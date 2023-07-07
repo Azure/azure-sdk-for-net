@@ -5,25 +5,19 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The L2IsolationDomain patch resource definition. </summary>
-    public partial class L2IsolationDomainPatch
+    /// <summary> The L2 Isolation Domain patch resource definition. </summary>
+    public partial class L2IsolationDomainPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of L2IsolationDomainPatch. </summary>
         public L2IsolationDomainPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> maximum transmission unit. Default value is 1500. </summary>
+        /// <summary> Maximum transmission unit. Default value is 1500. </summary>
         public int? Mtu { get; set; }
     }
 }

@@ -7,30 +7,29 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of NetworkToNetworkInterconnects. </summary>
+    /// <summary> List of Network To Network Interconnects. </summary>
     internal partial class NetworkToNetworkInterconnectsList
     {
         /// <summary> Initializes a new instance of NetworkToNetworkInterconnectsList. </summary>
         internal NetworkToNetworkInterconnectsList()
         {
-            Value = new ChangeTrackingList<NetworkToNetworkInterconnectData>();
+            Value = new ChangeTrackingList<NetworkToNetworkInterconnect>();
         }
 
         /// <summary> Initializes a new instance of NetworkToNetworkInterconnectsList. </summary>
         /// <param name="value"> List of NetworkToNetworkInterconnects resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal NetworkToNetworkInterconnectsList(IReadOnlyList<NetworkToNetworkInterconnectData> value, string nextLink)
+        internal NetworkToNetworkInterconnectsList(IReadOnlyList<NetworkToNetworkInterconnect> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of NetworkToNetworkInterconnects resources. </summary>
-        public IReadOnlyList<NetworkToNetworkInterconnectData> Value { get; }
+        public IReadOnlyList<NetworkToNetworkInterconnect> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

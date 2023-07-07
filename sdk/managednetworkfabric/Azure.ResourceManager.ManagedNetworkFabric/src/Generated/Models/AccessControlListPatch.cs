@@ -5,28 +5,31 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The AccessControlList patch resource definition. </summary>
-    public partial class AccessControlListPatch
+    /// <summary> The Access Control Lists patch resource definition. </summary>
+    public partial class AccessControlListPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of AccessControlListPatch. </summary>
         public AccessControlListPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Conditions = new ChangeTrackingList<AccessControlListConditionProperties>();
+            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
+            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Input method to configure Access Control List. </summary>
+        public ConfigurationType? ConfigurationType { get; set; }
+        /// <summary> Access Control List file URL. </summary>
+        public Uri AclsUri { get; set; }
+        /// <summary> List of match configurations. </summary>
+        public IList<AccessControlListMatchConfiguration> MatchConfigurations { get; }
+        /// <summary> List of dynamic match configurations. </summary>
+        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> IP address family. Example: ipv4 | ipv6. </summary>
-        public AddressFamily? AddressFamily { get; set; }
-        /// <summary> Access Control List conditions. </summary>
-        public IList<AccessControlListConditionProperties> Conditions { get; }
     }
 }

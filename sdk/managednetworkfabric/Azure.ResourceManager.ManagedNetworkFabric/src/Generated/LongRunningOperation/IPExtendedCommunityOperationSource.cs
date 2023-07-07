@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class IPExtendedCommunityOperationSource : IOperationSource<IPExtendedCommunityResource>
+    internal class IPExtendedCommunityOperationSource : IOperationSource<IPExtendedCommunity>
     {
-        private readonly ArmClient _client;
-
-        internal IPExtendedCommunityOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        IPExtendedCommunityResource IOperationSource<IPExtendedCommunityResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        IPExtendedCommunity IOperationSource<IPExtendedCommunity>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = IPExtendedCommunityData.DeserializeIPExtendedCommunityData(document.RootElement);
-            return new IPExtendedCommunityResource(_client, data);
+            return IPExtendedCommunity.DeserializeIPExtendedCommunity(document.RootElement);
         }
 
-        async ValueTask<IPExtendedCommunityResource> IOperationSource<IPExtendedCommunityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IPExtendedCommunity> IOperationSource<IPExtendedCommunity>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = IPExtendedCommunityData.DeserializeIPExtendedCommunityData(document.RootElement);
-            return new IPExtendedCommunityResource(_client, data);
+            return IPExtendedCommunity.DeserializeIPExtendedCommunity(document.RootElement);
         }
     }
 }

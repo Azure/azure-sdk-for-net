@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricControllerData>> value = default;
+            Optional<IReadOnlyList<NetworkFabricController>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<NetworkFabricControllerData> array = new List<NetworkFabricControllerData>();
+                    List<NetworkFabricController> array = new List<NetworkFabricController>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricControllerData.DeserializeNetworkFabricControllerData(item));
+                        array.Add(NetworkFabricController.DeserializeNetworkFabricController(item));
                     }
                     value = array;
                     continue;

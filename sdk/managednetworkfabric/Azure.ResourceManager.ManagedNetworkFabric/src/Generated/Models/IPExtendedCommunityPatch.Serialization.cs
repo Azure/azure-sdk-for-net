@@ -26,6 +26,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(IPExtendedCommunityRules))
+            {
+                writer.WritePropertyName("ipExtendedCommunityRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPExtendedCommunityRules)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Annotation))
+            {
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteStringValue(Annotation);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

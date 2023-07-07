@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkToNetworkInterconnectOperationSource : IOperationSource<NetworkToNetworkInterconnectResource>
+    internal class NetworkToNetworkInterconnectOperationSource : IOperationSource<NetworkToNetworkInterconnect>
     {
-        private readonly ArmClient _client;
-
-        internal NetworkToNetworkInterconnectOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        NetworkToNetworkInterconnectResource IOperationSource<NetworkToNetworkInterconnectResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkToNetworkInterconnect IOperationSource<NetworkToNetworkInterconnect>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement);
-            return new NetworkToNetworkInterconnectResource(_client, data);
+            return NetworkToNetworkInterconnect.DeserializeNetworkToNetworkInterconnect(document.RootElement);
         }
 
-        async ValueTask<NetworkToNetworkInterconnectResource> IOperationSource<NetworkToNetworkInterconnectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkToNetworkInterconnect> IOperationSource<NetworkToNetworkInterconnect>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement);
-            return new NetworkToNetworkInterconnectResource(_client, data);
+            return NetworkToNetworkInterconnect.DeserializeNetworkToNetworkInterconnect(document.RootElement);
         }
     }
 }

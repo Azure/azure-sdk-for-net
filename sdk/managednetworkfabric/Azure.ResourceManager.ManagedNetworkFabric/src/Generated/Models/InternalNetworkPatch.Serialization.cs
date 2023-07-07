@@ -47,16 +47,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StaticRouteConfiguration))
-            {
-                writer.WritePropertyName("staticRouteConfiguration"u8);
-                writer.WriteObjectValue(StaticRouteConfiguration);
-            }
-            if (Optional.IsDefined(BgpConfiguration))
-            {
-                writer.WritePropertyName("bgpConfiguration"u8);
-                writer.WriteObjectValue(BgpConfiguration);
-            }
             if (Optional.IsDefined(ImportRoutePolicyId))
             {
                 writer.WritePropertyName("importRoutePolicyId"u8);
@@ -66,6 +56,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("exportRoutePolicyId"u8);
                 writer.WriteStringValue(ExportRoutePolicyId);
+            }
+            if (Optional.IsDefined(ImportRoutePolicy))
+            {
+                writer.WritePropertyName("importRoutePolicy"u8);
+                writer.WriteObjectValue(ImportRoutePolicy);
+            }
+            if (Optional.IsDefined(ExportRoutePolicy))
+            {
+                writer.WritePropertyName("exportRoutePolicy"u8);
+                writer.WriteObjectValue(ExportRoutePolicy);
+            }
+            if (Optional.IsDefined(IngressAclId))
+            {
+                writer.WritePropertyName("ingressAclId"u8);
+                writer.WriteStringValue(IngressAclId);
+            }
+            if (Optional.IsDefined(EgressAclId))
+            {
+                writer.WritePropertyName("egressAclId"u8);
+                writer.WriteStringValue(EgressAclId);
+            }
+            if (Optional.IsDefined(IsMonitoringEnabled))
+            {
+                writer.WritePropertyName("isMonitoringEnabled"u8);
+                writer.WriteStringValue(IsMonitoringEnabled.Value.ToString());
+            }
+            if (Optional.IsDefined(BgpConfiguration))
+            {
+                writer.WritePropertyName("bgpConfiguration"u8);
+                writer.WriteObjectValue(BgpConfiguration);
+            }
+            if (Optional.IsDefined(StaticRouteConfiguration))
+            {
+                writer.WritePropertyName("staticRouteConfiguration"u8);
+                writer.WriteObjectValue(StaticRouteConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

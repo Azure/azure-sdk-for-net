@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of RoutePoliciesListResult. </summary>
         internal RoutePoliciesListResult()
         {
-            Value = new ChangeTrackingList<RoutePolicyData>();
+            Value = new ChangeTrackingList<RoutePolicy>();
         }
 
         /// <summary> Initializes a new instance of RoutePoliciesListResult. </summary>
         /// <param name="value"> List of RoutePolicy resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal RoutePoliciesListResult(IReadOnlyList<RoutePolicyData> value, string nextLink)
+        internal RoutePoliciesListResult(IReadOnlyList<RoutePolicy> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of RoutePolicy resources. </summary>
-        public IReadOnlyList<RoutePolicyData> Value { get; }
+        public IReadOnlyList<RoutePolicy> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

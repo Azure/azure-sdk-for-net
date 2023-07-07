@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkRackOperationSource : IOperationSource<NetworkRackResource>
+    internal class NetworkRackOperationSource : IOperationSource<NetworkRack>
     {
-        private readonly ArmClient _client;
-
-        internal NetworkRackOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        NetworkRackResource IOperationSource<NetworkRackResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkRack IOperationSource<NetworkRack>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkRackData.DeserializeNetworkRackData(document.RootElement);
-            return new NetworkRackResource(_client, data);
+            return NetworkRack.DeserializeNetworkRack(document.RootElement);
         }
 
-        async ValueTask<NetworkRackResource> IOperationSource<NetworkRackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkRack> IOperationSource<NetworkRack>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkRackData.DeserializeNetworkRackData(document.RootElement);
-            return new NetworkRackResource(_client, data);
+            return NetworkRack.DeserializeNetworkRack(document.RootElement);
         }
     }
 }

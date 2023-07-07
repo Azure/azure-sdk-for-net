@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AccessControlListData>> value = default;
+            Optional<IReadOnlyList<AccessControlList>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<AccessControlListData> array = new List<AccessControlListData>();
+                    List<AccessControlList> array = new List<AccessControlList>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListData.DeserializeAccessControlListData(item));
+                        array.Add(AccessControlList.DeserializeAccessControlList(item));
                     }
                     value = array;
                     continue;

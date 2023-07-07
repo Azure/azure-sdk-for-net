@@ -7,30 +7,29 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of NetworkDeviceSkus. </summary>
+    /// <summary> List of Network Device SKUs. </summary>
     internal partial class NetworkDeviceSkusListResult
     {
         /// <summary> Initializes a new instance of NetworkDeviceSkusListResult. </summary>
         internal NetworkDeviceSkusListResult()
         {
-            Value = new ChangeTrackingList<NetworkDeviceSkuData>();
+            Value = new ChangeTrackingList<NetworkDeviceSku>();
         }
 
         /// <summary> Initializes a new instance of NetworkDeviceSkusListResult. </summary>
-        /// <param name="value"> List of NetworkDeviceSku resources. </param>
+        /// <param name="value"> List of Network Device SKU resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal NetworkDeviceSkusListResult(IReadOnlyList<NetworkDeviceSkuData> value, string nextLink)
+        internal NetworkDeviceSkusListResult(IReadOnlyList<NetworkDeviceSku> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of NetworkDeviceSku resources. </summary>
-        public IReadOnlyList<NetworkDeviceSkuData> Value { get; }
+        /// <summary> List of Network Device SKU resources. </summary>
+        public IReadOnlyList<NetworkDeviceSku> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

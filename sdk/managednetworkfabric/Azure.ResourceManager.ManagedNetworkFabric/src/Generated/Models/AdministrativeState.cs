@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Administrative state. </summary>
+    /// <summary> State defined to represent administrative actions or post actions on a particular resource. </summary>
     public readonly partial struct AdministrativeState : IEquatable<AdministrativeState>
     {
         private readonly string _value;
@@ -22,13 +22,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EnableValue = "Enable";
-        private const string DisableValue = "Disable";
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
+        private const string MATValue = "MAT";
+        private const string RMAValue = "RMA";
 
-        /// <summary> Enable. </summary>
-        public static AdministrativeState Enable { get; } = new AdministrativeState(EnableValue);
-        /// <summary> Disable. </summary>
-        public static AdministrativeState Disable { get; } = new AdministrativeState(DisableValue);
+        /// <summary> Enabled. </summary>
+        public static AdministrativeState Enabled { get; } = new AdministrativeState(EnabledValue);
+        /// <summary> Disabled. </summary>
+        public static AdministrativeState Disabled { get; } = new AdministrativeState(DisabledValue);
+        /// <summary> MAT. </summary>
+        public static AdministrativeState MAT { get; } = new AdministrativeState(MATValue);
+        /// <summary> RMA. </summary>
+        public static AdministrativeState RMA { get; } = new AdministrativeState(RMAValue);
         /// <summary> Determines if two <see cref="AdministrativeState"/> values are the same. </summary>
         public static bool operator ==(AdministrativeState left, AdministrativeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdministrativeState"/> values are not the same. </summary>

@@ -22,22 +22,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string AcceptedValue = "Accepted";
         private const string SucceededValue = "Succeeded";
         private const string UpdatingValue = "Updating";
-        private const string CanceledValue = "Canceled";
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
 
+        /// <summary> Accepted. </summary>
+        public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
         /// <summary> Succeeded. </summary>
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
         /// <summary> Updating. </summary>
         public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
-        public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
         /// <summary> Deleting. </summary>
         public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+        /// <summary> Canceled. </summary>
+        public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>

@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkFabricControllerOperationSource : IOperationSource<NetworkFabricControllerResource>
+    internal class NetworkFabricControllerOperationSource : IOperationSource<NetworkFabricController>
     {
-        private readonly ArmClient _client;
-
-        internal NetworkFabricControllerOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        NetworkFabricControllerResource IOperationSource<NetworkFabricControllerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFabricController IOperationSource<NetworkFabricController>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkFabricControllerData.DeserializeNetworkFabricControllerData(document.RootElement);
-            return new NetworkFabricControllerResource(_client, data);
+            return NetworkFabricController.DeserializeNetworkFabricController(document.RootElement);
         }
 
-        async ValueTask<NetworkFabricControllerResource> IOperationSource<NetworkFabricControllerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFabricController> IOperationSource<NetworkFabricController>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkFabricControllerData.DeserializeNetworkFabricControllerData(document.RootElement);
-            return new NetworkFabricControllerResource(_client, data);
+            return NetworkFabricController.DeserializeNetworkFabricController(document.RootElement);
         }
     }
 }

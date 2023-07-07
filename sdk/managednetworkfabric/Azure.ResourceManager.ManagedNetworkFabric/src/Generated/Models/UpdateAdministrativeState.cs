@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Administrative state. </summary>
-        public AdministrativeState? State { get; set; }
+        public EnableDisableState? State { get; set; }
     }
 }

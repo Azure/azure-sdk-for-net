@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class InternalNetworkOperationSource : IOperationSource<InternalNetworkResource>
+    internal class InternalNetworkOperationSource : IOperationSource<InternalNetwork>
     {
-        private readonly ArmClient _client;
-
-        internal InternalNetworkOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        InternalNetworkResource IOperationSource<InternalNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        InternalNetwork IOperationSource<InternalNetwork>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = InternalNetworkData.DeserializeInternalNetworkData(document.RootElement);
-            return new InternalNetworkResource(_client, data);
+            return InternalNetwork.DeserializeInternalNetwork(document.RootElement);
         }
 
-        async ValueTask<InternalNetworkResource> IOperationSource<InternalNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<InternalNetwork> IOperationSource<InternalNetwork>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = InternalNetworkData.DeserializeInternalNetworkData(document.RootElement);
-            return new InternalNetworkResource(_client, data);
+            return InternalNetwork.DeserializeInternalNetwork(document.RootElement);
         }
     }
 }

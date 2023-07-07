@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkDeviceOperationSource : IOperationSource<NetworkDeviceResource>
+    internal class NetworkDeviceOperationSource : IOperationSource<NetworkDevice>
     {
-        private readonly ArmClient _client;
-
-        internal NetworkDeviceOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        NetworkDeviceResource IOperationSource<NetworkDeviceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkDevice IOperationSource<NetworkDevice>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetworkDeviceData.DeserializeNetworkDeviceData(document.RootElement);
-            return new NetworkDeviceResource(_client, data);
+            return NetworkDevice.DeserializeNetworkDevice(document.RootElement);
         }
 
-        async ValueTask<NetworkDeviceResource> IOperationSource<NetworkDeviceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkDevice> IOperationSource<NetworkDevice>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetworkDeviceData.DeserializeNetworkDeviceData(document.RootElement);
-            return new NetworkDeviceResource(_client, data);
+            return NetworkDevice.DeserializeNetworkDevice(document.RootElement);
         }
     }
 }

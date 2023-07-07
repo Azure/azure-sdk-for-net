@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class ExternalNetworkOperationSource : IOperationSource<ExternalNetworkResource>
+    internal class ExternalNetworkOperationSource : IOperationSource<ExternalNetwork>
     {
-        private readonly ArmClient _client;
-
-        internal ExternalNetworkOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        ExternalNetworkResource IOperationSource<ExternalNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExternalNetwork IOperationSource<ExternalNetwork>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ExternalNetworkData.DeserializeExternalNetworkData(document.RootElement);
-            return new ExternalNetworkResource(_client, data);
+            return ExternalNetwork.DeserializeExternalNetwork(document.RootElement);
         }
 
-        async ValueTask<ExternalNetworkResource> IOperationSource<ExternalNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExternalNetwork> IOperationSource<ExternalNetwork>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ExternalNetworkData.DeserializeExternalNetworkData(document.RootElement);
-            return new ExternalNetworkResource(_client, data);
+            return ExternalNetwork.DeserializeExternalNetwork(document.RootElement);
         }
     }
 }

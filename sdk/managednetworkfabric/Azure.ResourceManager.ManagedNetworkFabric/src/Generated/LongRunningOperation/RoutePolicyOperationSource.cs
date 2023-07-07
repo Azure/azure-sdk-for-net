@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class RoutePolicyOperationSource : IOperationSource<RoutePolicyResource>
+    internal class RoutePolicyOperationSource : IOperationSource<RoutePolicy>
     {
-        private readonly ArmClient _client;
-
-        internal RoutePolicyOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        RoutePolicyResource IOperationSource<RoutePolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RoutePolicy IOperationSource<RoutePolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = RoutePolicyData.DeserializeRoutePolicyData(document.RootElement);
-            return new RoutePolicyResource(_client, data);
+            return RoutePolicy.DeserializeRoutePolicy(document.RootElement);
         }
 
-        async ValueTask<RoutePolicyResource> IOperationSource<RoutePolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RoutePolicy> IOperationSource<RoutePolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = RoutePolicyData.DeserializeRoutePolicyData(document.RootElement);
-            return new RoutePolicyResource(_client, data);
+            return RoutePolicy.DeserializeRoutePolicy(document.RootElement);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkDevicesListResult. </summary>
         internal NetworkDevicesListResult()
         {
-            Value = new ChangeTrackingList<NetworkDeviceData>();
+            Value = new ChangeTrackingList<NetworkDevice>();
         }
 
         /// <summary> Initializes a new instance of NetworkDevicesListResult. </summary>
         /// <param name="value"> List of NetworkDevice resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal NetworkDevicesListResult(IReadOnlyList<NetworkDeviceData> value, string nextLink)
+        internal NetworkDevicesListResult(IReadOnlyList<NetworkDevice> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of NetworkDevice resources. </summary>
-        public IReadOnlyList<NetworkDeviceData> Value { get; }
+        public IReadOnlyList<NetworkDevice> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

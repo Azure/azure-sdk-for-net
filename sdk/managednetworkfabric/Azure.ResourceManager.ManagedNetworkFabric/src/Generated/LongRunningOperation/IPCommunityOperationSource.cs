@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class IPCommunityOperationSource : IOperationSource<IPCommunityResource>
+    internal class IPCommunityOperationSource : IOperationSource<IPCommunity>
     {
-        private readonly ArmClient _client;
-
-        internal IPCommunityOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        IPCommunityResource IOperationSource<IPCommunityResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        IPCommunity IOperationSource<IPCommunity>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = IPCommunityData.DeserializeIPCommunityData(document.RootElement);
-            return new IPCommunityResource(_client, data);
+            return IPCommunity.DeserializeIPCommunity(document.RootElement);
         }
 
-        async ValueTask<IPCommunityResource> IOperationSource<IPCommunityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IPCommunity> IOperationSource<IPCommunity>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = IPCommunityData.DeserializeIPCommunityData(document.RootElement);
-            return new IPCommunityResource(_client, data);
+            return IPCommunity.DeserializeIPCommunity(document.RootElement);
         }
     }
 }

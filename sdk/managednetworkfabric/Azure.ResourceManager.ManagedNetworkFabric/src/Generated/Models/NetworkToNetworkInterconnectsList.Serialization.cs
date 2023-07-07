@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkToNetworkInterconnectData>> value = default;
+            Optional<IReadOnlyList<NetworkToNetworkInterconnect>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<NetworkToNetworkInterconnectData> array = new List<NetworkToNetworkInterconnectData>();
+                    List<NetworkToNetworkInterconnect> array = new List<NetworkToNetworkInterconnect>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(item));
+                        array.Add(NetworkToNetworkInterconnect.DeserializeNetworkToNetworkInterconnect(item));
                     }
                     value = array;
                     continue;

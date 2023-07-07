@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class L3IsolationDomainOperationSource : IOperationSource<L3IsolationDomainResource>
+    internal class L3IsolationDomainOperationSource : IOperationSource<L3IsolationDomain>
     {
-        private readonly ArmClient _client;
-
-        internal L3IsolationDomainOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        L3IsolationDomainResource IOperationSource<L3IsolationDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        L3IsolationDomain IOperationSource<L3IsolationDomain>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = L3IsolationDomainData.DeserializeL3IsolationDomainData(document.RootElement);
-            return new L3IsolationDomainResource(_client, data);
+            return L3IsolationDomain.DeserializeL3IsolationDomain(document.RootElement);
         }
 
-        async ValueTask<L3IsolationDomainResource> IOperationSource<L3IsolationDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<L3IsolationDomain> IOperationSource<L3IsolationDomain>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = L3IsolationDomainData.DeserializeL3IsolationDomainData(document.RootElement);
-            return new L3IsolationDomainResource(_client, data);
+            return L3IsolationDomain.DeserializeL3IsolationDomain(document.RootElement);
         }
     }
 }

@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class IPPrefixOperationSource : IOperationSource<IPPrefixResource>
+    internal class IPPrefixOperationSource : IOperationSource<IPPrefix>
     {
-        private readonly ArmClient _client;
-
-        internal IPPrefixOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        IPPrefixResource IOperationSource<IPPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        IPPrefix IOperationSource<IPPrefix>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = IPPrefixData.DeserializeIPPrefixData(document.RootElement);
-            return new IPPrefixResource(_client, data);
+            return IPPrefix.DeserializeIPPrefix(document.RootElement);
         }
 
-        async ValueTask<IPPrefixResource> IOperationSource<IPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IPPrefix> IOperationSource<IPPrefix>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = IPPrefixData.DeserializeIPPrefixData(document.RootElement);
-            return new IPPrefixResource(_client, data);
+            return IPPrefix.DeserializeIPPrefix(document.RootElement);
         }
     }
 }

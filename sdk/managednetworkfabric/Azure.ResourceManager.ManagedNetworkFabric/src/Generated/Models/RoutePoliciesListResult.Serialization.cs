@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoutePolicyData>> value = default;
+            Optional<IReadOnlyList<RoutePolicy>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<RoutePolicyData> array = new List<RoutePolicyData>();
+                    List<RoutePolicy> array = new List<RoutePolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutePolicyData.DeserializeRoutePolicyData(item));
+                        array.Add(RoutePolicy.DeserializeRoutePolicy(item));
                     }
                     value = array;
                     continue;

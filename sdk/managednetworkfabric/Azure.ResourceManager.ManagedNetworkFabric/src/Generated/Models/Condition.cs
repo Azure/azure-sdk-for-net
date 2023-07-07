@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string EqualToValue = "EqualTo";
         private const string GreaterThanOrEqualToValue = "GreaterThanOrEqualTo";
         private const string LesserThanOrEqualToValue = "LesserThanOrEqualTo";
+        private const string RangeValue = "Range";
 
         /// <summary> EqualTo. </summary>
         public static Condition EqualTo { get; } = new Condition(EqualToValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Condition GreaterThanOrEqualTo { get; } = new Condition(GreaterThanOrEqualToValue);
         /// <summary> LesserThanOrEqualTo. </summary>
         public static Condition LesserThanOrEqualTo { get; } = new Condition(LesserThanOrEqualToValue);
+        /// <summary> Range. </summary>
+        public static Condition Range { get; } = new Condition(RangeValue);
         /// <summary> Determines if two <see cref="Condition"/> values are the same. </summary>
         public static bool operator ==(Condition left, Condition right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Condition"/> values are not the same. </summary>

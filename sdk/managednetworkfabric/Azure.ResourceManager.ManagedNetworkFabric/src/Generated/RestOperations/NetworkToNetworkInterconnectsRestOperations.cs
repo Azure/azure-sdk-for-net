@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectData data)
+        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnect body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,30 +57,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Configuration used to setup CE-PE connectivity PUT Method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkFabricName"> Name of the NetworkFabric. </param>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnectName. </param>
-        /// <param name="data"> Request payload. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAsync(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnect body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
             Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -93,23 +92,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Configuration used to setup CE-PE connectivity PUT Method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkFabricName"> Name of the NetworkFabric. </param>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnectName. </param>
-        /// <param name="data"> Request payload. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Create(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnect body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
             Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -121,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -144,16 +142,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements NetworkToNetworkInterconnects GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkFabricName"> Name of the NetworkFabric. </param>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnect. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkToNetworkInterconnectData>> GetAsync(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<NetworkToNetworkInterconnect>> GetAsync(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
             Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
@@ -164,29 +161,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case 200:
                     {
-                        NetworkToNetworkInterconnectData value = default;
+                        NetworkToNetworkInterconnect value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement);
+                        value = NetworkToNetworkInterconnect.DeserializeNetworkToNetworkInterconnect(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((NetworkToNetworkInterconnectData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Implements NetworkToNetworkInterconnects GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkFabricName"> Name of the NetworkFabric. </param>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnect. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkToNetworkInterconnectData> Get(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<NetworkToNetworkInterconnect> Get(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
             Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
@@ -197,19 +191,99 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case 200:
                     {
-                        NetworkToNetworkInterconnectData value = default;
+                        NetworkToNetworkInterconnect value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement);
+                        value = NetworkToNetworkInterconnect.DeserializeNetworkToNetworkInterconnect(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((NetworkToNetworkInterconnectData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectPatch patch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/networkToNetworkInterconnects/", false);
+            uri.AppendPath(networkToNetworkInterconnectName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Update certain properties of the Network To NetworkInterconnects resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="patch"> Network to Network Interconnect properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, patch);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Update certain properties of the Network To NetworkInterconnects resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="patch"> Network to Network Interconnect properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, patch);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -232,16 +306,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements NetworkToNetworkInterconnects DELETE method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkFabricName"> Name of the NetworkFabric. </param>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnectName. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
             Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
@@ -250,7 +323,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -260,16 +332,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements NetworkToNetworkInterconnects DELETE method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkFabricName"> Name of the NetworkFabric. </param>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnectName. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
             Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
@@ -278,7 +349,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -287,7 +357,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
+        internal HttpMessage CreateListByNetworkFabricRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -309,19 +379,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements Network To Network Interconnects list by Network Fabric GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkFabricName"> Name of the NetworkFabric. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkToNetworkInterconnectsList>> ListAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<NetworkToNetworkInterconnectsList>> ListByNetworkFabricAsync(Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateListByNetworkFabricRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -338,19 +407,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements Network To Network Interconnects list by Network Fabric GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkFabricName"> Name of the NetworkFabric. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkToNetworkInterconnectsList> List(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<NetworkToNetworkInterconnectsList> ListByNetworkFabric(Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateListByNetworkFabricRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -366,7 +434,173 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string networkFabricName)
+        internal HttpMessage CreateUpdateNpbStaticRouteBfdAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeState body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/networkToNetworkInterconnects/", false);
+            uri.AppendPath(networkToNetworkInterconnectName, true);
+            uri.AppendPath("/updateNpbStaticRouteBfdAdministrativeState", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Updates the NPB Static Route BFD Administrative State. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateNpbStaticRouteBfdAdministrativeStateAsync(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var message = CreateUpdateNpbStaticRouteBfdAdministrativeStateRequest(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Updates the NPB Static Route BFD Administrative State. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateNpbStaticRouteBfdAdministrativeState(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var message = CreateUpdateNpbStaticRouteBfdAdministrativeStateRequest(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeState body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/networkToNetworkInterconnects/", false);
+            uri.AppendPath(networkToNetworkInterconnectName, true);
+            uri.AppendPath("/updateAdministrativeState", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Updates the Admin State. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAdministrativeStateAsync(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Updates the Admin State. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateAdministrativeState(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListByNetworkFabricNextPageRequest(string nextLink, Guid subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -382,20 +616,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Implements Network To Network Interconnects list by Network Fabric GET method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkFabricName"> Name of the NetworkFabric. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkToNetworkInterconnectsList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<NetworkToNetworkInterconnectsList>> ListByNetworkFabricNextPageAsync(string nextLink, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateListByNetworkFabricNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -413,20 +646,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Implements Network To Network Interconnects list by Network Fabric GET method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="networkFabricName"> Name of the NetworkFabric. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkToNetworkInterconnectsList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<NetworkToNetworkInterconnectsList> ListByNetworkFabricNextPage(string nextLink, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateListByNetworkFabricNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

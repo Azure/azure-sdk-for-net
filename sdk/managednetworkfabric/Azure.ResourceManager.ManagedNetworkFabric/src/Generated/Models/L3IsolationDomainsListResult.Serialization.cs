@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<L3IsolationDomainData>> value = default;
+            Optional<IReadOnlyList<L3IsolationDomain>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<L3IsolationDomainData> array = new List<L3IsolationDomainData>();
+                    List<L3IsolationDomain> array = new List<L3IsolationDomain>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(L3IsolationDomainData.DeserializeL3IsolationDomainData(item));
+                        array.Add(L3IsolationDomain.DeserializeL3IsolationDomain(item));
                     }
                     value = array;
                     continue;

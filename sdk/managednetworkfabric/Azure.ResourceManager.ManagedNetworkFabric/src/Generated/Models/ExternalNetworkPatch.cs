@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The ExternalNetwork patch resource definition. </summary>
@@ -17,15 +19,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        public ResourceIdentifier ImportRoutePolicyId { get; set; }
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        public ResourceIdentifier ExportRoutePolicyId { get; set; }
+        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
+        public ImportRoutePolicy ImportRoutePolicy { get; set; }
+        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
+        public ExportRoutePolicy ExportRoutePolicy { get; set; }
         /// <summary> Peering option list. </summary>
         public PeeringOption? PeeringOption { get; set; }
         /// <summary> option B properties object. </summary>
-        public OptionBProperties OptionBProperties { get; set; }
+        public L3OptionBProperties OptionBProperties { get; set; }
         /// <summary> option A properties object. </summary>
-        public Layer3OptionAProperties OptionAProperties { get; set; }
-        /// <summary> ARM resource ID of importRoutePolicy. </summary>
-        public string ImportRoutePolicyId { get; set; }
-        /// <summary> ARM resource ID of exportRoutePolicy. </summary>
-        public string ExportRoutePolicyId { get; set; }
+        public ExternalNetworkPatchPropertiesOptionAProperties OptionAProperties { get; set; }
     }
 }

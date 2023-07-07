@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -18,385 +19,82 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedNetworkFabric. </summary>
     public static partial class ManagedNetworkFabricExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new TenantResourceExtensionClient(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new TenantResourceExtensionClient(client, scope);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region AccessControlListResource
         /// <summary>
-        /// Gets an object representing an <see cref="AccessControlListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccessControlListResource.CreateResourceIdentifier" /> to create an <see cref="AccessControlListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Implements Access Control List PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessControlLists_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccessControlListResource" /> object. </returns>
-        public static AccessControlListResource GetAccessControlListResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accessControlListName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<AccessControlList>> CreateAccessControlListAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, AccessControlList body, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                AccessControlListResource.ValidateResourceId(id);
-                return new AccessControlListResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            Argument.AssertNotNull(body, nameof(body));
 
-        #region IPCommunityResource
+            return await GetTenantResourceExtensionClient(tenantResource).CreateAccessControlListAsync(waitUntil, subscriptionId, resourceGroupName, accessControlListName, body, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary>
-        /// Gets an object representing an <see cref="IPCommunityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPCommunityResource.CreateResourceIdentifier" /> to create an <see cref="IPCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Implements Access Control List PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessControlLists_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPCommunityResource" /> object. </returns>
-        public static IPCommunityResource GetIPCommunityResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accessControlListName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<AccessControlList> CreateAccessControlList(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, AccessControlList body, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                IPCommunityResource.ValidateResourceId(id);
-                return new IPCommunityResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            Argument.AssertNotNull(body, nameof(body));
 
-        #region IPExtendedCommunityResource
-        /// <summary>
-        /// Gets an object representing an <see cref="IPExtendedCommunityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPExtendedCommunityResource.CreateResourceIdentifier" /> to create an <see cref="IPExtendedCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPExtendedCommunityResource" /> object. </returns>
-        public static IPExtendedCommunityResource GetIPExtendedCommunityResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                IPExtendedCommunityResource.ValidateResourceId(id);
-                return new IPExtendedCommunityResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region IPPrefixResource
-        /// <summary>
-        /// Gets an object representing an <see cref="IPPrefixResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPPrefixResource.CreateResourceIdentifier" /> to create an <see cref="IPPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPPrefixResource" /> object. </returns>
-        public static IPPrefixResource GetIPPrefixResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                IPPrefixResource.ValidateResourceId(id);
-                return new IPPrefixResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region L2IsolationDomainResource
-        /// <summary>
-        /// Gets an object representing a <see cref="L2IsolationDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="L2IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="L2IsolationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="L2IsolationDomainResource" /> object. </returns>
-        public static L2IsolationDomainResource GetL2IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                L2IsolationDomainResource.ValidateResourceId(id);
-                return new L2IsolationDomainResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region L3IsolationDomainResource
-        /// <summary>
-        /// Gets an object representing a <see cref="L3IsolationDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="L3IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="L3IsolationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="L3IsolationDomainResource" /> object. </returns>
-        public static L3IsolationDomainResource GetL3IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                L3IsolationDomainResource.ValidateResourceId(id);
-                return new L3IsolationDomainResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region InternalNetworkResource
-        /// <summary>
-        /// Gets an object representing an <see cref="InternalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InternalNetworkResource.CreateResourceIdentifier" /> to create an <see cref="InternalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InternalNetworkResource" /> object. </returns>
-        public static InternalNetworkResource GetInternalNetworkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                InternalNetworkResource.ValidateResourceId(id);
-                return new InternalNetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ExternalNetworkResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ExternalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExternalNetworkResource.CreateResourceIdentifier" /> to create an <see cref="ExternalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExternalNetworkResource" /> object. </returns>
-        public static ExternalNetworkResource GetExternalNetworkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ExternalNetworkResource.ValidateResourceId(id);
-                return new ExternalNetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NetworkDeviceSkuResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkDeviceSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkDeviceSkuResource.CreateResourceIdentifier" /> to create a <see cref="NetworkDeviceSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkDeviceSkuResource" /> object. </returns>
-        public static NetworkDeviceSkuResource GetNetworkDeviceSkuResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NetworkDeviceSkuResource.ValidateResourceId(id);
-                return new NetworkDeviceSkuResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NetworkDeviceResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkDeviceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkDeviceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkDeviceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkDeviceResource" /> object. </returns>
-        public static NetworkDeviceResource GetNetworkDeviceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NetworkDeviceResource.ValidateResourceId(id);
-                return new NetworkDeviceResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NetworkInterfaceResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkInterfaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkInterfaceResource" /> object. </returns>
-        public static NetworkInterfaceResource GetNetworkInterfaceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NetworkInterfaceResource.ValidateResourceId(id);
-                return new NetworkInterfaceResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NetworkFabricControllerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricControllerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricControllerResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricControllerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFabricControllerResource" /> object. </returns>
-        public static NetworkFabricControllerResource GetNetworkFabricControllerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NetworkFabricControllerResource.ValidateResourceId(id);
-                return new NetworkFabricControllerResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NetworkFabricSkuResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricSkuResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFabricSkuResource" /> object. </returns>
-        public static NetworkFabricSkuResource GetNetworkFabricSkuResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NetworkFabricSkuResource.ValidateResourceId(id);
-                return new NetworkFabricSkuResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NetworkFabricResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFabricResource" /> object. </returns>
-        public static NetworkFabricResource GetNetworkFabricResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NetworkFabricResource.ValidateResourceId(id);
-                return new NetworkFabricResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NetworkToNetworkInterconnectResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkToNetworkInterconnectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkToNetworkInterconnectResource.CreateResourceIdentifier" /> to create a <see cref="NetworkToNetworkInterconnectResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkToNetworkInterconnectResource" /> object. </returns>
-        public static NetworkToNetworkInterconnectResource GetNetworkToNetworkInterconnectResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NetworkToNetworkInterconnectResource.ValidateResourceId(id);
-                return new NetworkToNetworkInterconnectResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NetworkRackSkuResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkRackSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkRackSkuResource.CreateResourceIdentifier" /> to create a <see cref="NetworkRackSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkRackSkuResource" /> object. </returns>
-        public static NetworkRackSkuResource GetNetworkRackSkuResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NetworkRackSkuResource.ValidateResourceId(id);
-                return new NetworkRackSkuResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NetworkRackResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkRackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkRackResource.CreateResourceIdentifier" /> to create a <see cref="NetworkRackResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkRackResource" /> object. </returns>
-        public static NetworkRackResource GetNetworkRackResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NetworkRackResource.ValidateResourceId(id);
-                return new NetworkRackResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RoutePolicyResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoutePolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoutePolicyResource.CreateResourceIdentifier" /> to create a <see cref="RoutePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoutePolicyResource" /> object. </returns>
-        public static RoutePolicyResource GetRoutePolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoutePolicyResource.ValidateResourceId(id);
-                return new RoutePolicyResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of AccessControlListResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AccessControlListResources and their operations over a AccessControlListResource. </returns>
-        public static AccessControlListCollection GetAccessControlLists(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAccessControlLists();
+            return GetTenantResourceExtensionClient(tenantResource).CreateAccessControlList(waitUntil, subscriptionId, resourceGroupName, accessControlListName, body, cancellationToken);
         }
 
         /// <summary>
@@ -412,15 +110,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accessControlListName"> Name of the Access Control List. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<AccessControlListResource>> GetAccessControlListAsync(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is null. </exception>
+        public static async Task<Response<AccessControlList>> GetAccessControlListAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string accessControlListName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAccessControlLists().GetAsync(accessControlListName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetAccessControlListAsync(subscriptionId, resourceGroupName, accessControlListName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -436,743 +138,193 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accessControlListName"> Name of the Access Control List. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<AccessControlListResource> GetAccessControlList(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is null. </exception>
+        public static Response<AccessControlList> GetAccessControlList(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string accessControlListName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAccessControlLists().Get(accessControlListName, cancellationToken);
-        }
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
 
-        /// <summary> Gets a collection of IPCommunityResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IPCommunityResources and their operations over a IPCommunityResource. </returns>
-        public static IPCommunityCollection GetIPCommunities(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPCommunities();
+            return GetTenantResourceExtensionClient(tenantResource).GetAccessControlList(subscriptionId, resourceGroupName, accessControlListName, cancellationToken);
         }
 
         /// <summary>
-        /// Implements an IP Community GET method.
+        /// API to update certain properties of the Access Control List resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunities_Get</description>
+        /// <description>AccessControlLists_Update</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="patch"> Access Control List properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<IPCommunityResource>> GetIPCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accessControlListName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<AccessControlList>> UpdateAccessControlListAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, AccessControlListPatch patch, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetIPCommunities().GetAsync(ipCommunityName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAccessControlListAsync(waitUntil, subscriptionId, resourceGroupName, accessControlListName, patch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Implements an IP Community GET method.
+        /// API to update certain properties of the Access Control List resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunities_Get</description>
+        /// <description>AccessControlLists_Update</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="patch"> Access Control List properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<IPCommunityResource> GetIPCommunity(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accessControlListName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<AccessControlList> UpdateAccessControlList(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, AccessControlListPatch patch, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetIPCommunities().Get(ipCommunityName, cancellationToken);
-        }
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-        /// <summary> Gets a collection of IPExtendedCommunityResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IPExtendedCommunityResources and their operations over a IPExtendedCommunityResource. </returns>
-        public static IPExtendedCommunityCollection GetIPExtendedCommunities(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPExtendedCommunities();
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAccessControlList(waitUntil, subscriptionId, resourceGroupName, accessControlListName, patch, cancellationToken);
         }
 
         /// <summary>
-        /// Implements IP Extended Community GET method.
+        /// Implements Access Control List DELETE method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpExtendedCommunities_Get</description>
+        /// <description>AccessControlLists_Delete</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<IPExtendedCommunityResource>> GetIPExtendedCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteAccessControlListAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetIPExtendedCommunities().GetAsync(ipExtendedCommunityName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteAccessControlListAsync(waitUntil, subscriptionId, resourceGroupName, accessControlListName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Implements IP Extended Community GET method.
+        /// Implements Access Control List DELETE method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpExtendedCommunities_Get</description>
+        /// <description>AccessControlLists_Delete</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<IPExtendedCommunityResource> GetIPExtendedCommunity(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is null. </exception>
+        public static ArmOperation DeleteAccessControlList(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetIPExtendedCommunities().Get(ipExtendedCommunityName, cancellationToken);
-        }
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
 
-        /// <summary> Gets a collection of IPPrefixResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IPPrefixResources and their operations over a IPPrefixResource. </returns>
-        public static IPPrefixCollection GetIPPrefixes(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPPrefixes();
+            return GetTenantResourceExtensionClient(tenantResource).DeleteAccessControlList(waitUntil, subscriptionId, resourceGroupName, accessControlListName, cancellationToken);
         }
 
         /// <summary>
-        /// Implements IP Prefix GET method.
+        /// Implements AccessControlLists list by resource group GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Get</description>
+        /// <description>AccessControlLists_ListByResourceGroup</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<IPPrefixResource>> GetIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AccessControlList" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AccessControlList> GetAccessControlListsByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetIPPrefixes().GetAsync(ipPrefixName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetAccessControlListsByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
         }
 
         /// <summary>
-        /// Implements IP Prefix GET method.
+        /// Implements AccessControlLists list by resource group GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Get</description>
+        /// <description>AccessControlLists_ListByResourceGroup</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<IPPrefixResource> GetIPPrefix(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="AccessControlList" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AccessControlList> GetAccessControlListsByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetIPPrefixes().Get(ipPrefixName, cancellationToken);
-        }
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-        /// <summary> Gets a collection of L2IsolationDomainResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of L2IsolationDomainResources and their operations over a L2IsolationDomainResource. </returns>
-        public static L2IsolationDomainCollection GetL2IsolationDomains(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetL2IsolationDomains();
-        }
-
-        /// <summary>
-        /// Implements L2 Isolation Domain GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<L2IsolationDomainResource>> GetL2IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetL2IsolationDomains().GetAsync(l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Implements L2 Isolation Domain GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<L2IsolationDomainResource> GetL2IsolationDomain(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetL2IsolationDomains().Get(l2IsolationDomainName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of L3IsolationDomainResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of L3IsolationDomainResources and their operations over a L3IsolationDomainResource. </returns>
-        public static L3IsolationDomainCollection GetL3IsolationDomains(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetL3IsolationDomains();
-        }
-
-        /// <summary>
-        /// Retrieves details of this L3 Isolation Domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<L3IsolationDomainResource>> GetL3IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetL3IsolationDomains().GetAsync(l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves details of this L3 Isolation Domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<L3IsolationDomainResource> GetL3IsolationDomain(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetL3IsolationDomains().Get(l3IsolationDomainName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkDeviceResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NetworkDeviceResources and their operations over a NetworkDeviceResource. </returns>
-        public static NetworkDeviceCollection GetNetworkDevices(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkDevices();
-        }
-
-        /// <summary>
-        /// Get the Network Device resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkDeviceName"> Name of the Network Device. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NetworkDeviceResource>> GetNetworkDeviceAsync(this ResourceGroupResource resourceGroupResource, string networkDeviceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetNetworkDevices().GetAsync(networkDeviceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the Network Device resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkDeviceName"> Name of the Network Device. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<NetworkDeviceResource> GetNetworkDevice(this ResourceGroupResource resourceGroupResource, string networkDeviceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetNetworkDevices().Get(networkDeviceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkFabricControllerResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NetworkFabricControllerResources and their operations over a NetworkFabricControllerResource. </returns>
-        public static NetworkFabricControllerCollection GetNetworkFabricControllers(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricControllers();
-        }
-
-        /// <summary>
-        /// Shows the provisioning status of Network Fabric Controller.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFabricControllers_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricControllerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricControllerResource>> GetNetworkFabricControllerAsync(this ResourceGroupResource resourceGroupResource, string networkFabricControllerName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetNetworkFabricControllers().GetAsync(networkFabricControllerName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Shows the provisioning status of Network Fabric Controller.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFabricControllers_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricControllerName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<NetworkFabricControllerResource> GetNetworkFabricController(this ResourceGroupResource resourceGroupResource, string networkFabricControllerName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetNetworkFabricControllers().Get(networkFabricControllerName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkFabricResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NetworkFabricResources and their operations over a NetworkFabricResource. </returns>
-        public static NetworkFabricCollection GetNetworkFabrics(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabrics();
-        }
-
-        /// <summary>
-        /// Get Network Fabric resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricResource>> GetNetworkFabricAsync(this ResourceGroupResource resourceGroupResource, string networkFabricName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetNetworkFabrics().GetAsync(networkFabricName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Network Fabric resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<NetworkFabricResource> GetNetworkFabric(this ResourceGroupResource resourceGroupResource, string networkFabricName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetNetworkFabrics().Get(networkFabricName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkRackResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NetworkRackResources and their operations over a NetworkRackResource. </returns>
-        public static NetworkRackCollection GetNetworkRacks(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkRacks();
-        }
-
-        /// <summary>
-        /// Get Network Rack resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkRacks_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkRackName"> Name of the Network Rack. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NetworkRackResource>> GetNetworkRackAsync(this ResourceGroupResource resourceGroupResource, string networkRackName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetNetworkRacks().GetAsync(networkRackName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Network Rack resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkRacks_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkRackName"> Name of the Network Rack. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<NetworkRackResource> GetNetworkRack(this ResourceGroupResource resourceGroupResource, string networkRackName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetNetworkRacks().Get(networkRackName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RoutePolicyResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoutePolicyResources and their operations over a RoutePolicyResource. </returns>
-        public static RoutePolicyCollection GetRoutePolicies(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRoutePolicies();
-        }
-
-        /// <summary>
-        /// Implements Route Policy GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="routePolicyName"> Name of the Route Policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoutePolicyResource>> GetRoutePolicyAsync(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetRoutePolicies().GetAsync(routePolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Implements Route Policy GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="routePolicyName"> Name of the Route Policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoutePolicyResource> GetRoutePolicy(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetRoutePolicies().Get(routePolicyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkDeviceSkuResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NetworkDeviceSkuResources and their operations over a NetworkDeviceSkuResource. </returns>
-        public static NetworkDeviceSkuCollection GetNetworkDeviceSkus(this SubscriptionResource subscriptionResource)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkDeviceSkus();
-        }
-
-        /// <summary>
-        /// Get Network Device SKU details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="networkDeviceSkuName"> Name of the Network Device Sku. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NetworkDeviceSkuResource>> GetNetworkDeviceSkuAsync(this SubscriptionResource subscriptionResource, string networkDeviceSkuName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetNetworkDeviceSkus().GetAsync(networkDeviceSkuName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Network Device SKU details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="networkDeviceSkuName"> Name of the Network Device Sku. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<NetworkDeviceSkuResource> GetNetworkDeviceSku(this SubscriptionResource subscriptionResource, string networkDeviceSkuName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetNetworkDeviceSkus().Get(networkDeviceSkuName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkFabricSkuResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NetworkFabricSkuResources and their operations over a NetworkFabricSkuResource. </returns>
-        public static NetworkFabricSkuCollection GetNetworkFabricSkus(this SubscriptionResource subscriptionResource)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricSkus();
-        }
-
-        /// <summary>
-        /// Implements Network Fabric Sku GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkFabricSkus/{networkFabricSkuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFabricSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="networkFabricSkuName"> Name of the Network Fabric Sku. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricSkuResource>> GetNetworkFabricSkuAsync(this SubscriptionResource subscriptionResource, string networkFabricSkuName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetNetworkFabricSkus().GetAsync(networkFabricSkuName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Implements Network Fabric Sku GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkFabricSkus/{networkFabricSkuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFabricSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="networkFabricSkuName"> Name of the Network Fabric Sku. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<NetworkFabricSkuResource> GetNetworkFabricSku(this SubscriptionResource subscriptionResource, string networkFabricSkuName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetNetworkFabricSkus().Get(networkFabricSkuName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkRackSkuResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NetworkRackSkuResources and their operations over a NetworkRackSkuResource. </returns>
-        public static NetworkRackSkuCollection GetNetworkRackSkus(this SubscriptionResource subscriptionResource)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkRackSkus();
-        }
-
-        /// <summary>
-        /// Get Network Rack SKU resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkRackSkus/{networkRackSkuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkRackSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="networkRackSkuName"> Name of the Network Rack Sku. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkRackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkRackSkuName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NetworkRackSkuResource>> GetNetworkRackSkuAsync(this SubscriptionResource subscriptionResource, string networkRackSkuName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetNetworkRackSkus().GetAsync(networkRackSkuName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Network Rack SKU resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkRackSkus/{networkRackSkuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkRackSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="networkRackSkuName"> Name of the Network Rack Sku. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkRackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkRackSkuName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<NetworkRackSkuResource> GetNetworkRackSku(this SubscriptionResource subscriptionResource, string networkRackSkuName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetNetworkRackSkus().Get(networkRackSkuName, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetAccessControlListsByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1188,12 +340,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccessControlListResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AccessControlListResource> GetAccessControlListsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AccessControlList" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AccessControlList> GetAccessControlListsBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccessControlListsAsync(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetAccessControlListsBySubscriptionAsync(subscriptionId, cancellationToken);
         }
 
         /// <summary>
@@ -1209,16 +362,1159 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccessControlListResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AccessControlListResource> GetAccessControlLists(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AccessControlList" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AccessControlList> GetAccessControlListsBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccessControlLists(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetAccessControlListsBySubscription(subscriptionId, cancellationToken);
         }
 
         /// <summary>
-        /// Implements IpCommunities list by subscription GET method.
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessControlLists_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accessControlListName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateAdministrativeStateAccessControlListAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateAccessControlListAsync(waitUntil, subscriptionId, resourceGroupName, accessControlListName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessControlLists_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accessControlListName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateAdministrativeStateAccessControlList(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateAccessControlList(waitUntil, subscriptionId, resourceGroupName, accessControlListName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}/resync</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessControlLists_Resync</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> ResyncAccessControlListAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ResyncAccessControlListAsync(waitUntil, subscriptionId, resourceGroupName, accessControlListName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}/resync</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessControlLists_Resync</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> ResyncAccessControlList(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+
+            return GetTenantResourceExtensionClient(tenantResource).ResyncAccessControlList(waitUntil, subscriptionId, resourceGroupName, accessControlListName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessControlLists_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is null. </exception>
+        public static async Task<ArmOperation<ValidateConfigurationResponse>> ValidateConfigurationAccessControlListAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationAccessControlListAsync(waitUntil, subscriptionId, resourceGroupName, accessControlListName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessControlLists_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accessControlListName"/> is null. </exception>
+        public static ArmOperation<ValidateConfigurationResponse> ValidateConfigurationAccessControlList(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string accessControlListName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+
+            return GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationAccessControlList(waitUntil, subscriptionId, resourceGroupName, accessControlListName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a Network Fabric Service Internet Gateway resource instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="internetGatewayName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<InternetGateway>> CreateInternetGatewayAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayName, InternetGateway body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateInternetGatewayAsync(waitUntil, subscriptionId, resourceGroupName, internetGatewayName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a Network Fabric Service Internet Gateway resource instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="internetGatewayName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<InternetGateway> CreateInternetGateway(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayName, InternetGateway body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateInternetGateway(waitUntil, subscriptionId, resourceGroupName, internetGatewayName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Gateway GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is null. </exception>
+        public static async Task<Response<InternetGateway>> GetInternetGatewayAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string internetGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetInternetGatewayAsync(subscriptionId, resourceGroupName, internetGatewayName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements Gateway GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is null. </exception>
+        public static Response<InternetGateway> GetInternetGateway(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string internetGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetInternetGateway(subscriptionId, resourceGroupName, internetGatewayName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Execute patch on Network Fabric Service Internet Gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="patch"> API to update certain properties of the L2 Isolation Domain resource.. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="internetGatewayName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<InternetGateway>> UpdateInternetGatewayAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayName, InternetGatewayPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateInternetGatewayAsync(waitUntil, subscriptionId, resourceGroupName, internetGatewayName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Execute patch on Network Fabric Service Internet Gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="patch"> API to update certain properties of the L2 Isolation Domain resource.. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="internetGatewayName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<InternetGateway> UpdateInternetGateway(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayName, InternetGatewayPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateInternetGateway(waitUntil, subscriptionId, resourceGroupName, internetGatewayName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Execute a delete on Network Fabric Service Internet Gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteInternetGatewayAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteInternetGatewayAsync(waitUntil, subscriptionId, resourceGroupName, internetGatewayName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Execute a delete on Network Fabric Service Internet Gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayName"/> is null. </exception>
+        public static ArmOperation DeleteInternetGateway(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteInternetGateway(waitUntil, subscriptionId, resourceGroupName, internetGatewayName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Internet Gateways list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="InternetGateway" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<InternetGateway> GetInternetGatewaysByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetInternetGatewaysByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Internet Gateways list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="InternetGateway" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<InternetGateway> GetInternetGatewaysByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetInternetGatewaysByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Internet Gateways list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="InternetGateway" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<InternetGateway> GetInternetGatewaysBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetInternetGatewaysBySubscriptionAsync(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Internet Gateways list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InternetGateway" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<InternetGateway> GetInternetGatewaysBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetInternetGatewaysBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates an Internet Gateway rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="internetGatewayRuleName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<InternetGatewayRule>> CreateInternetGatewayRuleAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayRuleName, InternetGatewayRule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateInternetGatewayRuleAsync(waitUntil, subscriptionId, resourceGroupName, internetGatewayRuleName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates an Internet Gateway rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="internetGatewayRuleName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<InternetGatewayRule> CreateInternetGatewayRule(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayRuleName, InternetGatewayRule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateInternetGatewayRule(waitUntil, subscriptionId, resourceGroupName, internetGatewayRuleName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an Internet Gateway Rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is null. </exception>
+        public static async Task<Response<InternetGatewayRule>> GetInternetGatewayRuleAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetInternetGatewayRuleAsync(subscriptionId, resourceGroupName, internetGatewayRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an Internet Gateway Rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is null. </exception>
+        public static Response<InternetGatewayRule> GetInternetGatewayRule(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetInternetGatewayRule(subscriptionId, resourceGroupName, internetGatewayRuleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the Internet Gateway Rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
+        /// <param name="patch"> Internet Gateway Rule properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="internetGatewayRuleName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<InternetGatewayRule>> UpdateInternetGatewayRuleAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayRuleName, InternetGatewayRulePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateInternetGatewayRuleAsync(waitUntil, subscriptionId, resourceGroupName, internetGatewayRuleName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the Internet Gateway Rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
+        /// <param name="patch"> Internet Gateway Rule properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="internetGatewayRuleName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<InternetGatewayRule> UpdateInternetGatewayRule(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayRuleName, InternetGatewayRulePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateInternetGatewayRule(waitUntil, subscriptionId, resourceGroupName, internetGatewayRuleName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Internet Gateway Rules DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteInternetGatewayRuleAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteInternetGatewayRuleAsync(waitUntil, subscriptionId, resourceGroupName, internetGatewayRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements Internet Gateway Rules DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/{internetGatewayRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="internetGatewayRuleName"> Name of the Internet Gateway rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is null. </exception>
+        public static ArmOperation DeleteInternetGatewayRule(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteInternetGatewayRule(waitUntil, subscriptionId, resourceGroupName, internetGatewayRuleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Internet Gateway Rules list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="InternetGatewayRule" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<InternetGatewayRule> GetInternetGatewayRulesByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetInternetGatewayRulesByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Internet Gateway Rules list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="InternetGatewayRule" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<InternetGatewayRule> GetInternetGatewayRulesByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetInternetGatewayRulesByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all Internet Gateway rules in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="InternetGatewayRule" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<InternetGatewayRule> GetInternetGatewayRulesBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetInternetGatewayRulesBySubscriptionAsync(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all Internet Gateway rules in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InternetGatewayRule" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<InternetGatewayRule> GetInternetGatewayRulesBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetInternetGatewayRulesBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements an IP Community PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipCommunityName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<IPCommunity>> CreateIpCommunityAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipCommunityName, IPCommunity body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateIpCommunityAsync(waitUntil, subscriptionId, resourceGroupName, ipCommunityName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements an IP Community PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipCommunityName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<IPCommunity> CreateIpCommunity(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipCommunityName, IPCommunity body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateIpCommunity(waitUntil, subscriptionId, resourceGroupName, ipCommunityName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements an IP Community GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is null. </exception>
+        public static async Task<Response<IPCommunity>> GetIpCommunityAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string ipCommunityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetIpCommunityAsync(subscriptionId, resourceGroupName, ipCommunityName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements an IP Community GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is null. </exception>
+        public static Response<IPCommunity> GetIpCommunity(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string ipCommunityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetIpCommunity(subscriptionId, resourceGroupName, ipCommunityName, cancellationToken);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the IP Community resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="patch"> IP Community properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipCommunityName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<IPCommunity>> UpdateIpCommunityAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipCommunityName, IPCommunityPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateIpCommunityAsync(waitUntil, subscriptionId, resourceGroupName, ipCommunityName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the IP Community resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="patch"> IP Community properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipCommunityName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<IPCommunity> UpdateIpCommunity(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipCommunityName, IPCommunityPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateIpCommunity(waitUntil, subscriptionId, resourceGroupName, ipCommunityName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IP Community DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteIpCommunityAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipCommunityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteIpCommunityAsync(waitUntil, subscriptionId, resourceGroupName, ipCommunityName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements IP Community DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipCommunityName"/> is null. </exception>
+        public static ArmOperation DeleteIpCommunity(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipCommunityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipCommunityName, nameof(ipCommunityName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteIpCommunity(waitUntil, subscriptionId, resourceGroupName, ipCommunityName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IP Communities list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="IPCommunity" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPCommunity> GetIpCommunitiesByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetIpCommunitiesByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IP Communities list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="IPCommunity" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPCommunity> GetIpCommunitiesByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetIpCommunitiesByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IP Communities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1230,16 +1526,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IPCommunityResource> GetIPCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPCommunity" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPCommunity> GetIpCommunitiesBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPCommunitiesAsync(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetIpCommunitiesBySubscriptionAsync(subscriptionId, cancellationToken);
         }
 
         /// <summary>
-        /// Implements IpCommunities list by subscription GET method.
+        /// Implements IP Communities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1251,12 +1548,305 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IPCommunityResource> GetIPCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPCommunity" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPCommunity> GetIpCommunitiesBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPCommunities(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetIpCommunitiesBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IP Extended Community PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipExtendedCommunityName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<IPExtendedCommunity>> CreateIpExtendedCommunityAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, IPExtendedCommunity body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateIpExtendedCommunityAsync(waitUntil, subscriptionId, resourceGroupName, ipExtendedCommunityName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements IP Extended Community PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipExtendedCommunityName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<IPExtendedCommunity> CreateIpExtendedCommunity(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, IPExtendedCommunity body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateIpExtendedCommunity(waitUntil, subscriptionId, resourceGroupName, ipExtendedCommunityName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IP Extended Community GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is null. </exception>
+        public static async Task<Response<IPExtendedCommunity>> GetIpExtendedCommunityAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetIpExtendedCommunityAsync(subscriptionId, resourceGroupName, ipExtendedCommunityName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements IP Extended Community GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is null. </exception>
+        public static Response<IPExtendedCommunity> GetIpExtendedCommunity(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetIpExtendedCommunity(subscriptionId, resourceGroupName, ipExtendedCommunityName, cancellationToken);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the IP Extended Community resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="patch"> IP Extended Community properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipExtendedCommunityName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<IPExtendedCommunity>> UpdateIpExtendedCommunityAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, IPExtendedCommunityPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateIpExtendedCommunityAsync(waitUntil, subscriptionId, resourceGroupName, ipExtendedCommunityName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the IP Extended Community resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="patch"> IP Extended Community properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipExtendedCommunityName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<IPExtendedCommunity> UpdateIpExtendedCommunity(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, IPExtendedCommunityPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateIpExtendedCommunity(waitUntil, subscriptionId, resourceGroupName, ipExtendedCommunityName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IP Extended Community DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteIpExtendedCommunityAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteIpExtendedCommunityAsync(waitUntil, subscriptionId, resourceGroupName, ipExtendedCommunityName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements IP Extended Community DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipExtendedCommunityName"/> is null. </exception>
+        public static ArmOperation DeleteIpExtendedCommunity(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteIpExtendedCommunity(waitUntil, subscriptionId, resourceGroupName, ipExtendedCommunityName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IpExtendedCommunities list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="IPExtendedCommunity" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPExtendedCommunity> GetIpExtendedCommunitiesByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetIpExtendedCommunitiesByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IpExtendedCommunities list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="IPExtendedCommunity" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPExtendedCommunity> GetIpExtendedCommunitiesByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetIpExtendedCommunitiesByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1272,12 +1862,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IPExtendedCommunityResource> GetIPExtendedCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPExtendedCommunity" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPExtendedCommunity> GetIpExtendedCommunitiesBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPExtendedCommunitiesAsync(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetIpExtendedCommunitiesBySubscriptionAsync(subscriptionId, cancellationToken);
         }
 
         /// <summary>
@@ -1293,12 +1884,305 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IPExtendedCommunityResource> GetIPExtendedCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPExtendedCommunity" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPExtendedCommunity> GetIpExtendedCommunitiesBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPExtendedCommunities(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetIpExtendedCommunitiesBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IP Prefix PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipPrefixName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<IPPrefix>> CreateIpPrefixAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipPrefixName, IPPrefix body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateIpPrefixAsync(waitUntil, subscriptionId, resourceGroupName, ipPrefixName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements IP Prefix PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipPrefixName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<IPPrefix> CreateIpPrefix(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipPrefixName, IPPrefix body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateIpPrefix(waitUntil, subscriptionId, resourceGroupName, ipPrefixName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IP Prefix GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is null. </exception>
+        public static async Task<Response<IPPrefix>> GetIpPrefixAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string ipPrefixName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetIpPrefixAsync(subscriptionId, resourceGroupName, ipPrefixName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements IP Prefix GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is null. </exception>
+        public static Response<IPPrefix> GetIpPrefix(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string ipPrefixName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetIpPrefix(subscriptionId, resourceGroupName, ipPrefixName, cancellationToken);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the IP Prefix resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="patch"> IP Prefix properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipPrefixName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<IPPrefix>> UpdateIpPrefixAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipPrefixName, IPPrefixPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateIpPrefixAsync(waitUntil, subscriptionId, resourceGroupName, ipPrefixName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the IP Prefix resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="patch"> IP Prefix properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ipPrefixName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<IPPrefix> UpdateIpPrefix(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipPrefixName, IPPrefixPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateIpPrefix(waitUntil, subscriptionId, resourceGroupName, ipPrefixName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IP Prefix DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteIpPrefixAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipPrefixName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteIpPrefixAsync(waitUntil, subscriptionId, resourceGroupName, ipPrefixName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements IP Prefix DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ipPrefixName"/> is null. </exception>
+        public static ArmOperation DeleteIpPrefix(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string ipPrefixName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteIpPrefix(waitUntil, subscriptionId, resourceGroupName, ipPrefixName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IpPrefixes list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="IPPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPPrefix> GetIpPrefixesByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetIpPrefixesByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IpPrefixes list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="IPPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPPrefix> GetIpPrefixesByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetIpPrefixesByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1314,12 +2198,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IPPrefixResource> GetIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPPrefix> GetIpPrefixesBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPPrefixesAsync(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetIpPrefixesBySubscriptionAsync(subscriptionId, cancellationToken);
         }
 
         /// <summary>
@@ -1335,12 +2220,483 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IPPrefixResource> GetIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPPrefix> GetIpPrefixesBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPPrefixes(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetIpPrefixesBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates layer 2 network connectivity between compute nodes within a rack and across racks.The configuration is applied on the devices only after the isolation domain is enabled.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<L2IsolationDomain>> CreateL2IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, L2IsolationDomain body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateL2IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates layer 2 network connectivity between compute nodes within a rack and across racks.The configuration is applied on the devices only after the isolation domain is enabled.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<L2IsolationDomain> CreateL2IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, L2IsolationDomain body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateL2IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements L2 Isolation Domain GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
+        public static async Task<Response<L2IsolationDomain>> GetL2IsolationDomainAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetL2IsolationDomainAsync(subscriptionId, resourceGroupName, l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements L2 Isolation Domain GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
+        public static Response<L2IsolationDomain> GetL2IsolationDomain(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetL2IsolationDomain(subscriptionId, resourceGroupName, l2IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the L2 Isolation Domain resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="patch"> API to update certain properties of the L2 Isolation Domain resource.. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<L2IsolationDomain>> UpdateL2IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, L2IsolationDomainPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateL2IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the L2 Isolation Domain resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="patch"> API to update certain properties of the L2 Isolation Domain resource.. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<L2IsolationDomain> UpdateL2IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, L2IsolationDomainPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateL2IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes layer 2 connectivity between compute nodes by managed by named L2 Isolation name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteL2IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteL2IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes layer 2 connectivity between compute nodes by managed by named L2 Isolation name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
+        public static ArmOperation DeleteL2IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteL2IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Enables isolation domain across the fabric or on specified racks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_updateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForDeviceUpdate>> UpdateAdministrativeStateL2IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateL2IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Enables isolation domain across the fabric or on specified racks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_updateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForDeviceUpdate> UpdateAdministrativeStateL2IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateL2IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Validates the configuration of the resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
+        public static async Task<ArmOperation<ValidateConfigurationResponse>> ValidateConfigurationL2IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationL2IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Validates the configuration of the resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
+        public static ArmOperation<ValidateConfigurationResponse> ValidateConfigurationL2IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationL2IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Commits the configuration of the given resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> CommitConfigurationL2IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CommitConfigurationL2IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Commits the configuration of the given resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> CommitConfigurationL2IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).CommitConfigurationL2IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l2IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays L2IsolationDomains list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="L2IsolationDomain" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<L2IsolationDomain> GetL2IsolationDomainsByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetL2IsolationDomainsByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays L2IsolationDomains list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="L2IsolationDomain" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<L2IsolationDomain> GetL2IsolationDomainsByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetL2IsolationDomainsByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1356,12 +2712,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="L2IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<L2IsolationDomainResource> GetL2IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="L2IsolationDomain" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<L2IsolationDomain> GetL2IsolationDomainsBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL2IsolationDomainsAsync(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetL2IsolationDomainsBySubscriptionAsync(subscriptionId, cancellationToken);
         }
 
         /// <summary>
@@ -1377,12 +2734,305 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="L2IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<L2IsolationDomainResource> GetL2IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="L2IsolationDomain" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<L2IsolationDomain> GetL2IsolationDomainsBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL2IsolationDomains(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetL2IsolationDomainsBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create isolation domain resources for layer 3 connectivity between compute nodes and for communication with external services .This configuration is applied on the devices only after the creation of networks is completed and isolation domain is enabled.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<L3IsolationDomain>> CreateL3IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, L3IsolationDomain body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateL3IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create isolation domain resources for layer 3 connectivity between compute nodes and for communication with external services .This configuration is applied on the devices only after the creation of networks is completed and isolation domain is enabled.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<L3IsolationDomain> CreateL3IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, L3IsolationDomain body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateL3IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves details of this L3 Isolation Domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        public static async Task<Response<L3IsolationDomain>> GetL3IsolationDomainAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetL3IsolationDomainAsync(subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves details of this L3 Isolation Domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        public static Response<L3IsolationDomain> GetL3IsolationDomain(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetL3IsolationDomain(subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the L3 Isolation Domain resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="patch"> API to update certain properties of the L3 Isolation Domain resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<L3IsolationDomain>> UpdateL3IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, L3IsolationDomainPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateL3IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the L3 Isolation Domain resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="patch"> API to update certain properties of the L3 Isolation Domain resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<L3IsolationDomain> UpdateL3IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, L3IsolationDomainPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateL3IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes layer 3 connectivity between compute nodes by managed by named L3 Isolation name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteL3IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteL3IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes layer 3 connectivity between compute nodes by managed by named L3 Isolation name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        public static ArmOperation DeleteL3IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteL3IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays L3IsolationDomains list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="L3IsolationDomain" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<L3IsolationDomain> GetL3IsolationDomainsByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetL3IsolationDomainsByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays L3IsolationDomains list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="L3IsolationDomain" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<L3IsolationDomain> GetL3IsolationDomainsByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetL3IsolationDomainsByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1398,12 +3048,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="L3IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<L3IsolationDomainResource> GetL3IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="L3IsolationDomain" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<L3IsolationDomain> GetL3IsolationDomainsBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL3IsolationDomainsAsync(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetL3IsolationDomainsBySubscriptionAsync(subscriptionId, cancellationToken);
         }
 
         /// <summary>
@@ -1419,12 +3070,1869 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="L3IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<L3IsolationDomainResource> GetL3IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="L3IsolationDomain" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<L3IsolationDomain> GetL3IsolationDomainsBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL3IsolationDomains(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetL3IsolationDomainsBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Enables racks for this Isolation Domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_updateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForDeviceUpdate>> UpdateAdministrativeStateL3IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateL3IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Enables racks for this Isolation Domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_updateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForDeviceUpdate> UpdateAdministrativeStateL3IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateL3IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Validates the configuration of the resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        public static async Task<ArmOperation<ValidateConfigurationResponse>> ValidateConfigurationL3IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationL3IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Validates the configuration of the resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        public static ArmOperation<ValidateConfigurationResponse> ValidateConfigurationL3IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationL3IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Commits the configuration of the given resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> CommitConfigurationL3IsolationDomainAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CommitConfigurationL3IsolationDomainAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Commits the configuration of the given resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> CommitConfigurationL3IsolationDomain(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).CommitConfigurationL3IsolationDomain(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates InternalNetwork PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<InternalNetwork>> CreateInternalNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetwork body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateInternalNetworkAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates InternalNetwork PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<InternalNetwork> CreateInternalNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetwork body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateInternalNetwork(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a InternalNetworks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is null. </exception>
+        public static async Task<Response<InternalNetwork>> GetInternalNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetInternalNetworkAsync(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a InternalNetworks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is null. </exception>
+        public static Response<InternalNetwork> GetInternalNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetInternalNetwork(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates a InternalNetworks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="patch"> InternalNetwork properties to update. Only annotations are supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<InternalNetwork>> UpdateInternalNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetworkPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateInternalNetworkAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates a InternalNetworks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="patch"> InternalNetwork properties to update. Only annotations are supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<InternalNetwork> UpdateInternalNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetworkPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateInternalNetwork(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements InternalNetworks DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteInternalNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteInternalNetworkAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements InternalNetworks DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is null. </exception>
+        public static ArmOperation DeleteInternalNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteInternalNetwork(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays InternalNetworks list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_ListByL3IsolationDomain</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="InternalNetwork" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<InternalNetwork> GetInternalNetworksByL3IsolationDomainAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetInternalNetworksByL3IsolationDomainAsync(subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays InternalNetworks list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_ListByL3IsolationDomain</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <returns> A collection of <see cref="InternalNetwork" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<InternalNetwork> GetInternalNetworksByL3IsolationDomain(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetInternalNetworksByL3IsolationDomain(subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update Administrative state of  InternalNetworks on resources referred by their resource ids.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateAdministrativeStateInternalNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateInternalNetworkAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update Administrative state of  InternalNetworks on resources referred by their resource ids.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateAdministrativeStateInternalNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateInternalNetwork(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update BGP state for internalNetwork. Allowed only on edge devices.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}/updateBgpAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_UpdateBgpAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateBgpAdministrativeStateInternalNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateBgpAdministrativeStateInternalNetworkAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update BGP state for internalNetwork. Allowed only on edge devices.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}/updateBgpAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_UpdateBgpAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateBgpAdministrativeStateInternalNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateBgpAdministrativeStateInternalNetwork(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update Static Route BFD administrative state for internalNetwork.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}/updateStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_UpdateStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateStaticRouteBfdAdministrativeStateInternalNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateStaticRouteBfdAdministrativeStateInternalNetworkAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update Static Route BFD administrative state for internalNetwork.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/internalNetworks/{internalNetworkName}/updateStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternalNetworks_UpdateStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateStaticRouteBfdAdministrativeStateInternalNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateStaticRouteBfdAdministrativeStateInternalNetwork(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates ExternalNetwork PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<ExternalNetwork>> CreateExternalNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, ExternalNetwork body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateExternalNetworkAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates ExternalNetwork PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<ExternalNetwork> CreateExternalNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, ExternalNetwork body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateExternalNetwork(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements ExternalNetworks GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is null. </exception>
+        public static async Task<Response<ExternalNetwork>> GetExternalNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetExternalNetworkAsync(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements ExternalNetworks GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is null. </exception>
+        public static Response<ExternalNetwork> GetExternalNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetExternalNetwork(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, cancellationToken);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the ExternalNetworks resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="patch"> ExternalNetwork properties to update. Only annotations are supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<ExternalNetwork>> UpdateExternalNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, ExternalNetworkPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateExternalNetworkAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the ExternalNetworks resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="patch"> ExternalNetwork properties to update. Only annotations are supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<ExternalNetwork> UpdateExternalNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, ExternalNetworkPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateExternalNetwork(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements ExternalNetworks DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteExternalNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteExternalNetworkAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements ExternalNetworks DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is null. </exception>
+        public static ArmOperation DeleteExternalNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteExternalNetwork(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements External Networks list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_ListByL3IsolationDomain</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ExternalNetwork" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ExternalNetwork> GetExternalNetworksByL3IsolationDomainAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetExternalNetworksByL3IsolationDomainAsync(subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements External Networks list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_ListByL3IsolationDomain</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ExternalNetwork" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ExternalNetwork> GetExternalNetworksByL3IsolationDomain(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetExternalNetworksByL3IsolationDomain(subscriptionId, resourceGroupName, l3IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Executes update operation to enable or disable administrative State for externalNetwork.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateAdministrativeStateExternalNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateExternalNetworkAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Executes update operation to enable or disable administrative State for externalNetwork.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateAdministrativeStateExternalNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateExternalNetwork(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update Static Route BFD for external Network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_UpdateStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateStaticRouteBfdAdministrativeStateExternalNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateStaticRouteBfdAdministrativeStateExternalNetworkAsync(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update Static Route BFD for external Network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_UpdateStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateStaticRouteBfdAdministrativeStateExternalNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateStaticRouteBfdAdministrativeStateExternalNetwork(waitUntil, subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements the Neighbor Group PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups/{neighborGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="neighborGroupName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<NeighborGroup>> CreateNeighborGroupAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string neighborGroupName, NeighborGroup body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateNeighborGroupAsync(waitUntil, subscriptionId, resourceGroupName, neighborGroupName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements the Neighbor Group PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups/{neighborGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="neighborGroupName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<NeighborGroup> CreateNeighborGroup(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string neighborGroupName, NeighborGroup body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateNeighborGroup(waitUntil, subscriptionId, resourceGroupName, neighborGroupName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the Neighbor Group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups/{neighborGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is null. </exception>
+        public static async Task<Response<NeighborGroup>> GetNeighborGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string neighborGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNeighborGroupAsync(subscriptionId, resourceGroupName, neighborGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the Neighbor Group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups/{neighborGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is null. </exception>
+        public static Response<NeighborGroup> GetNeighborGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string neighborGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNeighborGroup(subscriptionId, resourceGroupName, neighborGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates the Neighbor Group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups/{neighborGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
+        /// <param name="patch"> Neighbor Group properties to update. Only annotations are supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="neighborGroupName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<NeighborGroup>> UpdateNeighborGroupAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string neighborGroupName, NeighborGroupPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateNeighborGroupAsync(waitUntil, subscriptionId, resourceGroupName, neighborGroupName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates the Neighbor Group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups/{neighborGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
+        /// <param name="patch"> Neighbor Group properties to update. Only annotations are supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="neighborGroupName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<NeighborGroup> UpdateNeighborGroup(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string neighborGroupName, NeighborGroupPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateNeighborGroup(waitUntil, subscriptionId, resourceGroupName, neighborGroupName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Neighbor Group DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups/{neighborGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteNeighborGroupAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string neighborGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteNeighborGroupAsync(waitUntil, subscriptionId, resourceGroupName, neighborGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements Neighbor Group DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups/{neighborGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="neighborGroupName"/> is null. </exception>
+        public static ArmOperation DeleteNeighborGroup(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string neighborGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteNeighborGroup(waitUntil, subscriptionId, resourceGroupName, neighborGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays NeighborGroups list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NeighborGroup" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NeighborGroup> GetNeighborGroupsByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNeighborGroupsByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays NeighborGroups list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="NeighborGroup" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NeighborGroup> GetNeighborGroupsByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNeighborGroupsByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays NeighborGroups list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/neighborGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NeighborGroup" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NeighborGroup> GetNeighborGroupsBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNeighborGroupsBySubscriptionAsync(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays NeighborGroups list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/neighborGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeighborGroup" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NeighborGroup> GetNeighborGroupsBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNeighborGroupsBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a Network Device SKU details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDeviceSkus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
+        public static async Task<Response<NetworkDeviceSku>> GetNetworkDeviceSkuAsync(this TenantResource tenantResource, Guid subscriptionId, string networkDeviceSkuName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNetworkDeviceSkuAsync(subscriptionId, networkDeviceSkuName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Network Device SKU details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDeviceSkus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
+        public static Response<NetworkDeviceSku> GetNetworkDeviceSku(this TenantResource tenantResource, Guid subscriptionId, string networkDeviceSkuName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkDeviceSku(subscriptionId, networkDeviceSkuName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List Network Device SKUs for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDeviceSkus_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkDeviceSku" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkDeviceSku> GetNetworkDeviceSkusBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkDeviceSkusBySubscriptionAsync(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List Network Device SKUs for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDeviceSkus_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkDeviceSku" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkDeviceSku> GetNetworkDeviceSkusBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkDeviceSkusBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a Network Device resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkDevice>> CreateNetworkDeviceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, NetworkDevice body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateNetworkDeviceAsync(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a Network Device resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<NetworkDevice> CreateNetworkDevice(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, NetworkDevice body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateNetworkDevice(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the Network Device resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
+        public static async Task<Response<NetworkDevice>> GetNetworkDeviceAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNetworkDeviceAsync(subscriptionId, resourceGroupName, networkDeviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the Network Device resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
+        public static Response<NetworkDevice> GetNetworkDevice(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkDevice(subscriptionId, resourceGroupName, networkDeviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Device resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="content"> Network Device properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkDevice>> UpdateNetworkDeviceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, NetworkDevicePatchContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateNetworkDeviceAsync(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Device resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="content"> Network Device properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="content"/> is null. </exception>
+        public static ArmOperation<NetworkDevice> UpdateNetworkDevice(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, NetworkDevicePatchContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateNetworkDevice(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete the Network Device resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteNetworkDeviceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteNetworkDeviceAsync(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete the Network Device resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
+        public static ArmOperation DeleteNetworkDevice(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteNetworkDevice(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Device resources in a given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkDevice" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkDevice> GetNetworkDevicesByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkDevicesByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Device resources in a given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkDevice" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkDevice> GetNetworkDevicesByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkDevicesByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1440,12 +4948,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkDeviceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkDeviceResource> GetNetworkDevicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkDevice" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkDevice> GetNetworkDevicesBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkDevicesAsync(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkDevicesBySubscriptionAsync(subscriptionId, cancellationToken);
         }
 
         /// <summary>
@@ -1461,12 +4970,927 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkDeviceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkDeviceResource> GetNetworkDevices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkDevice" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkDevice> GetNetworkDevicesBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkDevices(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkDevicesBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reboot the Network Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/reboot</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Reboot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> RebootNetworkDeviceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, RebootProperties body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).RebootNetworkDeviceAsync(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reboot the Network Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/reboot</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Reboot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> RebootNetworkDevice(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, RebootProperties body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).RebootNetworkDevice(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Refreshes the configuration the Network Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/refreshConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_RefreshConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> RefreshConfigurationNetworkDeviceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).RefreshConfigurationNetworkDeviceAsync(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Refreshes the configuration the Network Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/refreshConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_RefreshConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> RefreshConfigurationNetworkDevice(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+
+            return GetTenantResourceExtensionClient(tenantResource).RefreshConfigurationNetworkDevice(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates the Administrative state of the Network Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateAdministrativeStateNetworkDeviceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, UpdateDeviceAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateNetworkDeviceAsync(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates the Administrative state of the Network Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateAdministrativeStateNetworkDevice(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, UpdateDeviceAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateNetworkDevice(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Upgrades the version of the Network Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Upgrade</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpgradeNetworkDeviceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, UpdateVersion body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpgradeNetworkDeviceAsync(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Upgrades the version of the Network Device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkDevices_Upgrade</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpgradeNetworkDevice(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, UpdateVersion body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpgradeNetworkDevice(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a Network Interface resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkInterface>> CreateNetworkInterfaceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkInterface body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateNetworkInterfaceAsync(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a Network Interface resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<NetworkInterface> CreateNetworkInterface(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkInterface body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateNetworkInterface(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Network Interface resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
+        public static async Task<Response<NetworkInterface>> GetNetworkInterfaceAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNetworkInterfaceAsync(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the Network Interface resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
+        public static Response<NetworkInterface> GetNetworkInterface(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkInterface(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Interface resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="patch"> NetworkInterface properties to update. Only tags are supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkInterface>> UpdateNetworkInterfaceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkInterfacePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateNetworkInterfaceAsync(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Interface resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="patch"> NetworkInterface properties to update. Only tags are supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<NetworkInterface> UpdateNetworkInterface(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, NetworkInterfacePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateNetworkInterface(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete the Network Interface resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteNetworkInterfaceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteNetworkInterfaceAsync(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete the Network Interface resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
+        public static ArmOperation DeleteNetworkInterface(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteNetworkInterface(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Interface resources in a given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_ListByNetworkDevice</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkInterface> GetNetworkInterfacesByNetworkDeviceAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkInterfacesByNetworkDeviceAsync(subscriptionId, resourceGroupName, networkDeviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Interface resources in a given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_ListByNetworkDevice</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkDeviceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkInterface> GetNetworkInterfacesByNetworkDevice(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkInterfacesByNetworkDevice(subscriptionId, resourceGroupName, networkDeviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update the admin state of the Network Interface.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateAdministrativeStateNetworkInterfaceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateNetworkInterfaceAsync(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update the admin state of the Network Interface.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkDeviceName"> Name of the Network Device. </param>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateAdministrativeStateNetworkInterface(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateNetworkInterface(waitUntil, subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a Network Fabric Controller.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricControllers_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricControllerName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkFabricController>> CreateNetworkFabricControllerAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricControllerName, NetworkFabricController body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricControllerName, nameof(networkFabricControllerName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateNetworkFabricControllerAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricControllerName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a Network Fabric Controller.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricControllers_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricControllerName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<NetworkFabricController> CreateNetworkFabricController(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricControllerName, NetworkFabricController body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricControllerName, nameof(networkFabricControllerName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateNetworkFabricController(waitUntil, subscriptionId, resourceGroupName, networkFabricControllerName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Shows the provisioning status of Network Fabric Controller.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricControllers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is null. </exception>
+        public static async Task<Response<NetworkFabricController>> GetNetworkFabricControllerAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkFabricControllerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricControllerName, nameof(networkFabricControllerName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricControllerAsync(subscriptionId, resourceGroupName, networkFabricControllerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Shows the provisioning status of Network Fabric Controller.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricControllers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is null. </exception>
+        public static Response<NetworkFabricController> GetNetworkFabricController(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkFabricControllerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricControllerName, nameof(networkFabricControllerName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricController(subscriptionId, resourceGroupName, networkFabricControllerName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates are currently not supported for the Network Fabric Controller resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricControllers_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
+        /// <param name="patch"> Network Fabric Controller properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricControllerName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkFabricController>> UpdateNetworkFabricControllerAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricControllerName, NetworkFabricControllerPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricControllerName, nameof(networkFabricControllerName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateNetworkFabricControllerAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricControllerName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates are currently not supported for the Network Fabric Controller resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricControllers_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
+        /// <param name="patch"> Network Fabric Controller properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricControllerName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<NetworkFabricController> UpdateNetworkFabricController(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricControllerName, NetworkFabricControllerPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricControllerName, nameof(networkFabricControllerName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateNetworkFabricController(waitUntil, subscriptionId, resourceGroupName, networkFabricControllerName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes the Network Fabric Controller resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricControllers_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteNetworkFabricControllerAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricControllerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricControllerName, nameof(networkFabricControllerName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteNetworkFabricControllerAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricControllerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes the Network Fabric Controller resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricControllers_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricControllerName"> Name of the Network Fabric Controller. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricControllerName"/> is null. </exception>
+        public static ArmOperation DeleteNetworkFabricController(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricControllerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricControllerName, nameof(networkFabricControllerName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteNetworkFabricController(waitUntil, subscriptionId, resourceGroupName, networkFabricControllerName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the NetworkFabricControllers thats available in the resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricControllers_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkFabricController" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricController> GetNetworkFabricControllersByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricControllersByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the NetworkFabricControllers thats available in the resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricControllers_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkFabricController" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricController> GetNetworkFabricControllersByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricControllersByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1482,12 +5906,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricControllerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricControllerResource> GetNetworkFabricControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabricController" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricController> GetNetworkFabricControllersBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricControllersAsync(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricControllersBySubscriptionAsync(subscriptionId, cancellationToken);
         }
 
         /// <summary>
@@ -1503,12 +5928,401 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricControllerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricControllerResource> GetNetworkFabricControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabricController" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricController> GetNetworkFabricControllersBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricControllers(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricControllersBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Network Fabric SKU GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkFabricSkus/{networkFabricSkuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricSkus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="networkFabricSkuName"> Name of the Network Fabric SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
+        public static async Task<Response<NetworkFabricSku>> GetNetworkFabricSkuAsync(this TenantResource tenantResource, Guid subscriptionId, string networkFabricSkuName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFabricSkuName, nameof(networkFabricSkuName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricSkuAsync(subscriptionId, networkFabricSkuName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements Network Fabric SKU GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkFabricSkus/{networkFabricSkuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricSkus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="networkFabricSkuName"> Name of the Network Fabric SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
+        public static Response<NetworkFabricSku> GetNetworkFabricSku(this TenantResource tenantResource, Guid subscriptionId, string networkFabricSkuName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFabricSkuName, nameof(networkFabricSkuName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricSku(subscriptionId, networkFabricSkuName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Network Fabric SKUs list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkFabricSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricSkus_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkFabricSku" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricSku> GetNetworkFabricSkusBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricSkusBySubscriptionAsync(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Network Fabric SKUs list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkFabricSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabricSkus_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkFabricSku" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricSku> GetNetworkFabricSkusBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricSkusBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create Network Fabric resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkFabric>> CreateNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabric body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create Network Fabric resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<NetworkFabric> CreateNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabric body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Network Fabric resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static async Task<Response<NetworkFabric>> GetNetworkFabricAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricAsync(subscriptionId, resourceGroupName, networkFabricName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Network Fabric resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static Response<NetworkFabric> GetNetworkFabric(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabric(subscriptionId, resourceGroupName, networkFabricName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Fabric resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="patch"> Network Fabric properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkFabric>> UpdateNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Fabric resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="patch"> Network Fabric properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<NetworkFabric> UpdateNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete Network Fabric resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete Network Fabric resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static ArmOperation DeleteNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Fabric resources in the given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkFabric" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabric> GetNetworkFabricsByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricsByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Fabric resources in the given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkFabric" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabric> GetNetworkFabricsByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricsByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1524,12 +6338,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricResource> GetNetworkFabricsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabric" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabric> GetNetworkFabricsBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricsAsync(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricsBySubscriptionAsync(subscriptionId, cancellationToken);
         }
 
         /// <summary>
@@ -1545,12 +6360,1623 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricResource> GetNetworkFabrics(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabric" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabric> GetNetworkFabricsBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabrics(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkFabricsBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Provisions the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/provision</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_provision</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForDeviceUpdate>> ProvisionNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ProvisionNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Provisions the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/provision</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_provision</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForDeviceUpdate> ProvisionNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return GetTenantResourceExtensionClient(tenantResource).ProvisionNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deprovisions the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/deprovision</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_deprovision</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForDeviceUpdate>> DeprovisionNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeprovisionNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deprovisions the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/deprovision</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_deprovision</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForDeviceUpdate> DeprovisionNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeprovisionNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Upgrades the version of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_upgrade</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="body"> Network Fabric properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpgradeNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, UpdateVersion body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpgradeNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Upgrades the version of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_upgrade</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="body"> Network Fabric properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpgradeNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, UpdateVersion body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpgradeNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Refreshes the configuration of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/refreshConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_refreshConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> RefreshConfigurationNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).RefreshConfigurationNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Refreshes the configuration of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/refreshConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_refreshConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> RefreshConfigurationNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return GetTenantResourceExtensionClient(tenantResource).RefreshConfigurationNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates the Workload Management BFD Configuration of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/updateWorkloadManagementBfdConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_UpdateWorkloadManagementBfdConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateWorkloadManagementBfdConfigurationNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateWorkloadManagementBfdConfigurationNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates the Workload Management BFD Configuration of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/updateWorkloadManagementBfdConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_UpdateWorkloadManagementBfdConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateWorkloadManagementBfdConfigurationNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateWorkloadManagementBfdConfigurationNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates the Infra Management BFD Configuration of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/updateInfraManagementBfdConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_UpdateInfraManagementBfdConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateInfraManagementBfdConfigurationNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateInfraManagementBfdConfigurationNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates the Infra Management BFD Configuration of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/updateInfraManagementBfdConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_UpdateInfraManagementBfdConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateInfraManagementBfdConfigurationNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateInfraManagementBfdConfigurationNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Validates the configuration of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="body"> Validate configuration properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<ValidateConfigurationResponse>> ValidateConfigurationNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationProperties body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Validates the configuration of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="body"> Validate configuration properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<ValidateConfigurationResponse> ValidateConfigurationNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationProperties body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets Topology of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/getTopology</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_GetTopology</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static async Task<ArmOperation<ValidateConfigurationResponse>> GetTopologyNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetTopologyNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets Topology of the underlying resources in the given Network Fabric instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/getTopology</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_GetTopology</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static ArmOperation<ValidateConfigurationResponse> GetTopologyNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetTopologyNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Atomic update of the given Network Fabric instance. Sync update of NFA resources at Fabric level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> CommitConfigurationNetworkFabricAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CommitConfigurationNetworkFabricAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Atomic update of the given Network Fabric instance. Sync update of NFA resources at Fabric level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> CommitConfigurationNetworkFabric(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return GetTenantResourceExtensionClient(tenantResource).CommitConfigurationNetworkFabric(waitUntil, subscriptionId, resourceGroupName, networkFabricName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Configuration used to setup CE-PE connectivity PUT Method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkToNetworkInterconnect>> CreateNetworkToNetworkInterconnectAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnect body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateNetworkToNetworkInterconnectAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Configuration used to setup CE-PE connectivity PUT Method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<NetworkToNetworkInterconnect> CreateNetworkToNetworkInterconnect(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnect body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateNetworkToNetworkInterconnect(waitUntil, subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements NetworkToNetworkInterconnects GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
+        public static async Task<Response<NetworkToNetworkInterconnect>> GetNetworkToNetworkInterconnectAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNetworkToNetworkInterconnectAsync(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements NetworkToNetworkInterconnects GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
+        public static Response<NetworkToNetworkInterconnect> GetNetworkToNetworkInterconnect(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkToNetworkInterconnect(subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network To NetworkInterconnects resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="patch"> Network to Network Interconnect properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkToNetworkInterconnect>> UpdateNetworkToNetworkInterconnectAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateNetworkToNetworkInterconnectAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network To NetworkInterconnects resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="patch"> Network to Network Interconnect properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<NetworkToNetworkInterconnect> UpdateNetworkToNetworkInterconnect(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateNetworkToNetworkInterconnect(waitUntil, subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements NetworkToNetworkInterconnects DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteNetworkToNetworkInterconnectAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteNetworkToNetworkInterconnectAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements NetworkToNetworkInterconnects DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
+        public static ArmOperation DeleteNetworkToNetworkInterconnect(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteNetworkToNetworkInterconnect(waitUntil, subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Network To Network Interconnects list by Network Fabric GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_ListByNetworkFabric</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkToNetworkInterconnect" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkToNetworkInterconnect> GetNetworkToNetworkInterconnectsByNetworkFabricAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkToNetworkInterconnectsByNetworkFabricAsync(subscriptionId, resourceGroupName, networkFabricName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Network To Network Interconnects list by Network Fabric GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_ListByNetworkFabric</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkToNetworkInterconnect" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkToNetworkInterconnect> GetNetworkToNetworkInterconnectsByNetworkFabric(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkToNetworkInterconnectsByNetworkFabric(subscriptionId, resourceGroupName, networkFabricName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates the NPB Static Route BFD Administrative State.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}/updateNpbStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_updateNpbStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateNpbStaticRouteBfdAdministrativeStateNetworkToNetworkInterconnectAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateNpbStaticRouteBfdAdministrativeStateNetworkToNetworkInterconnectAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates the NPB Static Route BFD Administrative State.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}/updateNpbStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_updateNpbStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateNpbStaticRouteBfdAdministrativeStateNetworkToNetworkInterconnect(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateNpbStaticRouteBfdAdministrativeStateNetworkToNetworkInterconnect(waitUntil, subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates the Admin State.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_updateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateAdministrativeStateNetworkToNetworkInterconnectAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateNetworkToNetworkInterconnectAsync(waitUntil, subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates the Admin State.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkToNetworkInterconnects_updateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/>, <paramref name="networkToNetworkInterconnectName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateAdministrativeStateNetworkToNetworkInterconnect(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNullOrEmpty(networkToNetworkInterconnectName, nameof(networkToNetworkInterconnectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateNetworkToNetworkInterconnect(waitUntil, subscriptionId, resourceGroupName, networkFabricName, networkToNetworkInterconnectName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a Network Packet Broker.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers/{networkPacketBrokerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkPacketBrokerName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkPacketBroker>> CreateNetworkPacketBrokerAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkPacketBrokerName, NetworkPacketBroker body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateNetworkPacketBrokerAsync(waitUntil, subscriptionId, resourceGroupName, networkPacketBrokerName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a Network Packet Broker.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers/{networkPacketBrokerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkPacketBrokerName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<NetworkPacketBroker> CreateNetworkPacketBroker(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkPacketBrokerName, NetworkPacketBroker body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateNetworkPacketBroker(waitUntil, subscriptionId, resourceGroupName, networkPacketBrokerName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves details of this Network Packet Broker.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers/{networkPacketBrokerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is null. </exception>
+        public static async Task<Response<NetworkPacketBroker>> GetNetworkPacketBrokerAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkPacketBrokerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNetworkPacketBrokerAsync(subscriptionId, resourceGroupName, networkPacketBrokerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves details of this Network Packet Broker.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers/{networkPacketBrokerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is null. </exception>
+        public static Response<NetworkPacketBroker> GetNetworkPacketBroker(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkPacketBrokerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkPacketBroker(subscriptionId, resourceGroupName, networkPacketBrokerName, cancellationToken);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the Network Packet Broker resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers/{networkPacketBrokerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
+        /// <param name="patch"> Network Packet Broker properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkPacketBrokerName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkPacketBroker>> UpdateNetworkPacketBrokerAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkPacketBrokerName, NetworkPacketBrokerPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateNetworkPacketBrokerAsync(waitUntil, subscriptionId, resourceGroupName, networkPacketBrokerName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the Network Packet Broker resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers/{networkPacketBrokerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
+        /// <param name="patch"> Network Packet Broker properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkPacketBrokerName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<NetworkPacketBroker> UpdateNetworkPacketBroker(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkPacketBrokerName, NetworkPacketBrokerPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateNetworkPacketBroker(waitUntil, subscriptionId, resourceGroupName, networkPacketBrokerName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes Network Packet Broker.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers/{networkPacketBrokerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteNetworkPacketBrokerAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkPacketBrokerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteNetworkPacketBrokerAsync(waitUntil, subscriptionId, resourceGroupName, networkPacketBrokerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes Network Packet Broker.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers/{networkPacketBrokerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkPacketBrokerName"> Name of the Network Packet Broker. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkPacketBrokerName"/> is null. </exception>
+        public static ArmOperation DeleteNetworkPacketBroker(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkPacketBrokerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteNetworkPacketBroker(waitUntil, subscriptionId, resourceGroupName, networkPacketBrokerName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays NetworkPacketBrokers list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkPacketBroker" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkPacketBroker> GetNetworkPacketBrokersByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkPacketBrokersByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays NetworkPacketBrokers list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkPacketBroker" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkPacketBroker> GetNetworkPacketBrokersByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkPacketBrokersByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Network Packet Brokers list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkPacketBroker" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkPacketBroker> GetNetworkPacketBrokersBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkPacketBrokersBySubscriptionAsync(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Network Packet Brokers list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkPacketBroker" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkPacketBroker> GetNetworkPacketBrokersBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkPacketBrokersBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create Network Rack resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkRackName"> Name of the Network Rack. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkRackName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkRack>> CreateNetworkRackAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkRackName, NetworkRack body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateNetworkRackAsync(waitUntil, subscriptionId, resourceGroupName, networkRackName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create Network Rack resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkRackName"> Name of the Network Rack. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkRackName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<NetworkRack> CreateNetworkRack(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkRackName, NetworkRack body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateNetworkRack(waitUntil, subscriptionId, resourceGroupName, networkRackName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Network Rack resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkRackName"> Name of the Network Rack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is null. </exception>
+        public static async Task<Response<NetworkRack>> GetNetworkRackAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkRackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNetworkRackAsync(subscriptionId, resourceGroupName, networkRackName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Network Rack resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkRackName"> Name of the Network Rack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is null. </exception>
+        public static Response<NetworkRack> GetNetworkRack(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkRackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkRack(subscriptionId, resourceGroupName, networkRackName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Rack resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkRackName"> Name of the Network Rack. </param>
+        /// <param name="body"> Network Rack properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkRackName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkRack>> UpdateNetworkRackAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkRackName, TagsUpdate body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateNetworkRackAsync(waitUntil, subscriptionId, resourceGroupName, networkRackName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Rack resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkRackName"> Name of the Network Rack. </param>
+        /// <param name="body"> Network Rack properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkRackName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<NetworkRack> UpdateNetworkRack(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkRackName, TagsUpdate body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateNetworkRack(waitUntil, subscriptionId, resourceGroupName, networkRackName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete Network Rack resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkRackName"> Name of the Network Rack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteNetworkRackAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkRackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteNetworkRackAsync(waitUntil, subscriptionId, resourceGroupName, networkRackName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete Network Rack resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks/{networkRackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkRackName"> Name of the Network Rack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkRackName"/> is null. </exception>
+        public static ArmOperation DeleteNetworkRack(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkRackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteNetworkRack(waitUntil, subscriptionId, resourceGroupName, networkRackName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all Network Rack resources in the given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkRack" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkRack> GetNetworkRacksByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkRacksByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all Network Rack resources in the given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkRacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkRacks_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkRack" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkRack> GetNetworkRacksByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkRacksByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1566,12 +7992,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkRackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkRackResource> GetNetworkRacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkRack" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkRack> GetNetworkRacksBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkRacksAsync(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkRacksBySubscriptionAsync(subscriptionId, cancellationToken);
         }
 
         /// <summary>
@@ -1587,12 +8014,1275 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkRackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkRackResource> GetNetworkRacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkRack" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkRack> GetNetworkRacksBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkRacks(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkRacksBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create Network Tap Rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapRuleName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkTapRule>> CreateNetworkTapRuleAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, NetworkTapRule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateNetworkTapRuleAsync(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create Network Tap Rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapRuleName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<NetworkTapRule> CreateNetworkTapRule(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, NetworkTapRule body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateNetworkTapRule(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Network Tap Rule resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is null. </exception>
+        public static async Task<Response<NetworkTapRule>> GetNetworkTapRuleAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNetworkTapRuleAsync(subscriptionId, resourceGroupName, networkTapRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Network Tap Rule resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is null. </exception>
+        public static Response<NetworkTapRule> GetNetworkTapRule(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkTapRule(subscriptionId, resourceGroupName, networkTapRuleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Tap Rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="patch"> Network Tap Rule properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapRuleName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkTapRule>> UpdateNetworkTapRuleAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, NetworkTapRulePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateNetworkTapRuleAsync(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Tap Rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="patch"> Network Tap Rule properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapRuleName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<NetworkTapRule> UpdateNetworkTapRule(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, NetworkTapRulePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateNetworkTapRule(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete Network Tap Rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteNetworkTapRuleAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteNetworkTapRuleAsync(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete Network Tap Rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is null. </exception>
+        public static ArmOperation DeleteNetworkTapRule(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteNetworkTapRule(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Tap Rule resources in the given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkTapRule" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkTapRule> GetNetworkTapRulesByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkTapRulesByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Tap Rule resources in the given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkTapRule" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkTapRule> GetNetworkTapRulesByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkTapRulesByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Tap Rule resources in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkTapRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkTapRule" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkTapRule> GetNetworkTapRulesBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkTapRulesBySubscriptionAsync(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Tap Rule resources in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkTapRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkTapRule" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkTapRule> GetNetworkTapRulesBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkTapRulesBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapRuleName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateAdministrativeStateNetworkTapRuleAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateNetworkTapRuleAsync(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapRuleName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> UpdateAdministrativeStateNetworkTapRule(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateNetworkTapRule(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}/resync</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Resync</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> ResyncNetworkTapRuleAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ResyncNetworkTapRuleAsync(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}/resync</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Resync</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> ResyncNetworkTapRule(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+
+            return GetTenantResourceExtensionClient(tenantResource).ResyncNetworkTapRule(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is null. </exception>
+        public static async Task<ArmOperation<ValidateConfigurationResponse>> ValidateConfigurationNetworkTapRuleAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationNetworkTapRuleAsync(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is null. </exception>
+        public static ArmOperation<ValidateConfigurationResponse> ValidateConfigurationNetworkTapRule(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+
+            return GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationNetworkTapRule(waitUntil, subscriptionId, resourceGroupName, networkTapRuleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a Network Tap.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkTap>> CreateNetworkTapAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapName, NetworkTap body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateNetworkTapAsync(waitUntil, subscriptionId, resourceGroupName, networkTapName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a Network Tap.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<NetworkTap> CreateNetworkTap(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapName, NetworkTap body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateNetworkTap(waitUntil, subscriptionId, resourceGroupName, networkTapName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves details of this Network Tap.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is null. </exception>
+        public static async Task<Response<NetworkTap>> GetNetworkTapAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkTapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetNetworkTapAsync(subscriptionId, resourceGroupName, networkTapName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves details of this Network Tap.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is null. </exception>
+        public static Response<NetworkTap> GetNetworkTap(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string networkTapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkTap(subscriptionId, resourceGroupName, networkTapName, cancellationToken);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the Network Tap resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="patch"> Network Tap properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkTap>> UpdateNetworkTapAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapName, NetworkTapPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateNetworkTapAsync(waitUntil, subscriptionId, resourceGroupName, networkTapName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the Network Tap resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="patch"> Network Tap properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<NetworkTap> UpdateNetworkTap(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapName, NetworkTapPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateNetworkTap(waitUntil, subscriptionId, resourceGroupName, networkTapName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes Network Tap.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteNetworkTapAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteNetworkTapAsync(waitUntil, subscriptionId, resourceGroupName, networkTapName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes Network Tap.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is null. </exception>
+        public static ArmOperation DeleteNetworkTap(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteNetworkTap(waitUntil, subscriptionId, resourceGroupName, networkTapName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Network Taps list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkTap" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkTap> GetNetworkTapsByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkTapsByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Network Taps list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkTap" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkTap> GetNetworkTapsByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkTapsByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Network Taps list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkTaps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkTap" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkTap> GetNetworkTapsBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkTapsBySubscriptionAsync(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Network Taps list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkTaps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkTap" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkTap> GetNetworkTapsBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetNetworkTapsBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForDeviceUpdate>> UpdateAdministrativeStateNetworkTapAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateNetworkTapAsync(waitUntil, subscriptionId, resourceGroupName, networkTapName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkTapName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForDeviceUpdate> UpdateAdministrativeStateNetworkTap(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateNetworkTap(waitUntil, subscriptionId, resourceGroupName, networkTapName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}/resync</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Resync</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> ResyncNetworkTapAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ResyncNetworkTapAsync(waitUntil, subscriptionId, resourceGroupName, networkTapName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements the operation to the underlying resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTaps/{networkTapName}/resync</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_Resync</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="networkTapName"> Name of the Network Tap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> ResyncNetworkTap(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string networkTapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+
+            return GetTenantResourceExtensionClient(tenantResource).ResyncNetworkTap(waitUntil, subscriptionId, resourceGroupName, networkTapName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Route Policy PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routePolicyName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<RoutePolicy>> CreateRoutePolicyAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, RoutePolicy body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CreateRoutePolicyAsync(waitUntil, subscriptionId, resourceGroupName, routePolicyName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements Route Policy PUT method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_Create</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routePolicyName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<RoutePolicy> CreateRoutePolicy(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, RoutePolicy body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).CreateRoutePolicy(waitUntil, subscriptionId, resourceGroupName, routePolicyName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Route Policy GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is null. </exception>
+        public static async Task<Response<RoutePolicy>> GetRoutePolicyAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string routePolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).GetRoutePolicyAsync(subscriptionId, resourceGroupName, routePolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements Route Policy GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is null. </exception>
+        public static Response<RoutePolicy> GetRoutePolicy(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string routePolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetRoutePolicy(subscriptionId, resourceGroupName, routePolicyName, cancellationToken);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the Route Policy resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="patch"> Route Policy properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routePolicyName"/> or <paramref name="patch"/> is null. </exception>
+        public static async Task<ArmOperation<RoutePolicy>> UpdateRoutePolicyAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, RoutePolicyPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateRoutePolicyAsync(waitUntil, subscriptionId, resourceGroupName, routePolicyName, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API to update certain properties of the Route Policy resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="patch"> Route Policy properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routePolicyName"/> or <paramref name="patch"/> is null. </exception>
+        public static ArmOperation<RoutePolicy> UpdateRoutePolicy(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, RoutePolicyPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateRoutePolicy(waitUntil, subscriptionId, resourceGroupName, routePolicyName, patch, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements Route Policy DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteRoutePolicyAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).DeleteRoutePolicyAsync(waitUntil, subscriptionId, resourceGroupName, routePolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements Route Policy DELETE method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is null. </exception>
+        public static ArmOperation DeleteRoutePolicy(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+
+            return GetTenantResourceExtensionClient(tenantResource).DeleteRoutePolicy(waitUntil, subscriptionId, resourceGroupName, routePolicyName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements RoutePolicies list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="RoutePolicy" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RoutePolicy> GetRoutePoliciesByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetRoutePoliciesByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements RoutePolicies list by resource group GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <returns> A collection of <see cref="RoutePolicy" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RoutePolicy> GetRoutePoliciesByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            return GetTenantResourceExtensionClient(tenantResource).GetRoutePoliciesByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1608,12 +9298,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoutePolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RoutePolicyResource> GetRoutePoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RoutePolicy" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RoutePolicy> GetRoutePoliciesBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRoutePoliciesAsync(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetRoutePoliciesBySubscriptionAsync(subscriptionId, cancellationToken);
         }
 
         /// <summary>
@@ -1629,12 +9320,191 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoutePolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RoutePolicyResource> GetRoutePolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RoutePolicy" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RoutePolicy> GetRoutePoliciesBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRoutePolicies(cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetRoutePoliciesBySubscription(subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updated the admin state for this Route Policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routePolicyName"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForDeviceUpdate>> UpdateAdministrativeStateRoutePolicyAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateRoutePolicyAsync(waitUntil, subscriptionId, resourceGroupName, routePolicyName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updated the admin state for this Route Policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="routePolicyName"/> or <paramref name="body"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForDeviceUpdate> UpdateAdministrativeStateRoutePolicy(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return GetTenantResourceExtensionClient(tenantResource).UpdateAdministrativeStateRoutePolicy(waitUntil, subscriptionId, resourceGroupName, routePolicyName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// Validates the configuration of the resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is null. </exception>
+        public static async Task<ArmOperation<ValidateConfigurationResponse>> ValidateConfigurationRoutePolicyAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationRoutePolicyAsync(waitUntil, subscriptionId, resourceGroupName, routePolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Validates the configuration of the resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is null. </exception>
+        public static ArmOperation<ValidateConfigurationResponse> ValidateConfigurationRoutePolicy(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+
+            return GetTenantResourceExtensionClient(tenantResource).ValidateConfigurationRoutePolicy(waitUntil, subscriptionId, resourceGroupName, routePolicyName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Commits the configuration of the given resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is null. </exception>
+        public static async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> CommitConfigurationRoutePolicyAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CommitConfigurationRoutePolicyAsync(waitUntil, subscriptionId, resourceGroupName, routePolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Commits the configuration of the given resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="routePolicyName"> Name of the Route Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routePolicyName"/> is null. </exception>
+        public static ArmOperation<CommonPostActionResponseForStateUpdate> CommitConfigurationRoutePolicy(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string routePolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+
+            return GetTenantResourceExtensionClient(tenantResource).CommitConfigurationRoutePolicy(waitUntil, subscriptionId, resourceGroupName, routePolicyName, cancellationToken);
         }
     }
 }

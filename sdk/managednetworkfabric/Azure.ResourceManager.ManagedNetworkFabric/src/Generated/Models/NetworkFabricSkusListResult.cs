@@ -7,30 +7,29 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of NetworkFabricSkus. </summary>
+    /// <summary> List of Network Fabric SKUs. </summary>
     internal partial class NetworkFabricSkusListResult
     {
         /// <summary> Initializes a new instance of NetworkFabricSkusListResult. </summary>
         internal NetworkFabricSkusListResult()
         {
-            Value = new ChangeTrackingList<NetworkFabricSkuData>();
+            Value = new ChangeTrackingList<NetworkFabricSku>();
         }
 
         /// <summary> Initializes a new instance of NetworkFabricSkusListResult. </summary>
-        /// <param name="value"> List of NetworkFabricSku resources. </param>
+        /// <param name="value"> List of Network Fabric SKU resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal NetworkFabricSkusListResult(IReadOnlyList<NetworkFabricSkuData> value, string nextLink)
+        internal NetworkFabricSkusListResult(IReadOnlyList<NetworkFabricSku> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of NetworkFabricSku resources. </summary>
-        public IReadOnlyList<NetworkFabricSkuData> Value { get; }
+        /// <summary> List of Network Fabric SKU resources. </summary>
+        public IReadOnlyList<NetworkFabricSku> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

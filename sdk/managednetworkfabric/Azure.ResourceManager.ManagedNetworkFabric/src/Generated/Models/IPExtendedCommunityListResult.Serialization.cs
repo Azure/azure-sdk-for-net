@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IPExtendedCommunityData>> value = default;
+            Optional<IReadOnlyList<IPExtendedCommunity>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<IPExtendedCommunityData> array = new List<IPExtendedCommunityData>();
+                    List<IPExtendedCommunity> array = new List<IPExtendedCommunity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPExtendedCommunityData.DeserializeIPExtendedCommunityData(item));
+                        array.Add(IPExtendedCommunity.DeserializeIPExtendedCommunity(item));
                     }
                     value = array;
                     continue;

@@ -10,16 +10,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The IPPrefix patch resource definition. </summary>
-    public partial class IPPrefixPatch
+    /// <summary> The IP Prefix patch resource definition. </summary>
+    public partial class IPPrefixPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of IPPrefixPatch. </summary>
         public IPPrefixPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
+        /// <summary> The list of IP Prefix Rules. </summary>
+        public IList<IPPrefixRule> IPPrefixRules { get; }
     }
 }

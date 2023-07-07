@@ -7,30 +7,29 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of AccessControlLists. </summary>
+    /// <summary> List of Access Control Lists. </summary>
     internal partial class AccessControlListsListResult
     {
         /// <summary> Initializes a new instance of AccessControlListsListResult. </summary>
         internal AccessControlListsListResult()
         {
-            Value = new ChangeTrackingList<AccessControlListData>();
+            Value = new ChangeTrackingList<AccessControlList>();
         }
 
         /// <summary> Initializes a new instance of AccessControlListsListResult. </summary>
-        /// <param name="value"> List of AccessControlList resources. </param>
+        /// <param name="value"> List of Access Control List resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal AccessControlListsListResult(IReadOnlyList<AccessControlListData> value, string nextLink)
+        internal AccessControlListsListResult(IReadOnlyList<AccessControlList> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of AccessControlList resources. </summary>
-        public IReadOnlyList<AccessControlListData> Value { get; }
+        /// <summary> List of Access Control List resources. </summary>
+        public IReadOnlyList<AccessControlList> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

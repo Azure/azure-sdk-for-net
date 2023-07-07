@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> staticRouteConfiguration model. </summary>
+    /// <summary> Static Route Configuration properties. </summary>
     public partial class StaticRouteConfiguration
     {
         /// <summary> Initializes a new instance of StaticRouteConfiguration. </summary>
@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of StaticRouteConfiguration. </summary>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="ipv4Routes"> List with object IPv4Routes. </param>
-        /// <param name="ipv6Routes"> List with object IPv6Routes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         internal StaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes)
         {
             BfdConfiguration = bfdConfiguration;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> BFD configuration properties. </summary>
         public BfdConfiguration BfdConfiguration { get; set; }
-        /// <summary> List with object IPv4Routes. </summary>
+        /// <summary> List of IPv4 Routes. </summary>
         public IList<StaticRouteProperties> IPv4Routes { get; }
-        /// <summary> List with object IPv6Routes. </summary>
+        /// <summary> List of IPv6 Routes. </summary>
         public IList<StaticRouteProperties> IPv6Routes { get; }
     }
 }
