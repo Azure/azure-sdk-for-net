@@ -42,7 +42,7 @@ namespace Azure.Core
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request. </param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default)
+        public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
@@ -51,17 +51,20 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Creates a new TokenRequest with the specified scopes and options.
+        /// Creates a new TokenRequest with the specified scopes.
         /// </summary>
         /// <param name="scopes">The scopes required for the token.</param>
-        /// <param name="options">The <see cref="TokenRequestContextOptions"/> to configure token requests.</param>
-        public TokenRequestContext(string[] scopes, TokenRequestContextOptions options)
+        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        /// <param name="claims">Additional claims to be included in the token.</param>
+        /// <param name="tenantId"> The tenantId to be included in the token request. </param>
+        /// <param name="enableCae"></param>
+        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool enableCae = false)
         {
             Scopes = scopes;
-            ParentRequestId = options.ParentRequestId;
-            Claims = options.Claims;
-            TenantId = options.TenantId;
-            EnableCae = options.EnableCae;
+            ParentRequestId = parentRequestId;
+            Claims = claims;
+            TenantId = tenantId;
+            EnableCae = enableCae;
         }
 
         /// <summary>
@@ -85,7 +88,7 @@ namespace Azure.Core
         public string? TenantId { get; }
 
         /// <summary>
-        /// Indicates whether to enable Conditional Access Exclusion (CAE) for the token request.
+        /// Indicates whether to enable Continuous Access Evaluation (CAE) for the token request.
         /// </summary>
         public bool EnableCae { get; }
     }
