@@ -93,8 +93,6 @@ If you are using system environment variables, make sure to restart Visual Studi
 
 ## Test proxy
 
-Using the test proxy tool, migrate the local recording files to the external repository [azure-sdk-assets](https://github.com/Azure/azure-sdk-assets). 
-
 The local recording files will be stored in `azure-sdk-for-net/.assets/{10-character}/net/sdk/{service name}/{service}/tests/SessionRecords`. 
 
 1. Restore recording files
