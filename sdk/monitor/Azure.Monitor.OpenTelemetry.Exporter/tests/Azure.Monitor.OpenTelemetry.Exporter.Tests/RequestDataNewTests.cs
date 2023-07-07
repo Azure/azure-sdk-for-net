@@ -14,9 +14,9 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public class RequestDataV2Tests
+    public class RequestDataNewTests
     {
-        private const string ActivityName = "RequestDataActivity";
+        private const string ActivityName = "RequestDataNewActivity";
 
         [Fact]
         public void ValidateHttpRequestData()
@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, "V2");
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
 
             Assert.Equal("GET /search", requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: "V2");
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
 
             Assert.Equal(httpResponseCode, requestData.ResponseCode);
         }
@@ -104,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: "V2");
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
 
             Assert.Equal(httpResponseCode, requestData.ResponseCode);
             Assert.Equal(isSuccess, requestData.Success);
@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: "V2");
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
 
             Assert.Equal("DemoAzureResource", activityTagsProcessor.AzureNamespace);
         }
@@ -147,7 +147,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: "V2");
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
@@ -181,7 +181,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: "V2");
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
@@ -212,7 +212,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: "V2");
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
