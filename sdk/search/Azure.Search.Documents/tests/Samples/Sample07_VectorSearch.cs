@@ -13,15 +13,14 @@ using System.Linq;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
     public partial class VectorSearch : SearchTestBase
     {
         public VectorSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, SearchClientOptions.ServiceVersion.V2023_07_01_Preview, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SingleVectorSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -63,7 +62,7 @@ namespace Azure.Search.Documents.Tests.Samples
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SingleVectorSearchWithFilter()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -106,7 +105,7 @@ namespace Azure.Search.Documents.Tests.Samples
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SimpleHybridSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -149,7 +148,7 @@ namespace Azure.Search.Documents.Tests.Samples
             }
         }
 
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
         public async Task SemanticHybridSearch()
         {
