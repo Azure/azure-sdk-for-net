@@ -59,7 +59,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             var additionalProperties = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(dog) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
-            Assert.IsFalse(additionalProperties.ContainsKey("numberOfLegs"));
+            Assert.IsFalse(additionalProperties.ContainsKey("numberOfLegs")); //TODO check
 
             string expected = "{";
             if (!ignoreReadonlyProperties)
