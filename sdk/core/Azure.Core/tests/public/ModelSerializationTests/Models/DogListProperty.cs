@@ -179,7 +179,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             private ModelSerializerOptions GetOptions(JsonSerializerOptions options)
             {
-                return new ModelSerializerOptions("W");
+                var serializableOptions = new ModelSerializerOptions();
+                //pulls the additional properties setting from the ModelJsonConverter if it exists
+                //if it does not exist it uses the default value of true for azure sdk use cases
+                var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
+                string format = modelConverter is not null ? modelConverter.Format : "W";
+                return new ModelSerializerOptions(format);
             }
         }
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
