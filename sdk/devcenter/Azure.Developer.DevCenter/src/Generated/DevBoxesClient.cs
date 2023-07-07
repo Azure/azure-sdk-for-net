@@ -84,7 +84,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetPoolAsync(string poolName, RequestContext context = null)
+        public virtual async Task<Response> GetPoolAsync(string poolName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
@@ -119,7 +119,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPool(string,RequestContext)']/*" />
-        public virtual Response GetPool(string poolName, RequestContext context = null)
+        public virtual Response GetPool(string poolName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
@@ -155,7 +155,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleByPoolAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetScheduleByPoolAsync(string poolName, string scheduleName, RequestContext context = null)
+        public virtual async Task<Response> GetScheduleByPoolAsync(string poolName, string scheduleName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
@@ -192,7 +192,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleByPool(string,string,RequestContext)']/*" />
-        public virtual Response GetScheduleByPool(string poolName, string scheduleName, RequestContext context = null)
+        public virtual Response GetScheduleByPool(string poolName, string scheduleName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
@@ -229,7 +229,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxByUserAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDevBoxByUserAsync(string userId, string devBoxName, RequestContext context = null)
+        public virtual async Task<Response> GetDevBoxByUserAsync(string userId, string devBoxName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -266,7 +266,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxByUser(string,string,RequestContext)']/*" />
-        public virtual Response GetDevBoxByUser(string userId, string devBoxName, RequestContext context = null)
+        public virtual Response GetDevBoxByUser(string userId, string devBoxName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -303,7 +303,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnectionAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRemoteConnectionAsync(string userId, string devBoxName, RequestContext context = null)
+        public virtual async Task<Response> GetRemoteConnectionAsync(string userId, string devBoxName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -340,7 +340,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnection(string,string,RequestContext)']/*" />
-        public virtual Response GetRemoteConnection(string userId, string devBoxName, RequestContext context = null)
+        public virtual Response GetRemoteConnection(string userId, string devBoxName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -378,7 +378,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActionAsync(string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetUpcomingActionAsync(string userId, string devBoxName, string upcomingActionId, RequestContext context = null)
+        public virtual async Task<Response> GetUpcomingActionAsync(string userId, string devBoxName, string upcomingActionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -417,7 +417,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingAction(string,string,string,RequestContext)']/*" />
-        public virtual Response GetUpcomingAction(string userId, string devBoxName, string upcomingActionId, RequestContext context = null)
+        public virtual Response GetUpcomingAction(string userId, string devBoxName, string upcomingActionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -535,7 +535,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayUpcomingActionAsync(string,string,string,DateTimeOffset,RequestContext)']/*" />
-        public virtual async Task<Response> DelayUpcomingActionAsync(string userId, string devBoxName, string upcomingActionId, DateTimeOffset delayUntil, RequestContext context = null)
+        public virtual async Task<Response> DelayUpcomingActionAsync(string userId, string devBoxName, string upcomingActionId, DateTimeOffset delayUntil, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -575,7 +575,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayUpcomingAction(string,string,string,DateTimeOffset,RequestContext)']/*" />
-        public virtual Response DelayUpcomingAction(string userId, string devBoxName, string upcomingActionId, DateTimeOffset delayUntil, RequestContext context = null)
+        public virtual Response DelayUpcomingAction(string userId, string devBoxName, string upcomingActionId, DateTimeOffset delayUntil, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -611,7 +611,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolsAsync(int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetPoolsAsync(int? maxCount = null, string filter = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetPoolsAsync(int? maxCount, string filter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(maxCount, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, maxCount, filter, context);
@@ -634,7 +634,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPools(int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetPools(int? maxCount = null, string filter = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetPools(int? maxCount, string filter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(maxCount, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, maxCount, filter, context);
@@ -660,7 +660,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesByPoolAsync(string,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSchedulesByPoolAsync(string poolName, int? maxCount = null, string filter = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSchedulesByPoolAsync(string poolName, int? maxCount, string filter, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
@@ -688,7 +688,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesByPool(string,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSchedulesByPool(string poolName, int? maxCount = null, string filter = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSchedulesByPool(string poolName, int? maxCount, string filter, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
@@ -716,7 +716,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesByUserAsync(string,string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDevBoxesByUserAsync(string userId, string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDevBoxesByUserAsync(string userId, string filter, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -744,7 +744,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesByUser(string,string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDevBoxesByUser(string userId, string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDevBoxesByUser(string userId, string filter, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -771,7 +771,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActionsAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetUpcomingActionsAsync(string userId, string devBoxName, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetUpcomingActionsAsync(string userId, string devBoxName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
@@ -799,7 +799,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActions(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetUpcomingActions(string userId, string devBoxName, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetUpcomingActions(string userId, string devBoxName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));

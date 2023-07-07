@@ -11,7 +11,7 @@ using Azure.Core;
 using Azure.Core.Extensions;
 
 //TODO: there is no way to only suppress a single memmber of a static class so we need to have everything custom here.
-[assembly: CodeGenSuppressType("TextTranslationClientBuilderExtensions")]
+[assembly: CodeGenSuppressType("AzureAITranslationTextClientBuilderExtensions")]
 
 namespace Azure.AI.Translation.Text.Custom
 {

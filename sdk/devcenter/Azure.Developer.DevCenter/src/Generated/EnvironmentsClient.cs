@@ -85,7 +85,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentByUserAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEnvironmentByUserAsync(string userId, string environmentName, RequestContext context = null)
+        public virtual async Task<Response> GetEnvironmentByUserAsync(string userId, string environmentName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -122,7 +122,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentByUser(string,string,RequestContext)']/*" />
-        public virtual Response GetEnvironmentByUser(string userId, string environmentName, RequestContext context = null)
+        public virtual Response GetEnvironmentByUser(string userId, string environmentName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
@@ -236,7 +236,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCatalogItemAsync(string catalogItemId, RequestContext context = null)
+        public virtual async Task<Response> GetCatalogItemAsync(string catalogItemId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
 
@@ -271,7 +271,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItem(string,RequestContext)']/*" />
-        public virtual Response GetCatalogItem(string catalogItemId, RequestContext context = null)
+        public virtual Response GetCatalogItem(string catalogItemId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
 
@@ -307,7 +307,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersionAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCatalogItemVersionAsync(string catalogItemId, string version, RequestContext context = null)
+        public virtual async Task<Response> GetCatalogItemVersionAsync(string catalogItemId, string version, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
@@ -344,7 +344,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersion(string,string,RequestContext)']/*" />
-        public virtual Response GetCatalogItemVersion(string catalogItemId, string version, RequestContext context = null)
+        public virtual Response GetCatalogItemVersion(string catalogItemId, string version, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
@@ -378,7 +378,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsAsync(int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetEnvironmentsAsync(int? maxCount = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetEnvironmentsAsync(int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsNextPageRequest(nextLink, maxCount, context);
@@ -400,7 +400,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironments(int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetEnvironments(int? maxCount = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetEnvironments(int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsNextPageRequest(nextLink, maxCount, context);
@@ -425,7 +425,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsByUserAsync(string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetEnvironmentsByUserAsync(string userId, int? maxCount = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetEnvironmentsByUserAsync(string userId, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -452,7 +452,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsByUser(string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetEnvironmentsByUser(string userId, int? maxCount = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetEnvironmentsByUser(string userId, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -476,7 +476,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemsAsync(int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetCatalogItemsAsync(int? maxCount = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetCatalogItemsAsync(int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemsNextPageRequest(nextLink, maxCount, context);
@@ -498,7 +498,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItems(int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetCatalogItems(int? maxCount = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetCatalogItems(int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogItemsRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogItemsNextPageRequest(nextLink, maxCount, context);
@@ -523,7 +523,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersionsAsync(string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetCatalogItemVersionsAsync(string catalogItemId, int? maxCount = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetCatalogItemVersionsAsync(string catalogItemId, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
 
@@ -550,7 +550,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogItemVersions(string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetCatalogItemVersions(string catalogItemId, int? maxCount = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetCatalogItemVersions(string catalogItemId, int? maxCount, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(catalogItemId, nameof(catalogItemId));
 
@@ -574,7 +574,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypesAsync(int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetEnvironmentTypesAsync(int? maxCount = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetEnvironmentTypesAsync(int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentTypesNextPageRequest(nextLink, maxCount, context);
@@ -596,7 +596,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/EnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypes(int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetEnvironmentTypes(int? maxCount = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetEnvironmentTypes(int? maxCount, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentTypesNextPageRequest(nextLink, maxCount, context);

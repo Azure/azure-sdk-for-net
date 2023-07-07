@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetBusinessMetadataDefByGuid("<guid>");
+            Response response = client.GetBusinessMetadataDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetBusinessMetadataDefByGuid("<guid>");
+            Response response = client.GetBusinessMetadataDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>");
+            Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>");
+            Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetBusinessMetadataDefByName("<name>");
+            Response response = client.GetBusinessMetadataDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetBusinessMetadataDefByName("<name>");
+            Response response = client.GetBusinessMetadataDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -240,7 +240,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetBusinessMetadataDefByNameAsync("<name>");
+            Response response = await client.GetBusinessMetadataDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -254,7 +254,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetBusinessMetadataDefByNameAsync("<name>");
+            Response response = await client.GetBusinessMetadataDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -311,7 +311,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetClassificationDefByGuid("<guid>");
+            Response response = client.GetClassificationDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -325,7 +325,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetClassificationDefByGuid("<guid>");
+            Response response = client.GetClassificationDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
@@ -385,7 +385,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetClassificationDefByGuidAsync("<guid>");
+            Response response = await client.GetClassificationDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -399,7 +399,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetClassificationDefByGuidAsync("<guid>");
+            Response response = await client.GetClassificationDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
@@ -459,7 +459,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetClassificationDefByName("<name>");
+            Response response = client.GetClassificationDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -473,7 +473,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetClassificationDefByName("<name>");
+            Response response = client.GetClassificationDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
@@ -533,7 +533,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetClassificationDefByNameAsync("<name>");
+            Response response = await client.GetClassificationDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -547,7 +547,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetClassificationDefByNameAsync("<name>");
+            Response response = await client.GetClassificationDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
@@ -607,7 +607,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEntityDefinitionByGuid("<guid>");
+            Response response = client.GetEntityDefinitionByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -621,7 +621,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEntityDefinitionByGuid("<guid>");
+            Response response = client.GetEntityDefinitionByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
@@ -696,7 +696,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEntityDefinitionByGuidAsync("<guid>");
+            Response response = await client.GetEntityDefinitionByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -710,7 +710,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEntityDefinitionByGuidAsync("<guid>");
+            Response response = await client.GetEntityDefinitionByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
@@ -785,7 +785,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEntityDefinitionByName("<name>");
+            Response response = client.GetEntityDefinitionByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -799,7 +799,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEntityDefinitionByName("<name>");
+            Response response = client.GetEntityDefinitionByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
@@ -874,7 +874,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEntityDefinitionByNameAsync("<name>");
+            Response response = await client.GetEntityDefinitionByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -888,7 +888,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEntityDefinitionByNameAsync("<name>");
+            Response response = await client.GetEntityDefinitionByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
@@ -963,7 +963,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEnumDefByGuid("<guid>");
+            Response response = client.GetEnumDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -977,7 +977,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEnumDefByGuid("<guid>");
+            Response response = client.GetEnumDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("defaultValue").ToString());
@@ -1024,7 +1024,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEnumDefByGuidAsync("<guid>");
+            Response response = await client.GetEnumDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1038,7 +1038,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEnumDefByGuidAsync("<guid>");
+            Response response = await client.GetEnumDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("defaultValue").ToString());
@@ -1085,7 +1085,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEnumDefByName("<name>");
+            Response response = client.GetEnumDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1099,7 +1099,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetEnumDefByName("<name>");
+            Response response = client.GetEnumDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("defaultValue").ToString());
@@ -1146,7 +1146,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEnumDefByNameAsync("<name>");
+            Response response = await client.GetEnumDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1160,7 +1160,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetEnumDefByNameAsync("<name>");
+            Response response = await client.GetEnumDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("defaultValue").ToString());
@@ -1207,7 +1207,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetRelationshipDefByGuid("<guid>");
+            Response response = client.GetRelationshipDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1221,7 +1221,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetRelationshipDefByGuid("<guid>");
+            Response response = client.GetRelationshipDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
@@ -1292,7 +1292,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetRelationshipDefByGuidAsync("<guid>");
+            Response response = await client.GetRelationshipDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1306,7 +1306,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetRelationshipDefByGuidAsync("<guid>");
+            Response response = await client.GetRelationshipDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
@@ -1377,7 +1377,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetRelationshipDefByName("<name>");
+            Response response = client.GetRelationshipDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1391,7 +1391,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetRelationshipDefByName("<name>");
+            Response response = client.GetRelationshipDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
@@ -1462,7 +1462,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetRelationshipDefByNameAsync("<name>");
+            Response response = await client.GetRelationshipDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1476,7 +1476,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetRelationshipDefByNameAsync("<name>");
+            Response response = await client.GetRelationshipDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
@@ -1547,7 +1547,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetStructDefByGuid("<guid>");
+            Response response = client.GetStructDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1561,7 +1561,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetStructDefByGuid("<guid>");
+            Response response = client.GetStructDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -1618,7 +1618,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetStructDefByGuidAsync("<guid>");
+            Response response = await client.GetStructDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1632,7 +1632,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetStructDefByGuidAsync("<guid>");
+            Response response = await client.GetStructDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -1689,7 +1689,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetStructDefByName("<name>");
+            Response response = client.GetStructDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1703,7 +1703,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetStructDefByName("<name>");
+            Response response = client.GetStructDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -1760,7 +1760,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetStructDefByNameAsync("<name>");
+            Response response = await client.GetStructDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1774,7 +1774,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetStructDefByNameAsync("<name>");
+            Response response = await client.GetStructDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -1831,7 +1831,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionByGuid("<guid>");
+            Response response = client.GetTypeDefinitionByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1845,7 +1845,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionByGuid("<guid>");
+            Response response = client.GetTypeDefinitionByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("category").ToString());
@@ -1888,7 +1888,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTypeDefinitionByGuidAsync("<guid>");
+            Response response = await client.GetTypeDefinitionByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1902,7 +1902,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTypeDefinitionByGuidAsync("<guid>");
+            Response response = await client.GetTypeDefinitionByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("category").ToString());
@@ -1945,7 +1945,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionByName("<name>");
+            Response response = client.GetTypeDefinitionByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1959,7 +1959,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionByName("<name>");
+            Response response = client.GetTypeDefinitionByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("category").ToString());
@@ -2002,7 +2002,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTypeDefinitionByNameAsync("<name>");
+            Response response = await client.GetTypeDefinitionByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2016,7 +2016,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTypeDefinitionByNameAsync("<name>");
+            Response response = await client.GetTypeDefinitionByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("category").ToString());
@@ -2107,7 +2107,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetAllTypeDefinitions();
+            Response response = client.GetAllTypeDefinitions(true, "<type>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2121,7 +2121,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetAllTypeDefinitions(true, "<type>");
+            Response response = client.GetAllTypeDefinitions(true, "<type>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -2467,7 +2467,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetAllTypeDefinitionsAsync();
+            Response response = await client.GetAllTypeDefinitionsAsync(true, "<type>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2481,7 +2481,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetAllTypeDefinitionsAsync(true, "<type>");
+            Response response = await client.GetAllTypeDefinitionsAsync(true, "<type>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -5857,7 +5857,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionHeaders();
+            Response response = client.GetTypeDefinitionHeaders(true, "<type>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -5871,7 +5871,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTypeDefinitionHeaders(true, "<type>");
+            Response response = client.GetTypeDefinitionHeaders(true, "<type>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("category").ToString());
@@ -5887,7 +5887,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTypeDefinitionHeadersAsync();
+            Response response = await client.GetTypeDefinitionHeadersAsync(true, "<type>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -5901,7 +5901,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTypeDefinitionHeadersAsync(true, "<type>");
+            Response response = await client.GetTypeDefinitionHeadersAsync(true, "<type>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("category").ToString());
@@ -5917,7 +5917,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTermTemplateDefByGuid("<guid>");
+            Response response = client.GetTermTemplateDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -5931,7 +5931,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTermTemplateDefByGuid("<guid>");
+            Response response = client.GetTermTemplateDefByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -5988,7 +5988,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTermTemplateDefByGuidAsync("<guid>");
+            Response response = await client.GetTermTemplateDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6002,7 +6002,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTermTemplateDefByGuidAsync("<guid>");
+            Response response = await client.GetTermTemplateDefByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -6059,7 +6059,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTermTemplateDefByName("<name>");
+            Response response = client.GetTermTemplateDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6073,7 +6073,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.GetTermTemplateDefByName("<name>");
+            Response response = client.GetTermTemplateDefByName("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -6130,7 +6130,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTermTemplateDefByNameAsync("<name>");
+            Response response = await client.GetTermTemplateDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6144,7 +6144,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.GetTermTemplateDefByNameAsync("<name>");
+            Response response = await client.GetTermTemplateDefByNameAsync("<name>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());

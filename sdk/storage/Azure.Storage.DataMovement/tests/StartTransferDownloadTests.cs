@@ -100,7 +100,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
 
             List<VerifyDownloadBlobContentInfo> downloadedBlobInfo = new List<VerifyDownloadBlobContentInfo>(blobCount);
@@ -343,7 +343,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToLocal_SmallChunk()
         {
             long size = Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
             TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 100,
@@ -439,7 +439,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -472,7 +472,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -528,7 +528,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
 
             List<VerifyDownloadBlobContentInfo> downloadedBlobInfo = new List<VerifyDownloadBlobContentInfo>(blobCount);
@@ -882,7 +882,7 @@ namespace Azure.Storage.DataMovement.Tests
             // To test parallel chunked download, this makes it faster to debug
             // and run through.
             long size = Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
             TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 100,
@@ -911,7 +911,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -938,7 +938,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -993,7 +993,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
 
             List<VerifyDownloadBlobContentInfo> downloadedBlobInfo = new List<VerifyDownloadBlobContentInfo>(blobCount);
@@ -1211,7 +1211,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PageBlobToLocal_SmallChunk()
         {
             long size = 12 * Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
             TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = Constants.KB,
@@ -1306,7 +1306,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -1339,7 +1339,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 

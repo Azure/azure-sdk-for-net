@@ -217,7 +217,7 @@ namespace Azure.Storage.DataMovement
 
             // Create the source Path
             string sourcePath;
-            if (jobPart._sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
+            if (jobPart._sourceResource.CanProduceUri)
             {
                 // Remove any query or SAS that could be attach to the Uri
                 UriBuilder uriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
@@ -230,7 +230,7 @@ namespace Azure.Storage.DataMovement
             }
 
             string destinationPath;
-            if (jobPart._destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
+            if (jobPart._destinationResource.CanProduceUri)
             {
                 // Remove any query or SAS that could be attach to the Uri
                 UriBuilder uriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
@@ -293,7 +293,7 @@ namespace Azure.Storage.DataMovement
 
             // Check source path
             string passedSourcePath;
-            if (jobPart._sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
+            if (jobPart._sourceResource.CanProduceUri)
             {
                 // Remove any query or SAS that could be attach to the Uri
                 UriBuilder uriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
@@ -313,7 +313,7 @@ namespace Azure.Storage.DataMovement
 
             // Check destination path
             string passedDestinationPath;
-            if (jobPart._destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
+            if (jobPart._destinationResource.CanProduceUri)
             {
                 // Remove any query or SAS that could be attach to the Uri
                 UriBuilder uriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);

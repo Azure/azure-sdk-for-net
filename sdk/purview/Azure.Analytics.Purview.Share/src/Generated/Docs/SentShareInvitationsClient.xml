@@ -8,7 +8,7 @@ This sample shows how to call GetSentShareInvitationAsync with required paramete
 var credential = new DefaultAzureCredential();
 var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetSentShareInvitationAsync("<sentShareName>", "<sentShareInvitationName>");
+Response response = await client.GetSentShareInvitationAsync("<sentShareName>", "<sentShareInvitationName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -25,7 +25,7 @@ This sample shows how to call GetSentShareInvitation with required parameters an
 var credential = new DefaultAzureCredential();
 var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetSentShareInvitation("<sentShareName>", "<sentShareInvitationName>");
+Response response = client.GetSentShareInvitation("<sentShareName>", "<sentShareInvitationName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -158,19 +158,7 @@ This sample shows how to call GetSentShareInvitationsAsync with required paramet
 var credential = new DefaultAzureCredential();
 var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
 
-await foreach (var item in client.GetSentShareInvitationsAsync("<sentShareName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSentShareInvitationsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-
-await foreach (var item in client.GetSentShareInvitationsAsync("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
+await foreach (var item in client.GetSentShareInvitationsAsync("<sentShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -188,19 +176,7 @@ This sample shows how to call GetSentShareInvitations with required parameters a
 var credential = new DefaultAzureCredential();
 var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
 
-foreach (var item in client.GetSentShareInvitations("<sentShareName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSentShareInvitations with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-
-foreach (var item in client.GetSentShareInvitations("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
+foreach (var item in client.GetSentShareInvitations("<sentShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("invitationKind").ToString());

@@ -33,9 +33,9 @@ namespace Azure.Storage.DataMovement
         public override string Path => _path;
 
         /// <summary>
-        /// Cannot return a Url because this is a local path.
+        /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
+        public override bool CanProduceUri => false;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the resource
