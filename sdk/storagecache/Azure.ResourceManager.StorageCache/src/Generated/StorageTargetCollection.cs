@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Create or update a Storage Target. This operation is allowed at any time, but if the Cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the Cache is healthy again.
+        /// Create or update a Storage Target. This operation is allowed at any time, but if the cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the cache is healthy again.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Create or update a Storage Target. This operation is allowed at any time, but if the Cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the Cache is healthy again.
+        /// Create or update a Storage Target. This operation is allowed at any time, but if the cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the cache is healthy again.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Storage Target from a Cache.
+        /// Returns a Storage Target from a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Storage Target from a Cache.
+        /// Returns a Storage Target from a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a list of Storage Targets for the specified Cache.
+        /// Returns a list of Storage Targets for the specified cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a list of Storage Targets for the specified Cache.
+        /// Returns a list of Storage Targets for the specified cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
