@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
     {
         protected ArmClient Client { get; private set; }
         protected const string DefaultResourceGroupPrefix = "HDInsightRG-";
-        protected AzureLocation DefaultLocation = AzureLocation.EastUS;
+        protected AzureLocation DefaultLocation = AzureLocation.JapanEast;
         protected const string Common_User = "sshuser5951";
         protected const string Common_Password = "Password!5951";
 

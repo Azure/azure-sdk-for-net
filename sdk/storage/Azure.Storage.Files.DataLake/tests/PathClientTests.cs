@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Moq;
@@ -412,6 +413,59 @@ namespace Azure.Storage.Files.DataLake.Tests
             mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), Tenants.GetNewHnsSharedKeyCredentials(), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient sourceFile = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            DataLakePathClient pathClient = test.FileSystem.GetPathClient(sourceFile.Name);
+            string destFileName = GetNewDirectoryName();
+
+            // Act
+            DataLakePathClient destFile = await pathClient.RenameAsync(destinationPath: destFileName);
+
+            // Assert
+            Response<PathProperties> response = await destFile.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_FileSystem()
+        {
+            await using DisposingFileSystem sourceTest = await GetNewFileSystem();
+            await using DisposingFileSystem destTest = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient sourceFile = await sourceTest.FileSystem.CreateFileAsync(GetNewFileName());
+            DataLakePathClient pathClient = sourceTest.FileSystem.GetPathClient(sourceFile.Name);
+            string destFileName = GetNewDirectoryName();
+
+            // Act
+            DataLakePathClient destFile = await pathClient.RenameAsync(
+                destinationPath: destFileName,
+                destinationFileSystem: destTest.FileSystem.Name);
+
+            // Assert
+            Response<PathProperties> response = await destFile.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_Error()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient sourceFile = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            DataLakePathClient pathClient = test.FileSystem.GetPathClient(sourceFile.Name);
+            string destPath = GetNewFileName();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                pathClient.RenameAsync(destinationPath: destPath),
+                e => Assert.AreEqual("SourcePathNotFound", e.ErrorCode));
         }
     }
 }

@@ -19,9 +19,10 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         [Test]
         public async Task ClusterMetricsConfiguration()
         {
+            // retrieve a parent cluster
             ClusterResource cluster = Client.GetClusterResource(TestEnvironment.ClusterId);
-            var clusterResponse = await cluster.GetAsync();
-            var clusterName = clusterResponse.Value.Data.Name;
+            cluster = await cluster.GetAsync();
+
             ClusterMetricsConfigurationCollection collection = cluster.GetClusterMetricsConfigurations();
 
             // Create
@@ -29,8 +30,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             string metricsConfigurationName = "default";
             ClusterMetricsConfigurationData createData = new ClusterMetricsConfigurationData
             (
-                TestEnvironment.Location,
-                new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"),
+                cluster.Data.Location,
+                cluster.Data.ClusterExtendedLocation,
                 15
             )
             {
@@ -59,21 +60,13 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             };
             ArmOperation<ClusterMetricsConfigurationResource> updateResult = await clusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch);
 
-            // List by Resource Group
-            var listByResourceGroup = new List<ClusterMetricsConfigurationResource>();
+            // List by cluster
+            var listByCluster = new List<ClusterMetricsConfigurationResource>();
             await foreach (var item in collection.GetAllAsync())
             {
-                listByResourceGroup.Add(item);
+                listByCluster.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
-
-            // List by Subscription
-            // var listBySubscription = new List<ClusterMetricsConfigurationResource>();
-            // await foreach (var item in SubscriptionResource.GetClusterMetricsConfigurationsAsync(clusterName))
-            // {
-            //     listBySubscription.Add(item);
-            // }
-            // Assert.IsNotEmpty(listBySubscription);
+            Assert.IsNotEmpty(listByCluster);
 
             // Delete
             var deleteResult = await clusterMetricsConfiguration.DeleteAsync(WaitUntil.Completed);

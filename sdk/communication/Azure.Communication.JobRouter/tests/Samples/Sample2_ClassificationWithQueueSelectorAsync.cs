@@ -182,13 +182,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Classification_Policy_O365_And_XBox",
                     QueueSelectors = {
                         new ConditionalQueueSelectorAttachment(
-                            condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
+                            condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
                                 new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("Office_Support"))
                             }),
                         new ConditionalQueueSelectorAttachment(
-                            condition: new ExpressionRule("If(job.Product = \"XBx\", true, false)"),
+                            condition: new ExpressionRouterRule("If(job.Product = \"XBx\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
                                 new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("XBox_Support"))

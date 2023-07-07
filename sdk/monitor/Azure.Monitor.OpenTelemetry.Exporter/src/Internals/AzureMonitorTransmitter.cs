@@ -43,9 +43,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _connectionVars = InitializeConnectionVars(options, platform);
 
-            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
-
             _transmissionStateManager = new TransmissionStateManager();
+
+            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
 
             _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory);
 
@@ -90,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 };
 
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {options.Credential.GetType().Name} Scope: {scope}");
+                AzureMonitorExporterEventSource.Log.SetAADCredentialsToPipeline(options.Credential.GetType().Name, scope);
             }
             else
             {
@@ -112,7 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         configuredStorageDirectory: configuredStorageDirectory,
                         instrumentationKey: connectionVars.InstrumentationKey);
 
-                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", $"Data for ikey '{connectionVars.InstrumentationKey}' will be stored at: {storageDirectory}");
+                    AzureMonitorExporterEventSource.Log.InitializedPersistentStorage(connectionVars.InstrumentationKey, storageDirectory);
 
                     return new FileBlobProvider(storageDirectory);
                 }
@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     // Remove this when we add an option to disable offline storage.
                     // So if someone opts in for storage and we cannot initialize, we can throw.
                     // Change needed on persistent storage side to throw if not able to create storage directory.
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToInitializePersistentStorage", ex);
+                    AzureMonitorExporterEventSource.Log.FailedToInitializePersistentStorage(connectionVars.InstrumentationKey, ex);
 
                     return null;
                 }
@@ -140,7 +140,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     var disableStatsbeat = platform.GetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED");
                     if (string.Equals(disableStatsbeat, "true", StringComparison.OrdinalIgnoreCase))
                     {
-                        AzureMonitorExporterEventSource.Log.WriteInformational("StatsbeatInitialization: ", "Statsbeat was disabled via environment variable");
+                        AzureMonitorExporterEventSource.Log.StatsbeatDisabled();
 
                         return null;
                     }
@@ -149,7 +149,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteWarning($"ErrorInitializingStatsbeatFor:{connectionVars.InstrumentationKey}", ex);
+                    AzureMonitorExporterEventSource.Log.ErrorInitializingStatsbeat(connectionVars, ex);
                 }
             }
 
@@ -168,27 +168,38 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             try
             {
-                using var httpMessage = async ?
+                if (_transmissionStateManager.State == TransmissionState.Closed)
+                {
+                    using var httpMessage = async ?
                     await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
                     _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
-                result = HttpPipelineHelper.IsSuccess(httpMessage);
+                    result = HttpPipelineHelper.IsSuccess(httpMessage);
 
-                if (result == ExportResult.Failure && _fileBlobProvider != null)
-                {
-                    _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
+                    if (result == ExportResult.Failure && _fileBlobProvider != null)
+                    {
+                        _transmissionStateManager.EnableBackOff(httpMessage.Response);
+                        result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
+                    }
+                    else
+                    {
+                        _transmissionStateManager.ResetConsecutiveErrors();
+                        _transmissionStateManager.CloseTransmission();
+                        AzureMonitorExporterEventSource.Log.TransmissionSuccess(_connectionVars.InstrumentationKey);
+                    }
                 }
                 else
                 {
-                    _transmissionStateManager.ResetConsecutiveErrors();
-                    _transmissionStateManager.CloseTransmission();
-                    AzureMonitorExporterEventSource.Log.WriteInformational("TransmissionSuccess", "Successfully transmitted a batch of telemetry Items.");
+                    byte[] requestContent = HttpPipelineHelper.GetSerializedContent(telemetryItems);
+                    if (_fileBlobProvider != null)
+                    {
+                        result = _fileBlobProvider.SaveTelemetry(requestContent);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("FailedToTransmit", ex);
+                AzureMonitorExporterEventSource.Log.TransmitterFailed(_connectionVars.InstrumentationKey, ex);
             }
 
             return result;

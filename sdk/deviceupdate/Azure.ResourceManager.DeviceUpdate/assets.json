@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/deviceupdate/Azure.ResourceManager.DeviceUpdate",
+  "Tag": "net/deviceupdate/Azure.ResourceManager.DeviceUpdate_d33f3d9a26"
+}

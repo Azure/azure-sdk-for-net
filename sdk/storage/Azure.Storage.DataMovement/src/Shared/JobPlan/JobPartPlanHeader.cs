@@ -9,8 +9,6 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
 {
     /// <summary>
     /// Stores the Job Part Header information to resume from.
-    ///
-    /// This matching the JobPartPlanHeader of azcopy
     /// </summary>
     internal class JobPartPlanHeader
     {
@@ -43,6 +41,16 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         public long PartNumber;
 
         /// <summary>
+        /// The length of the source resource identifier
+        /// </summary>
+        public ushort SourceResourceIdLength;
+
+        /// <summary>
+        /// The identifier of the source resource
+        /// </summary>
+        public string SourceResourceId;
+
+        /// <summary>
         /// The length of the source root path
         /// </summary>
         public ushort SourcePathLength;
@@ -59,10 +67,18 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
 
         /// <summary>
         /// Extra query params applicable to the source
-        ///
-        /// Size of byte array in azcopy is 1000 bytes.
         /// </summary>
         public string SourceExtraQuery;
+
+        /// <summary>
+        /// The length of the destination resource identifier
+        /// </summary>
+        public ushort DestinationResourceIdLength;
+
+        /// <summary>
+        /// The identifier of the destination resource
+        /// </summary>
+        public string DestinationResourceId;
 
         /// <summary>
         /// The length of the destination root path
@@ -71,8 +87,6 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
 
         /// <summary>
         /// The destination path
-        ///
-        /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
         public string DestinationPath;
 
@@ -83,8 +97,6 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
 
         /// <summary>
         /// Extra query params applicable to the dest
-        ///
-        /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
         public string DestinationExtraQuery;
 
@@ -206,8 +218,10 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             DateTimeOffset startTime,
             string transferId,
             long partNumber,
+            string sourceResourceId,
             string sourcePath,
             string sourceExtraQuery,
+            string destinationResourceId,
             string destinationPath,
             string destinationExtraQuery,
             bool isFinalPart,
@@ -268,7 +282,19 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
                     actualSize: transferId.Length);
             }
             PartNumber = partNumber;
-            SourcePath = sourcePath;
+            // Source resource type
+            if (sourceResourceId.Length <= DataMovementConstants.PlanFile.ResourceIdMaxStrLength)
+            {
+                SourceResourceId = sourceResourceId;
+                SourceResourceIdLength = (ushort) sourceResourceId.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileElement(
+                    elementName: nameof(sourceResourceId),
+                    expectedSize: DataMovementConstants.PlanFile.ResourceIdMaxStrLength,
+                    actualSize: sourceResourceId.Length);
+            }
             // SourcePath
             if (sourcePath.Length <= DataMovementConstants.PlanFile.PathStrMaxLength)
             {
@@ -294,6 +320,19 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
                     elementName: nameof(SourceExtraQuery),
                     expectedSize: DataMovementConstants.PlanFile.ExtraQueryMaxLength,
                     actualSize: sourceExtraQuery.Length);
+            }
+            // Destination resource type
+            if (destinationResourceId.Length <= DataMovementConstants.PlanFile.ResourceIdMaxStrLength)
+            {
+                DestinationResourceId = destinationResourceId;
+                DestinationResourceIdLength = (ushort)destinationResourceId.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileElement(
+                    elementName: nameof(destinationResourceId),
+                    expectedSize: DataMovementConstants.PlanFile.ResourceIdMaxStrLength,
+                    actualSize: destinationResourceId.Length);
             }
             // DestinationPath
             if (destinationPath.Length <= DataMovementConstants.PlanFile.PathStrMaxLength)
@@ -370,6 +409,12 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             // PartNumber
             writer.Write(PartNumber);
 
+            // SourceResourceIdLength
+            writer.Write(SourceResourceIdLength);
+
+            // SourceResourceId
+            WriteString(writer, SourceResourceId, DataMovementConstants.PlanFile.ResourceIdNumBytes);
+
             // SourcePathLength
             writer.Write(SourcePathLength);
 
@@ -381,6 +426,12 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
 
             // SourceExtraQuery
             WriteString(writer, SourceExtraQuery, DataMovementConstants.PlanFile.ExtraQueryNumBytes);
+
+            // DestinationResourceIdLength
+            writer.Write(DestinationResourceIdLength);
+
+            // DestinationResourceId
+            WriteString(writer, DestinationResourceId, DataMovementConstants.PlanFile.ResourceIdNumBytes);
 
             // DestinationPathLength
             writer.Write(DestinationPathLength);
@@ -544,6 +595,9 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             byte[] versionBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.VersionStrNumBytes);
             string version = versionBuffer.ToString(DataMovementConstants.PlanFile.VersionStrLength);
 
+            // Assert the schema version before continuing
+            CheckSchemaVersion(version);
+
             // Start Time
             byte[] startTimeBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
             DateTimeOffset startTime = new DateTimeOffset(startTimeBuffer.ToLong(), new TimeSpan(0, 0, 0));
@@ -555,6 +609,14 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             // Job Part Number
             byte[] partNumberBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
             long partNumber = partNumberBuffer.ToLong();
+
+            // SourceResourceIdLength
+            byte[] sourceResourceIdLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            ushort sourceResourceIdLength = sourceResourceIdLengthBuffer.ToUShort();
+
+            // SourceResourceId
+            byte[] sourceResourceIdBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ResourceIdNumBytes);
+            string sourceResourceId = sourceResourceIdBuffer.ToString(sourceResourceIdLength);
 
             // SourcePathLength
             byte[] sourcePathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
@@ -571,6 +633,14 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             // SourceExtraQuery
             byte[] sourceExtraQueryBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ExtraQueryNumBytes);
             string sourceExtraQuery = sourceExtraQueryBuffer.ToString(sourceExtraQueryLength);
+
+            // DestinationResourceIdLength
+            byte[] destinationResourceIdLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+            ushort destinationResourceIdLength = destinationResourceIdLengthBuffer.ToUShort();
+
+            // DestinationResourceId
+            byte[] destinationResourceIdBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ResourceIdNumBytes);
+            string destinationResourceId = destinationResourceIdBuffer.ToString(destinationResourceIdLength);
 
             // DestinationPathLength
             byte[] destinationPathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
@@ -784,8 +854,10 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
                 startTime: startTime,
                 transferId: transferId,
                 partNumber: partNumber,
+                sourceResourceId: sourceResourceId,
                 sourcePath: sourcePath,
                 sourceExtraQuery: sourceExtraQuery,
+                destinationResourceId: destinationResourceId,
                 destinationPath: destinationPath,
                 destinationExtraQuery: destinationExtraQuery,
                 isFinalPart: isFinalPart,
@@ -821,6 +893,14 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 char[] paddingArray = new char[padding];
                 writer.Write(paddingArray);
+            }
+        }
+
+        private static void CheckSchemaVersion(string version)
+        {
+            if (version != DataMovementConstants.PlanFile.SchemaVersion)
+            {
+                throw Errors.UnsupportedSchemaVersionHeader(version);
             }
         }
     }

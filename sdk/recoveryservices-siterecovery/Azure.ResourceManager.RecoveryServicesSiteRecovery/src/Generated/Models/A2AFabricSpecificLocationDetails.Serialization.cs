@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> initialPrimaryZone = default;
             Optional<string> initialRecoveryZone = default;
-            Optional<ExtendedLocation> initialPrimaryExtendedLocation = default;
-            Optional<ExtendedLocation> initialRecoveryExtendedLocation = default;
-            Optional<string> initialPrimaryFabricLocation = default;
-            Optional<string> initialRecoveryFabricLocation = default;
+            Optional<SiteRecoveryExtendedLocation> initialPrimaryExtendedLocation = default;
+            Optional<SiteRecoveryExtendedLocation> initialRecoveryExtendedLocation = default;
+            Optional<AzureLocation> initialPrimaryFabricLocation = default;
+            Optional<AzureLocation> initialRecoveryFabricLocation = default;
             Optional<string> primaryZone = default;
             Optional<string> recoveryZone = default;
-            Optional<ExtendedLocation> primaryExtendedLocation = default;
-            Optional<ExtendedLocation> recoveryExtendedLocation = default;
-            Optional<string> primaryFabricLocation = default;
-            Optional<string> recoveryFabricLocation = default;
+            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
+            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
+            Optional<AzureLocation> primaryFabricLocation = default;
+            Optional<AzureLocation> recoveryFabricLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initialPrimaryZone"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialPrimaryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialRecoveryExtendedLocation"u8))
@@ -57,17 +57,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialRecoveryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialPrimaryFabricLocation"u8))
                 {
-                    initialPrimaryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    initialPrimaryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("initialRecoveryFabricLocation"u8))
                 {
-                    initialRecoveryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    initialRecoveryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryZone"u8))
@@ -86,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryExtendedLocation"u8))
@@ -95,21 +103,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("primaryFabricLocation"u8))
                 {
-                    primaryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryFabricLocation"u8))
                 {
-                    recoveryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }
-            return new A2AFabricSpecificLocationDetails(initialPrimaryZone.Value, initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, initialPrimaryFabricLocation.Value, initialRecoveryFabricLocation.Value, primaryZone.Value, recoveryZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, primaryFabricLocation.Value, recoveryFabricLocation.Value);
+            return new A2AFabricSpecificLocationDetails(initialPrimaryZone.Value, initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Optional.ToNullable(initialPrimaryFabricLocation), Optional.ToNullable(initialRecoveryFabricLocation), primaryZone.Value, recoveryZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation));
         }
     }
 }

@@ -97,6 +97,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
+        public async Task QueueTrigger_IfBoundToParameterBindingData_Binds()
+        {
+            string expectedContent = Guid.NewGuid().ToString();
+            await TestBindToParameterBindingData(expectedContent);
+        }
+
+        [Test]
+        public async Task QueueTrigger_IfBoundToParameterBindingDataAndMessageIsEmpty_Binds()
+        {
+            await TestBindToParameterBindingData(string.Empty);
+        }
+
+        private async Task TestBindToParameterBindingData(string expectedContent)
+        {
+            // Arrange
+            var queue = await CreateQueue(queueServiceClient, QueueName);
+            await queue.SendMessageAsync(expectedContent);
+
+            // Act
+            ParameterBindingData result = await RunTriggerAsync<ParameterBindingData>(typeof(BindToParameterBindingData),
+                (s) => BindToParameterBindingData.TaskSource = s);
+
+            var messageData = result.Content.ToObjectFromJson<Dictionary<string,object>>();
+
+            // Assert
+            Assert.True(messageData.TryGetValue("MessageText", out var text));
+            Assert.AreEqual(expectedContent, text.ToString());
+        }
+
+        [Test]
         public async Task QueueTrigger_IfBoundToStringAndMessageIsNotUtf8ByteArray_DoesNotBind()
         {
             // Arrange
@@ -757,6 +787,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var queue = client.GetQueueClient(queueName);
             await queue.CreateIfNotExistsAsync();
             return queue;
+        }
+
+        private class BindToParameterBindingData
+        {
+            public static TaskCompletionSource<ParameterBindingData> TaskSource { get; set; }
+
+            public static void Run([QueueTrigger(QueueName)] ParameterBindingData bindingData)
+            {
+                TaskSource.TrySetResult(bindingData);
+            }
         }
 
         private class BindToCloudQueueMessageProgram
