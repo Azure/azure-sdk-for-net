@@ -26,7 +26,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = client.GetBiomassModelJob("<jobId>");
+            Response response = client.GetBiomassModelJob("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -49,7 +49,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = client.GetBiomassModelJob("<jobId>");
+            Response response = client.GetBiomassModelJob("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -86,7 +86,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = await client.GetBiomassModelJobAsync("<jobId>");
+            Response response = await client.GetBiomassModelJobAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -109,7 +109,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = await client.GetBiomassModelJobAsync("<jobId>");
+            Response response = await client.GetBiomassModelJobAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -146,7 +146,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = client.GetSensorPlacementModelJob("<jobId>");
+            Response response = client.GetSensorPlacementModelJob("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -167,7 +167,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = client.GetSensorPlacementModelJob("<jobId>");
+            Response response = client.GetSensorPlacementModelJob("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -202,7 +202,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = await client.GetSensorPlacementModelJobAsync("<jobId>");
+            Response response = await client.GetSensorPlacementModelJobAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -223,7 +223,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = await client.GetSensorPlacementModelJobAsync("<jobId>");
+            Response response = await client.GetSensorPlacementModelJobAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -258,7 +258,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = client.GetSoilMoistureModelJob("<jobId>");
+            Response response = client.GetSoilMoistureModelJob("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -284,7 +284,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = client.GetSoilMoistureModelJob("<jobId>");
+            Response response = client.GetSoilMoistureModelJob("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -324,7 +324,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = await client.GetSoilMoistureModelJobAsync("<jobId>");
+            Response response = await client.GetSoilMoistureModelJobAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -350,7 +350,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
 
-            Response response = await client.GetSoilMoistureModelJobAsync("<jobId>");
+            Response response = await client.GetSoilMoistureModelJobAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());

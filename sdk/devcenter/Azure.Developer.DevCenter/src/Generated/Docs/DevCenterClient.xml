@@ -9,7 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-Response response = await client.GetProjectAsync("<projectName>");
+Response response = await client.GetProjectAsync("<projectName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -25,7 +25,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-Response response = client.GetProject("<projectName>");
+Response response = client.GetProject("<projectName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -35,25 +35,13 @@ Console.WriteLine(result.GetProperty("description").ToString());
     </member>
     <member name="GetProjectsAsync(string,int?,RequestContext)">
 <example>
-This sample shows how to call GetProjectsAsync and parse the result.
+This sample shows how to call GetProjectsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-await foreach (var item in client.GetProjectsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetProjectsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevCenterClient(endpoint, credential);
-
-await foreach (var item in client.GetProjectsAsync("<filter>", 1234))
+await foreach (var item in client.GetProjectsAsync("<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -64,25 +52,13 @@ await foreach (var item in client.GetProjectsAsync("<filter>", 1234))
     </member>
     <member name="GetProjects(string,int?,RequestContext)">
 <example>
-This sample shows how to call GetProjects and parse the result.
+This sample shows how to call GetProjects with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-foreach (var item in client.GetProjects())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetProjects with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevCenterClient(endpoint, credential);
-
-foreach (var item in client.GetProjects("<filter>", 1234))
+foreach (var item in client.GetProjects("<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -93,25 +69,13 @@ foreach (var item in client.GetProjects("<filter>", 1234))
     </member>
     <member name="GetAllDevBoxesAsync(string,int?,RequestContext)">
 <example>
-This sample shows how to call GetAllDevBoxesAsync and parse the result.
+This sample shows how to call GetAllDevBoxesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-await foreach (var item in client.GetAllDevBoxesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("poolName").ToString());
-}
-]]></code>
-This sample shows how to call GetAllDevBoxesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevCenterClient(endpoint, credential);
-
-await foreach (var item in client.GetAllDevBoxesAsync("<filter>", 1234))
+await foreach (var item in client.GetAllDevBoxesAsync("<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -144,25 +108,13 @@ await foreach (var item in client.GetAllDevBoxesAsync("<filter>", 1234))
     </member>
     <member name="GetAllDevBoxes(string,int?,RequestContext)">
 <example>
-This sample shows how to call GetAllDevBoxes and parse the result.
+This sample shows how to call GetAllDevBoxes with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-foreach (var item in client.GetAllDevBoxes())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("poolName").ToString());
-}
-]]></code>
-This sample shows how to call GetAllDevBoxes with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevCenterClient(endpoint, credential);
-
-foreach (var item in client.GetAllDevBoxes("<filter>", 1234))
+foreach (var item in client.GetAllDevBoxes("<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -201,19 +153,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-await foreach (var item in client.GetAllDevBoxesByUserAsync("<userId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("poolName").ToString());
-}
-]]></code>
-This sample shows how to call GetAllDevBoxesByUserAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevCenterClient(endpoint, credential);
-
-await foreach (var item in client.GetAllDevBoxesByUserAsync("<userId>", "<filter>", 1234))
+await foreach (var item in client.GetAllDevBoxesByUserAsync("<userId>", "<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -252,19 +192,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-foreach (var item in client.GetAllDevBoxesByUser("<userId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("poolName").ToString());
-}
-]]></code>
-This sample shows how to call GetAllDevBoxesByUser with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DevCenterClient(endpoint, credential);
-
-foreach (var item in client.GetAllDevBoxesByUser("<userId>", "<filter>", 1234))
+foreach (var item in client.GetAllDevBoxesByUser("<userId>", "<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
