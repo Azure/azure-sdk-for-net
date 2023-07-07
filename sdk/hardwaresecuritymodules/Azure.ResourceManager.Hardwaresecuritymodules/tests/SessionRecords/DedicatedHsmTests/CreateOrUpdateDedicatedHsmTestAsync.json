@@ -1,0 +1,1836 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8ca2fa7f510f0f3b201a5114745d8218-3c0f2cc860f5b09d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d902bde5d8abbfd73c0892bf4617f2b4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "448",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9f3b1667-cb6a-444c-9a55-1213d9e8ef34",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "9f3b1667-cb6a-444c-9a55-1213d9e8ef34",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152026Z:9f3b1667-cb6a-444c-9a55-1213d9e8ef34"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "subscriptionId": "75e96d09-a291-40e1-a5e6-cda78233d867",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "susolank Projects",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ae978daa1c7eda31b8a0886e99403526-5f3cfca8d67b7392-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7111bb847c090fdb488b9b6ef5ef9f5c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "448",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4f9ec255-6904-4d86-bede-520aa4124a15",
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "4f9ec255-6904-4d86-bede-520aa4124a15",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152026Z:4f9ec255-6904-4d86-bede-520aa4124a15"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "subscriptionId": "75e96d09-a291-40e1-a5e6-cda78233d867",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "susolank Projects",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourcegroups/sdkTestsRg5708?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-6c05b83fe9b07119f2fd72994d957aba-8113a0bcb15796ac-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3d16e6ce17e22784c7f7722ed7971072",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "225",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7262a5b1-915a-4725-ba8e-19af2cecad93",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "7262a5b1-915a-4725-ba8e-19af2cecad93",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152026Z:7262a5b1-915a-4725-ba8e-19af2cecad93"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708",
+        "name": "sdkTestsRg5708",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354?api-version=2021-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "282",
+        "Content-Type": "application/json",
+        "traceparent": "00-606033e1a8da282ae24d334a51c3bfd4-533808d6c069937c-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0746a686e26991f21f3d68c94c6936c8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus",
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "default",
+              "properties": {
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [
+                  {
+                    "name": "myDelegation",
+                    "properties": {
+                      "serviceName": "Microsoft.HardwareSecurityModules/dedicatedHSMs"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncNotification": "Enabled",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/1d50a3df-33c0-4358-a345-434ecd850ce8?api-version=2021-02-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "2079",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "3",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "8d598a7f-15c1-4b48-8df3-cb7e1b41ce08",
+        "x-ms-client-request-id": "0746a686e26991f21f3d68c94c6936c8",
+        "x-ms-correlation-request-id": "beedfad3-ec14-466a-9542-2c79ef3f3491",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "1d50a3df-33c0-4358-a345-434ecd850ce8",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152028Z:beedfad3-ec14-466a-9542-2c79ef3f3491"
+      },
+      "ResponseBody": {
+        "name": "dhsm-vnet-354",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354",
+        "etag": "W/\u0022178cf23c-8e0c-4e8c-9241-70313dcbf02f\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "688ba1ca-dd21-43ad-a67c-0e07eba08180",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "default",
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default",
+              "etag": "W/\u0022178cf23c-8e0c-4e8c-9241-70313dcbf02f\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [
+                  {
+                    "name": "myDelegation",
+                    "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default/delegations/myDelegation",
+                    "etag": "W/\u0022178cf23c-8e0c-4e8c-9241-70313dcbf02f\u0022",
+                    "properties": {
+                      "provisioningState": "Succeeded",
+                      "serviceName": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+                      "actions": [
+                        "Microsoft.Network/networkinterfaces/*",
+                        "Microsoft.Network/virtualNetworks/subnets/join/action"
+                      ]
+                    },
+                    "type": "Microsoft.Network/virtualNetworks/subnets/delegations"
+                  }
+                ],
+                "purpose": "HostedWorkloads",
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/1d50a3df-33c0-4358-a345-434ecd850ce8?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-606033e1a8da282ae24d334a51c3bfd4-1818372b06281f32-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b518d4aec6b0347c4a51f746bffdab09",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "30",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "3e671fb5-e926-488d-ae21-f94b1c993d92",
+        "x-ms-client-request-id": "b518d4aec6b0347c4a51f746bffdab09",
+        "x-ms-correlation-request-id": "51b136ca-8184-4976-bea5-379f2bbb8481",
+        "x-ms-ratelimit-remaining-subscription-reads": "11978",
+        "x-ms-request-id": "f96544af-634f-4ee7-9feb-35a972a5fa7a",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152028Z:51b136ca-8184-4976-bea5-379f2bbb8481"
+      },
+      "ResponseBody": {
+        "status": "InProgress"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/1d50a3df-33c0-4358-a345-434ecd850ce8?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-606033e1a8da282ae24d334a51c3bfd4-d0db447d36b78250-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "de1e0ef8d196e27919fdc4e47911202b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "16d96bcc-fa20-4fc0-b420-aa55921826bf",
+        "x-ms-client-request-id": "de1e0ef8d196e27919fdc4e47911202b",
+        "x-ms-correlation-request-id": "ab7a3755-7696-4851-812d-216b77d2502a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11977",
+        "x-ms-request-id": "e633a0e6-c286-46c1-9ab1-7da65f1abfe5",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152038Z:ab7a3755-7696-4851-812d-216b77d2502a"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-606033e1a8da282ae24d334a51c3bfd4-4a4c9f2cbd969b1e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "771b6cb28050b217b4a82b50ac468a44",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2081",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:38 GMT",
+        "ETag": "W/\u00229e81d130-cf79-453b-b48f-2f50989ad12c\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "66b846c6-aba5-41c2-b232-d3bb18f3dbf8",
+        "x-ms-client-request-id": "771b6cb28050b217b4a82b50ac468a44",
+        "x-ms-correlation-request-id": "accf96e8-6e26-4c72-afc3-4cf5103dbcfb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11976",
+        "x-ms-request-id": "a329cee7-f676-421e-b52e-a33787445fe1",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152039Z:accf96e8-6e26-4c72-afc3-4cf5103dbcfb"
+      },
+      "ResponseBody": {
+        "name": "dhsm-vnet-354",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354",
+        "etag": "W/\u00229e81d130-cf79-453b-b48f-2f50989ad12c\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "688ba1ca-dd21-43ad-a67c-0e07eba08180",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "default",
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default",
+              "etag": "W/\u00229e81d130-cf79-453b-b48f-2f50989ad12c\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [
+                  {
+                    "name": "myDelegation",
+                    "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default/delegations/myDelegation",
+                    "etag": "W/\u00229e81d130-cf79-453b-b48f-2f50989ad12c\u0022",
+                    "properties": {
+                      "provisioningState": "Succeeded",
+                      "serviceName": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+                      "actions": [
+                        "Microsoft.Network/networkinterfaces/*",
+                        "Microsoft.Network/virtualNetworks/subnets/join/action"
+                      ]
+                    },
+                    "type": "Microsoft.Network/virtualNetworks/subnets/delegations"
+                  }
+                ],
+                "purpose": "HostedWorkloads",
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "673",
+        "Content-Type": "application/json",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-05fa9c573bdfade0-00",
+        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20230707.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "62e85fd8acd5dc655b369bb30198ba39",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "location": "eastus",
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "stampId": "stamp1"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1323",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "62e85fd8acd5dc655b369bb30198ba39",
+        "x-ms-correlation-request-id": "851bc436-50a0-418d-b754-01eeecd8591b",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "07998bc7-4c0c-4d54-98a4-00add61c8c1b",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152040Z:851bc436-50a0-418d-b754-01eeecd8591b"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "CheckingQuota",
+          "statusMessage": "Resource creation in progress. Validating subscription device quota...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-0dc2bc557afe5d49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1a0b8073bd290656063e1b1ae564b01c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1323",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1a0b8073bd290656063e1b1ae564b01c",
+        "x-ms-correlation-request-id": "72ec89d5-68a2-4cdf-8c1b-c9e0654ed6e8",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11975",
+        "x-ms-request-id": "e8bcd7ba-c940-4418-a5c8-32cbeb8f6562",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152040Z:72ec89d5-68a2-4cdf-8c1b-c9e0654ed6e8"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "CheckingQuota",
+          "statusMessage": "Resource creation in progress. Validating subscription device quota...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-20cad1a209fc5660-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e11ff2ed37b2a462a6706a6981773732",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1323",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e11ff2ed37b2a462a6706a6981773732",
+        "x-ms-correlation-request-id": "c2ef5359-5ba1-44ab-a05e-3edc93c56c8b",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11974",
+        "x-ms-request-id": "99ff6eef-48ec-4c69-b291-f70fe3012e26",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152042Z:c2ef5359-5ba1-44ab-a05e-3edc93c56c8b"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "CheckingQuota",
+          "statusMessage": "Resource creation in progress. Validating subscription device quota...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-a81ef5eb1ca79f8d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8140c8009f8c730f758e4ba3189e9293",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1323",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:43 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8140c8009f8c730f758e4ba3189e9293",
+        "x-ms-correlation-request-id": "39c50271-e0aa-45cc-bd75-5aee472f5d3f",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11973",
+        "x-ms-request-id": "1166197b-ffb3-4b98-85c3-f5ec77e67ba5",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152043Z:39c50271-e0aa-45cc-bd75-5aee472f5d3f"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "CheckingQuota",
+          "statusMessage": "Resource creation in progress. Validating subscription device quota...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-f4c6862dacca1f0b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b3000dbb54093b201d6774b952ed848f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1323",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b3000dbb54093b201d6774b952ed848f",
+        "x-ms-correlation-request-id": "4fcb84b9-0d96-4e1e-8eb4-5820dd0ab757",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11972",
+        "x-ms-request-id": "62d76533-10b1-487d-b2a7-2247ad606c97",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152044Z:4fcb84b9-0d96-4e1e-8eb4-5820dd0ab757"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "CheckingQuota",
+          "statusMessage": "Resource creation in progress. Validating subscription device quota...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-74821e7f09c8d1a5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1c19e9072f234e90e2ab6b23ebbf8c07",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1323",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1c19e9072f234e90e2ab6b23ebbf8c07",
+        "x-ms-correlation-request-id": "3fb2053d-3868-4c3d-9318-be9c1419fdc5",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11971",
+        "x-ms-request-id": "3094162b-0ae7-4c08-a495-dd373e37069e",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152046Z:3fb2053d-3868-4c3d-9318-be9c1419fdc5"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "CheckingQuota",
+          "statusMessage": "Resource creation in progress. Validating subscription device quota...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-63e7f51c59c0dad0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "74add7dd8376ac28a80464252b562088",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1323",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "74add7dd8376ac28a80464252b562088",
+        "x-ms-correlation-request-id": "fc1539d3-c2ee-4d21-bd7a-d567b3253335",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11970",
+        "x-ms-request-id": "b058435b-65dd-4274-9da2-f76f783c55c4",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152051Z:fc1539d3-c2ee-4d21-bd7a-d567b3253335"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "CheckingQuota",
+          "statusMessage": "Resource creation in progress. Validating subscription device quota...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-435b5a21f643984b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2e9cbc0a76858c6f7db2d15ee8fc505e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1323",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:20:59 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2e9cbc0a76858c6f7db2d15ee8fc505e",
+        "x-ms-correlation-request-id": "ff23856d-8657-429c-b430-075c35e5c6e9",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11969",
+        "x-ms-request-id": "7dd1e30f-1513-4bbd-95a1-9c656851a28a",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152059Z:ff23856d-8657-429c-b430-075c35e5c6e9"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "CheckingQuota",
+          "statusMessage": "Resource creation in progress. Validating subscription device quota...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-733245e00d392b54-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7bdb6cda0f3f8318c06c731fca6b228b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1323",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:21:15 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7bdb6cda0f3f8318c06c731fca6b228b",
+        "x-ms-correlation-request-id": "ab1c388f-fa88-4b71-9078-79f217ec3324",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11968",
+        "x-ms-request-id": "eac51e8b-4a13-4675-956d-956b2571ef86",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152115Z:ab1c388f-fa88-4b71-9078-79f217ec3324"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "CheckingQuota",
+          "statusMessage": "Resource creation in progress. Validating subscription device quota...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-ab59e87160455384-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2e19e38b5d2366826821f7c3b2cac3ab",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1323",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:21:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2e19e38b5d2366826821f7c3b2cac3ab",
+        "x-ms-correlation-request-id": "6acbb6de-b57d-445a-ad83-1a8126065b3f",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11967",
+        "x-ms-request-id": "a5eaef4c-1d53-441f-8e9a-f643b1721651",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152147Z:6acbb6de-b57d-445a-ad83-1a8126065b3f"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "CheckingQuota",
+          "statusMessage": "Resource creation in progress. Validating subscription device quota...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-0b73ae9da5ad1078-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "be4a06b4a57bfa48a4186d18024fc111",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1822",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:22:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "be4a06b4a57bfa48a4186d18024fc111",
+        "x-ms-correlation-request-id": "78fc9975-fadf-493c-b4be-2a3dbb9a7668",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "53737008-b221-4812-ab8d-1ebb3f05abc9",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152220Z:78fc9975-fadf-493c-b4be-2a3dbb9a7668"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost1Nic",
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost2Nic",
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMMgmtNic",
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "Allocating",
+          "statusMessage": "Resource creation in progress. Updating Network Manager containers...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-3308f0ca6112e8ba-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "05d2458f21e27d3aea74131e1854d1f6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1811",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:22:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "05d2458f21e27d3aea74131e1854d1f6",
+        "x-ms-correlation-request-id": "be120ab5-d26a-4bae-bd03-0932ff9cd110",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "26d0baf5-b47a-46de-a2c8-05a841389d59",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152252Z:be120ab5-d26a-4bae-bd03-0932ff9cd110"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost1Nic",
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost2Nic",
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMMgmtNic",
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "Provisioning",
+          "statusMessage": "Resource creation in progress. Configuring the device...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-aebc8eb1b26e2fef-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c46bc8a96421e6109b1f8a0aef696318",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1811",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:23:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c46bc8a96421e6109b1f8a0aef696318",
+        "x-ms-correlation-request-id": "500a0f92-5f73-4a5a-a3e9-7e133abec850",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "dfc7630f-b685-42d0-9e65-d6b626fb59a9",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152324Z:500a0f92-5f73-4a5a-a3e9-7e133abec850"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost1Nic",
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost2Nic",
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMMgmtNic",
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "Provisioning",
+          "statusMessage": "Resource creation in progress. Configuring the device...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-dafb91571eb8e3e5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6d34e55fbef792c8cbccd3069129e14f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1811",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:23:56 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6d34e55fbef792c8cbccd3069129e14f",
+        "x-ms-correlation-request-id": "69521f00-e680-48d7-8516-fa4661bdc6e7",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11963",
+        "x-ms-request-id": "e0c6b339-2842-4b67-a704-3f1d1382cbcf",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152357Z:69521f00-e680-48d7-8516-fa4661bdc6e7"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost1Nic",
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost2Nic",
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMMgmtNic",
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "Provisioning",
+          "statusMessage": "Resource creation in progress. Configuring the device...",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9139065d1f60f177c04e8980b82edb71-33d97d64a740cbb1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3a6f7747fce42bf034ec69c3962f8d81",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1822",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:24:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3a6f7747fce42bf034ec69c3962f8d81",
+        "x-ms-correlation-request-id": "711300e4-5d0e-4ada-b4dc-3d675402291d",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11962",
+        "x-ms-request-id": "a413e6a1-1001-4620-840f-b30aad8dff7f",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152429Z:711300e4-5d0e-4ada-b4dc-3d675402291d"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost1Nic",
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost2Nic",
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMMgmtNic",
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "Succeeded",
+          "statusMessage": "The Dedicated HSM device is provisioned successfully and ready to use.",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c0a1dc9099890e73216e19b40ca94cc5-3f38c16b6722ee0c-00",
+        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20230707.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "33befb116320eafeffd8f954900a5471",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1822",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:24:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "33befb116320eafeffd8f954900a5471",
+        "x-ms-correlation-request-id": "83f1c2de-e1e6-4844-b6cb-6b0e295b5a28",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11961",
+        "x-ms-request-id": "6096e1c9-7ae6-4710-a8a9-c20914148b04",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152429Z:83f1c2de-e1e6-4844-b6cb-6b0e295b5a28"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "payShield10K_LMK1_CPS60"
+        },
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+        "name": "DedicatedHsmTest6414",
+        "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+        "location": "eastus",
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "createdByType": "Application",
+          "createdAt": "2023-07-07T15:20:39.905Z",
+          "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost1Nic",
+                "privateIpAddress": "10.0.0.4"
+              },
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost2Nic",
+                "privateIpAddress": "10.0.0.5"
+              }
+            ]
+          },
+          "managementNetworkProfile": {
+            "subnet": {
+              "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+            },
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMMgmtNic",
+                "privateIpAddress": "10.0.0.6"
+              }
+            ]
+          },
+          "provisioningState": "Succeeded",
+          "statusMessage": "The Dedicated HSM device is provisioned successfully and ready to use.",
+          "stampId": "stamp1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs?api-version=2021-11-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20230707.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "77c33b3e29fa6234f408380a5405fc9b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1834",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Jul 2023 15:24:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "77c33b3e29fa6234f408380a5405fc9b",
+        "x-ms-correlation-request-id": "f4d271bb-086e-482e-ac5a-a216dfbb9d91",
+        "x-ms-keyvault-service-version": "1.5.822.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11960",
+        "x-ms-request-id": "a4c7fe15-d5d6-462c-8ca2-88a00c810859",
+        "x-ms-routing-request-id": "NORTHEUROPE:20230707T152429Z:f4d271bb-086e-482e-ac5a-a216dfbb9d91"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "sku": {
+              "name": "payShield10K_LMK1_CPS60"
+            },
+            "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/DedicatedHsmTest6414",
+            "name": "DedicatedHsmTest6414",
+            "type": "Microsoft.HardwareSecurityModules/dedicatedHSMs",
+            "location": "eastus",
+            "tags": {
+              "Dept": "SDK Testing",
+              "Env": "df"
+            },
+            "systemData": {
+              "createdBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+              "createdByType": "Application",
+              "createdAt": "2023-07-07T15:20:39.905Z",
+              "lastModifiedBy": "8c04e2a7-4a4a-43bf-bc08-53b4847b53f1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-07-07T15:20:39.905Z"
+            },
+            "properties": {
+              "networkProfile": {
+                "subnet": {
+                  "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+                },
+                "networkInterfaces": [
+                  {
+                    "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost1Nic",
+                    "privateIpAddress": "10.0.0.4"
+                  },
+                  {
+                    "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMHost2Nic",
+                    "privateIpAddress": "10.0.0.5"
+                  }
+                ]
+              },
+              "managementNetworkProfile": {
+                "subnet": {
+                  "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/virtualNetworks/dhsm-vnet-354/subnets/default"
+                },
+                "networkInterfaces": [
+                  {
+                    "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/sdkTestsRg5708/providers/Microsoft.Network/networkInterfaces/DedicatedHsmTest6414_HSMMgmtNic",
+                    "privateIpAddress": "10.0.0.6"
+                  }
+                ]
+              },
+              "provisioningState": "Succeeded",
+              "statusMessage": "The Dedicated HSM device is provisioned successfully and ready to use.",
+              "stampId": "stamp1"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "2118196025",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "75e96d09-a291-40e1-a5e6-cda78233d867"
+  }
+}
