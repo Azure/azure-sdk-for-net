@@ -140,6 +140,7 @@ namespace Azure.Storage.DataMovement
     {
         public TransferManagerOptions() { }
         public Azure.Storage.DataMovement.Models.TransferCheckpointerOptions CheckpointerOptions { get { throw null; } set { } }
+        public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Storage.DataMovement.ErrorHandlingBehavior ErrorHandling { get { throw null; } set { } }
         public int? MaximumConcurrency { get { throw null; } set { } }
     }

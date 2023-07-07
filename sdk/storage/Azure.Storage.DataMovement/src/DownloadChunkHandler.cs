@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
@@ -74,6 +75,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private ConcurrentDictionary<long, string> _rangesCompleted;
 
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
         /// The controller for downloading the chunks to each file.
         /// </summary>
@@ -89,6 +92,9 @@ namespace Azure.Storage.DataMovement
         /// <param name="behaviors">
         /// Contains all the supported function calls.
         /// </param>
+        /// <param name="clientDiagnostics">
+        /// ClientDiagnostics for handler logging.
+        /// </param>
         /// <param name="cancellationToken">
         /// Cancellation token of the job part or job to cancel any ongoing waiting in the
         /// download chunk handler to prevent infinite waiting.
@@ -99,6 +105,7 @@ namespace Azure.Storage.DataMovement
             long expectedLength,
             IList<HttpRange> ranges,
             Behaviors behaviors,
+            ClientDiagnostics clientDiagnostics,
             CancellationToken cancellationToken)
         {
             // Create channel of finished Stage Chunk Args to update the bytesTransferred
@@ -123,6 +130,7 @@ namespace Azure.Storage.DataMovement
             }
             Argument.AssertNotNullOrEmpty(ranges, nameof(ranges));
             Argument.AssertNotNull(behaviors, nameof(behaviors));
+            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
 
             // Set values
             _copyToDestinationFile = behaviors.CopyToDestinationFile
@@ -146,6 +154,7 @@ namespace Azure.Storage.DataMovement
             _rangesCompleted = new ConcurrentDictionary<long, string>();
 
             _downloadChunkEventHandler += DownloadChunkEvent;
+            ClientDiagnostics = clientDiagnostics;
         }
 
         public async ValueTask DisposeAsync()
@@ -274,7 +283,12 @@ namespace Azure.Storage.DataMovement
             // was already disposed, and we should just ignore any more incoming events.
             if (_downloadChunkEventHandler != null)
             {
-                await _downloadChunkEventHandler.Invoke(args).ConfigureAwait(false);
+                await _downloadChunkEventHandler.RaiseAsync(
+                    args,
+                    nameof(DownloadChunkHandler),
+                    nameof(_downloadChunkEventHandler),
+                    ClientDiagnostics)
+                    .ConfigureAwait(false);
             }
         }
 
