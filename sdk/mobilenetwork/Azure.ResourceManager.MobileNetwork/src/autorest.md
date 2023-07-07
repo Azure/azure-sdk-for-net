@@ -14,6 +14,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 request-path-to-resource-name:
   /providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}: TenantPacketCoreControlPlaneVersion
   /subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}: SubscriptionPacketCoreControlPlaneVersion
@@ -47,6 +50,13 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+rename-mapping:
+  ManagedServiceIdentity: MobileNetworkManagedServiceIdentity
+  SimGroup.identity: UserAssignedIdentity
+  IdentityAndTagsObject: MobileNetworkResourcePatch
+  IdentityAndTagsObject.identity: UserAssignedIdentity
+  PacketCoreControlPlane.identity: UserAssignedIdentity
 
 directive:
   # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem

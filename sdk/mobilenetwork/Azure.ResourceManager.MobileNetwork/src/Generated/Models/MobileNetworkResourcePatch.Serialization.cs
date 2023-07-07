@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class IdentityAndTagsObject : IUtf8JsonSerializable
+    public partial class MobileNetworkResourcePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue(UserAssignedIdentity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

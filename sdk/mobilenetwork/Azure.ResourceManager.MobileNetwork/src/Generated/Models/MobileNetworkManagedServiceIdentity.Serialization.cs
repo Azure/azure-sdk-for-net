@@ -12,13 +12,13 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class ManagedServiceIdentity : IUtf8JsonSerializable
+    public partial class MobileNetworkManagedServiceIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(IdentityType.ToString());
+            writer.WriteStringValue(ManagedServiceIdentityType.ToString());
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element)
+        internal static MobileNetworkManagedServiceIdentity DeserializeMobileNetworkManagedServiceIdentity(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new ManagedServiceIdentity(type, Optional.ToDictionary(userAssignedIdentities));
+            return new MobileNetworkManagedServiceIdentity(type, Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

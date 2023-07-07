@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity used to retrieve the ingress certificate from Azure key vault. </param>
+        /// <param name="userAssignedIdentity"> The identity used to retrieve the ingress certificate from Azure key vault. </param>
         /// <param name="provisioningState"> The provisioning state of the packet core control plane resource. </param>
         /// <param name="installation"> The installation state of the packet core control plane resource. </param>
         /// <param name="sites"> Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane. </param>
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="localDiagnosticsAccess"> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </param>
         /// <param name="diagnosticsUpload"> Configuration for uploading packet core diagnostics. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
-        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.ManagedServiceIdentity identity, ProvisioningState? provisioningState, Installation installation, IList<WritableSubResource> sites, PlatformConfiguration platform, CoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, InterfaceProperties controlPlaneAccessInterface, BillingSku sku, int? ueMtu, LocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, BinaryData interopSettings) : base(id, name, resourceType, systemData, tags, location)
+        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, ProvisioningState? provisioningState, Installation installation, IList<WritableSubResource> sites, PlatformConfiguration platform, CoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, InterfaceProperties controlPlaneAccessInterface, BillingSku sku, int? ueMtu, LocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, BinaryData interopSettings) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
+            UserAssignedIdentity = userAssignedIdentity;
             ProvisioningState = provisioningState;
             Installation = installation;
             Sites = sites;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The identity used to retrieve the ingress certificate from Azure key vault. </summary>
-        public Models.ManagedServiceIdentity Identity { get; set; }
+        public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
         /// <summary> The provisioning state of the packet core control plane resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The installation state of the packet core control plane resource. </summary>

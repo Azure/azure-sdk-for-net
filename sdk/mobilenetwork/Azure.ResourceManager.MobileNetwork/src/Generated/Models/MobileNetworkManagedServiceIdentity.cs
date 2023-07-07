@@ -12,27 +12,27 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Managed service identity (User assigned identity). </summary>
-    public partial class ManagedServiceIdentity
+    public partial class MobileNetworkManagedServiceIdentity
     {
-        /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
-        /// <param name="identityType"> Type of managed service identity (currently only UserAssigned allowed). </param>
-        public ManagedServiceIdentity(ManagedServiceIdentityType identityType)
+        /// <summary> Initializes a new instance of MobileNetworkManagedServiceIdentity. </summary>
+        /// <param name="managedServiceIdentityType"> Type of managed service identity (currently only UserAssigned allowed). </param>
+        public MobileNetworkManagedServiceIdentity(ManagedServiceIdentityType managedServiceIdentityType)
         {
-            IdentityType = identityType;
+            ManagedServiceIdentityType = managedServiceIdentityType;
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
-        /// <param name="identityType"> Type of managed service identity (currently only UserAssigned allowed). </param>
+        /// <summary> Initializes a new instance of MobileNetworkManagedServiceIdentity. </summary>
+        /// <param name="managedServiceIdentityType"> Type of managed service identity (currently only UserAssigned allowed). </param>
         /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
-        internal ManagedServiceIdentity(ManagedServiceIdentityType identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        internal MobileNetworkManagedServiceIdentity(ManagedServiceIdentityType managedServiceIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
-            IdentityType = identityType;
+            ManagedServiceIdentityType = managedServiceIdentityType;
             UserAssignedIdentities = userAssignedIdentities;
         }
 
         /// <summary> Type of managed service identity (currently only UserAssigned allowed). </summary>
-        public ManagedServiceIdentityType IdentityType { get; set; }
+        public ManagedServiceIdentityType ManagedServiceIdentityType { get; set; }
         /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }

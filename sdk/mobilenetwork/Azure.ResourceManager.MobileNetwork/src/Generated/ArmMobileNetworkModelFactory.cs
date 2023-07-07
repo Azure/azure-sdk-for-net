@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity used to retrieve the ingress certificate from Azure key vault. </param>
+        /// <param name="userAssignedIdentity"> The identity used to retrieve the ingress certificate from Azure key vault. </param>
         /// <param name="provisioningState"> The provisioning state of the packet core control plane resource. </param>
         /// <param name="installation"> The installation state of the packet core control plane resource. </param>
         /// <param name="sites"> Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane. </param>
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="diagnosticsUploadStorageAccountContainerUri"> Configuration for uploading packet core diagnostics. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
         /// <returns> A new <see cref="MobileNetwork.PacketCoreControlPlaneData"/> instance for mocking. </returns>
-        public static PacketCoreControlPlaneData PacketCoreControlPlaneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ProvisioningState? provisioningState = null, Installation installation = null, IEnumerable<WritableSubResource> sites = null, PlatformConfiguration platform = null, CoreNetworkType? coreNetworkTechnology = null, string version = null, string installedVersion = null, string rollbackVersion = null, InterfaceProperties controlPlaneAccessInterface = null, BillingSku sku = default, int? ueMtu = null, LocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, Uri diagnosticsUploadStorageAccountContainerUri = null, BinaryData interopSettings = null)
+        public static PacketCoreControlPlaneData PacketCoreControlPlaneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, ProvisioningState? provisioningState = null, Installation installation = null, IEnumerable<WritableSubResource> sites = null, PlatformConfiguration platform = null, CoreNetworkType? coreNetworkTechnology = null, string version = null, string installedVersion = null, string rollbackVersion = null, InterfaceProperties controlPlaneAccessInterface = null, BillingSku sku = default, int? ueMtu = null, LocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, Uri diagnosticsUploadStorageAccountContainerUri = null, BinaryData interopSettings = null)
         {
             tags ??= new Dictionary<string, string>();
             sites ??= new List<WritableSubResource>();
 
-            return new PacketCoreControlPlaneData(id, name, resourceType, systemData, tags, location, identity, provisioningState, installation, sites?.ToList(), platform, coreNetworkTechnology, version, installedVersion, rollbackVersion, controlPlaneAccessInterface, sku, ueMtu, localDiagnosticsAccess, diagnosticsUploadStorageAccountContainerUri != null ? new DiagnosticsUploadConfiguration(diagnosticsUploadStorageAccountContainerUri) : null, interopSettings);
+            return new PacketCoreControlPlaneData(id, name, resourceType, systemData, tags, location, userAssignedIdentity, provisioningState, installation, sites?.ToList(), platform, coreNetworkTechnology, version, installedVersion, rollbackVersion, controlPlaneAccessInterface, sku, ueMtu, localDiagnosticsAccess, diagnosticsUploadStorageAccountContainerUri != null ? new DiagnosticsUploadConfiguration(diagnosticsUploadStorageAccountContainerUri) : null, interopSettings);
         }
 
         /// <summary> Initializes a new instance of Installation. </summary>
@@ -303,16 +303,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity used to retrieve the encryption key from Azure key vault. </param>
+        /// <param name="userAssignedIdentity"> The identity used to retrieve the encryption key from Azure key vault. </param>
         /// <param name="provisioningState"> The provisioning state of the SIM group resource. </param>
         /// <param name="keyUri"> A key to encrypt the SIM data that belongs to this SIM group. </param>
         /// <param name="mobileNetworkId"> Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group. </param>
         /// <returns> A new <see cref="MobileNetwork.SimGroupData"/> instance for mocking. </returns>
-        public static SimGroupData SimGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ProvisioningState? provisioningState = null, Uri keyUri = null, ResourceIdentifier mobileNetworkId = null)
+        public static SimGroupData SimGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, ProvisioningState? provisioningState = null, Uri keyUri = null, ResourceIdentifier mobileNetworkId = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SimGroupData(id, name, resourceType, systemData, tags, location, identity, provisioningState, keyUri != null ? new KeyVaultKey(keyUri) : null, mobileNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(mobileNetworkId) : null);
+            return new SimGroupData(id, name, resourceType, systemData, tags, location, userAssignedIdentity, provisioningState, keyUri != null ? new KeyVaultKey(keyUri) : null, mobileNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(mobileNetworkId) : null);
         }
 
         /// <summary> Initializes a new instance of SimPolicyData. </summary>

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.MobileNetwork
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue(UserAssignedIdentity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<Models.ManagedServiceIdentity> identity = default;
+            Optional<MobileNetworkManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
+                    identity = MobileNetworkManagedServiceIdentity.DeserializeMobileNetworkManagedServiceIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity used to retrieve the encryption key from Azure key vault. </param>
+        /// <param name="userAssignedIdentity"> The identity used to retrieve the encryption key from Azure key vault. </param>
         /// <param name="provisioningState"> The provisioning state of the SIM group resource. </param>
         /// <param name="encryptionKey"> A key to encrypt the SIM data that belongs to this SIM group. </param>
         /// <param name="mobileNetwork"> Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group. </param>
-        internal SimGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.ManagedServiceIdentity identity, ProvisioningState? provisioningState, KeyVaultKey encryptionKey, WritableSubResource mobileNetwork) : base(id, name, resourceType, systemData, tags, location)
+        internal SimGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, ProvisioningState? provisioningState, KeyVaultKey encryptionKey, WritableSubResource mobileNetwork) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
+            UserAssignedIdentity = userAssignedIdentity;
             ProvisioningState = provisioningState;
             EncryptionKey = encryptionKey;
             MobileNetwork = mobileNetwork;
         }
 
         /// <summary> The identity used to retrieve the encryption key from Azure key vault. </summary>
-        public Models.ManagedServiceIdentity Identity { get; set; }
+        public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
         /// <summary> The provisioning state of the SIM group resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> A key to encrypt the SIM data that belongs to this SIM group. </summary>

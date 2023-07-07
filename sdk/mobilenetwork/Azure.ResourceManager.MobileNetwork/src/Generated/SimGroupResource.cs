@@ -292,18 +292,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="identityAndTagsObject"> Parameters supplied to patch SIM group resource. </param>
+        /// <param name="patch"> Parameters supplied to patch SIM group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identityAndTagsObject"/> is null. </exception>
-        public virtual async Task<Response<SimGroupResource>> UpdateAsync(IdentityAndTagsObject identityAndTagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<SimGroupResource>> UpdateAsync(MobileNetworkResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(identityAndTagsObject, nameof(identityAndTagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _simGroupClientDiagnostics.CreateScope("SimGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _simGroupRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityAndTagsObject, cancellationToken).ConfigureAwait(false);
+                var response = await _simGroupRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SimGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,18 +326,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="identityAndTagsObject"> Parameters supplied to patch SIM group resource. </param>
+        /// <param name="patch"> Parameters supplied to patch SIM group resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identityAndTagsObject"/> is null. </exception>
-        public virtual Response<SimGroupResource> Update(IdentityAndTagsObject identityAndTagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<SimGroupResource> Update(MobileNetworkResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(identityAndTagsObject, nameof(identityAndTagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _simGroupClientDiagnostics.CreateScope("SimGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _simGroupRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityAndTagsObject, cancellationToken);
+                var response = _simGroupRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new SimGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new IdentityAndTagsObject();
+                    var patch = new MobileNetworkResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new IdentityAndTagsObject();
+                    var patch = new MobileNetworkResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new IdentityAndTagsObject();
+                    var patch = new MobileNetworkResourcePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new IdentityAndTagsObject();
+                    var patch = new MobileNetworkResourcePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new IdentityAndTagsObject();
+                    var patch = new MobileNetworkResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new IdentityAndTagsObject();
+                    var patch = new MobileNetworkResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

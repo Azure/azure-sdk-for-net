@@ -11,16 +11,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Identity and Tags object for patch operations. </summary>
-    public partial class IdentityAndTagsObject
+    public partial class MobileNetworkResourcePatch
     {
-        /// <summary> Initializes a new instance of IdentityAndTagsObject. </summary>
-        public IdentityAndTagsObject()
+        /// <summary> Initializes a new instance of MobileNetworkResourcePatch. </summary>
+        public MobileNetworkResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The managed service identity associated with this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
