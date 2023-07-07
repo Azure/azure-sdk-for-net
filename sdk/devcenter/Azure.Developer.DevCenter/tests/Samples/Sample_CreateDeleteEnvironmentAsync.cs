@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             var credential = new DefaultAzureCredential();
             var devCenterClient = new DevCenterClient(endpoint, credential);
             string projectName = null;
-            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
+            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1, context: new()))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 projectName = result.GetProperty("name").ToString();
@@ -34,7 +34,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             #region Snippet:Azure_DevCenter_GetCatalogItems_Scenario
             var environmentsClient = new EnvironmentsClient(endpoint, projectName, credential);
             string catalogItemName = null;
-            await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1))
+            await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1, context: new()))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 catalogItemName = result.GetProperty("name").ToString();
@@ -48,7 +48,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             #region Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
             string environmentTypeName = null;
-            await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(maxCount: 1))
+            await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(maxCount: 1, context: new()))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 environmentTypeName = result.GetProperty("name").ToString();

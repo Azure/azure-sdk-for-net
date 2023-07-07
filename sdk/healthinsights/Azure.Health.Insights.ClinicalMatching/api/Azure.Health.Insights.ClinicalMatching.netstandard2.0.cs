@@ -43,7 +43,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public double Radius { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.GeoJsonPropertiesSubType SubType { get { throw null; } }
     }
-    public static partial class AzureHealthInsightsModelFactory
+    public static partial class AzureHealthInsightsClinicalMatchingModelFactory
     {
         public static Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence ClinicalNoteEvidence(string id = null, string text = null, int offset = 0, int length = 0) { throw null; }
         public static Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement ExtendedClinicalCodedElement(string system = null, string code = null, string name = null, string value = null, string semanticType = null, string category = null) { throw null; }
@@ -559,7 +559,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class AzureHealthInsightsClientBuilderExtensions
+    public static partial class AzureHealthInsightsClinicalMatchingClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClient, Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClientOptions> AddClinicalMatchingClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClient, Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClientOptions> AddClinicalMatchingClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

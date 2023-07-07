@@ -3,13 +3,13 @@
   <members>
     <member name="GetCollectionAsync(RequestContext)">
 <example>
-This sample shows how to call GetCollectionAsync and parse the result.
+This sample shows how to call GetCollectionAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-Response response = await client.GetCollectionAsync();
+Response response = await client.GetCollectionAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
@@ -29,13 +29,13 @@ Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByTy
     </member>
     <member name="GetCollection(RequestContext)">
 <example>
-This sample shows how to call GetCollection and parse the result.
+This sample shows how to call GetCollection with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-Response response = client.GetCollection();
+Response response = client.GetCollection(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
@@ -175,13 +175,13 @@ Console.WriteLine(response.Status);
     </member>
     <member name="GetCollectionPathAsync(RequestContext)">
 <example>
-This sample shows how to call GetCollectionPathAsync and parse the result.
+This sample shows how to call GetCollectionPathAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-Response response = await client.GetCollectionPathAsync();
+Response response = await client.GetCollectionPathAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("parentFriendlyNameChain")[0].ToString());
@@ -191,13 +191,13 @@ Console.WriteLine(result.GetProperty("parentNameChain")[0].ToString());
     </member>
     <member name="GetCollectionPath(RequestContext)">
 <example>
-This sample shows how to call GetCollectionPath and parse the result.
+This sample shows how to call GetCollectionPath with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-Response response = client.GetCollectionPath();
+Response response = client.GetCollectionPath(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("parentFriendlyNameChain")[0].ToString());
@@ -207,25 +207,13 @@ Console.WriteLine(result.GetProperty("parentNameChain")[0].ToString());
     </member>
     <member name="GetChildCollectionNamesAsync(string,RequestContext)">
 <example>
-This sample shows how to call GetChildCollectionNamesAsync and parse the result.
+This sample shows how to call GetChildCollectionNamesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-await foreach (var item in client.GetChildCollectionNamesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetChildCollectionNamesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-
-await foreach (var item in client.GetChildCollectionNamesAsync("<skipToken>"))
+await foreach (var item in client.GetChildCollectionNamesAsync("<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("friendlyName").ToString());
@@ -236,25 +224,13 @@ await foreach (var item in client.GetChildCollectionNamesAsync("<skipToken>"))
     </member>
     <member name="GetChildCollectionNames(string,RequestContext)">
 <example>
-This sample shows how to call GetChildCollectionNames and parse the result.
+This sample shows how to call GetChildCollectionNames with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
 
-foreach (var item in client.GetChildCollectionNames())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetChildCollectionNames with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
-
-foreach (var item in client.GetChildCollectionNames("<skipToken>"))
+foreach (var item in client.GetChildCollectionNames("<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("friendlyName").ToString());
