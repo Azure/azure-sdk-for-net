@@ -24,7 +24,7 @@ sdk\<service name>\Azure.ResourceManager.<service>\tests\Scenario
 
 1. Considering that in Git directories exist implicitly, so you might need to create the `Scenario` directories by yourself after cloning the repo.
 
-2. There is a reserved field `<service name>` in the `assets.json` file. Please replace it with the correct value before starting to write the tests.
+2. There is a reserved field `<service name>` in the `assets.json` file. Please replace it with the correct value before starting to write the tests. The `<service name>` is the path to the `assets.json` file, for example, in `\sdk\sqlmanagement\Azure.ResourceManager.Sql\assets.json`, `<service name>` would be `sqlmanagement`.
 
 ## Writing scenario tests
 
