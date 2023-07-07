@@ -13,7 +13,7 @@ using Azure.ResourceManager.Search.Models;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Search.Tests
+namespace Azure.ResourceManager.Search.Tests.Tests
 {
     public class SearchServiceResourceTest : SearchManagementTestBase
     {
