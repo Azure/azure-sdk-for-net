@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <summary>
         /// Stops transmitting data to backend.
         /// </summary>
-        private void OpenTransmission()
+        internal void OpenTransmission()
         {
             State = TransmissionState.Open;
         }

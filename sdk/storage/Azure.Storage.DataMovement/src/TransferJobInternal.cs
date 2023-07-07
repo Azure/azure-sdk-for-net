@@ -81,7 +81,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The error handling options
         /// </summary>
-        internal ErrorHandlingOptions _errorHandling;
+        internal ErrorHandlingBehavior _errorHandling;
 
         /// <summary>
         /// Determines how files are created or if they should be overwritten if they already exists
@@ -153,7 +153,7 @@ namespace Azure.Storage.DataMovement
             DataTransfer dataTransfer,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkPointer,
-            ErrorHandlingOptions errorHandling,
+            ErrorHandlingBehavior errorHandling,
             StorageResourceCreateMode createMode,
             ArrayPool<byte> arrayPool,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
@@ -196,7 +196,7 @@ namespace Azure.Storage.DataMovement
             TransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
-            ErrorHandlingOptions errorHandling,
+            ErrorHandlingBehavior errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
             : this(dataTransfer,
@@ -229,7 +229,7 @@ namespace Azure.Storage.DataMovement
             TransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
-            ErrorHandlingOptions errorHandling,
+            ErrorHandlingBehavior errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
             : this(dataTransfer,
@@ -351,7 +351,7 @@ namespace Azure.Storage.DataMovement
             }
 
             // Cancel the entire job if one job part fails and StopOnFailure is set
-            if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures &&
+            if (_errorHandling == ErrorHandlingBehavior.StopOnAllFailures &&
                 jobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers &&
                 jobStatus != StorageTransferStatus.CancellationInProgress &&
                 jobStatus != StorageTransferStatus.CompletedWithFailedTransfers &&

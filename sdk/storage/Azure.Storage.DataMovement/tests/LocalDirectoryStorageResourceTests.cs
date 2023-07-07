@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                 // Assert
                 Assert.AreEqual(path, storageResource.Path);
-                Assert.AreEqual(ProduceUriType.NoUri, storageResource.CanProduceUri);
+                Assert.IsFalse(storageResource.CanProduceUri);
             }
         }
 

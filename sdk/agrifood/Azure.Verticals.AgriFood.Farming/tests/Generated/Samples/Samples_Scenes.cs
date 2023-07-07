@@ -26,7 +26,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = client.Download("<filePath>");
+            Response response = client.Download("<filePath>", new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -43,7 +43,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = client.Download("<filePath>");
+            Response response = client.Download("<filePath>", new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -60,7 +60,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = await client.DownloadAsync("<filePath>");
+            Response response = await client.DownloadAsync("<filePath>", new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -77,7 +77,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = await client.DownloadAsync("<filePath>");
+            Response response = await client.DownloadAsync("<filePath>", new RequestContext());
             if (response.ContentStream != null)
             {
                 using (Stream outFileStream = File.OpenWrite("<filePath>"))
@@ -94,7 +94,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>");
+            Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -111,7 +111,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>");
+            Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -146,7 +146,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>");
+            Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -163,7 +163,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>");
+            Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -358,7 +358,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = client.GetStacFeature("<collectionId>", "<featureId>");
+            Response response = client.GetStacFeature("<collectionId>", "<featureId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -377,7 +377,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = client.GetStacFeature("<collectionId>", "<featureId>");
+            Response response = client.GetStacFeature("<collectionId>", "<featureId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -406,7 +406,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = await client.GetStacFeatureAsync("<collectionId>", "<featureId>");
+            Response response = await client.GetStacFeatureAsync("<collectionId>", "<featureId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -425,7 +425,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            Response response = await client.GetStacFeatureAsync("<collectionId>", "<featureId>");
+            Response response = await client.GetStacFeatureAsync("<collectionId>", "<featureId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -454,7 +454,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            foreach (var item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>"))
+            foreach (var item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<imageNames>" }, new double[] { 3.14 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -468,7 +468,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            foreach (var item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<imageNames>" }, new double[] { 3.14 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>"))
+            foreach (var item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<imageNames>" }, new double[] { 3.14 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
@@ -496,7 +496,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>"))
+            await foreach (var item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<imageNames>" }, new double[] { 3.14 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -510,7 +510,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<imageNames>" }, new double[] { 3.14 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>"))
+            await foreach (var item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new string[] { "<imageNames>" }, new double[] { 3.14 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
