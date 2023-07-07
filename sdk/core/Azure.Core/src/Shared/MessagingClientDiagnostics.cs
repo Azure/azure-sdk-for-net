@@ -173,7 +173,7 @@ namespace Azure.Core.Shared
                 Activity? activity = Activity.Current;
                 if (activity != null)
                 {
-                    traceparent = activity!.Id!;
+                    traceparent = activity.Id!;
                     properties[DiagnosticIdAttribute] = traceparent;
                     if (ActivityExtensions.SupportsActivitySource())
                     {
