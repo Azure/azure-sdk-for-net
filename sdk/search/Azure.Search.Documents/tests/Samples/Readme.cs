@@ -12,11 +12,14 @@ using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
 #region Snippet:Azure_Search_Tests_Samples_Readme_Namespace
-using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
 using Azure.Core.GeoJson;
 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Namespace
+
+#region Snippet:Azure_Search_Readme_Identity_Namespace
+using Azure.Identity;
+#endregion
 
 namespace Azure.Search.Documents.Tests.Samples
 {
@@ -49,6 +52,25 @@ namespace Azure.Search.Documents.Tests.Samples
             AzureKeyCredential credential = new AzureKeyCredential(key);
             SearchClient client = new SearchClient(endpoint, indexName, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
+        }
+
+        [Test]
+        [SyncOnly]
+        public async Task AuthenticateWithAAD()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
+            Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
+
+            #region Snippet:Azure_Search_Readme_CreateWithDefaultAzureCredential
+            string indexName = "nycjobs";
+
+            // Get the service endpoint from the environment
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+
+            // Create a client
+            SearchClient client = new SearchClient(endpoint, indexName, credential);
+            #endregion
         }
 
 #if EXPERIMENTAL_DYNAMIC

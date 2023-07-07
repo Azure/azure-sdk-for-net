@@ -6,7 +6,7 @@ Cognitive Search doesn't host vectorization models. This presents a challenge in
 
 Please refer the [documentation](https://learn.microsoft.com/azure/search/vector-search-overview) to learn more about Vector Search.
 
-This sample will show you how to index a vector field and perform vector search.
+This sample will show you how to index a vector field and perform vector search using .NET SDK.
 
 ## Create a Vector Index
 
