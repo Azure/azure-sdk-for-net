@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ConsoleProvisioningState? ProvisioningState { get; }
         /// <summary> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </summary>
         internal SshPublicKey SshPublicKey { get; set; }
-        /// <summary> The public ssh key of the user. </summary>
+        /// <summary> The SSH public key data. </summary>
         public string KeyData
         {
             get => SshPublicKey is null ? default : SshPublicKey.KeyData;

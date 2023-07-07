@@ -15,7 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageDataMovementSharedSources)..\Models\JobPlan\*.cs" LinkBase="Shared\DataMovement\JobPlanModels" />
-    <Compile Include="$(AzureStorageDataMovementSharedSources)DataMovementExtensions.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared\Storage" />

@@ -195,13 +195,13 @@ foreach (var item in client.GetAllDevBoxes("<filter>", 1234))
     </member>
     <member name="GetAllDevBoxesByUserAsync(string,string,int?,RequestContext)">
 <example>
-This sample shows how to call GetAllDevBoxesByUserAsync and parse the result.
+This sample shows how to call GetAllDevBoxesByUserAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-await foreach (var item in client.GetAllDevBoxesByUserAsync())
+await foreach (var item in client.GetAllDevBoxesByUserAsync("<userId>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -213,7 +213,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-await foreach (var item in client.GetAllDevBoxesByUserAsync("me", "<filter>", 1234))
+await foreach (var item in client.GetAllDevBoxesByUserAsync("<userId>", "<filter>", 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -246,13 +246,13 @@ await foreach (var item in client.GetAllDevBoxesByUserAsync("me", "<filter>", 12
     </member>
     <member name="GetAllDevBoxesByUser(string,string,int?,RequestContext)">
 <example>
-This sample shows how to call GetAllDevBoxesByUser and parse the result.
+This sample shows how to call GetAllDevBoxesByUser with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-foreach (var item in client.GetAllDevBoxesByUser())
+foreach (var item in client.GetAllDevBoxesByUser("<userId>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -264,7 +264,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DevCenterClient(endpoint, credential);
 
-foreach (var item in client.GetAllDevBoxesByUser("me", "<filter>", 1234))
+foreach (var item in client.GetAllDevBoxesByUser("<userId>", "<filter>", 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());

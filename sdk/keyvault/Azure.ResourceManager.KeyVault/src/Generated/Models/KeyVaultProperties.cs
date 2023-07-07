@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the vault. </summary>
     public partial class KeyVaultProperties
     {
-
         /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="sku"> SKU details. </param>

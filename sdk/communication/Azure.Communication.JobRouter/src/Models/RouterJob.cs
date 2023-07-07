@@ -86,7 +86,7 @@ namespace Azure.Communication.JobRouter.Models
         {
             get
             {
-                return Notes != null
+                return Notes != null && Notes.Count != 0
                     ? Notes?.ToDictionary(x => (x.AddedAtUtc ?? DateTimeOffset.UtcNow)
                         .ToUniversalTime().ToString("O", CultureInfo.InvariantCulture), x => x.Message)
                     : new ChangeTrackingDictionary<string, string>();
@@ -109,7 +109,7 @@ namespace Azure.Communication.JobRouter.Models
         {
             get
             {
-                return RequestedWorkerSelectors != null
+                return RequestedWorkerSelectors != null && RequestedWorkerSelectors.Any()
                     ? RequestedWorkerSelectors.ToList()
                     : new ChangeTrackingList<RouterWorkerSelector>();
             }

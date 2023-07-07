@@ -14,7 +14,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule that defines actions to execute upon a specific trigger. </summary>
     public partial class ExceptionRule
     {
-
         /// <summary>
         /// The trigger for this exception rule
         /// Please note <see cref="ExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
