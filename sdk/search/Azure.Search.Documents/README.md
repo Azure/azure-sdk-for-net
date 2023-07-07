@@ -70,7 +70,7 @@ To interact with the Search service, you'll need to create an instance of the ap
 
 You can get the **endpoint** and an **API key** from the Search service in the [Azure Portal][https://portal.azure.com/]. Please refer the [documentation](https://docs.microsoft.com/azure/search/search-security-api-keys) for instructions on how to get an API key.
 
-Alternatively, you can use the following [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/) command to retrieve the API key from the Search service:
+Alternatively, you can use the following [Azure CLI](https://learn.microsoft.com/cli/azure/) command to retrieve the API key from the Search service:
 
 ```Powershell
 az search admin-key show --service-name <mysearch> --resource-group <mysearch-rg>
