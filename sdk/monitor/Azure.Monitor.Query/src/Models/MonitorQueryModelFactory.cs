@@ -16,7 +16,6 @@ namespace Azure.Monitor.Query.Models
     /// <summary>
     /// Model factory that enables mocking for the MetricsQueryResult class.
     /// </summary>
-    [CodeGenType("QueryModelFactory")]
     public static partial class MonitorQueryModelFactory
     {
         /// <summary> Enables the user to create an instance of a <see cref="MetricsQueryResult"/>. </summary>

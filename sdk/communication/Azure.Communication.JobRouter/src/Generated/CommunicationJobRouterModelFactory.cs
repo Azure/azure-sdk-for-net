@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class RouterModelFactory
+    public static partial class CommunicationJobRouterModelFactory
     {
         /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
         /// <param name="assignmentId"> The Id of the job assignment. </param>

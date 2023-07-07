@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class CallingServerModelFactory
+    public static partial class CommunicationCallingServerModelFactory
     {
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
         /// <param name="participants"> Participants of the call. </param>

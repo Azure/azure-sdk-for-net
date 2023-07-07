@@ -5,14 +5,14 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-[assembly: CodeGenSuppressType("RemoteRenderingModelFactory")]
+[assembly: CodeGenSuppressType("MixedRealityRemoteRenderingModelFactory")]
 
 namespace Azure.MixedReality.RemoteRendering
 {
     /// <summary>
     /// Model factory that enables mocking for the Remote Rendering library.
     /// </summary>
-    public static class RemoteRenderingModelFactory
+    public static partial class RemoteRenderingModelFactory
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AssetConversionOutput"/> class for mocking purposes.
