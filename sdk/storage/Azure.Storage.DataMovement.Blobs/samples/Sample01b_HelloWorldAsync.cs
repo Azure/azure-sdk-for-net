@@ -132,7 +132,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create Blob Data Controller to skip through all failures
                 TransferManagerOptions options = new TransferManagerOptions()
                 {
-                    ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                    ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
                 };
                 TransferManager transferManager = new TransferManager(options);
 
