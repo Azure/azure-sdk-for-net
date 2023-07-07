@@ -20,17 +20,21 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public async Task BmcKeySet()
         {
             string bmcKeySetName = Recording.GenerateAssetName("bmckeyset");
-            ResourceIdentifier bmcKeySetResourceId = BmcKeySetResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ClusterRG, TestEnvironment.ClusterName, bmcKeySetName);
+
+            // retrieve a parent cluster
+            ClusterResource cluster = Client.GetClusterResource(TestEnvironment.ClusterId);
+            cluster = await cluster.GetAsync();
+
+            ResourceIdentifier bmcKeySetResourceId = BmcKeySetResource.CreateResourceIdentifier(cluster.Id.SubscriptionId, cluster.Id.ResourceGroupName, cluster.Data.Name, bmcKeySetName);
             BmcKeySetResource bmcKeySet = Client.GetBmcKeySetResource(bmcKeySetResourceId);
 
-            ClusterResource cluster = Client.GetClusterResource(TestEnvironment.ClusterId);
             BmcKeySetCollection collection = cluster.GetBmcKeySets();
 
             // Create
             BmcKeySetData data = new BmcKeySetData
             (
-                TestEnvironment.Location,
-                new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"),
+                cluster.Data.Location,
+                cluster.Data.ClusterExtendedLocation,
                 "fake-ag-id",
                 TestEnvironment.DayFromNow,
                 BmcKeySetPrivilegeLevel.ReadOnly,
@@ -52,13 +56,13 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             var getResult = await bmcKeySet.GetAsync();
             Assert.AreEqual(bmcKeySetName, getResult.Value.Data.Name);
 
-            // List by Resource Group
-            var listByResourceGroup = new List<BmcKeySetResource>();
+            // List by cluster
+            var listByCluster = new List<BmcKeySetResource>();
             await foreach (BmcKeySetResource item in collection.GetAllAsync())
             {
-                listByResourceGroup.Add(item);
+                listByCluster.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.IsNotEmpty(listByCluster);
 
             // Update
             BmcKeySetPatch patch = new BmcKeySetPatch()

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The UnknownSecretBase. </summary>
-    internal partial class UnknownSecretBase : FactorySecretBaseDefinition
+    internal partial class UnknownSecretBase : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of UnknownSecretBase. </summary>
         /// <param name="secretBaseType"> Type of the secret. </param>

@@ -14,7 +14,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents a field in an index definition, which describes the name, data type, and search behavior of a field. </summary>
     public partial class SearchField
     {
-
         /// <summary> Initializes a new instance of SearchField. </summary>
         /// <param name="name"> The name of the field, which must be unique within the fields collection of the index or parent field. </param>
         /// <param name="type"> The data type of the field. </param>

@@ -33,7 +33,7 @@ namespace Azure.AI.Translation.Document.Models
         /// <param name="code"> Gets code error string. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <param name="target">
-        /// Gets the source of the error. 
+        /// Gets the source of the error.
         /// For example it would be "documents" or "document id" in case of invalid document.
         /// </param>
         /// <param name="innerError">
@@ -53,7 +53,7 @@ namespace Azure.AI.Translation.Document.Models
         /// <summary> Gets high level error message. </summary>
         public string Message { get; }
         /// <summary>
-        /// Gets the source of the error. 
+        /// Gets the source of the error.
         /// For example it would be "documents" or "document id" in case of invalid document.
         /// </summary>
         public string Target { get; }

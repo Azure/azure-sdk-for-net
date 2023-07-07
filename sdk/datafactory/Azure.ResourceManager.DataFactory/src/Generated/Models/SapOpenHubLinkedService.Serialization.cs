@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -64,56 +65,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Server);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Server.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Server);
             }
             if (Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SystemNumber);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemNumber.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SystemNumber);
             }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ClientId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ClientId);
             }
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Language);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Language.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Language);
             }
             if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SystemId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SystemId);
             }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, UserName);
             }
             if (Optional.IsDefined(Password))
             {
@@ -123,29 +100,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MessageServer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MessageServer.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MessageServer);
             }
             if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MessageServerService);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MessageServerService.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MessageServerService);
             }
             if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(LogonGroup);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogonGroup.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, LogonGroup);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -180,16 +145,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            Optional<BinaryData> server = default;
-            Optional<BinaryData> systemNumber = default;
-            Optional<BinaryData> clientId = default;
-            Optional<BinaryData> language = default;
-            Optional<BinaryData> systemId = default;
-            Optional<BinaryData> userName = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> messageServer = default;
-            Optional<BinaryData> messageServerService = default;
-            Optional<BinaryData> logonGroup = default;
+            Optional<DataFactoryElement<string>> server = default;
+            Optional<DataFactoryElement<string>> systemNumber = default;
+            Optional<DataFactoryElement<string>> clientId = default;
+            Optional<DataFactoryElement<string>> language = default;
+            Optional<DataFactoryElement<string>> systemId = default;
+            Optional<DataFactoryElement<string>> userName = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
+            Optional<DataFactoryElement<string>> messageServer = default;
+            Optional<DataFactoryElement<string>> messageServerService = default;
+            Optional<DataFactoryElement<string>> logonGroup = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -264,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            server = BinaryData.FromString(property0.Value.GetRawText());
+                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("systemNumber"u8))
@@ -273,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            systemNumber = BinaryData.FromString(property0.Value.GetRawText());
+                            systemNumber = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
@@ -282,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientId = BinaryData.FromString(property0.Value.GetRawText());
+                            clientId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("language"u8))
@@ -291,7 +256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            language = BinaryData.FromString(property0.Value.GetRawText());
+                            language = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("systemId"u8))
@@ -300,7 +265,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            systemId = BinaryData.FromString(property0.Value.GetRawText());
+                            systemId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userName"u8))
@@ -309,7 +274,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            userName = BinaryData.FromString(property0.Value.GetRawText());
+                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -318,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("messageServer"u8))
@@ -327,7 +292,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            messageServer = BinaryData.FromString(property0.Value.GetRawText());
+                            messageServer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("messageServerService"u8))
@@ -336,7 +301,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            messageServerService = BinaryData.FromString(property0.Value.GetRawText());
+                            messageServerService = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("logonGroup"u8))
@@ -345,7 +310,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logonGroup = BinaryData.FromString(property0.Value.GetRawText());
+                            logonGroup = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

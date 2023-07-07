@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public async Task TrunkedNetworks()
         {
             TrunkedNetworkCollection collection = ResourceGroupResource.GetTrunkedNetworks();
-            string trunkedNetworkName = TestEnvironment.TrunkedNetworkName;
+            string trunkedNetworkName = Recording.GenerateAssetName("trunkednetwork");
             string resourceGroupName = ResourceIdentifier.Parse(ResourceGroupResource.Id).ResourceGroupName;
             ResourceIdentifier trunkedNetworkResourceId = TrunkedNetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, resourceGroupName, trunkedNetworkName);
             TrunkedNetworkResource trunkedNetwork = Client.GetTrunkedNetworkResource(trunkedNetworkResourceId);
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 vlans.Add(long.Parse(item));
             }
+            var isolationDomainIds = TestEnvironment.IsolationDomainIds.Split(',');
+
             TrunkedNetworkData createData = new TrunkedNetworkData
             (
                 TestEnvironment.Location,
                 new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"),
-                new string[]
-                {
-                TestEnvironment.L3IsolationDomainId,
-                },
+                isolationDomainIds,
                 vlans
             )
             {
+                InterfaceName = TestEnvironment.InterfaceName,
                 Tags =
                 {
                     ["key1"] = "myvalue1",

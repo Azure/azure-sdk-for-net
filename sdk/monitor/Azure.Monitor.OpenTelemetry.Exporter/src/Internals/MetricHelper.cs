@@ -35,8 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     catch (Exception ex)
                     {
-                        // TODO: add additional information e.g. meter name etc.
-                        AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertMetricPoint", ex);
+                        AzureMonitorExporterEventSource.Log.FailedToConvertMetricPoint(meterName: metric.MeterName, instrumentName: metric.Name, ex: ex);
                     }
                 }
             }

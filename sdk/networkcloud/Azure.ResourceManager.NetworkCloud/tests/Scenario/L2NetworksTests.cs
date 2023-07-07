@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public async Task L2Networks()
         {
             var l2NetworkCollection = ResourceGroupResource.GetL2Networks();
-            var l2NetworkName = TestEnvironment.L2NetworkName;
+            var l2NetworkName = Recording.GenerateAssetName("l2network");
 
             var l2NetworkId = L2NetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceIdentifier.Parse(ResourceGroupResource.Id).Name, l2NetworkName);
             var l2Network = Client.GetL2NetworkResource(l2NetworkId);

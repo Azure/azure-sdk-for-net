@@ -253,7 +253,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevCenterClient(endpoint, credential);
 
-            foreach (var item in client.GetAllDevBoxesByUser())
+            foreach (var item in client.GetAllDevBoxesByUser("<userId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -268,7 +268,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevCenterClient(endpoint, credential);
 
-            foreach (var item in client.GetAllDevBoxesByUser("me", "<filter>", 1234))
+            foreach (var item in client.GetAllDevBoxesByUser("<userId>", "<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -306,7 +306,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevCenterClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllDevBoxesByUserAsync())
+            await foreach (var item in client.GetAllDevBoxesByUserAsync("<userId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("poolName").ToString());
@@ -321,7 +321,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new DevCenterClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllDevBoxesByUserAsync("me", "<filter>", 1234))
+            await foreach (var item in client.GetAllDevBoxesByUserAsync("<userId>", "<filter>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());

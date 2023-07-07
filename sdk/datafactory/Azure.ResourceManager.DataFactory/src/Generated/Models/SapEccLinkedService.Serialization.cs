@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,11 +63,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            JsonSerializer.Serialize(writer, Uri);
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
+                JsonSerializer.Serialize(writer, Username);
             }
             if (Optional.IsDefined(Password))
             {
@@ -106,9 +107,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            Uri url = default;
-            Optional<string> username = default;
-            Optional<FactorySecretBaseDefinition> password = default;
+            DataFactoryElement<string> url = default;
+            Optional<DataFactoryElement<string>> username = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,12 +180,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("url"u8))
                         {
-                            url = new Uri(property0.Value.GetString());
+                            url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("username"u8))
                         {
-                            username = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -193,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

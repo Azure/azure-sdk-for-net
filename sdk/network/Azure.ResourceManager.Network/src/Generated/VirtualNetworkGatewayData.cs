@@ -59,7 +59,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableBgpRouteTranslationForNat"> EnableBgpRouteTranslationForNat flag. </param>
         /// <param name="allowVirtualWanTraffic"> Configures this gateway to accept traffic from remote Virtual WAN networks. </param>
         /// <param name="allowRemoteVnetTraffic"> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </param>
-        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, AddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic) : base(id, name, resourceType, location, tags)
+        /// <param name="adminState"> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </param>
+        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, AddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.Network
             EnableBgpRouteTranslationForNat = enableBgpRouteTranslationForNat;
             AllowVirtualWanTraffic = allowVirtualWanTraffic;
             AllowRemoteVnetTraffic = allowRemoteVnetTraffic;
+            AdminState = adminState;
         }
 
         /// <summary> The extended location of type local virtual network gateway. </summary>
@@ -161,5 +163,7 @@ namespace Azure.ResourceManager.Network
         public bool? AllowVirtualWanTraffic { get; set; }
         /// <summary> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </summary>
         public bool? AllowRemoteVnetTraffic { get; set; }
+        /// <summary> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </summary>
+        public ExpressRouteGatewayAdminState? AdminState { get; set; }
     }
 }

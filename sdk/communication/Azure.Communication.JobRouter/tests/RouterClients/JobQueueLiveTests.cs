@@ -41,7 +41,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        [Ignore(reason: "Known bug: fix required for update queue")]
         public async Task UpdateQueueTest()
         {
             JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
