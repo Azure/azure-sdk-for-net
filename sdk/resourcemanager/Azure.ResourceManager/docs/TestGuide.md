@@ -6,6 +6,8 @@ We use [NUnit 3][nunit] as our testing framework.
 
 [Azure.Core.TestFramework's testing framework][core_tests] provides a set of reusable primitives that simplify writing tests for new Azure SDK libraries.
 
+The installation of `Test proxy` is a prerequisite for running the tests. Please run the `test-proxy --version` to ensure that test proxy is installed on your computer. If it is not installed, Please refer to [this document](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md#installation) for the installation of the test proxy.
+
 ## Testing project structure
 
 With the help of [Azure.ResourceManager.Template][mgmt_template], the basic testing project and file structure(see following for details) will be generated under `sdk\<service name>\Azure.ResourceManager.<service>\tests` directory.
@@ -22,7 +24,7 @@ sdk\<service name>\Azure.ResourceManager.<service>\tests\Scenario
 
 1. Considering that in Git directories exist implicitly, so you might need to create the `Scenario` directories by yourself after cloning the repo.
 
-2. In assets.json, there is a reserved field "<service name>" in "TagPrefix". Please replace it with the correct value before starting to write the tests.
+2. There is a reserved field `<service name>` in the `assets.json` file. Please replace it with the correct value before starting to write the tests.
 
 ## Writing scenario tests
 
@@ -91,17 +93,19 @@ If you are using system environment variables, make sure to restart Visual Studi
 
 ## Test proxy
 
-Using the test proxy tool, migrate the local recording files to the external repository [azure-sdk-assets](https://github.com/Azure/azure-sdk-assets). Please refer to [this document](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md#installation) for the installation of the test proxy.
+Using the test proxy tool, migrate the local recording files to the external repository [azure-sdk-assets](https://github.com/Azure/azure-sdk-assets). 
 
 > If an RP's root directory contains an `assets.json` file, it means that all local recording files for that RP have been migrated to the `azure-sdk-assets` repo.
 
-1. Running tests
+1. Restore recording files
 
-After migrating the recording files, you can run the tests again or execute the following command to download the recording files from the remote repository to the local machine:
+If the value of the "tag" field is not empty in the `assets.json` file, it means that the service has recording files in the remote repository. You can use the following command to download them to your local machine.
+
 ```
 cd azure-sdk-for-net/sdk/{service}/{package}
 test-proxy restore -a ./assets.json
 ```
+
 The local recording files will be stored in `azure-sdk-for-net/.assets/{10-character}/net/sdk/{service name}/{service}/tests/SessionRecords`.
 
 2. Push the recording files to the assets repository.
