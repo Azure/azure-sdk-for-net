@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Core.Experimental.SchemaValidator
 {
@@ -26,6 +27,32 @@ namespace Azure.Core.Experimental.SchemaValidator
         /// <param name="dataType">The type of data to validate.</param>
         /// <param name="schemaDefinition">The schema definition to validate against.</param>
         public abstract bool IsValid(object data, Type dataType, string schemaDefinition);
+
+        /// <summary>
+        /// Validates that <paramref name="data"/> is valid according to <paramref name="schemaDefinition"/>.
+        /// </summary>
+        /// <param name="data">The data to validate.</param>
+        /// <param name="dataType">The type of data to validate.</param>
+        /// <param name="schemaDefinition">The schema definition to validate against.</param>
+        /// <param name="validationErrors"></param>
+        /// <returns></returns>
+        public abstract bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors);
+
+        /// <summary>
+        /// Validates that <paramref name="data"/> is valid according to <paramref name="schemaDefinition"/>. If the object is not valid,
+        /// this method throws an <see cref="AggregateException"/> containing all of the validation errors.
+        /// </summary>
+        /// <param name="data">The data to validate.</param>
+        /// <param name="dataType">The type of data to validate.</param>
+        /// <param name="schemaDefinition">The schema definition to validate against.</param>
+        /// <exception cref="AggregateException"> is thrown </exception>
+        public virtual void Validate(object data, Type dataType, string schemaDefinition)
+        {
+            if (!TryValidate(data, dataType, schemaDefinition, out var errors))
+            {
+                throw new AggregateException(errors);
+            }
+        }
 
         /// <summary>
         /// Generates a schema from <paramref name="dataType"/> and returns it as a string.
