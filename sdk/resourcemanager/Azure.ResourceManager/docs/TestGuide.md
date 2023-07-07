@@ -95,26 +95,28 @@ If you are using system environment variables, make sure to restart Visual Studi
 
 Using the test proxy tool, migrate the local recording files to the external repository [azure-sdk-assets](https://github.com/Azure/azure-sdk-assets). 
 
-> If an RP's root directory contains an `assets.json` file, it means that all local recording files for that RP have been migrated to the `azure-sdk-assets` repo.
+The local recording files will be stored in `azure-sdk-for-net/.assets/{10-character}/net/sdk/{service name}/{service}/tests/SessionRecords`. 
 
 1. Restore recording files
 
-If the value of the "tag" field is not empty in the `assets.json` file, it means that the service has recording files in the remote repository. You can use the following command to download them to your local machine.
+If the value of the "tag" field is not empty in the `assets.json` file, it means that the service has recording files in the remote repository. You can use the following command or playback any cases to download them to your local machine.
 
 ```
 cd azure-sdk-for-net/sdk/{service}/{package}
 test-proxy restore -a ./assets.json
 ```
 
-The local recording files will be stored in `azure-sdk-for-net/.assets/{10-character}/net/sdk/{service name}/{service}/tests/SessionRecords`.
+2. Run tests
 
-2. Push the recording files to the assets repository.
+The recording files generated during the testing will be directly saved to the SessionRecords directory under the `/.assets` folder. Similarly, the playback will also use the recording files in the same directory.
+
+3. Push the recording files to the assets repository.
 
 ```
 cd azure-sdk-for-net/sdk/{service}/{package}
 test-proxy push -a ./assets.json
 ```
-The test-proxy push command will upload the corresponding SessionRecords files under `\.assets` and update the tag in `assets.json`.
+The test-proxy push command will upload the corresponding SessionRecords files under the `/.assets` folder and update the tag in `assets.json`.
 
 After the push is complete, you can find the corresponding tag in the `Switch branches/tags` section of the [azure-sdk-assets](https://github.com/Azure/azure-sdk-assets) repo  to verify the recording files you uploaded.
 
