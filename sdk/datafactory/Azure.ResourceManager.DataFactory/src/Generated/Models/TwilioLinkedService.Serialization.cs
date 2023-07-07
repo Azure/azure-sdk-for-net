@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,11 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("userName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, UserName);
             writer.WritePropertyName("password"u8);
             writer.WriteObjectValue(Password);
             writer.WriteEndObject();
@@ -93,8 +90,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData userName = default;
-            FactorySecretBaseDefinition password = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecretBaseDefinition password = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,12 +161,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("userName"u8))
                         {
-                            userName = BinaryData.FromString(property0.Value.GetRawText());
+                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
                         {
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                     }

@@ -37,7 +37,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             // todo: non-server spans
             if (activity.Kind == ActivityKind.Server)
             {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
+                Tags[ContextTagKeys.AiOperationName.ToString()] = activityTagsProcessor.activityType.HasFlag(OperationType.V2)
+                                                                    ? TraceHelper.GetV2OperationName(activity, null, ref activityTagsProcessor.MappedTags)
+                                                                    : TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
                 Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
             }
 

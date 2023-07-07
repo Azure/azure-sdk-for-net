@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 "65046:10039"
 },
                 },
-                OptionAProperties = new OptionAProperties()
+                OptionAProperties = new Layer3OptionAProperties()
                 {
                     Mtu = 1500,
                     VlanId = 1001,

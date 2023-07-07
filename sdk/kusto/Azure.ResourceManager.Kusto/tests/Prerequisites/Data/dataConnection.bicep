@@ -1,5 +1,6 @@
 param id string
 param location string
+param user_assigned_identity_principal_id string
 
 var eventHubNamespaceName = 'sdkEventHubNamespace${id}'
 var eventHubName = 'sdkEventHub${id}'
@@ -71,3 +72,18 @@ resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2022-08-15' = {
 output COSMOSDB_ACCOUNT_ID string = cosmosDbAccount.id
 output COSMOSDB_DATABASE_NAME string = cosmosDbDatabaseName
 output COSMOSDB_CONTAINER_NAME string = cosmosDbContainerName
+
+resource cosmosDBAccountReaderRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+  scope: cosmosDbAccount
+  name: 'fbdf93bf-df7d-467e-a4d2-9458aa1360c8'
+}
+
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: cosmosDbAccount
+  name: guid(cosmosDbAccountName, user_assigned_identity_principal_id, cosmosDBAccountReaderRoleDefinition.id)
+  properties: {
+    roleDefinitionId: cosmosDBAccountReaderRoleDefinition.id
+    principalId: user_assigned_identity_principal_id
+    principalType: 'ServicePrincipal'
+  }
+}

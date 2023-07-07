@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,11 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("value"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Value);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Value);
             writer.WriteEndObject();
         }
 
@@ -34,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string name = default;
-            BinaryData value = default;
+            DataFactoryElement<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -44,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    value = BinaryData.FromString(property.Value.GetRawText());
+                    value = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
             }

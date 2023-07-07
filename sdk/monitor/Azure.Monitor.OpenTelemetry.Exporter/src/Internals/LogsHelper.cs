@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertLogRecord", ex);
+                    AzureMonitorExporterEventSource.Log.FailedToConvertLogRecord(instrumentationKey, ex);
                 }
             }
 
@@ -66,9 +66,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             string? message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
 
-            if (logRecord.StateValues != null)
+            if (logRecord.Attributes != null)
             {
-                ExtractProperties(ref message, properties, logRecord.StateValues);
+                ExtractProperties(ref message, properties, logRecord.Attributes);
             }
 
             WriteScopeInformation(logRecord, properties);

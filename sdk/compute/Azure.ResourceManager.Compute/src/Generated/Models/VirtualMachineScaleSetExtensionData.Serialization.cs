@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class VirtualMachineScaleSetExtensionData : IUtf8JsonSerializable
     {
-
         internal static VirtualMachineScaleSetExtensionData DeserializeVirtualMachineScaleSetExtensionData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

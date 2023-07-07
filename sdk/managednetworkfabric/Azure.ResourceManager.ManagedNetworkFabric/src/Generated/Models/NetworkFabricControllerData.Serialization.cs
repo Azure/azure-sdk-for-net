@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> annotation = default;
             Optional<IList<ExpressRouteConnectionInformation>> infrastructureExpressRouteConnections = default;
             Optional<IList<ExpressRouteConnectionInformation>> workloadExpressRouteConnections = default;
-            Optional<NetworkFabricControllerPropertiesInfrastructureServices> infrastructureServices = default;
-            Optional<NetworkFabricControllerPropertiesWorkloadServices> workloadServices = default;
-            Optional<NetworkFabricControllerPropertiesManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
+            Optional<InfrastructureServices> infrastructureServices = default;
+            Optional<WorkloadServices> workloadServices = default;
+            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
             Optional<IReadOnlyList<string>> networkFabricIds = default;
             Optional<bool> workloadManagementNetwork = default;
             Optional<string> ipv4AddressSpace = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            infrastructureServices = NetworkFabricControllerPropertiesInfrastructureServices.DeserializeNetworkFabricControllerPropertiesInfrastructureServices(property0.Value);
+                            infrastructureServices = InfrastructureServices.DeserializeInfrastructureServices(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workloadServices"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            workloadServices = NetworkFabricControllerPropertiesWorkloadServices.DeserializeNetworkFabricControllerPropertiesWorkloadServices(property0.Value);
+                            workloadServices = WorkloadServices.DeserializeWorkloadServices(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = NetworkFabricControllerPropertiesManagedResourceGroupConfiguration.DeserializeNetworkFabricControllerPropertiesManagedResourceGroupConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkFabricIds"u8))

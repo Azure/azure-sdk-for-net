@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of InternalNetworkPatch. </summary>
         public InternalNetworkPatch()
         {
-            ConnectedIPv4Subnets = new ChangeTrackingList<InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem>();
-            ConnectedIPv6Subnets = new ChangeTrackingList<InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem>();
+            ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();
+            ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Maximum transmission unit. Default value is 1500. </summary>
         public int? Mtu { get; set; }
-        /// <summary> List with object connectedIPv4Subnets. </summary>
-        public IList<InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem> ConnectedIPv4Subnets { get; }
-        /// <summary> List with object connectedIPv6Subnets. </summary>
-        public IList<InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem> ConnectedIPv6Subnets { get; }
-        /// <summary> staticRouteConfiguration model. </summary>
-        public InternalNetworkPatchablePropertiesStaticRouteConfiguration StaticRouteConfiguration { get; set; }
+        /// <summary> List with object connected IPv4 Subnets. </summary>
+        public IList<ConnectedSubnet> ConnectedIPv4Subnets { get; }
+        /// <summary> List with object connected IPv6 Subnets. </summary>
+        public IList<ConnectedSubnet> ConnectedIPv6Subnets { get; }
+        /// <summary> Static Route Configuration properties. </summary>
+        public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
         /// <summary> BGP configuration properties. </summary>
-        public InternalNetworkPatchablePropertiesBgpConfiguration BgpConfiguration { get; set; }
+        public BgpConfiguration BgpConfiguration { get; set; }
         /// <summary> ARM resource ID of importRoutePolicy. </summary>
         public string ImportRoutePolicyId { get; set; }
         /// <summary> ARM resource ID of importRoutePolicy. </summary>

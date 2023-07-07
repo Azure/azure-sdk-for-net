@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
                     break;
                 default:
-                    AzureMonitorExporterEventSource.Log.WriteWarning("MetricDataPoint", $"Unsupported MetricType '{metric.MetricType}'");
+                    AzureMonitorExporterEventSource.Log.UnsupportedMetricType(metric.MetricType.ToString());
                     break;
             }
         }
