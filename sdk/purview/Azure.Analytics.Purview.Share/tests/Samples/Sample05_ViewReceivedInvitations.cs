@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
 #endif
 
             // View received invitations
-            var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync().ToEnumerableAsync();
+            var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync(null, null, null, new()).ToEnumerableAsync();
             #endregion Snippet:Azure_Analytics_Purview_Share_Samples_ViewReceivedInvitations
         }
     }

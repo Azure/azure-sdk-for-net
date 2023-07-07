@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Models.JobPlan;
 
@@ -89,6 +90,8 @@ namespace Azure.Storage.DataMovement
         internal ArrayPool<byte> UploadArrayPool => _arrayPool;
         private ArrayPool<byte> _arrayPool;
 
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
         /// Protected constructor for mocking.
         /// </summary>
@@ -128,6 +131,7 @@ namespace Azure.Storage.DataMovement
             _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
             _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : ErrorHandlingBehavior.StopOnAllFailures;
+            ClientDiagnostics = new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default);
         }
 
         #region Job Channel Management
@@ -516,7 +520,8 @@ namespace Azure.Storage.DataMovement
                         queueChunkTask: QueueJobChunkAsync,
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
-                        arrayPool: _arrayPool);
+                        arrayPool: _arrayPool,
+                        clientDiagnostics: ClientDiagnostics);
 
                     if (resumeJob)
                     {
@@ -555,7 +560,8 @@ namespace Azure.Storage.DataMovement
                         queueChunkTask: QueueJobChunkAsync,
                         CheckPointFolderPath: _checkpointer,
                         errorHandling: _errorHandling,
-                        arrayPool: _arrayPool);
+                        arrayPool: _arrayPool,
+                        clientDiagnostics: ClientDiagnostics);
 
                     if (resumeJob)
                     {
@@ -587,7 +593,8 @@ namespace Azure.Storage.DataMovement
                         queueChunkTask: QueueJobChunkAsync,
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
-                        arrayPool: _arrayPool);
+                        arrayPool: _arrayPool,
+                        clientDiagnostics: ClientDiagnostics);
 
                     if (resumeJob)
                     {
@@ -632,7 +639,8 @@ namespace Azure.Storage.DataMovement
                         queueChunkTask: QueueJobChunkAsync,
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
-                        arrayPool: _arrayPool);
+                        arrayPool: _arrayPool,
+                        clientDiagnostics: ClientDiagnostics);
 
                     if (resumeJob)
                     {
@@ -678,7 +686,8 @@ namespace Azure.Storage.DataMovement
                         queueChunkTask: QueueJobChunkAsync,
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
-                        arrayPool: _arrayPool);
+                        arrayPool: _arrayPool,
+                        clientDiagnostics: ClientDiagnostics);
 
                     if (resumeJob)
                     {
@@ -717,7 +726,8 @@ namespace Azure.Storage.DataMovement
                         queueChunkTask: QueueJobChunkAsync,
                         checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
-                        arrayPool: _arrayPool);
+                        arrayPool: _arrayPool,
+                        clientDiagnostics: ClientDiagnostics);
 
                     if (resumeJob)
                     {

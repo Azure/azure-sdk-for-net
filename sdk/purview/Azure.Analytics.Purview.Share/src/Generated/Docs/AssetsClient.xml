@@ -8,7 +8,7 @@ This sample shows how to call GetAssetAsync with required parameters and parse t
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetAssetAsync("<sentShareName>", "<assetName>");
+Response response = await client.GetAssetAsync("<sentShareName>", "<assetName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -25,7 +25,7 @@ This sample shows how to call GetAsset with required parameters and parse the re
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetAsset("<sentShareName>", "<assetName>");
+Response response = client.GetAsset("<sentShareName>", "<assetName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -42,19 +42,7 @@ This sample shows how to call GetAssetsAsync with required parameters and parse 
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-await foreach (var item in client.GetAssetsAsync("<sentShareName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("kind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAssetsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new AssetsClient("<https://my-service.azure.com>", credential);
-
-await foreach (var item in client.GetAssetsAsync("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
+await foreach (var item in client.GetAssetsAsync("<sentShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
@@ -72,19 +60,7 @@ This sample shows how to call GetAssets with required parameters and parse the r
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-foreach (var item in client.GetAssets("<sentShareName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("kind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAssets with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new AssetsClient("<https://my-service.azure.com>", credential);
-
-foreach (var item in client.GetAssets("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
+foreach (var item in client.GetAssets("<sentShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
