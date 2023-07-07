@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         }
 
 
-        public enum ActionTestTypes { NullClaims, EmptyClaims, NullClaimId, EmptyClaimsId, EmptyValueString, NullValue, EmptyValueArray, EmptyValueStringArray, EmptyMixedArray }
+        public enum ActionTestTypes { NullClaims, EmptyClaims, NullClaimId, EmptyClaimsId, EmptyValueString, NullValue, EmptyValueArray, EmptyValueStringArray, EmptyMixedArray, NullAction }
 
         [Test]
         [TestCase(ActionTestTypes.NullClaims)]
@@ -76,6 +76,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         [TestCase(ActionTestTypes.EmptyValueArray)]
         [TestCase(ActionTestTypes.EmptyValueStringArray)]
         [TestCase(ActionTestTypes.EmptyMixedArray)]
+        [TestCase(ActionTestTypes.NullAction)]
         public async Task TokenIssuanceStartActionTest(ActionTestTypes actionTestTypes)
         {
             (TokenIssuanceAction action, HttpStatusCode expectReturnCode, string expectedResponse) = GetActionTestExepected(actionTestTypes);
@@ -107,6 +108,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case ActionTestTypes.EmptyValueArray: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { }) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.provideClaimsForToken\",\"claims\":{\"key\":[]}}]}}");
                 case ActionTestTypes.EmptyValueStringArray: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { String.Empty, String.Empty }) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.provideClaimsForToken\",\"claims\":{\"key\":[\"\",\"\"]}}]}}");
                 case ActionTestTypes.EmptyMixedArray: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { String.Empty, null, " " }) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.provideClaimsForToken\",\"claims\":{\"key\":[\"\",null,\" \"]}}]}}");
+                case ActionTestTypes.NullAction: return (null, HttpStatusCode.BadRequest, "{\"errors\":[\"No Actions Found. Please supply atleast one action.\"]}");
                 default: return (null, HttpStatusCode.InternalServerError, null);
             }
         }

@@ -36,11 +36,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             base.Invalidate();
         }
 
+        /// <summary>
+        /// If the response has no actions, mark as failed.
+        /// </summary>
 		internal override void ValidateActions()
 		{
-            if (Actions.Count == 0)
+            if (Actions == null || Actions.Count == 0 || Actions[0] == null)
             {
-                this.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                MarkAsFailed(new Exception("No Actions Found. Please supply atleast one action."), false);
             }
 		}
 	}
