@@ -60,7 +60,8 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="publicIPType"> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </param>
         /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
-        internal KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, ManagedServiceIdentity identity, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
+        internal KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, ManagedServiceIdentity identity, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
             PublicIPType = publicIPType;
             VirtualClusterGraduationProperties = virtualClusterGraduationProperties;
             PrivateEndpointConnections = privateEndpointConnections;
+            MigrationCluster = migrationCluster;
         }
 
         /// <summary> The SKU of the cluster. </summary>
@@ -153,5 +155,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public string VirtualClusterGraduationProperties { get; set; }
         /// <summary> A list of private endpoint connections. </summary>
         public IReadOnlyList<KustoPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> Properties of the peer cluster involved in a migration to/from this cluster. </summary>
+        public MigrationClusterProperties MigrationCluster { get; }
     }
 }
