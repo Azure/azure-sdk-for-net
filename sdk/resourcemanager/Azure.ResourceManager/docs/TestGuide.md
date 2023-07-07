@@ -11,18 +11,18 @@ We use [NUnit 3][nunit] as our testing framework.
 With the help of [Azure.ResourceManager.Template][mgmt_template], the basic testing project and file structure(see following for details) will be generated under `sdk\<service name>\Azure.ResourceManager.<service>\tests` directory.
 
 ```text
+sdk\<service name>\Azure.ResourceManager.<service>\assets.json
 sdk\<service name>\Azure.ResourceManager.<service>\tests\Azure.ResourceManager.<service>.Tests.csproj
 sdk\<service name>\Azure.ResourceManager.<service>\tests\<service>ManagementTestBase.cs
 sdk\<service name>\Azure.ResourceManager.<service>\tests\<service>ManagementTestEnvironment.cs
 sdk\<service name>\Azure.ResourceManager.<service>\tests\Scenario
-sdk\<service name>\Azure.ResourceManager.<service>\tests\SessionRecords
 ```
 
 **Note**: 
 
-1. Considering that in Git directories exist implicitly, so you might need to create the `Scenario` and `SessionRecords` directories by yourself after cloning the repo.
+1. Considering that in Git directories exist implicitly, so you might need to create the `Scenario` directories by yourself after cloning the repo.
 
-2. The recording files under SessionRecords will eventually be migrated to the assets repository by the test proxy. For more details, please refer to [these steps](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/TestGuide.md#test-proxy).
+2. In assets.json, there is a reserved field "<service name>" in "TagPrefix". Please replace it with the correct value before starting to write the tests.
 
 ## Writing scenario tests
 
@@ -77,7 +77,7 @@ In order to run the tests, the following environment variables need to be set:
 
 **Note**:
 
-1. Our testing framework supports three different test modes: `Live`, `Playback`, `Record`. In management plane, please set the `AZURE_TEST_MODE` to `Record` for your first test run, this will record HTTP requests and responses and store the record files in `SessionRecords` folder. Properly supporting recorded tests does require a few extra considerations. All random values should be obtained via `this.Recording.Random` since we use the same seed on test playback to ensure our client code generates the same "random" values each time. You can't share any state between tests or rely on ordering because you don't know the order they'll be recorded or replayed. Any sensitive values are redacted via the [`ConfigurationRecordedTestSanitizer`][test_sanitizer]. After you have successfully recorded all the tests for the first time, you can change its value to `Playback`. If the tests locally fail due to recording session file mismatches at this point, the attribute `RecordedTest` will help enable automatically re-record failed tests.
+1. Our testing framework supports three different test modes: `Live`, `Playback`, `Record`. In management plane, please set the `AZURE_TEST_MODE` to `Record` for your first test run, this will record HTTP requests and responses and store the record files in the `SessionRecords folder corresponding to the ./assets directory`. Properly supporting recorded tests does require a few extra considerations. All random values should be obtained via `this.Recording.Random` since we use the same seed on test playback to ensure our client code generates the same "random" values each time. You can't share any state between tests or rely on ordering because you don't know the order they'll be recorded or replayed. Any sensitive values are redacted via the [`ConfigurationRecordedTestSanitizer`][test_sanitizer]. After you have successfully recorded all the tests for the first time, you can change its value to `Playback`. If the tests locally fail due to recording session file mismatches at this point, the attribute `RecordedTest` will help enable automatically re-record failed tests.
 
 2. You need to change its value depending on the Azure Cloud type you are using in your tests. `https://login.microsoftonline.com` only applies to Azure Public Cloud.
 
@@ -95,20 +95,16 @@ Using the test proxy tool, migrate the local recording files to the external rep
 
 > If an RP's root directory contains an `assets.json` file, it means that all local recording files for that RP have been migrated to the `azure-sdk-assets` repo.
 
-1. How to migrate recordings
- 
-The Engineering System team provided a PowerShell script that can be used to migrate recordings automatically, but it needs to be executed once for each package. To get the script and guidance on how to run it, see: [Transitioning recording assets from language repositories into azure-sdk-assets](https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2FAzure%2Fazure-sdk-tools%2Fblob%2Fmain%2Feng%2Fcommon%2Ftestproxy%2Ftransition-scripts%2FREADME.md&data=05%7C01%7Cv-minghc%40microsoft.com%7C884353a5d83a4f7daef608db6d61e24b%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C638224039445940738%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=ZKJqiD58%2FC6LvkWrG1iY2%2F7dRSQarAXsO9se7ftl1pE%3D&reserved=0)
-
-2. Running tests
+1. Running tests
 
 After migrating the recording files, you can run the tests again or execute the following command to download the recording files from the remote repository to the local machine:
 ```
 cd azure-sdk-for-net/sdk/{service}/{package}
 test-proxy restore -a ./assets.json
 ```
-The local recording files will be stored in `azure-sdk-for-net/.assets/{10-character}/net/sdk/{service}/{package}/tests/SessionRecords`.
+The local recording files will be stored in `azure-sdk-for-net/.assets/{10-character}/net/sdk/{service name}/{service}/tests/SessionRecords`.
 
-3. Push the recording files to the assets repository.
+2. Push the recording files to the assets repository.
 
 ```
 cd azure-sdk-for-net/sdk/{service}/{package}
