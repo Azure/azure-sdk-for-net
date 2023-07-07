@@ -1131,9 +1131,8 @@ namespace Azure.Core.Serialization
     }
     public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IModelSerializable>
     {
-        public ModelJsonConverter() { }
-        public ModelJsonConverter(bool ignoreAdditionalProperties) { }
-        public bool IgnoreAdditionalProperties { get { throw null; } set { } }
+        public ModelJsonConverter(string format = "D") { }
+        public string Format { get { throw null; } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override Azure.Core.Serialization.IModelSerializable Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.IModelSerializable value, System.Text.Json.JsonSerializerOptions options) { }
@@ -1145,9 +1144,8 @@ namespace Azure.Core.Serialization
     }
     public partial class ModelSerializerOptions
     {
-        public ModelSerializerOptions() { }
-        public bool IgnoreAdditionalProperties { get { throw null; } set { } }
-        public bool IgnoreReadOnlyProperties { get { throw null; } set { } }
+        public ModelSerializerOptions(string format = "D") { }
+        public string Format { get { throw null; } }
         public string? NameHint { get { throw null; } set { } }
         public bool PrettyPrint { get { throw null; } set { } }
         public System.Collections.Generic.Dictionary<System.Type, Azure.Core.Serialization.ObjectSerializer> Serializers { get { throw null; } }
