@@ -6,7 +6,7 @@
 - Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md).
 
 ### Bugs Fixed
-- Fixed issue with `QueryCaptionsType.None` in semantic search, resolving an invalid response to the service - [issue](https://github.com/Azure/azure-sdk-for-net/issues/37164)..
+- Fixed issue with `QueryCaptionsType.None` in semantic search, resolving an invalid response to the service - [issue](https://github.com/Azure/azure-sdk-for-net/issues/37164).
 
 ## 11.5.0-beta.2 (2022-10-11)
 
