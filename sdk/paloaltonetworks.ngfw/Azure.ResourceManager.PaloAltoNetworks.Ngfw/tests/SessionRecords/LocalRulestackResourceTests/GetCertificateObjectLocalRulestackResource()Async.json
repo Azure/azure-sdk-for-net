@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0c0443b00477df1aa62dc8e0d7180a11-d1bf2341b0bc1a93-00",
+        "traceparent": "00-5df31e780ac612858faca8de449d5149-2c99910c762697bd-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "cdef7d98233ecba876381237c4c12909",
+        "x-ms-client-request-id": "24f5e2702cf4b665bd16f47dc7da42e2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "440",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Jun 2023 06:44:05 GMT",
+        "Date": "Thu, 06 Jul 2023 15:57:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "02e261f4-5a1a-4b4c-8838-293a09b373ef",
-        "x-ms-ratelimit-remaining-subscription-reads": "11885",
-        "x-ms-request-id": "02e261f4-5a1a-4b4c-8838-293a09b373ef",
-        "x-ms-routing-request-id": "SOUTHINDIA:20230630T064406Z:02e261f4-5a1a-4b4c-8838-293a09b373ef"
+        "x-ms-correlation-request-id": "f30f3afe-1add-42a7-b32e-33e7be77de04",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "f30f3afe-1add-42a7-b32e-33e7be77de04",
+        "x-ms-routing-request-id": "WESTINDIA:20230706T155726Z:f30f3afe-1add-42a7-b32e-33e7be77de04"
       },
       "ResponseBody": {
         "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27",
@@ -52,9 +52,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-34294e94461cc02195126b46ed3e387e-5d232b585862c2af-00",
+        "traceparent": "00-7ad9770f8a4fa30ec23057dd29533750-44b9f7b62b5fad7f-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "81a8bed8bf604c880cc52de1d7198dd7",
+        "x-ms-client-request-id": "73f8f085cef456665acf701f03b6b7ae",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -63,15 +63,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "259",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Jun 2023 06:44:05 GMT",
+        "Date": "Thu, 06 Jul 2023 15:57:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2566f6eb-fa27-47c1-a06e-795377fbd359",
-        "x-ms-ratelimit-remaining-subscription-reads": "11884",
-        "x-ms-request-id": "2566f6eb-fa27-47c1-a06e-795377fbd359",
-        "x-ms-routing-request-id": "SOUTHINDIA:20230630T064406Z:2566f6eb-fa27-47c1-a06e-795377fbd359"
+        "x-ms-correlation-request-id": "33fb3d26-212f-4e92-a0bd-11c1b7b08e55",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "33fb3d26-212f-4e92-a0bd-11c1b7b08e55",
+        "x-ms-routing-request-id": "WESTINDIA:20230706T155726Z:33fb3d26-212f-4e92-a0bd-11c1b7b08e55"
       },
       "ResponseBody": {
         "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg",
@@ -90,29 +90,29 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-10b47f1d30010954448874b6c12e6dce-6c0d9aab3a38320d-00",
-        "User-Agent": "azsdk-net-ResourceManager.PaloAltoNetworks.Ngfw/1.0.0-alpha.20230630.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "f717719106dd16954ad03b7bab3728c6",
+        "traceparent": "00-3ce1436b265b5224bcc50206f20ddc04-8cba748d3bc54659-00",
+        "User-Agent": "azsdk-net-ResourceManager.PaloAltoNetworks.Ngfw/1.0.0-alpha.20230706.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "aebe1829118bd4c28e901a4a0fbd9d28",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "988",
+        "Content-Length": "991",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Jun 2023 06:44:06 GMT",
-        "ETag": "\u00220100f129-0000-0100-0000-649e79aa0000\u0022",
+        "Date": "Thu, 06 Jul 2023 15:57:26 GMT",
+        "ETag": "\u00220200951e-0000-0100-0000-64a6e4450000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "f717719106dd16954ad03b7bab3728c6",
-        "x-ms-correlation-request-id": "e4806895-d70e-48e4-ab71-a1fd73a19c17",
+        "x-ms-client-request-id": "aebe1829118bd4c28e901a4a0fbd9d28",
+        "x-ms-correlation-request-id": "45540379-8b6b-49d4-a75d-64ac553fc423",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11883",
-        "x-ms-request-id": "dd4be839-0c35-46ce-87db-addf3e4db058",
-        "x-ms-routing-request-id": "SOUTHINDIA:20230630T064406Z:e4806895-d70e-48e4-ab71-a1fd73a19c17"
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "eb021e19-9a71-402f-8507-34b19ae05ac8",
+        "x-ms-routing-request-id": "WESTINDIA:20230706T155727Z:45540379-8b6b-49d4-a75d-64ac553fc423"
       },
       "ResponseBody": {
         "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-lrs-default",
@@ -125,17 +125,17 @@
         "systemData": {
           "createdBy": "vibhuti.sharma@microsoft.com",
           "createdByType": "User",
-          "createdAt": "2023-06-28T04:40:49.2065813Z",
+          "createdAt": "2023-06-30T08:13:20.9801656Z",
           "lastModifiedBy": "864bdfa7-42e8-4658-83dd-9148a39ff519",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-06-30T06:43:54.2456596Z"
+          "lastModifiedAt": "2023-07-06T15:56:53.2251373Z"
         },
         "properties": {
           "scope": "LOCAL",
           "description": "",
-          "provisioningState": "Failed",
+          "provisioningState": "Succeeded",
           "defaultMode": "FIREWALL",
-          "panEtag": "401e1294-15fa-11ee-97ce-a679daf0cc41",
+          "panEtag": "490d957a-1c15-11ee-9b2a-325125fec2f4",
           "minAppIdVersion": "8595-7473",
           "securityServices": {
             "vulnerabilityProfile": "BestPractice",
@@ -154,9 +154,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-68f6098c60021816c142abda0ad0ac5f-24dc3d243f3e8e9d-00",
-        "User-Agent": "azsdk-net-ResourceManager.PaloAltoNetworks.Ngfw/1.0.0-alpha.20230630.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "50365a92cd75d999f5a3c179f6c6f45c",
+        "traceparent": "00-7b55420a08bd45430aac3c1ef8fe7942-2e207ffa972dd913-00",
+        "User-Agent": "azsdk-net-ResourceManager.PaloAltoNetworks.Ngfw/1.0.0-alpha.20230706.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3ab017cea2e8a2887b9fc925bb45b206",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -165,19 +165,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "416",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Jun 2023 06:44:07 GMT",
+        "Date": "Thu, 06 Jul 2023 15:57:28 GMT",
         "Expires": "-1",
-        "mise-correlation-id": "21b6c193-ab06-4058-b44d-812a8535c100",
+        "mise-correlation-id": "659ba4e2-d131-4ddb-97de-95cba5723122",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:4aa06bd6-38f4-4944-9612-cd84d39b5e90",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "50365a92cd75d999f5a3c179f6c6f45c",
-        "x-ms-correlation-request-id": "4d6b2c2b-e68d-4d2b-b257-e9f517fe38c4",
+        "x-ms-client-request-id": "3ab017cea2e8a2887b9fc925bb45b206",
+        "x-ms-correlation-request-id": "b3d8c750-96e2-43c6-82a5-8328134ee48c",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11882",
-        "x-ms-request-id": "152f73bd-0b7a-4f0b-9651-b6b036f11269",
-        "x-ms-routing-request-id": "SOUTHINDIA:20230630T064407Z:4d6b2c2b-e68d-4d2b-b257-e9f517fe38c4"
+        "x-ms-ratelimit-remaining-subscription-reads": "11978",
+        "x-ms-request-id": "c14bdbfa-1eb8-4904-b5cd-a55cd2306f78",
+        "x-ms-routing-request-id": "WESTINDIA:20230706T155729Z:b3d8c750-96e2-43c6-82a5-8328134ee48c"
       },
       "ResponseBody": {
         "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-lrs-default/certificates/dotnetSdkTest-cert",
@@ -186,7 +186,7 @@
         "properties": {
           "certificateSelfSigned": "TRUE",
           "description": "",
-          "etag": "40004a66-15fa-11ee-97ce-a679daf0cc41",
+          "etag": "48ddb15c-1c15-11ee-9b2a-325125fec2f4",
           "provisioningState": "Succeeded"
         }
       }
@@ -194,7 +194,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
-    "RandomSeed": "780152126",
+    "RandomSeed": "324780720",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "2bf4a339-294d-4c25-b0b2-ef649e9f5c27"
   }

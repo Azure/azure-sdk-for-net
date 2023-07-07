@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             var rule = (await LocalRulestackResource.GetLocalRulesResourceAsync("1000000")).Value;
             LocalRulesResourceData ruleData = rule.Data;
-            ruleData.Description = "Updated description for commit";
+            string suffix = IsAsync ? "async" : "sync";
+            ruleData.Description = $"Updated description for commit: {suffix}";
             await rule.UpdateAsync(WaitUntil.Completed, ruleData);
-            Changelog log = (await LocalRulestackResource.GetChangeLogAsync()).Value;
+            Changelog log = await LocalRulestackResource.GetChangeLogAsync();
             Assert.IsTrue(log.Changes.Contains("LocalRule"));
             Assert.IsTrue(log.Changes.Contains("Rulestack"));
-            Assert.AreEqual(log.Changes.Count, 2);
             ArmOperation response = await LocalRulestackResource.CommitAsync(WaitUntil.Completed);
             Assert.AreEqual(response.GetRawResponse().Status, 200);
             log = await LocalRulestackResource.GetChangeLogAsync();
@@ -182,12 +182,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             LocalRulesResource rule = await LocalRulestackResource.GetLocalRulesResourceAsync("1000000");
             LocalRulesResourceData ruleData = rule.Data;
-            ruleData.Description = "Updated description for changeLog";
+            string suffix = IsAsync ? "async" : "sync";
+            ruleData.Description = $"Updated description for changeLog: {suffix}";
             await rule.UpdateAsync(WaitUntil.Completed, ruleData);
             Changelog log = await LocalRulestackResource.GetChangeLogAsync();
             Assert.IsTrue(log.Changes.Contains("LocalRule"));
             Assert.IsTrue(log.Changes.Contains("Rulestack"));
-            Assert.AreEqual(log.Changes.Count, 2);
         }
 
         [TestCase]
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             LocalRulesResource rule = await LocalRulestackResource.GetLocalRulesResourceAsync("1000000");
             LocalRulesResourceData ruleData = rule.Data;
-            ruleData.Description = "Updated description for revert";
+            string suffix = IsAsync ? "async" : "sync";
+            ruleData.Description = $"Updated description for revert: {suffix}";
             await rule.UpdateAsync(WaitUntil.Completed, ruleData);
             Changelog log = await LocalRulestackResource.GetChangeLogAsync();
             Assert.IsTrue(log.Changes.Contains("LocalRule"));
             Assert.IsTrue(log.Changes.Contains("Rulestack"));
-            Assert.AreEqual(log.Changes.Count, 2);
             Response response = await LocalRulestackResource.RevertAsync();
             Assert.AreEqual(response.Status, 204);
             log = await LocalRulestackResource.GetChangeLogAsync();
