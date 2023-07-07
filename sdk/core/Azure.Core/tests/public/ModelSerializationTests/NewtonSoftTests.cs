@@ -15,12 +15,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class NewtonSoftTests
     {
-        private readonly ModelSerializerOptions _wireOptions = new ModelSerializerOptions { IgnoreReadOnlyProperties = false };
-        private readonly ModelSerializerOptions _objectOptions = new ModelSerializerOptions();
-
-        [TestCase(true)]
-        [TestCase(false)]
-        public void CanRoundTripFutureVersionWithoutLoss(bool ignoreReadOnly)
+        [TestCase("D")]
+        [TestCase("W")]
+        public void CanRoundTripFutureVersionWithoutLoss(string format)
         {
             Stream stream = new MemoryStream();
             string serviceResponse =
@@ -29,7 +26,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             StringBuilder expectedSerialized = new StringBuilder("{");
             expectedSerialized.Append("\"IsHungry\":false,");
             expectedSerialized.Append("\"Weight\":2.5,");
-            if (!ignoreReadOnly)
+            if (format == "D")
             {
                 expectedSerialized.Append("\"LatinName\":\"Animalia\",");
             }
@@ -37,9 +34,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             expectedSerialized.Append("}");
             var expectedSerializedString = expectedSerialized.ToString();
 
-            ModelSerializerOptions options = new ModelSerializerOptions() { IgnoreReadOnlyProperties = ignoreReadOnly };
+            ModelSerializerOptions options = new ModelSerializerOptions(format);
 
-            if (ignoreReadOnly)
+            if (format == "W")
             {
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
@@ -52,7 +49,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             var model = ModelSerializer.Deserialize<Animal>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
-            if (!ignoreReadOnly)
+            if (format == "D")
             {
                 Assert.That(model.LatinName, Is.EqualTo("Animalia"));
             }

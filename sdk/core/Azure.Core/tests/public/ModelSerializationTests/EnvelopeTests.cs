@@ -12,12 +12,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class EnvelopeTests
     {
-        private readonly ModelSerializerOptions _wireOptions = new ModelSerializerOptions { IgnoreReadOnlyProperties = false };
-        private readonly ModelSerializerOptions _objectOptions = new ModelSerializerOptions();
-
-        [TestCase(true)]
-        [TestCase(false)]
-        public void CanRoundTripFutureVersionWithoutLoss(bool ignoreReadOnly)
+        [TestCase("D")]
+        [TestCase("W")]
+        public void CanRoundTripFutureVersionWithoutLoss(string format)
         {
             string serviceResponse =
                 "{\"readOnlyProperty\":\"read\"," +
@@ -26,12 +23,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 "}";
 
             StringBuilder expectedSerialized = new StringBuilder("{");
-            if (!ignoreReadOnly)
+            if (format == "D")
             {
                 expectedSerialized.Append("\"readOnlyProperty\":\"read\",");
             }
             expectedSerialized.Append("\"modelA\":{");
-            if (!ignoreReadOnly)
+            if (format == "D")
             {
                 expectedSerialized.Append("\"latinName\":\"Felis catus\",\"hasWhiskers\":false,");
             }
@@ -40,9 +37,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             expectedSerialized.Append("}");
             var expectedSerializedString = expectedSerialized.ToString();
 
-            ModelSerializerOptions options = new ModelSerializerOptions() { IgnoreReadOnlyProperties = ignoreReadOnly };
+            ModelSerializerOptions options = new ModelSerializerOptions(format);
 
-            if (ignoreReadOnly)
+            if (format == "W")
             {
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
@@ -55,7 +52,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             Envelope<ModelC> model = ModelSerializer.Deserialize<Envelope<ModelC>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
-            if (!ignoreReadOnly)
+            if (format == "D")
             {
                 Assert.That(model.ReadOnlyProperty, Is.EqualTo("read"));
             }

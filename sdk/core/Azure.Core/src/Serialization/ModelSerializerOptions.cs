@@ -12,15 +12,19 @@ namespace Azure.Core.Serialization
     public class ModelSerializerOptions
     {
         /// <summary>
-        /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
+        /// Consructor for ModelSerializerOptions. Takes in a string that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".
         /// </summary>
-        public string Format
+        /// <param name="format"></param>
+        public ModelSerializerOptions(string format = "D")
         {
-            get
-            {
-                return "D";
-            }
+            //throw ArgumentException if not "D" or "W"
+            Format = ValidateFormat(format);
         }
+
+        /// <summary>
+        /// String that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".
+        /// </summary>
+        public string Format { get; }
 
         /// <summary>
         /// Bool that determines if Json will be PrettyPrinted. Default is false.
@@ -36,5 +40,14 @@ namespace Azure.Core.Serialization
         /// NameHint for Xml Models
         /// </summary>
         public string? NameHint { get; set; }
+
+        private string ValidateFormat(string x)
+        {
+            if (x != "D" && x != "W")
+            {
+                throw new ArgumentException("Format must be either 'D' or 'W'.");
+            }
+            return x;
+        }
     }
 }

@@ -19,17 +19,12 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
         /// </summary>
-        public string Format { get; set; } = "D";
-
-        /// <summary>
-        /// .
-        /// </summary>
-        public ModelJsonConverter() { }
+        public string Format { get; }
 
         /// <summary>
         /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
         /// </summary>
-        public ModelJsonConverter(string format)
+        public ModelJsonConverter(string format = "D")
         {
             Format = format;
         }
@@ -56,7 +51,7 @@ namespace Azure.Core.Serialization
         public override IModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            return (IModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, ConvertOptions(options));
+            return (IModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, GetOptions());
         }
 
         /// <summary>
@@ -69,7 +64,7 @@ namespace Azure.Core.Serialization
         public override void Write(Utf8JsonWriter writer, IModelSerializable value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            BinaryData data = value.Serialize(ConvertOptions(options));
+            BinaryData data = value.Serialize(GetOptions());
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(data);
 #else
@@ -77,11 +72,9 @@ namespace Azure.Core.Serialization
 #endif
         }
 
-        private ModelSerializerOptions ConvertOptions(JsonSerializerOptions options)
+        private ModelSerializerOptions GetOptions()
         {
-            ModelSerializerOptions serializableOptions = new ModelSerializerOptions();
-            serializableOptions.Format = Format;
-            return serializableOptions;
+            return new ModelSerializerOptions(Format);
         }
     }
 }

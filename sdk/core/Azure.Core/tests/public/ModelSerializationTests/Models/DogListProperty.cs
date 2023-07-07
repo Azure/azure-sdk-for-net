@@ -37,11 +37,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public static explicit operator DogListProperty(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            var serializationOptions = new ModelSerializerOptions()
-            {
-                IgnoreReadOnlyProperties = false,
-                IgnoreAdditionalProperties = false
-            };
+            var serializationOptions = new ModelSerializerOptions("D");
             return DeserializeDogListProperty(jsonDocument.RootElement, serializationOptions);
         }
 
@@ -70,7 +66,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             MemoryStream stream = new MemoryStream();
             Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
-            if (!options.IgnoreReadOnlyProperties)
+            if (options.Format == "D")
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -93,7 +89,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 writer.WriteEndArray();
             }
 
-            if (!options.IgnoreAdditionalProperties)
+            if (options.Format == "D")
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -151,7 +147,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     }
                     continue;
                 }
-                if (!options.IgnoreAdditionalProperties)
+                if (options.Format == "D")
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -165,7 +161,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             public override DogListProperty Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var model = DeserializeDogListProperty(JsonDocument.ParseValue(ref reader).RootElement, ConvertOptions(options));
+                var model = DeserializeDogListProperty(JsonDocument.ParseValue(ref reader).RootElement, GetOptions(options));
                 //marker used for testing to know if this converter fires
                 model.RawData.Add("DogListPropertyConverterMarker", new BinaryData("true"));
                 return model;
@@ -173,7 +169,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             public override void Write(Utf8JsonWriter writer, DogListProperty value, JsonSerializerOptions options)
             {
-                BinaryData data = ((IModelSerializable)value).Serialize(ConvertOptions(options));
+                BinaryData data = ((IModelSerializable)value).Serialize(GetOptions(options));
 #if NET6_0_OR_GREATER
                 writer.WriteRawValue(data);
 #else
@@ -181,15 +177,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 #endif
             }
 
-            private ModelSerializerOptions ConvertOptions(JsonSerializerOptions options)
+            private ModelSerializerOptions GetOptions(JsonSerializerOptions options)
             {
-                var serializableOptions = new ModelSerializerOptions();
-                //pulls the additional properties setting from the ModelJsonConverter if it exists
-                //if it does not exist it uses the default value of true for azure sdk use cases
-                var modelConverter = options.Converters.FirstOrDefault(c=>c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                serializableOptions.IgnoreAdditionalProperties = modelConverter is not null ? modelConverter.IgnoreAdditionalProperties : true;
-                serializableOptions.IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties;
-                return serializableOptions;
+                return new ModelSerializerOptions("W");
             }
         }
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)

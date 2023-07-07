@@ -13,12 +13,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class CombinedInterfaceTests
     {
-        [TestCase(true)]
-        [TestCase(false)]
-        public void CanRoundTripFutureVersionWithoutLossXml(bool ignoreReadOnlyProperties)
+        [TestCase("D")]
+        [TestCase("W")]
+        public void CanRoundTripFutureVersionWithoutLossXml(string format)
         {
-            ModelSerializerOptions options = new ModelSerializerOptions();
-            options.IgnoreReadOnlyProperties = ignoreReadOnlyProperties;
+            ModelSerializerOptions options = new ModelSerializerOptions(format);
 
             string serviceResponse =
                 "<Tag>" +
@@ -28,7 +27,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 "</Tag>";
 
             var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
-            if (!ignoreReadOnlyProperties)
+            if (format == "D")
                 expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
             expectedSerializedString += "</Tag>";
 
@@ -43,26 +42,23 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
             XmlModelForCombinedInterface model2 = ModelSerializer.Deserialize<XmlModelForCombinedInterface>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options);
-            VerifyModelXmlModelForCombinedInterface(model, model2, ignoreReadOnlyProperties);
+            VerifyModelXmlModelForCombinedInterface(model, model2, format);
         }
 
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
-        public void CanRoundTripFutureVersionWithoutLossJson(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties)
+        [TestCase("D")]
+        [TestCase("W")]
+        public void CanRoundTripFutureVersionWithoutLossJson(string format)
         {
-            ModelSerializerOptions options = new ModelSerializerOptions();
-            options.IgnoreAdditionalProperties = ignoreAdditionalProperties;
-            options.IgnoreReadOnlyProperties = ignoreReadOnlyProperties;
+            ModelSerializerOptions options = new ModelSerializerOptions(format);
 
             string serviceResponse = "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"x\":\"extra\"}";
 
             var expectedSerializedString = "{\"key\":\"Color\",\"value\":\"Red\"";
-            if (!ignoreReadOnlyProperties)
+            if (format == "D")
+            {
                 expectedSerializedString += ",\"readOnlyProperty\":\"ReadOnly\"";
-            if (!ignoreAdditionalProperties)
                 expectedSerializedString += ",\"x\":\"extra\"";
+            }
             expectedSerializedString += "}";
 
             JsonModelForCombinedInterface model = ModelSerializer.Deserialize<JsonModelForCombinedInterface>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options);
@@ -72,35 +68,35 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("ReadOnly", model.ReadOnlyProperty);
             var additionalProperties = typeof(JsonModelForCombinedInterface).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
-            Assert.AreEqual(!ignoreAdditionalProperties, additionalProperties.ContainsKey("x"));
+            Assert.AreEqual(format == "D", additionalProperties.ContainsKey("x"));
             var data = ModelSerializer.Serialize(model, options);
             string roundTrip = data.ToString();
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
             JsonModelForCombinedInterface model2 = ModelSerializer.Deserialize<JsonModelForCombinedInterface>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options);
-            VerifyModelJsonModelForCombinedInterface(model, model2, ignoreReadOnlyProperties, ignoreAdditionalProperties);
+            VerifyModelJsonModelForCombinedInterface(model, model2, format);
         }
 
-        internal static void VerifyModelXmlModelForCombinedInterface(XmlModelForCombinedInterface expected, XmlModelForCombinedInterface actual, bool ignoreReadOnlyProperties)
+        internal static void VerifyModelXmlModelForCombinedInterface(XmlModelForCombinedInterface expected, XmlModelForCombinedInterface actual, string format)
         {
             Assert.AreEqual(expected.Key, actual.Key);
             Assert.AreEqual(expected.Value, actual.Value);
-            if (!ignoreReadOnlyProperties)
+            if (format == "D")
                 Assert.AreEqual(expected.ReadOnlyProperty, actual.ReadOnlyProperty);
         }
 
-        internal static void VerifyModelJsonModelForCombinedInterface(JsonModelForCombinedInterface expected, JsonModelForCombinedInterface actual, bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties)
+        internal static void VerifyModelJsonModelForCombinedInterface(JsonModelForCombinedInterface expected, JsonModelForCombinedInterface actual, string format)
         {
             Assert.AreEqual(expected.Key, actual.Key);
             Assert.AreEqual(expected.Value, actual.Value);
-            if (!ignoreReadOnlyProperties)
+            if (format == "D")
                 Assert.AreEqual(expected.ReadOnlyProperty, actual.ReadOnlyProperty);
             var rawDataProperty = typeof(JsonModelForCombinedInterface).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             var expectedRawData = rawDataProperty.GetValue(expected) as Dictionary<string, BinaryData>;
             var actualRawData = rawDataProperty.GetValue(actual) as Dictionary<string, BinaryData>;
             Assert.AreEqual(expectedRawData.Count, actualRawData.Count);
-            if (!ignoreAdditionalProperties)
+            if (format == "D")
                 Assert.AreEqual(expectedRawData["x"].ToString(), actualRawData["x"].ToString());
         }
     }

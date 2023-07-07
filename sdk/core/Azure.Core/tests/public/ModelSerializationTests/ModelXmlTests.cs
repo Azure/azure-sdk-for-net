@@ -12,12 +12,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class ModelXmlTests
     {
-        [TestCase(true)]
-        [TestCase(false)]
-        public void CanRoundTripFutureVersionWithoutLoss(bool ignoreReadonlyProperites)
+        [TestCase("D")]
+        [TestCase("W")]
+        public void CanRoundTripFutureVersionWithoutLoss(string format)
         {
-            ModelSerializerOptions options = new ModelSerializerOptions();
-            options.IgnoreReadOnlyProperties = ignoreReadonlyProperites;
+            ModelSerializerOptions options = new ModelSerializerOptions(format);
 
             Stream stream = new MemoryStream();
 
@@ -29,7 +28,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 "</Tag>";
 
             var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
-            if (!ignoreReadonlyProperites)
+            if (format == "D")
                 expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
             expectedSerializedString += "</Tag>";
 
@@ -44,14 +43,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
             ModelXml model2 = ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options);
-            VerifyModelXml(model, model2, ignoreReadonlyProperites);
+            VerifyModelXml(model, model2, format);
         }
 
-        internal static void VerifyModelXml(ModelXml correctModelXml, ModelXml model2, bool ignoreReadOnlyProperties)
+        internal static void VerifyModelXml(ModelXml correctModelXml, ModelXml model2, string format)
         {
             Assert.AreEqual(correctModelXml.Key, model2.Key);
             Assert.AreEqual(correctModelXml.Value, model2.Value);
-            if (!ignoreReadOnlyProperties)
+            if (format == "D")
                 Assert.AreEqual(correctModelXml.ReadOnlyProperty, model2.ReadOnlyProperty);
         }
     }

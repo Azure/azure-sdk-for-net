@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             MemoryStream stream = new MemoryStream();
             Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
-            if (!options.IgnoreReadOnlyProperties)
+            if (options.Format == "D")
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
 
-            if (!options.IgnoreAdditionalProperties)
+            if (options.Format == "D")
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -116,7 +116,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     hasWhiskers = property.Value.GetBoolean();
                     continue;
                 }
-                if (!options.IgnoreAdditionalProperties)
+                if (options.Format == "D")
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
