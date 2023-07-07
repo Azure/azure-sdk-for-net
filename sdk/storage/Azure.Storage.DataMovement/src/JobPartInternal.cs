@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Specifies the options for error handling.
         /// </summary>
-        internal ErrorHandlingOptions _errorHandling;
+        internal ErrorHandlingBehavior _errorHandling;
 
         /// <summary>
         /// Determines how files are created and overwrite behavior for files that already exists.
@@ -154,7 +154,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceSingle destinationResource,
             long? maximumTransferChunkSize,
             long? initialTransferSize,
-            ErrorHandlingOptions errorHandling,
+            ErrorHandlingBehavior errorHandling,
             StorageResourceCreateMode createMode,
             TransferCheckpointer checkpointer,
             TransferProgressTracker progressTracker,

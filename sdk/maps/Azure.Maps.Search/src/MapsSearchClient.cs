@@ -9,9 +9,10 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.Maps.Search.Models;
 using Azure.Core.GeoJson;
+using Azure.Core.Pipeline;
+using Azure.Maps;
+using Azure.Maps.Search.Models;
 
 namespace Azure.Maps.Search
 {
@@ -91,6 +92,35 @@ namespace Azure.Maps.Search
             string[] scopes = { "https://atlas.microsoft.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
             RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
+        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
+        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
+        public MapsSearchClient(AzureSasCredential credential)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            var options = new MapsSearchClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
+        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
+        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public MapsSearchClient(AzureSasCredential credential, MapsSearchClientOptions options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = options.Endpoint;
+            options ??= new MapsSearchClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
         /// <summary>
