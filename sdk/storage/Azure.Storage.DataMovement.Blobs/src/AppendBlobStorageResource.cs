@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Blobs
     public class AppendBlobStorageResource : StorageResourceSingle
     {
         internal AppendBlobClient BlobClient { get; set; }
-        private AppendBlobStorageResourceOptions _options;
+        internal AppendBlobStorageResourceOptions _options;
         private long? _length;
         private ETag? _etagDownloadLock = default;
 
@@ -38,9 +38,9 @@ namespace Azure.Storage.DataMovement.Blobs
         public override string Path => BlobClient.Name;
 
         /// <summary>
-        /// Defines whether the storage resource type can produce a URL.
+        /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
+        public override bool CanProduceUri => true;
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.

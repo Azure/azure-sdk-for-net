@@ -27,7 +27,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = client.GetEnvironmentByUser("<userId>", "<environmentName>");
+            Response response = client.GetEnvironmentByUser("<userId>", "<environmentName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -42,7 +42,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = client.GetEnvironmentByUser("<userId>", "<environmentName>");
+            Response response = client.GetEnvironmentByUser("<userId>", "<environmentName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -68,7 +68,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = await client.GetEnvironmentByUserAsync("<userId>", "<environmentName>");
+            Response response = await client.GetEnvironmentByUserAsync("<userId>", "<environmentName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -83,7 +83,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = await client.GetEnvironmentByUserAsync("<userId>", "<environmentName>");
+            Response response = await client.GetEnvironmentByUserAsync("<userId>", "<environmentName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -247,7 +247,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = client.GetCatalogItem("<catalogItemId>");
+            Response response = client.GetCatalogItem("<catalogItemId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -261,7 +261,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = client.GetCatalogItem("<catalogItemId>");
+            Response response = client.GetCatalogItem("<catalogItemId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -277,7 +277,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = await client.GetCatalogItemAsync("<catalogItemId>");
+            Response response = await client.GetCatalogItemAsync("<catalogItemId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -291,7 +291,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = await client.GetCatalogItemAsync("<catalogItemId>");
+            Response response = await client.GetCatalogItemAsync("<catalogItemId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -307,7 +307,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = client.GetCatalogItemVersion("<catalogItemId>", "<version>");
+            Response response = client.GetCatalogItemVersion("<catalogItemId>", "<version>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -321,7 +321,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = client.GetCatalogItemVersion("<catalogItemId>", "<version>");
+            Response response = client.GetCatalogItemVersion("<catalogItemId>", "<version>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("catalogItemId").ToString());
@@ -368,7 +368,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = await client.GetCatalogItemVersionAsync("<catalogItemId>", "<version>");
+            Response response = await client.GetCatalogItemVersionAsync("<catalogItemId>", "<version>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -382,7 +382,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = await client.GetCatalogItemVersionAsync("<catalogItemId>", "<version>");
+            Response response = await client.GetCatalogItemVersionAsync("<catalogItemId>", "<version>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("catalogItemId").ToString());
@@ -429,7 +429,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetEnvironments())
+            foreach (var item in client.GetEnvironments(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -445,7 +445,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetEnvironments(1234))
+            foreach (var item in client.GetEnvironments(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -472,7 +472,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetEnvironmentsAsync())
+            await foreach (var item in client.GetEnvironmentsAsync(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -488,7 +488,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetEnvironmentsAsync(1234))
+            await foreach (var item in client.GetEnvironmentsAsync(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -515,7 +515,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetEnvironmentsByUser("<userId>"))
+            foreach (var item in client.GetEnvironmentsByUser("<userId>", 1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -531,7 +531,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetEnvironmentsByUser("<userId>", 1234))
+            foreach (var item in client.GetEnvironmentsByUser("<userId>", 1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -558,7 +558,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetEnvironmentsByUserAsync("<userId>"))
+            await foreach (var item in client.GetEnvironmentsByUserAsync("<userId>", 1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -574,7 +574,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetEnvironmentsByUserAsync("<userId>", 1234))
+            await foreach (var item in client.GetEnvironmentsByUserAsync("<userId>", 1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -601,7 +601,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetCatalogItems())
+            foreach (var item in client.GetCatalogItems(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -616,7 +616,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetCatalogItems(1234))
+            foreach (var item in client.GetCatalogItems(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -633,7 +633,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetCatalogItemsAsync())
+            await foreach (var item in client.GetCatalogItemsAsync(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -648,7 +648,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetCatalogItemsAsync(1234))
+            await foreach (var item in client.GetCatalogItemsAsync(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -665,7 +665,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetCatalogItemVersions("<catalogItemId>"))
+            foreach (var item in client.GetCatalogItemVersions("<catalogItemId>", 1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -680,7 +680,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetCatalogItemVersions("<catalogItemId>", 1234))
+            foreach (var item in client.GetCatalogItemVersions("<catalogItemId>", 1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("catalogItemId").ToString());
@@ -728,7 +728,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetCatalogItemVersionsAsync("<catalogItemId>"))
+            await foreach (var item in client.GetCatalogItemVersionsAsync("<catalogItemId>", 1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -743,7 +743,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetCatalogItemVersionsAsync("<catalogItemId>", 1234))
+            await foreach (var item in client.GetCatalogItemVersionsAsync("<catalogItemId>", 1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("catalogItemId").ToString());
@@ -791,7 +791,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetEnvironmentTypes())
+            foreach (var item in client.GetEnvironmentTypes(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -806,7 +806,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetEnvironmentTypes(1234))
+            foreach (var item in client.GetEnvironmentTypes(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -823,7 +823,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetEnvironmentTypesAsync())
+            await foreach (var item in client.GetEnvironmentTypesAsync(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -838,7 +838,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetEnvironmentTypesAsync(1234))
+            await foreach (var item in client.GetEnvironmentTypesAsync(1234, new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());

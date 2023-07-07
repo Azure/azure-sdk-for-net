@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
 #endif
 
             // View sent share invitations. (Pending/Rejected)
-            var sentShareInvitations = await sentShareInvitationsClient.GetSentShareInvitationsAsync(sentShareName).ToEnumerableAsync();
+            var sentShareInvitations = await sentShareInvitationsClient.GetSentShareInvitationsAsync(sentShareName, null, null, null, new()).ToEnumerableAsync();
             var responseInvitation = sentShareInvitations.FirstOrDefault();
 
             if (responseInvitation == null)
