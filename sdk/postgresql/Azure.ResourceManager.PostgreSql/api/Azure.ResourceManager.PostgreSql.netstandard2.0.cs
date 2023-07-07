@@ -1698,6 +1698,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal PostgreSqlFlexibleServerServerVersionCapability() { }
         public string Name { get { throw null; } }
+        public new string Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedVersionsToUpgrade { get { throw null; } }
     }
     public partial class PostgreSqlFlexibleServerSku
@@ -1788,6 +1789,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal PostgreSqlFlexibleServerStorageCapability() { }
         public string DefaultIopsTier { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string Name { get { throw null; } }
+        public new string Status { get { throw null; } }
         public long? StorageSizeInMB { get { throw null; } }
         public int? SupportedIops { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageTierCapability> SupportedIopsTiers { get { throw null; } }
