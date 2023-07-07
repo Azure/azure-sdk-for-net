@@ -107,8 +107,9 @@ namespace Azure.Core
         {
             // should we harden it? we really cannot afford use-after-free bugs. they might cause data corruption.
             // should we lock other members on this instance when we are disposing?
-            foreach (var buffer in GetUsedBuffers())
+            for (int i = 0; i < _count; i++)
             {
+                var buffer = _buffers[i];
                 ArrayPool<byte>.Shared.Return(buffer.Array);
             }
             _buffers = Array.Empty<Buffer>();
@@ -119,36 +120,31 @@ namespace Azure.Core
         public override bool TryComputeLength(out long length)
         {
             length = 0;
-            foreach (Buffer buffer in GetUsedBuffers())
+            for (int i = 0; i < _count; i++)
             {
+                var buffer = _buffers[i];
                 length += buffer.Written;
             }
             return true;
         }
+
         /// <inheritdoc/>
         public override void WriteTo(Stream stream, CancellationToken cancellation)
         {
-            foreach (var buffer in GetUsedBuffers())
+            for (int i = 0; i < _count; i++)
             {
+                var buffer = _buffers[i];
                 stream.Write(buffer.Array, 0, buffer.Written);
             }
         }
+
         /// <inheritdoc/>
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
-            foreach (var buffer in GetUsedBuffers())
+            for (int i = 0; i < _count; i++)
             {
+                var buffer = _buffers[i];
                 await stream.WriteAsync(buffer.Array, 0, buffer.Written).ConfigureAwait(false);
-            }
-        }
-
-        private IEnumerable<Buffer> GetUsedBuffers()
-        {
-            foreach (var buffer in _buffers)
-            {
-                if (buffer.Array is null)
-                    yield break; //we have reached the empty buffers
-                yield return buffer;
             }
         }
     }

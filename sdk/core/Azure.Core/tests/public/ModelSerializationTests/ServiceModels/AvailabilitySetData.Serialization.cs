@@ -235,10 +235,13 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 
         BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
         {
-            using MemoryStream stream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            using var multiBufferRequestContent = new MultiBufferRequestContent();
+            using var writer = new Utf8JsonWriter(multiBufferRequestContent);
             Serialize(writer, options);
             writer.Flush();
+            multiBufferRequestContent.TryComputeLength(out var length);
+            using var stream = new MemoryStream((int)length);
+            multiBufferRequestContent.WriteTo(stream, default);
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
