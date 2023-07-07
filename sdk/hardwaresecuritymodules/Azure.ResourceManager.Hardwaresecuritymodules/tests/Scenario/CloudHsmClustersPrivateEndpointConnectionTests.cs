@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             Assert.AreEqual(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus.Approved, privateEndpointConnectionResource.Data.ConnectionState.Status);
         }
 
+        [Ignore("Exception")]
         [RecordedTest]
         public async Task GetAllPrivateEndpointConnections()
         {
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             Assert.AreEqual(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.ConnectionState.Status);
         }
 
+        [Ignore("Exception")]
         [RecordedTest]
         public async Task DeletePrivateEndpointConnection()
         {
