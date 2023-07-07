@@ -507,7 +507,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            Response response = client.GetPurviewRelationship("<guid>");
+            Response response = client.GetPurviewRelationship("<guid>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -521,7 +521,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            Response response = client.GetPurviewRelationship("<guid>", true);
+            Response response = client.GetPurviewRelationship("<guid>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
@@ -584,7 +584,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            Response response = await client.GetPurviewRelationshipAsync("<guid>");
+            Response response = await client.GetPurviewRelationshipAsync("<guid>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -598,7 +598,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            Response response = await client.GetPurviewRelationshipAsync("<guid>", true);
+            Response response = await client.GetPurviewRelationshipAsync("<guid>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
