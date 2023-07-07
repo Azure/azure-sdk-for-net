@@ -17,6 +17,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
+using Castle.DynamicProxy;
 
 namespace Azure.Identity.Tests
 {

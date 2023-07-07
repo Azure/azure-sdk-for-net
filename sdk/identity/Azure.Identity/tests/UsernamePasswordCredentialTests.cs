@@ -34,7 +34,8 @@ namespace Azure.Identity.Tests
             {
                 Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
-                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new UsernamePasswordCredential("user", "password", config.TenantId, ClientId, options, pipeline, null));
@@ -78,12 +79,12 @@ namespace Azure.Identity.Tests
                 password,
                 clientId,
                 tenantId,
-                new TokenCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled },
+                new TokenCredentialOptions { IsSupportLoggingEnabled = isLoggingPIIEnabled },
                 default,
                 null);
 
             Assert.NotNull(credential.Client);
-            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
+            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsSupportLoggingEnabled);
         }
 
         [Test]

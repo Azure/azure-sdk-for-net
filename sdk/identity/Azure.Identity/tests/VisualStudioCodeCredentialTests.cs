@@ -73,10 +73,10 @@ namespace Azure.Identity.Tests
         [Test]
         public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
         {
-            var credential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled });
+            var credential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { IsSupportLoggingEnabled = isLoggingPIIEnabled });
 
             Assert.NotNull(credential.Client);
-            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
+            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsSupportLoggingEnabled);
         }
 
         [Test]
