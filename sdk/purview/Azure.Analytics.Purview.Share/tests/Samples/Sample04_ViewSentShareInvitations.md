@@ -18,7 +18,7 @@ var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var sentShareInvitationsClient = new SentShareInvitationsClient(endPoint, credential);
 
 // View sent share invitations. (Pending/Rejected)
-var sentShareInvitations = await sentShareInvitationsClient.GetSentShareInvitationsAsync(sentShareName).ToEnumerableAsync();
+var sentShareInvitations = await sentShareInvitationsClient.GetSentShareInvitationsAsync(sentShareName, null, null, null, new()).ToEnumerableAsync();
 var responseInvitation = sentShareInvitations.FirstOrDefault();
 
 if (responseInvitation == null)
