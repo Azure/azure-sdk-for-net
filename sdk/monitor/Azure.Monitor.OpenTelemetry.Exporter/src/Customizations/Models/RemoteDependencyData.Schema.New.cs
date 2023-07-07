@@ -22,6 +22,12 @@ internal partial class RemoteDependencyData
         {
             httpUrl = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUrlFull)?.ToString();
             dependencyName = activityTagsProcessor.MappedTags.GetNewSchemaHttpDependencyName(httpUrl) ?? activity.DisplayName;
+            Data = httpUrl.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
+            Target = activityTagsProcessor.MappedTags.GetNewSchemaHttpDependencyTarget().Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+            Type = "Http";
+            ResultCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)
+                ?.ToString().Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength)
+                ?? "0";
         }
         else
         {
@@ -35,15 +41,6 @@ internal partial class RemoteDependencyData
             : SchemaConstants.Duration_MaxValue;
         Success = activity.Status != ActivityStatusCode.Error;
 
-        if (activityTagsProcessor.activityType.HasFlag(OperationType.Http))
-        {
-            Data = httpUrl.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-            Target = activityTagsProcessor.MappedTags.GetNewSchemaHttpDependencyTarget().Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
-            Type = "Http";
-            ResultCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)
-                ?.ToString().Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength)
-                ?? "0";
-        }
         // TODO: Other operation types.
 
         if (activityTagsProcessor.AzureNamespace != null)
