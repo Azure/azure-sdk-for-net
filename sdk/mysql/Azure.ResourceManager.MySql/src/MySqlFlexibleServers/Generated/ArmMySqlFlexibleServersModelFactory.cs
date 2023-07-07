@@ -17,7 +17,7 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ArmFlexibleServersModelFactory
+    public static partial class ArmMySqlFlexibleServersModelFactory
     {
         /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorData. </summary>
         /// <param name="id"> The id. </param>
