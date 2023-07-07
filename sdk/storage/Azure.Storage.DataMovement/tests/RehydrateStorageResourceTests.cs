@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
             {
-                JobPartPlanHeader header = CreateDefaultJobPartHeader(
+                JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: currentPart,
                     sourcePath: sourcePaths[currentPart],

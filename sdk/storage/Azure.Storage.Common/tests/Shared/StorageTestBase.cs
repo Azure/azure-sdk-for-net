@@ -119,14 +119,7 @@ namespace Azure.Storage.Test.Shared
 
         public string GetNewMetadataName() => $"test_metadata_{Recording.Random.NewGuid().ToString().Replace("-", "_")}";
 
-        public IDictionary<string, string> BuildMetadata()
-            => new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-                {
-                    { "foo", "bar" },
-                    { "meta", "data" },
-                    { "Capital", "letter" },
-                    { "UPPER", "case" }
-                };
+        public IDictionary<string, string> BuildMetadata() => DataProvider.BuildMetadata();
 
         public IPAddress GetIPAddress()
         {

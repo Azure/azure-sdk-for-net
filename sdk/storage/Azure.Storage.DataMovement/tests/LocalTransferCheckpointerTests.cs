@@ -55,7 +55,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 // Populate the JobPlanFile with a pseudo job plan header
 
-                JobPartPlanHeader header = CreateDefaultJobPartHeader(
+                JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber,
                     sourcePath: sourcePaths.ElementAt(i),
@@ -182,7 +182,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int partNumber = 0;
             int chunksTotal = 1;
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
 
@@ -217,7 +217,7 @@ namespace Azure.Storage.DataMovement.Tests
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
-                await AssertJobPlanHeaderAsync(header, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int partNumber = 0;
             int chunksTotal = 1;
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
 
@@ -273,16 +273,16 @@ namespace Azure.Storage.DataMovement.Tests
             // Add multiple parts for the same job
             string transferId = GetNewTransferId();
             int chunksTotal = 1;
-            JobPartPlanHeader header1 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header1 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 0);
-            JobPartPlanHeader header2 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header2 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 1);
-            JobPartPlanHeader header3 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header3 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 2);
-            JobPartPlanHeader header4 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header4 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 3);
 
@@ -343,7 +343,7 @@ namespace Azure.Storage.DataMovement.Tests
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
-                await AssertJobPlanHeaderAsync(header1, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header1, stream);
             }
 
             using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
@@ -353,7 +353,7 @@ namespace Azure.Storage.DataMovement.Tests
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
-                await AssertJobPlanHeaderAsync(header2, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header2, stream);
             }
 
             using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
@@ -363,7 +363,7 @@ namespace Azure.Storage.DataMovement.Tests
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
-                await AssertJobPlanHeaderAsync(header3, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header3, stream);
             }
 
             using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
@@ -373,7 +373,7 @@ namespace Azure.Storage.DataMovement.Tests
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
-                await AssertJobPlanHeaderAsync(header4, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header4, stream);
             }
         }
 
@@ -382,7 +382,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             string transferId = GetNewTransferId();
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 1);
 
@@ -425,7 +425,7 @@ namespace Azure.Storage.DataMovement.Tests
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
-                await AssertJobPlanHeaderAsync(header, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
             }
         }
 
@@ -502,7 +502,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int partNumber = 0;
 
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber,
                     version: "bV");
@@ -591,7 +591,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
             int partNumber = 0;
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
 
@@ -723,7 +723,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int partNumber = 0;
             int chunksTotal = 1;
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
 
@@ -757,16 +757,16 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string transferId = GetNewTransferId();
             int chunksTotal = 1;
-            JobPartPlanHeader header1 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header1 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 0);
-            JobPartPlanHeader header2 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header2 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 1);
-            JobPartPlanHeader header3 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header3 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 2);
-            JobPartPlanHeader header4 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header4 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 3);
 
@@ -846,7 +846,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int partNumber = 0;
             int chunksTotal = 1;
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
 
@@ -872,7 +872,7 @@ namespace Azure.Storage.DataMovement.Tests
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
-                await AssertJobPlanHeaderAsync(header, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
             }
         }
 
@@ -906,7 +906,7 @@ namespace Azure.Storage.DataMovement.Tests
             int partNumber = 0;
             int chunksTotal = 1;
             StorageTransferStatus newStatus = StorageTransferStatus.Completed;
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
 
@@ -935,7 +935,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
-                await AssertJobPlanHeaderAsync(header, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
             }
         }
 
@@ -948,16 +948,16 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int chunksTotal = 1;
             StorageTransferStatus newStatus = StorageTransferStatus.Completed;
-            JobPartPlanHeader header1 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header1 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 0);
-            JobPartPlanHeader header2 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header2 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 1);
-            JobPartPlanHeader header3 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header3 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 2);
-            JobPartPlanHeader header4 = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header4 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 3);
 
@@ -1017,7 +1017,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
-                await AssertJobPlanHeaderAsync(header1, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header1, stream);
             }
             header2.AtomicJobStatus = newStatus;
             using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
@@ -1026,7 +1026,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
-                await AssertJobPlanHeaderAsync(header2, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header2, stream);
             }
             header3.AtomicJobStatus = newStatus;
             using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
@@ -1035,7 +1035,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
-                await AssertJobPlanHeaderAsync(header3, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header3, stream);
             }
             header4.AtomicJobStatus = newStatus;
             using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
@@ -1044,7 +1044,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
-                await AssertJobPlanHeaderAsync(header4, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header4, stream);
             }
         }
 
@@ -1057,7 +1057,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int partNumber = 0;
             StorageTransferStatus newStatus = StorageTransferStatus.Completed;
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
 
@@ -1079,7 +1079,7 @@ namespace Azure.Storage.DataMovement.Tests
             int chunksTotal = 1;
             // originally the default is set to Queued
             StorageTransferStatus newStatus = StorageTransferStatus.Completed;
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
 
@@ -1108,7 +1108,7 @@ namespace Azure.Storage.DataMovement.Tests
                 offset: 0,
                 readSize: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
             {
-                await AssertJobPlanHeaderAsync(header, stream);
+                await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
             }
         }
 
@@ -1122,7 +1122,7 @@ namespace Azure.Storage.DataMovement.Tests
             int partNumber = 0;
             // originally the default is set to Queued
             StorageTransferStatus newStatus = StorageTransferStatus.Completed;
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
 
