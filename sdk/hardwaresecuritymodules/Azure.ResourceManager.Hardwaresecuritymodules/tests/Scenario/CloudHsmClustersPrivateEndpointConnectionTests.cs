@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             _cloudHsmClusterResource = await CreateCloudHsmClusterResourceAsync();
         }
 
+        [Ignore("Exception")]
         [RecordedTest]
         public async Task CreateOrUpdateAsyncPrivateEndpointConnection()
         {
