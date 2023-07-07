@@ -365,6 +365,11 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            Argument.AssertNotNullOrWhiteSpace(transferId, nameof(transferId));
+            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
+            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
+
+            transferOptions ??= new TransferOptions();
 
             if (_dataTransfers.ContainsKey(transferId))
             {
@@ -433,33 +438,15 @@ namespace Azure.Storage.DataMovement
 
             transferOptions ??= new TransferOptions();
 
-            string transferId;
-            bool resumeJob = false;
-            if (!string.IsNullOrEmpty(transferOptions.ResumeFromCheckpointId))
-            {
-                resumeJob = true;
-                transferId = transferOptions.ResumeFromCheckpointId;
-
-                if (_dataTransfers.ContainsKey(transferId))
-                {
-                    // Remove the stale DataTransfer so we can pass a new DataTransfer object
-                    // to the user and also track the transfer from the DataTransfer object
-                    _dataTransfers.Remove(transferId);
-                }
-            }
-            else
-            {
-                // Add Transfer to Checkpointer
-                transferId = Guid.NewGuid().ToString();
-                await _checkpointer.AddNewJobAsync(transferId, _cancellationToken).ConfigureAwait(false);
-            }
+            string transferId = Guid.NewGuid().ToString();
+            await _checkpointer.AddNewJobAsync(transferId, _cancellationToken).ConfigureAwait(false);
 
             DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
                 sourceResource,
                 destinationResource,
                 transferOptions,
                 transferId,
-                resumeJob,
+                false,
                 cancellationToken).ConfigureAwait(false);
 
             return dataTransfer;
