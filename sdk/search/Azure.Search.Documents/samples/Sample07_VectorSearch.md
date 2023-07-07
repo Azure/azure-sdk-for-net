@@ -72,7 +72,7 @@ public class Hotel
 
 Next, we will create sample hotel documents. The vector field requires submitting text input to an embedding model that converts human-readable text into a vector representation. To convert a text query string provided by a user into a vector representation, your application should utilize an embedding library that offers this functionality. For more details about how to generate embeddings, refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). Here's an example of how you can get embeddings using [Azure.AI.OpenAI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/README.md) library. 
 
-### Get Embeddings using `Azure.AI.OpenAI`
+#### Get Embeddings using `Azure.AI.OpenAI`
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_GetEmbeddings
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
