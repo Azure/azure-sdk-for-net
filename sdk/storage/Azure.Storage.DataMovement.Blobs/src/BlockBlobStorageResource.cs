@@ -21,12 +21,13 @@ namespace Azure.Storage.DataMovement.Blobs
     public class BlockBlobStorageResource : StorageResourceSingle
     {
         internal BlockBlobClient BlobClient { get; set; }
+        internal BlockBlobStorageResourceOptions _options;
+
         /// <summary>
         /// In order to ensure the block list is sent in the correct order
         /// we will order them by the offset (i.e. {offset, block_id}).
         /// </summary>
         private ConcurrentDictionary<long, string> _blocks;
-        private BlockBlobStorageResourceOptions _options;
         private long? _length;
         private ETag? _etagDownloadLock = default;
 
@@ -46,9 +47,9 @@ namespace Azure.Storage.DataMovement.Blobs
         public override string Path => BlobClient.Name;
 
         /// <summary>
-        /// Defines whether the storage resource type can produce a URL.
+        /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
+        public override bool CanProduceUri => true;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.

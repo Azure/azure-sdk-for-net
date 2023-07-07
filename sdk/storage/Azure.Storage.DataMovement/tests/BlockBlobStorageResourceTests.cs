@@ -33,7 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Assert
             Assert.AreEqual(uri, storageResource.Uri);
             Assert.AreEqual(blobClient.Name, storageResource.Path);
-            Assert.AreEqual(ProduceUriType.ProducesUri, storageResource.CanProduceUri);
+            Assert.IsTrue(storageResource.CanProduceUri);
         }
 
         [RecordedTest]
