@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Tests
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task BaseSetUpForTests()
+        protected async Task BaseSetUpForTests(bool isDedicatedHsm = false)
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             }
             //TODO will initialize resource groups here as well
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
-            Location = AzureLocation.UKWest;
+            Location = isDedicatedHsm ? AzureLocation.EastUS : AzureLocation.UKWest;
             ResourceGroupResource = await CreateResourceGroup(DefaultSubscription, "sdkTestsRg", Location);
         }
 
