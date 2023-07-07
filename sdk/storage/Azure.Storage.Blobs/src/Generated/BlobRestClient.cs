@@ -135,6 +135,7 @@ namespace Azure.Storage.Blobs
         public async Task<ResponseWithHeaders<Stream, BlobDownloadHeaders>> DownloadAsync(string snapshot = null, string versionId = null, int? timeout = null, string range = null, string leaseId = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDownloadRequest(snapshot, versionId, timeout, range, leaseId, rangeGetContentMD5, rangeGetContentCRC64, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobDownloadHeaders(message.Response);
             switch (message.Response.Status)
@@ -172,6 +173,7 @@ namespace Azure.Storage.Blobs
         public ResponseWithHeaders<Stream, BlobDownloadHeaders> Download(string snapshot = null, string versionId = null, int? timeout = null, string range = null, string leaseId = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDownloadRequest(snapshot, versionId, timeout, range, leaseId, rangeGetContentMD5, rangeGetContentCRC64, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobDownloadHeaders(message.Response);
             switch (message.Response.Status)
@@ -377,7 +379,7 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPropertiesAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionAlgorithm = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<Response> GetPropertiesAsync(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string ifTags, RequestConditions requestConditions, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("Blob.GetProperties");
             scope.Start();
@@ -415,7 +417,7 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetProperties(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionAlgorithm = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual Response GetProperties(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string ifTags, RequestConditions requestConditions, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("Blob.GetProperties");
             scope.Start();

@@ -326,6 +326,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
 
             using var message = CreateGetRequest(libraryName);
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -355,6 +356,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
 
             using var message = CreateGetRequest(libraryName);
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
