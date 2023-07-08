@@ -12,7 +12,7 @@ using Azure.Verticals.AgriFood.Farming;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="FarmBeatsClient"/> to client builder. </summary>
-    public static partial class FarmBeatsClientBuilderExtensions
+    public static partial class VerticalsAgriFoodFarmingClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="FarmBeatsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
