@@ -12,7 +12,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="RoleAssignmentsClient"/>, <see cref="RoleDefinitionsClient"/> to client builder. </summary>
-    public static partial class AccessControlClientBuilderExtensions
+    public static partial class AnalyticsSynapseAccessControlClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="RoleAssignmentsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
