@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication.JobRouter.Models;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class CommunicationJobRouterModelFactory

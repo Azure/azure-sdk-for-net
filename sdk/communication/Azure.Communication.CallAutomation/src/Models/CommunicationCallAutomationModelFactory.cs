@@ -10,8 +10,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Model factory for read-only models. </summary>
-    [CodeGenModel("AzureCommunicationServicesModelFactory")]
-    public static partial class CallAutomationModelFactory
+    public static partial class CommunicationCallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
         /// <param name="participant"> Participant of the call. </param>

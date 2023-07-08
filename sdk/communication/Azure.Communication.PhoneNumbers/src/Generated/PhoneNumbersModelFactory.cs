@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class CommunicationPhoneNumbersModelFactory
+    public static partial class PhoneNumbersModelFactory
     {
         /// <summary> Initializes a new instance of PhoneNumberAreaCode. </summary>
         /// <param name="areaCode"> An area code. </param>
@@ -112,43 +112,6 @@ namespace Azure.Communication.PhoneNumbers
             phoneNumbers ??= new List<string>();
 
             return new PhoneNumberSearchResult(searchId, phoneNumbers?.ToList(), phoneNumberType, assignmentType, capabilities, cost, searchExpiresOn, errorCode, error);
-        }
-
-        /// <summary> Initializes a new instance of PurchasedPhoneNumber. </summary>
-        /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
-        /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
-        /// <param name="countryCode"> The ISO 3166-2 code of the phone number's country, e.g. US. </param>
-        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, tollFree. </param>
-        /// <param name="capabilities"> Capabilities of a phone number. </param>
-        /// <param name="assignmentType"> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </param>
-        /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
-        /// <param name="cost"> The incurred cost for a single phone number. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="phoneNumber"/>, <paramref name="countryCode"/>, <paramref name="capabilities"/> or <paramref name="cost"/> is null. </exception>
-        /// <returns> A new <see cref="PhoneNumbers.PurchasedPhoneNumber"/> instance for mocking. </returns>
-        public static PurchasedPhoneNumber PurchasedPhoneNumber(string id = null, string phoneNumber = null, string countryCode = null, PhoneNumberType phoneNumberType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberAssignmentType assignmentType = default, DateTimeOffset purchaseDate = default, PhoneNumberCost cost = null)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
-            if (countryCode == null)
-            {
-                throw new ArgumentNullException(nameof(countryCode));
-            }
-            if (capabilities == null)
-            {
-                throw new ArgumentNullException(nameof(capabilities));
-            }
-            if (cost == null)
-            {
-                throw new ArgumentNullException(nameof(cost));
-            }
-
-            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
         }
     }
 }
