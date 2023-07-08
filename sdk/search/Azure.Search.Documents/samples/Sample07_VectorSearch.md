@@ -2,7 +2,7 @@
 
 Vector search is a method of information retrieval technique that aims to overcome the limitations of traditional keyword-based search. Instead of relying solely on lexical analysis and matching individual query terms, vector search utilizes machine learning models to capture the contextual meaning of words and phrases. This is achieved by representing documents and queries as vectors in a high-dimensional space known as an embedding. By understanding the intent behind the query, vector search can provide more relevant results that align with the user's requirements, even if the exact terms are not present in the document. Additionally, vector search can be applied to different types of content, such as images and videos, not just text.
 
-Cognitive Search doesn't host vectorization models. This presents a challenge in creating embeddings for query inputs and outputs. To address this, you need to ensure that the documents you push to your search service include vectors within the payload. To generate vectorized data, you have the flexibility to use any embedding model of your choice. However, we recommend utilizing the [Azure OpenAI Embeddings models](https://learn.microsoft.com/azure/cognitive-services/openai/how-to/embeddings?tabs=console) for this purpose. You can leverage the [Azure.AI.OpenAI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/README.md) library to generate text embeddings.
+Cognitive Search doesn't host vectorization models. This presents a challenge in creating embeddings for query inputs and outputs. To address this, you need to ensure that the documents you push to your search service include vectors within the payload. To generate vectorized data, you have the flexibility to use any embedding model of your choice. However, we recommend utilizing the [Azure OpenAI Embeddings models](https://learn.microsoft.com/azure/cognitive-services/openai/how-to/embeddings) for this purpose. You can leverage the [Azure.AI.OpenAI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/README.md) library to generate text embeddings.
 
 Please refer the [documentation](https://learn.microsoft.com/azure/search/vector-search-overview) to learn more about Vector Search.
 
@@ -10,7 +10,7 @@ This sample will show you how to index a vector field and perform vector search 
 
 ## Create a Vector Index
 
-Let's consider the example of a `Hotel`. First, we need to create an index for storing hotel information. In this index, we will define a field called `DescriptionVector` as a vector field. To configure the vector field, you need to provide the model dimensions, which indicate the size of the embeddings generated for this field, and the name of the vector search algorithm configuration that specifies the algorithm and any optional parameters for searching the vector field. You can find detailed instructions on how to create a vector index in the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-create-index?tabs=push).
+Let's consider the example of a `Hotel`. First, we need to create an index for storing hotel information. In this index, we will define a field called `DescriptionVector` as a vector field. To configure the vector field, you need to provide the model dimensions, which indicate the size of the embeddings generated for this field, and the name of the vector search algorithm configuration that specifies the algorithm and any optional parameters for searching the vector field. You can find detailed instructions on how to create a vector index in the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-create-index).
 
 We will create an instace of `SearchIndex` and define `Hotel` fields.
 
@@ -44,7 +44,7 @@ SearchIndex searchIndex = new(indexName)
 };
 ```
 
-After creating an instance of the `SearchIndex`, we need to instantiate the `SearchIndexClient` and call the `CreateIndexAsync` method to create the search index. 
+After creating an instance of the `SearchIndex`, we need to instantiate the `SearchIndexClient` and call the `CreateIndex` method to create the search index. 
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index
 Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
@@ -256,7 +256,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     });
 
 int count = 0;
-Console.WriteLine($"\nSemantic Hybrid Search Results:");
+Console.WriteLine($"Semantic Hybrid Search Results:");
 
 Console.WriteLine($"\nQuery Answer:");
 foreach (AnswerResult result in response.Answers)
@@ -269,7 +269,7 @@ await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
 {
     count++;
     Hotel doc = result.Document;
-    Console.WriteLine($"\nHotelId: {doc.HotelId} \n HotelName: {doc.HotelName} \n Category: {doc.Category} \n Description: {doc.Description}");
+    Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
 
     if (result.Captions != null)
     {

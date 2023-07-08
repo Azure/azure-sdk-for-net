@@ -182,7 +182,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     });
 
                 int count = 0;
-                Console.WriteLine($"\nSemantic Hybrid Search Results:");
+                Console.WriteLine($"Semantic Hybrid Search Results:");
 
                 Console.WriteLine($"\nQuery Answer:");
                 foreach (AnswerResult result in response.Answers)
@@ -195,7 +195,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     count++;
                     Hotel doc = result.Document;
-                    Console.WriteLine($"\nHotelId: {doc.HotelId} \n HotelName: {doc.HotelName} \n Category: {doc.Category} \n Description: {doc.Description}");
+                    Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
 
                     if (result.Captions != null)
                     {

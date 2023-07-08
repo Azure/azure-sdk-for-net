@@ -59,13 +59,16 @@ namespace Azure.Search.Documents.Tests.Samples
         public async Task AuthenticateWithAAD()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
-            Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
 
             #region Snippet:Azure_Search_Readme_CreateWithDefaultAzureCredential
             string indexName = "nycjobs";
 
             // Get the service endpoint from the environment
+#if SNIPPET
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+#else
+            Uri endpoint = resources.Endpoint;
+#endif
             DefaultAzureCredential credential = new DefaultAzureCredential();
 
             // Create a client
