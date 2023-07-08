@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
@@ -51,6 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             TraceHelper.AddPropertiesToTelemetry(Properties, ref activityTagsProcessor.UnMappedTags);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool IsSuccess(Activity activity, string? responseCode, OperationType operationType)
         {
             if (operationType.HasFlag(OperationType.Http)

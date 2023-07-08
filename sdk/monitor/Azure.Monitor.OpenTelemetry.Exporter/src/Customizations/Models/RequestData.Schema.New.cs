@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
@@ -24,12 +25,8 @@ internal partial class RequestData
         Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
             ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
             : SchemaConstants.Duration_MaxValue;
-        ResponseCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)
-            ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
-            ?? "0";
-
+        ResponseCode = GetResponseCode(ref activityTagsProcessor.MappedTags);
         Success = IsSuccess(activity, ResponseCode, activityTagsProcessor.activityType);
-
         Url = url.Truncate(SchemaConstants.RequestData_Url_MaxLength);
         Properties = new ChangeTrackingDictionary<string, string>();
         Measurements = new ChangeTrackingDictionary<string, double>();
@@ -44,5 +41,13 @@ internal partial class RequestData
         }
 
         TraceHelper.AddPropertiesToTelemetry(Properties, ref activityTagsProcessor.UnMappedTags);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static string GetResponseCode(ref AzMonList mappedTags)
+    {
+        return AzMonList.GetTagValue(ref mappedTags, SemanticConventions.AttributeHttpResponseStatusCode)
+            ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
+            ?? "0";
     }
 }

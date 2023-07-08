@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Runtime.CompilerServices;
+using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
@@ -15,23 +17,26 @@ internal static class AzMonNewListExtensions
     {
         try
         {
-            var serverAddress = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeServerAddress)?.ToString();
-            if (serverAddress != null)
+            var host = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeServerAddress)?.ToString();
+            if (host != null)
             {
-                UriBuilder uriBuilder = new()
-                {
-                    Scheme = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeUrlScheme)?.ToString(),
-                    Host = serverAddress,
-                    Path = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeUrlPath)?.ToString(),
-                    Query = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeUrlQuery)?.ToString()
-                };
+                var requestUrlTagObjects = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeUrlScheme, SemanticConventions.AttributeUrlPath, SemanticConventions.AttributeUrlQuery, SemanticConventions.AttributeServerPort);
+                var scheme = requestUrlTagObjects[0]?.ToString();
+                var path = requestUrlTagObjects[1]?.ToString();
+                var queryString = requestUrlTagObjects[2]?.ToString();
+                var queryStringLength = queryString?.Length;
+                var isNonDefaultPort = TryGetNonDefaultPort(requestUrlTagObjects[3]?.ToString(), out string? port);
+                var length = (scheme?.Length ?? 0) + (scheme?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + host.Length + (port?.Length > 0 ? 1 : 0) + (port?.Length ?? 0) + (path?.Length ?? 0) + (queryString?.Length > 0 ? 1 : 0) + (queryString?.Length ?? 0);
 
-                if (int.TryParse(AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeServerPort)?.ToString(), out int port))
-                {
-                    uriBuilder.Port = port;
-                }
+                var urlStringBuilder = new System.Text.StringBuilder(length)
+                    .Append(scheme)
+                    .Append(scheme != null ? Uri.SchemeDelimiter : null)
+                    .Append(host)
+                    .Append(isNonDefaultPort ? $":{port}" : null)
+                    .Append(string.IsNullOrEmpty(path) ? "/" : path)
+                    .Append(queryString != null ? $"?{queryString}" : null);
 
-                return uriBuilder.Uri.AbsoluteUri;
+                return urlStringBuilder.ToString();
             }
         }
         catch
@@ -87,5 +92,18 @@ internal static class AzMonNewListExtensions
     private static bool IsDefaultPort(int port)
     {
         return port == 0 || port == 80 || port == 443;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool TryGetNonDefaultPort(string? stringport, out string? port)
+    {
+        port = stringport;
+
+        if (string.IsNullOrEmpty(stringport) || stringport == "80" || stringport == "443")
+        {
+            return false;
+        }
+
+        return true;
     }
 }
