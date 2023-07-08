@@ -7,8 +7,8 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    [CodeGenModel("AzureCommunicationServicesModelFactory")]
-    public static partial class RouterModelFactory
+    [CodeGenModel("CommunicationJobRouterModelFactory")]
+    public static partial class CommunicationJobRouterModelFactory
     {
         /// <summary> Initializes a new instance of CommunicationError. </summary>
         /// <param name="code"> The error code. </param>

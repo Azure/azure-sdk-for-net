@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Communication.Chat
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class CommunicationChatModelFactory
+    public static partial class ChatModelFactory
     {
         /// <summary> Initializes a new instance of ChatError. </summary>
         /// <param name="code"> The error code. </param>
@@ -36,17 +36,6 @@ namespace Azure.Communication.Chat
             invalidParticipants ??= new List<ChatError>();
 
             return new AddChatParticipantsResult(invalidParticipants?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ChatThreadItem. </summary>
-        /// <param name="id"> Chat thread id. </param>
-        /// <param name="topic"> Chat thread topic. </param>
-        /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <returns> A new <see cref="Chat.ChatThreadItem"/> instance for mocking. </returns>
-        public static ChatThreadItem ChatThreadItem(string id = null, string topic = null, DateTimeOffset? deletedOn = null, DateTimeOffset? lastMessageReceivedOn = null)
-        {
-            return new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn);
         }
     }
 }

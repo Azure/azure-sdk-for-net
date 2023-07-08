@@ -7,12 +7,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class SecurityKeyVaultAdministrationModelFactory
+    public static partial class KeyVaultAdministrationModelFactory
     {
         /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
         /// <param name="id"> The role definition ID. </param>
