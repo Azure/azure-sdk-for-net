@@ -11,17 +11,21 @@ namespace Azure.Communication.CallAutomation
     internal partial class PlaySourceInternal
     {
         /// <summary> Initializes a new instance of PlaySourceInternal. </summary>
-        /// <param name="kind"> Defines the type of the play source. </param>
-        public PlaySourceInternal(PlaySourceTypeInternal kind)
+        /// <param name="sourceType"> Defines the type of the play source. </param>
+        public PlaySourceInternal(PlaySourceTypeInternal sourceType)
         {
-            Kind = kind;
+            SourceType = sourceType;
         }
 
         /// <summary> Defines the type of the play source. </summary>
-        public PlaySourceTypeInternal Kind { get; }
+        public PlaySourceTypeInternal SourceType { get; }
         /// <summary> Defines the identifier to be used for caching related media. </summary>
-        public string PlaySourceCacheId { get; set; }
+        public string PlaySourceId { get; set; }
         /// <summary> Defines the file source info to be used for play. </summary>
-        public FileSourceInternal File { get; set; }
+        public FileSourceInternal FileSource { get; set; }
+        /// <summary> Defines the text source info to be used for play. </summary>
+        public TextSourceInternal TextSource { get; set; }
+        /// <summary> Defines the ssml(Speech Synthesis Markup Language) source info to be used for play. </summary>
+        public SsmlSourceInternal SsmlSource { get; set; }
     }
 }

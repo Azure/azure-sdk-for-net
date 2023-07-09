@@ -44,6 +44,11 @@ namespace Azure.Communication.CallAutomation
             }
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
+            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
+            {
+                writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
+                writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+            }
             writer.WriteEndObject();
         }
     }

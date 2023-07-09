@@ -23,9 +23,18 @@ namespace Azure.Communication.CallAutomation
         }
 
         private const string DtmfValue = "dtmf";
+        private const string SpeechValue = "speech";
+        private const string SpeechOrDtmfValue = "speechOrDtmf";
+        private const string ChoicesValue = "choices";
 
         /// <summary> dtmf. </summary>
         public static RecognizeInputType Dtmf { get; } = new RecognizeInputType(DtmfValue);
+        /// <summary> speech. </summary>
+        public static RecognizeInputType Speech { get; } = new RecognizeInputType(SpeechValue);
+        /// <summary> speechOrDtmf. </summary>
+        public static RecognizeInputType SpeechOrDtmf { get; } = new RecognizeInputType(SpeechOrDtmfValue);
+        /// <summary> choices. </summary>
+        public static RecognizeInputType Choices { get; } = new RecognizeInputType(ChoicesValue);
         /// <summary> Determines if two <see cref="RecognizeInputType"/> values are the same. </summary>
         public static bool operator ==(RecognizeInputType left, RecognizeInputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecognizeInputType"/> values are not the same. </summary>
