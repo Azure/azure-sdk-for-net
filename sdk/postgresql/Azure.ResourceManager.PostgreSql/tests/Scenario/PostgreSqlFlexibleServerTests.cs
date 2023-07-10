@@ -229,6 +229,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
         }
 
         [TestCase]
+        [RecordedTest]
         public async Task GeoRestore()
         {
             var sourcePublicServerName = Recording.GenerateAssetName("pgflexserver");
