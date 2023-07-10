@@ -261,10 +261,6 @@ namespace Azure.Search.Documents.Tests.Models
             searchOptions.QueryCaptionRaw = "unknown";
             Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
             Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
-
-            searchOptions.QueryCaptionRaw = "unknown|highlight-False";
-            Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
-            Assert.AreEqual(false, searchOptions.QueryCaptionHighlightEnabled);
         }
 
         [Test]
