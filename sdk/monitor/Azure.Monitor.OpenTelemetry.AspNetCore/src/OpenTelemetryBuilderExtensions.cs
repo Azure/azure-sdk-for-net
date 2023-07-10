@@ -100,16 +100,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                                 // 1) created by Azure SDK 2) created by HttpClient
                                 // To prevent this duplication we are filtering the span from HttpClient
                                 // as span from Azure SDK contains all relevant information needed.
-                                if (AppContext.TryGetSwitch("Azure.Experimental.EnableActivitySource", out var enabled))
+                                var parentActivity = Activity.Current?.Parent;
+                                if (parentActivity != null && parentActivity.Source.Name.StartsWith("Azure.Core"))
                                 {
-                                    if (enabled)
-                                    {
-                                        var parentActivity = Activity.Current?.Parent;
-                                        if (parentActivity != null && parentActivity.Source.Name.StartsWith("Azure.Core"))
-                                        {
-                                            return false;
-                                        }
-                                    }
+                                    return false;
                                 }
 
                                 return true;
