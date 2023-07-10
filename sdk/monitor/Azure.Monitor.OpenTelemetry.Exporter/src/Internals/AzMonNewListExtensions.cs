@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
@@ -26,7 +25,7 @@ internal static class AzMonNewListExtensions
                 var queryString = requestUrlTagObjects[2]?.ToString();
                 var queryStringLength = queryString?.Length;
                 var isNonDefaultPort = TryGetNonDefaultPort(requestUrlTagObjects[3]?.ToString(), out string? port);
-                var length = (scheme?.Length ?? 0) + (scheme?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + host.Length + (port?.Length > 0 ? 1 : 0) + (port?.Length ?? 0) + (path?.Length ?? 0) + (queryString?.Length > 0 ? 1 : 0) + (queryString?.Length ?? 0);
+                var length = (scheme?.Length ?? 0) + (scheme?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + host.Length + (port?.Length > 0 ? 1 : 0) + (port?.Length ?? 0) + (path?.Length ?? 1) + (queryString?.Length > 0 ? 1 : 0) + (queryString?.Length ?? 0);
 
                 var urlStringBuilder = new System.Text.StringBuilder(length)
                     .Append(scheme)
@@ -42,6 +41,58 @@ internal static class AzMonNewListExtensions
         catch
         {
             // If URI building fails, there is no need to throw an exception. Instead, we can simply return null.
+        }
+
+        return null;
+    }
+
+    ///<summary>
+    /// Gets messaging url from activity tag objects.
+    ///</summary>
+    ///<example>
+    /// amqps://my.servicebus.windows.net/queueName.
+    ///</example>
+    internal static string? GetNewSchemaMessagingUrl(this AzMonList tagObjects, ActivityKind activityKind)
+    {
+        try
+        {
+            var host = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeServerAddress)?.ToString();
+            if (!string.IsNullOrEmpty(host))
+            {
+                object?[] messagingTagObjects;
+                string? sourceOrDestinationName = null;
+
+                if (activityKind == ActivityKind.Consumer)
+                {
+                    messagingTagObjects = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeNetworkProtocolName, SemanticConventions.AttributeMessagingSourceName);
+                    sourceOrDestinationName = messagingTagObjects[1]?.ToString(); // messagingTagObjects[1] => SemanticConventions.AttributeMessagingSourceName.
+                    if (sourceOrDestinationName == null)
+                    {
+                        sourceOrDestinationName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeMessagingDestinationName)?.ToString();
+                    }
+                }
+                else
+                {
+                    messagingTagObjects = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeNetworkProtocolName, SemanticConventions.AttributeMessagingDestinationName);
+                    sourceOrDestinationName = messagingTagObjects[1]?.ToString(); // messagingTagObjects[1] => SemanticConventions.AttributeMessagingDestinationName.
+                }
+
+                var protocolName = messagingTagObjects[0]?.ToString(); // messagingTagObjects[0] => SemanticConventions.AttributeNetworkProtocolName.
+
+                var length = (protocolName?.Length ?? 0) + (protocolName?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + host!.Length + (sourceOrDestinationName?.Length ?? 0) + 1;
+
+                var messagingStringBuilder = new System.Text.StringBuilder(length)
+                    .Append(protocolName)
+                    .Append(string.IsNullOrEmpty(protocolName) ? null : Uri.SchemeDelimiter)
+                    .Append(host)
+                    .Append(string.IsNullOrEmpty(sourceOrDestinationName) ? "/" : $"/{sourceOrDestinationName}");
+
+                return messagingStringBuilder.ToString();
+            }
+        }
+        catch
+        {
+            // If Messaging Url building fails, there is no need to throw an exception. Instead, we can simply return null.
         }
 
         return null;

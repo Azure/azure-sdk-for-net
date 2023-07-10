@@ -72,7 +72,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
                 case OperationType.Messaging:
                     depDataAndType = AzMonList.GetTagValues(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMessagingUrl, SemanticConventions.AttributeMessagingSystem);
-                    Data = depDataAndType[0]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
+                    var messagingUrl = depDataAndType[0]?.ToString()
+                                        ?? activityTagsProcessor.MappedTags.GetNewSchemaMessagingUrl(activity.Kind);
+                    Data = messagingUrl?.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
                     Type = depDataAndType[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
                     break;
             }

@@ -213,6 +213,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.False(requestData.Measurements.TryGetValue("timeSinceEnqueued", out var timeInQueue));
         }
 
+        [Fact]
+        public void ValidateMessagingRequestData()
+        {
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(ValidateMessagingRequestData)).Build();
+            using var activitySource = new ActivitySource(nameof(ValidateMessagingRequestData));
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Consumer,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
+            activity.Stop();
+
+            activity.SetStatus(Status.Ok);
+            activity.SetTag(SemanticConventions.AttributeMessagingSystem, "servicebus");
+            activity.SetTag(SemanticConventions.AttributeNetworkProtocolName, "amqps");
+            activity.SetTag(SemanticConventions.AttributeServerAddress, "my.servicebus.windows.net");
+            activity.SetTag(SemanticConventions.AttributeMessagingSourceName, "queueName");
+            activity.SetTag("foo", "bar");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            Assert.Equal("RequestDataNewActivity", requestData.Name);
+            Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
+            Assert.Equal("amqps://my.servicebus.windows.net/", requestData.Url);
+            Assert.Equal("0", requestData.ResponseCode);
+            Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
+            Assert.True(requestData.Success);
+            Assert.Null(requestData.Source);
+            Assert.True(requestData.Properties.Count == 1);
+            Assert.Equal("bar", requestData.Properties["foo"]);
+            Assert.True(requestData.Measurements.Count == 0);
+        }
+
         private ActivityLink AddActivityLink(long enqueuedTime)
         {
             ActivityTagsCollection tags = new ActivityTagsCollection

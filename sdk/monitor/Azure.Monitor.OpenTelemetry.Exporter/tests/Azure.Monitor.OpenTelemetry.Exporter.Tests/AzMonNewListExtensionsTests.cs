@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Xunit;
 
@@ -32,6 +33,79 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Assert
             Assert.Equal(expectedUrl, url);
+            if (url != null)
+            {
+                // Validate the length with the same logic from code.
+                var length = (urlScheme?.Length ?? 0) + (urlScheme?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + serverAddress.Length + (serverPort?.Length > 0 ? 1 : 0) + (serverPort?.Length ?? 0) + (urlPath?.Length ?? 1) + (urlQuery?.Length > 0 ? 1 : 0) + (urlQuery?.Length ?? 0);
+                Assert.Equal(length, url.Length);
+            }
+        }
+
+        [Theory]
+        [InlineData("my.servicebus.windows.net", "amqps", "queueName", "amqps://my.servicebus.windows.net/queueName")]
+        [InlineData("my.servicebus.windows.net", "amqps", "", "amqps://my.servicebus.windows.net/")]
+        [InlineData("", "amqps", "queueName", null)]
+        [InlineData("my.servicebus.windows.net", "", "queueName", "my.servicebus.windows.net/queueName")]
+        [InlineData("my.servicebus.windows.net", null, null, "my.servicebus.windows.net/")]
+        [InlineData(null, "amqps", "queueName", null)]
+        public void GetNewSchemaMessagingUrl_ActivityKindProducer(string serverAddress, string protocolName, string destinationName, string expectedUrl)
+        {
+            // Arrange
+            AzMonList tagObjects = AzMonList.Initialize();
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerAddress, serverAddress));
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetworkProtocolName, protocolName));
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeMessagingDestinationName, destinationName));
+
+            // Act
+            var url = tagObjects.GetNewSchemaMessagingUrl(ActivityKind.Producer);
+
+            // Assert
+            Assert.Equal(expectedUrl, url);
+            if (url != null)
+            {
+                // Validate the length with the same logic from code.
+                var length = (protocolName?.Length ?? 0) + (protocolName?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + serverAddress!.Length + (destinationName?.Length ?? 0) + 1;
+                Assert.Equal(length, url.Length);
+            }
+        }
+
+        [Theory]
+        [InlineData("my.servicebus.windows.net", "amqps", "queueName", null, "amqps://my.servicebus.windows.net/queueName")]
+        [InlineData("my.servicebus.windows.net", "amqps", "", null, "amqps://my.servicebus.windows.net/")]
+        [InlineData("", "amqps", null, null, null)]
+        [InlineData("my.servicebus.windows.net", "", null, "destinationName", "my.servicebus.windows.net/destinationName")]
+        [InlineData(null, "amqps", null, "destinationName", null)]
+        [InlineData("my.servicebus.windows.net", "amqps", "sourceName", "destinationName", "amqps://my.servicebus.windows.net/sourceName")]
+        [InlineData("my.servicebus.windows.net", "amqps", null, null, "amqps://my.servicebus.windows.net/")]
+        [InlineData("my.servicebus.windows.net", "amqps", "", "", "amqps://my.servicebus.windows.net/")]
+        public void GetNewSchemaMessagingUrl_ActivityKindConsumer(string serverAddress, string protocolName, string sourceName, string destinationName, string expectedUrl)
+        {
+            // Arrange
+            AzMonList tagObjects = AzMonList.Initialize();
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerAddress, serverAddress));
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeNetworkProtocolName, protocolName));
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeMessagingDestinationName, destinationName));
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeMessagingSourceName, sourceName));
+
+            // Act
+            var result = tagObjects.GetNewSchemaMessagingUrl(ActivityKind.Consumer);
+
+            // Assert
+            Assert.Equal(expectedUrl, result);
+        }
+
+        [Fact]
+        public void GetNewSchemaMessagingUrl_NullTagObjects_ReturnsNull()
+        {
+            // Arrange
+            AzMonList tagObjects = AzMonList.Initialize();
+            var activityKind = ActivityKind.Consumer;
+
+            // Act
+            var result = tagObjects.GetNewSchemaMessagingUrl(activityKind);
+
+            // Assert
+            Assert.Null(result);
         }
 
         [Theory]

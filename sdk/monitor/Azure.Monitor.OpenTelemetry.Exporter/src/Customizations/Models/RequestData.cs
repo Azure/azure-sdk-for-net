@@ -21,7 +21,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     url = activityTagsProcessor.MappedTags.GetRequestUrl();
                     break;
                 case OperationType.Messaging:
-                    url = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMessagingUrl)?.ToString();
+                    url = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMessagingUrl)?.ToString()
+                            ?? activityTagsProcessor.MappedTags.GetNewSchemaMessagingUrl(activity.Kind);
                     break;
             }
 
