@@ -11,9 +11,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         internal override void Invalidate() { }
         internal override void ValidateActions() { }
 
-		#region Empty Response/Data
+        #region Empty Response/Data
 
-		internal class EmptyData : AuthenticationEventData { }
+        internal class EmptyData : AuthenticationEventData { }
 
         internal class EmptyRequest : AuthenticationEventRequest<EmptyResponse, EmptyData>
         {
