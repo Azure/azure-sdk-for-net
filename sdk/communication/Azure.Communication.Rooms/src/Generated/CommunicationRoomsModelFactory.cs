@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.Rooms
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class RoomsModelFactory
+    public static partial class CommunicationRoomsModelFactory
     {
         /// <summary> Initializes a new instance of CommunicationRoom. </summary>
         /// <param name="id"> Unique identifier of a room. This id is server generated. </param>
