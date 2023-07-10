@@ -33,7 +33,7 @@
                 "description": "The client OID to grant access to test resources."
             }
         },
-        "chsmLocation": {
+        "location": {
             "type": "string",
             "defaultValue": "ukwest",
             "allowedValues": [
@@ -43,21 +43,6 @@
             ],
             "metadata": {
                 "description": "The location of the resource. The default is ukwest."
-            }
-        },
-        "dhsmLocation": {
-            "type": "string",
-            "defaultValue": "ukwest",
-            "allowedValues": [
-                "EastUS",
-                "WestUS",
-                "SouthCentralUS",
-                "CentralUS",
-                "NorthEurope",
-                "WestEurope"
-            ],
-            "metadata": {
-                "description": "The location of the resource. The default is eastus."
             }
         },
         "cloudHsmSkuFamily": {
@@ -74,13 +59,6 @@
                 "description": "Cloud HSM SKU to deploy. The default is 'Standard_B1'"
             }
         },
-        "dedicatedHsmSkuName": {
-            "type": "string",
-            "defaultValue": "Standard_B1",
-            "metadata": {
-                "description": "Dedicated HSM SKU to deploy. The default is 'payShield10K_LMK1_CPS60'"
-            }
-        },
         "provisionerApplicationOid": {
             "type": "string",
             "metadata": {
@@ -91,8 +69,6 @@
     "variables": {
         "cloudHsmApiVersion": "2022-08-31-preview",
         "cloudHsmName": "sdk-test-chsm",
-        "dedicatedhsmApiVersion": "2021-11-30",
-        "dedicatedHsmName": "sdk-test-dhsm",
         "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
     },
     "resources": [
@@ -100,32 +76,11 @@
             "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
             "apiVersion": "[variables('cloudHsmApiVersion')]",
             "name": "[variables('cloudHsmName')]",
-            "location": "[parameters('chsmLocation')]",
+            "location": "[parameters('location')]",
             "Sku": {
                 "Family": "[parameters('cloudHsmSkuFamily')]",
                 "Name": "[parameters('cloudHsmSkuName')]"
             }
-        },
-        {
-            "type": "Microsoft.HardwareSecurityModules/dedicatedhsms",
-            "apiVersion": "[variables('dedicatedhsmApiVersion')]",
-            "name": "[variables('cloudHsmName')]",
-            "location": "[parameters('dhsmLocation')]",
-            "Sku": {
-                "Name": "[parameters('dedicatedHsmSkuName')]"
-            },
-            "networkProfiles": [
-                {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'host-nic')]",
-                        },
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'mgmt-nic')]"
-                        }
-                    ]
-                }
-            ]
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
