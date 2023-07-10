@@ -15,6 +15,31 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> Model factory for models. </summary>
     public static partial class AzureHealthInsightsCancerProfilingModelFactory
     {
+        /// <summary> Initializes a new instance of PatientRecord. </summary>
+        /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
+        /// <param name="info"> Patient structured information, including demographics and known structured clinical information. </param>
+        /// <param name="data"> Patient unstructured clinical data, given as documents. </param>
+        /// <returns> A new <see cref="CancerProfiling.PatientRecord"/> instance for mocking. </returns>
+        public static PatientRecord PatientRecord(string id = null, PatientInfo info = null, IEnumerable<PatientDocument> data = null)
+        {
+            data ??= new List<PatientDocument>();
+
+            return new PatientRecord(id, info, data?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PatientDocument. </summary>
+        /// <param name="type"> The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document). </param>
+        /// <param name="clinicalType"> The type of the clinical document. </param>
+        /// <param name="id"> A given identifier for the document. Has to be unique across all documents for a single patient. </param>
+        /// <param name="language"> A 2 letter ISO 639-1 representation of the language of the document. </param>
+        /// <param name="createdDateTime"> The date and time when the document was created. </param>
+        /// <param name="content"> The content of the patient document. </param>
+        /// <returns> A new <see cref="CancerProfiling.PatientDocument"/> instance for mocking. </returns>
+        public static PatientDocument PatientDocument(DocumentType type = default, ClinicalDocumentType? clinicalType = null, string id = null, string language = null, DateTimeOffset? createdDateTime = null, DocumentContent content = null)
+        {
+            return new PatientDocument(type, clinicalType, id, language, createdDateTime, content);
+        }
+
         /// <summary> Initializes a new instance of OncoPhenotypeResult. </summary>
         /// <param name="jobId"> A processing job identifier. </param>
         /// <param name="createdDateTime"> The date and time when the processing job was created. </param>

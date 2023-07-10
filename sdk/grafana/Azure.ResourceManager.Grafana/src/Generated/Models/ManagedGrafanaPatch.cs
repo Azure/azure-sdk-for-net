@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.Grafana.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of ManagedGrafanaPatch. </summary>
+        /// <param name="identity"> The managed identity of the grafana resource. </param>
+        /// <param name="tags"> The new tags of the grafana resource. </param>
+        /// <param name="properties"> Properties specific to the managed grafana resource. </param>
+        internal ManagedGrafanaPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ManagedGrafanaPatchProperties properties)
+        {
+            Identity = identity;
+            Tags = tags;
+            Properties = properties;
+        }
+
         /// <summary> The managed identity of the grafana resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The new tags of the grafana resource. </summary>

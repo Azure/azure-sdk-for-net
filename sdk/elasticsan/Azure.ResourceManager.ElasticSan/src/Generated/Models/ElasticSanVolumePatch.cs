@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of ElasticSanVolumePatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sizeGiB"> Volume size. </param>
+        internal ElasticSanVolumePatch(IDictionary<string, string> tags, long? sizeGiB)
+        {
+            Tags = tags;
+            SizeGiB = sizeGiB;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Volume size. </summary>

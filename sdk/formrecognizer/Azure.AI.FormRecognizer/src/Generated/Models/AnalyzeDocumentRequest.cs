@@ -17,6 +17,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
         }
 
+        /// <summary> Initializes a new instance of AnalyzeDocumentRequest. </summary>
+        /// <param name="urlSource"> Document URL to analyze. </param>
+        /// <param name="base64Source"> Base64 encoding of the document to analyze. </param>
+        internal AnalyzeDocumentRequest(Uri urlSource, byte[] base64Source)
+        {
+            UrlSource = urlSource;
+            Base64Source = base64Source;
+        }
+
         /// <summary> Document URL to analyze. </summary>
         public Uri UrlSource { get; set; }
         /// <summary> Base64 encoding of the document to analyze. </summary>
