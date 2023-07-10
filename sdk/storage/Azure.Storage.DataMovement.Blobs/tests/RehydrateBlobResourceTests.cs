@@ -17,7 +17,7 @@ using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class RehydrateBlobResourceTests : DataMovementTestBase
+    public class RehydrateBlobResourceTests
     {
         public enum RehydrateApi
         {
@@ -38,8 +38,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
         public static IEnumerable<RehydrateApi> GetRehydrateApis() => Enum.GetValues(typeof(RehydrateApi)).Cast<RehydrateApi>();
 
-        public RehydrateBlobResourceTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public RehydrateBlobResourceTests()
         { }
 
         private enum StorageResourceType
@@ -504,7 +503,7 @@ namespace Azure.Storage.DataMovement.Tests
             int jobPartCount = 10;
             for (int i = 0; i < jobPartCount; i++)
             {
-                string childPath = GetNewString(5);
+                string childPath = DataProvider.GetNewString(5);
                 sourcePaths.Add(string.Join("/", sourceParentPath, childPath));
                 destinationPaths.Add(string.Join("/", destinationParentPath, childPath));
             }
