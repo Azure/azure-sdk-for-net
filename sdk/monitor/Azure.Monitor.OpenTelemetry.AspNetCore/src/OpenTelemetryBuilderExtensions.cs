@@ -101,7 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                                 // To prevent this duplication we are filtering the span from HttpClient
                                 // as span from Azure SDK contains all relevant information needed.
                                 var parentActivity = Activity.Current?.Parent;
-                                if (parentActivity != null && parentActivity.Source.Name.StartsWith("Azure.Core.Http"))
+                                if (parentActivity != null && parentActivity.Source.Name.Equals("Azure.Core.Http"))
                                 {
                                     return false;
                                 }
