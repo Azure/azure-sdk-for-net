@@ -16,5 +16,5 @@ var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
 
 // View received invitations
-var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync().ToEnumerableAsync();
+var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync(null, null, null, new()).ToEnumerableAsync();
 ```

@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
 #endif
 
             // View accepted shares
-            var acceptedSentShares = await acceptedSentSharesClient.GetAcceptedSentSharesAsync(sentShareName).ToEnumerableAsync();
+            var acceptedSentShares = await acceptedSentSharesClient.GetAcceptedSentSharesAsync(sentShareName, null, new()).ToEnumerableAsync();
 
             var acceptedSentShare = acceptedSentShares.FirstOrDefault();
 

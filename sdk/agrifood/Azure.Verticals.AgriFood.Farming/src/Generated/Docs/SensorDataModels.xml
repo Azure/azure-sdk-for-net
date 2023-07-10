@@ -154,7 +154,7 @@ This sample shows how to call GetSensorDataModelAsync with required parameters a
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
 
-Response response = await client.GetSensorDataModelAsync("<sensorPartnerId>", "<sensorDataModelId>");
+Response response = await client.GetSensorDataModelAsync("<sensorPartnerId>", "<sensorDataModelId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -186,7 +186,7 @@ This sample shows how to call GetSensorDataModel with required parameters and pa
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
 
-Response response = client.GetSensorDataModel("<sensorPartnerId>", "<sensorDataModelId>");
+Response response = client.GetSensorDataModel("<sensorPartnerId>", "<sensorDataModelId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -242,18 +242,7 @@ This sample shows how to call GetSensorDataModelsAsync with required parameters 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetSensorDataModelsAsync("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-}
-]]></code>
-This sample shows how to call GetSensorDataModelsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
-
-await foreach (var item in client.GetSensorDataModelsAsync("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetSensorDataModelsAsync("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -286,18 +275,7 @@ This sample shows how to call GetSensorDataModels with required parameters and p
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
 
-foreach (var item in client.GetSensorDataModels("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("dataType").ToString());
-}
-]]></code>
-This sample shows how to call GetSensorDataModels with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorDataModelsClient("2022-11-01-preview");
-
-foreach (var item in client.GetSensorDataModels("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetSensorDataModels("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());

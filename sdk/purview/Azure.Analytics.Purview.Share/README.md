@@ -170,7 +170,7 @@ var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var sentShareInvitationsClient = new SentShareInvitationsClient(endPoint, credential);
 
 // View sent share invitations. (Pending/Rejected)
-var sentShareInvitations = await sentShareInvitationsClient.GetSentShareInvitationsAsync(sentShareName).ToEnumerableAsync();
+var sentShareInvitations = await sentShareInvitationsClient.GetSentShareInvitationsAsync(sentShareName, null, null, null, new()).ToEnumerableAsync();
 var responseInvitation = sentShareInvitations.FirstOrDefault();
 
 if (responseInvitation == null)
@@ -191,7 +191,7 @@ var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
 
 // View received invitations
-var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync().ToEnumerableAsync();
+var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync(null, null, null, new()).ToEnumerableAsync();
 ```
 
 ### Create a received share
@@ -202,7 +202,7 @@ var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
 
 // Create received share
-var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync().ToEnumerableAsync();
+var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync(null, null, null, new()).ToEnumerableAsync();
 var receivedShareName = "fabrikam-received-share";
 var receivedInvitation = receivedInvitations.LastOrDefault();
 
@@ -245,7 +245,7 @@ var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var acceptedSentSharesClient = new AcceptedSentSharesClient(endPoint, credential);
 
 // View accepted shares
-var acceptedSentShares = await acceptedSentSharesClient.GetAcceptedSentSharesAsync(sentShareName).ToEnumerableAsync();
+var acceptedSentShares = await acceptedSentSharesClient.GetAcceptedSentSharesAsync(sentShareName, null, new()).ToEnumerableAsync();
 
 var acceptedSentShare = acceptedSentShares.FirstOrDefault();
 
@@ -267,7 +267,7 @@ var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var receivedAssetsClient = new ReceivedAssetsClient(endPoint, credential);
 
 // Get received assets
-var receivedAssets = await receivedAssetsClient.GetReceivedAssetsAsync(receivedShareName).ToEnumerableAsync();
+var receivedAssets = await receivedAssetsClient.GetReceivedAssetsAsync(receivedShareName, null, new()).ToEnumerableAsync();
 using var jsonDocument = JsonDocument.Parse(receivedAssets.First());
 var receivedAssetName = jsonDocument.RootElement.GetProperty("name").GetString();
 

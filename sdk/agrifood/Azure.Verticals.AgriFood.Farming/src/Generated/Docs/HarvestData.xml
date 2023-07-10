@@ -8,7 +8,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync with required para
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -33,7 +33,7 @@ This sample shows how to call GetCascadeDeleteJobDetails with required parameter
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -58,7 +58,7 @@ This sample shows how to call GetHarvestDataAsync with required parameters and p
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-Response response = await client.GetHarvestDataAsync("<partyId>", "<harvestDataId>");
+Response response = await client.GetHarvestDataAsync("<partyId>", "<harvestDataId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
@@ -115,7 +115,7 @@ This sample shows how to call GetHarvestData with required parameters and parse 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-Response response = client.GetHarvestData("<partyId>", "<harvestDataId>");
+Response response = client.GetHarvestData("<partyId>", "<harvestDataId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
@@ -423,23 +423,12 @@ Console.WriteLine(response.Status);
     </member>
     <member name="GetAllHarvestDataAsync(double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetAllHarvestDataAsync and parse the result.
+This sample shows how to call GetAllHarvestDataAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-await foreach (var item in client.GetAllHarvestDataAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAllHarvestDataAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
-
-await foreach (var item in client.GetAllHarvestDataAsync(3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<harvestDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetAllHarvestDataAsync(3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<harvestDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
@@ -492,23 +481,12 @@ await foreach (var item in client.GetAllHarvestDataAsync(3.14, 3.14, 3.14, 3.14,
     </member>
     <member name="GetAllHarvestData(double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetAllHarvestData and parse the result.
+This sample shows how to call GetAllHarvestData with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-foreach (var item in client.GetAllHarvestData())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAllHarvestData with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
-
-foreach (var item in client.GetAllHarvestData(3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<harvestDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetAllHarvestData(3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<harvestDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
@@ -566,18 +544,7 @@ This sample shows how to call GetAllHarvestDataByPartyIdAsync with required para
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-await foreach (var item in client.GetAllHarvestDataByPartyIdAsync("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAllHarvestDataByPartyIdAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
-
-await foreach (var item in client.GetAllHarvestDataByPartyIdAsync("<partyId>", 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetAllHarvestDataByPartyIdAsync("<partyId>", 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
@@ -635,18 +602,7 @@ This sample shows how to call GetAllHarvestDataByPartyId with required parameter
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-foreach (var item in client.GetAllHarvestDataByPartyId("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAllHarvestDataByPartyId with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
-
-foreach (var item in client.GetAllHarvestDataByPartyId("<partyId>", 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetAllHarvestDataByPartyId("<partyId>", 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
@@ -704,7 +660,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync with required paramete
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -730,7 +686,7 @@ This sample shows how to call CreateCascadeDeleteJob with required parameters an
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetHarvestDataClient("2022-11-01-preview");
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<harvestDataId>", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

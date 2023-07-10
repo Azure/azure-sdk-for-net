@@ -232,7 +232,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -280,7 +280,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -321,7 +321,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
 
@@ -344,7 +344,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -398,7 +398,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -431,13 +431,10 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertPausedCheck();
 
             // Act - Resume Job
-            TransferOptions resumeOptions = new TransferOptions()
-            {
-                ResumeFromCheckpointId = transfer.Id
-            };
+            TransferOptions resumeOptions = new TransferOptions();
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
-            DataTransfer resumeTransfer = await CreateSingleLongTransferAsync(
-                manager: transferManager,
+            DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
+                transferId: transfer.Id,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
                 transferOptions: resumeOptions);
@@ -475,7 +472,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -683,7 +680,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -728,7 +725,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -773,7 +770,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -824,7 +821,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -860,23 +857,19 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertPausedCheck();
 
             // Act - Resume Job
-            TransferOptions resumeOptions = new TransferOptions()
-            {
-                ResumeFromCheckpointId = transfer.Id
-            };
-            TestEventsRaised testEventsRaised2 = new TestEventsRaised(resumeOptions);
-            DataTransfer resumeTransfer = await CreateDirectoryLongTransferAsync(
-                manager: transferManager,
+            TransferOptions resumeOptions = new TransferOptions();
+            TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
+            DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
+                transferId: transfer.Id,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                transferOptions: resumeOptions,
-                transferCount: partCount);
+                transferOptions: resumeOptions);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
 
             // Assert
-            await testEventsRaised2.AssertContainerCompletedCheck(partCount);
+            await testEventRaised2.AssertContainerCompletedCheck(partCount);
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -905,7 +898,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();

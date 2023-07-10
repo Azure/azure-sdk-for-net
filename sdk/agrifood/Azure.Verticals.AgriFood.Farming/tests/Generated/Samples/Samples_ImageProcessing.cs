@@ -26,7 +26,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
 
-            Response response = client.GetRasterizeJob("<jobId>");
+            Response response = client.GetRasterizeJob("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -41,7 +41,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
 
-            Response response = client.GetRasterizeJob("<jobId>");
+            Response response = client.GetRasterizeJob("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -70,7 +70,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
 
-            Response response = await client.GetRasterizeJobAsync("<jobId>");
+            Response response = await client.GetRasterizeJobAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -85,7 +85,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
 
-            Response response = await client.GetRasterizeJobAsync("<jobId>");
+            Response response = await client.GetRasterizeJobAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
