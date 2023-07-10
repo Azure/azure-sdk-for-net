@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
-                writer.WriteObjectValue(CatalogAdminPassword);
+                JsonSerializer.Serialize(writer, CatalogAdminPassword);
             }
             if (Optional.IsDefined(CatalogPricingTier))
             {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             Optional<Uri> catalogServerEndpoint = default;
             Optional<string> catalogAdminUserName = default;
-            Optional<SynapseSecureString> catalogAdminPassword = default;
+            Optional<DataFactorySecretString> catalogAdminPassword = default;
             Optional<SynapseIntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    catalogAdminPassword = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
+                    catalogAdminPassword = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("catalogPricingTier"u8))
