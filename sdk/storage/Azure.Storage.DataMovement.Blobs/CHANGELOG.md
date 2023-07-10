@@ -4,6 +4,7 @@
 
 ### Features Added
 - Added `ResourceOptions` to `BlobStorageResourceContainerOptions` which allows setting resource specific options on all resources in a container transfer.
+- Added support authorization using Azure Active Directory when using Service to Service Copy.
 
 ### Breaking Changes
 - [Breaking Change] Removed several options from `BlobStorageResourceContainerOptions`.
