@@ -7,20 +7,20 @@ using System.Linq;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Options for the Unmute Participant Request.
+    /// Options for the Mute Participant Request.
     /// </summary>
-    public class UnmuteParticipantsOptions
+    public class MuteParticipantsOptions
     {
         /// <summary>
-        /// Creates a new UnmuteParticipantOptions object.
+        /// Creates a new MuteParticipantOptions object.
         /// </summary>
-        public UnmuteParticipantsOptions(IEnumerable<CommunicationIdentifier> targetParticipant)
+        public MuteParticipantsOptions(IEnumerable<CommunicationIdentifier> targetParticipants)
         {
-            TargetParticipants = targetParticipant.ToList<CommunicationIdentifier>();
+            TargetParticipants = targetParticipants.ToList<CommunicationIdentifier>();
         }
 
         /// <summary>
-        /// The identity of participants to be unmuted from the call.
+        /// The identity of participants to be muted from the call.
         /// Only one participant is currently supported.
         /// Only ACS Users are currently supported.
         /// </summary>

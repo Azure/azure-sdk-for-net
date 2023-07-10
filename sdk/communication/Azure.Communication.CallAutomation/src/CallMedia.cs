@@ -261,7 +261,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="playSource"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual Response<PlayResult> PlayToAll(PlaySource playSource,  CancellationToken cancellationToken = default)
+        public virtual Response<PlayResult> PlayToAll(PlaySource playSource, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
             scope.Start();
@@ -525,8 +525,8 @@ namespace Azure.Communication.CallAutomation
             if (playSource != null && playSource is FileSource fileSource)
             {
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
-                sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                sourceInternal.PlaySourceId = fileSource.PlaySourceId;
+                sourceInternal.File = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
+                sourceInternal.PlaySourceCacheId = fileSource.PlaySourceCacheId;
                 return sourceInternal;
             }
             else if (playSource != null && playSource is TextSource textSource)
@@ -537,7 +537,7 @@ namespace Azure.Communication.CallAutomation
                 sourceInternal.TextSource.VoiceGender = textSource.VoiceGender ?? GenderType.Male;
                 sourceInternal.TextSource.VoiceName = textSource.VoiceName ?? null;
                 sourceInternal.TextSource.CustomVoiceEndpointId = textSource.CustomVoiceEndpointId ?? null;
-                sourceInternal.PlaySourceId = textSource.PlaySourceId;
+                sourceInternal.PlaySourceCacheId = textSource.PlaySourceCacheId;
                 return sourceInternal;
             }
             else if (playSource != null && playSource is SsmlSource ssmlSource)
@@ -545,7 +545,7 @@ namespace Azure.Communication.CallAutomation
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Ssml);
                 sourceInternal.SsmlSource = new SsmlSourceInternal(ssmlSource.SsmlText);
                 sourceInternal.SsmlSource.CustomVoiceEndpointId = ssmlSource.CustomVoiceEndpointId ?? null;
-                sourceInternal.PlaySourceId = ssmlSource.PlaySourceId;
+                sourceInternal.PlaySourceCacheId = ssmlSource.PlaySourceCacheId;
                 return sourceInternal;
             }
             else
@@ -686,13 +686,13 @@ namespace Azure.Communication.CallAutomation
 
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                Response<SendDtmfResponse> response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken).ConfigureAwait(false);
 
                 var result = new SendDtmfResult();
-                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
-                return Response.FromValue(result, response);
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -722,13 +722,13 @@ namespace Azure.Communication.CallAutomation
 
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = CallMediaRestClient.SendDtmf(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                Response<SendDtmfResponse> response = CallMediaRestClient.SendDtmf(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken);
 
                 var result = new SendDtmfResult();
-                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
-                return Response.FromValue(result, response);
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {

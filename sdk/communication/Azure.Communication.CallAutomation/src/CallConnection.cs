@@ -656,5 +656,134 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
+
+        /// <summary>
+        /// Mute participant from the call.
+        /// Only Acs Users are currently supported.
+        /// </summary>
+        /// <param name="targetParticipant">Participant to mute.</param>
+        /// <param name="operationContext">The Operation Context.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
+        /// <returns>A Response containing MuteParticipantsResponse.</returns>
+        public virtual Response<MuteParticipantsResponse> MuteParticipants(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        {
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
+            {
+                OperationContext = operationContext
+            };
+
+            return MuteParticipants(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Mute participants from the call.
+        /// Only Acs Users are currently supported.
+        /// </summary>
+        /// <param name="options">Options for the MuteParticipant operation.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns>A Response containing MuteParticipantsResponse. </returns>
+        public virtual Response<MuteParticipantsResponse> MuteParticipants(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipants)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+
+                MuteParticipantsRequestInternal request = new MuteParticipantsRequestInternal(
+                    options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
+
+                return RestClient.Mute(
+                    CallConnectionId,
+                    request,
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.RepeatabilityFirstSent,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Mute participants on the call.
+        /// Only Acs Users are currently supported.
+        /// </summary>
+        /// <param name="targetParticipant">Participants to mute.</param>
+        /// <param name="operationContext">The Operation Context.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        {
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
+            {
+                OperationContext = operationContext
+            };
+            return await MuteParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Mute participants on the call.
+        /// </summary>
+        /// <param name="options">Options for the MuteParticipant operation.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipants)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+
+                MuteParticipantsRequestInternal request = new MuteParticipantsRequestInternal(
+                    options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
+
+                return await RestClient.MuteAsync(
+                    CallConnectionId,
+                    request,
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.RepeatabilityFirstSent,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

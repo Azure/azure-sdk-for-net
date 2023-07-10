@@ -207,7 +207,23 @@ namespace Azure.Communication.CallAutomation
 
         private AnswerCallRequestInternal CreateAnswerCallRequest(AnswerCallOptions options)
         {
+            // validate callbackUri
+            if (!IsValidHttpsUri(options.CallbackUri))
+            {
+                throw new ArgumentException(CallAutomationErrorMessages.InvalidHttpsUriMessage);
+            }
+
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
+
+            // Add custom cognitive service domain name
+            if (options.AzureCognitiveServicesEndpointUrl != null)
+            {
+                if (!IsValidHttpsUri(options.AzureCognitiveServicesEndpointUrl))
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidCognitiveServiceHttpsUriMessage);
+                }
+                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUrl.AbsoluteUri;
+            }
 
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
@@ -615,6 +631,16 @@ namespace Azure.Communication.CallAutomation
                 Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
             };
 
+            // Add custom cognitive service domain name
+            if (options.AzureCognitiveServicesEndpointUrl != null)
+            {
+                if (!IsValidHttpsUri(options.AzureCognitiveServicesEndpointUrl))
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidCognitiveServiceHttpsUriMessage);
+                }
+                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUrl.AbsoluteUri;
+            }
+
             request.OperationContext = options.OperationContext;
 
             return request;
@@ -632,6 +658,16 @@ namespace Azure.Communication.CallAutomation
                 SourceDisplayName = options?.SourceDisplayName,
                 Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
             };
+
+            // Add custom cognitive service domain name
+            if (options.AzureCognitiveServicesEndpointUrl != null)
+            {
+                if (!IsValidHttpsUri(options.AzureCognitiveServicesEndpointUrl))
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidCognitiveServiceHttpsUriMessage);
+                }
+                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUrl.AbsoluteUri;
+            }
 
             request.OperationContext = options.OperationContext;
             return request;

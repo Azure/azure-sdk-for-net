@@ -246,7 +246,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStartContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest)
+        internal HttpMessage CreateStartContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -271,7 +271,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
-        public async Task<Response> StartContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> StartContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -298,7 +298,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
-        public Response StartContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
+        public Response StartContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -320,7 +320,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStopContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest)
+        internal HttpMessage CreateStopContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -345,7 +345,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
-        public async Task<Response> StopContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> StopContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -372,7 +372,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
-        public Response StopContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequest continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
+        public Response StopContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -394,7 +394,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateSendDtmfRequest(string callConnectionId, SendDtmfRequest sendDtmfRequest, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
+        internal HttpMessage CreateSendDtmfRequest(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -429,7 +429,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
-        public async Task<Response<SendDtmfResponse>> SendDtmfAsync(string callConnectionId, SendDtmfRequest sendDtmfRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SendDtmfResponse>> SendDtmfAsync(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -463,7 +463,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
-        public Response<SendDtmfResponse> SendDtmf(string callConnectionId, SendDtmfRequest sendDtmfRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<SendDtmfResponse> SendDtmf(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {

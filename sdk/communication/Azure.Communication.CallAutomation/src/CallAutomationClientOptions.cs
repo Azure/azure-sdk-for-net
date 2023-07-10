@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2023_03_06 => "2023-03-06",
+                ServiceVersion.V2023_03_06 => "2023-06-15-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
