@@ -13,6 +13,7 @@ using Azure.Storage.DataMovement.Models.JobPlan;
 using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
+using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
 {

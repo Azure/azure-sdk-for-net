@@ -247,10 +247,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task ProgressHandler_Chunks(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task ProgressHandler_Chunks(TransferDirection transferType)
         {
             // Arrange
             // For this test, file size should be multiple of chunk size to make predictable progress updates
@@ -264,13 +264,13 @@ namespace Azure.Storage.DataMovement.Tests
 
             StorageResourceContainer sourceResource;
             StorageResourceContainer destinationResource;
-            if (transferType == TransferType.Upload)
+            if (transferType == TransferDirection.Upload)
             {
                 await PopulateTestLocalDirectory(localDirectory.DirectoryPath, fileSize, fileCount);
                 sourceResource = new LocalDirectoryStorageResourceContainer(localDirectory.DirectoryPath);
                 destinationResource = new BlobStorageResourceContainer(destinationContainer.Container);
             }
-            else if (transferType == TransferType.Download)
+            else if (transferType == TransferDirection.Download)
             {
                 await PopulateTestContainer(sourceContainer.Container, fileSize, fileCount);
                 sourceResource = new BlobStorageResourceContainer(sourceContainer.Container);

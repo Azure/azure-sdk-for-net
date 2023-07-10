@@ -18,18 +18,9 @@ namespace Azure.Storage.DataMovement.Tests
     /// </summary>
     public abstract class DataMovementTestBase : StorageTestBase<StorageTestEnvironment>
     {
-        public enum TransferType
-        {
-            Upload,
-            Download,
-            Copy,
-        }
-
         public DataMovementTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode /* RecordedTestMode.Record /* to re-record */)
         {
         }
-
-        public static string GetNewTransferId() => Guid.NewGuid().ToString();
     }
 }
