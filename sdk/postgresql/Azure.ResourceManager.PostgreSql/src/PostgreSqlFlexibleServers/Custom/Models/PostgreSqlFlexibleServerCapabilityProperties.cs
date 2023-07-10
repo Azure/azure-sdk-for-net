@@ -44,5 +44,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> The status. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public new string Status { get; }
+
+        /// <summary> zone name. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Zone { get; }
+        /// <summary> Supported high availability mode. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IReadOnlyList<string> SupportedHAModes { get; }
     }
 }
