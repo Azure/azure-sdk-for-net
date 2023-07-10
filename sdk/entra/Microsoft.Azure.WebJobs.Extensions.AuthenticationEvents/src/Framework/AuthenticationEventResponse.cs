@@ -19,8 +19,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Checks the Action count > 0</summary>
         internal abstract void ValidateActions();
 
-		/// <summary>Gets or sets the body of the event response.</summary>
-		[Required]
+        /// <summary>Gets or sets the body of the event response.</summary>
+        [Required]
         public string Body
         {
             get { return Content == null ? string.Empty : Content.ReadAsStringAsync()?.Result; }
