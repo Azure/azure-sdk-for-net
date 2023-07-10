@@ -311,11 +311,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (string.IsNullOrWhiteSpace(target))
             {
-                target = tagObjects.GetTargetUsingServerAttributes(defaultPort);
-            }
-            if (string.IsNullOrWhiteSpace(target))
-            {
-                target = tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
+                target = tagObjects.GetTargetUsingServerAttributes(defaultPort) ?? tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
             }
 
             var dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
