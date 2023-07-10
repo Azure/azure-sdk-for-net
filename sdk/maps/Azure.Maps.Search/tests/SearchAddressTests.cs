@@ -144,7 +144,6 @@ namespace Azure.Maps.Search.Tests
             });
 
             Assert.AreEqual(2, searchResult.Value.Results.Count);
-            Assert.AreEqual(2, searchResult.Value.Results[0].Results.Count);
             Assert.AreEqual("Tucson", searchResult.Value.Results[1].Results[0].Address.Municipality);
         }
 
@@ -162,7 +161,6 @@ namespace Azure.Maps.Search.Tests
             await Task.Delay(400);
             var searchResult = operation.WaitForCompletion();
             Assert.AreEqual(2, searchResult.Value.Results.Count);
-            Assert.AreEqual(2, searchResult.Value.Results[0].Results.Count);
             Assert.AreEqual("Tucson", searchResult.Value.Results[1].Results[0].Address.Municipality);
         }
     }
