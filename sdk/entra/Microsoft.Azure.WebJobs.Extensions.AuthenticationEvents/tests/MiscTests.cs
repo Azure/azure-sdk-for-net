@@ -1,13 +1,13 @@
 ﻿
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 using NUnit.Framework;
-using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
 using Payload = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
@@ -63,24 +63,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             Assert.True(TestHelper.DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
         }
 
-        /// <summary>Tests the OnTokenIssuanceStart request and response object model when the response is set to null</summary>
-        [Test]
-        [Description("Tests the OnTokenIssuanceStart request and response object model when the response is set to null")]
-        public async Task TokenIssuanceStartObjectModelNullResponseTest()
-        {
-            HttpResponseMessage httpResponseMessage = await TestHelper.EventResponseBaseTest(eventsResponseHandler =>
-            {
-                if (eventsResponseHandler.Request is TokenIssuanceStartRequest request)
-                {
-                    request.Response = null;
 
-                    eventsResponseHandler.SetValueAsync(request.Completed().Result, CancellationToken.None);
-                }
-            });
-
-            Assert.AreEqual(HttpStatusCode.InternalServerError, httpResponseMessage.StatusCode);
-            Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.NullResponsePayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
-        }
+        public enum ActionTestTypes { NullClaims, EmptyClaims, NullClaimId, EmptyClaimsId, EmptyValueString, NullValue, EmptyValueArray, EmptyValueStringArray, EmptyMixedArray, NullAction }
 
         [Test]
         [TestCase(ActionTestTypes.NullClaims)]
@@ -92,8 +76,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         [TestCase(ActionTestTypes.EmptyValueArray)]
         [TestCase(ActionTestTypes.EmptyValueStringArray)]
         [TestCase(ActionTestTypes.EmptyMixedArray)]
-        [TestCase(ActionTestTypes.NullActionItems)]
-        public async Task TokenIssuanceStartActionTest(ActionTestTypes actionTestTypes)
+		[TestCase(ActionTestTypes.NullAction)]
+		public async Task TokenIssuanceStartActionTest(ActionTestTypes actionTestTypes)
         {
             (TokenIssuanceAction action, HttpStatusCode expectReturnCode, string expectedResponse) = GetActionTestExepected(actionTestTypes);
 
@@ -109,6 +93,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
             Assert.AreEqual(httpResponseMessage.StatusCode, expectReturnCode);
             Assert.True(TestHelper.DoesPayloadMatch(expectedResponse, httpResponseMessage.Content.ReadAsStringAsync().Result));
+        }
+
+        public (TokenIssuanceAction action, HttpStatusCode expectReturnCode, string expectedResponse) GetActionTestExepected(ActionTestTypes actionTestTypes)
+        {
+            switch (actionTestTypes)
+            {
+                case ActionTestTypes.NullClaims: return (new ProvideClaimsForToken(null), HttpStatusCode.BadRequest, "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: The Claims field is required.\"]}");
+                case ActionTestTypes.EmptyClaims: return (new ProvideClaimsForToken(), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{}}]}}");
+                case ActionTestTypes.NullClaimId: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim(null, string.Empty) }), HttpStatusCode.BadRequest, "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
+                case ActionTestTypes.EmptyClaimsId: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim(String.Empty, string.Empty) }), HttpStatusCode.BadRequest, "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
+                case ActionTestTypes.EmptyValueString: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", string.Empty) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":\"\"}}]}}");
+                case ActionTestTypes.NullValue: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", null) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":null}}]}}");
+                case ActionTestTypes.EmptyValueArray: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { }) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[]}}]}}");
+                case ActionTestTypes.EmptyValueStringArray: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { String.Empty, String.Empty }) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[\"\",\"\"]}}]}}");
+                case ActionTestTypes.EmptyMixedArray: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { String.Empty, null, " " }) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[\"\",null,\" \"]}}]}}");
+				case ActionTestTypes.NullAction: return (null, HttpStatusCode.BadRequest, "{\"errors\":[\"No Actions Found. Please supply atleast one action.\"]}");
+				default: return (null, HttpStatusCode.InternalServerError, null);
+            }
         }
     }
 }
