@@ -305,9 +305,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         ///</summary>
         internal static (string? DbName, string? DbTarget) GetDbDependencyTargetAndName(this AzMonList tagObjects)
         {
-            var peerServiceAndDbName = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributePeerService, SemanticConventions.AttributeDbSystem);
-            string? target = peerServiceAndDbName[0]?.ToString();
-            var defaultPort = GetDefaultDbPort(peerServiceAndDbName[1]?.ToString());
+            var peerServiceAndDbSystem = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributePeerService, SemanticConventions.AttributeDbSystem);
+            string? target = peerServiceAndDbSystem[0]?.ToString();
+            var defaultPort = GetDefaultDbPort(peerServiceAndDbSystem[1]?.ToString());
 
             if (string.IsNullOrWhiteSpace(target))
             {
