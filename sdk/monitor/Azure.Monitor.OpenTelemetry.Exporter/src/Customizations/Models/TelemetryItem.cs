@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             if (activity.Kind == ActivityKind.Server)
             {
                 Tags[ContextTagKeys.AiOperationName.ToString()] = activityTagsProcessor.activityType.HasFlag(OperationType.V2)
-                                                                    ? TraceHelper.GetV2OperationName(activity, null, ref activityTagsProcessor.MappedTags)
+                                                                    ? TraceHelper.GetNewSchemaOperationName(activity, null, ref activityTagsProcessor.MappedTags)
                                                                     : TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
                 Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
             }

@@ -13,7 +13,7 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public class TraceHelperV2Tests
+    public class TraceHelperNewTests
     {
         private const string ActivityName = "AzureMonitorTraceHelperTestsActivity";
 
@@ -21,11 +21,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("GET", "/api/{controller}/{action}", "GET /api/urltest")]
         [InlineData("GET", "/api/routetest", "GET /api/routetest")]
         [InlineData("POST", "/api/routetest", "POST /api/routetest")]
-        public void GetV2OperationName_ValidateHttpMethodAndHttpRoute(string httpMethod, string httpRoute, string expected)
+        public void GetNewOperationName_ValidateHttpMethodAndHttpRoute(string httpMethod, string httpRoute, string expected)
         {
             // Arrange
-            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetV2OperationName_ValidateHttpMethodAndHttpRoute)).Build();
-            using var activitySource = new ActivitySource(nameof(GetV2OperationName_ValidateHttpMethodAndHttpRoute));
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetNewOperationName_ValidateHttpMethodAndHttpRoute)).Build();
+            using var activitySource = new ActivitySource(nameof(GetNewOperationName_ValidateHttpMethodAndHttpRoute));
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Server);
@@ -37,18 +37,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpRoute, httpRoute));
 
             // Act
-            var result = TraceHelper.GetV2OperationName(activity!, url, ref tagObjects);
+            var result = TraceHelper.GetNewSchemaOperationName(activity!, url, ref tagObjects);
 
             // Assert
             Assert.Equal(expected, result);
         }
 
         [Fact]
-        public void GetV2OperationName_WithValidHttpMethodAndUrl()
+        public void GetNewOperationName_WithValidHttpMethodAndUrl()
         {
             // Arrange
-            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetV2OperationName_WithValidHttpMethodAndUrl)).Build();
-            using var activitySource = new ActivitySource(nameof(GetV2OperationName_WithValidHttpMethodAndUrl));
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetNewOperationName_WithValidHttpMethodAndUrl)).Build();
+            using var activitySource = new ActivitySource(nameof(GetNewOperationName_WithValidHttpMethodAndUrl));
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Server);
@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpRequestMethod, "GET"));
 
             // Act
-            var result = TraceHelper.GetV2OperationName(activity!, "/api/test", ref tagObjects);
+            var result = TraceHelper.GetNewSchemaOperationName(activity!, "/api/test", ref tagObjects);
 
             // Assert
             Assert.Equal("GET /api/test", result);
@@ -67,11 +67,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Theory]
         [InlineData(null, "/api/test")]
         [InlineData("", "/api/test")]
-        public void GetV2OperationName_WithNullHttpMethod_ReturnsActivityDisplayName(string httpMethod, string httpRoute)
+        public void GetNewOperationName_WithNullHttpMethod_ReturnsActivityDisplayName(string httpMethod, string httpRoute)
         {
             // Arrange
-            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetV2OperationName_WithNullHttpMethod_ReturnsActivityDisplayName)).Build();
-            using var activitySource = new ActivitySource(nameof(GetV2OperationName_WithNullHttpMethod_ReturnsActivityDisplayName));
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetNewOperationName_WithNullHttpMethod_ReturnsActivityDisplayName)).Build();
+            using var activitySource = new ActivitySource(nameof(GetNewOperationName_WithNullHttpMethod_ReturnsActivityDisplayName));
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Server);
@@ -83,18 +83,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpRoute, httpRoute));
 
             // Act
-            var result = TraceHelper.GetV2OperationName(activity!, url, ref tagObjects);
+            var result = TraceHelper.GetNewSchemaOperationName(activity!, url, ref tagObjects);
 
             // Assert
             Assert.Equal(ActivityName, result);
         }
 
         [Fact]
-        public void GetV2OperationName_WithNullHttpRoute_ReturnsActivityDisplayName()
+        public void GetNewOperationName_WithNullHttpRoute_ReturnsActivityDisplayName()
         {
             // Arrange
-            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetV2OperationName_WithNullHttpRoute_ReturnsActivityDisplayName)).Build();
-            using var activitySource = new ActivitySource(nameof(GetV2OperationName_WithNullHttpRoute_ReturnsActivityDisplayName));
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetNewOperationName_WithNullHttpRoute_ReturnsActivityDisplayName)).Build();
+            using var activitySource = new ActivitySource(nameof(GetNewOperationName_WithNullHttpRoute_ReturnsActivityDisplayName));
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Server);
@@ -104,18 +104,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpRequestMethod, "POST"));
 
             // Act
-            var result = TraceHelper.GetV2OperationName(activity!, url: null, ref tagObjects);
+            var result = TraceHelper.GetNewSchemaOperationName(activity!, url: null, ref tagObjects);
 
             // Assert
             Assert.Equal(ActivityName, result);
         }
 
         [Fact]
-        public void GetV2OperationName_WithNullUrl_ReturnsFormattedStringFromMappedTags()
+        public void GetNewOperationName_WithNullUrl_ReturnsFormattedStringFromMappedTags()
         {
             // Arrange
-            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetV2OperationName_WithNullUrl_ReturnsFormattedStringFromMappedTags)).Build();
-            using var activitySource = new ActivitySource(nameof(GetV2OperationName_WithNullUrl_ReturnsFormattedStringFromMappedTags));
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetNewOperationName_WithNullUrl_ReturnsFormattedStringFromMappedTags)).Build();
+            using var activitySource = new ActivitySource(nameof(GetNewOperationName_WithNullUrl_ReturnsFormattedStringFromMappedTags));
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Server);
@@ -126,7 +126,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpRoute, "/api/test"));
 
             // Act
-            var result = TraceHelper.GetV2OperationName(activity!, null, ref tagObjects);
+            var result = TraceHelper.GetNewSchemaOperationName(activity!, null, ref tagObjects);
 
             // Assert
             Assert.Equal("GET /api/test", result);
