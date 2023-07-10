@@ -21,7 +21,7 @@
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.4.0]" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.18, 4.0.0)" />
-    <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="[2.3.20, 3.0.0)" />
+    <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="[2.3.24, 3.0.0)" />
     <PackageReference Update="Microsoft.ServiceFabric.Data" Version="3.3.624" />
     <PackageReference Update="Microsoft.ServiceFabric.Services" Version="3.3.624" />
     <PackageReference Update="Microsoft.ServiceFabric" Version="6.4.624" />
