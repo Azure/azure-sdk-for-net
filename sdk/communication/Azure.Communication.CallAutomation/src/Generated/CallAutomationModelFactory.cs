@@ -161,6 +161,26 @@ namespace Azure.Communication.CallAutomation
             return new DtmfResult(tones?.ToList());
         }
 
+        /// <summary> Initializes a new instance of ChoiceResult. </summary>
+        /// <param name="label"> Label is the primary identifier for the choice detected. </param>
+        /// <param name="recognizedPhrase">
+        /// Phrases are set to the value if choice is selected via phrase detection.
+        /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
+        /// </param>
+        /// <returns> A new <see cref="CallAutomation.ChoiceResult"/> instance for mocking. </returns>
+        public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null)
+        {
+            return new ChoiceResult(label, recognizedPhrase);
+        }
+
+        /// <summary> Initializes a new instance of SpeechResult. </summary>
+        /// <param name="speech"> The recognized speech in string. </param>
+        /// <returns> A new <see cref="CallAutomation.SpeechResult"/> instance for mocking. </returns>
+        public static SpeechResult SpeechResult(string speech = null)
+        {
+            return new SpeechResult(speech);
+        }
+
         /// <summary> Initializes a new instance of RecognizeFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
