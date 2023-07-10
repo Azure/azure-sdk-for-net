@@ -248,6 +248,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new StreamAnalyticsSubscriptionQuota(id, name, resourceType, maxCount, currentCount);
         }
 
+        /// <summary> Initializes a new instance of StreamAnalyticsTestQuery. </summary>
+        /// <param name="streamingJob"> Stream analytics job object which defines the input, output, and transformation for the query testing. </param>
+        /// <param name="writeUri"> The SAS URI to the container or directory. </param>
+        /// <param name="path"> The path to the subdirectory. </param>
+        /// <returns> A new <see cref="Models.StreamAnalyticsTestQuery"/> instance for mocking. </returns>
+        public static StreamAnalyticsTestQuery StreamAnalyticsTestQuery(StreamingJobData streamingJob = null, Uri writeUri = null, string path = null)
+        {
+            return new StreamAnalyticsTestQuery(streamingJob, writeUri, path);
+        }
+
         /// <summary> Initializes a new instance of StreamAnalyticsQueryTestingResult. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
@@ -261,6 +271,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             details ??= new List<StreamAnalyticsErrorDetails>();
 
             return new StreamAnalyticsQueryTestingResult(code, message, target, details?.ToList(), status, outputUri);
+        }
+
+        /// <summary> Initializes a new instance of StreamAnalyticsCompileQuery. </summary>
+        /// <param name="query"> The query to compile. </param>
+        /// <param name="inputs"> The inputs for the query compilation. </param>
+        /// <param name="functions"> The functions for the query compilation. </param>
+        /// <param name="jobType"> Describes the type of the job. Valid values are `Cloud` and 'Edge'. </param>
+        /// <param name="compatibilityLevel"> The query to compile. </param>
+        /// <returns> A new <see cref="Models.StreamAnalyticsCompileQuery"/> instance for mocking. </returns>
+        public static StreamAnalyticsCompileQuery StreamAnalyticsCompileQuery(string query = null, IEnumerable<StreamAnalyticsQueryInput> inputs = null, IEnumerable<StreamAnalyticsQueryFunction> functions = null, StreamingJobType jobType = default, StreamingJobCompatibilityLevel? compatibilityLevel = null)
+        {
+            inputs ??= new List<StreamAnalyticsQueryInput>();
+            functions ??= new List<StreamAnalyticsQueryFunction>();
+
+            return new StreamAnalyticsCompileQuery(query, inputs?.ToList(), functions?.ToList(), jobType, compatibilityLevel);
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsQueryCompilationResult. </summary>

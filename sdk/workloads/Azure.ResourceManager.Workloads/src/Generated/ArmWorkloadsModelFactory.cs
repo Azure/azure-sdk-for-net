@@ -19,6 +19,35 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmWorkloadsModelFactory
     {
+        /// <summary> Initializes a new instance of SapSizingRecommendationContent. </summary>
+        /// <param name="appLocation"> The geo-location where the resource is to be created. </param>
+        /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
+        /// <param name="sapProduct"> Defines the SAP Product type. </param>
+        /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
+        /// <param name="saps"> The SAP Application Performance Standard measurement. </param>
+        /// <param name="dbMemory"> The database memory configuration. </param>
+        /// <param name="databaseType"> The database type. </param>
+        /// <param name="dbScaleMethod"> The DB scale method. </param>
+        /// <param name="highAvailabilityType"> The high availability type. </param>
+        /// <returns> A new <see cref="Models.SapSizingRecommendationContent"/> instance for mocking. </returns>
+        public static SapSizingRecommendationContent SapSizingRecommendationContent(AzureLocation appLocation = default, SapEnvironmentType environment = default, SapProductType sapProduct = default, SapDeploymentType deploymentType = default, long saps = default, long dbMemory = default, SapDatabaseType databaseType = default, SapDatabaseScaleMethod? dbScaleMethod = null, SapHighAvailabilityType? highAvailabilityType = null)
+        {
+            return new SapSizingRecommendationContent(appLocation, environment, sapProduct, deploymentType, saps, dbMemory, databaseType, dbScaleMethod, highAvailabilityType);
+        }
+
+        /// <summary> Initializes a new instance of SapSupportedSkusContent. </summary>
+        /// <param name="appLocation"> The geo-location where the resource is to be created. </param>
+        /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
+        /// <param name="sapProduct"> Defines the SAP Product type. </param>
+        /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
+        /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
+        /// <param name="highAvailabilityType"> The high availability type. </param>
+        /// <returns> A new <see cref="Models.SapSupportedSkusContent"/> instance for mocking. </returns>
+        public static SapSupportedSkusContent SapSupportedSkusContent(AzureLocation appLocation = default, SapEnvironmentType environment = default, SapProductType sapProduct = default, SapDeploymentType deploymentType = default, SapDatabaseType databaseType = default, SapHighAvailabilityType? highAvailabilityType = null)
+        {
+            return new SapSupportedSkusContent(appLocation, environment, sapProduct, deploymentType, databaseType, highAvailabilityType);
+        }
+
         /// <summary> Initializes a new instance of SapSupportedResourceSkusResult. </summary>
         /// <param name="supportedSkus"> Gets the list of SAP supported SKUs. </param>
         /// <returns> A new <see cref="Models.SapSupportedResourceSkusResult"/> instance for mocking. </returns>

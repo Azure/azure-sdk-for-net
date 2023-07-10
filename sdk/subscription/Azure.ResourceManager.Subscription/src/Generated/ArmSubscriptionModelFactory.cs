@@ -79,6 +79,18 @@ namespace Azure.ResourceManager.Subscription.Models
             return new SubscriptionAliasProperties(subscriptionId, displayName, provisioningState, acceptOwnershipUri, acceptOwnershipState, billingScope, workload, resellerId, subscriptionOwnerId, managementGroupId, createdOn, tags);
         }
 
+        /// <summary> Initializes a new instance of AcceptOwnershipRequestProperties. </summary>
+        /// <param name="displayName"> The friendly name of the subscription. </param>
+        /// <param name="managementGroupId"> Management group Id for the subscription. </param>
+        /// <param name="tags"> Tags for the subscription. </param>
+        /// <returns> A new <see cref="Models.AcceptOwnershipRequestProperties"/> instance for mocking. </returns>
+        public static AcceptOwnershipRequestProperties AcceptOwnershipRequestProperties(string displayName = null, string managementGroupId = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new AcceptOwnershipRequestProperties(displayName, managementGroupId, tags);
+        }
+
         /// <summary> Initializes a new instance of AcceptOwnershipStatus. </summary>
         /// <param name="subscriptionId"> Newly created subscription Id. </param>
         /// <param name="acceptOwnershipState"> The accept ownership state of the resource. </param>

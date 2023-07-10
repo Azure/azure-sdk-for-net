@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.StorageMover.Models
         {
         }
 
+        /// <summary> Initializes a new instance of StorageMoverEndpointPatch. </summary>
+        /// <param name="properties"> The Endpoint resource, which contains information about file sources and targets. </param>
+        internal StorageMoverEndpointPatch(EndpointBaseUpdateProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> The Endpoint resource, which contains information about file sources and targets. </summary>
         internal EndpointBaseUpdateProperties Properties { get; set; }
         /// <summary> A description for the Endpoint. </summary>

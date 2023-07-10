@@ -47,6 +47,16 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseIPFirewallRuleInfoData(id, name, resourceType, systemData, endIPAddress, provisioningState, startIPAddress);
         }
 
+        /// <summary> Initializes a new instance of SynapseIPFirewallRuleProperties. </summary>
+        /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. </param>
+        /// <returns> A new <see cref="Models.SynapseIPFirewallRuleProperties"/> instance for mocking. </returns>
+        public static SynapseIPFirewallRuleProperties SynapseIPFirewallRuleProperties(IPAddress endIPAddress = null, SynapseProvisioningState? provisioningState = null, IPAddress startIPAddress = null)
+        {
+            return new SynapseIPFirewallRuleProperties(endIPAddress, provisioningState, startIPAddress);
+        }
+
         /// <summary> Initializes a new instance of ReplaceAllFirewallRulesOperationResult. </summary>
         /// <param name="operationId"> The operation ID. </param>
         /// <returns> A new <see cref="Models.ReplaceAllFirewallRulesOperationResult"/> instance for mocking. </returns>
@@ -201,6 +211,39 @@ namespace Azure.ResourceManager.Synapse.Models
             tags ??= new Dictionary<string, string>();
 
             return new SynapseSqlPoolData(id, name, resourceType, systemData, tags, location, sku, maxSizeBytes, collation, sourceDatabaseId, recoverableDatabaseId, provisioningState, status, restorePointInTime, createMode, createdOn, storageAccountType, sourceDatabaseDeletionOn);
+        }
+
+        /// <summary> Initializes a new instance of SynapseSqlPoolPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> SQL pool SKU. </param>
+        /// <param name="maxSizeBytes"> Maximum size in bytes. </param>
+        /// <param name="collation"> Collation mode. </param>
+        /// <param name="sourceDatabaseId"> Source database to create from. </param>
+        /// <param name="recoverableDatabaseId"> Backup database to restore from. </param>
+        /// <param name="provisioningState"> Resource state. </param>
+        /// <param name="status"> Resource status. </param>
+        /// <param name="restorePointInTime"> Snapshot time to restore. </param>
+        /// <param name="createMode">
+        /// Specifies the mode of sql pool creation.
+        ///
+        /// Default: regular sql pool creation.
+        ///
+        /// PointInTimeRestore: Creates a sql pool by restoring a point in time backup of an existing sql pool. sourceDatabaseId must be specified as the resource ID of the existing sql pool, and restorePointInTime must be specified.
+        ///
+        /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
+        ///
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool's original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
+        /// </param>
+        /// <param name="createdOn"> Date the SQL pool was created. </param>
+        /// <param name="storageAccountType"> The storage account type used to store backups for this sql pool. </param>
+        /// <param name="sourceDatabaseDeletionOn"> Specifies the time that the sql pool was deleted. </param>
+        /// <returns> A new <see cref="Models.SynapseSqlPoolPatch"/> instance for mocking. </returns>
+        public static SynapseSqlPoolPatch SynapseSqlPoolPatch(IDictionary<string, string> tags = null, AzureLocation? location = null, SynapseSku sku = null, long? maxSizeBytes = null, string collation = null, string sourceDatabaseId = null, string recoverableDatabaseId = null, string provisioningState = null, string status = null, DateTimeOffset? restorePointInTime = null, SqlPoolCreateMode? createMode = null, DateTimeOffset? createdOn = null, SqlPoolStorageAccountType? storageAccountType = null, DateTimeOffset? sourceDatabaseDeletionOn = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new SynapseSqlPoolPatch(tags, location, sku, maxSizeBytes, collation, sourceDatabaseId, recoverableDatabaseId, provisioningState, status, restorePointInTime, createMode, createdOn, storageAccountType, sourceDatabaseDeletionOn);
         }
 
         /// <summary> Initializes a new instance of SynapseMetadataSyncConfigurationData. </summary>
@@ -1206,6 +1249,24 @@ namespace Azure.ResourceManager.Synapse.Models
             return new WorkspaceCustomerManagedKeyDetails(status, key, kekIdentity);
         }
 
+        /// <summary> Initializes a new instance of SynapseWorkspacePatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="sqlAdministratorLoginPassword"> SQL administrator login password. </param>
+        /// <param name="managedVirtualNetworkSettings"> Managed Virtual Network Settings. </param>
+        /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
+        /// <param name="purviewResourceId"> Purview Configuration. </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <param name="encryption"> The encryption details of the workspace. </param>
+        /// <param name="publicNetworkAccess"> Enable or Disable public network access to workspace. </param>
+        /// <returns> A new <see cref="Models.SynapseWorkspacePatch"/> instance for mocking. </returns>
+        public static SynapseWorkspacePatch SynapseWorkspacePatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, string sqlAdministratorLoginPassword = null, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, ResourceIdentifier purviewResourceId = null, string provisioningState = null, SynapseEncryptionDetails encryption = null, WorkspacePublicNetworkAccess? publicNetworkAccess = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new SynapseWorkspacePatch(tags, identity, sqlAdministratorLoginPassword, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, purviewResourceId != null ? new PurviewConfiguration(purviewResourceId) : null, provisioningState, encryption, publicNetworkAccess);
+        }
+
         /// <summary> Initializes a new instance of SynapseWorkspaceAadAdminInfoData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1588,6 +1649,15 @@ namespace Azure.ResourceManager.Synapse.Models
             return new KustoPoolSkuLocationInfoItem(location, zones?.ToList());
         }
 
+        /// <summary> Initializes a new instance of KustoPoolNameAvailabilityContent. </summary>
+        /// <param name="name"> Kusto Pool name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools. </param>
+        /// <returns> A new <see cref="Models.KustoPoolNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoPoolNameAvailabilityContent KustoPoolNameAvailabilityContent(string name = null, KustoPoolType resourceType = default)
+        {
+            return new KustoPoolNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of KustoPoolNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
         /// <param name="name"> The name that was checked. </param>
@@ -1717,6 +1787,15 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseDatabaseData(id, name, resourceType, systemData, location, kind);
         }
 
+        /// <summary> Initializes a new instance of KustoPoolDataConnectionNameAvailabilityContent. </summary>
+        /// <param name="name"> Data Connection name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections. </param>
+        /// <returns> A new <see cref="Models.KustoPoolDataConnectionNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoPoolDataConnectionNameAvailabilityContent KustoPoolDataConnectionNameAvailabilityContent(string name = null, SynapseDataConnectionType resourceType = default)
+        {
+            return new KustoPoolDataConnectionNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of SynapseDataConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1748,6 +1827,15 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseDataConnectionValidationResult(errorMessage);
         }
 
+        /// <summary> Initializes a new instance of KustoPoolPrincipalAssignmentNameAvailabilityContent. </summary>
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools/principalAssignments. </param>
+        /// <returns> A new <see cref="Models.KustoPoolPrincipalAssignmentNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoPoolPrincipalAssignmentNameAvailabilityContent KustoPoolPrincipalAssignmentNameAvailabilityContent(string name = null, SynapsePrincipalAssignmentType resourceType = default)
+        {
+            return new KustoPoolPrincipalAssignmentNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of SynapseClusterPrincipalAssignmentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1765,6 +1853,15 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseClusterPrincipalAssignmentData SynapseClusterPrincipalAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string principalId = null, SynapseClusterPrincipalRole? role = null, Guid? tenantId = null, SynapsePrincipalType? principalType = null, string tenantName = null, string principalName = null, ResourceProvisioningState? provisioningState = null, Guid? aadObjectId = null)
         {
             return new SynapseClusterPrincipalAssignmentData(id, name, resourceType, systemData, principalId, role, tenantId, principalType, tenantName, principalName, provisioningState, aadObjectId);
+        }
+
+        /// <summary> Initializes a new instance of KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent. </summary>
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments. </param>
+        /// <returns> A new <see cref="Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent(string name = null, SynapseDatabasePrincipalAssignmentType resourceType = default)
+        {
+            return new KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent(name, resourceType);
         }
 
         /// <summary> Initializes a new instance of SynapseDatabasePrincipalAssignmentData. </summary>
