@@ -195,15 +195,7 @@ namespace Azure.Identity
                 Exception inner = null;
 
                 var tenantId = TenantIdResolver.Resolve(TenantId ?? Record?.TenantId, requestContext, AdditionallyAllowedTenantIds);
-                var isCachePopulated = Record switch
-                {
-                    not null when requestContext.IsCaeEnabled && _isCaeEnabledRequestCached => true,
-                    not null when !requestContext.IsCaeEnabled && _isCaeDisabledRequestCached => true,
-                    _ => false
-                };
-
                 if (Record != null)
-                //if (isCachePopulated)
                 {
                     try
                     {
