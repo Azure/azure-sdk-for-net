@@ -180,6 +180,15 @@ namespace Azure.ResourceManager.Search.Models
             return new ShareableSearchServicePrivateLinkResourceProperties(shareablePrivateLinkResourcePropertiesType, groupId, description);
         }
 
+        /// <summary> Initializes a new instance of SearchServiceNameAvailabilityContent. </summary>
+        /// <param name="name"> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </param>
+        /// <returns> A new <see cref="Models.SearchServiceNameAvailabilityContent"/> instance for mocking. </returns>
+        public static SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name = null, SearchServiceResourceType resourceType = default)
+        {
+            return new SearchServiceNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of SearchServiceNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable"> A value indicating whether the name is available. </param>
         /// <param name="reason"> The reason why the name is not available. 'Invalid' indicates the name provided does not match the naming requirements (incorrect length, unsupported characters, etc.). 'AlreadyExists' indicates that the name is already in use and is therefore unavailable. </param>

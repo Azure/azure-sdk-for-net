@@ -958,6 +958,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new JitNetworkAccessPolicyData(id, name, resourceType, systemData, virtualMachines?.ToList(), requests?.ToList(), provisioningState, kind, location);
         }
 
+        /// <summary> Initializes a new instance of JitNetworkAccessPolicyInitiatePort. </summary>
+        /// <param name="number"></param>
+        /// <param name="allowedSourceAddressPrefix"> Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request. </param>
+        /// <param name="endOn"> The time to close the request in UTC. </param>
+        /// <returns> A new <see cref="Models.JitNetworkAccessPolicyInitiatePort"/> instance for mocking. </returns>
+        public static JitNetworkAccessPolicyInitiatePort JitNetworkAccessPolicyInitiatePort(int number = default, string allowedSourceAddressPrefix = null, DateTimeOffset endOn = default)
+        {
+            return new JitNetworkAccessPolicyInitiatePort(number, allowedSourceAddressPrefix, endOn);
+        }
+
         /// <summary> Initializes a new instance of DiscoveredSecuritySolution. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

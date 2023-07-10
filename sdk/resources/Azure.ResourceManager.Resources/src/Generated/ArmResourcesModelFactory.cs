@@ -18,6 +18,33 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmResourcesModelFactory
     {
+        /// <summary> Initializes a new instance of ArmDeploymentContent. </summary>
+        /// <param name="location"> The location to store the deployment data. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        /// <param name="tags"> Deployment tags. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentContent"/> instance for mocking. </returns>
+        public static ArmDeploymentContent ArmDeploymentContent(AzureLocation? location = null, ArmDeploymentProperties properties = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ArmDeploymentContent(location, properties, tags);
+        }
+
+        /// <summary> Initializes a new instance of ArmDeploymentProperties. </summary>
+        /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </param>
+        /// <param name="parametersLink"> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
+        /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
+        /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
+        /// <param name="errorDeployment"> The deployment on error behavior. </param>
+        /// <param name="expressionEvaluationScope"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentProperties"/> instance for mocking. </returns>
+        public static ArmDeploymentProperties ArmDeploymentProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null)
+        {
+            return new ArmDeploymentProperties(template, templateLink, parameters, parametersLink, mode, debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel) : null, errorDeployment, expressionEvaluationScope != null ? new ExpressionEvaluationOptions(expressionEvaluationScope) : null);
+        }
+
         /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -111,6 +138,31 @@ namespace Azure.ResourceManager.Resources.Models
         public static ArmDeploymentExportResult ArmDeploymentExportResult(BinaryData template = null)
         {
             return new ArmDeploymentExportResult(template);
+        }
+
+        /// <summary> Initializes a new instance of ArmDeploymentWhatIfContent. </summary>
+        /// <param name="location"> The location to store the deployment data, only required at the tenant and management group scope. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentWhatIfContent"/> instance for mocking. </returns>
+        public static ArmDeploymentWhatIfContent ArmDeploymentWhatIfContent(AzureLocation? location = null, ArmDeploymentWhatIfProperties properties = null)
+        {
+            return new ArmDeploymentWhatIfContent(location, properties);
+        }
+
+        /// <summary> Initializes a new instance of ArmDeploymentWhatIfProperties. </summary>
+        /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </param>
+        /// <param name="parametersLink"> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
+        /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
+        /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
+        /// <param name="errorDeployment"> The deployment on error behavior. </param>
+        /// <param name="expressionEvaluationScope"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
+        /// <param name="whatIfResultFormat"> Optional What-If operation settings. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentWhatIfProperties"/> instance for mocking. </returns>
+        public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null, WhatIfResultFormat? whatIfResultFormat = null)
+        {
+            return new ArmDeploymentWhatIfProperties(template, templateLink, parameters, parametersLink, mode, debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel) : null, errorDeployment, expressionEvaluationScope != null ? new ExpressionEvaluationOptions(expressionEvaluationScope) : null, whatIfResultFormat != null ? new ArmDeploymentWhatIfSettings(whatIfResultFormat) : null);
         }
 
         /// <summary> Initializes a new instance of WhatIfOperationResult. </summary>

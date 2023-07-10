@@ -19,6 +19,27 @@ namespace Azure.ResourceManager.Sql.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of ElasticPoolPatch. </summary>
+        /// <param name="sku"> An ARM Resource SKU. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="maxSizeBytes"> The storage limit for the database elastic pool in bytes. </param>
+        /// <param name="perDatabaseSettings"> The per database settings for the elastic pool. </param>
+        /// <param name="isZoneRedundant"> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </param>
+        /// <param name="licenseType"> The license type to apply for this elastic pool. </param>
+        /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </param>
+        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </param>
+        internal ElasticPoolPatch(SqlSku sku, IDictionary<string, string> tags, long? maxSizeBytes, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount)
+        {
+            Sku = sku;
+            Tags = tags;
+            MaxSizeBytes = maxSizeBytes;
+            PerDatabaseSettings = perDatabaseSettings;
+            IsZoneRedundant = isZoneRedundant;
+            LicenseType = licenseType;
+            MaintenanceConfigurationId = maintenanceConfigurationId;
+            HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
+        }
+
         /// <summary> An ARM Resource SKU. </summary>
         public SqlSku Sku { get; set; }
         /// <summary> Resource tags. </summary>

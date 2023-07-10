@@ -77,6 +77,17 @@ namespace Azure.Quantum.Jobs.Models
             return new ErrorData(code, message);
         }
 
+        /// <summary> Initializes a new instance of JsonPatchDocument. </summary>
+        /// <param name="op"> The operation to be performed. </param>
+        /// <param name="path"> A JSON-Pointer. </param>
+        /// <param name="value"> A value to be used in the operation on the path. </param>
+        /// <param name="from"> Optional field used in copy and move operations. </param>
+        /// <returns> A new <see cref="Models.JsonPatchDocument"/> instance for mocking. </returns>
+        public static JsonPatchDocument JsonPatchDocument(JsonPatchOperation op = default, string path = null, object value = null, string @from = null)
+        {
+            return new JsonPatchDocument(op, path, value, @from);
+        }
+
         /// <summary> Initializes a new instance of ProviderStatus. </summary>
         /// <param name="id"> Provider id. </param>
         /// <param name="currentAvailability"> Provider availability. </param>
@@ -98,6 +109,15 @@ namespace Azure.Quantum.Jobs.Models
         public static TargetStatus TargetStatus(string id = null, TargetAvailability? currentAvailability = null, long? averageQueueTime = null, string statusPage = null)
         {
             return new TargetStatus(id, currentAvailability, averageQueueTime, statusPage);
+        }
+
+        /// <summary> Initializes a new instance of BlobDetails. </summary>
+        /// <param name="containerName"> The container name. </param>
+        /// <param name="blobName"> The blob name. </param>
+        /// <returns> A new <see cref="Models.BlobDetails"/> instance for mocking. </returns>
+        public static BlobDetails BlobDetails(string containerName = null, string blobName = null)
+        {
+            return new BlobDetails(containerName, blobName);
         }
 
         /// <summary> Initializes a new instance of SasUriResponse. </summary>

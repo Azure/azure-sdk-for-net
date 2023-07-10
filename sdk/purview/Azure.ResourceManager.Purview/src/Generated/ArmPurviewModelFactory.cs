@@ -49,6 +49,29 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewAccountData(id, name, resourceType, systemData, tags, location, sku, cloudConnectorsAwsExternalId != null ? new CloudConnectors(cloudConnectorsAwsExternalId) : null, createdOn, createdBy, createdByObjectId, endpoints, friendlyName, managedResourceGroupName, managedResources, privateEndpointConnections?.ToList(), provisioningState, publicNetworkAccess, identity);
         }
 
+        /// <summary> Initializes a new instance of PurviewAccountProperties. </summary>
+        /// <param name="cloudConnectorsAwsExternalId">
+        /// Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.
+        /// </param>
+        /// <param name="createdOn"> Gets the time at which the entity was created. </param>
+        /// <param name="createdBy"> Gets the creator of the entity. </param>
+        /// <param name="createdByObjectId"> Gets the creators of the entity's object id. </param>
+        /// <param name="endpoints"> The URIs that are the public endpoints of the account. </param>
+        /// <param name="friendlyName"> Gets or sets the friendly name. </param>
+        /// <param name="managedResourceGroupName"> Gets or sets the managed resource group name. </param>
+        /// <param name="managedResources"> Gets the resource identifiers of the managed resources. </param>
+        /// <param name="privateEndpointConnections"> Gets the private endpoint connections information. </param>
+        /// <param name="provisioningState"> Gets or sets the state of the provisioning. </param>
+        /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
+        /// <returns> A new <see cref="Models.PurviewAccountProperties"/> instance for mocking. </returns>
+        public static PurviewAccountProperties PurviewAccountProperties(string cloudConnectorsAwsExternalId = null, DateTimeOffset? createdOn = null, string createdBy = null, string createdByObjectId = null, PurviewAccountEndpoint endpoints = null, string friendlyName = null, string managedResourceGroupName = null, PurviewManagedResource managedResources = null, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections = null, PurviewProvisioningState? provisioningState = null, PurviewPublicNetworkAccess? publicNetworkAccess = null)
+        {
+            privateEndpointConnections ??= new List<PurviewPrivateEndpointConnectionData>();
+
+            return new PurviewAccountProperties(cloudConnectorsAwsExternalId != null ? new CloudConnectors(cloudConnectorsAwsExternalId) : null, createdOn, createdBy, createdByObjectId, endpoints, friendlyName, managedResourceGroupName, managedResources, privateEndpointConnections?.ToList(), provisioningState, publicNetworkAccess);
+        }
+
         /// <summary> Initializes a new instance of PurviewAccountEndpoint. </summary>
         /// <param name="catalog"> Gets the catalog endpoint. </param>
         /// <param name="guardian"> Gets the guardian endpoint. </param>
