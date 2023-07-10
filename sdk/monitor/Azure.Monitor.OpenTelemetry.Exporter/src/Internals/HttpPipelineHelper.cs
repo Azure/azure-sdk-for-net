@@ -15,6 +15,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -82,6 +83,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             retryAfter = default;
             return false;
+        }
+
+        internal static byte[] GetSerializedContent(IEnumerable<TelemetryItem> body)
+        {
+            using var content = new NDJsonWriter();
+            foreach (var item in body)
+            {
+                content.JsonWriter.WriteObjectValue(item);
+                content.WriteNewLine();
+            }
+
+            return content.ToBytes().ToArray();
         }
 
         internal static bool TryGetRequestContent(RequestContent? content, [NotNullWhen(true)] out byte[]? requestContent)
@@ -155,7 +168,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return ExportResult.Failure;
         }
 
-        internal static ExportResult HandleFailures(HttpMessage httpMessage, PersistentBlobProvider blobProvider, ConnectionVars connectionVars)
+        internal static ExportResult HandleFailures(HttpMessage httpMessage, PersistentBlobProvider blobProvider, ConnectionVars connectionVars, TelemetryItemOrigin origin)
         {
             ExportResult result = ExportResult.Failure;
             int statusCode = 0;
@@ -208,7 +221,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             AzureMonitorExporterEventSource.Log.TransmissionFailed(
-                fromStorage: false,
+                origin: origin,
                 statusCode: statusCode,
                 connectionVars: connectionVars,
                 requestEndpoint: httpMessage.Request.Uri.Host,
@@ -259,7 +272,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             AzureMonitorExporterEventSource.Log.TransmissionFailed(
-                fromStorage: true,
+                origin: TelemetryItemOrigin.Storage,
                 statusCode: statusCode,
                 connectionVars: connectionVars,
                 requestEndpoint: httpMessage.Request.Uri.Host,

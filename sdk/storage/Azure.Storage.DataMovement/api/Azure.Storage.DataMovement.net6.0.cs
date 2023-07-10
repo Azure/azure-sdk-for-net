@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement
         public virtual System.Threading.Tasks.Task PauseIfRunningAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.FlagsAttribute]
-    public enum ErrorHandlingOptions
+    public enum ErrorHandlingBehavior
     {
         StopOnAllFailures = 0,
         ContinueOnFailure = 1,
@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement
     public partial class LocalDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
         public LocalDirectoryStorageResourceContainer(string path) { }
-        public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
+        public override bool CanProduceUri { get { throw null; } }
         public override string Path { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         public override Azure.Storage.DataMovement.StorageResourceSingle GetChildStorageResource(string childPath) { throw null; }
@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
     public partial class LocalFileStorageResource : Azure.Storage.DataMovement.StorageResourceSingle
     {
         public LocalFileStorageResource(string path) { }
-        public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
+        public override bool CanProduceUri { get { throw null; } }
         public override long? Length { get { throw null; } }
         public override long MaxChunkSize { get { throw null; } }
         public override string Path { get { throw null; } }
@@ -52,16 +52,10 @@ namespace Azure.Storage.DataMovement
     {
         public static bool TryGetResourceProviders(Azure.Storage.DataMovement.Models.DataTransferProperties info, out Azure.Storage.DataMovement.LocalStorageResourceProvider sourceProvider, out Azure.Storage.DataMovement.LocalStorageResourceProvider destinationProvider) { throw null; }
     }
-    [System.FlagsAttribute]
-    public enum ProduceUriType
-    {
-        NoUri = 0,
-        ProducesUri = 1,
-    }
     public abstract partial class StorageResource
     {
         protected StorageResource() { }
-        public abstract Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get; }
+        public abstract bool CanProduceUri { get; }
         public abstract bool IsContainer { get; }
         public abstract string Path { get; }
         public abstract System.Uri Uri { get; }
@@ -146,7 +140,8 @@ namespace Azure.Storage.DataMovement
     {
         public TransferManagerOptions() { }
         public Azure.Storage.DataMovement.Models.TransferCheckpointerOptions CheckpointerOptions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.ErrorHandlingOptions ErrorHandling { get { throw null; } set { } }
+        public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
+        public Azure.Storage.DataMovement.ErrorHandlingBehavior ErrorHandling { get { throw null; } set { } }
         public int? MaximumConcurrency { get { throw null; } set { } }
     }
     public enum TransferType
@@ -214,12 +209,6 @@ namespace Azure.Storage.DataMovement.Models
         public TransferCheckpointerOptions(string localCheckpointerPath) { }
         public string CheckpointerPath { get { throw null; } }
     }
-    public enum TransferCopyMethod
-    {
-        None = 0,
-        SyncCopy = 1,
-        AsyncCopy = 2,
-    }
     public partial class TransferFailedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
         public TransferFailedEventArgs(string transferId, Azure.Storage.DataMovement.StorageResourceSingle sourceResource, Azure.Storage.DataMovement.StorageResourceSingle destinationResource, System.Exception exception, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
@@ -235,7 +224,6 @@ namespace Azure.Storage.DataMovement.Models
         public long? MaximumTransferChunkSize { get { throw null; } set { } }
         public System.IProgress<Azure.Storage.DataMovement.StorageTransferProgress> ProgressHandler { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Models.ProgressHandlerOptions ProgressHandlerOptions { get { throw null; } set { } }
-        public string ResumeFromCheckpointId { get { throw null; } set { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.SingleTransferCompletedEventArgs> SingleTransferCompleted { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailed { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferSkippedEventArgs> TransferSkipped { add { } remove { } }

@@ -134,7 +134,7 @@ This sample shows how to call GetDeviceAsync with required parameters and parse 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDevicesClient("2022-11-01-preview");
 
-Response response = await client.GetDeviceAsync("<sensorPartnerId>", "<deviceId>");
+Response response = await client.GetDeviceAsync("<sensorPartnerId>", "<deviceId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());
@@ -166,7 +166,7 @@ This sample shows how to call GetDevice with required parameters and parse the r
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDevicesClient("2022-11-01-preview");
 
-Response response = client.GetDevice("<sensorPartnerId>", "<deviceId>");
+Response response = client.GetDevice("<sensorPartnerId>", "<deviceId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());
@@ -222,18 +222,7 @@ This sample shows how to call GetDevicesAsync with required parameters and parse
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDevicesClient("2022-11-01-preview");
 
-await foreach (var item in client.GetDevicesAsync("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetDevicesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient("2022-11-01-preview");
-
-await foreach (var item in client.GetDevicesAsync("<sensorPartnerId>", new String[]{"<parentDeviceIds>"}, new String[]{"<deviceDataModelIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetDevicesAsync("<sensorPartnerId>", new String[]{"<parentDeviceIds>"}, new String[]{"<deviceDataModelIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());
@@ -266,18 +255,7 @@ This sample shows how to call GetDevices with required parameters and parse the 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDevicesClient("2022-11-01-preview");
 
-foreach (var item in client.GetDevices("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetDevices with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient("2022-11-01-preview");
-
-foreach (var item in client.GetDevices("<sensorPartnerId>", new String[]{"<parentDeviceIds>"}, new String[]{"<deviceDataModelIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetDevices("<sensorPartnerId>", new String[]{"<parentDeviceIds>"}, new String[]{"<deviceDataModelIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());

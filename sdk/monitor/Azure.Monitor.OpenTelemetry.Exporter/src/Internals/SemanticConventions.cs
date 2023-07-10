@@ -150,5 +150,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeExceptionType = "exception.type";
         public const string AttributeExceptionMessage = "exception.message";
         public const string AttributeExceptionStacktrace = "exception.stacktrace";
+
+        // Http v1.21.0 https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/http.md
+        public const string AttributeHttpRequestMethod = "http.request.method"; // replaces: "http.method" (AttributeHttpMethod)
+        public const string AttributeHttpResponseStatusCode = "http.response.status_code"; // replaces: "http.status_code" (AttributeHttpStatusCode)
+        public const string AttributeNetworkProtocolVersion = "network.protocol.version"; // replaces: "http.flavor" (AttributeHttpFlavor)
+        public const string AttributeServerAddress = "server.address"; // replaces: "net.host.name" (AttributeNetHostName)
+        public const string AttributeServerPort = "server.port"; // replaces: "net.host.port" (AttributeNetHostPort) and "net.peer.port" (AttributeNetPeerPort)
+        public const string AttributeUrlFull = "url.full"; // replaces: "http.url" (AttributeHttpUrl)
+        public const string AttributeUrlPath = "url.path"; // replaces: "http.target" (AttributeHttpTarget)
+        public const string AttributeUrlScheme = "url.scheme"; // replaces: "http.scheme" (AttributeHttpScheme)
+        public const string AttributeUrlQuery = "url.query";
+        public const string AttributeUserAgentOriginal = "user_agent.original"; // replaces: "http.user_agent" (AttributeHttpUserAgent)
     }
 }
