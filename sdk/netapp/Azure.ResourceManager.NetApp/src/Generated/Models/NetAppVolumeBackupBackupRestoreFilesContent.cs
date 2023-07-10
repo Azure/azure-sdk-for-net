@@ -28,6 +28,17 @@ namespace Azure.ResourceManager.NetApp.Models
             DestinationVolumeId = destinationVolumeId;
         }
 
+        /// <summary> Initializes a new instance of NetAppVolumeBackupBackupRestoreFilesContent. </summary>
+        /// <param name="fileList"> List of files to be restored. </param>
+        /// <param name="restoreFilePath"> Destination folder where the files will be restored. The path name should start with a forward slash. If it is omitted from request then restore is done at the root folder of the destination volume by default. </param>
+        /// <param name="destinationVolumeId"> Resource Id of the destination volume on which the files need to be restored. </param>
+        internal NetAppVolumeBackupBackupRestoreFilesContent(IList<string> fileList, string restoreFilePath, ResourceIdentifier destinationVolumeId)
+        {
+            FileList = fileList;
+            RestoreFilePath = restoreFilePath;
+            DestinationVolumeId = destinationVolumeId;
+        }
+
         /// <summary> List of files to be restored. </summary>
         public IList<string> FileList { get; }
         /// <summary> Destination folder where the files will be restored. The path name should start with a forward slash. If it is omitted from request then restore is done at the root folder of the destination volume by default. </summary>

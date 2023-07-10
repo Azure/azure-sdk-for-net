@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Command = command;
         }
 
+        /// <summary> Initializes a new instance of StorageApplianceCommandSpecification. </summary>
+        /// <param name="arguments"> The list of string arguments that will be passed to the script in order as separate arguments. </param>
+        /// <param name="command"> The read-only command to execute against the storage appliance. </param>
+        internal StorageApplianceCommandSpecification(IList<string> arguments, string command)
+        {
+            Arguments = arguments;
+            Command = command;
+        }
+
         /// <summary> The list of string arguments that will be passed to the script in order as separate arguments. </summary>
         public IList<string> Arguments { get; }
         /// <summary> The read-only command to execute against the storage appliance. </summary>

@@ -372,6 +372,38 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new SlimPolicyMetadata(id, name, resourceType, systemData, metadataId, category, title, owner, additionalContentUri, metadata);
         }
 
+        /// <summary> Initializes a new instance of CheckPolicyRestrictionsContent. </summary>
+        /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
+        /// <param name="pendingFields"> The list of fields and values that should be evaluated for potential restrictions. </param>
+        /// <returns> A new <see cref="Models.CheckPolicyRestrictionsContent"/> instance for mocking. </returns>
+        public static CheckPolicyRestrictionsContent CheckPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails = null, IEnumerable<PendingField> pendingFields = null)
+        {
+            pendingFields ??= new List<PendingField>();
+
+            return new CheckPolicyRestrictionsContent(resourceDetails, pendingFields?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of CheckRestrictionsResourceDetails. </summary>
+        /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
+        /// <param name="apiVersion"> The api-version of the resource content. </param>
+        /// <param name="scope"> The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource's resource ID. </param>
+        /// <returns> A new <see cref="Models.CheckRestrictionsResourceDetails"/> instance for mocking. </returns>
+        public static CheckRestrictionsResourceDetails CheckRestrictionsResourceDetails(BinaryData resourceContent = null, string apiVersion = null, string scope = null)
+        {
+            return new CheckRestrictionsResourceDetails(resourceContent, apiVersion, scope);
+        }
+
+        /// <summary> Initializes a new instance of PendingField. </summary>
+        /// <param name="field"> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </param>
+        /// <param name="values"> The list of potential values for the field that should be evaluated against Azure Policy. </param>
+        /// <returns> A new <see cref="Models.PendingField"/> instance for mocking. </returns>
+        public static PendingField PendingField(string field = null, IEnumerable<string> values = null)
+        {
+            values ??= new List<string>();
+
+            return new PendingField(field, values?.ToList());
+        }
+
         /// <summary> Initializes a new instance of CheckPolicyRestrictionsResult. </summary>
         /// <param name="fieldRestrictions"> The restrictions that will be placed on various fields in the resource by policy. </param>
         /// <param name="policyEvaluations"> Evaluation results for the provided partial resource content. </param>

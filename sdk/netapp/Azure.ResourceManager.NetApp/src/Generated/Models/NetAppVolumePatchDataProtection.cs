@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
+        /// <summary> Initializes a new instance of NetAppVolumePatchDataProtection. </summary>
+        /// <param name="backup"> Backup Properties. </param>
+        /// <param name="snapshot"> Snapshot properties. </param>
+        internal NetAppVolumePatchDataProtection(NetAppVolumeBackupConfiguration backup, VolumeSnapshotProperties snapshot)
+        {
+            Backup = backup;
+            Snapshot = snapshot;
+        }
+
         /// <summary> Backup Properties. </summary>
         public NetAppVolumeBackupConfiguration Backup { get; set; }
         /// <summary> Snapshot properties. </summary>

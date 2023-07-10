@@ -183,6 +183,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(supportedSku, supportedStorageGb, supportedServerVersions);
         }
 
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailabilityContent. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityContent"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerNameAvailabilityContent PostgreSqlFlexibleServerNameAvailabilityContent(string name = null, ResourceType? resourceType = null)
+        {
+            return new PostgreSqlFlexibleServerNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>

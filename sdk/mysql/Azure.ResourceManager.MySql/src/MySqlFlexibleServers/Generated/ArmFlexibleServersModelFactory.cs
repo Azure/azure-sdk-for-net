@@ -49,6 +49,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerBackupData(id, name, resourceType, systemData, backupType, completedOn, source);
         }
 
+        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupSettings. </summary>
+        /// <param name="backupName"> The name of the backup. </param>
+        /// <param name="backupFormat"> Backup Format for the current backup. (CollatedFormat is INTERNAL – DO NOT USE). </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupSettings"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerBackupSettings MySqlFlexibleServerBackupSettings(string backupName = null, MySqlFlexibleServerBackupFormat? backupFormat = null)
+        {
+            return new MySqlFlexibleServerBackupSettings(backupName, backupFormat);
+        }
+
         /// <summary> Initializes a new instance of MySqlFlexibleServerBackupAndExportResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -298,6 +307,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerDelegatedSubnetUsage MySqlFlexibleServerDelegatedSubnetUsage(string subnetName = null, long? usage = null)
         {
             return new MySqlFlexibleServerDelegatedSubnetUsage(subnetName, usage);
+        }
+
+        /// <summary> Initializes a new instance of MySqlFlexibleServerNameAvailabilityContent. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerNameAvailabilityContent"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerNameAvailabilityContent MySqlFlexibleServerNameAvailabilityContent(string name = null, ResourceType? resourceType = null)
+        {
+            return new MySqlFlexibleServerNameAvailabilityContent(name, resourceType);
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerNameAvailabilityResult. </summary>

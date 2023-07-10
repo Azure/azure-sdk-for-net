@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNotificationHubsModelFactory
     {
+        /// <summary> Initializes a new instance of NotificationHubAvailabilityContent. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The sku of the created namespace. </param>
+        /// <param name="isAvailiable"> True if the name is available and can be used to create new Namespace/NotificationHub. Otherwise false. </param>
+        /// <returns> A new <see cref="Models.NotificationHubAvailabilityContent"/> instance for mocking. </returns>
+        public static NotificationHubAvailabilityContent NotificationHubAvailabilityContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NotificationHubSku sku = null, bool? isAvailiable = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NotificationHubAvailabilityContent(id, name, resourceType, systemData, tags, location, sku, isAvailiable);
+        }
+
         /// <summary> Initializes a new instance of NotificationHubAvailabilityResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

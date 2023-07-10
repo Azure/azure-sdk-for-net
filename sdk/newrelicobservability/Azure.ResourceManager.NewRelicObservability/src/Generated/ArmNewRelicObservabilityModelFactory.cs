@@ -87,6 +87,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicPlanData(id, name, resourceType, systemData, planData, orgCreationSource, accountCreationSource);
         }
 
+        /// <summary> Initializes a new instance of NewRelicMetricsStatusContent. </summary>
+        /// <param name="azureResourceIds"> Azure resource IDs. </param>
+        /// <param name="userEmail"> User Email. </param>
+        /// <returns> A new <see cref="Models.NewRelicMetricsStatusContent"/> instance for mocking. </returns>
+        public static NewRelicMetricsStatusContent NewRelicMetricsStatusContent(IEnumerable<string> azureResourceIds = null, string userEmail = null)
+        {
+            azureResourceIds ??= new List<string>();
+
+            return new NewRelicMetricsStatusContent(azureResourceIds?.ToList(), userEmail);
+        }
+
         /// <summary> Initializes a new instance of NewRelicMetricsStatusResult. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
         /// <returns> A new <see cref="Models.NewRelicMetricsStatusResult"/> instance for mocking. </returns>
@@ -97,6 +108,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicMetricsStatusResult(azureResourceIds?.ToList());
         }
 
+        /// <summary> Initializes a new instance of NewRelicAppServicesGetContent. </summary>
+        /// <param name="azureResourceIds"> Azure resource IDs. </param>
+        /// <param name="userEmail"> User Email. </param>
+        /// <returns> A new <see cref="Models.NewRelicAppServicesGetContent"/> instance for mocking. </returns>
+        public static NewRelicAppServicesGetContent NewRelicAppServicesGetContent(IEnumerable<ResourceIdentifier> azureResourceIds = null, string userEmail = null)
+        {
+            azureResourceIds ??= new List<ResourceIdentifier>();
+
+            return new NewRelicAppServicesGetContent(azureResourceIds?.ToList(), userEmail);
+        }
+
         /// <summary> Initializes a new instance of NewRelicObservabilityAppServiceInfo. </summary>
         /// <param name="azureResourceId"> Azure App service resource ID. </param>
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the App service. </param>
@@ -105,6 +127,28 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static NewRelicObservabilityAppServiceInfo NewRelicObservabilityAppServiceInfo(ResourceIdentifier azureResourceId = null, string agentVersion = null, string agentStatus = null)
         {
             return new NewRelicObservabilityAppServiceInfo(azureResourceId, agentVersion, agentStatus);
+        }
+
+        /// <summary> Initializes a new instance of NewRelicSwitchBillingContent. </summary>
+        /// <param name="azureResourceId"> Azure resource Id. </param>
+        /// <param name="organizationId"> Organization id. </param>
+        /// <param name="planData"> Plan details. </param>
+        /// <param name="userEmail"> User Email. </param>
+        /// <returns> A new <see cref="Models.NewRelicSwitchBillingContent"/> instance for mocking. </returns>
+        public static NewRelicSwitchBillingContent NewRelicSwitchBillingContent(ResourceIdentifier azureResourceId = null, string organizationId = null, NewRelicPlanDetails planData = null, string userEmail = null)
+        {
+            return new NewRelicSwitchBillingContent(azureResourceId, organizationId, planData, userEmail);
+        }
+
+        /// <summary> Initializes a new instance of NewRelicHostsGetContent. </summary>
+        /// <param name="vmIds"> VM resource IDs. </param>
+        /// <param name="userEmail"> User Email. </param>
+        /// <returns> A new <see cref="Models.NewRelicHostsGetContent"/> instance for mocking. </returns>
+        public static NewRelicHostsGetContent NewRelicHostsGetContent(IEnumerable<ResourceIdentifier> vmIds = null, string userEmail = null)
+        {
+            vmIds ??= new List<ResourceIdentifier>();
+
+            return new NewRelicHostsGetContent(vmIds?.ToList(), userEmail);
         }
 
         /// <summary> Initializes a new instance of NewRelicObservabilityVmInfo. </summary>

@@ -21,6 +21,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             UserList = new ChangeTrackingList<KeySetUser>();
         }
 
+        /// <summary> Initializes a new instance of BmcKeySetPatch. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="expiration"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
+        /// <param name="userList"> The unique list of permitted users. </param>
+        internal BmcKeySetPatch(IDictionary<string, string> tags, DateTimeOffset? expiration, IList<KeySetUser> userList)
+        {
+            Tags = tags;
+            Expiration = expiration;
+            UserList = userList;
+        }
+
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The date and time after which the users in this key set will be removed from the baseboard management controllers. </summary>
