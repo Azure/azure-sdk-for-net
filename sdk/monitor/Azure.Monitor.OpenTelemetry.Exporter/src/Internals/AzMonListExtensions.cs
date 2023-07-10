@@ -239,6 +239,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return target;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string? GetTargetUsingServerAttributes(this AzMonList tagObjects, string defaultPort)
+        {
+            var values = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerSocketAddress, SemanticConventions.AttributeServerPort);
+            string? target = values[0]?.ToString() ?? values[1]?.ToString();
+            var port = values[2]?.ToString();
+            if (!string.IsNullOrWhiteSpace(target) &&  port != null && port != defaultPort)
+            {
+                target = target + ":" + port;
+            }
+
+            return target;
+        }
+
         ///<summary>
         /// Gets Http dependency target from activity tag objects.
         ///</summary>
@@ -297,6 +311,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (!string.IsNullOrWhiteSpace(peerService))
             {
                 target = peerService;
+            }
+            if (string.IsNullOrWhiteSpace(target))
+            {
+                target = tagObjects.GetTargetUsingServerAttributes(defaultPort);
             }
             if (string.IsNullOrWhiteSpace(target))
             {
