@@ -25,6 +25,13 @@ namespace Azure.Communication.Chat
             Participants = participants.ToList();
         }
 
+        /// <summary> Initializes a new instance of AddChatParticipantsRequest. </summary>
+        /// <param name="participants"> Participants to add to a chat thread. </param>
+        internal AddChatParticipantsRequest(IList<ChatParticipantInternal> participants)
+        {
+            Participants = participants;
+        }
+
         /// <summary> Participants to add to a chat thread. </summary>
         public IList<ChatParticipantInternal> Participants { get; }
     }

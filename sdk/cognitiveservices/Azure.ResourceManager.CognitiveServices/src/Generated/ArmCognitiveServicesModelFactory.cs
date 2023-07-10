@@ -373,6 +373,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesModel(model, kind, skuName);
         }
 
+        /// <summary> Initializes a new instance of CognitiveServicesDomainAvailabilityContent. </summary>
+        /// <param name="subdomainName"> The subdomain name to use. </param>
+        /// <param name="resourceType"> The Type of the resource. </param>
+        /// <param name="kind"> The Kind of the resource. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesDomainAvailabilityContent"/> instance for mocking. </returns>
+        public static CognitiveServicesDomainAvailabilityContent CognitiveServicesDomainAvailabilityContent(string subdomainName = null, ResourceType resourceType = default, string kind = null)
+        {
+            return new CognitiveServicesDomainAvailabilityContent(subdomainName, resourceType, kind);
+        }
+
         /// <summary> Initializes a new instance of CognitiveServicesDomainAvailabilityList. </summary>
         /// <param name="isSubdomainAvailable"> Indicates the given SKU is available or not. </param>
         /// <param name="reason"> Reason why the SKU is not available. </param>

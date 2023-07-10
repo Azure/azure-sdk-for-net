@@ -75,6 +75,74 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ApiEntityBaseContract(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license);
         }
 
+        /// <summary> Initializes a new instance of ApiCreateOrUpdateContent. </summary>
+        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
+        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
+        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
+        /// <param name="apiType"> Type of API. </param>
+        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
+        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
+        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
+        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
+        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
+        /// <param name="apiVersionDescription"> Description of the API Version. </param>
+        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
+        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
+        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="contact"> Contact information for the API. </param>
+        /// <param name="license"> License information for the API. </param>
+        /// <param name="sourceApiId"> API identifier of the source API. </param>
+        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
+        /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
+        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
+        /// <param name="apiVersionSet"> Version set details. </param>
+        /// <param name="value"> Content value when Importing an API. </param>
+        /// <param name="format"> Format of the Content in which the API is getting imported. </param>
+        /// <param name="wsdlSelector"> Criteria to limit import of WSDL to a subset of the document. </param>
+        /// <param name="soapApiType">
+        /// Type of API to create.
+        ///  * `http` creates a REST API
+        ///  * `soap` creates a SOAP pass-through API
+        ///  * `websocket` creates websocket API
+        ///  * `graphql` creates GraphQL API.
+        /// </param>
+        /// <returns> A new <see cref="Models.ApiCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, Uri serviceUri = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null, string value = null, ContentFormat? format = null, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = null, SoapApiType? soapApiType = null)
+        {
+            protocols ??= new List<ApiOperationInvokableProtocol>();
+
+            return new ApiCreateOrUpdateContent(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, sourceApiId, displayName, serviceUri, path, protocols?.ToList(), apiVersionSet, value, format, wsdlSelector, soapApiType);
+        }
+
+        /// <summary> Initializes a new instance of ApiPatch. </summary>
+        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
+        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
+        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
+        /// <param name="apiType"> Type of API. </param>
+        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
+        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
+        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
+        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
+        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
+        /// <param name="apiVersionDescription"> Description of the API Version. </param>
+        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
+        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
+        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="contact"> Contact information for the API. </param>
+        /// <param name="license"> License information for the API. </param>
+        /// <param name="displayName"> API name. </param>
+        /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. </param>
+        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
+        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
+        /// <returns> A new <see cref="Models.ApiPatch"/> instance for mocking. </returns>
+        public static ApiPatch ApiPatch(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, string displayName = null, Uri serviceUri = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null)
+        {
+            protocols ??= new List<ApiOperationInvokableProtocol>();
+
+            return new ApiPatch(description, authenticationSettings, subscriptionKeyParameterNames, apiType, apiRevision, apiVersion, isCurrent, isOnline, apiRevisionDescription, apiVersionDescription, apiVersionSetId, isSubscriptionRequired, termsOfServiceUri, contact, license, displayName, serviceUri, path, protocols?.ToList());
+        }
+
         /// <summary> Initializes a new instance of ApiRevisionContract. </summary>
         /// <param name="apiId"> Identifier of the API Revision. </param>
         /// <param name="apiRevision"> Revision number of API. </param>
@@ -516,6 +584,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ApiManagementCertificateData(id, name, resourceType, systemData, subject, thumbprint, expireOn, keyVaultDetails);
         }
 
+        /// <summary> Initializes a new instance of ConnectivityCheckContent. </summary>
+        /// <param name="source"> Definitions about the connectivity check origin. </param>
+        /// <param name="destination"> The connectivity check operation destination. </param>
+        /// <param name="preferredIPVersion"> The IP version to be used. Only IPv4 is supported for now. </param>
+        /// <param name="protocol"> The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </param>
+        /// <param name="protocolHttpConfiguration"> Protocol-specific configuration. </param>
+        /// <returns> A new <see cref="Models.ConnectivityCheckContent"/> instance for mocking. </returns>
+        public static ConnectivityCheckContent ConnectivityCheckContent(ConnectivityCheckRequestSource source = null, ConnectivityCheckRequestDestination destination = null, PreferredIPVersion? preferredIPVersion = null, ConnectivityCheckProtocol? protocol = null, ConnectivityCheckRequestHttpConfiguration protocolHttpConfiguration = null)
+        {
+            return new ConnectivityCheckContent(source, destination, preferredIPVersion, protocol, protocolHttpConfiguration != null ? new ConnectivityCheckRequestProtocolConfiguration(protocolHttpConfiguration) : null);
+        }
+
+        /// <summary> Initializes a new instance of ConnectivityCheckRequestSource. </summary>
+        /// <param name="region"> The API Management service region from where to start the connectivity check operation. </param>
+        /// <param name="instance"> The particular VMSS instance from which to fire the request. </param>
+        /// <returns> A new <see cref="Models.ConnectivityCheckRequestSource"/> instance for mocking. </returns>
+        public static ConnectivityCheckRequestSource ConnectivityCheckRequestSource(string region = null, long? instance = null)
+        {
+            return new ConnectivityCheckRequestSource(region, instance);
+        }
+
         /// <summary> Initializes a new instance of ConnectivityCheckResult. </summary>
         /// <param name="hops"> List of hops between the source and the destination. </param>
         /// <param name="connectionStatus"> The connection status. </param>
@@ -595,6 +684,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementResourceSkuCapacity ApiManagementResourceSkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, ApiManagementResourceSkuCapacityScaleType? scaleType = null)
         {
             return new ApiManagementResourceSkuCapacity(minimum, maximum, @default, scaleType);
+        }
+
+        /// <summary> Initializes a new instance of ApiManagementServiceBackupRestoreContent. </summary>
+        /// <param name="storageAccount"> The name of the Azure storage account (used to place/retrieve the backup). </param>
+        /// <param name="containerName"> The name of the blob container (used to place/retrieve the backup). </param>
+        /// <param name="backupName"> The name of the backup file to create/retrieve. </param>
+        /// <param name="accessType"> The type of access to be used for the storage account. </param>
+        /// <param name="accessKey"> Storage account access key. Required only if `accessType` is set to `AccessKey`. </param>
+        /// <param name="clientId"> The Client ID of user assigned managed identity. Required only if `accessType` is set to `UserAssignedManagedIdentity`. </param>
+        /// <returns> A new <see cref="Models.ApiManagementServiceBackupRestoreContent"/> instance for mocking. </returns>
+        public static ApiManagementServiceBackupRestoreContent ApiManagementServiceBackupRestoreContent(string storageAccount = null, string containerName = null, string backupName = null, StorageAccountAccessType? accessType = null, string accessKey = null, string clientId = null)
+        {
+            return new ApiManagementServiceBackupRestoreContent(storageAccount, containerName, backupName, accessType, accessKey, clientId);
         }
 
         /// <summary> Initializes a new instance of ApiManagementServiceData. </summary>
