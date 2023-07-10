@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -12,7 +11,7 @@ namespace Azure.Storage.DataMovement
     public abstract class StorageResource
     {
         /// <summary>
-        /// The protected constructor for the abstract StorageResourceBase class (to allow for mocking).
+        /// The protected constructor for the abstract StorageResource class (to allow for mocking).
         /// </summary>
         protected StorageResource()
         {

@@ -14,7 +14,6 @@ using NUnit.Framework;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Blobs.Models;
 using System.Linq;
-using System.ComponentModel;
 
 namespace Azure.Storage.DataMovement.Tests
 {
