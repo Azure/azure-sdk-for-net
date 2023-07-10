@@ -239,7 +239,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal("RequestDataNewActivity", requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
-            Assert.Equal("amqps://my.servicebus.windows.net/", requestData.Url);
+            Assert.Equal("amqps://my.servicebus.windows.net/queueName", requestData.Url);
             Assert.Equal("0", requestData.ResponseCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
             Assert.True(requestData.Success);
