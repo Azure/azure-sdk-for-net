@@ -245,6 +245,19 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new CostManagementAlertData(id, name, resourceType, systemData, definition, description, source, details, costEntityId, status, createdOn, closeOn, modifiedOn, statusModificationUserName, statusModifiedOn, eTag);
         }
 
+        /// <summary> Initializes a new instance of ForecastDefinition. </summary>
+        /// <param name="forecastType"> The type of the forecast. </param>
+        /// <param name="timeframe"> The time frame for pulling data for the forecast. If custom, then a specific time period must be provided. </param>
+        /// <param name="timePeriod"> Has time period for pulling data for the forecast. </param>
+        /// <param name="dataset"> Has definition for data in this forecast. </param>
+        /// <param name="includeActualCost"> A boolean determining if actualCost will be included. </param>
+        /// <param name="includeFreshPartialCost"> A boolean determining if FreshPartialCost will be included. </param>
+        /// <returns> A new <see cref="Models.ForecastDefinition"/> instance for mocking. </returns>
+        public static ForecastDefinition ForecastDefinition(ForecastType forecastType = default, ForecastTimeframe timeframe = default, ForecastTimePeriod timePeriod = null, ForecastDataset dataset = null, bool? includeActualCost = null, bool? includeFreshPartialCost = null)
+        {
+            return new ForecastDefinition(forecastType, timeframe, timePeriod, dataset, includeActualCost, includeFreshPartialCost);
+        }
+
         /// <summary> Initializes a new instance of ForecastResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -301,6 +314,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             tags ??= new Dictionary<string, string>();
 
             return new CostManagementDimension(id, name, resourceType, systemData, description, isFilterEnabled, isGroupingEnabled, data?.ToList(), total, category, usageStart, usageEnd, nextLink, location, sku, eTag, tags);
+        }
+
+        /// <summary> Initializes a new instance of QueryDefinition. </summary>
+        /// <param name="exportType"> The type of the query. </param>
+        /// <param name="timeframe"> The time frame for pulling data for the query. If custom, then a specific time period must be provided. </param>
+        /// <param name="timePeriod"> Has time period for pulling data for the query. </param>
+        /// <param name="dataset"> Has definition for data in this query. </param>
+        /// <returns> A new <see cref="Models.QueryDefinition"/> instance for mocking. </returns>
+        public static QueryDefinition QueryDefinition(ExportType exportType = default, TimeframeType timeframe = default, QueryTimePeriod timePeriod = null, QueryDataset dataset = null)
+        {
+            return new QueryDefinition(exportType, timeframe, timePeriod, dataset);
         }
 
         /// <summary> Initializes a new instance of QueryResult. </summary>

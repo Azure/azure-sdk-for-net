@@ -23,6 +23,22 @@ namespace Azure.Communication.JobRouter
             AssignmentId = assignmentId;
         }
 
+        /// <summary> Initializes a new instance of CloseJobRequest. </summary>
+        /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>
+        /// <param name="dispositionCode"> Indicates the outcome of the job, populate this field with your own custom values. </param>
+        /// <param name="closeAt">
+        /// If not provided, worker capacity is released immediately along with a JobClosedEvent notification.
+        /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC.
+        /// </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
+        internal CloseJobRequest(string assignmentId, string dispositionCode, DateTimeOffset? closeAt, string note)
+        {
+            AssignmentId = assignmentId;
+            DispositionCode = dispositionCode;
+            CloseAt = closeAt;
+            Note = note;
+        }
+
         /// <summary> The assignment within which the job is to be closed. </summary>
         public string AssignmentId { get; }
         /// <summary> Indicates the outcome of the job, populate this field with your own custom values. </summary>

@@ -19,6 +19,14 @@ namespace Azure.ResourceManager.Communication.Models
             LinkedDomains = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of CommunicationServiceResourcePatch. </summary>
+        /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
+        /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
+        internal CommunicationServiceResourcePatch(IDictionary<string, string> tags, IList<string> linkedDomains) : base(tags)
+        {
+            LinkedDomains = linkedDomains;
+        }
+
         /// <summary> List of email Domain resource Ids. </summary>
         public IList<string> LinkedDomains { get; }
     }

@@ -23,6 +23,19 @@ namespace Azure.Core.TestFramework.Models
             Value = value;
         }
 
+        /// <summary> Initializes a new instance of BodyKeySanitizer. </summary>
+        /// <param name="jsonPath"></param>
+        /// <param name="value"></param>
+        /// <param name="regex"></param>
+        /// <param name="groupForReplace"></param>
+        internal BodyKeySanitizer(string jsonPath, string value, string regex, string groupForReplace)
+        {
+            JsonPath = jsonPath;
+            Value = value;
+            Regex = regex;
+            GroupForReplace = groupForReplace;
+        }
+
         /// <summary> Gets or sets the json path. </summary>
         public string JsonPath { get; set; }
         /// <summary> Gets the value. </summary>

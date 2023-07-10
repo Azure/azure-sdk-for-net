@@ -15,6 +15,15 @@ namespace Azure.Core.TestFramework.Models
         {
         }
 
+        /// <summary> Initializes a new instance of ProxyOptionsTransportCertificatesItem. </summary>
+        /// <param name="pemValue"></param>
+        /// <param name="pemKey"></param>
+        internal ProxyOptionsTransportCertificatesItem(string pemValue, string pemKey)
+        {
+            PemValue = pemValue;
+            PemKey = pemKey;
+        }
+
         /// <summary> Gets or sets the pem value. </summary>
         public string PemValue { get; set; }
         /// <summary> Gets or sets the pem key. </summary>
