@@ -154,16 +154,11 @@ namespace Azure.Storage.DataMovement.Tests
             BlockBlobClient newSourceBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
             StorageResourceSingle wrongSourceResource = new BlockBlobStorageResource(newSourceBlob);
 
-            TransferOptions resumeTransferOptions = new TransferOptions()
-            {
-                ResumeFromCheckpointId = transfer.Id
-            };
-
             Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
+                async () => await transferManager.ResumeTransferAsync(
+                    transfer.Id,
                     wrongSourceResource,
-                    destinationResource,
-                    resumeTransferOptions),
+                    destinationResource),
                 Errors.MismatchResumeTransferArguments(
                     "SourcePath",
                     sourceResource.Uri.AbsoluteUri,
@@ -213,16 +208,11 @@ namespace Azure.Storage.DataMovement.Tests
             BlockBlobClient newDestinationBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
             StorageResourceSingle wrongDestinationResource = new BlockBlobStorageResource(newDestinationBlob);
 
-            TransferOptions resumeTransferOptions = new TransferOptions()
-            {
-                ResumeFromCheckpointId = transfer.Id
-            };
-
             Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
+                async () => await transferManager.ResumeTransferAsync(
+                    transfer.Id,
                     sourceResource,
-                    wrongDestinationResource,
-                    resumeTransferOptions),
+                    wrongDestinationResource),
                 Errors.MismatchResumeTransferArguments(
                     "DestinationPath",
                     destinationResource.Uri.AbsoluteUri,
@@ -272,11 +262,11 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions resumeTransferOptions = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Overwrite,
-                ResumeFromCheckpointId = transfer.Id
             };
 
             Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
+                async () => await transferManager.ResumeTransferAsync(
+                    transfer.Id,
                     sourceResource,
                     destinationResource,
                     resumeTransferOptions),

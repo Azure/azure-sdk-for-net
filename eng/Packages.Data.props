@@ -68,7 +68,7 @@
     <PackageReference Update="System.Memory.Data" Version="1.0.2" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
-    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="6.0.1" />
     <PackageReference Update="System.Reflection.TypeExtensions" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
@@ -295,7 +295,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20230427.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20230706.1</TestProxyVersion>
   </PropertyGroup>
 
 </Project>
