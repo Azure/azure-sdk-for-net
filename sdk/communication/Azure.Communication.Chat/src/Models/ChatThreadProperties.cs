@@ -41,6 +41,6 @@ namespace Azure.Communication.Chat
         /// <summary>
         /// Metadata
         /// </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; }
+        public IDictionary<string, string> Metadata { get; }
     }
 }

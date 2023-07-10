@@ -18,7 +18,7 @@ namespace Azure.Communication.Chat
             User = identifier;
         }
 
-        internal ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime)
+        internal ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime, IDictionary<string, string> metadata = null)
         {
             User = user;
             DisplayName = displayName;
@@ -42,7 +42,7 @@ namespace Azure.Communication.Chat
         /// <summary>
         /// Metadata
         /// </summary>
-        public IDictionary<string, string> Metadata { get; set; }
+        public IDictionary<string, string> Metadata { get; }
 
         internal ChatParticipantInternal ToChatParticipantInternal()
         {
