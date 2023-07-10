@@ -90,6 +90,11 @@ namespace Azure.Core
         /// <summary>
         /// Indicates whether to enable Continuous Access Evaluation (CAE) for the token request.
         /// </summary>
+        /// <remarks>
+        /// If a resource API implements CAE and your application declares it can handle CAE, your app receives CAE tokens for that resource.
+        /// For this reason, if you declare your app CAE ready, your application must handle the CAE claim challenge for all resource APIs that accept Microsoft Identity access tokens.
+        /// If you don't handle CAE responses in these API calls, your app could end up in a loop retrying an API call with a token that is still in the returned lifespan of the token but has been revoked due to CAE.
+        /// </remarks>
         public bool IsCaeEnabled { get; }
     }
 }
