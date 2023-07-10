@@ -44,8 +44,7 @@ namespace Azure.Core.Experimental
         }
 
         /// <summary>
-        /// Tries to get the value associated with the specified key. If the key exists, it moves
-        /// it to the front of the cache.
+        /// Gets the value associated with the specified key.
         /// </summary>
         /// <param name="key">The key of the value to get.</param>
         /// <param name="value">When this method returns, contains the value associated with
@@ -72,7 +71,8 @@ namespace Azure.Core.Experimental
         }
 
         /// <summary>
-        /// TODO.
+        /// Adds a key/value pair to the <see cref="LruCache{TKey, TValue}"/> if the key doesn't already exist, or updates a key/value
+        /// pair in the <see cref="LruCache{TKey, TValue}"/> if the key does already exist.
         /// </summary>
         /// <param name="key"></param>
         /// <param name="val"></param>
@@ -107,7 +107,7 @@ namespace Azure.Core.Experimental
         }
 
         /// <summary>
-        /// Returns an enumerator that iterates through the <see cref="LruCache{TKey, TValue}"/>
+        /// Returns an enumerator that iterates through the <see cref="LruCache{TKey, TValue}"/>.
         /// </summary>
         /// <returns></returns>
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _linkedList.GetEnumerator();
