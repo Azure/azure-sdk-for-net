@@ -30,10 +30,6 @@ namespace Azure.Storage.DataMovement.Tests
         {
         }
 
-        [SetUp]
-        public void Setup()
-        {
-        }
         public static string GetNewTransferId() => Guid.NewGuid().ToString();
     }
 }
