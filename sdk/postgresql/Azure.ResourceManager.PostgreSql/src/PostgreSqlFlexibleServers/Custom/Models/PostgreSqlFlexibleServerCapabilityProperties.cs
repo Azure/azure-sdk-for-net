@@ -17,6 +17,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get => SupportedServerEditions;
         }
+        /// <summary> Gets the supported hyperscale node editions. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IReadOnlyList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> SupportedHyperscaleNodeEditions { get; }
         /// <summary> A value indicating whether fast provisioning is supported in this region. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? FastProvisioningSupported
