@@ -29,7 +29,7 @@ namespace Azure.Core.Experimental
         /// <summary>
         /// Gets the total length of all values currently stored in the <see cref="LruCache{TKey, TValue}"/>.
         /// </summary>
-        internal int TotalLength { get; private set; }
+        public int TotalLength { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LruCache{TKey, TValue}"/> class.

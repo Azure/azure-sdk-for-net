@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading;
@@ -122,8 +123,9 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
                 return _schemaV2;
             }
 
-            public override bool IsValid(object data, Type dataType, string schemaDefinition)
+            public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
             {
+                validationErrors = new List<Exception>();
                 return true;
             }
         }

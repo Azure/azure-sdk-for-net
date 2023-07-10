@@ -13,6 +13,8 @@ using Azure.Messaging;
 using System.Text.Json;
 using Azure.Core.Serialization;
 using Azure.Core.Experimental.SchemaValidator;
+using Azure.Core.Experimental;
+using System.Collections.Generic;
 
 namespace Azure.Data.SchemaRegistry.Serialization
 {
@@ -302,19 +304,14 @@ namespace Azure.Data.SchemaRegistry.Serialization
                 throw new Exception("An error occurred while attempting to serialize the data.", ex);
             }
 
-            bool isValid;
             try
             {
                 // Attempt to validate
-                isValid = _schemaValidator.IsValid(value, dataType, schemaString);
+                _schemaValidator.Validate(value, dataType, schemaString);
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while attempting to validate the object against the schema.", ex);
-            }
-            if (!isValid)
-            {
-                throw new Exception("The validate method determined the object was invalid according to the schema.");
+                throw new Exception("The validate method determined the object was invalid according to the schema.", ex);
             }
 
             try
@@ -531,19 +528,14 @@ namespace Azure.Data.SchemaRegistry.Serialization
                 throw new Exception($"An error occurred while attempting to deserialize the data.", ex);
             }
 
-            bool isValid;
             try
             {
-                // Attempt to validate the object against the schema definition
-                isValid = _schemaValidator.IsValid(objectToReturn, dataType, schemaDefinition);
+                // Attempt to validate
+                _schemaValidator.Validate(objectToReturn, dataType, schemaDefinition);
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while attempting to validate the deserialized object.", ex);
-            }
-            if (!isValid)
-            {
-                throw new Exception("The validate method determined the object was invalid according to the schema.");
+                throw new Exception("The validate method determined the object was invalid according to the schema.", ex);
             }
 
             return objectToReturn;

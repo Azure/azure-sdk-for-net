@@ -185,21 +185,6 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         #region Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
         internal class SampleJsonValidator : SchemaValidator
         {
-            public override bool IsValid(object data, Type dataType, string schemaDefinition)
-            {
-                // This method throws an exception if the data argument is not valid according to the schemaDefinition.
-
-                // Your implementation using the third-party library of your choice goes here.
-                List<Exception> validationErrors = SampleValidationClass.SampleValidationMethod(schemaDefinition, data, dataType);
-
-                if (validationErrors.Count  > 0)
-                {
-                    throw new AggregateException(validationErrors);
-                }
-
-                return true;
-            }
-
             public override string GenerateSchema(Type dataType)
             {
 #if SNIPPET
@@ -208,6 +193,22 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 #else
                 return "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
 #endif
+            }
+
+            public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
+            {
+                // This method throws an exception if the data argument is not valid according to the schemaDefinition.
+
+                // Your implementation using the third-party library of your choice goes here.
+                List<Exception> errors = SampleValidationClass.SampleValidationMethod(schemaDefinition, data, dataType);
+                validationErrors = errors;
+
+                if (errors.Count > 0)
+                {
+                    throw new AggregateException(validationErrors);
+                }
+
+                return true;
             }
         }
 #endregion

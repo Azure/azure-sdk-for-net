@@ -11,30 +11,19 @@ namespace Azure.Core.Experimental.SchemaValidator
     /// objects against schemas.
     /// </summary>
     /// <remarks>
-    /// Defining both <see cref="GenerateSchema(Type)"/> and <see cref="IsValid(object, Type, string)"/> is required. If you
+    /// Defining both <see cref="GenerateSchema(Type)"/> and <see cref="TryValidate(object, Type, string, out IEnumerable{Exception})"/> is required. If you
     /// do not wish to validate, then evaluate all schemas as valid.
     /// </remarks>
     public abstract class SchemaValidator
     {
-        /// <summary>
-        /// Validates that <paramref name="data"/> is valid according to <paramref name="schemaDefinition"/>. If the object is not valid,
-        /// this method can either return false or throw an exception, depending on the needs of the application.
-        /// </summary>
-        /// <remarks>
-        /// If you have more than one validation exception, consider wrapping them in an <see cref="AggregateException"/>.
-        /// </remarks>
-        /// <param name="data">The data to validate.</param>
-        /// <param name="dataType">The type of data to validate.</param>
-        /// <param name="schemaDefinition">The schema definition to validate against.</param>
-        public abstract bool IsValid(object data, Type dataType, string schemaDefinition);
-
         /// <summary>
         /// Validates that <paramref name="data"/> is valid according to <paramref name="schemaDefinition"/>.
         /// </summary>
         /// <param name="data">The data to validate.</param>
         /// <param name="dataType">The type of data to validate.</param>
         /// <param name="schemaDefinition">The schema definition to validate against.</param>
-        /// <param name="validationErrors"></param>
+        /// <param name="validationErrors">When this method returns, contains the validation errors if <paramref name="data"/> was invalid according to
+        /// the <paramref name="schemaDefinition"/>.</param>
         /// <returns></returns>
         public abstract bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors);
 
@@ -45,7 +34,7 @@ namespace Azure.Core.Experimental.SchemaValidator
         /// <param name="data">The data to validate.</param>
         /// <param name="dataType">The type of data to validate.</param>
         /// <param name="schemaDefinition">The schema definition to validate against.</param>
-        /// <exception cref="AggregateException"> is thrown </exception>
+        /// <exception cref="AggregateException"> <paramref name="data"/> is not valid according to the <paramref name="schemaDefinition"/>.</exception>
         public virtual void Validate(object data, Type dataType, string schemaDefinition)
         {
             if (!TryValidate(data, dataType, schemaDefinition, out var errors))

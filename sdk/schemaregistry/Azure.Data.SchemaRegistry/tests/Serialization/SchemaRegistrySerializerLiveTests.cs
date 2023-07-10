@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -279,7 +280,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var serializer = new SchemaRegistrySerializer(client, groupName, new ValidateThrowsGenerator());
 
             Assert.That(
-                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }), Throws.InstanceOf<Exception>().And.Property(nameof(Exception.InnerException)).InstanceOf<FormatException>());
+                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }), Throws.InstanceOf<Exception>().And.Property(nameof(Exception.InnerException)).InstanceOf<AggregateException>());
         }
 
         [RecordedTest]
@@ -322,8 +323,9 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
                 return s_schema;
             }
 
-            public override bool IsValid(object data, Type dataType, string schemaDefinition)
+            public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
             {
+                validationErrors = new List<Exception>();
                 return true;
             }
         }
@@ -335,9 +337,13 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
                 return s_schema;
             }
 
-            public override bool IsValid(object data, Type dataType, string schemaDefinition)
+            public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
             {
-                throw new FormatException("This is bad JSON!!!!");
+                var errors = new List<Exception>();
+                errors.Add(new Exception("Incorrect schema."));
+                validationErrors = errors;
+
+                return false;
             }
         }
 
@@ -348,11 +354,13 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
                 return s_customSchema;
             }
 
-            public override bool IsValid(object data, Type dataType, string schemaDefinition)
+            public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
             {
                 Assert.That(data, Is.TypeOf<Employee>());
                 Assert.AreEqual(dataType.Name, "Employee");
                 Assert.AreEqual(schemaDefinition, s_customSchema);
+
+                validationErrors = new List<Exception>();
 
                 return true;
             }

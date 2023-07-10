@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -148,11 +149,13 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
                 return SchemaToUse;
             }
 
-            public override bool IsValid(object data, Type dataType, string schemaDefinition)
+            public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
             {
                 Assert.That(data, Is.TypeOf<Employee>());
                 Assert.AreEqual(dataType.Name, "Employee");
                 Assert.AreEqual(schemaDefinition, SchemaToUse);
+
+                validationErrors = new List<Exception>();
 
                 return true;
             }
@@ -165,8 +168,9 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
                 return s_schema;
             }
 
-            public override bool IsValid(object data, Type dataType, string schemaDefinition)
+            public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
             {
+                validationErrors = new List<Exception>();
                 return true;
             }
         }
