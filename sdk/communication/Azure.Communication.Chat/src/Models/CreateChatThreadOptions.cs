@@ -10,6 +10,7 @@ namespace Azure.Communication.Chat
         public CreateChatThreadOptions(string topic)
         {
             Topic = topic;
+            Metadata = new Dictionary<string, string>();
         }
         public string Topic { get; }
 
@@ -17,6 +18,6 @@ namespace Azure.Communication.Chat
 
         public string IdempotencyToken { get; set; }
 
-        public IDictionary<string, string> Metadata { get; set; }
+        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

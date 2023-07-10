@@ -84,7 +84,7 @@ namespace Azure.Communication.Chat
             try
             {
                 options.IdempotencyToken ??= Guid.NewGuid().ToString();
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(options.Topic, options.IdempotencyToken, options.Participants.Select(x => x.ToChatParticipantInternal()), options.Metadata, cancellationToken).ConfigureAwait(false);
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(options.Topic, options.IdempotencyToken, options.Participants.Select(x => x.ToChatParticipantInternal()), options.Metadata.ToDictionary(pair => pair.Key, pair => pair.Value), cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
@@ -104,7 +104,7 @@ namespace Azure.Communication.Chat
             try
             {
                 options.IdempotencyToken ??= Guid.NewGuid().ToString();
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(options.Topic, options.IdempotencyToken, options.Participants.Select(x => x.ToChatParticipantInternal()), options.Metadata, cancellationToken);
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(options.Topic, options.IdempotencyToken, options.Participants.Select(x => x.ToChatParticipantInternal()), options.Metadata.ToDictionary(pair => pair.Key, pair => pair.Value), cancellationToken);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
