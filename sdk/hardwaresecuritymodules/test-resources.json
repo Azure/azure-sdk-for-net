@@ -94,7 +94,7 @@
     "dedicatedhsmApiVersion": "2021-11-30",
     "dedicatedHsmName": "sdk-test-dhsm",
     "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
-    "vmName": "dhsm-vnet-"
+    "vmName": "dhsm-vnet"
   },
   "resources": [
     {
@@ -184,6 +184,10 @@
     "RESOURCE_GROUP_NAME": {
       "type": "string",
       "value": "[resourceGroup().Name]"
+    },
+    "VM_NAME": {
+      "type": "string",
+      "value": "[variables('vmName')]"
     }
   }
 }

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
 
         protected async Task<VirtualNetworkResource> CreateVnet()
         {
-            var vnetName = Recording.GenerateAssetName("dhsm-vnet-");
+            var vnetName = "dhsm-vnet";
 
             ServiceDelegation delegation = new ServiceDelegation()
             {
