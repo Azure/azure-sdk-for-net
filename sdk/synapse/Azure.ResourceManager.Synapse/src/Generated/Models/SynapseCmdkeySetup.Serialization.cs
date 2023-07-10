@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Synapse.Models
             JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
 #endif
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            JsonSerializer.Serialize(writer, Password);
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Synapse.Models
             string type = default;
             BinaryData targetName = default;
             BinaryData userName = default;
-            SynapseSecretBase password = default;
+            DataFactorySecretBaseDefinition password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         }
                         if (property0.NameEquals("password"u8))
                         {
-                            password = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                     }
