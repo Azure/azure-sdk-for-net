@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class MonitoringModelFactory
+    public static partial class AnalyticsSynapseMonitoringModelFactory
     {
         /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
         /// <param name="nJobs"></param>
