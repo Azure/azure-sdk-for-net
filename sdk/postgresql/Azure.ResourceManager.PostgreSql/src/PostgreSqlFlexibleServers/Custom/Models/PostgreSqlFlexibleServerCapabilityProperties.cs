@@ -24,25 +24,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? FastProvisioningSupported
         {
-            get => SupportFastProvisioning is null ? false : SupportFastProvisioning == PostgreSqlFlexibleServerFastProvisioningSupportedEnum.Enabled;
+            get => SupportFastProvisioning is null ? false : SupportFastProvisioning == PostgreSqlFlexibleServerFastProvisioningSupported.Enabled;
         }
         /// <summary> A value indicating whether a new server in this region can have geo-backups to paired region. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsGeoBackupSupported
         {
-            get => GeoBackupSupported is null ? false : GeoBackupSupported == PostgreSqlFlexibleServerGeoBackupSupportedEnum.Enabled;
+            get => GeoBackupSupported is null ? false : GeoBackupSupported == PostgreSqlFlexibleServerGeoBackupSupported.Enabled;
         }
         /// <summary> A value indicating whether a new server in this region can be zone redundant HA enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsZoneRedundantHASupported
         {
-            get => ZoneRedundantHaSupported is null ? false : ZoneRedundantHaSupported == PostgreSqlFlexibleServerZoneRedundantHaSupportedEnum.Enabled;
+            get => ZoneRedundantHaSupported is null ? false : ZoneRedundantHaSupported == PostgreSqlFlexibleServerZoneRedundantHaSupported.Enabled;
         }
         /// <summary> A value indicating whether a new server in this region can have geo-backups to paired region and have zone redundant HA enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsZoneRedundantHAAndGeoBackupSupported
         {
-            get => ZoneRedundantHaAndGeoBackupSupported is null ? false : ZoneRedundantHaAndGeoBackupSupported == PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupportedEnum.Enabled;
+            get => ZoneRedundantHaAndGeoBackupSupported is null ? false : ZoneRedundantHaAndGeoBackupSupported == PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported.Enabled;
         }
 
         /// <summary> zone name. </summary>

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<string> name = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerEditionCapability>> supportedServerEditions = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability>> supportedServerVersions = default;
-            Optional<PostgreSqlFlexibleServerFastProvisioningSupportedEnum> fastProvisioningSupported = default;
+            Optional<PostgreSqlFlexibleServerFastProvisioningSupported> fastProvisioningSupported = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>> supportedFastProvisioningEditions = default;
-            Optional<PostgreSqlFlexibleServerGeoBackupSupportedEnum> geoBackupSupported = default;
-            Optional<PostgreSqlFlexibleServerZoneRedundantHaSupportedEnum> zoneRedundantHaSupported = default;
-            Optional<PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupportedEnum> zoneRedundantHaAndGeoBackupSupported = default;
-            Optional<PostgreSqlFlexibleServerStorageAutoGrowthSupportedEnum> storageAutoGrowthSupported = default;
-            Optional<PostgreSqlFlexibleServerOnlineResizeSupportedEnum> onlineResizeSupported = default;
-            Optional<PostgreSqlFlexibleServerZoneRedundantRestrictedEnum> restricted = default;
+            Optional<PostgreSqlFlexibleServerGeoBackupSupported> geoBackupSupported = default;
+            Optional<PostgreSqlFlexibleServerZoneRedundantHaSupported> zoneRedundantHaSupported = default;
+            Optional<PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported> zoneRedundantHaAndGeoBackupSupported = default;
+            Optional<PostgreSqlFlexibleServerStorageAutoGrowthSupported> storageAutoGrowthSupported = default;
+            Optional<PostgreSqlFlexibleServerOnlineResizeSupported> onlineResizeSupported = default;
+            Optional<PostgreSqlFlexibleServerZoneRedundantRestricted> restricted = default;
             Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    fastProvisioningSupported = new PostgreSqlFlexibleServerFastProvisioningSupportedEnum(property.Value.GetString());
+                    fastProvisioningSupported = new PostgreSqlFlexibleServerFastProvisioningSupported(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("supportedFastProvisioningEditions"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    geoBackupSupported = new PostgreSqlFlexibleServerGeoBackupSupportedEnum(property.Value.GetString());
+                    geoBackupSupported = new PostgreSqlFlexibleServerGeoBackupSupported(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zoneRedundantHaSupported"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    zoneRedundantHaSupported = new PostgreSqlFlexibleServerZoneRedundantHaSupportedEnum(property.Value.GetString());
+                    zoneRedundantHaSupported = new PostgreSqlFlexibleServerZoneRedundantHaSupported(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zoneRedundantHaAndGeoBackupSupported"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    zoneRedundantHaAndGeoBackupSupported = new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupportedEnum(property.Value.GetString());
+                    zoneRedundantHaAndGeoBackupSupported = new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageAutoGrowthSupported"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    storageAutoGrowthSupported = new PostgreSqlFlexibleServerStorageAutoGrowthSupportedEnum(property.Value.GetString());
+                    storageAutoGrowthSupported = new PostgreSqlFlexibleServerStorageAutoGrowthSupported(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("onlineResizeSupported"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    onlineResizeSupported = new PostgreSqlFlexibleServerOnlineResizeSupportedEnum(property.Value.GetString());
+                    onlineResizeSupported = new PostgreSqlFlexibleServerOnlineResizeSupported(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("restricted"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    restricted = new PostgreSqlFlexibleServerZoneRedundantRestrictedEnum(property.Value.GetString());
+                    restricted = new PostgreSqlFlexibleServerZoneRedundantRestricted(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
