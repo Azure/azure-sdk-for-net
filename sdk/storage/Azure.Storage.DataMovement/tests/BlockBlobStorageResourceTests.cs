@@ -297,7 +297,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task CopyFromUriAsync_AccessToken()
+        public async Task CopyFromUriAsync_HttpAuthorization()
         {
             // Arrange
             BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
@@ -318,12 +318,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
-            AccessToken sourceBearerToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+            HttpAuthorization authorization = await sourceResource.GetCopyAuthorizationHeaderAsync();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
-                SourceAuthentication = new HttpAuthorization(
-                    scheme: "Bearer",
-                    parameter: sourceBearerToken.Token)
+                SourceAuthentication = authorization
             };
 
             // Act
@@ -489,7 +487,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task CopyBlockFromUriAsync_AccessToken()
+        public async Task CopyBlockFromUriAsync_HttpAuthorization()
         {
             // Arrange
             BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
@@ -510,12 +508,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
 
-            AccessToken accessToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+            HttpAuthorization authorization = await sourceResource.GetCopyAuthorizationHeaderAsync();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
-                SourceAuthentication = new HttpAuthorization(
-                    scheme: "Bearer",
-                    parameter: accessToken.Token)
+                SourceAuthentication = authorization
             };
 
             // Act
@@ -661,7 +657,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task GetCopyAuthorizationTokenAsync()
+        public async Task GetCopyAuthorizationHeaderAsync()
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
@@ -678,14 +674,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(blobClient);
 
             // Act - Get access token
-            AccessToken accessToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+            HttpAuthorization authorization = await sourceResource.GetCopyAuthorizationHeaderAsync();
 
             // Assert
-            Assert.NotNull(accessToken);
+            Assert.Null(authorization);
         }
 
         [RecordedTest]
-        public async Task GetCopyAuthorizationTokenAsync_OAuth()
+        public async Task GetCopyAuthorizationHeaderAsync_OAuth()
         {
             // Arrange
             var containerName = GetNewContainerName();
@@ -707,11 +703,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(blobClient);
 
             // Act - Get access token
-            AccessToken accessToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+            HttpAuthorization authorization = await sourceResource.GetCopyAuthorizationHeaderAsync();
 
             // Assert
-            Assert.NotNull(accessToken);
-            Assert.NotNull(accessToken.Token);
+            Assert.NotNull(authorization);
+            Assert.NotNull(authorization.Scheme);
+            Assert.NotNull(authorization.Parameter);
         }
     }
 }

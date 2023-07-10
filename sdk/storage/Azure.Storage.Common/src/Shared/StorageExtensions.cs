@@ -61,13 +61,16 @@ namespace Azure.Storage.Shared
             return Convert.ToBase64String(id);
         }
 
-        public static async Task<AccessToken> GetCopyAuthorizationTokenAsync(
+        public static async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(
             this TokenCredential tokenCredential,
             CancellationToken cancellationToken = default)
         {
-            return await tokenCredential.GetTokenAsync(
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
                 new TokenRequestContext(Constants.CopyHttpAuthorization.Scopes),
                 cancellationToken).ConfigureAwait(false);
+            return new HttpAuthorization(
+                Constants.CopyHttpAuthorization.BearerScheme,
+                accessToken.Token);
         }
     }
 }

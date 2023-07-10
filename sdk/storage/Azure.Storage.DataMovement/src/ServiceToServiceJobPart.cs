@@ -430,14 +430,12 @@ namespace Azure.Storage.DataMovement
         private async Task<StorageResourceCopyFromUriOptions> GetCopyFromUriOptionsAsync(CancellationToken cancellationToken)
         {
             StorageResourceCopyFromUriOptions options = default;
-            AccessToken accessToken = await _sourceResource.GetCopyAuthorizationTokenAsync(cancellationToken).ConfigureAwait(false);
-            if (accessToken.Token != null)
+            HttpAuthorization authorization = await _sourceResource.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
+            if (authorization != null)
             {
                 options = new StorageResourceCopyFromUriOptions()
                 {
-                    SourceAuthentication = new HttpAuthorization(
-                        scheme: Constants.CopyHttpAuthorization.BearerScheme,
-                        parameter: accessToken.Token)
+                    SourceAuthentication = authorization
                 };
             }
             return options;

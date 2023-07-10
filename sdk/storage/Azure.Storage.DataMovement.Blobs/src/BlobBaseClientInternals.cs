@@ -10,9 +10,9 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal class BlobBaseClientInternals : BlobBaseClient
     {
-        public static new Task<AccessToken> GetCopyAuthorizationTokenAsync(
+        public static Task<HttpAuthorization> GetCopyAuthorizationTokenAsync(
             BlobBaseClient client,
             CancellationToken cancellationToken)
-            => BlobBaseClient.GetCopyAuthorizationTokenAsync(client, cancellationToken);
+            => BlobBaseClient.GetCopyAuthorizationHeaderAsync(client, cancellationToken);
     }
 }

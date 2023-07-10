@@ -222,7 +222,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Gets the Authorization Token for the storage resource if available.
+        /// Gets the Authorization Header for the storage resource if available.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -232,9 +232,9 @@ namespace Azure.Storage.DataMovement
         /// Gets the HTTP Authorization header for the storage resource if available. If not available
         /// will return default.
         /// </returns>
-        public override Task<AccessToken> GetCopyAuthorizationTokenAsync(CancellationToken cancellationToken = default)
+        public override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult<AccessToken>(default);
+            throw new NotSupportedException();
         }
 
         /// <summary>

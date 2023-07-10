@@ -295,7 +295,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task CopyFromUriAsync_AccessToken()
+        public async Task CopyFromUriAsync_HttpAuthorization()
         {
             // Arrange
             BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
@@ -316,12 +316,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             AppendBlobStorageResource sourceResource = new AppendBlobStorageResource(sourceClient);
             AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(destinationClient);
-            AccessToken sourceBearerToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+            HttpAuthorization authorizationHeader = await sourceResource.GetCopyAuthorizationHeaderAsync();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
-                SourceAuthentication = new HttpAuthorization(
-                    scheme: "Bearer",
-                    parameter: sourceBearerToken.Token)
+                SourceAuthentication = authorizationHeader
             };
 
             // Act
@@ -464,9 +462,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(destinationClient);
 
             // Convert TokenCredential to HttpAuthorization
-            TokenCredential sourceBearerToken = Tenants.GetOAuthCredential();
+            TokenCredential tokenCredential = Tenants.GetOAuthCredential();
             string[] scopes = new string[] { "https://storage.azure.com/.default" };
-            AccessToken accessToken = await sourceBearerToken.GetTokenAsync(new TokenRequestContext(scopes), CancellationToken.None);
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(new TokenRequestContext(scopes), CancellationToken.None);
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
                 SourceAuthentication = new HttpAuthorization(
@@ -492,7 +490,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task CopyBlockFromUriAsync_AccessToken()
+        public async Task CopyBlockFromUriAsync_HttpAuthorization()
         {
             // Arrange
             BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
@@ -515,12 +513,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(destinationClient);
 
             // Convert TokenCredential to HttpAuthorization
-            AccessToken accessToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+            HttpAuthorization authorization = await sourceResource.GetCopyAuthorizationHeaderAsync();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
-                SourceAuthentication = new HttpAuthorization(
-                    scheme: "Bearer",
-                    parameter: accessToken.Token)
+                SourceAuthentication = authorization
             };
 
             // Act
@@ -650,7 +646,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task GetCopyAuthorizationTokenAsync()
+        public async Task GetCopyAuthorizationHeaderAsync()
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
@@ -667,14 +663,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             AppendBlobStorageResource sourceResource = new AppendBlobStorageResource(blobClient);
 
             // Act - Get access token
-            AccessToken accessToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+            HttpAuthorization httpAuthorization = await sourceResource.GetCopyAuthorizationHeaderAsync();
 
             // Assert
-            Assert.NotNull(accessToken);
+            Assert.Null(httpAuthorization);
         }
 
         [RecordedTest]
-        public async Task GetCopyAuthorizationTokenAsync_OAuth()
+        public async Task GetCopyAuthorizationHeaderAsync_OAuth()
         {
             // Arrange
             var containerName = GetNewContainerName();
@@ -696,11 +692,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             AppendBlobStorageResource sourceResource = new AppendBlobStorageResource(blobClient);
 
             // Act - Get options
-            AccessToken accessToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+            HttpAuthorization authorization = await sourceResource.GetCopyAuthorizationHeaderAsync();
 
             // Assert
-            Assert.NotNull(accessToken);
-            Assert.NotNull(accessToken.Token);
+            Assert.NotNull(authorization);
+            Assert.NotNull(authorization.Scheme);
+            Assert.NotNull(authorization.Parameter);
         }
     }
 }

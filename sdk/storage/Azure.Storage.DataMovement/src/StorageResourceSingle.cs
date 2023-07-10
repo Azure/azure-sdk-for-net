@@ -153,14 +153,17 @@ namespace Azure.Storage.DataMovement
         public abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default);
 
         /// <summary>
-        /// Gets the Authorization Token for the storage resource if available.
+        /// Gets the Authorization Header for the storage resource if available.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        /// <returns></returns>
-        public abstract Task<AccessToken> GetCopyAuthorizationTokenAsync(CancellationToken cancellationToken = default);
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        public abstract Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// If the operation requires any ending transfers (e.g. Committing a block list, flushing crypto streams)

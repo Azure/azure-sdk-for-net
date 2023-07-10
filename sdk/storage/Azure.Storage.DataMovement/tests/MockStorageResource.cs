@@ -82,9 +82,9 @@ namespace Azure.Storage.DataMovement.Tests
                 resourceType: StorageResourceType.LocalFile));
         }
 
-        public override Task<AccessToken> GetCopyAuthorizationTokenAsync(CancellationToken cancellationToken = default)
+        public override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult<AccessToken>(default);
+            return Task.FromResult<HttpAuthorization>(default);
         }
 
         public override Task<ReadStreamStorageResourceResult> ReadStreamAsync(long position = 0, long? length = null, CancellationToken cancellationToken = default)

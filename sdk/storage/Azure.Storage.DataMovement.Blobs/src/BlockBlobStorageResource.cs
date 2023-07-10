@@ -30,7 +30,6 @@ namespace Azure.Storage.DataMovement.Blobs
         private ConcurrentDictionary<long, string> _blocks;
         private long? _length;
         private ETag? _etagDownloadLock = default;
-        private AccessToken _accessToken;
 
         /// <summary>
         /// The identifier for the type of storage resource.
@@ -88,7 +87,6 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobClient = blobClient;
             _blocks = new ConcurrentDictionary<long, string>();
             _options = options;
-            _accessToken = default;
         }
 
         /// <summary>
@@ -281,7 +279,7 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Gets the Authorization Token for the storage resource if available.
+        /// Gets the Authorization Header for the storage resource if available.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -291,17 +289,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Gets the HTTP Authorization header for the storage resource if available. If not available
         /// will return default.
         /// </returns>
-        public override async Task<AccessToken> GetCopyAuthorizationTokenAsync(CancellationToken cancellationToken = default)
+        public override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
-            if (_accessToken.Equals(default))
-            {
-                if (DateTimeOffset.Compare(DateTimeOffset.UtcNow, _accessToken.ExpiresOn) < 0)
-                {
-                    return _accessToken;
-                }
-            }
-            _accessToken = await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
-            return _accessToken;
+            return await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
