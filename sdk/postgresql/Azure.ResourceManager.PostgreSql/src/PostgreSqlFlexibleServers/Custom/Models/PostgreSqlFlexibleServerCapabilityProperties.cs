@@ -41,9 +41,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get => ZoneRedundantHaAndGeoBackupSupported is null ? false : ZoneRedundantHaAndGeoBackupSupported == PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupportedEnum.Enabled;
         }
-        /// <summary> The status. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new string Status { get; }
 
         /// <summary> zone name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

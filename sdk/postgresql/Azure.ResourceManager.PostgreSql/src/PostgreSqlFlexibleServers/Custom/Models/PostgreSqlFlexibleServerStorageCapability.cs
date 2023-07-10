@@ -13,8 +13,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> storage MB name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Name { get; }
-        /// <summary> The status of the capability. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new string Status { get; }
     }
 }
