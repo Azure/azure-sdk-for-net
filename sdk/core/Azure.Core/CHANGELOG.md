@@ -2,6 +2,10 @@
 
 ## 1.34.0 (2023-07-11)
 
+### Features Added
+
+- Added `IsCaeEnabled` property to `TokenRequestContext` to enabled per-request support for Continuous Access Evaluation
+
 ## 1.33.0 (2023-06-16)
 
 ### Features Added
