@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> fabricObjectId = default;
-            Optional<string> primaryLocation = default;
-            Optional<string> recoveryLocation = default;
+            Optional<ResourceIdentifier> fabricObjectId = default;
+            Optional<AzureLocation> primaryLocation = default;
+            Optional<AzureLocation> recoveryLocation = default;
             Optional<string> recoverySubscriptionId = default;
-            Optional<IReadOnlyList<A2AProtectionIntentDiskInputDetails>> vmDisks = default;
-            Optional<IReadOnlyList<A2AProtectionIntentManagedDiskInputDetails>> vmManagedDisks = default;
-            Optional<string> recoveryResourceGroupId = default;
+            Optional<IReadOnlyList<A2AProtectionIntentDiskDetails>> vmDisks = default;
+            Optional<IReadOnlyList<A2AProtectionIntentManagedDiskDetails>> vmManagedDisks = default;
+            Optional<ResourceIdentifier> recoveryResourceGroupId = default;
             Optional<ProtectionProfileCustomDetails> protectionProfile = default;
             Optional<StorageAccountCustomDetails> primaryStagingStorageAccount = default;
             Optional<RecoveryAvailabilitySetCustomDetails> recoveryAvailabilitySet = default;
@@ -35,28 +35,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> multiVmGroupName = default;
             Optional<string> multiVmGroupId = default;
             Optional<StorageAccountCustomDetails> recoveryBootDiagStorageAccount = default;
-            Optional<DiskEncryptionInfo> diskEncryptionInfo = default;
+            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
             Optional<string> recoveryAvailabilityZone = default;
             string recoveryAvailabilityType = default;
-            Optional<AgentAutoUpdateStatus> agentAutoUpdateStatus = default;
-            Optional<string> automationAccountArmId = default;
+            Optional<SiteRecoveryAgentAutoUpdateStatus> agentAutoUpdateStatus = default;
+            Optional<ResourceIdentifier> automationAccountArmId = default;
             Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fabricObjectId"u8))
                 {
-                    fabricObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricObjectId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryLocation"u8))
                 {
-                    primaryLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryLocation"u8))
                 {
-                    recoveryLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoverySubscriptionId"u8))
@@ -70,10 +82,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<A2AProtectionIntentDiskInputDetails> array = new List<A2AProtectionIntentDiskInputDetails>();
+                    List<A2AProtectionIntentDiskDetails> array = new List<A2AProtectionIntentDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AProtectionIntentDiskInputDetails.DeserializeA2AProtectionIntentDiskInputDetails(item));
+                        array.Add(A2AProtectionIntentDiskDetails.DeserializeA2AProtectionIntentDiskDetails(item));
                     }
                     vmDisks = array;
                     continue;
@@ -84,17 +96,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<A2AProtectionIntentManagedDiskInputDetails> array = new List<A2AProtectionIntentManagedDiskInputDetails>();
+                    List<A2AProtectionIntentManagedDiskDetails> array = new List<A2AProtectionIntentManagedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AProtectionIntentManagedDiskInputDetails.DeserializeA2AProtectionIntentManagedDiskInputDetails(item));
+                        array.Add(A2AProtectionIntentManagedDiskDetails.DeserializeA2AProtectionIntentManagedDiskDetails(item));
                     }
                     vmManagedDisks = array;
                     continue;
                 }
                 if (property.NameEquals("recoveryResourceGroupId"u8))
                 {
-                    recoveryResourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryResourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("protectionProfile"u8))
@@ -176,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionInfo = DiskEncryptionInfo.DeserializeDiskEncryptionInfo(property.Value);
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryAvailabilityZone"u8))
@@ -195,12 +211,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentAutoUpdateStatus = new AgentAutoUpdateStatus(property.Value.GetString());
+                    agentAutoUpdateStatus = new SiteRecoveryAgentAutoUpdateStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("automationAccountArmId"u8))
                 {
-                    automationAccountArmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    automationAccountArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("automationAccountAuthenticationType"u8))
@@ -218,7 +238,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2AReplicationIntentDetails(instanceType, fabricObjectId.Value, primaryLocation.Value, recoveryLocation.Value, recoverySubscriptionId.Value, Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), recoveryResourceGroupId.Value, protectionProfile.Value, primaryStagingStorageAccount.Value, recoveryAvailabilitySet.Value, recoveryVirtualNetwork.Value, recoveryProximityPlacementGroup.Value, Optional.ToNullable(autoProtectionOfDataDisk), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccount.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, recoveryAvailabilityType, Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Optional.ToNullable(automationAccountAuthenticationType));
+            return new A2AReplicationIntentDetails(instanceType, fabricObjectId.Value, Optional.ToNullable(primaryLocation), Optional.ToNullable(recoveryLocation), recoverySubscriptionId.Value, Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), recoveryResourceGroupId.Value, protectionProfile.Value, primaryStagingStorageAccount.Value, recoveryAvailabilitySet.Value, recoveryVirtualNetwork.Value, recoveryProximityPlacementGroup.Value, Optional.ToNullable(autoProtectionOfDataDisk), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccount.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, recoveryAvailabilityType, Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Optional.ToNullable(automationAccountAuthenticationType));
         }
     }
 }

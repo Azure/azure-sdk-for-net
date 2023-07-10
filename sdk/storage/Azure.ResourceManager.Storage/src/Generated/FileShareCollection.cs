@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Creates a new share under the specified account as described by request body. The share resource includes metadata and properties for that share. It does not include a list of the files contained by the share. 
+        /// Creates a new share under the specified account as described by request body. The share resource includes metadata and properties for that share. It does not include a list of the files contained by the share.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Creates a new share under the specified account as described by request body. The share resource includes metadata and properties for that share. It does not include a list of the files contained by the share. 
+        /// Creates a new share under the specified account as described by request body. The share resource includes metadata and properties for that share. It does not include a list of the files contained by the share.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

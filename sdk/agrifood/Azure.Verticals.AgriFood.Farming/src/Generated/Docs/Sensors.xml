@@ -150,7 +150,7 @@ This sample shows how to call GetSensorAsync with required parameters and parse 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = await client.GetSensorAsync("<sensorPartnerId>", "<sensorId>");
+Response response = await client.GetSensorAsync("<sensorPartnerId>", "<sensorId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
@@ -184,7 +184,7 @@ This sample shows how to call GetSensor with required parameters and parse the r
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = client.GetSensor("<sensorPartnerId>", "<sensorId>");
+Response response = client.GetSensor("<sensorPartnerId>", "<sensorId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
@@ -242,7 +242,7 @@ This sample shows how to call GetConnectionStringAsync with required parameters 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = await client.GetConnectionStringAsync("<sensorPartnerId>", "<sensorId>");
+Response response = await client.GetConnectionStringAsync("<sensorPartnerId>", "<sensorId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("primaryDeviceConnectionString").ToString());
@@ -257,7 +257,7 @@ This sample shows how to call GetConnectionString with required parameters and p
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = client.GetConnectionString("<sensorPartnerId>", "<sensorId>");
+Response response = client.GetConnectionString("<sensorPartnerId>", "<sensorId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("primaryDeviceConnectionString").ToString());
@@ -310,18 +310,7 @@ This sample shows how to call GetSensorsAsync with required parameters and parse
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetSensorsAsync("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSensorsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
-
-await foreach (var item in client.GetSensorsAsync("<sensorPartnerId>", new String[]{"<sensorDataModelIds>"}, new String[]{"<sensorMappingIds>"}, new String[]{"<deviceIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetSensorsAsync("<sensorPartnerId>", new String[]{"<sensorDataModelIds>"}, new String[]{"<sensorMappingIds>"}, new String[]{"<deviceIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
@@ -356,18 +345,7 @@ This sample shows how to call GetSensors with required parameters and parse the 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-foreach (var item in client.GetSensors("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSensors with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
-
-foreach (var item in client.GetSensors("<sensorPartnerId>", new String[]{"<sensorDataModelIds>"}, new String[]{"<sensorMappingIds>"}, new String[]{"<deviceIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetSensors("<sensorPartnerId>", new String[]{"<sensorDataModelIds>"}, new String[]{"<sensorMappingIds>"}, new String[]{"<deviceIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
