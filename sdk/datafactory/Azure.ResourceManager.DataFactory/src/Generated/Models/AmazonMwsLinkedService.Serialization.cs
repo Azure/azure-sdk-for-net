@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MwsAuthToken))
             {
                 writer.WritePropertyName("mwsAuthToken"u8);
-                writer.WriteObjectValue(MwsAuthToken);
+                JsonSerializer.Serialize(writer, MwsAuthToken);
             }
             writer.WritePropertyName("accessKeyId"u8);
             JsonSerializer.Serialize(writer, AccessKeyId);
             if (Optional.IsDefined(SecretKey))
             {
                 writer.WritePropertyName("secretKey"u8);
-                writer.WriteObjectValue(SecretKey);
+                JsonSerializer.Serialize(writer, SecretKey);
             }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mwsAuthToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            mwsAuthToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessKeyId"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            secretKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

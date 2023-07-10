@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("url"u8);
             JsonSerializer.Serialize(writer, Uri);
             writer.WritePropertyName("userToken"u8);
-            writer.WriteObjectValue(UserToken);
+            JsonSerializer.Serialize(writer, UserToken);
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("userToken"u8))
                         {
-                            userToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            userToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

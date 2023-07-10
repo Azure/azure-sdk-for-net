@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
-            writer.WriteObjectValue(Key);
+            JsonSerializer.Serialize(writer, Key);
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             writer.WriteEndObject();
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = DataFactorySecretString.DeserializeDataFactorySecretString(property.Value);
+                    key = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))

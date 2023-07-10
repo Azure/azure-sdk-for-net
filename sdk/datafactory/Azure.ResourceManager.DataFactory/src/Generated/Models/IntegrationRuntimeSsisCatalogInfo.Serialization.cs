@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
-                writer.WriteObjectValue(CatalogAdminPassword);
+                JsonSerializer.Serialize(writer, CatalogAdminPassword);
             }
             if (Optional.IsDefined(CatalogPricingTier))
             {
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    catalogAdminPassword = DataFactorySecretString.DeserializeDataFactorySecretString(property.Value);
+                    catalogAdminPassword = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("catalogPricingTier"u8))

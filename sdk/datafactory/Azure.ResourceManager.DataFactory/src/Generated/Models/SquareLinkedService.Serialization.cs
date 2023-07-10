@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue(ClientSecret);
+                JsonSerializer.Serialize(writer, ClientSecret);
             }
             if (Optional.IsDefined(RedirectUri))
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            clientSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("redirectUri"u8))

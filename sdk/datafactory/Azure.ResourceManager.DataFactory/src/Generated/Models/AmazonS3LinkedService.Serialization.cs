@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SecretAccessKey))
             {
                 writer.WritePropertyName("secretAccessKey"u8);
-                writer.WriteObjectValue(SecretAccessKey);
+                JsonSerializer.Serialize(writer, SecretAccessKey);
             }
             if (Optional.IsDefined(ServiceUri))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SessionToken))
             {
                 writer.WritePropertyName("sessionToken"u8);
-                writer.WriteObjectValue(SessionToken);
+                JsonSerializer.Serialize(writer, SessionToken);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretAccessKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            secretAccessKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sessionToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            sessionToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

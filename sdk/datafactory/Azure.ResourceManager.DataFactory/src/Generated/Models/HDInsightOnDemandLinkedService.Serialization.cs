@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("version"u8);
             JsonSerializer.Serialize(writer, Version);
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            JsonSerializer.Serialize(writer, LinkedServiceName);
             writer.WritePropertyName("hostSubscriptionId"u8);
             JsonSerializer.Serialize(writer, HostSubscriptionId);
             if (Optional.IsDefined(ServicePrincipalId))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey);
+                JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
             writer.WritePropertyName("tenant"u8);
             JsonSerializer.Serialize(writer, Tenant);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClusterPassword))
             {
                 writer.WritePropertyName("clusterPassword"u8);
-                writer.WriteObjectValue(ClusterPassword);
+                JsonSerializer.Serialize(writer, ClusterPassword);
             }
             if (Optional.IsDefined(ClusterSshUserName))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClusterSshPassword))
             {
                 writer.WritePropertyName("clusterSshPassword"u8);
-                writer.WriteObjectValue(ClusterSshPassword);
+                JsonSerializer.Serialize(writer, ClusterSshPassword);
             }
             if (Optional.IsCollectionDefined(AdditionalLinkedServiceNames))
             {
@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLinkedServiceNames)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(HcatalogLinkedServiceName))
             {
                 writer.WritePropertyName("hcatalogLinkedServiceName"u8);
-                writer.WriteObjectValue(HcatalogLinkedServiceName);
+                JsonSerializer.Serialize(writer, HcatalogLinkedServiceName);
             }
             if (Optional.IsDefined(ClusterType))
             {
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("linkedServiceName"u8))
                         {
-                            linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
+                            linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hostSubscriptionId"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clusterPassword = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            clusterPassword = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterSshUserName"u8))
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clusterSshPassword = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            clusterSshPassword = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("additionalLinkedServiceNames"u8))
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(item));
+                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
                             }
                             additionalLinkedServiceNames = array;
                             continue;
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            hcatalogLinkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
+                            hcatalogLinkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterType"u8))
