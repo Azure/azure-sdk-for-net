@@ -77,7 +77,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ReceivedAssetsClient.xml" path="doc/members/member[@name='GetReceivedAssetsAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetReceivedAssetsAsync(string receivedShareName, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetReceivedAssetsAsync(string receivedShareName, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ReceivedAssetsClient.xml" path="doc/members/member[@name='GetReceivedAssets(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetReceivedAssets(string receivedShareName, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetReceivedAssets(string receivedShareName, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 

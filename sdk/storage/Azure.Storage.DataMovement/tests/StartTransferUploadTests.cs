@@ -96,7 +96,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
 
             List<VerifyUploadBlobContentInfo> uploadedBlobInfo = new List<VerifyUploadBlobContentInfo>(blobCount);
@@ -192,7 +192,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task LocalToBlockBlobSize_SmallChunk()
         {
             long fileSize = Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
             TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 100,
@@ -410,7 +410,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -444,7 +444,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -538,7 +538,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
 
             List<VerifyUploadBlobContentInfo> uploadedBlobInfo = new List<VerifyUploadBlobContentInfo>(blobCount);
@@ -807,7 +807,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -843,7 +843,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -957,7 +957,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
 
             List<VerifyUploadBlobContentInfo> uploadedBlobInfo = new List<VerifyUploadBlobContentInfo>(blobCount);
@@ -1023,7 +1023,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task LocalToAppend_SmallChunk()
         {
             long size = Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
 
             TransferOptions options = new TransferOptions()
             {
@@ -1256,7 +1256,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -1287,7 +1287,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -1569,8 +1569,8 @@ namespace Azure.Storage.DataMovement.Tests
         {
             long fileSize = 5L * Constants.GB;
 
-            StorageResourceSingle srcResource = MockStorageResource.MakeSourceResource(fileSize, ProduceUriType.NoUri, maxChunkSize: Constants.GB);
-            StorageResourceSingle dstResource = MockStorageResource.MakeDestinationResource(ProduceUriType.ProducesUri, maxChunkSize: Constants.GB);
+            StorageResourceSingle srcResource = MockStorageResource.MakeSourceResource(fileSize, false, maxChunkSize: Constants.GB);
+            StorageResourceSingle dstResource = MockStorageResource.MakeDestinationResource(true, maxChunkSize: Constants.GB);
             TransferManager transferManager = new TransferManager();
 
             TransferOptions options = new();

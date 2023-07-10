@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
@@ -328,16 +328,16 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = BillingAccountScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
             scope.Start();
             try
             {
-                var response = await BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -364,16 +364,16 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = BillingAccountScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
             scope.Start();
             try
             {
-                var response = BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, benefitUtilizationSummariesRequest, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -401,16 +401,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = BillingProfileScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
             scope.Start();
             try
             {
-                var response = await BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, billingProfileId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -438,16 +438,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="billingProfileId"> Billing profile ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = BillingProfileScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
             scope.Start();
             try
             {
-                var response = BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, billingProfileId, benefitUtilizationSummariesRequest, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, billingProfileId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -474,16 +474,16 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderId"> Reservation Order ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ReservationOrderScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
             scope.Start();
             try
             {
-                var response = await ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -510,16 +510,16 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderId"> Reservation Order ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ReservationOrderScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
             scope.Start();
             try
             {
-                var response = ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, benefitUtilizationSummariesRequest, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -547,16 +547,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderId"> Reservation Order ID. </param>
         /// <param name="reservationId"> Reservation ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ReservationScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportReservationScope");
             scope.Start();
             try
             {
-                var response = await ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, reservationId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -584,16 +584,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="reservationOrderId"> Reservation Order ID. </param>
         /// <param name="reservationId"> Reservation ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ReservationScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportReservationScope");
             scope.Start();
             try
             {
-                var response = ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, reservationId, benefitUtilizationSummariesRequest, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, reservationId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -620,16 +620,16 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SavingsPlanOrderScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
             scope.Start();
             try
             {
-                var response = await SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -656,16 +656,16 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SavingsPlanOrderScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
             scope.Start();
             try
             {
-                var response = SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(savingsPlanOrderId, benefitUtilizationSummariesRequest, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(savingsPlanOrderId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -693,16 +693,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="savingsPlanId"> Savings plan ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SavingsPlanScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
             scope.Start();
             try
             {
-                var response = await SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsyncAsync(savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsyncAsync(savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -730,16 +730,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="savingsPlanId"> Savings plan ID. </param>
-        /// <param name="benefitUtilizationSummariesRequest"> Async Benefit Utilization Summary report to be created. </param>
+        /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SavingsPlanScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
             scope.Start();
             try
             {
-                var response = SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest).Request, response, OperationFinalStateVia.Location);
+                var response = SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, savingsPlanId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1284,15 +1284,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityScheduledActionAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScheduledActionAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameAvailabilityScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckCostManagementNameAvailabilityByScheduledAction");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.CheckNameAvailabilityAsync(checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionsRestClient.CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1315,15 +1315,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityScheduledAction(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScheduledAction(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameAvailabilityScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckCostManagementNameAvailabilityByScheduledAction");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.CheckNameAvailability(checkNameAvailabilityRequest, cancellationToken);
+                var response = ScheduledActionsRestClient.CheckNameAvailability(content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -2,19 +2,24 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
 #region Snippet:Azure_Search_Tests_Samples_Readme_Namespace
-using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
 using Azure.Core.GeoJson;
 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Namespace
+
+#region Snippet:Azure_Search_Readme_Identity_Namespace
+using Azure.Identity;
+#endregion
 
 namespace Azure.Search.Documents.Tests.Samples
 {
@@ -47,6 +52,28 @@ namespace Azure.Search.Documents.Tests.Samples
             AzureKeyCredential credential = new AzureKeyCredential(key);
             SearchClient client = new SearchClient(endpoint, indexName, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
+        }
+
+        [Test]
+        [SyncOnly]
+        public async Task AuthenticateWithAAD()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
+
+            #region Snippet:Azure_Search_Readme_CreateWithDefaultAzureCredential
+            string indexName = "nycjobs";
+
+            // Get the service endpoint from the environment
+#if SNIPPET
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+#else
+            Uri endpoint = resources.Endpoint;
+#endif
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+
+            // Create a client
+            SearchClient client = new SearchClient(endpoint, indexName, credential);
+            #endregion
         }
 
 #if EXPERIMENTAL_DYNAMIC
@@ -177,6 +204,22 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
             // ...
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Options
+        }
+
+        public async Task GetEmbeddings()
+        {
+            #region Snippet:Azure_Search_Tests_Samples_Readme_GetEmbeddings
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
+            string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
+            AzureKeyCredential credential = new AzureKeyCredential(key);
+
+            OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
+            string description = "Very popular hotel in town.";
+            EmbeddingsOptions embeddingsOptions = new(description);
+
+            Embeddings embeddings = await openAIClient.GetEmbeddingsAsync("EmbeddingsModelName", embeddingsOptions);
+            IReadOnlyList<float> descriptionVector = embeddings.Data[0].Embedding;
+            #endregion
         }
 
         [Test]

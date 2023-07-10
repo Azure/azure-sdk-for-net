@@ -30,12 +30,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
                     Name = "Sample classification policy",
-                    PrioritizationRule = new StaticRule(new LabelValue(10)),
+                    PrioritizationRule = new StaticRouterRule(new LabelValue(10)),
                     QueueSelectors =
                     {
                         new StaticQueueSelectorAttachment(new RouterQueueSelector("Region", LabelOperator.Equal, new LabelValue("NA"))),
                         new ConditionalQueueSelectorAttachment(
-                            condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
+                            condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
                                 new RouterQueueSelector("Product", LabelOperator.Equal, new LabelValue("O365")),
@@ -45,14 +45,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     WorkerSelectors =
                     {
                         new ConditionalWorkerSelectorAttachment(
-                            condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
+                            condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                             workerSelectors: new List<RouterWorkerSelector>()
                             {
                                 new RouterWorkerSelector("Skill_O365", LabelOperator.Equal, new LabelValue(true)),
                                 new RouterWorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(1))
                             }),
                         new ConditionalWorkerSelectorAttachment(
-                            condition: new ExpressionRule("If(job.HighPriority = \"true\", true, false)"),
+                            condition: new ExpressionRouterRule("If(job.HighPriority = \"true\", true, false)"),
                             workerSelectors: new List<RouterWorkerSelector>()
                             {
                                 new RouterWorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(10))
@@ -88,7 +88,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<ClassificationPolicy> updatedClassificationPolicy = await routerAdministrationClient.UpdateClassificationPolicyAsync(
                 new UpdateClassificationPolicyOptions(classificationPolicyId)
                 {
-                    PrioritizationRule = new ExpressionRule("If(job.HighPriority = \"true\", 50, 10)")
+                    PrioritizationRule = new ExpressionRouterRule("If(job.HighPriority = \"true\", 50, 10)")
                 });
 
             Console.WriteLine($"Classification policy successfully update with new prioritization rule. RuleType: {updatedClassificationPolicy.Value.PrioritizationRule.Kind}");
