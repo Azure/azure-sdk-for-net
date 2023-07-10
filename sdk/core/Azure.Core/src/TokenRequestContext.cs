@@ -88,7 +88,7 @@ namespace Azure.Core
         public string? TenantId { get; }
 
         /// <summary>
-        /// Indicates whether to enable Continuous Access Evaluation (CAE) for the token request.
+        /// Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.
         /// </summary>
         /// <remarks>
         /// If a resource API implements CAE and your application declares it can handle CAE, your app receives CAE tokens for that resource.
