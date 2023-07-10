@@ -149,9 +149,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             _fileSource.PlaySourceCacheId = "PlaySourceCacheId";
         }
 
-        private CallMedia GetCallMedia(int responseCode)
+        private CallMedia GetCallMedia(int responseCode, object? responseContent = null)
         {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(responseCode);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(responseCode, responseContent);
             return callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
         }
 
@@ -185,7 +185,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         [TestCaseSource(nameof(TestData_SendDtmfOperationsAsync))]
         public async Task SendDtmfOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<SendDtmfResult>>> operation)
         {
-            _callMedia = GetCallMedia(202);
+            _callMedia = GetCallMedia(202, "{ \"operationContext\": \"operationContext\" }");
             var result = await operation(_callMedia);
             Assert.IsNotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
@@ -239,7 +239,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         [TestCaseSource(nameof(TestData_SendDtmfOperations))]
         public void SendDtmfOperations_Return202Accepted(Func<CallMedia, Response<SendDtmfResult>> operation)
         {
-            _callMedia = GetCallMedia(202);
+            _callMedia = GetCallMedia(202, "{ \"operationContext\": \"operationContext\" }");
             var result = operation(_callMedia);
             Assert.IsNotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);

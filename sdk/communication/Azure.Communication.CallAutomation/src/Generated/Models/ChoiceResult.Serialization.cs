@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class ChoiceResult
+    public partial class ChoiceResult
     {
         internal static ChoiceResult DeserializeChoiceResult(JsonElement element)
         {

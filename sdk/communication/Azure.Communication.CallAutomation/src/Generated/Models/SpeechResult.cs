@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The speech status as a result. </summary>
-    internal partial class SpeechResult
+    public partial class SpeechResult
     {
         /// <summary> Initializes a new instance of SpeechResult. </summary>
         internal SpeechResult()

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class SpeechResult
+    public partial class SpeechResult
     {
         internal static SpeechResult DeserializeSpeechResult(JsonElement element)
         {
