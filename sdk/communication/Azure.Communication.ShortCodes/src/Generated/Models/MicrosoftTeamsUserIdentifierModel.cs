@@ -27,7 +27,7 @@ namespace Azure.Communication.ShortCodes.Models
         public string UserId { get; }
         /// <summary> True if the Microsoft Teams user is anonymous. By default false if missing. </summary>
         public bool? IsAnonymous { get; }
-        /// <summary> The cloud that the Microsoft Teams user belongs to. By default &apos;public&apos; if missing. </summary>
+        /// <summary> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </summary>
         public CommunicationCloudEnvironmentModel? Cloud { get; }
     }
 }

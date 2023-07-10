@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get workspace managed sql server&apos;s encryption protector. </summary>
+        /// <summary> Get workspace managed sql server's encryption protector. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get workspace managed sql server&apos;s encryption protector. </summary>
+        /// <summary> Get workspace managed sql server's encryption protector. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Updates workspace managed sql server&apos;s encryption protector. </summary>
+        /// <summary> Updates workspace managed sql server's encryption protector. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Updates workspace managed sql server&apos;s encryption protector. </summary>
+        /// <summary> Updates workspace managed sql server's encryption protector. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Revalidates workspace managed sql server&apos;s existing encryption protector. </summary>
+        /// <summary> Revalidates workspace managed sql server's existing encryption protector. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Revalidates workspace managed sql server&apos;s existing encryption protector. </summary>
+        /// <summary> Revalidates workspace managed sql server's existing encryption protector. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>

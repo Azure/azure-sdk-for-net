@@ -78,7 +78,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='GetAcceptedSentShareAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAcceptedSentShareAsync(string sentShareName, string acceptedSentShareName, RequestContext context = null)
+        public virtual async Task<Response> GetAcceptedSentShareAsync(string sentShareName, string acceptedSentShareName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(acceptedSentShareName, nameof(acceptedSentShareName));
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='GetAcceptedSentShare(string,string,RequestContext)']/*" />
-        public virtual Response GetAcceptedSentShare(string sentShareName, string acceptedSentShareName, RequestContext context = null)
+        public virtual Response GetAcceptedSentShare(string sentShareName, string acceptedSentShareName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(acceptedSentShareName, nameof(acceptedSentShareName));
@@ -152,7 +152,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='GetAcceptedSentSharesAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAcceptedSentSharesAsync(string sentShareName, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAcceptedSentSharesAsync(string sentShareName, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
@@ -179,7 +179,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='GetAcceptedSentShares(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAcceptedSentShares(string sentShareName, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAcceptedSentShares(string sentShareName, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
@@ -271,7 +271,7 @@ namespace Azure.Analytics.Purview.Share
         }
 
         /// <summary>
-        /// [Protocol Method] Revoke an accepted sent share&apos;s access
+        /// [Protocol Method] Revoke an accepted sent share's access
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -290,7 +290,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='RevokeAsync(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> RevokeAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> RevokeAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(acceptedSentShareName, nameof(acceptedSentShareName));
@@ -310,7 +310,7 @@ namespace Azure.Analytics.Purview.Share
         }
 
         /// <summary>
-        /// [Protocol Method] Revoke an accepted sent share&apos;s access
+        /// [Protocol Method] Revoke an accepted sent share's access
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -329,7 +329,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='Revoke(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> Revoke(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId = null, RequestContext context = null)
+        public virtual Operation<BinaryData> Revoke(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(acceptedSentShareName, nameof(acceptedSentShareName));
@@ -481,11 +481,11 @@ namespace Azure.Analytics.Purview.Share
             uri.AppendPath(":reinstate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (repeatabilityRequestId != null)
             {
                 request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -505,11 +505,11 @@ namespace Azure.Analytics.Purview.Share
             uri.AppendPath(":revoke", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (repeatabilityRequestId != null)
             {
                 request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
             }
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -527,11 +527,11 @@ namespace Azure.Analytics.Purview.Share
             uri.AppendPath(":update-expiration", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (repeatabilityRequestId != null)
             {
                 request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

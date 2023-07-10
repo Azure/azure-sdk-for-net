@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="secondaryType"> Type of the geo-secondary instance. Set &apos;Standby&apos; if the instance is used as a DR option only. </param>
+        /// <param name="secondaryType"> Type of the geo-secondary instance. Set 'Standby' if the instance is used as a DR option only. </param>
         /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
         /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
         /// <param name="replicationRole"> Local replication role of the failover group instance. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql
             ManagedInstancePairs = managedInstancePairs;
         }
 
-        /// <summary> Type of the geo-secondary instance. Set &apos;Standby&apos; if the instance is used as a DR option only. </summary>
+        /// <summary> Type of the geo-secondary instance. Set 'Standby' if the instance is used as a DR option only. </summary>
         public GeoSecondaryInstanceType? SecondaryType { get; set; }
         /// <summary> Read-write endpoint of the failover group instance. </summary>
         public InstanceFailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }

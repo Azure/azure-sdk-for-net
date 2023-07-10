@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of DataTableResponseColumn. </summary>
         /// <param name="columnName"> Name of the column. </param>
-        /// <param name="dataType"> Data type which looks like &apos;String&apos; or &apos;Int32&apos;. </param>
+        /// <param name="dataType"> Data type which looks like 'String' or 'Int32'. </param>
         /// <param name="columnType"> Column Type. </param>
         internal DataTableResponseColumn(string columnName, string dataType, string columnType)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Name of the column. </summary>
         public string ColumnName { get; set; }
-        /// <summary> Data type which looks like &apos;String&apos; or &apos;Int32&apos;. </summary>
+        /// <summary> Data type which looks like 'String' or 'Int32'. </summary>
         public string DataType { get; set; }
         /// <summary> Column Type. </summary>
         public string ColumnType { get; set; }

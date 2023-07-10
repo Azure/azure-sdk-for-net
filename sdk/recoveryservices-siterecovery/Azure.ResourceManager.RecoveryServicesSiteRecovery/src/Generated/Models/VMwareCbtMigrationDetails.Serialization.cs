@@ -20,35 +20,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmwareMachineId = default;
+            Optional<ResourceIdentifier> vmwareMachineId = default;
             Optional<string> osType = default;
             Optional<string> osName = default;
             Optional<string> firmwareType = default;
             Optional<string> targetGeneration = default;
             Optional<string> licenseType = default;
             Optional<string> sqlServerLicenseType = default;
-            Optional<string> dataMoverRunAsAccountId = default;
-            Optional<string> snapshotRunAsAccountId = default;
-            Optional<string> storageAccountId = default;
+            Optional<ResourceIdentifier> dataMoverRunAsAccountId = default;
+            Optional<ResourceIdentifier> snapshotRunAsAccountId = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
             Optional<string> targetVmName = default;
             Optional<string> targetVmSize = default;
             Optional<string> targetLocation = default;
-            Optional<string> targetResourceGroupId = default;
-            Optional<string> targetAvailabilitySetId = default;
+            Optional<ResourceIdentifier> targetResourceGroupId = default;
+            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
             Optional<string> targetAvailabilityZone = default;
-            Optional<string> targetProximityPlacementGroupId = default;
+            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
             Optional<ResourceIdentifier> confidentialVmKeyVaultId = default;
             Optional<VMwareCbtSecurityProfileProperties> targetVmSecurityProfile = default;
-            Optional<string> targetBootDiagnosticsStorageAccountId = default;
+            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
             Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
             Optional<IReadOnlyList<VMwareCbtProtectedDiskDetails>> protectedDisks = default;
-            Optional<string> targetNetworkId = default;
-            Optional<string> testNetworkId = default;
+            Optional<ResourceIdentifier> targetNetworkId = default;
+            Optional<ResourceIdentifier> testNetworkId = default;
             Optional<IReadOnlyList<VMwareCbtNicDetails>> vmNics = default;
             Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
-            Optional<string> migrationRecoveryPointId = default;
+            Optional<ResourceIdentifier> migrationRecoveryPointId = default;
             Optional<DateTimeOffset> lastRecoveryPointReceived = default;
-            Optional<string> lastRecoveryPointId = default;
+            Optional<ResourceIdentifier> lastRecoveryPointId = default;
             Optional<int> initialSeedingProgressPercentage = default;
             Optional<int> migrationProgressPercentage = default;
             Optional<int> resyncProgressPercentage = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<long> resyncRetryCount = default;
             Optional<long> resumeRetryCount = default;
             Optional<string> resyncRequired = default;
-            Optional<ResyncState> resyncState = default;
+            Optional<SiteRecoveryResyncState> resyncState = default;
             Optional<string> performAutoResync = default;
             Optional<IReadOnlyDictionary<string, string>> seedDiskTags = default;
             Optional<IReadOnlyDictionary<string, string>> targetDiskTags = default;
@@ -67,7 +67,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("vmwareMachineId"u8))
                 {
-                    vmwareMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmwareMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -102,17 +106,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("dataMoverRunAsAccountId"u8))
                 {
-                    dataMoverRunAsAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataMoverRunAsAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("snapshotRunAsAccountId"u8))
                 {
-                    snapshotRunAsAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshotRunAsAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVmName"u8))
@@ -132,12 +148,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("targetResourceGroupId"u8))
                 {
-                    targetResourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetAvailabilitySetId"u8))
                 {
-                    targetAvailabilitySetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetAvailabilityZone"u8))
@@ -147,7 +171,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("targetProximityPlacementGroupId"u8))
                 {
-                    targetProximityPlacementGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("confidentialVmKeyVaultId"u8))
@@ -170,7 +198,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
                 {
-                    targetBootDiagnosticsStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetBootDiagnosticsStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVmTags"u8))
@@ -203,12 +235,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("targetNetworkId"u8))
                 {
-                    targetNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("testNetworkId"u8))
                 {
-                    testNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vmNics"u8))
@@ -241,7 +281,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("migrationRecoveryPointId"u8))
                 {
-                    migrationRecoveryPointId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    migrationRecoveryPointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastRecoveryPointReceived"u8))
@@ -255,7 +299,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("lastRecoveryPointId"u8))
                 {
-                    lastRecoveryPointId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastRecoveryPointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("initialSeedingProgressPercentage"u8))
@@ -332,7 +380,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncState = new ResyncState(property.Value.GetString());
+                    resyncState = new SiteRecoveryResyncState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("performAutoResync"u8))

@@ -77,7 +77,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedShareAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetReceivedShareAsync(string receivedShareName, RequestContext context = null)
+        public virtual async Task<Response> GetReceivedShareAsync(string receivedShareName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedShare(string,RequestContext)']/*" />
-        public virtual Response GetReceivedShare(string receivedShareName, RequestContext context = null)
+        public virtual Response GetReceivedShare(string receivedShareName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(receivedShareName, nameof(receivedShareName));
 
@@ -221,7 +221,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedSharesAsync(string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetReceivedSharesAsync(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetReceivedSharesAsync(string skipToken, string filter, string orderby, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetReceivedSharesRequest(skipToken, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetReceivedSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
@@ -245,7 +245,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedShares(string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetReceivedShares(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetReceivedShares(string skipToken, string filter, string orderby, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetReceivedSharesRequest(skipToken, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetReceivedSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);

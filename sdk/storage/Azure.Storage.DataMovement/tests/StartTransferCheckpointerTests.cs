@@ -67,8 +67,8 @@ namespace Azure.Storage.DataMovement.Tests
                 .GetBlobContainerClient(containerName)
                 .GetBlockBlobClient(destinationBlobName));
 
-            StorageResource sourceResource = new BlockBlobStorageResource(sasSourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(sasDestinationBlob);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(sasSourceBlob);
+            StorageResourceSingle destinationResource = new BlockBlobStorageResource(sasDestinationBlob);
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
@@ -89,7 +89,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions).ConfigureAwait(false);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Check the transfer files made and the source and destination
@@ -127,8 +127,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationBlobName = GetNewBlobName();
             BlockBlobClient destinationBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), destinationBlobName, Constants.KB * 4);
 
-            StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(sourceBlob);
+            StorageResourceSingle destinationResource = new BlockBlobStorageResource(destinationBlob);
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
@@ -147,23 +147,18 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 transferOptions).ConfigureAwait(false);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Act/Assert - resume transfer with wrong source resource.
             BlockBlobClient newSourceBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
-            StorageResource wrongSourceResource = new BlockBlobStorageResource(newSourceBlob);
-
-            TransferOptions resumeTransferOptions = new TransferOptions()
-            {
-                ResumeFromCheckpointId = transfer.Id
-            };
+            StorageResourceSingle wrongSourceResource = new BlockBlobStorageResource(newSourceBlob);
 
             Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
+                async () => await transferManager.ResumeTransferAsync(
+                    transfer.Id,
                     wrongSourceResource,
-                    destinationResource,
-                    resumeTransferOptions),
+                    destinationResource),
                 Errors.MismatchResumeTransferArguments(
                     "SourcePath",
                     sourceResource.Uri.AbsoluteUri,
@@ -186,8 +181,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationBlobName = GetNewBlobName();
             BlockBlobClient destinationBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), destinationBlobName, Constants.KB * 4);
 
-            StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(sourceBlob);
+            StorageResourceSingle destinationResource = new BlockBlobStorageResource(destinationBlob);
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
@@ -206,23 +201,18 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 transferOptions).ConfigureAwait(false);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Act/Assert - resume transfer with wrong destination resource.
             BlockBlobClient newDestinationBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
-            StorageResource wrongDestinationResource = new BlockBlobStorageResource(newDestinationBlob);
-
-            TransferOptions resumeTransferOptions = new TransferOptions()
-            {
-                ResumeFromCheckpointId = transfer.Id
-            };
+            StorageResourceSingle wrongDestinationResource = new BlockBlobStorageResource(newDestinationBlob);
 
             Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
+                async () => await transferManager.ResumeTransferAsync(
+                    transfer.Id,
                     sourceResource,
-                    wrongDestinationResource,
-                    resumeTransferOptions),
+                    wrongDestinationResource),
                 Errors.MismatchResumeTransferArguments(
                     "DestinationPath",
                     destinationResource.Uri.AbsoluteUri,
@@ -245,8 +235,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationBlobName = GetNewBlobName();
             BlockBlobClient destinationBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), destinationBlobName, Constants.KB * 4);
 
-            StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(sourceBlob);
+            StorageResourceSingle destinationResource = new BlockBlobStorageResource(destinationBlob);
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
@@ -265,18 +255,18 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 transferOptions).ConfigureAwait(false);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Act/Assert - resume transfer with wrong CreateMode Resource
             TransferOptions resumeTransferOptions = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Overwrite,
-                ResumeFromCheckpointId = transfer.Id
             };
 
             Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
+                async () => await transferManager.ResumeTransferAsync(
+                    transfer.Id,
                     sourceResource,
                     destinationResource,
                     resumeTransferOptions),

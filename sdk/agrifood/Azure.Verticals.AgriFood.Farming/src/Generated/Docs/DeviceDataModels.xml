@@ -38,7 +38,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -97,7 +97,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceDataModelId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -184,7 +184,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceDataModelId>", new RequestContext());
+Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceDataModelId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -196,7 +196,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-Response response = client.Delete("<sensorPartnerId>", "<deviceDataModelId>", new RequestContext());
+Response response = client.Delete("<sensorPartnerId>", "<deviceDataModelId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -204,17 +204,6 @@ Console.WriteLine(response.Status);
     <member name="GetDeviceDataModelsAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceDataModelsAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
-
-await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceDataModelsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
@@ -245,17 +234,6 @@ await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", 
     <member name="GetDeviceDataModels(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetDeviceDataModels with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
-
-foreach (var item in client.GetDeviceDataModels("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceDataModels with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");

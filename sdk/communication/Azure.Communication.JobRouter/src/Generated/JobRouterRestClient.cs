@@ -447,10 +447,10 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
         /// <param name="id"> Id of the job. </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
         /// <param name="dispositionCode">
         /// Indicates the outcome of the job, populate this field with your own custom values.
-        /// If not provided, default value of &quot;Cancelled&quot; is set.
+        /// If not provided, default value of "Cancelled" is set.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -479,10 +479,10 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
         /// <param name="id"> Id of the job. </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
         /// <param name="dispositionCode">
         /// Indicates the outcome of the job, populate this field with your own custom values.
-        /// If not provided, default value of &quot;Cancelled&quot; is set.
+        /// If not provided, default value of "Cancelled" is set.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -536,7 +536,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Completes an assigned job. </summary>
         /// <param name="id"> Id of the job. </param>
         /// <param name="assignmentId"> The assignment within the job to complete. </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
         public async Task<Response<object>> CompleteJobActionAsync(string id, string assignmentId, string note = null, CancellationToken cancellationToken = default)
@@ -569,7 +569,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Completes an assigned job. </summary>
         /// <param name="id"> Id of the job. </param>
         /// <param name="assignmentId"> The assignment within the job to complete. </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
         public Response<object> CompleteJobAction(string id, string assignmentId, string note = null, CancellationToken cancellationToken = default)
@@ -599,7 +599,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateCloseJobActionRequest(string id, string assignmentId, string dispositionCode, DateTimeOffset? closeTime, string note)
+        internal HttpMessage CreateCloseJobActionRequest(string id, string assignmentId, string dispositionCode, DateTimeOffset? closeAt, string note)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -616,7 +616,7 @@ namespace Azure.Communication.JobRouter
             var model = new CloseJobRequest(assignmentId)
             {
                 DispositionCode = dispositionCode,
-                CloseTime = closeTime,
+                CloseAt = closeAt,
                 Note = note
             };
             var content = new Utf8JsonRequestContent();
@@ -629,14 +629,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the job. </param>
         /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>
         /// <param name="dispositionCode"> Indicates the outcome of the job, populate this field with your own custom values. </param>
-        /// <param name="closeTime">
+        /// <param name="closeAt">
         /// If not provided, worker capacity is released immediately along with a JobClosedEvent notification.
-        /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time.
+        /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC.
         /// </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
-        public async Task<Response<object>> CloseJobActionAsync(string id, string assignmentId, string dispositionCode = null, DateTimeOffset? closeTime = null, string note = null, CancellationToken cancellationToken = default)
+        public async Task<Response<object>> CloseJobActionAsync(string id, string assignmentId, string dispositionCode = null, DateTimeOffset? closeAt = null, string note = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -647,7 +647,7 @@ namespace Azure.Communication.JobRouter
                 throw new ArgumentNullException(nameof(assignmentId));
             }
 
-            using var message = CreateCloseJobActionRequest(id, assignmentId, dispositionCode, closeTime, note);
+            using var message = CreateCloseJobActionRequest(id, assignmentId, dispositionCode, closeAt, note);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -668,14 +668,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the job. </param>
         /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>
         /// <param name="dispositionCode"> Indicates the outcome of the job, populate this field with your own custom values. </param>
-        /// <param name="closeTime">
+        /// <param name="closeAt">
         /// If not provided, worker capacity is released immediately along with a JobClosedEvent notification.
-        /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time.
+        /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC.
         /// </param>
-        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
-        public Response<object> CloseJobAction(string id, string assignmentId, string dispositionCode = null, DateTimeOffset? closeTime = null, string note = null, CancellationToken cancellationToken = default)
+        public Response<object> CloseJobAction(string id, string assignmentId, string dispositionCode = null, DateTimeOffset? closeAt = null, string note = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -686,7 +686,7 @@ namespace Azure.Communication.JobRouter
                 throw new ArgumentNullException(nameof(assignmentId));
             }
 
-            using var message = CreateCloseJobActionRequest(id, assignmentId, dispositionCode, closeTime, note);
+            using var message = CreateCloseJobActionRequest(id, assignmentId, dispositionCode, closeAt, note);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -703,7 +703,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateListJobsRequest(JobStateSelector? status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, int? maxpagesize)
+        internal HttpMessage CreateListJobsRequest(RouterJobStatusSelector? status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -754,7 +754,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<JobCollection>> ListJobsAsync(JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RouterJobCollection>> ListJobsAsync(RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -762,9 +762,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        JobCollection value = default;
+                        RouterJobCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobCollection.DeserializeJobCollection(document.RootElement);
+                        value = RouterJobCollection.DeserializeRouterJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -781,7 +781,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<JobCollection> ListJobs(JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<RouterJobCollection> ListJobs(RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListJobsRequest(status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, maxpagesize);
             _pipeline.Send(message, cancellationToken);
@@ -789,9 +789,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        JobCollection value = default;
+                        RouterJobCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobCollection.DeserializeJobCollection(document.RootElement);
+                        value = RouterJobCollection.DeserializeRouterJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -815,11 +815,11 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        /// <summary> Gets a job&apos;s position details. </summary>
+        /// <summary> Gets a job's position details. </summary>
         /// <param name="id"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<JobPositionDetails>> GetInQueuePositionAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<RouterJobPositionDetails>> GetInQueuePositionAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -832,9 +832,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        JobPositionDetails value = default;
+                        RouterJobPositionDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobPositionDetails.DeserializeJobPositionDetails(document.RootElement);
+                        value = RouterJobPositionDetails.DeserializeRouterJobPositionDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -842,11 +842,11 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Gets a job&apos;s position details. </summary>
+        /// <summary> Gets a job's position details. </summary>
         /// <param name="id"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<JobPositionDetails> GetInQueuePosition(string id, CancellationToken cancellationToken = default)
+        public Response<RouterJobPositionDetails> GetInQueuePosition(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -859,9 +859,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        JobPositionDetails value = default;
+                        RouterJobPositionDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobPositionDetails.DeserializeJobPositionDetails(document.RootElement);
+                        value = RouterJobPositionDetails.DeserializeRouterJobPositionDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1149,11 +1149,11 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        /// <summary> Retrieves a queue&apos;s statistics. </summary>
+        /// <summary> Retrieves a queue's statistics. </summary>
         /// <param name="id"> Id of the queue to retrieve statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<QueueStatistics>> GetQueueStatisticsAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<RouterQueueStatistics>> GetQueueStatisticsAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -1166,9 +1166,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        QueueStatistics value = default;
+                        RouterQueueStatistics value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QueueStatistics.DeserializeQueueStatistics(document.RootElement);
+                        value = RouterQueueStatistics.DeserializeRouterQueueStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1176,11 +1176,11 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Retrieves a queue&apos;s statistics. </summary>
+        /// <summary> Retrieves a queue's statistics. </summary>
         /// <param name="id"> Id of the queue to retrieve statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<QueueStatistics> GetQueueStatistics(string id, CancellationToken cancellationToken = default)
+        public Response<RouterQueueStatistics> GetQueueStatistics(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -1193,9 +1193,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        QueueStatistics value = default;
+                        RouterQueueStatistics value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QueueStatistics.DeserializeQueueStatistics(document.RootElement);
+                        value = RouterQueueStatistics.DeserializeRouterQueueStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1505,7 +1505,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateListWorkersRequest(WorkerStateSelector? status, string channelId, string queueId, bool? hasCapacity, int? maxpagesize)
+        internal HttpMessage CreateListWorkersRequest(RouterWorkerStateSelector? state, string channelId, string queueId, bool? hasCapacity, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1513,9 +1513,9 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/workers", false);
-            if (status != null)
+            if (state != null)
             {
-                uri.AppendQuery("status", status.Value.ToString(), true);
+                uri.AppendQuery("state", state.Value.ToString(), true);
             }
             if (channelId != null)
             {
@@ -1540,7 +1540,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing workers. </summary>
-        /// <param name="status"> If specified, select workers by worker status. </param>
+        /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
@@ -1549,17 +1549,17 @@ namespace Azure.Communication.JobRouter
         /// </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<WorkerCollection>> ListWorkersAsync(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RouterWorkerCollection>> ListWorkersAsync(RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxpagesize);
+            using var message = CreateListWorkersRequest(state, channelId, queueId, hasCapacity, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        WorkerCollection value = default;
+                        RouterWorkerCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkerCollection.DeserializeWorkerCollection(document.RootElement);
+                        value = RouterWorkerCollection.DeserializeRouterWorkerCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1568,7 +1568,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing workers. </summary>
-        /// <param name="status"> If specified, select workers by worker status. </param>
+        /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
@@ -1577,17 +1577,17 @@ namespace Azure.Communication.JobRouter
         /// </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<WorkerCollection> ListWorkers(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<RouterWorkerCollection> ListWorkers(RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxpagesize);
+            using var message = CreateListWorkersRequest(state, channelId, queueId, hasCapacity, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        WorkerCollection value = default;
+                        RouterWorkerCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkerCollection.DeserializeWorkerCollection(document.RootElement);
+                        value = RouterWorkerCollection.DeserializeRouterWorkerCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1606,7 +1606,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<JobCollection>> ListJobsNextPageAsync(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RouterJobCollection>> ListJobsNextPageAsync(string nextLink, RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1619,9 +1619,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        JobCollection value = default;
+                        RouterJobCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobCollection.DeserializeJobCollection(document.RootElement);
+                        value = RouterJobCollection.DeserializeRouterJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1640,7 +1640,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<JobCollection> ListJobsNextPage(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<RouterJobCollection> ListJobsNextPage(string nextLink, RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1653,9 +1653,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        JobCollection value = default;
+                        RouterJobCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobCollection.DeserializeJobCollection(document.RootElement);
+                        value = RouterJobCollection.DeserializeRouterJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1665,7 +1665,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing workers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="status"> If specified, select workers by worker status. </param>
+        /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
@@ -1675,22 +1675,22 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<WorkerCollection>> ListWorkersNextPageAsync(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RouterWorkerCollection>> ListWorkersNextPageAsync(string nextLink, RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxpagesize);
+            using var message = CreateListWorkersNextPageRequest(nextLink, state, channelId, queueId, hasCapacity, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        WorkerCollection value = default;
+                        RouterWorkerCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkerCollection.DeserializeWorkerCollection(document.RootElement);
+                        value = RouterWorkerCollection.DeserializeRouterWorkerCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1700,7 +1700,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing workers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="status"> If specified, select workers by worker status. </param>
+        /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
@@ -1710,22 +1710,22 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<WorkerCollection> ListWorkersNextPage(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<RouterWorkerCollection> ListWorkersNextPage(string nextLink, RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxpagesize);
+            using var message = CreateListWorkersNextPageRequest(nextLink, state, channelId, queueId, hasCapacity, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        WorkerCollection value = default;
+                        RouterWorkerCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkerCollection.DeserializeWorkerCollection(document.RootElement);
+                        value = RouterWorkerCollection.DeserializeRouterWorkerCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

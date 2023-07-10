@@ -12,33 +12,33 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Contains the weight percentage and label selectors to be applied if selected for weighted distributions. </summary>
+    /// <summary> Contains the weight percentage and queue selectors to be applied if selected for weighted distributions. </summary>
     public partial class QueueWeightedAllocation
     {
         /// <summary> Initializes a new instance of QueueWeightedAllocation. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="labelSelectors"> A collection of label selectors that will be applied if this allocation is selected. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labelSelectors"/> is null. </exception>
-        public QueueWeightedAllocation(double weight, IEnumerable<QueueSelector> labelSelectors)
+        /// <param name="queueSelectors"> A collection of queue selectors that will be applied if this allocation is selected. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueSelectors"/> is null. </exception>
+        public QueueWeightedAllocation(double weight, IEnumerable<RouterQueueSelector> queueSelectors)
         {
-            Argument.AssertNotNull(labelSelectors, nameof(labelSelectors));
+            Argument.AssertNotNull(queueSelectors, nameof(queueSelectors));
 
             Weight = weight;
-            LabelSelectors = labelSelectors.ToList();
+            QueueSelectors = queueSelectors.ToList();
         }
 
         /// <summary> Initializes a new instance of QueueWeightedAllocation. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="labelSelectors"> A collection of label selectors that will be applied if this allocation is selected. </param>
-        internal QueueWeightedAllocation(double weight, IList<QueueSelector> labelSelectors)
+        /// <param name="queueSelectors"> A collection of queue selectors that will be applied if this allocation is selected. </param>
+        internal QueueWeightedAllocation(double weight, IList<RouterQueueSelector> queueSelectors)
         {
             Weight = weight;
-            LabelSelectors = labelSelectors;
+            QueueSelectors = queueSelectors;
         }
 
         /// <summary> The percentage of this weight, expressed as a fraction of 1. </summary>
         public double Weight { get; set; }
-        /// <summary> A collection of label selectors that will be applied if this allocation is selected. </summary>
-        public IList<QueueSelector> LabelSelectors { get; }
+        /// <summary> A collection of queue selectors that will be applied if this allocation is selected. </summary>
+        public IList<RouterQueueSelector> QueueSelectors { get; }
     }
 }

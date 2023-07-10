@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Status of the portal&apos;s revision. </summary>
+    /// <summary> Status of the portal's revision. </summary>
     public readonly partial struct PortalRevisionStatus : IEquatable<PortalRevisionStatus>
     {
         private readonly string _value;
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string CompletedValue = "completed";
         private const string FailedValue = "failed";
 
-        /// <summary> Portal&apos;s revision has been queued. </summary>
+        /// <summary> Portal's revision has been queued. </summary>
         public static PortalRevisionStatus Pending { get; } = new PortalRevisionStatus(PendingValue);
-        /// <summary> Portal&apos;s revision is being published. </summary>
+        /// <summary> Portal's revision is being published. </summary>
         public static PortalRevisionStatus Publishing { get; } = new PortalRevisionStatus(PublishingValue);
-        /// <summary> Portal&apos;s revision publishing completed. </summary>
+        /// <summary> Portal's revision publishing completed. </summary>
         public static PortalRevisionStatus Completed { get; } = new PortalRevisionStatus(CompletedValue);
-        /// <summary> Portal&apos;s revision publishing failed. </summary>
+        /// <summary> Portal's revision publishing failed. </summary>
         public static PortalRevisionStatus Failed { get; } = new PortalRevisionStatus(FailedValue);
         /// <summary> Determines if two <see cref="PortalRevisionStatus"/> values are the same. </summary>
         public static bool operator ==(PortalRevisionStatus left, PortalRevisionStatus right) => left.Equals(right);

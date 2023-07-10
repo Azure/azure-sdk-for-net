@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of MediaAccessControl. </summary>
         /// <param name="defaultAction"> The behavior for IP access control in Key Delivery. </param>
-        /// <param name="ipAllowList"> The IP allow list for access control in Key Delivery. If the default action is set to &apos;Allow&apos;, the IP allow list must be empty. </param>
+        /// <param name="ipAllowList"> The IP allow list for access control in Key Delivery. If the default action is set to 'Allow', the IP allow list must be empty. </param>
         internal MediaAccessControl(IPAccessControlDefaultAction? defaultAction, IList<IPAddress> ipAllowList)
         {
             DefaultAction = defaultAction;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> The behavior for IP access control in Key Delivery. </summary>
         public IPAccessControlDefaultAction? DefaultAction { get; set; }
-        /// <summary> The IP allow list for access control in Key Delivery. If the default action is set to &apos;Allow&apos;, the IP allow list must be empty. </summary>
+        /// <summary> The IP allow list for access control in Key Delivery. If the default action is set to 'Allow', the IP allow list must be empty. </summary>
         public IList<IPAddress> IPAllowList { get; }
     }
 }

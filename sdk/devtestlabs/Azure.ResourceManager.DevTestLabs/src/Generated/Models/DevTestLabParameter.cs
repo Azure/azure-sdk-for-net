@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Information about an artifact&apos;s parameter. </summary>
+    /// <summary> Information about an artifact's parameter. </summary>
     public partial class DevTestLabParameter
     {
         /// <summary> Initializes a new instance of DevTestLabParameter. </summary>

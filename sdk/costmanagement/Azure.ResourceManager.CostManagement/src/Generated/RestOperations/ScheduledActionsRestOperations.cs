@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> List all shared scheduled actions within the given scope. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
-        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is &apos;eq&apos;. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<ScheduledActionListResult>> ListByScopeAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> List all shared scheduled actions within the given scope. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
-        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is &apos;eq&apos;. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<ScheduledActionListResult> ListByScope(string scope, string filter = null, CancellationToken cancellationToken = default)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Create or update a shared scheduled action within the given scope. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="data"> Scheduled action to be created or updated. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Create or update a shared scheduled action within the given scope. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="data"> Scheduled action to be created or updated. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Get the shared scheduled action from the given scope by name. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="name"/> is null. </exception>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Get the shared scheduled action from the given scope by name. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="name"/> is null. </exception>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Delete a scheduled action within the given scope. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="name"/> is null. </exception>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Delete a scheduled action within the given scope. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="name"/> is null. </exception>
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Runs a shared scheduled action within the given scope. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="name"/> is null. </exception>
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Runs a shared scheduled action within the given scope. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
         /// <param name="name"> Scheduled action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="name"/> is null. </exception>
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(CheckNameAvailabilityRequest checkNameAvailabilityRequest)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(CostManagementNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -678,30 +678,30 @@ namespace Azure.ResourceManager.CostManagement
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkNameAvailabilityRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Checks availability and correctness of the name for a scheduled action. </summary>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response<CostManagementNameAvailabilityResult>> CheckNameAvailabilityAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityRequest);
+            using var message = CreateCheckNameAvailabilityRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        CostManagementNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = CostManagementNameAvailabilityResult.DeserializeCostManagementNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -710,22 +710,22 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Checks availability and correctness of the name for a scheduled action. </summary>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public Response<CheckNameAvailabilityResponse> CheckNameAvailability(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response<CostManagementNameAvailabilityResult> CheckNameAvailability(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(checkNameAvailabilityRequest);
+            using var message = CreateCheckNameAvailabilityRequest(content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        CostManagementNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = CostManagementNameAvailabilityResult.DeserializeCostManagementNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityByScopeRequest(string scope, CheckNameAvailabilityRequest checkNameAvailabilityRequest)
+        internal HttpMessage CreateCheckNameAvailabilityByScopeRequest(string scope, CostManagementNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -747,32 +747,32 @@ namespace Azure.ResourceManager.CostManagement
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkNameAvailabilityRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Checks availability and correctness of the name for a scheduled action within the given scope. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityByScopeAsync(string scope, CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public async Task<Response<CostManagementNameAvailabilityResult>> CheckNameAvailabilityByScopeAsync(string scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityByScopeRequest(scope, checkNameAvailabilityRequest);
+            using var message = CreateCheckNameAvailabilityByScopeRequest(scope, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        CostManagementNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = CostManagementNameAvailabilityResult.DeserializeCostManagementNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -781,24 +781,24 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Checks availability and correctness of the name for a scheduled action within the given scope. </summary>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public Response<CheckNameAvailabilityResponse> CheckNameAvailabilityByScope(string scope, CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public Response<CostManagementNameAvailabilityResult> CheckNameAvailabilityByScope(string scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityByScopeRequest(scope, checkNameAvailabilityRequest);
+            using var message = CreateCheckNameAvailabilityByScopeRequest(scope, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        CostManagementNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = CostManagementNameAvailabilityResult.DeserializeCostManagementNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -822,8 +822,8 @@ namespace Azure.ResourceManager.CostManagement
 
         /// <summary> List all shared scheduled actions within the given scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
-        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is &apos;eq&apos;. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<ScheduledActionListResult>> ListByScopeNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
@@ -849,8 +849,8 @@ namespace Azure.ResourceManager.CostManagement
 
         /// <summary> List all shared scheduled actions within the given scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope associated with scheduled action operations. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for External Billing Account scope and &apos;providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
-        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is &apos;eq&apos;. </param>
+        /// <param name="scope"> The scope associated with scheduled action operations. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for External Billing Account scope and 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for External Subscription scope. Note: Insight Alerts are only available on subscription scope. </param>
+        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<ScheduledActionListResult> ListByScopeNextPage(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)

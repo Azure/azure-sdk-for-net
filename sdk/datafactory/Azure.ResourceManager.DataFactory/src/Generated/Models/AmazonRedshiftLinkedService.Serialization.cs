@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,19 +63,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Server);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Server.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Server);
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Username);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Username);
             }
             if (Optional.IsDefined(Password))
             {
@@ -82,19 +75,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteObjectValue(Password);
             }
             writer.WritePropertyName("database"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Database);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Database.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Database);
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Port);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Port.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Port);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -129,11 +114,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData server = default;
-            Optional<BinaryData> username = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            BinaryData database = default;
-            Optional<BinaryData> port = default;
+            DataFactoryElement<string> server = default;
+            Optional<DataFactoryElement<string>> username = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
+            DataFactoryElement<string> database = default;
+            Optional<DataFactoryElement<int>> port = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -204,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("server"u8))
                         {
-                            server = BinaryData.FromString(property0.Value.GetRawText());
+                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("username"u8))
@@ -213,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            username = BinaryData.FromString(property0.Value.GetRawText());
+                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -222,12 +207,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("database"u8))
                         {
-                            database = BinaryData.FromString(property0.Value.GetRawText());
+                            database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("port"u8))
@@ -236,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            port = BinaryData.FromString(property0.Value.GetRawText());
+                            port = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

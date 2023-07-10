@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of ScheduleBasedBackupCriteria. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="absoluteCriteria">
-        /// it contains absolute values like &quot;AllBackup&quot; / &quot;FirstOfDay&quot; / &quot;FirstOfWeek&quot; / &quot;FirstOfMonth&quot;
+        /// it contains absolute values like "AllBackup" / "FirstOfDay" / "FirstOfWeek" / "FirstOfMonth"
         /// and should be part of AbsoluteMarker enum
         /// </param>
         /// <param name="daysOfMonth"> This is day of the month from 1 to 28 other wise last of month. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary>
-        /// it contains absolute values like &quot;AllBackup&quot; / &quot;FirstOfDay&quot; / &quot;FirstOfWeek&quot; / &quot;FirstOfMonth&quot;
+        /// it contains absolute values like "AllBackup" / "FirstOfDay" / "FirstOfWeek" / "FirstOfMonth"
         /// and should be part of AbsoluteMarker enum
         /// </summary>
         public IList<BackupAbsoluteMarker> AbsoluteCriteria { get; }

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <param name="provisioningState"> Provisioning state of the Azure Dev Spaces Controller. </param>
         /// <param name="hostSuffix"> DNS suffix for public endpoints running in the Azure Dev Spaces Controller. </param>
         /// <param name="dataPlaneFqdn"> DNS name for accessing DataPlane services. </param>
-        /// <param name="targetContainerHostApiServerFqdn"> DNS of the target container host&apos;s API server. </param>
+        /// <param name="targetContainerHostApiServerFqdn"> DNS of the target container host's API server. </param>
         /// <param name="targetContainerHostResourceId"> Resource ID of the target container host. </param>
         /// <param name="targetContainerHostCredentialsBase64"> Credentials of the target container host (base64). </param>
         internal ControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevSpacesSku sku, ProvisioningState? provisioningState, string hostSuffix, string dataPlaneFqdn, string targetContainerHostApiServerFqdn, string targetContainerHostResourceId, string targetContainerHostCredentialsBase64) : base(id, name, resourceType, systemData, tags, location)
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevSpaces
         public string HostSuffix { get; }
         /// <summary> DNS name for accessing DataPlane services. </summary>
         public string DataPlaneFqdn { get; }
-        /// <summary> DNS of the target container host&apos;s API server. </summary>
+        /// <summary> DNS of the target container host's API server. </summary>
         public string TargetContainerHostApiServerFqdn { get; }
         /// <summary> Resource ID of the target container host. </summary>
         public string TargetContainerHostResourceId { get; set; }
