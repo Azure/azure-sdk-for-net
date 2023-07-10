@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added `IsCaeEnabled` property to `TokenRequestContext` to enabled per-request support for Continuous Access Evaluation
+  - Updated dependency on System.Diagnostics.DiagnosticSource
 
 ## 1.33.0 (2023-06-16)
 
