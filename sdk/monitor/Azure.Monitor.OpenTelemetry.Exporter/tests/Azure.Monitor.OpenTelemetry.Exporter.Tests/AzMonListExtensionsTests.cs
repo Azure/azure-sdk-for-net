@@ -552,8 +552,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("peerservice", null, null, null, null, null, null, "peerservice | DbName")]
         [InlineData(null, "servicename.com", null, "8888", null, null, null, "servicename.com:8888 | DbName")]
         [InlineData(null, null, "127.0.0.1", "8888", null, null, null, "127.0.0.1:8888 | DbName")]
-        [InlineData(null, null, null, null, "servicename.com", null, "8888", "servicename.com:8888 | DbName")]
-        [InlineData(null, null, null, null, null, "127.0.0.1", "8888", "127.0.0.1:8888 | DbName")]
+        [InlineData(null, null, null, null, "servername.com", null, "8888", "servername.com:8888 | DbName")]
+        [InlineData(null, null, null, null, null, "127.0.0.5", "8888", "127.0.0.5:8888 | DbName")]
         public void DbNameIsAppendedToTargetDerivedFromNetAttributesforDBDependencyTarget(string peerService, string netPeerName, string netPeerIp, string netPeerPort, string serverAddress, string serverSocketAddress, string serverPort, string expectedTarget)
         {
             var mappedTags = AzMonList.Initialize();
