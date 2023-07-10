@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class FeatureSettings : IUtf8JsonSerializable
+    public partial class FeatureSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("crossSubscriptionRestoreSettings"u8);
                 writer.WriteObjectValue(CrossSubscriptionRestoreSettings);
+            }
+            if (Optional.IsDefined(CrossRegionRestoreSettings))
+            {
+                writer.WritePropertyName("crossRegionRestoreSettings"u8);
+                writer.WriteObjectValue(CrossRegionRestoreSettings);
             }
             writer.WriteEndObject();
         }
@@ -30,6 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             Optional<CrossSubscriptionRestoreSettings> crossSubscriptionRestoreSettings = default;
+            Optional<CrossRegionRestoreSettings> crossRegionRestoreSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("crossSubscriptionRestoreSettings"u8))
@@ -41,8 +47,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     crossSubscriptionRestoreSettings = CrossSubscriptionRestoreSettings.DeserializeCrossSubscriptionRestoreSettings(property.Value);
                     continue;
                 }
+                if (property.NameEquals("crossRegionRestoreSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    crossRegionRestoreSettings = CrossRegionRestoreSettings.DeserializeCrossRegionRestoreSettings(property.Value);
+                    continue;
+                }
             }
-            return new FeatureSettings(crossSubscriptionRestoreSettings.Value);
+            return new FeatureSettings(crossSubscriptionRestoreSettings.Value, crossRegionRestoreSettings.Value);
         }
     }
 }

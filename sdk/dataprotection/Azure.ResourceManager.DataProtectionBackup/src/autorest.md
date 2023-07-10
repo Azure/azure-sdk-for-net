@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/0724e72994ed3c77f76ed0bfa2df3b1f0c33a41b/specification/dataprotection/resource-manager/readme.md
-tag: package-2023-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/a8fb6bcb9872431012ed1c7edbb7f369295422a5/specification/dataprotection/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
