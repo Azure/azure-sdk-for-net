@@ -109,7 +109,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case ActionTestTypes.EmptyValueStringArray: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { String.Empty, String.Empty }) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[\"\",\"\"]}}]}}");
                 case ActionTestTypes.EmptyMixedArray: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { String.Empty, null, " " }) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[\"\",null,\" \"]}}]}}");
                 case ActionTestTypes.NullAction: return (null, HttpStatusCode.BadRequest, "{\"errors\":[\"No Actions Found. Please supply atleast one action.\"]}");
-				default: return (null, HttpStatusCode.InternalServerError, null);
+                default: return (null, HttpStatusCode.InternalServerError, null);
             }
         }
     }
