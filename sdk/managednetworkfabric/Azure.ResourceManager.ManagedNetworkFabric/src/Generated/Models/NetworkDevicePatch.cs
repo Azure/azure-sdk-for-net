@@ -19,6 +19,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of NetworkDevicePatch. </summary>
+        /// <param name="tags"> Azure resource tags that will replace the existing ones. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="hostName"> The host Name of the device. </param>
+        /// <param name="serialNumber"> serialNumber of the format Make;Model;HardwareRevisionId;SerialNumber. Example: Arista;DCS-7280DR3-24;12.05;JPE21116969. </param>
+        internal NetworkDevicePatch(IDictionary<string, string> tags, string annotation, string hostName, string serialNumber)
+        {
+            Tags = tags;
+            Annotation = annotation;
+            HostName = hostName;
+            SerialNumber = serialNumber;
+        }
+
         /// <summary> Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Switch configuration description. </summary>

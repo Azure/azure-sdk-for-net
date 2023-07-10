@@ -15,6 +15,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
         }
 
+        /// <summary> Initializes a new instance of ExternalNetworkPatch. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="peeringOption"> Peering option list. </param>
+        /// <param name="optionBProperties"> option B properties object. </param>
+        /// <param name="optionAProperties"> option A properties object. </param>
+        /// <param name="importRoutePolicyId"> ARM resource ID of importRoutePolicy. </param>
+        /// <param name="exportRoutePolicyId"> ARM resource ID of exportRoutePolicy. </param>
+        internal ExternalNetworkPatch(string annotation, PeeringOption? peeringOption, OptionBProperties optionBProperties, Layer3OptionAProperties optionAProperties, string importRoutePolicyId, string exportRoutePolicyId)
+        {
+            Annotation = annotation;
+            PeeringOption = peeringOption;
+            OptionBProperties = optionBProperties;
+            OptionAProperties = optionAProperties;
+            ImportRoutePolicyId = importRoutePolicyId;
+            ExportRoutePolicyId = exportRoutePolicyId;
+        }
+
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Peering option list. </summary>

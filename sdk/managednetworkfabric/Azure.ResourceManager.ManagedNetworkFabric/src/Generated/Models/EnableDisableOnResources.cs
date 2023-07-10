@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIds = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of EnableDisableOnResources. </summary>
+        /// <param name="resourceIds"> Network Fabrics or Network Rack resource Id. </param>
+        internal EnableDisableOnResources(IList<string> resourceIds)
+        {
+            ResourceIds = resourceIds;
+        }
+
         /// <summary> Network Fabrics or Network Rack resource Id. </summary>
         public IList<string> ResourceIds { get; }
     }

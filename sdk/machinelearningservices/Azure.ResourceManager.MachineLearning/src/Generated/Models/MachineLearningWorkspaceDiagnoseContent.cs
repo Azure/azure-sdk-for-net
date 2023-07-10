@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> Initializes a new instance of MachineLearningWorkspaceDiagnoseContent. </summary>
+        /// <param name="value"> Value of Parameters. </param>
+        internal MachineLearningWorkspaceDiagnoseContent(MachineLearningWorkspaceDiagnoseProperties value)
+        {
+            Value = value;
+        }
+
         /// <summary> Value of Parameters. </summary>
         public MachineLearningWorkspaceDiagnoseProperties Value { get; set; }
     }

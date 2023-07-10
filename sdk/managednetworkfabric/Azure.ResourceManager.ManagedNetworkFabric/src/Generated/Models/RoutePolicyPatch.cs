@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of RoutePolicyPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal RoutePolicyPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
