@@ -1,15 +1,11 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2023-07-11)
 
 ### Features Added
 
 * Added `SamplingRatio` property to customize the sampling rate in Azure Monitor Exporter.
   ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
