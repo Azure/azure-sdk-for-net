@@ -64,7 +64,7 @@ namespace Azure.Core
             ParentRequestId = parentRequestId;
             Claims = claims;
             TenantId = tenantId;
-            EnableCae = enableCae;
+            IsCaeEnabled = enableCae;
         }
 
         /// <summary>
@@ -90,6 +90,6 @@ namespace Azure.Core
         /// <summary>
         /// Indicates whether to enable Continuous Access Evaluation (CAE) for the token request.
         /// </summary>
-        public bool EnableCae { get; }
+        public bool IsCaeEnabled { get; }
     }
 }

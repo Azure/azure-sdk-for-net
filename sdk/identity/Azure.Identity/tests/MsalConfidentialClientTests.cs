@@ -49,8 +49,8 @@ namespace Azure.Identity.Tests
             var caeEnabledCache = await client.GetTokenCache(true);
             var caeDisabledCache = await client.GetTokenCache(false);
 
-            Assert.True(caeEnabledCache.EnableCae);
-            Assert.False(caeDisabledCache.EnableCae);
+            Assert.True(caeEnabledCache.IsCaeEnabled);
+            Assert.False(caeDisabledCache.IsCaeEnabled);
         }
 
         public class TestCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions

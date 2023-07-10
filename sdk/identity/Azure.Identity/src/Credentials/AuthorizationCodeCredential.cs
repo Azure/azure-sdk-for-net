@@ -144,18 +144,18 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
                 var isCachePopulated = _record switch
                 {
-                    not null when requestContext.EnableCae && _isCaeEnabledRequestCached => true,
-                    not null when !requestContext.EnableCae && _isCaeDisabledRequestCached => true,
+                    not null when requestContext.IsCaeEnabled && _isCaeEnabledRequestCached => true,
+                    not null when !requestContext.IsCaeEnabled && _isCaeDisabledRequestCached => true,
                     _ => false
                 };
 
                 if (!isCachePopulated)
                 {
                     AuthenticationResult result = await Client
-                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, requestContext.EnableCae, async, cancellationToken)
+                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, requestContext.IsCaeEnabled, async, cancellationToken)
                         .ConfigureAwait(false);
                     _record = new AuthenticationRecord(result, _clientId);
-                    if (requestContext.EnableCae)
+                    if (requestContext.IsCaeEnabled)
                     {
                         _isCaeEnabledRequestCached = true;
                     }
@@ -169,7 +169,7 @@ namespace Azure.Identity
                 else
                 {
                     AuthenticationResult result = await Client
-                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, _redirectUri, requestContext.EnableCae, async, cancellationToken)
+                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, _redirectUri, requestContext.IsCaeEnabled, async, cancellationToken)
                         .ConfigureAwait(false);
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }

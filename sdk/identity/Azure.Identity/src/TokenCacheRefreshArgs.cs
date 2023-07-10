@@ -29,12 +29,12 @@ namespace Azure.Identity
         /// <summary>
         /// Whether or not the cache is enabled for CAE.
         /// </summary>
-        public bool EnableCae { get; }
+        public bool IsCaeEnabled { get; }
 
         internal TokenCacheRefreshArgs(TokenCacheNotificationArgs args, bool enableCae)
         {
             SuggestedCacheKey = args.SuggestedCacheKey;
-            EnableCae = enableCae;
+            IsCaeEnabled = enableCae;
         }
     }
 }

@@ -747,7 +747,7 @@ namespace Azure.Core
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId) { throw null; }
         public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null, bool enableCae = false) { throw null; }
         public string? Claims { get { throw null; } }
-        public bool EnableCae { get { throw null; } }
+        public bool IsCaeEnabled { get { throw null; } }
         public string? ParentRequestId { get { throw null; } }
         public string[] Scopes { get { throw null; } }
         public string? TenantId { get { throw null; } }

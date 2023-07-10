@@ -39,7 +39,7 @@ namespace Azure.Identity
         /// Determines whether the token cache will be associated with CAE enabled requests.
         /// </summary>
         /// <value>If true, this cache services only CAE enabled requests.Otherwise, this cache services non-CAE enabled requests.</value>
-        internal bool EnableCae { get;}
+        internal bool IsCaeEnabled { get;}
 
         private class CacheTimestamp
         {
@@ -72,7 +72,7 @@ namespace Azure.Identity
         {
             _cacheHelperWrapper = cacheHelperWrapper ?? new MsalCacheHelperWrapper();
             _publicClientApplicationFactory = publicApplicationFactory ?? new Func<IPublicClientApplication>(() => PublicClientApplicationBuilder.Create(Guid.NewGuid().ToString()).Build());
-            EnableCae = enableCae;
+            IsCaeEnabled = enableCae;
             if (options is UnsafeTokenCacheOptions inMemoryOptions)
             {
                 TokenCacheUpdatedAsync = inMemoryOptions.TokenCacheUpdatedAsync;
@@ -142,7 +142,7 @@ namespace Azure.Identity
             {
                 if (RefreshCacheFromOptionsAsync != null)
                 {
-                    Data = (await RefreshCacheFromOptionsAsync(new TokenCacheRefreshArgs(args, EnableCae), default).ConfigureAwait(false))
+                    Data = (await RefreshCacheFromOptionsAsync(new TokenCacheRefreshArgs(args, IsCaeEnabled), default).ConfigureAwait(false))
                         .CacheBytes.ToArray();
                 }
                 args.TokenCache.DeserializeMsalV3(Data, true);
@@ -181,7 +181,7 @@ namespace Azure.Identity
                 if (TokenCacheUpdatedAsync != null)
                 {
                     var eventBytes = Data.ToArray();
-                    await TokenCacheUpdatedAsync(new TokenCacheUpdatedArgs(eventBytes, EnableCae)).ConfigureAwait(false);
+                    await TokenCacheUpdatedAsync(new TokenCacheUpdatedArgs(eventBytes, IsCaeEnabled)).ConfigureAwait(false);
                 }
 
                 _lastUpdated = _cacheAccessMap.GetOrCreateValue(tokenCache).Update();

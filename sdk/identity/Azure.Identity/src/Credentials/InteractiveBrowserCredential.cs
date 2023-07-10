@@ -197,8 +197,8 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(TenantId ?? Record?.TenantId, requestContext, AdditionallyAllowedTenantIds);
                 var isCachePopulated = Record switch
                 {
-                    not null when requestContext.EnableCae && _isCaeEnabledRequestCached => true,
-                    not null when !requestContext.EnableCae && _isCaeDisabledRequestCached => true,
+                    not null when requestContext.IsCaeEnabled && _isCaeEnabledRequestCached => true,
+                    not null when !requestContext.IsCaeEnabled && _isCaeDisabledRequestCached => true,
                     _ => false
                 };
 
@@ -208,7 +208,7 @@ namespace Azure.Identity
                     try
                     {
                         AuthenticationResult result = await Client
-                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, requestContext.EnableCae, async, cancellationToken)
+                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
                             .ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
@@ -242,11 +242,11 @@ namespace Azure.Identity
 
             var tenantId = TenantIdResolver.Resolve(TenantId ?? Record?.TenantId, context, AdditionallyAllowedTenantIds);
             AuthenticationResult result = await Client
-                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, context.EnableCae, async, cancellationToken)
+                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, context.IsCaeEnabled, async, cancellationToken)
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
-            if (context.EnableCae)
+            if (context.IsCaeEnabled)
             {
                 _isCaeEnabledRequestCached = true;
             }
