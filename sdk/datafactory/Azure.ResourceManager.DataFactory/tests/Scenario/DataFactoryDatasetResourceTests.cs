@@ -3,11 +3,14 @@
 
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using NUnit.Framework;
+using DataFactoryLinkedServiceReference = Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceReference;
+using DataFactoryLinkedServiceReferenceType = Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceReferenceType;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
