@@ -117,7 +117,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void TagObjects_Mapped_HonorsV2()
+        public void TagObjects_Mapped_HonorsNewSchema()
         {
             var activityTagsProcessor = new ActivityTagsProcessor();
 

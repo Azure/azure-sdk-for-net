@@ -8,28 +8,28 @@ namespace Azure.Developer.DevCenter
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> CreateDevBox(Azure.WaitUntil waitUntil, string userId, string devBoxName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateDevBoxAsync(Azure.WaitUntil waitUntil, string userId, string devBoxName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DelayUpcomingAction(string userId, string devBoxName, string upcomingActionId, System.DateTimeOffset delayUntil, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DelayUpcomingActionAsync(string userId, string devBoxName, string upcomingActionId, System.DateTimeOffset delayUntil, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DelayUpcomingAction(string userId, string devBoxName, string upcomingActionId, System.DateTimeOffset delayUntil, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DelayUpcomingActionAsync(string userId, string devBoxName, string upcomingActionId, System.DateTimeOffset delayUntil, Azure.RequestContext context) { throw null; }
         public virtual Azure.Operation DeleteDevBox(Azure.WaitUntil waitUntil, string userId, string devBoxName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteDevBoxAsync(Azure.WaitUntil waitUntil, string userId, string devBoxName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetDevBoxByUser(string userId, string devBoxName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetDevBoxByUserAsync(string userId, string devBoxName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDevBoxesByUser(string userId, string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDevBoxesByUserAsync(string userId, string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetPool(string poolName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetPoolAsync(string poolName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetPools(int? maxCount = default(int?), string filter = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetPoolsAsync(int? maxCount = default(int?), string filter = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetRemoteConnection(string userId, string devBoxName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetRemoteConnectionAsync(string userId, string devBoxName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetScheduleByPool(string poolName, string scheduleName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetScheduleByPoolAsync(string poolName, string scheduleName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetSchedulesByPool(string poolName, int? maxCount = default(int?), string filter = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetSchedulesByPoolAsync(string poolName, int? maxCount = default(int?), string filter = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetUpcomingAction(string userId, string devBoxName, string upcomingActionId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetUpcomingActionAsync(string userId, string devBoxName, string upcomingActionId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetUpcomingActions(string userId, string devBoxName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetUpcomingActionsAsync(string userId, string devBoxName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetDevBoxByUser(string userId, string devBoxName, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDevBoxByUserAsync(string userId, string devBoxName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDevBoxesByUser(string userId, string filter, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDevBoxesByUserAsync(string userId, string filter, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetPool(string poolName, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetPoolAsync(string poolName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetPools(int? maxCount, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetPoolsAsync(int? maxCount, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetRemoteConnection(string userId, string devBoxName, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetRemoteConnectionAsync(string userId, string devBoxName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetScheduleByPool(string poolName, string scheduleName, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetScheduleByPoolAsync(string poolName, string scheduleName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetSchedulesByPool(string poolName, int? maxCount, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetSchedulesByPoolAsync(string poolName, int? maxCount, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetUpcomingAction(string userId, string devBoxName, string upcomingActionId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetUpcomingActionAsync(string userId, string devBoxName, string upcomingActionId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetUpcomingActions(string userId, string devBoxName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetUpcomingActionsAsync(string userId, string devBoxName, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response SkipUpcomingAction(string userId, string devBoxName, string upcomingActionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SkipUpcomingActionAsync(string userId, string devBoxName, string upcomingActionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation StartDevBox(Azure.WaitUntil waitUntil, string userId, string devBoxName, Azure.RequestContext context = null) { throw null; }
@@ -43,14 +43,14 @@ namespace Azure.Developer.DevCenter
         public DevCenterClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DevCenterClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Pageable<System.BinaryData> GetAllDevBoxes(string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetAllDevBoxesAsync(string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetAllDevBoxesByUser(string userId, string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetAllDevBoxesByUserAsync(string userId, string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetProject(string projectName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetProjectAsync(string projectName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetProjects(string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetProjectsAsync(string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetAllDevBoxes(string filter, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetAllDevBoxesAsync(string filter, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetAllDevBoxesByUser(string userId, string filter, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetAllDevBoxesByUserAsync(string userId, string filter, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetProject(string projectName, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetProjectAsync(string projectName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetProjects(string filter, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetProjectsAsync(string filter, int? maxCount, Azure.RequestContext context) { throw null; }
     }
     public partial class DevCenterClientOptions : Azure.Core.ClientOptions
     {
@@ -74,22 +74,22 @@ namespace Azure.Developer.DevCenter
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteEnvironmentAsync(Azure.WaitUntil waitUntil, string userId, string environmentName, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation DeployEnvironmentAction(Azure.WaitUntil waitUntil, string userId, string environmentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeployEnvironmentActionAsync(Azure.WaitUntil waitUntil, string userId, string environmentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetCatalogItem(string catalogItemId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCatalogItemAsync(string catalogItemId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetCatalogItems(int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetCatalogItemsAsync(int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetCatalogItemVersion(string catalogItemId, string version, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCatalogItemVersionAsync(string catalogItemId, string version, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetCatalogItemVersions(string catalogItemId, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetCatalogItemVersionsAsync(string catalogItemId, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetEnvironmentByUser(string userId, string environmentName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetEnvironmentByUserAsync(string userId, string environmentName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetEnvironments(int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetEnvironmentsAsync(int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetEnvironmentsByUser(string userId, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetEnvironmentsByUserAsync(string userId, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetEnvironmentTypes(int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetEnvironmentTypesAsync(int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetCatalogItem(string catalogItemId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCatalogItemAsync(string catalogItemId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetCatalogItems(int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetCatalogItemsAsync(int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetCatalogItemVersion(string catalogItemId, string version, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCatalogItemVersionAsync(string catalogItemId, string version, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetCatalogItemVersions(string catalogItemId, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetCatalogItemVersionsAsync(string catalogItemId, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetEnvironmentByUser(string userId, string environmentName, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetEnvironmentByUserAsync(string userId, string environmentName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetEnvironments(int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetEnvironmentsAsync(int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetEnvironmentsByUser(string userId, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetEnvironmentsByUserAsync(string userId, int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetEnvironmentTypes(int? maxCount, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetEnvironmentTypesAsync(int? maxCount, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response UpdateEnvironment(string userId, string environmentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateEnvironmentAsync(string userId, string environmentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }

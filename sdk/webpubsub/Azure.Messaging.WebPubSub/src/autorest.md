@@ -12,6 +12,7 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/1735a92bdc79b446385a36ba063ea5235680709f/specification/webpubsub/data-plane/WebPubSub/stable/2022-11-01/webpubsub.json
 credential-types: AzureKeyCredential
 credential-header-name: Ocp-Apim-Subscription-Key
+keep-non-overloadable-protocol-signature: true
 ```
 
 ### Make WebPubSubPermission a regular enum

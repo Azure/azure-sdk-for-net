@@ -73,7 +73,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 var credential = new DefaultAzureCredential();
 var devCenterClient = new DevCenterClient(endpoint, credential);
 string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
+await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1, context: new()))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetProjectName = result.GetProperty("name").ToString();
@@ -84,7 +84,7 @@ await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null,
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
 var devBoxesClient = new DevBoxesClient(endpoint, targetProjectName, credential);
 string targetPoolName = null;
-await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(filter: null, maxCount: 1))
+await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(filter: null, maxCount: 1, context: new()))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetPoolName = result.GetProperty("name").ToString();
@@ -106,7 +106,7 @@ Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetPr
 
 ### Connect to your Dev Box
 ```C# Snippet:Azure_DevCenter_ConnectToDevBox_Scenario
-Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync("me", "MyDevBox");
+Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync("me", "MyDevBox", new());
 JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
 Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
 ```
@@ -123,7 +123,7 @@ Console.WriteLine($"Completed dev box deletion.");
 ```C# Snippet:Azure_DevCenter_GetCatalogItems_Scenario
 var environmentsClient = new EnvironmentsClient(endpoint, projectName, credential);
 string catalogItemName = null;
-await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1))
+await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1, context: new()))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     catalogItemName = result.GetProperty("name").ToString();
@@ -134,7 +134,7 @@ await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCou
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
 string environmentTypeName = null;
-await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(maxCount: 1))
+await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(maxCount: 1, context: new()))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     environmentTypeName = result.GetProperty("name").ToString();
