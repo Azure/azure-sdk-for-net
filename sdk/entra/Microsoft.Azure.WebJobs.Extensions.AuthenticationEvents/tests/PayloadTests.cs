@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         internal override void Invalidate()
         { }
 
-		internal override void ValidateActions()
-		{ }
+        internal override void ValidateActions()
+        { }
 	}
 }
