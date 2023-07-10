@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -13,5 +14,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> storage MB name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Name { get; }
+        /// <summary> Gets the supported upgradable tier list. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> SupportedUpgradableTierList { get; }
     }
 }

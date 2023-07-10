@@ -1245,8 +1245,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerOnlineResizeSupportedEnum? OnlineResizeSupported { get { throw null; } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerZoneRedundantRestrictedEnum? Restricted { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public new string Status { get { throw null; } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageAutoGrowthSupportedEnum? StorageAutoGrowthSupported { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerFastProvisioningEditionCapability> SupportedFastProvisioningEditions { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1721,8 +1719,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal PostgreSqlFlexibleServerServerVersionCapability() { }
         public string Name { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public new string Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedVersionsToUpgrade { get { throw null; } }
     }
     public partial class PostgreSqlFlexibleServerSku
@@ -1815,11 +1811,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public string DefaultIopsTier { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Name { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public new string Status { get { throw null; } }
         public long? StorageSizeInMB { get { throw null; } }
         public int? SupportedIops { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageTierCapability> SupportedIopsTiers { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageTierCapability> SupportedUpgradableTierList { get { throw null; } }
     }
     public partial class PostgreSqlFlexibleServerStorageEditionCapability : Azure.ResourceManager.PostgreSql.FlexibleServers.Models.CapabilityBase
     {
@@ -1832,7 +1828,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal PostgreSqlFlexibleServerStorageTierCapability() { }
         public int? Iops { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public bool? IsBaseline { get { throw null; } }
         public string Name { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string TierName { get { throw null; } }
     }
     public partial class PostgreSqlFlexibleServerUserAssignedIdentity
     {
