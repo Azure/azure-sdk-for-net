@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AzureAIOpenAIModelFactory
+    public static partial class AIOpenAIModelFactory
     {
         /// <summary> Initializes a new instance of Embeddings. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>

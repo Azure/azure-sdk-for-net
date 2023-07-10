@@ -16,7 +16,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ArmFlexibleServersModelFactory
+    public static partial class ArmPostgreSqlFlexibleServersModelFactory
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerActiveDirectoryAdministratorData. </summary>
         /// <param name="id"> The id. </param>
