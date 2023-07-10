@@ -13,6 +13,6 @@ namespace Azure.Communication.Chat
         }
         public string Topic { get; set; }
 
-        public IReadOnlyDictionary<string, string> Metadata { get; }
+        public IDictionary<string, string> Metadata { get; }
     }
 }
