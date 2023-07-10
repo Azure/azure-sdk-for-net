@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FunctionKey))
             {
                 writer.WritePropertyName("functionKey"u8);
-                writer.WriteObjectValue(FunctionKey);
+                JsonSerializer.Serialize(writer, FunctionKey);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            functionKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            functionKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
