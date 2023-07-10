@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Advertise Connected Subnets. Ex: &quot;True&quot; | &quot;False&quot;. </summary>
+        /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>
         public RedistributeConnectedSubnet? RedistributeConnectedSubnets { get; set; }
-        /// <summary> Advertise Static Routes. Ex: &quot;True&quot; | &quot;False&quot;. </summary>
+        /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
         public RedistributeStaticRoute? RedistributeStaticRoutes { get; set; }
         /// <summary> List of Ipv4 and Ipv6 route configurations. </summary>
-        public L3IsolationDomainPatchPropertiesAggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
+        public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
         /// <summary> L3 Isolation Domain description. </summary>
         public string Description { get; set; }
         /// <summary> Connected Subnet RoutePolicy. </summary>

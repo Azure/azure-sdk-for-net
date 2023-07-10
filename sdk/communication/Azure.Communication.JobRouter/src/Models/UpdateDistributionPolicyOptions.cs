@@ -36,7 +36,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// The amount of time before an offer expires.
         /// </summary>
-        public TimeSpan OfferTtl { get; set; }
+        public TimeSpan OfferExpiresAfter { get; set; }
 
         /// <summary> Abstract base class for defining a distribution mode. </summary>
         public DistributionMode Mode { get; set; }

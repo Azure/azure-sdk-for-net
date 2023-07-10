@@ -42,18 +42,6 @@ This sample shows how to call GetAcceptedSentSharesAsync with required parameter
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var item in client.GetAcceptedSentSharesAsync("<sentShareName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAcceptedSentSharesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
-
 await foreach (var item in client.GetAcceptedSentSharesAsync("<sentShareName>", "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -68,18 +56,6 @@ await foreach (var item in client.GetAcceptedSentSharesAsync("<sentShareName>", 
     <member name="GetAcceptedSentShares(string,string,RequestContext)">
 <example>
 This sample shows how to call GetAcceptedSentShares with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
-
-foreach (var item in client.GetAcceptedSentShares("<sentShareName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetAcceptedSentShares with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
@@ -126,7 +102,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -168,7 +144,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -182,18 +158,6 @@ Console.WriteLine(result.GetProperty("type").ToString());
     <member name="RevokeAsync(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call RevokeAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
-
-var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>");
-
-BinaryData responseData = operation.Value;
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("shareKind").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call RevokeAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
@@ -212,18 +176,6 @@ Console.WriteLine(result.GetProperty("type").ToString());
     <member name="Revoke(WaitUntil,string,string,string,RequestContext)">
 <example>
 This sample shows how to call Revoke with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
-
-var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>");
-
-BinaryData responseData = operation.Value;
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("shareKind").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call Revoke with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
@@ -270,7 +222,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -312,7 +264,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

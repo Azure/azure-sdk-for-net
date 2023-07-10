@@ -903,7 +903,7 @@ namespace Azure.Communication.Chat
             return message;
         }
 
-        /// <summary> Updates a thread&apos;s properties. </summary>
+        /// <summary> Updates a thread's properties. </summary>
         /// <param name="chatThreadId"> The id of the thread to update. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="metadata"> Contextual metadata for the thread. Note: Has a size limit of 1KB. </param>
@@ -927,7 +927,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <summary> Updates a thread&apos;s properties. </summary>
+        /// <summary> Updates a thread's properties. </summary>
         /// <param name="chatThreadId"> The id of the thread to update. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// /// <param name="metadata"> Contextual metadata for the thread. Note: Has a size limit of 1KB. </param>
@@ -966,7 +966,7 @@ namespace Azure.Communication.Chat
             return message;
         }
 
-        /// <summary> Gets a chat thread&apos;s properties. </summary>
+        /// <summary> Gets a chat thread's properties. </summary>
         /// <param name="chatThreadId"> Id of the thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
@@ -993,7 +993,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <summary> Gets a chat thread&apos;s properties. </summary>
+        /// <summary> Gets a chat thread's properties. </summary>
         /// <param name="chatThreadId"> Id of the thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>

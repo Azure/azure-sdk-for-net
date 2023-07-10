@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> A2A provider specific settings. </summary>
@@ -23,8 +25,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="osType"> The type of operating system. </param>
         /// <param name="vmProtectionState"> The protection state for the vm. </param>
         /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
-        /// <param name="lifecycleId"> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the &quot;same&quot; protected item even though other internal Ids/ARM Id might be changing. </param>
-        internal A2ACrossClusterMigrationReplicationDetails(string instanceType, string fabricObjectId, string primaryFabricLocation, string osType, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId) : base(instanceType)
+        /// <param name="lifecycleId"> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </param>
+        internal A2ACrossClusterMigrationReplicationDetails(string instanceType, ResourceIdentifier fabricObjectId, AzureLocation? primaryFabricLocation, string osType, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId) : base(instanceType)
         {
             FabricObjectId = fabricObjectId;
             PrimaryFabricLocation = primaryFabricLocation;
@@ -36,16 +38,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The fabric specific object Id of the virtual machine. </summary>
-        public string FabricObjectId { get; }
+        public ResourceIdentifier FabricObjectId { get; }
         /// <summary> Primary fabric location. </summary>
-        public string PrimaryFabricLocation { get; }
+        public AzureLocation? PrimaryFabricLocation { get; }
         /// <summary> The type of operating system. </summary>
         public string OSType { get; }
         /// <summary> The protection state for the vm. </summary>
         public string VmProtectionState { get; }
         /// <summary> The protection state description for the vm. </summary>
         public string VmProtectionStateDescription { get; }
-        /// <summary> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the &quot;same&quot; protected item even though other internal Ids/ARM Id might be changing. </summary>
+        /// <summary> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </summary>
         public string LifecycleId { get; }
     }
 }

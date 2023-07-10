@@ -18,7 +18,7 @@ var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var acceptedSentSharesClient = new AcceptedSentSharesClient(endPoint, credential);
 
 // View accepted shares
-var acceptedSentShares = await acceptedSentSharesClient.GetAcceptedSentSharesAsync(sentShareName).ToEnumerableAsync();
+var acceptedSentShares = await acceptedSentSharesClient.GetAcceptedSentSharesAsync(sentShareName, null, new()).ToEnumerableAsync();
 
 var acceptedSentShare = acceptedSentShares.FirstOrDefault();
 

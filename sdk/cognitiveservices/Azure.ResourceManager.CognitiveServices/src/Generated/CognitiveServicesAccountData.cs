@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing the CognitiveServicesAccount data model.
-    /// Cognitive Services account is an Azure resource representing the provisioned account, it&apos;s type, location and SKU.
+    /// Cognitive Services account is an Azure resource representing the provisioned account, it's type, location and SKU.
     /// </summary>
     public partial class CognitiveServicesAccountData : TrackedResourceData
     {

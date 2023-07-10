@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<string>> associatedResourceIds = default;
             Optional<string> clusterId = default;
             Optional<L2NetworkDetailedStatus> detailedStatus = default;
             Optional<string> detailedStatusMessage = default;
@@ -132,6 +133,20 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("associatedResourceIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            associatedResourceIds = array;
+                            continue;
+                        }
                         if (property0.NameEquals("clusterId"u8))
                         {
                             clusterId = property0.Value.GetString();
@@ -211,7 +226,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new L2NetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(hybridAksClustersAssociatedIds), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, l2IsolationDomainId, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds));
+            return new L2NetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(hybridAksClustersAssociatedIds), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, l2IsolationDomainId, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds));
         }
     }
 }

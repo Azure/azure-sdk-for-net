@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using System.ComponentModel;
+using static Azure.Storage.Constants.Sas;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -501,12 +502,14 @@ namespace Azure.Storage.Files.DataLake
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: dfsUri.AbsoluteUri,
+                resource: "filesystem",
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
             FileSystemRestClient blobFileSystemRestClient = new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: blobUri.AbsoluteUri,
+            url: blobUri.AbsoluteUri,
+                resource: "filesystem",
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
             return (dfsFileSystemRestClient, blobFileSystemRestClient);
