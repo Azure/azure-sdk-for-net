@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     {
         internal override void InstanceCreated(AuthenticationEventJsonElement payload) { }
         internal override void Invalidate() { }
-		internal override void ValidateActions() { }
+        internal override void ValidateActions() { }
 
 		#region Empty Response/Data
 
