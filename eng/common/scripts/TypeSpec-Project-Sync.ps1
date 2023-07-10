@@ -103,9 +103,7 @@ $specSubDirectory = $configuration["directory"]
 
 # use local spec repo if provided
 if ($LocalSpecRepoPath) {
-  $LocalSpecRepoPath = $LocalSpecRepoPath.Replace("\", "/")
-  # remove duplicated 'specification' in path
-  $specCloneDir = $LocalSpecRepoPath.Replace("/specification","")
+  $specCloneDir = $LocalSpecRepoPath
 }
 elseif ($configuration["repo"] -and $configuration["commit"]) {
   # use sparse clone if repo and commit are provided
