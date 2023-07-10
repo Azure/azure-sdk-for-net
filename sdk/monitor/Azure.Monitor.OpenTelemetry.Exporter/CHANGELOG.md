@@ -13,7 +13,6 @@
   For more information see [Semantic conventions for HTTP spans](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/http.md).
   ([#37464](https://github.com/Azure/azure-sdk-for-net/pull/37464))
   ([#37357](https://github.com/Azure/azure-sdk-for-net/pull/37357))
-
 * Update OpenTelemetry dependencies
   ([#36859](https://github.com/Azure/azure-sdk-for-net/pull/36859))
   - OpenTelemetry 1.5.0
