@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> An identity that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </summary>
+    /// <summary> An identity that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </summary>
     public partial class KeyVaultAccessPolicy
     {
         /// <summary> Initializes a new instance of KeyVaultAccessPolicy. </summary>

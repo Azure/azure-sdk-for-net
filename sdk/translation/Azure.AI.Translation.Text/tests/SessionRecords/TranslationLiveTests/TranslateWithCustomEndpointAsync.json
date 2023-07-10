@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "a604cede46a31759fbbec085b8958fba",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022Text\u0022:\u0022It is a beautiful morning\u0022}]",
+      "RequestBody": "[{\u0022text\u0022:\u0022It is a beautiful morning\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "X-RequestId,X-Metered-Usage",

@@ -50,7 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get Biomass Model job&apos;s details.
+        /// [Protocol Method] Get Biomass Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -66,7 +66,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetBiomassModelJobAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetBiomassModelJobAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetBiomassModelJobAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -85,7 +85,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get Biomass Model job&apos;s details.
+        /// [Protocol Method] Get Biomass Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -101,7 +101,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetBiomassModelJob(string,RequestContext)']/*" />
-        public virtual Response GetBiomassModelJob(string jobId, RequestContext context = null)
+        public virtual Response GetBiomassModelJob(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -120,7 +120,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get Sensor Placement Model job&apos;s details.
+        /// [Protocol Method] Get Sensor Placement Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -136,7 +136,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSensorPlacementModelJobAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSensorPlacementModelJobAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetSensorPlacementModelJobAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -155,7 +155,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get Sensor Placement Model job&apos;s details.
+        /// [Protocol Method] Get Sensor Placement Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -171,7 +171,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSensorPlacementModelJob(string,RequestContext)']/*" />
-        public virtual Response GetSensorPlacementModelJob(string jobId, RequestContext context = null)
+        public virtual Response GetSensorPlacementModelJob(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -190,7 +190,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get SoilMoisture Model job&apos;s details.
+        /// [Protocol Method] Get SoilMoisture Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -206,7 +206,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSoilMoistureModelJobAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSoilMoistureModelJobAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetSoilMoistureModelJobAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -225,7 +225,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get SoilMoisture Model job&apos;s details.
+        /// [Protocol Method] Get SoilMoisture Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -241,7 +241,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSoilMoistureModelJob(string,RequestContext)']/*" />
-        public virtual Response GetSoilMoistureModelJob(string jobId, RequestContext context = null)
+        public virtual Response GetSoilMoistureModelJob(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 

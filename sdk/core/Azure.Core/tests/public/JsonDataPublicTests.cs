@@ -47,11 +47,11 @@ namespace Azure.Core.Tests.Public
         public void DynamicCanConvertToNullAsNullableBool() => Assert.AreEqual(null, JsonDataTestHelpers.JsonAsType<bool?>("null"));
 
         [Test]
-        public void DynamicCanConvertToIEnumerableDynamic()
+        public void CanForeachOverHeterogenousArrayValues()
         {
             dynamic jsonData = new BinaryData("[1, null, \"s\"]").ToDynamicFromJson();
             int i = 0;
-            foreach (var dynamicItem in jsonData)
+            foreach (dynamic dynamicItem in jsonData)
             {
                 switch (i)
                 {
@@ -75,7 +75,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        public void DynamicCanConvertToIEnumerableInt()
+        public void CanForeachOverIntArrayValues()
         {
             dynamic jsonData = new BinaryData("[0, 1, 2, 3]").ToDynamicFromJson();
             int i = 0;
@@ -263,6 +263,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void RoundtripObjects()
         {
             var model = new SampleModel("Hello World", 5);
@@ -286,6 +287,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing general IEnumerable support in current version.")]
         public void CanCastToIEnumerableOfT()
         {
             dynamic data = new BinaryData("{ \"array\": [ 1, 2, 3] }").ToDynamicFromJson();

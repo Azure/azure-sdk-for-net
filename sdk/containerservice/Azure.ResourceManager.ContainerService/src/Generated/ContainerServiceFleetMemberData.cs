@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="clusterResourceId"> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}&apos;. </param>
+        /// <param name="clusterResourceId"> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}'. </param>
         /// <param name="provisioningState"> The provisioning state of the last accepted operation. </param>
         /// <param name="etag"> Resource Etag. </param>
         internal ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier clusterResourceId, ContainerServiceFleetMemberProvisioningState? provisioningState, ETag? etag) : base(id, name, resourceType, systemData)
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService
             ETag = etag;
         }
 
-        /// <summary> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}&apos;. </summary>
+        /// <summary> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}'. </summary>
         public ResourceIdentifier ClusterResourceId { get; set; }
         /// <summary> The provisioning state of the last accepted operation. </summary>
         public ContainerServiceFleetMemberProvisioningState? ProvisioningState { get; }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2023-06-30)
+
+### Other Changes
+
+- Upgraded api-version tag from 'package-2022-09' to 'package-2023-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0b4a0a3f4bfc198df608f373784505e42e248c2c/specification/network/resource-manager/readme.md
+- Upgraded Azure.Core from 1.31.0 to 1.33.0
+- Upgraded Azure.ResourceManager from 1.5.0 to 1.6.0
+- Obsoleted method 'ArmOperation<PeerRouteList> GetAdvertisedRoutesVirtualHubBgpConnection(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource
+- Obsoleted method 'Task<ArmOperation<PeerRouteList>> GetAdvertisedRoutesVirtualHubBgpConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource
+- Obsoleted method 'ArmOperation<PeerRouteList> GetLearnedRoutesVirtualHubBgpConnection(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource
+- Obsoleted method 'Task<ArmOperation<PeerRouteList>> GetLearnedRoutesVirtualHubBgpConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.BgpConnectionResource
+- Obsoleted method 'ArmOperation GetEffectiveVirtualHubRoutes(WaitUntil waitUntil, EffectiveRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
+- Obsoleted method 'Task<ArmOperation> GetEffectiveVirtualHubRoutesAsync(WaitUntil waitUntil, EffectiveRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
+- Obsoleted method 'ArmOperation GetInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
+- Obsoleted method 'Task<ArmOperation> GetInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
+- Obsoleted method 'ArmOperation GetOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
+- Obsoleted method 'Task<ArmOperation> GetOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken)' in type Azure.ResourceManager.Network.VirtualHubResource
+- Obsoleted property 'ApplicationGatewayCustomErrorStatusCode HttpStatus499' in type Azure.ResourceManager.Network.Models.ApplicationGatewayCustomErrorStatusCode
+- Obsoleted property 'LoadBalancerBackendAddressAdminState Drain' in type Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState
+- Obsoleted type 'Azure.ResourceManager.Network.Models.PeerRouteList'
 
 ## 1.3.0-beta.1 (2023-05-30)
 

@@ -255,6 +255,19 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.False(result);
         }
 
+        [Test]
+        public void TestSignatureCheck_SecondSignatureSuccess()
+        {
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                signature: "sha256=something,sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
+                origin: TestUri.Host);
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
+            var result = validator.IsValidSignature(connectionContext);
+            Assert.True(result);
+        }
+
         [TestCase("OPTIONS", true)]
         [TestCase("DELETE", false)]
         public void TestAbuseProtection(string httpMethod, bool valid)

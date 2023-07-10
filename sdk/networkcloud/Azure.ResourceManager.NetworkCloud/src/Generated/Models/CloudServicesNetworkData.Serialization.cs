@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<IList<EgressEndpoint>> additionalEgressEndpoints = default;
+            Optional<IReadOnlyList<string>> associatedResourceIds = default;
             Optional<string> clusterId = default;
             Optional<CloudServicesNetworkDetailedStatus> detailedStatus = default;
             Optional<string> detailedStatusMessage = default;
@@ -148,6 +149,20 @@ namespace Azure.ResourceManager.NetworkCloud
                                 array.Add(EgressEndpoint.DeserializeEgressEndpoint(item));
                             }
                             additionalEgressEndpoints = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("associatedResourceIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            associatedResourceIds = array;
                             continue;
                         }
                         if (property0.NameEquals("clusterId"u8))
@@ -238,7 +253,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new CloudServicesNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(additionalEgressEndpoints), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(enableDefaultEgressEndpoints), Optional.ToList(enabledEgressEndpoints), Optional.ToList(hybridAksClustersAssociatedIds), interfaceName.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds));
+            return new CloudServicesNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(additionalEgressEndpoints), Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(enableDefaultEgressEndpoints), Optional.ToList(enabledEgressEndpoints), Optional.ToList(hybridAksClustersAssociatedIds), interfaceName.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds));
         }
     }
 }

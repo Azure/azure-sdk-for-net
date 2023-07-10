@@ -722,7 +722,8 @@ function GeneratePackage()
         [string]$downloadUrlPrefix="",
         [string]$serviceType="data-plane",
         [switch]$skipGenerate,
-        [object]$generatedSDKPackages
+        [object]$generatedSDKPackages,
+        [string]$specRepoRoot=""
     )
 
     $packageName = Split-Path $projectFolder -Leaf
@@ -740,7 +741,11 @@ function GeneratePackage()
     Write-Host "Start to generate sdk $projectFolder"
     $srcPath = Join-Path $projectFolder 'src'
     if (!$skipGenerate) {
-        dotnet build /t:GenerateCode $srcPath
+        if($specRepoRoot -eq "") {
+            dotnet build /t:GenerateCode $srcPath
+        } else {
+            dotnet build /t:GenerateCode $srcPath /p:SpecRepoRoot=$specRepoRoot
+        }
     }
     if ( !$?) {
         Write-Error "Failed to generate sdk. exit code: $?"

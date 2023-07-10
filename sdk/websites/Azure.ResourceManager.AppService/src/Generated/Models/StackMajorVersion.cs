@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isHidden"> &lt;code&gt;true&lt;/code&gt; if this stack should be hidden for new customers on portal, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appSettingsDictionary">
         /// &lt;appSettings&gt;
-        ///  &lt;appSetting name=&quot;FUNCTIONS_WORKER_RUNTIME&quot; value=&quot;dotnet&quot; /&gt;
+        ///  &lt;appSetting name="FUNCTIONS_WORKER_RUNTIME" value="dotnet" /&gt;
         /// &lt;/appSettings&gt;
-        ///  Example: All the function apps need AppSetting: &quot;FUNCTIONS_WORKER_RUNTIME&quot; to be set stack name
+        ///  Example: All the function apps need AppSetting: "FUNCTIONS_WORKER_RUNTIME" to be set stack name
         /// </param>
         /// <param name="siteConfigPropertiesDictionary">
         /// &lt;siteConfigProperties&gt;
-        ///  &lt;siteConfigProperty name=&quot;Use32BitWorkerProcess&quot; value=&quot;false&quot; /&gt;
+        ///  &lt;siteConfigProperty name="Use32BitWorkerProcess" value="false" /&gt;
         /// &lt;/siteConfigProperties&gt;
         ///  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
         /// </param>
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsHidden { get; set; }
         /// <summary>
         /// &lt;appSettings&gt;
-        ///  &lt;appSetting name=&quot;FUNCTIONS_WORKER_RUNTIME&quot; value=&quot;dotnet&quot; /&gt;
+        ///  &lt;appSetting name="FUNCTIONS_WORKER_RUNTIME" value="dotnet" /&gt;
         /// &lt;/appSettings&gt;
-        ///  Example: All the function apps need AppSetting: &quot;FUNCTIONS_WORKER_RUNTIME&quot; to be set stack name
+        ///  Example: All the function apps need AppSetting: "FUNCTIONS_WORKER_RUNTIME" to be set stack name
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
         public IDictionary<string, BinaryData> AppSettingsDictionary { get; }
         /// <summary>
         /// &lt;siteConfigProperties&gt;
-        ///  &lt;siteConfigProperty name=&quot;Use32BitWorkerProcess&quot; value=&quot;false&quot; /&gt;
+        ///  &lt;siteConfigProperty name="Use32BitWorkerProcess" value="false" /&gt;
         /// &lt;/siteConfigProperties&gt;
         ///  Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
         /// <para>

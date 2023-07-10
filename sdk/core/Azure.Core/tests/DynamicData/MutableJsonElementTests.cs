@@ -288,6 +288,59 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void PropertyEnumeratorIncludesAddedProperties()
+        {
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse("""
+                {
+                    "object" : {   
+                        "zero" : 0,
+                        "one" : 1,
+                        "two" : 2
+                    }
+                }
+                """);
+
+            mdoc.RootElement.GetProperty("object").SetProperty("three", 3);
+            MutableJsonElement.ObjectEnumerator enumerator = mdoc.RootElement.GetProperty("object").EnumerateObject();
+
+            int expected = 0;
+            string[] expectedNames = new string[] { "zero", "one", "two", "three" };
+
+            foreach ((string Name, MutableJsonElement Value) property in enumerator)
+            {
+                Assert.AreEqual(expectedNames[expected], property.Name);
+                Assert.AreEqual(expected, property.Value.GetInt32());
+                expected++;
+            }
+        }
+
+        [Test]
+        public void PropertyEnumeratorExcludesRemovedProperties()
+        {
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse("""
+                {
+                    "object" : {   
+                        "zero" : 0,
+                        "one" : 1,
+                        "two" : 2
+                    }
+                }
+                """);
+
+            mdoc.RootElement.GetProperty("object").RemoveProperty("zero");
+            MutableJsonElement.ObjectEnumerator enumerator = mdoc.RootElement.GetProperty("object").EnumerateObject();
+
+            int expected = 0;
+            string[] expectedNames = new string[] { "one", "two" };
+
+            foreach ((string Name, MutableJsonElement Value) property in enumerator)
+            {
+                Assert.AreEqual(expectedNames[expected], property.Name);
+                Assert.AreEqual(++expected, property.Value.GetInt32());
+            }
+        }
+
+        [Test]
         public void CanGetByte()
         {
             string json = """

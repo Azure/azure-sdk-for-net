@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMobileNetworkModelFactory
     {
-
         /// <summary> Initializes a new instance of AttachedDataNetworkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The provisioning state of the attached data network resource. </param>
         /// <param name="userPlaneDataInterface"> The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </param>
-        /// <param name="dnsAddresses"> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don&apos;t want DNS servers, you must provide an empty array. </param>
+        /// <param name="dnsAddresses"> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array. </param>
         /// <param name="naptConfiguration">
         /// The network address and port translation (NAPT) configuration.
         /// If this is not specified, the attached data network will use a default NAPT configuration with NAPT enabled.
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of CertificateProvisioning. </summary>
-        /// <param name="state"> The certificate&apos;s provisioning state. </param>
+        /// <param name="state"> The certificate's provisioning state. </param>
         /// <param name="reason"> Reason for certificate provisioning failure. </param>
         /// <returns> A new <see cref="Models.CertificateProvisioning"/> instance for mocking. </returns>
         public static CertificateProvisioning CertificateProvisioning(CertificateProvisioningState? state = null, string reason = null)
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The provisioning state of the service resource. </param>
         /// <param name="servicePrecedence"> A precedence value that is used to decide between services when identifying the QoS values to use for a particular SIM. A lower value means a higher priority. This value should be unique among all services configured in the mobile network. </param>
-        /// <param name="serviceQosPolicy"> The QoS policy to use for packets matching this service. This can be overridden for particular flows using the ruleQosPolicy field in a PccRuleConfiguration. If this field is null then the UE&apos;s SIM policy will define the QoS settings. </param>
+        /// <param name="serviceQosPolicy"> The QoS policy to use for packets matching this service. This can be overridden for particular flows using the ruleQosPolicy field in a PccRuleConfiguration. If this field is null then the UE's SIM policy will define the QoS settings. </param>
         /// <param name="pccRules"> The set of data flow policy rules that make up this service. </param>
         /// <returns> A new <see cref="MobileNetwork.ServiceData"/> instance for mocking. </returns>
         public static ServiceData ServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, int servicePrecedence = default, QosPolicy serviceQosPolicy = null, IEnumerable<PccRuleConfiguration> pccRules = null)
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM on that site. </param>
         /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
         /// <param name="integratedCircuitCardIdentifier"> The integrated circuit card ID (ICCID) for the SIM. </param>
-        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example &apos;Video camera&apos;. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
+        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
         /// <param name="simPolicyId"> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </param>
         /// <param name="staticIPConfiguration"> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </param>
         /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>

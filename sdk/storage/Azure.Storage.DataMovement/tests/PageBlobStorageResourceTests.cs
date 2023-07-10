@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
@@ -25,8 +23,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
+        [Test]
         public void Ctor_PublicUri()
         {
             // Arrange
@@ -37,40 +34,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Assert
             Assert.AreEqual(uri, storageResource.Uri);
             Assert.AreEqual(blobClient.Name, storageResource.Path);
-            Assert.AreEqual(ProduceUriType.ProducesUri, storageResource.CanProduceUri);
-            // If no options were specified then we default to SyncCopy
-            Assert.AreEqual(TransferCopyMethod.SyncCopy, storageResource.ServiceCopyMethod);
-        }
-
-        [RecordedTest]
-        public void Ctor_Options()
-        {
-            // Arrange
-            Uri uri = new Uri("https://storageaccount.blob.core.windows.net/");
-            PageBlobClient blobClient = new PageBlobClient(uri);
-            // Default Options
-            PageBlobStorageResourceOptions defaultOptions = new PageBlobStorageResourceOptions();
-            PageBlobStorageResource resourceDefaultOptions = new PageBlobStorageResource(blobClient, defaultOptions);
-
-            // Assert
-            Assert.AreEqual(uri, resourceDefaultOptions.Uri);
-            Assert.AreEqual(blobClient.Name, resourceDefaultOptions.Path);
-            Assert.AreEqual(ProduceUriType.ProducesUri, resourceDefaultOptions.CanProduceUri);
-            Assert.AreEqual(TransferCopyMethod.None, resourceDefaultOptions.ServiceCopyMethod);
-
-            // Arrange - Set up options specifying different async copy
-            PageBlobStorageResourceOptions optionsWithAsyncCopy = new PageBlobStorageResourceOptions()
-            {
-                CopyMethod = TransferCopyMethod.AsyncCopy,
-            };
-            PageBlobStorageResource resourceSyncCopy = new PageBlobStorageResource(blobClient, optionsWithAsyncCopy);
-
-            // Assert
-            Assert.AreEqual(uri, resourceSyncCopy.Uri);
-            Assert.AreEqual(blobClient.Name, resourceSyncCopy.Path);
-            Assert.AreEqual(ProduceUriType.ProducesUri, resourceSyncCopy.CanProduceUri);
-            // If no options were specified then we default to SyncCopy
-            Assert.AreEqual(TransferCopyMethod.AsyncCopy, resourceSyncCopy.ServiceCopyMethod);
+            Assert.IsTrue(storageResource.CanProduceUri);
         }
 
         [RecordedTest]
@@ -287,16 +251,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     offset: 0);
             }
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
-            PageBlobStorageResource destinationResource = new PageBlobStorageResource(
-                destinationClient,
-                new PageBlobStorageResourceOptions()
-                {
-                    CopyMethod = TransferCopyMethod.AsyncCopy
-                });
+            PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
 
             // Act
             await destinationResource.CopyFromUriAsync(sourceResource, false, length);
-            ;
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -369,7 +327,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false, completeLength: length),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.StartsWith("The specified blob does not exist."));
+                    Assert.IsTrue(e.Status == (int)HttpStatusCode.NotFound);
                 });
         }
 
@@ -403,7 +361,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 completeLength: blockLength);
 
             // Commit the block
-            await destinationResource.CompleteTransferAsync();
+            await destinationResource.CompleteTransferAsync(false);
 
             // Assert
             BlobDownloadStreamingResult result = await destinationClient.DownloadStreamingAsync();
@@ -450,7 +408,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
                 options: options);
-            await destinationResource.CompleteTransferAsync();
+            await destinationResource.CompleteTransferAsync(false);
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -548,7 +506,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             // Act
-            await storageResource.CompleteTransferAsync();
+            await storageResource.CompleteTransferAsync(false);
 
             // Assert
             Assert.IsTrue(await blobClient.ExistsAsync());
