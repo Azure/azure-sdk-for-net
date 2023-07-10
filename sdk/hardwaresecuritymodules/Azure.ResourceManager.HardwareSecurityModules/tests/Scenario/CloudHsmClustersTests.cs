@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             await BaseSetUpForTests();
         }
 
-        [Ignore("don't waht to test this now")]
         [RecordedTest]
         public async Task CreateOrUpdateCloudHsmClusterTest()
         {
