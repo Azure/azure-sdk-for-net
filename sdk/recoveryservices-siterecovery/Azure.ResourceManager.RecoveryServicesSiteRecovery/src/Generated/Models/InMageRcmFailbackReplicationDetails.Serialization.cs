@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> internalIdentifier = default;
-            Optional<ResourceIdentifier> azureVirtualMachineId = default;
+            Optional<string> azureVirtualMachineId = default;
             Optional<string> multiVmGroupName = default;
             Optional<string> reprotectAgentId = default;
             Optional<string> reprotectAgentName = default;
             Optional<string> osType = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
+            Optional<string> logStorageAccountId = default;
             Optional<string> targetvCenterId = default;
             Optional<string> targetDataStoreName = default;
             Optional<string> targetVmName = default;
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<long> resyncTransferredBytes = default;
             Optional<VmReplicationProgressHealth> resyncProgressHealth = default;
             Optional<string> resyncRequired = default;
-            Optional<SiteRecoveryResyncState> resyncState = default;
+            Optional<ResyncState> resyncState = default;
             Optional<IReadOnlyList<InMageRcmFailbackProtectedDiskDetails>> protectedDisks = default;
             Optional<InMageRcmFailbackMobilityAgentDetails> mobilityAgentDetails = default;
             Optional<IReadOnlyList<InMageRcmFailbackNicDetails>> vmNics = default;
             Optional<DateTimeOffset> lastPlannedFailoverStartTime = default;
             Optional<PlannedFailoverStatus> lastPlannedFailoverStatus = default;
             Optional<InMageRcmFailbackDiscoveredProtectedVmDetails> discoveredVmDetails = default;
-            Optional<ResourceIdentifier> lastUsedPolicyId = default;
+            Optional<string> lastUsedPolicyId = default;
             Optional<string> lastUsedPolicyFriendlyName = default;
             Optional<bool> isAgentRegistrationSuccessfulAfterFailover = default;
             string instanceType = default;
@@ -59,11 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("azureVirtualMachineId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    azureVirtualMachineId = new ResourceIdentifier(property.Value.GetString());
+                    azureVirtualMachineId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("multiVmGroupName"u8))
@@ -88,11 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("logStorageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    logStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    logStorageAccountId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("targetvCenterId"u8))
@@ -193,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncState = new SiteRecoveryResyncState(property.Value.GetString());
+                    resyncState = new ResyncState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("protectedDisks"u8))
@@ -262,11 +254,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("lastUsedPolicyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastUsedPolicyId = new ResourceIdentifier(property.Value.GetString());
+                    lastUsedPolicyId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastUsedPolicyFriendlyName"u8))

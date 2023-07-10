@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of DisableProtectionContent. </summary>
         /// <param name="properties"> Disable protection input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DisableProtectionContent(DisableProtectionProperties properties)
+        public DisableProtectionContent(DisableProtectionInputProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Disable protection input properties. </summary>
-        public DisableProtectionProperties Properties { get; }
+        public DisableProtectionInputProperties Properties { get; }
     }
 }

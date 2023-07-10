@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<int> replicationInterval = default;
             Optional<string> onlineReplicationStartTime = default;
             Optional<string> encryption = default;
-            Optional<ResourceIdentifier> activeStorageAccountId = default;
+            Optional<string> activeStorageAccountId = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -66,11 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("activeStorageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    activeStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    activeStorageAccountId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

@@ -8,7 +8,7 @@ This sample shows how to call GetAcceptedSentShareAsync with required parameters
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetAcceptedSentShareAsync("<sentShareName>", "<acceptedSentShareName>", new RequestContext());
+Response response = await client.GetAcceptedSentShareAsync("<sentShareName>", "<acceptedSentShareName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -25,7 +25,7 @@ This sample shows how to call GetAcceptedSentShare with required parameters and 
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetAcceptedSentShare("<sentShareName>", "<acceptedSentShareName>", new RequestContext());
+Response response = client.GetAcceptedSentShare("<sentShareName>", "<acceptedSentShareName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -42,7 +42,19 @@ This sample shows how to call GetAcceptedSentSharesAsync with required parameter
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var item in client.GetAcceptedSentSharesAsync("<sentShareName>", "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetAcceptedSentSharesAsync("<sentShareName>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetAcceptedSentSharesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
+
+await foreach (var item in client.GetAcceptedSentSharesAsync("<sentShareName>", "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -60,7 +72,19 @@ This sample shows how to call GetAcceptedSentShares with required parameters and
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var item in client.GetAcceptedSentShares("<sentShareName>", "<skipToken>", new RequestContext()))
+foreach (var item in client.GetAcceptedSentShares("<sentShareName>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetAcceptedSentShares with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
+
+foreach (var item in client.GetAcceptedSentShares("<sentShareName>", "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -162,7 +186,19 @@ This sample shows how to call RevokeAsync with required parameters and parse the
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>", new RequestContext());
+var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>");
+
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call RevokeAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
+
+var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -180,7 +216,19 @@ This sample shows how to call Revoke with required parameters and parse the resu
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>", new RequestContext());
+var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>");
+
+BinaryData responseData = operation.Value;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Revoke with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
+
+var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

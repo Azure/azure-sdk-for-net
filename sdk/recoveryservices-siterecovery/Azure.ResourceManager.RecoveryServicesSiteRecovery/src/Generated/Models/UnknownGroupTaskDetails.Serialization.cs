@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string instanceType = "Unknown";
-            Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            Optional<IReadOnlyList<ASRTask>> childTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"u8))
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<AsrTask> array = new List<AsrTask>();
+                    List<ASRTask> array = new List<ASRTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AsrTask.DeserializeAsrTask(item));
+                        array.Add(ASRTask.DeserializeASRTask(item));
                     }
                     childTasks = array;
                     continue;

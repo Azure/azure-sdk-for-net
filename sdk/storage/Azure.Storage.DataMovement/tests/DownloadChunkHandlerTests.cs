@@ -11,7 +11,6 @@ using System.Threading;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Tests.Shared;
-using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -26,8 +25,6 @@ namespace Azure.Storage.DataMovement.Tests
         private readonly string _copyToChunkFileMsg = "Amount of Copy To Chunk File Task calls were incorrect.";
         private readonly string _reportProgressInBytesMsg = "Amount of Progress amount calls were incorrect.";
         private readonly string _completeFileDownloadMsg = "Complete File Download call amount calls were incorrect.";
-
-        private ClientDiagnostics ClientDiagnostics => new(ClientOptions.Default);
 
         private void VerifyDelegateInvocations(
             MockDownloadChunkBehaviors behaviors,
@@ -220,7 +217,6 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
@@ -267,7 +263,6 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
@@ -335,7 +330,6 @@ namespace Azure.Storage.DataMovement.Tests
                     QueueCompleteFileDownload = mockBehaviors.QueueCompleteFileDownloadTask.Object,
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
@@ -394,7 +388,6 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
@@ -463,7 +456,6 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             List<Task> runningTasks = new List<Task>();
@@ -521,7 +513,6 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
@@ -569,7 +560,6 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
@@ -616,7 +606,6 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             PredictableStream content = new PredictableStream(blockSize);
@@ -663,7 +652,6 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                ClientDiagnostics,
                 cancellationToken: CancellationToken.None);
 
             // Act

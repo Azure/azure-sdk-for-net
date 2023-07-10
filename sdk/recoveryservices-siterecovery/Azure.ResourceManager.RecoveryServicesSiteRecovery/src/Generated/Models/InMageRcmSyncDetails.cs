@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm disk level sync details. </summary>
@@ -23,23 +21,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to azure. </param>
         /// <param name="lastDataTransferTimeUtc"> The time of the last data transfer from source VM to azure. </param>
         /// <param name="processedBytes"> The total processed bytes. This includes bytes that are transferred from source VM to azure and matched bytes. </param>
-        /// <param name="staStartOn"> The start time. </param>
-        /// <param name="lastRefreshedOn"> The last refresh time. </param>
+        /// <param name="startTime"> The start time. </param>
+        /// <param name="lastRefreshTime"> The last refresh time. </param>
         /// <param name="progressPercentage"> Progress in percentage. Progress percentage is calculated based on processed bytes. </param>
-        internal InMageRcmSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, string lastDataTransferTimeUtc, long? processedBytes, DateTimeOffset? staStartOn, DateTimeOffset? lastRefreshedOn, int? progressPercentage)
+        internal InMageRcmSyncDetails(DiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, string lastDataTransferTimeUtc, long? processedBytes, string startTime, string lastRefreshTime, int? progressPercentage)
         {
             ProgressHealth = progressHealth;
             TransferredBytes = transferredBytes;
             Last15MinutesTransferredBytes = last15MinutesTransferredBytes;
             LastDataTransferTimeUtc = lastDataTransferTimeUtc;
             ProcessedBytes = processedBytes;
-            StaStartOn = staStartOn;
-            LastRefreshedOn = lastRefreshedOn;
+            StartTime = startTime;
+            LastRefreshTime = lastRefreshTime;
             ProgressPercentage = progressPercentage;
         }
 
         /// <summary> The progress health. </summary>
-        public SiteRecoveryDiskReplicationProgressHealth? ProgressHealth { get; }
+        public DiskReplicationProgressHealth? ProgressHealth { get; }
         /// <summary> The transferred bytes from source VM to azure for the disk. </summary>
         public long? TransferredBytes { get; }
         /// <summary> The bytes transferred in last 15 minutes from source VM to azure. </summary>
@@ -49,9 +47,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The total processed bytes. This includes bytes that are transferred from source VM to azure and matched bytes. </summary>
         public long? ProcessedBytes { get; }
         /// <summary> The start time. </summary>
-        public DateTimeOffset? StaStartOn { get; }
+        public string StartTime { get; }
         /// <summary> The last refresh time. </summary>
-        public DateTimeOffset? LastRefreshedOn { get; }
+        public string LastRefreshTime { get; }
         /// <summary> Progress in percentage. Progress percentage is calculated based on processed bytes. </summary>
         public int? ProgressPercentage { get; }
     }

@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Configure protection input properties. </summary>
-        public SiteRecoveryCreateProtectionContainerMappingProperties Properties { get; set; }
+        public CreateProtectionContainerMappingInputProperties Properties { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=PASSWORDCODE";
+
         private EventGridDomainCollection DomainCollection { get; set; }
         private ResourceGroupResource ResourceGroup { get; set; }
 
@@ -36,12 +37,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task CRUD()
         {
             await SetCollection();
-            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
             var domainName = Recording.GenerateAssetName("sdk-Domain-");
             var domainTopicName = Recording.GenerateAssetName("sdk-DomainTopic-");
 
             var createDomainResponse = (await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName,
-                new EventGridDomainData(location)
+                new EventGridDomainData(DefaultLocation)
                 {
                     Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
                 })).Value;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var getDomainResponse = (await DomainCollection.GetAsync(domainName)).Value;
             Assert.NotNull(getDomainResponse);
             Assert.AreEqual(EventGridDomainProvisioningState.Succeeded, getDomainResponse.Data.ProvisioningState);
-            Assert.AreEqual(location, getDomainResponse.Data.Location);
+            Assert.AreEqual(DefaultLocation, getDomainResponse.Data.Location);
 
             // Create an event subscription to this domain
             var domainEventSubscriptionsCollection = getDomainResponse.GetDomainEventSubscriptions();

@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            Response response = client.GetAccountProperties(new RequestContext());
+            Response response = client.GetAccountProperties();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            Response response = client.GetAccountProperties(new RequestContext());
+            Response response = client.GetAccountProperties();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            Response response = await client.GetAccountPropertiesAsync(new RequestContext());
+            Response response = await client.GetAccountPropertiesAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            Response response = await client.GetAccountPropertiesAsync(new RequestContext());
+            Response response = await client.GetAccountPropertiesAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -301,7 +301,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            Response response = client.GetAccessKeys(new RequestContext());
+            Response response = client.GetAccessKeys();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -315,7 +315,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            Response response = client.GetAccessKeys(new RequestContext());
+            Response response = client.GetAccessKeys();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
@@ -330,7 +330,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            Response response = await client.GetAccessKeysAsync(new RequestContext());
+            Response response = await client.GetAccessKeysAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -344,7 +344,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            Response response = await client.GetAccessKeysAsync(new RequestContext());
+            Response response = await client.GetAccessKeysAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
@@ -431,7 +431,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            foreach (var item in client.GetCollections("<skipToken>", new RequestContext()))
+            foreach (var item in client.GetCollections())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -446,7 +446,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            foreach (var item in client.GetCollections("<skipToken>", new RequestContext()))
+            foreach (var item in client.GetCollections("<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
@@ -472,7 +472,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            await foreach (var item in client.GetCollectionsAsync("<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetCollectionsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -487,7 +487,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            await foreach (var item in client.GetCollectionsAsync("<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetCollectionsAsync("<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
@@ -513,7 +513,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            foreach (var item in client.GetResourceSetRules("<skipToken>", new RequestContext()))
+            foreach (var item in client.GetResourceSetRules())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -528,7 +528,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            foreach (var item in client.GetResourceSetRules("<skipToken>", new RequestContext()))
+            foreach (var item in client.GetResourceSetRules("<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -627,7 +627,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            await foreach (var item in client.GetResourceSetRulesAsync("<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetResourceSetRulesAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -642,7 +642,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential);
 
-            await foreach (var item in client.GetResourceSetRulesAsync("<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetResourceSetRulesAsync("<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());

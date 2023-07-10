@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskCapacityInBytes = diskCapacityInBytes;
             FileSystemCapacityInBytes = fileSystemCapacityInBytes;
             SourceDataInMB = sourceDataInMB;
-            PSDataInMB = psDataInMB;
+            PsDataInMB = psDataInMB;
             TargetDataInMB = targetDataInMB;
             DiskResized = diskResized;
             LastRpoCalculatedOn = lastRpoCalculatedOn;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The source data transit in MB. </summary>
         public double? SourceDataInMB { get; }
         /// <summary> The PS data transit in MB. </summary>
-        public double? PSDataInMB { get; }
+        public double? PsDataInMB { get; }
         /// <summary> The target data transit in MB. </summary>
         public double? TargetDataInMB { get; }
         /// <summary> A value indicating whether disk is resized. </summary>

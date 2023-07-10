@@ -70,11 +70,6 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AreRegionalAndGlobalSourcesSupported))
-            {
-                writer.WritePropertyName("areRegionalAndGlobalSourcesSupported"u8);
-                writer.WriteBooleanValue(AreRegionalAndGlobalSourcesSupported.Value);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -97,7 +92,6 @@ namespace Azure.ResourceManager.EventGrid
             Optional<IList<string>> supportedLocations = default;
             Optional<string> sourceResourceFormat = default;
             Optional<IList<TopicTypeSourceScope>> supportedScopesForSource = default;
-            Optional<bool> areRegionalAndGlobalSourcesSupported = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -199,20 +193,11 @@ namespace Azure.ResourceManager.EventGrid
                             supportedScopesForSource = array;
                             continue;
                         }
-                        if (property0.NameEquals("areRegionalAndGlobalSourcesSupported"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            areRegionalAndGlobalSourcesSupported = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource), Optional.ToNullable(areRegionalAndGlobalSourcesSupported));
+            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource));
         }
     }
 }

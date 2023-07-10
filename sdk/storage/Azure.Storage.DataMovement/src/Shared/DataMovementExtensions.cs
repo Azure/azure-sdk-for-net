@@ -217,7 +217,7 @@ namespace Azure.Storage.DataMovement
 
             // Create the source Path
             string sourcePath;
-            if (jobPart._sourceResource.CanProduceUri)
+            if (jobPart._sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
             {
                 // Remove any query or SAS that could be attach to the Uri
                 UriBuilder uriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
@@ -230,7 +230,7 @@ namespace Azure.Storage.DataMovement
             }
 
             string destinationPath;
-            if (jobPart._destinationResource.CanProduceUri)
+            if (jobPart._destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
             {
                 // Remove any query or SAS that could be attach to the Uri
                 UriBuilder uriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
@@ -247,10 +247,8 @@ namespace Azure.Storage.DataMovement
                 startTime: DateTimeOffset.UtcNow, // TODO: update to job start time
                 transferId: jobPart._dataTransfer.Id,
                 partNumber: (uint)jobPart.PartNumber,
-                sourceResourceId: jobPart._sourceResource.ResourceId,
                 sourcePath: sourcePath,
                 sourceExtraQuery: "", // TODO: convert options to string
-                destinationResourceId: jobPart._destinationResource.ResourceId,
                 destinationPath: destinationPath,
                 destinationExtraQuery: "", // TODO: convert options to string
                 isFinalPart: isFinalPart,
@@ -281,10 +279,17 @@ namespace Azure.Storage.DataMovement
         /// Verifies the contents of the Job Part Plan Header with the
         /// information passed to resume the transfer.
         /// </summary>
-        /// <param name="jobPart">The job part containing the resume information.</param>
+        /// <param name="jobPart">The job partcontaining the resume information.</param>
         /// <param name="header">The header which holds the state of the job when it was stopped/paused.</param>
         internal static void VerifyJobPartPlanHeader(this JobPartInternal jobPart, JobPartPlanHeader header)
         {
+            // Check schema version
+            string schemaVersion = header.Version;
+            if (!DataMovementConstants.PlanFile.SchemaVersion.Equals(schemaVersion))
+            {
+                throw Errors.MismatchSchemaVersionHeader(schemaVersion);
+            }
+
             // Check transfer id
             if (!header.TransferId.Equals(jobPart._dataTransfer.Id))
             {
@@ -293,7 +298,7 @@ namespace Azure.Storage.DataMovement
 
             // Check source path
             string passedSourcePath;
-            if (jobPart._sourceResource.CanProduceUri)
+            if (jobPart._sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
             {
                 // Remove any query or SAS that could be attach to the Uri
                 UriBuilder uriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
@@ -313,7 +318,7 @@ namespace Azure.Storage.DataMovement
 
             // Check destination path
             string passedDestinationPath;
-            if (jobPart._destinationResource.CanProduceUri)
+            if (jobPart._destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
             {
                 // Remove any query or SAS that could be attach to the Uri
                 UriBuilder uriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);

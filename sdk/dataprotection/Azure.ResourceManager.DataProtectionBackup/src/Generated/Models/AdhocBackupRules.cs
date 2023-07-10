@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Adhoc backup rules. </summary>
     public partial class AdhocBackupRules
     {
+
         /// <summary> Gets the rule name. </summary>
         public string RuleName { get; }
         /// <summary> Adhoc backup trigger option. </summary>

@@ -31,6 +31,12 @@ namespace Azure.Storage.DataMovement.Models
         public long? InitialTransferSize { get; set; }
 
         /// <summary>
+        /// Optional. Defines the checkpoint id that the transfer should continue from and will
+        /// grab transfer information from <see cref="TransferManagerOptions.CheckpointerOptions"/>.
+        /// </summary>
+        public string ResumeFromCheckpointId { get; set; }
+
+        /// <summary>
         /// Optional. An <see cref="IProgress{StorageTransferProgress}"/> for tracking progress of the transfer.
         /// See <see cref="StorageTransferProgress"/> for details on what is tracked.
         /// </summary>

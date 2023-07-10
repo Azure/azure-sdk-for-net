@@ -29,10 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="committedOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
-        internal ActiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, DateTimeOffset? committedOn, AzureLocation? region) : base(id, configurationGroups, description, connectivityTopology, hubs, isGlobal, appliesToGroups, provisioningState, deleteExistingPeering, resourceGuid)
+        internal ActiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, DateTimeOffset? committedOn, AzureLocation? region) : base(id, configurationGroups, description, connectivityTopology, hubs, isGlobal, appliesToGroups, provisioningState, deleteExistingPeering)
         {
             CommittedOn = committedOn;
             Region = region;

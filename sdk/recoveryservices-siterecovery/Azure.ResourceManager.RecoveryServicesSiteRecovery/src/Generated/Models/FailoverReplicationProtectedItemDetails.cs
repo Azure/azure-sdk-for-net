@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="subnet"> The network subnet. </param>
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
-        internal FailoverReplicationProtectedItemDetails(string name, string friendlyName, string testVmName, string testVmFriendlyName, string networkConnectionStatus, string networkFriendlyName, string subnet, ResourceIdentifier recoveryPointId, DateTimeOffset? recoveryPointOn)
+        internal FailoverReplicationProtectedItemDetails(string name, string friendlyName, string testVmName, string testVmFriendlyName, string networkConnectionStatus, string networkFriendlyName, string subnet, string recoveryPointId, DateTimeOffset? recoveryPointOn)
         {
             Name = name;
             FriendlyName = friendlyName;
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The network subnet. </summary>
         public string Subnet { get; }
         /// <summary> The recovery point Id. </summary>
-        public ResourceIdentifier RecoveryPointId { get; }
+        public string RecoveryPointId { get; }
         /// <summary> The recovery point time. </summary>
         public DateTimeOffset? RecoveryPointOn { get; }
     }

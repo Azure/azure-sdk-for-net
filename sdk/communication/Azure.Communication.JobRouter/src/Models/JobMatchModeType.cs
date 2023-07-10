@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.JobRouter
 {
-    public readonly partial struct JobMatchModeType
+    internal readonly partial struct JobMatchModeType
     {
     }
 }

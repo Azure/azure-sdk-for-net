@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Disable resolve health input properties. </summary>
-        internal ResolveHealthContentProperties Properties { get; set; }
+        internal ResolveHealthInputProperties Properties { get; set; }
         /// <summary> Health errors. </summary>
         public IList<ResolveHealthError> ResolveHealthErrors
         {
             get
             {
                 if (Properties is null)
-                    Properties = new ResolveHealthContentProperties();
+                    Properties = new ResolveHealthInputProperties();
                 return Properties.HealthErrors;
             }
         }

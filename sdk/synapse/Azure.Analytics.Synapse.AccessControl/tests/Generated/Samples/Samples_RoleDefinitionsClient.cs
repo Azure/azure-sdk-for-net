@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetRoleDefinitions(true, "<scope>", new RequestContext());
+            Response response = client.GetRoleDefinitions();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetRoleDefinitions(true, "<scope>", new RequestContext());
+            Response response = client.GetRoleDefinitions(true, "<scope>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("id").ToString());
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = await client.GetRoleDefinitionsAsync(true, "<scope>", new RequestContext());
+            Response response = await client.GetRoleDefinitionsAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = await client.GetRoleDefinitionsAsync(true, "<scope>", new RequestContext());
+            Response response = await client.GetRoleDefinitionsAsync(true, "<scope>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("id").ToString());
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetRoleDefinitionById("<roleDefinitionId>", new RequestContext());
+            Response response = client.GetRoleDefinitionById("<roleDefinitionId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetRoleDefinitionById("<roleDefinitionId>", new RequestContext());
+            Response response = client.GetRoleDefinitionById("<roleDefinitionId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>", new RequestContext());
+            Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -152,7 +152,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>", new RequestContext());
+            Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetScopes(new RequestContext());
+            Response response = client.GetScopes();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -189,7 +189,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetScopes(new RequestContext());
+            Response response = client.GetScopes();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = await client.GetScopesAsync(new RequestContext());
+            Response response = await client.GetScopesAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = await client.GetScopesAsync(new RequestContext());
+            Response response = await client.GetScopesAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());

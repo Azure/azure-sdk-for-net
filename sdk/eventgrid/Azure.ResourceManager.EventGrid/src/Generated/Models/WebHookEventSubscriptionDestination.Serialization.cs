@@ -56,11 +56,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinimumTlsVersionAllowed))
-            {
-                writer.WritePropertyName("minimumTlsVersionAllowed"u8);
-                writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -79,7 +74,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<Guid> azureActiveDirectoryTenantId = default;
             Optional<string> azureActiveDirectoryApplicationIdOrUri = default;
             Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -160,20 +154,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                             deliveryAttributeMappings = array;
                             continue;
                         }
-                        if (property0.NameEquals("minimumTlsVersionAllowed"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            minimumTlsVersionAllowed = new TlsVersion(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new WebHookEventSubscriptionDestination(endpointType, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings), Optional.ToNullable(minimumTlsVersionAllowed));
+            return new WebHookEventSubscriptionDestination(endpointType, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings));
         }
     }
 }

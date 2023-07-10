@@ -31,17 +31,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
+            Optional<string> recoveryProximityPlacementGroupId = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryProximityPlacementGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryProximityPlacementGroupId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))

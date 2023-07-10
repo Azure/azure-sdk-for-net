@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Configure protection input properties. </summary>
-        internal RemoveProtectionContainerMappingProperties Properties { get; set; }
+        internal RemoveProtectionContainerMappingInputProperties Properties { get; set; }
         /// <summary> The class type. </summary>
-        public string ProviderSpecificContentInstanceType
+        public string ProviderSpecificInputInstanceType
         {
-            get => Properties is null ? default : Properties.ProviderSpecificContentInstanceType;
+            get => Properties is null ? default : Properties.ProviderSpecificInputInstanceType;
             set
             {
                 if (Properties is null)
-                    Properties = new RemoveProtectionContainerMappingProperties();
-                Properties.ProviderSpecificContentInstanceType = value;
+                    Properties = new RemoveProtectionContainerMappingInputProperties();
+                Properties.ProviderSpecificInputInstanceType = value;
             }
         }
     }

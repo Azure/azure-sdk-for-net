@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of A2AExtendedLocationDetails. </summary>
         /// <param name="primaryExtendedLocation"> The primary ExtendedLocation. </param>
         /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
-        internal A2AExtendedLocationDetails(SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation)
+        internal A2AExtendedLocationDetails(ExtendedLocation primaryExtendedLocation, ExtendedLocation recoveryExtendedLocation)
         {
             PrimaryExtendedLocation = primaryExtendedLocation;
             RecoveryExtendedLocation = recoveryExtendedLocation;
         }
 
         /// <summary> The primary ExtendedLocation. </summary>
-        public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
+        public ExtendedLocation PrimaryExtendedLocation { get; }
         /// <summary> The recovery ExtendedLocation. </summary>
-        public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
+        public ExtendedLocation RecoveryExtendedLocation { get; }
     }
 }

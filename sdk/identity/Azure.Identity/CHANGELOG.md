@@ -1,6 +1,10 @@
 # Release History
 
-## 1.10.0-beta.1 (2023-07-11)
+## 1.10.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
 
 ### Bugs Fixed
 - Fixed an issue with `TokenCachePersistenceOptions` where credentials in the same process would share the same cache, even if they had different configured names.

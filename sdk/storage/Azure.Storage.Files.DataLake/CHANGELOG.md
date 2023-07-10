@@ -7,7 +7,6 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed bug where DatalakePathClient.Rename was using the filesystem name parameter for the destination path and vice versa.
 
 ### Other Changes
 

@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSecurityCenterModelFactory
     {
+
         /// <summary> Initializes a new instance of MdeOnboarding. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

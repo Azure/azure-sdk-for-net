@@ -18,11 +18,6 @@ namespace Azure.Storage.DataMovement
         private string _path;
 
         /// <summary>
-        /// The identifier for the type of storage resource.
-        /// </summary>
-        public override string ResourceId => "LocalFile";
-
-        /// <summary>
         /// Returns URL
         /// </summary>
         public override Uri Uri => throw new NotSupportedException();
@@ -33,9 +28,9 @@ namespace Azure.Storage.DataMovement
         public override string Path => _path;
 
         /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
+        /// Cannot return a Url because this is a local path.
         /// </summary>
-        public override bool CanProduceUri => false;
+        public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the resource
@@ -257,30 +252,6 @@ namespace Azure.Storage.DataMovement
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static LocalFileStorageResource RehydrateResource(
-            DataTransferProperties transferProperties,
-            bool isSource)
-        {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
-
-            return new LocalFileStorageResource(storedPath);
         }
     }
 }

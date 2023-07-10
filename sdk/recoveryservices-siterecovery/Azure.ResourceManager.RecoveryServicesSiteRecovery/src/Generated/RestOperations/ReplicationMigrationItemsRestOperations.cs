@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2023-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteRecoveryMigrationItemListResult>> ListByReplicationProtectionContainersAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.MigrationItemCollection>> ListByReplicationProtectionContainersAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryMigrationItemListResult value = default;
+                        Models.MigrationItemCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteRecoveryMigrationItemListResult.DeserializeSiteRecoveryMigrationItemListResult(document.RootElement);
+                        value = Models.MigrationItemCollection.DeserializeMigrationItemCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteRecoveryMigrationItemListResult> ListByReplicationProtectionContainers(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<Models.MigrationItemCollection> ListByReplicationProtectionContainers(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryMigrationItemListResult value = default;
+                        Models.MigrationItemCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteRecoveryMigrationItemListResult.DeserializeSiteRecoveryMigrationItemListResult(document.RootElement);
+                        value = Models.MigrationItemCollection.DeserializeMigrationItemCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteRecoveryMigrationItemData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, CancellationToken cancellationToken = default)
+        public async Task<Response<MigrationItemData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryMigrationItemData value = default;
+                        MigrationItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteRecoveryMigrationItemData.DeserializeSiteRecoveryMigrationItemData(document.RootElement);
+                        value = MigrationItemData.DeserializeMigrationItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteRecoveryMigrationItemData)null, message.Response);
+                    return Response.FromValue((MigrationItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteRecoveryMigrationItemData> Get(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, CancellationToken cancellationToken = default)
+        public Response<MigrationItemData> Get(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -234,19 +234,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryMigrationItemData value = default;
+                        MigrationItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteRecoveryMigrationItemData.DeserializeSiteRecoveryMigrationItemData(document.RootElement);
+                        value = MigrationItemData.DeserializeMigrationItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteRecoveryMigrationItemData)null, message.Response);
+                    return Response.FromValue((MigrationItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, SiteRecoveryMigrationItemCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrationItemCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/>, <paramref name="migrationItemName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, SiteRecoveryMigrationItemCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrationItemCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/>, <paramref name="migrationItemName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, SiteRecoveryMigrationItemCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrationItemCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, SiteRecoveryMigrationItemPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrationItemPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/>, <paramref name="migrationItemName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, SiteRecoveryMigrationItemPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrationItemPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/>, <paramref name="migrationItemName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, SiteRecoveryMigrationItemPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrationItemPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        internal HttpMessage CreateMigrateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, SiteRecoveryMigrateContent content)
+        internal HttpMessage CreateMigrateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/>, <paramref name="migrationItemName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> MigrateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, SiteRecoveryMigrateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> MigrateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/>, <paramref name="migrationItemName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Migrate(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, SiteRecoveryMigrateContent content, CancellationToken cancellationToken = default)
+        public Response Migrate(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        internal HttpMessage CreateResyncRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrationItemResyncContent content)
+        internal HttpMessage CreateResyncRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, ResyncContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/>, <paramref name="migrationItemName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResyncAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrationItemResyncContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> ResyncAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, ResyncContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/>, <paramref name="migrationItemName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Resync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, MigrationItemResyncContent content, CancellationToken cancellationToken = default)
+        public Response Resync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName, ResyncContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteRecoveryMigrationItemListResult>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.MigrationItemCollection>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1168,9 +1168,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryMigrationItemListResult value = default;
+                        Models.MigrationItemCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteRecoveryMigrationItemListResult.DeserializeSiteRecoveryMigrationItemListResult(document.RootElement);
+                        value = Models.MigrationItemCollection.DeserializeMigrationItemCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteRecoveryMigrationItemListResult> List(string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<Models.MigrationItemCollection> List(string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1200,9 +1200,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryMigrationItemListResult value = default;
+                        Models.MigrationItemCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteRecoveryMigrationItemListResult.DeserializeSiteRecoveryMigrationItemListResult(document.RootElement);
+                        value = Models.MigrationItemCollection.DeserializeMigrationItemCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1237,7 +1237,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteRecoveryMigrationItemListResult>> ListByReplicationProtectionContainersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.MigrationItemCollection>> ListByReplicationProtectionContainersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1252,9 +1252,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryMigrationItemListResult value = default;
+                        Models.MigrationItemCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteRecoveryMigrationItemListResult.DeserializeSiteRecoveryMigrationItemListResult(document.RootElement);
+                        value = Models.MigrationItemCollection.DeserializeMigrationItemCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1275,7 +1275,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteRecoveryMigrationItemListResult> ListByReplicationProtectionContainersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<Models.MigrationItemCollection> ListByReplicationProtectionContainersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1290,9 +1290,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryMigrationItemListResult value = default;
+                        Models.MigrationItemCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteRecoveryMigrationItemListResult.DeserializeSiteRecoveryMigrationItemListResult(document.RootElement);
+                        value = Models.MigrationItemCollection.DeserializeMigrationItemCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1325,7 +1325,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteRecoveryMigrationItemListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.MigrationItemCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1338,9 +1338,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryMigrationItemListResult value = default;
+                        Models.MigrationItemCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteRecoveryMigrationItemListResult.DeserializeSiteRecoveryMigrationItemListResult(document.RootElement);
+                        value = Models.MigrationItemCollection.DeserializeMigrationItemCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteRecoveryMigrationItemListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<Models.MigrationItemCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1372,9 +1372,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryMigrationItemListResult value = default;
+                        Models.MigrationItemCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteRecoveryMigrationItemListResult.DeserializeSiteRecoveryMigrationItemListResult(document.RootElement);
+                        value = Models.MigrationItemCollection.DeserializeMigrationItemCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

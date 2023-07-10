@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<int> maximumServerCount = default;
             Optional<int> maximumStorageCount = default;
             Optional<int> maximumUplinks = default;
-            Optional<IList<NetworkDeviceRoleProperties>> networkDevices = default;
+            Optional<IList<NetworkRackSkuPropertiesNetworkDevicesItem>> networkDevices = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<NetworkDeviceRoleProperties> array = new List<NetworkDeviceRoleProperties>();
+                            List<NetworkRackSkuPropertiesNetworkDevicesItem> array = new List<NetworkRackSkuPropertiesNetworkDevicesItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkDeviceRoleProperties.DeserializeNetworkDeviceRoleProperties(item));
+                                array.Add(NetworkRackSkuPropertiesNetworkDevicesItem.DeserializeNetworkRackSkuPropertiesNetworkDevicesItem(item));
                             }
                             networkDevices = array;
                             continue;

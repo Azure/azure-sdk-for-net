@@ -15,9 +15,12 @@ namespace Azure.ResourceManager.Kusto.Tests
         public string DatabaseName => GetRecordedVariable("DATABASE_NAME");
         public string TableName => GetRecordedVariable("TABLE_NAME");
         public string FollowingClusterName => GetRecordedVariable("FOLLOWING_CLUSTER_NAME");
-        public Uri KeyVaultUri => new(GetRecordedVariable("KEY_VAULT_URI"));
-        public string KeyName => GetRecordedVariable("KEY_NAME");
-        public string KeyVersion => GetRecordedVariable("KEY_VERSION");
+
+        // TODO: figure out how to authenticate
+        // public Uri KeyVaultUri => new(GetRecordedVariable("KEY_VAULT_URI"));
+        // public string KeyName => GetRecordedVariable("KEY_NAME");
+        // public string KeyVersion => GetRecordedVariable("KEY_VERSION");
+
         public string PrivateEndpointName => GetRecordedVariable("PRIVATE_ENDPOINT_NAME");
 
         public ResourceIdentifier UserAssignedIdentityId => new(GetRecordedVariable("USER_ASSIGNED_IDENTITY_ID"));

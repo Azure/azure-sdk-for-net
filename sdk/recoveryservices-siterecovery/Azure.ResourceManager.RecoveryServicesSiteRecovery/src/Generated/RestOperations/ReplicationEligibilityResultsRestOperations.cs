@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2023-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReplicationEligibilityResultListResult>> ListAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
+        public async Task<Response<ReplicationEligibilityResultsCollection>> ListAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        ReplicationEligibilityResultListResult value = default;
+                        ReplicationEligibilityResultsCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReplicationEligibilityResultListResult.DeserializeReplicationEligibilityResultListResult(document.RootElement);
+                        value = ReplicationEligibilityResultsCollection.DeserializeReplicationEligibilityResultsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReplicationEligibilityResultListResult> List(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
+        public Response<ReplicationEligibilityResultsCollection> List(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        ReplicationEligibilityResultListResult value = default;
+                        ReplicationEligibilityResultsCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReplicationEligibilityResultListResult.DeserializeReplicationEligibilityResultListResult(document.RootElement);
+                        value = ReplicationEligibilityResultsCollection.DeserializeReplicationEligibilityResultsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

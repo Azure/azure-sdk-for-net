@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
+            Optional<string> keyVaultId = default;
             Optional<Uri> keyVaultUri = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
+            Optional<string> storageAccountId = default;
             Optional<string> storageAccountSasSecretName = default;
             Optional<string> serviceBusConnectionStringSecretName = default;
             Optional<string> targetLocation = default;
@@ -33,11 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("keyVaultId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    keyVaultId = new ResourceIdentifier(property.Value.GetString());
+                    keyVaultId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVaultUri"u8))
@@ -51,11 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("storageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    storageAccountId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("storageAccountSasSecretName"u8))

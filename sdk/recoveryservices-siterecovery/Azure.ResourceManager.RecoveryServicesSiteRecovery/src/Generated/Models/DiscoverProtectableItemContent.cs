@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The properties of a discover protectable item request. </summary>
-        public DiscoverProtectableItemProperties Properties { get; set; }
+        public DiscoverProtectableItemRequestProperties Properties { get; set; }
     }
 }

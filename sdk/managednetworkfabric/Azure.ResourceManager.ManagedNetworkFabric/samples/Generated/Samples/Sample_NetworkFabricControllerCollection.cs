@@ -49,19 +49,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 Annotation = "lab 1",
                 InfrastructureExpressRouteConnections =
 {
-new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName")
-{
-ExpressRouteAuthorizationKey = "xxxxxxx",
-}
+new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName","xxxxxxx")
 },
                 WorkloadExpressRouteConnections =
 {
-new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName")
-{
-ExpressRouteAuthorizationKey = "xxxxx",
-}
+new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName","xxxxx")
 },
-                ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration()
+                ManagedResourceGroupConfiguration = new NetworkFabricControllerPropertiesManagedResourceGroupConfiguration()
                 {
                     Name = "managedResourceGroupName",
                     Location = new AzureLocation("eastus"),

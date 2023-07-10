@@ -86,7 +86,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetFilterAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetFilterAsync(RequestContext context)
+        public virtual async Task<Response> GetFilterAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetFilter(RequestContext)']/*" />
-        public virtual Response GetFilter(RequestContext context)
+        public virtual Response GetFilter(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
             scope.Start();
@@ -147,7 +147,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CreateOrUpdateFilterAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateFilterAsync(RequestContent content, RequestContext context)
+        public virtual async Task<Response> CreateOrUpdateFilterAsync(RequestContent content, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
@@ -178,7 +178,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CreateOrUpdateFilter(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdateFilter(RequestContent content, RequestContext context)
+        public virtual Response CreateOrUpdateFilter(RequestContent content, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
             scope.Start();
@@ -276,7 +276,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetPropertiesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetPropertiesAsync(RequestContext context)
+        public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
@@ -306,7 +306,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetProperties(RequestContext)']/*" />
-        public virtual Response GetProperties(RequestContext context)
+        public virtual Response GetProperties(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
             scope.Start();
@@ -336,7 +336,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='DeleteAsync(RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(RequestContext context)
+        public virtual async Task<Response> DeleteAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
@@ -366,7 +366,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='Delete(RequestContext)']/*" />
-        public virtual Response Delete(RequestContext context)
+        public virtual Response Delete(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.Delete");
             scope.Start();
@@ -400,7 +400,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='RunScanAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> RunScanAsync(string runId, string scanLevel, RequestContext context)
+        public virtual async Task<Response> RunScanAsync(string runId, string scanLevel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -436,7 +436,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='RunScan(string,string,RequestContext)']/*" />
-        public virtual Response RunScan(string runId, string scanLevel, RequestContext context)
+        public virtual Response RunScan(string runId, string scanLevel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -471,7 +471,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CancelScanAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> CancelScanAsync(string runId, RequestContext context)
+        public virtual async Task<Response> CancelScanAsync(string runId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -506,7 +506,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='CancelScan(string,RequestContext)']/*" />
-        public virtual Response CancelScan(string runId, RequestContext context)
+        public virtual Response CancelScan(string runId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -538,7 +538,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetTriggerAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetTriggerAsync(RequestContext context)
+        public virtual async Task<Response> GetTriggerAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
@@ -568,7 +568,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetTrigger(RequestContext)']/*" />
-        public virtual Response GetTrigger(RequestContext context)
+        public virtual Response GetTrigger(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
             scope.Start();
@@ -666,7 +666,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='DeleteTriggerAsync(RequestContext)']/*" />
-        public virtual async Task<Response> DeleteTriggerAsync(RequestContext context)
+        public virtual async Task<Response> DeleteTriggerAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
@@ -696,7 +696,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='DeleteTrigger(RequestContext)']/*" />
-        public virtual Response DeleteTrigger(RequestContext context)
+        public virtual Response DeleteTrigger(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
             scope.Start();
@@ -726,7 +726,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetRunsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
@@ -747,7 +747,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetRuns(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetRuns(RequestContext context)
+        public virtual Pageable<BinaryData> GetRuns(RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);

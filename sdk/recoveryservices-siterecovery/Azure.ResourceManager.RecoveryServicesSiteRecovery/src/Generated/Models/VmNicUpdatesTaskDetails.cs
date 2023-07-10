@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class represents the vm NicUpdates task details. </summary>
-    public partial class VmNicUpdatesTaskDetails : SiteRecoveryTaskTypeDetails
+    public partial class VmNicUpdatesTaskDetails : TaskTypeDetails
     {
         /// <summary> Initializes a new instance of VmNicUpdatesTaskDetails. </summary>
         internal VmNicUpdatesTaskDetails()

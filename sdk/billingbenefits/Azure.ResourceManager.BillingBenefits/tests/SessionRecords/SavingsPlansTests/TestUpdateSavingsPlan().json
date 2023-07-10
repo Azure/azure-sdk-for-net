@@ -1,0 +1,439 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-c4ef53a9dc200041a0ff7862ffd430c3-7b3ec06527ada546-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "0b9d33426fdcb4742a9c4d9145294bd7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "429",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 17 Nov 2022 02:18:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8b3ed8aa-04d4-4be7-8faf-438fb2e6679b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "8b3ed8aa-04d4-4be7-8faf-438fb2e6679b",
+        "x-ms-routing-request-id": "WESTUS:20221117T021842Z:8b3ed8aa-04d4-4be7-8faf-438fb2e6679b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "costcenter": "1000"
+        },
+        "subscriptionId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
+        "displayName": "Azure subscription 1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4fdf6e82b8a5e2419e770b4f3f0e8d52-b2d06855bb807a4b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "c1be2fe326f8539a94ddc3fccce6182c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "429",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 17 Nov 2022 02:18:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "028134c8-e770-4753-9d5d-38c3a73de723",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "028134c8-e770-4753-9d5d-38c3a73de723",
+        "x-ms-routing-request-id": "WESTUS:20221117T021843Z:028134c8-e770-4753-9d5d-38c3a73de723"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "costcenter": "1000"
+        },
+        "subscriptionId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
+        "displayName": "Azure subscription 1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8e44fe71e61ef542abd58c0b65e4eca9-a62e5e61bd53ad4d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "9333333f3ea4c5e29a2f914ea4aeff71",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 17 Nov 2022 02:18:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c7f9b9a4-b6aa-44f5-82fa-15e78cd0ee3c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "c7f9b9a4-b6aa-44f5-82fa-15e78cd0ee3c",
+        "x-ms-routing-request-id": "WESTUS:20221117T021843Z:c7f9b9a4-b6aa-44f5-82fa-15e78cd0ee3c"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
+            "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.BillingBenefits/savingsPlanOrders/b538c0a7-b852-4ff8-aa3a-1d91dad90d2a?api-version=2022-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-22d5a873c7b3da4db1bc676070250922-aa253dc97e324342-00",
+        "User-Agent": "azsdk-net-ResourceManager.BillingBenefits/1.0.0-alpha.20221116.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "8b9c2c68e4851c93994976ffac78e843",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1001",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 17 Nov 2022 02:18:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f30d8825-7529-474a-ab5e-199210fa5ae0",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "8b9c2c68e4851c93994976ffac78e843",
+        "x-ms-routing-request-id": "WESTUS:20221117T021843Z:f30d8825-7529-474a-ab5e-199210fa5ae0",
+        "x-ms-version": "1.0.2141.1412"
+      },
+      "ResponseBody": {
+        "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/b538c0a7-b852-4ff8-aa3a-1d91dad90d2a",
+        "name": "b538c0a7-b852-4ff8-aa3a-1d91dad90d2a",
+        "type": "microsoft.billingbenefits/savingsPlanOrders",
+        "properties": {
+          "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+          "savingsPlans": [
+            "/providers/Microsoft.BillingBenefits/savingsPlanOrders/b538c0a7-b852-4ff8-aa3a-1d91dad90d2a/savingsPlans/2035abf9-4697-4220-b158-dbff2a0dc073"
+          ],
+          "billingPlan": "P1M",
+          "term": "P3Y",
+          "displayName": "TestSPNameSingle",
+          "benefitStartTime": "2022-11-16T02:14:36.5807954Z",
+          "provisioningState": "Succeeded",
+          "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+          "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+          "expiryDateTime": "2025-11-16T02:14:36.5807954Z"
+        },
+        "sku": {
+          "name": "Compute_Savings_Plan"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.BillingBenefits/savingsPlanOrders/b538c0a7-b852-4ff8-aa3a-1d91dad90d2a/savingsPlans/2035abf9-4697-4220-b158-dbff2a0dc073?api-version=2022-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-60021cb70589b1488c19225cf9b936f2-edaeba21cb7d0e4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.BillingBenefits/1.0.0-alpha.20221116.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "11512083b8f5a4334cf927c8954bafe6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1533",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 17 Nov 2022 02:18:43 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "581e45e4-f84c-4af5-8562-48757e4b0826",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "11512083b8f5a4334cf927c8954bafe6",
+        "x-ms-routing-request-id": "WESTUS:20221117T021844Z:581e45e4-f84c-4af5-8562-48757e4b0826",
+        "x-ms-version": "1.0.2141.1412"
+      },
+      "ResponseBody": {
+        "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/b538c0a7-b852-4ff8-aa3a-1d91dad90d2a/savingsPlans/2035abf9-4697-4220-b158-dbff2a0dc073",
+        "name": "2035abf9-4697-4220-b158-dbff2a0dc073",
+        "type": "microsoft.billingbenefits/savingsPlanOrders/savingsPlans",
+        "sku": {
+          "name": "Compute_Savings_Plan"
+        },
+        "properties": {
+          "billingScopeId": "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47",
+          "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+          "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+          "billingPlan": "P1M",
+          "appliedScopeProperties": {
+            "resourceGroupId": "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47/resourcegroups/TestRG",
+            "displayName": "TestRG"
+          },
+          "commitment": {
+            "grain": "Hourly",
+            "currencyCode": "USD",
+            "amount": 0.001
+          },
+          "renew": false,
+          "appliedScopeType": "Single",
+          "displayName": "TestSP_3",
+          "provisioningState": "Succeeded",
+          "term": "P3Y",
+          "displayProvisioningState": "Succeeded",
+          "userFriendlyAppliedScopeType": "ResourceGroup",
+          "expiryDateTime": "2025-11-16T02:14:36.5807954Z",
+          "purchaseDateTime": "2022-11-16T02:12:26.8754615Z",
+          "benefitStartTime": "2022-11-16T02:14:36.5807954Z",
+          "effectiveDateTime": "2022-11-17T02:16:47.9098437Z",
+          "utilization": {
+            "trend": "",
+            "aggregates": [
+              {
+                "grain": 1.0,
+                "grainUnit": "days",
+                "value": 0.0,
+                "valueUnit": "percentage"
+              },
+              {
+                "grain": 7.0,
+                "grainUnit": "days",
+                "value": 0.0,
+                "valueUnit": "percentage"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.BillingBenefits/savingsPlanOrders/b538c0a7-b852-4ff8-aa3a-1d91dad90d2a/savingsPlans/2035abf9-4697-4220-b158-dbff2a0dc073?api-version=2022-11-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "44",
+        "Content-Type": "application/json",
+        "traceparent": "00-347a32d474531b4281de020f3fa1b542-feffd1e8e53e7b47-00",
+        "User-Agent": "azsdk-net-ResourceManager.BillingBenefits/1.0.0-alpha.20221116.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "9f9351de8d495aa7a017f95ac8e31822",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "displayName": "TestSP_3New"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1536",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 17 Nov 2022 02:18:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "12e46911-d38e-493d-9e91-935debc2af34",
+        "x-ms-ratelimit-remaining-tenant-writes": "1199",
+        "x-ms-request-id": "9f9351de8d495aa7a017f95ac8e31822",
+        "x-ms-routing-request-id": "WESTUS:20221117T021852Z:12e46911-d38e-493d-9e91-935debc2af34",
+        "x-ms-version": "1.0.2141.1412"
+      },
+      "ResponseBody": {
+        "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/b538c0a7-b852-4ff8-aa3a-1d91dad90d2a/savingsPlans/2035abf9-4697-4220-b158-dbff2a0dc073",
+        "name": "2035abf9-4697-4220-b158-dbff2a0dc073",
+        "type": "microsoft.billingbenefits/savingsPlanOrders/savingsPlans",
+        "sku": {
+          "name": "Compute_Savings_Plan"
+        },
+        "properties": {
+          "billingScopeId": "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47",
+          "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+          "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+          "billingPlan": "P1M",
+          "appliedScopeProperties": {
+            "resourceGroupId": "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47/resourcegroups/TestRG",
+            "displayName": "TestRG"
+          },
+          "commitment": {
+            "grain": "Hourly",
+            "currencyCode": "USD",
+            "amount": 0.001
+          },
+          "renew": false,
+          "appliedScopeType": "Single",
+          "displayName": "TestSP_3New",
+          "provisioningState": "Succeeded",
+          "term": "P3Y",
+          "displayProvisioningState": "Succeeded",
+          "userFriendlyAppliedScopeType": "ResourceGroup",
+          "expiryDateTime": "2025-11-16T02:14:36.5807954Z",
+          "purchaseDateTime": "2022-11-16T02:12:26.8754615Z",
+          "benefitStartTime": "2022-11-16T02:14:36.5807954Z",
+          "effectiveDateTime": "2022-11-17T02:18:48.6504967Z",
+          "utilization": {
+            "trend": "",
+            "aggregates": [
+              {
+                "grain": 1.0,
+                "grainUnit": "days",
+                "value": 0.0,
+                "valueUnit": "percentage"
+              },
+              {
+                "grain": 7.0,
+                "grainUnit": "days",
+                "value": 0.0,
+                "valueUnit": "percentage"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.BillingBenefits/savingsPlanOrders/b538c0a7-b852-4ff8-aa3a-1d91dad90d2a/savingsPlans/2035abf9-4697-4220-b158-dbff2a0dc073?api-version=2022-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-934b04edf5eeea4aafa3367c1a4139c6-ed777bc99848c24e-00",
+        "User-Agent": "azsdk-net-ResourceManager.BillingBenefits/1.0.0-alpha.20221116.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "83ca4d47ed5cb07bf9f83f8cbdca874d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1536",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 17 Nov 2022 02:18:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9466f4ab-0cdc-44f4-abd7-3e94a84a124d",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "83ca4d47ed5cb07bf9f83f8cbdca874d",
+        "x-ms-routing-request-id": "WESTUS:20221117T021852Z:9466f4ab-0cdc-44f4-abd7-3e94a84a124d",
+        "x-ms-version": "1.0.2141.1412"
+      },
+      "ResponseBody": {
+        "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/b538c0a7-b852-4ff8-aa3a-1d91dad90d2a/savingsPlans/2035abf9-4697-4220-b158-dbff2a0dc073",
+        "name": "2035abf9-4697-4220-b158-dbff2a0dc073",
+        "type": "microsoft.billingbenefits/savingsPlanOrders/savingsPlans",
+        "sku": {
+          "name": "Compute_Savings_Plan"
+        },
+        "properties": {
+          "billingScopeId": "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47",
+          "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+          "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+          "billingPlan": "P1M",
+          "appliedScopeProperties": {
+            "resourceGroupId": "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47/resourcegroups/TestRG",
+            "displayName": "TestRG"
+          },
+          "commitment": {
+            "grain": "Hourly",
+            "currencyCode": "USD",
+            "amount": 0.001
+          },
+          "renew": false,
+          "appliedScopeType": "Single",
+          "displayName": "TestSP_3New",
+          "provisioningState": "Succeeded",
+          "term": "P3Y",
+          "displayProvisioningState": "Succeeded",
+          "userFriendlyAppliedScopeType": "ResourceGroup",
+          "expiryDateTime": "2025-11-16T02:14:36.5807954Z",
+          "purchaseDateTime": "2022-11-16T02:12:26.8754615Z",
+          "benefitStartTime": "2022-11-16T02:14:36.5807954Z",
+          "effectiveDateTime": "2022-11-17T02:18:48.6504967Z",
+          "utilization": {
+            "trend": "",
+            "aggregates": [
+              {
+                "grain": 1.0,
+                "grainUnit": "days",
+                "value": 0.0,
+                "valueUnit": "percentage"
+              },
+              {
+                "grain": 7.0,
+                "grainUnit": "days",
+                "value": 0.0,
+                "valueUnit": "percentage"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "629723319",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "eef82110-c91b-4395-9420-fcfcbefc5a47"
+  }
+}

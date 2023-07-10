@@ -56,7 +56,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
 
             // Initialize transferManager
@@ -233,7 +233,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             TransferManager transferManager = new TransferManager(managerOptions);

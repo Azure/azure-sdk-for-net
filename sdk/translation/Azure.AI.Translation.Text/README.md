@@ -58,11 +58,9 @@ update the API key without creating a new client.
 
 With the value of the endpoint, `AzureKeyCredential` and a `Region`, you can create the [TextTranslationClient][translator_client_class]:
 
-```C# Snippet:CreateTextTranslationClient
-string endpoint = "<Text Translator Resource Endpoint>";
-string apiKey = "<Text Translator Resource API Key>";
-string region = "<Text Translator Azure Region>";
-TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), new Uri(endpoint), region);
+```C#
+AzureKeyCredential credential = new("<apiKey>");
+TextTranslationClient client = new(credential, "<region>");
 ```
 
 ## Key concepts
@@ -103,7 +101,7 @@ The following section provides several code snippets using the `client` [created
 
 Gets the set of languages currently supported by other operations of the Translator.
 
-```C# Snippet:GetTextTranslationLanguagesAsync
+```C#
 try
 {
     Response<GetLanguagesResult> response = await client.GetLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
@@ -126,7 +124,7 @@ Please refer to the service documentation for a conceptual discussion of [langua
 
 Renders single source-language text to multiple target-language texts with a single request.
 
-```C# Snippet:GetTextTranslationAsync
+```C#
 try
 {
     string targetLanguage = "cs";
@@ -154,7 +152,7 @@ Please refer to the service documentation for a conceptual discussion of [transl
 
 Converts characters or letters of a source language to the corresponding characters or letters of a target language.
 
-```C# Snippet:GetTransliteratedTextAsync
+```C#
 try
 {
     string language = "zh-Hans";
@@ -184,7 +182,7 @@ Please refer to the service documentation for a conceptual discussion of [transl
 
 Identifies the positioning of sentence boundaries in a piece of text.
 
-```C# Snippet:FindTextSentenceBoundariesAsync
+```C#
 try
 {
     string inputText = "How are you? I am fine. What did you do today?";
@@ -195,6 +193,7 @@ try
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
     Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+
 }
 catch (RequestFailedException exception)
 {
@@ -211,7 +210,7 @@ Please refer to the service documentation for a conceptual discussion of [break 
 
 Returns equivalent words for the source term in the target language.
 
-```C# Snippet:LookupDictionaryEntriesAsync
+```C#
 try
 {
     string sourceLanguage = "en";
@@ -224,6 +223,7 @@ try
 
     Console.WriteLine($"For the given input {dictionaryEntry?.Translations?.Count} entries were found in the dictionary.");
     Console.WriteLine($"First entry: '{dictionaryEntry?.Translations?.FirstOrDefault()?.DisplayTarget}', confidence: {dictionaryEntry?.Translations?.FirstOrDefault()?.Confidence}.");
+
 }
 catch (RequestFailedException exception)
 {
@@ -240,7 +240,7 @@ Please refer to the service documentation for a conceptual discussion of [dictio
 
 Returns grammatical structure and context examples for the source term and target term pair.
 
-```C# Snippet:GetGrammaticalStructureAsync
+```C#
 try
 {
     string sourceLanguage = "en";
@@ -257,6 +257,7 @@ try
     Console.WriteLine($"For the given input {dictionaryEntry?.Examples?.Count} examples were found in the dictionary.");
     DictionaryExample firstExample = dictionaryEntry?.Examples?.FirstOrDefault();
     Console.WriteLine($"Example: '{string.Concat(firstExample.TargetPrefix, firstExample.TargetTerm, firstExample.TargetSuffix)}'.");
+
 }
 catch (RequestFailedException exception)
 {
@@ -275,10 +276,10 @@ When you interact with the Translator Service using the Text Translation client 
 
 For example, if you submit a translation request without a target translate language, a `400` error is returned, indicating "Bad Request".
 
-```C# Snippet:HandleBadRequestAsync
+```C#
 try
 {
-    var translation = await client.TranslateAsync(Array.Empty<string>(), new[] { "This is a Test" }).ConfigureAwait(false);
+    var translation = client.TranslateAsync(Array.Empty<string>(), new[] { new InputText { Text = "This is a Test" } }).ConfigureAwait(false);
 }
 catch (RequestFailedException e)
 {
@@ -311,7 +312,7 @@ Headers:
 The simplest way to see the logs is to enable the console logging.
 To create an Azure SDK log listener that outputs messages to console use AzureEventSourceListener.CreateConsoleLogger method.
 
-```C# Snippet:CreateLoggingMonitor
+```C#
 // Setup a listener to monitor logged events.
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```

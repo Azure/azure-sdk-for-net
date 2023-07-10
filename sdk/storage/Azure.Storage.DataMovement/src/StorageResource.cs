@@ -16,9 +16,9 @@ namespace Azure.Storage.DataMovement
         protected StorageResource() { }
 
         /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
+        /// Defines whether we can produce a Uri.
         /// </summary>
-        public abstract bool CanProduceUri { get; }
+        public abstract ProduceUriType CanProduceUri { get; }
 
         /// <summary>
         /// Gets the Uri.

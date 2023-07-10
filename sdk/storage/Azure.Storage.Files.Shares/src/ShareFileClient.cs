@@ -471,7 +471,6 @@ namespace Azure.Storage.Files.Shares
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString(),
                 fileRequestIntent: _clientConfiguration.ClientOptions.ShareTokenIntent,
                 allowTrailingDot: _clientConfiguration.ClientOptions.AllowTrailingDot,
-                fileRangeWriteFromUrl: "update",
                 allowSourceTrailingDot: _clientConfiguration.ClientOptions.AllowSourceTrailingDot);
         }
         #endregion ctors

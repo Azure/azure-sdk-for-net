@@ -22,11 +22,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
-            if (Optional.IsDefined(PartnerDestinationInfo))
-            {
-                writer.WritePropertyName("partnerDestinationInfo"u8);
-                writer.WriteObjectValue(PartnerDestinationInfo);
-            }
             if (Optional.IsDefined(PartnerTopicInfo))
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);

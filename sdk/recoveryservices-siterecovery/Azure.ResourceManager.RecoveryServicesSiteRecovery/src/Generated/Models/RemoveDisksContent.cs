@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Remove disk input properties. </summary>
-        internal RemoveDisksContentProperties Properties { get; set; }
+        internal RemoveDisksInputProperties Properties { get; set; }
         /// <summary>
         /// The ReplicationProviderInput. For HyperVReplicaAzure provider, it will be AzureEnableProtectionInput object. For San provider, it will be SanEnableProtectionInput object. For HyperVReplicaAzure provider, it can be null.
-        /// Please note <see cref="RemoveDisksProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2ARemoveDisksContent"/>.
+        /// Please note <see cref="RemoveDisksProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2ARemoveDisksInput"/>.
         /// </summary>
-        public RemoveDisksProviderSpecificContent RemoveDisksContentProviderSpecificDetails
+        public RemoveDisksProviderSpecificInput RemoveDisksInputProviderSpecificDetails
         {
             get => Properties is null ? default : Properties.ProviderSpecificDetails;
             set
             {
                 if (Properties is null)
-                    Properties = new RemoveDisksContentProperties();
+                    Properties = new RemoveDisksInputProperties();
                 Properties.ProviderSpecificDetails = value;
             }
         }

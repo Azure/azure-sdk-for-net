@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 return null;
             }
-            Optional<ReplicationEligibilityResultProperties> properties = default;
+            Optional<ReplicationEligibilityResultsProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     {
                         continue;
                     }
-                    properties = ReplicationEligibilityResultProperties.DeserializeReplicationEligibilityResultProperties(property.Value);
+                    properties = ReplicationEligibilityResultsProperties.DeserializeReplicationEligibilityResultsProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

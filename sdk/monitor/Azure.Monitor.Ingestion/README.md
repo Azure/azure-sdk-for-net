@@ -251,7 +251,9 @@ Console.WriteLine("Table entry count: " +
 
 ## Troubleshooting
 
-For details on diagnosing various failure scenarios, see our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Ingestion/TROUBLESHOOTING.md).
+### Enabling logging
+
+The Azure SDK for .NET offers a consistent logging story to aid in troubleshooting application errors and expedite their resolution. The logs produced will capture the application's flow before reaching the terminal state to help locate the root issue. For information on enabling logging, see [Logging with the Azure SDK for .NET][logging].
 
 ## Next steps
 

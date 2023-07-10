@@ -98,7 +98,6 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
         {
             var data = new CognitiveServicesAccountDeploymentData()
             {
-                Sku = new CognitiveServicesSku("Standard", null, null, null, 1),
                 Properties = new CognitiveServicesAccountDeploymentProperties
                 {
                     Model = new CognitiveServicesAccountDeploymentModel()
@@ -106,6 +105,10 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
                         Name = "text-ada-001",
                         Format = "OpenAI",
                         Version = "1"
+                    },
+                    ScaleSettings = new CognitiveServicesAccountDeploymentScaleSettings()
+                    {
+                         ScaleType = CognitiveServicesAccountDeploymentScaleType.Standard,
                     }
                 }
             };

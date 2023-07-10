@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> scenarioName = default;
-            Optional<ResourceIdentifier> jobId = default;
+            Optional<string> jobId = default;
             Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -31,11 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("jobId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    jobId = new ResourceIdentifier(property.Value.GetString());
+                    jobId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))

@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ShareResourcesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllShareResources("<filter>", "<orderby>", new RequestContext()))
+            foreach (var item in client.GetAllShareResources())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ShareResourcesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllShareResources("<filter>", "<orderby>", new RequestContext()))
+            foreach (var item in client.GetAllShareResources("<filter>", "<orderby>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ShareResourcesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllShareResourcesAsync("<filter>", "<orderby>", new RequestContext()))
+            await foreach (var item in client.GetAllShareResourcesAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ShareResourcesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllShareResourcesAsync("<filter>", "<orderby>", new RequestContext()))
+            await foreach (var item in client.GetAllShareResourcesAsync("<filter>", "<orderby>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());

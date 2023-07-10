@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             Argument.AssertNotNull(recoveryAvailabilityType, nameof(recoveryAvailabilityType));
 
-            VmDisks = new ChangeTrackingList<A2AProtectionIntentDiskDetails>();
-            VmManagedDisks = new ChangeTrackingList<A2AProtectionIntentManagedDiskDetails>();
+            VmDisks = new ChangeTrackingList<A2AProtectionIntentDiskInputDetails>();
+            VmManagedDisks = new ChangeTrackingList<A2AProtectionIntentManagedDiskInputDetails>();
             RecoveryAvailabilityType = recoveryAvailabilityType;
             InstanceType = "A2A";
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
         /// <param name="automationAccountArmId"> The automation account arm id. </param>
         /// <param name="automationAccountAuthenticationType"> A value indicating the type authentication to use for automation Account. </param>
-        internal A2AReplicationIntentDetails(string instanceType, ResourceIdentifier fabricObjectId, AzureLocation? primaryLocation, AzureLocation? recoveryLocation, string recoverySubscriptionId, IReadOnlyList<A2AProtectionIntentDiskDetails> vmDisks, IReadOnlyList<A2AProtectionIntentManagedDiskDetails> vmManagedDisks, ResourceIdentifier recoveryResourceGroupId, ProtectionProfileCustomDetails protectionProfile, StorageAccountCustomDetails primaryStagingStorageAccount, RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySet, RecoveryVirtualNetworkCustomDetails recoveryVirtualNetwork, RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroup, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, string multiVmGroupName, string multiVmGroupId, StorageAccountCustomDetails recoveryBootDiagStorageAccount, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, string recoveryAvailabilityType, SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus, ResourceIdentifier automationAccountArmId, AutomationAccountAuthenticationType? automationAccountAuthenticationType) : base(instanceType)
+        internal A2AReplicationIntentDetails(string instanceType, string fabricObjectId, string primaryLocation, string recoveryLocation, string recoverySubscriptionId, IReadOnlyList<A2AProtectionIntentDiskInputDetails> vmDisks, IReadOnlyList<A2AProtectionIntentManagedDiskInputDetails> vmManagedDisks, string recoveryResourceGroupId, ProtectionProfileCustomDetails protectionProfile, StorageAccountCustomDetails primaryStagingStorageAccount, RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySet, RecoveryVirtualNetworkCustomDetails recoveryVirtualNetwork, RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroup, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, string multiVmGroupName, string multiVmGroupId, StorageAccountCustomDetails recoveryBootDiagStorageAccount, DiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, string recoveryAvailabilityType, AgentAutoUpdateStatus? agentAutoUpdateStatus, string automationAccountArmId, AutomationAccountAuthenticationType? automationAccountAuthenticationType) : base(instanceType)
         {
             FabricObjectId = fabricObjectId;
             PrimaryLocation = primaryLocation;
@@ -103,19 +103,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The fabric specific object Id of the virtual machine. </summary>
-        public ResourceIdentifier FabricObjectId { get; }
+        public string FabricObjectId { get; }
         /// <summary> The primary location for the virtual machine. </summary>
-        public AzureLocation? PrimaryLocation { get; }
+        public string PrimaryLocation { get; }
         /// <summary> The recovery location for the virtual machine. </summary>
-        public AzureLocation? RecoveryLocation { get; }
+        public string RecoveryLocation { get; }
         /// <summary> The recovery subscription Id of the virtual machine. </summary>
         public string RecoverySubscriptionId { get; }
         /// <summary> The list of vm disk details. </summary>
-        public IReadOnlyList<A2AProtectionIntentDiskDetails> VmDisks { get; }
+        public IReadOnlyList<A2AProtectionIntentDiskInputDetails> VmDisks { get; }
         /// <summary> The list of vm managed disk details. </summary>
-        public IReadOnlyList<A2AProtectionIntentManagedDiskDetails> VmManagedDisks { get; }
+        public IReadOnlyList<A2AProtectionIntentManagedDiskInputDetails> VmManagedDisks { get; }
         /// <summary> The recovery resource group id. </summary>
-        public ResourceIdentifier RecoveryResourceGroupId { get; }
+        public string RecoveryResourceGroupId { get; }
         /// <summary>
         /// The protection profile custom details.
         /// Please note <see cref="ProtectionProfileCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         public StorageAccountCustomDetails RecoveryBootDiagStorageAccount { get; }
         /// <summary> The recovery disk encryption information (for two pass flows). </summary>
-        public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; }
+        public DiskEncryptionInfo DiskEncryptionInfo { get; }
         /// <summary> The recovery availability zone. </summary>
         public string RecoveryAvailabilityZone { get; }
         /// <summary> The recovery availability type of the virtual machine. </summary>
         public string RecoveryAvailabilityType { get; }
         /// <summary> A value indicating whether the auto update is enabled. </summary>
-        public SiteRecoveryAgentAutoUpdateStatus? AgentAutoUpdateStatus { get; }
+        public AgentAutoUpdateStatus? AgentAutoUpdateStatus { get; }
         /// <summary> The automation account arm id. </summary>
-        public ResourceIdentifier AutomationAccountArmId { get; }
+        public string AutomationAccountArmId { get; }
         /// <summary> A value indicating the type authentication to use for automation Account. </summary>
         public AutomationAccountAuthenticationType? AutomationAccountAuthenticationType { get; }
     }

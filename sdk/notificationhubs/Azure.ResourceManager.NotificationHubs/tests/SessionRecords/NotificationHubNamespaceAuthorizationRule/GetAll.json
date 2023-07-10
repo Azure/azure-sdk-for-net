@@ -1,0 +1,150 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/NotificationHubRG-1156/providers/Microsoft.NotificationHubs/namespaces/azNotificationHubNamespace4667?api-version=2017-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-38160426c00f6846a518183165466ed8-51be573f9ce24542-00",
+        "User-Agent": "azsdk-net-ResourceManager.NotificationHubs/1.0.0-alpha.20220829.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "9b4cc90a3f50726a3b66aedd9585b545",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2014-09-01, 2016-03-01, 2017-04-01, 2020-01-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "616",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Aug 2022 09:22:48 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "TrackingId": "1ab3b323-4e7d-43ea-be9f-55e04a3546ee",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9b4cc90a3f50726a3b66aedd9585b545",
+        "x-ms-correlation-request-id": "6d2d3ccc-049f-4e6c-b1f5-c59b1fdb002e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11955",
+        "x-ms-request-id": "6d2d3ccc-049f-4e6c-b1f5-c59b1fdb002e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220829T092249Z:6d2d3ccc-049f-4e6c-b1f5-c59b1fdb002e"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "status": "Active",
+          "createdAt": "2022-08-29T09:22:16.2730000Z",
+          "updatedAt": "2022-08-29T09:22:46.8430000Z",
+          "serviceBusEndpoint": "https://azNotificationHubNamespace4667.servicebus.windows.net:443/",
+          "enabled": true,
+          "critical": false,
+          "zoneRedundant": false
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/NotificationHubRG-1156/providers/Microsoft.NotificationHubs/namespaces/azNotificationHubNamespace4667",
+        "name": "azNotificationHubNamespace4667",
+        "type": "Microsoft.NotificationHubs/namespaces",
+        "location": "East US",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/NotificationHubRG-1156/providers/Microsoft.NotificationHubs/namespaces/azNotificationHubNamespace4667/AuthorizationRules?api-version=2017-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-99375cf492379446ac1734457ab3e0a2-6856bbafee3b534f-00",
+        "User-Agent": "azsdk-net-ResourceManager.NotificationHubs/1.0.0-alpha.20220829.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "027a443862ef46dfaac7076368f588b5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2014-09-01, 2016-03-01, 2017-04-01, 2020-01-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1595",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Aug 2022 09:22:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "TrackingId": "b4b0a075-a780-41ed-b2b8-9d9fb72abb5a",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "027a443862ef46dfaac7076368f588b5",
+        "x-ms-correlation-request-id": "05b758c1-585c-42a3-beee-f266bba7769e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11954",
+        "x-ms-request-id": "05b758c1-585c-42a3-beee-f266bba7769e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220829T092250Z:05b758c1-585c-42a3-beee-f266bba7769e"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "rights": [
+                "Manage",
+                "Listen",
+                "Send"
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/NotificationHubRG-1156/providers/Microsoft.NotificationHubs/namespaces/azNotificationHubNamespace4667/AuthorizationRules/RootManageSharedAccessKey",
+            "name": "RootManageSharedAccessKey",
+            "type": "Microsoft.NotificationHubs/Namespaces/AuthorizationRules",
+            "location": "East US"
+          },
+          {
+            "properties": {
+              "rights": [
+                "Manage",
+                "Listen",
+                "Send"
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/NotificationHubRG-1156/providers/Microsoft.NotificationHubs/namespaces/azNotificationHubNamespace4667/AuthorizationRules/ManagesharedAccessKey5435",
+            "name": "ManagesharedAccessKey5435",
+            "type": "Microsoft.NotificationHubs/Namespaces/AuthorizationRules",
+            "location": "East US"
+          },
+          {
+            "properties": {
+              "rights": [
+                "Manage",
+                "Listen",
+                "Send"
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/NotificationHubRG-1156/providers/Microsoft.NotificationHubs/namespaces/azNotificationHubNamespace4667/AuthorizationRules/ManagesharedAccessKey8437",
+            "name": "ManagesharedAccessKey8437",
+            "type": "Microsoft.NotificationHubs/Namespaces/AuthorizationRules",
+            "location": "East US"
+          },
+          {
+            "properties": {
+              "rights": [
+                "Manage",
+                "Listen",
+                "Send"
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/NotificationHubRG-1156/providers/Microsoft.NotificationHubs/namespaces/azNotificationHubNamespace4667/AuthorizationRules/ManagesharedAccessKey3848",
+            "name": "ManagesharedAccessKey3848",
+            "type": "Microsoft.NotificationHubs/Namespaces/AuthorizationRules",
+            "location": "East US"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1075920587",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

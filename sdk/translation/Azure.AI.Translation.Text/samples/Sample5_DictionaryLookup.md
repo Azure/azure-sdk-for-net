@@ -6,19 +6,23 @@ All samples are using `client` created in [Create a `TextTranslationClient`][cre
 
 Returns equivalent words for the source term in the target language.
 
-```C# Snippet:LookupDictionaryEntriesAsync
+```C#
 try
 {
     string sourceLanguage = "en";
     string targetLanguage = "es";
-    string inputText = "fly";
+    IEnumerable<string> inputTextElements = new[]
+    {
+        "fly"
+    };
 
-    Response<IReadOnlyList<DictionaryLookupItem>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputText).ConfigureAwait(false);
+    Response<IReadOnlyList<DictionaryLookupItem>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
     IReadOnlyList<DictionaryLookupItem> dictionaryEntries = response.Value;
     DictionaryLookupItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
     Console.WriteLine($"For the given input {dictionaryEntry?.Translations?.Count} entries were found in the dictionary.");
     Console.WriteLine($"First entry: '{dictionaryEntry?.Translations?.FirstOrDefault()?.DisplayTarget}', confidence: {dictionaryEntry?.Translations?.FirstOrDefault()?.Confidence}.");
+
 }
 catch (RequestFailedException exception)
 {

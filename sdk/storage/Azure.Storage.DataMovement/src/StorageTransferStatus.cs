@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
-
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
@@ -33,7 +31,7 @@ namespace Azure.Storage.DataMovement
         /// this will be the value.
         ///
         /// This status is a resumable state, only
-        /// transfers that failed will be retried when <see cref="TransferManager.StartTransferAsync(StorageResource, StorageResource, Models.TransferOptions, CancellationToken)"/>
+        /// transfers that failed will be retried when <see cref="TransferManager.StartTransferAsync(StorageResource, StorageResource, Models.TransferOptions)"/>
         /// with the respective transfer ID to resume.
         /// </summary>
         Paused = 3,

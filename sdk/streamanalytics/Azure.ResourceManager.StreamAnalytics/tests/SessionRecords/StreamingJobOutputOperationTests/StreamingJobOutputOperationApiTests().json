@@ -1,0 +1,376 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-9d4c3bbb1be30d49a1544ce5027924e1-d244b904a6286e49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "432147a42d9b2a439ad7992541e6daf7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Aug 2022 07:53:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f0368faa-a90b-4c6a-a33b-d12aee4cb170",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "f0368faa-a90b-4c6a-a33b-d12aee4cb170",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220829T075351Z:f0368faa-a90b-4c6a-a33b-d12aee4cb170"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-5537?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "traceparent": "00-046d17fe8d29d54493b4c1a94aea878e-7e5ed2ed11df9d47-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "7f45be034a1ab9d5f85d926e6281a035",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "test": "env"
+        },
+        "location": "westus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Aug 2022 07:53:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "478ff56f-6089-4cc2-9cbe-addae27a0248",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "478ff56f-6089-4cc2-9cbe-addae27a0248",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220829T075353Z:478ff56f-6089-4cc2-9cbe-addae27a0248"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5537",
+        "name": "testRG-5537",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-5537/providers/Microsoft.StreamAnalytics/streamingjobs/testJobOutput-2345?api-version=2021-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "256",
+        "Content-Type": "application/json",
+        "traceparent": "00-48f4f0d7301c6b4288aa96da0711b905-30b7ff7778c53144-00",
+        "User-Agent": "azsdk-net-ResourceManager.StreamAnalytics/1.0.0-alpha.20220829.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3b2dcc6d5524ef6c1e032ba2f27cee9b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "westus",
+        "properties": {
+          "sku": {
+            "name": "Standard"
+          },
+          "eventsOutOfOrderPolicy": "Drop",
+          "outputErrorPolicy": "Drop",
+          "eventsOutOfOrderMaxDelayInSeconds": 0,
+          "eventsLateArrivalMaxDelayInSeconds": 5,
+          "dataLocale": "en-US",
+          "compatibilityLevel": "1.0"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "792",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Aug 2022 07:54:01 GMT",
+        "ETag": "82f1da26-e45a-4488-b6cc-1925289d6440",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNetMvc-Version": "5.0",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7735cf2c-a589-4d9c-a1fb-66d1a105246c",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "3b2dcc6d-5524-ef6c-1e03-2ba2f27cee9b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220829T075401Z:7735cf2c-a589-4d9c-a1fb-66d1a105246c",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5537/providers/Microsoft.StreamAnalytics/streamingjobs/testJobOutput-2345",
+        "name": "testJobOutput-2345",
+        "type": "Microsoft.StreamAnalytics/streamingjobs",
+        "location": "West US",
+        "tags": {},
+        "properties": {
+          "sku": {
+            "name": "Standard"
+          },
+          "jobId": "7052df65-64f6-498b-ab97-1a7314b93162",
+          "provisioningState": "Succeeded",
+          "jobState": "Created",
+          "eventsOutOfOrderPolicy": "Drop",
+          "outputErrorPolicy": "Drop",
+          "eventsOutOfOrderMaxDelayInSeconds": 0,
+          "eventsLateArrivalMaxDelayInSeconds": 5,
+          "dataLocale": "en-US",
+          "createdDate": "2022-08-29T07:54:00.71Z",
+          "compatibilityLevel": "1.0",
+          "jobStorageAccount": null,
+          "contentStoragePolicy": "SystemAccount",
+          "inputs": [],
+          "functions": [],
+          "outputs": [],
+          "jobType": "Cloud",
+          "cluster": null
+        },
+        "sku": {
+          "name": "Standard"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-5537/providers/Microsoft.StreamAnalytics/streamingjobs/testJobOutput-2345/outputs/testJobOutput-2345?api-version=2021-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "365",
+        "Content-Type": "application/json",
+        "traceparent": "00-2d67e3b1372ed04c8287cf87b32e5d85-d971f94c9f175a40-00",
+        "User-Agent": "azsdk-net-ResourceManager.StreamAnalytics/1.0.0-alpha.20220829.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0e780c84c4caad9f515561161e33c67c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "datasource": {
+            "type": "Microsoft.Storage/Blob",
+            "properties": {
+              "storageAccounts": [
+                {
+                  "accountName": "myhditest0811hdistorage",
+                  "accountKey": "$testAccountName$"
+                }
+              ],
+              "container": "differentContainer",
+              "pathPattern": "{date}/{time}",
+              "dateFormat": "yyyy/MM/dd",
+              "timeFormat": "HH"
+            }
+          },
+          "serialization": {
+            "type": "Csv",
+            "properties": {
+              "fieldDelimiter": ",",
+              "encoding": "UTF8"
+            }
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "672",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Aug 2022 07:54:02 GMT",
+        "ETag": "6e46c998-1058-4ed8-a3bd-d5f037b7681f",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNetMvc-Version": "5.0",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "590d5323-d95f-4711-984a-e54912517a81",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "0e780c84-c4ca-ad9f-5155-61161e33c67c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220829T075402Z:590d5323-d95f-4711-984a-e54912517a81",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5537/providers/Microsoft.StreamAnalytics/streamingjobs/testJobOutput-2345/outputs/testJobOutput-2345",
+        "name": "testJobOutput-2345",
+        "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
+        "properties": {
+          "datasource": {
+            "type": "Microsoft.Storage/Blob",
+            "properties": {
+              "blobPathPrefix": "{date}/{time}",
+              "storageAccounts": [
+                {
+                  "accountName": "myhditest0811hdistorage"
+                }
+              ],
+              "container": "differentContainer",
+              "pathPattern": "{date}/{time}",
+              "dateFormat": "yyyy/MM/dd",
+              "timeFormat": "HH",
+              "authenticationMode": "ConnectionString"
+            }
+          },
+          "serialization": {
+            "type": "Csv",
+            "properties": {
+              "fieldDelimiter": ",",
+              "encoding": "UTF8"
+            }
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-5537/providers/Microsoft.StreamAnalytics/streamingjobs/testJobOutput-2345/outputs/testJobOutput-2345?api-version=2021-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9e53e73b84b38446b233f5886eb49d41-e57174bed7e5524b-00",
+        "User-Agent": "azsdk-net-ResourceManager.StreamAnalytics/1.0.0-alpha.20220829.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "eb47f76ef9e348919e56cd41218658f1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "672",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Aug 2022 07:54:02 GMT",
+        "ETag": "6e46c998-1058-4ed8-a3bd-d5f037b7681f",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNetMvc-Version": "5.0",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c8279b46-cd59-42ee-be65-9f86f825b78b",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "199",
+        "x-ms-request-id": "eb47f76e-f9e3-4891-9e56-cd41218658f1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220829T075403Z:c8279b46-cd59-42ee-be65-9f86f825b78b",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5537/providers/Microsoft.StreamAnalytics/streamingjobs/testJobOutput-2345/outputs/testJobOutput-2345",
+        "name": "testJobOutput-2345",
+        "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
+        "properties": {
+          "datasource": {
+            "type": "Microsoft.Storage/Blob",
+            "properties": {
+              "blobPathPrefix": "{date}/{time}",
+              "storageAccounts": [
+                {
+                  "accountName": "myhditest0811hdistorage"
+                }
+              ],
+              "container": "differentContainer",
+              "pathPattern": "{date}/{time}",
+              "dateFormat": "yyyy/MM/dd",
+              "timeFormat": "HH",
+              "authenticationMode": "ConnectionString"
+            }
+          },
+          "serialization": {
+            "type": "Csv",
+            "properties": {
+              "fieldDelimiter": ",",
+              "encoding": "UTF8"
+            }
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-5537/providers/Microsoft.StreamAnalytics/streamingjobs/testJobOutput-2345/outputs/testJobOutput-2345?api-version=2021-10-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ac898eadb20a6b42a90803d41a5f7dea-559d0ad4124e6244-00",
+        "User-Agent": "azsdk-net-ResourceManager.StreamAnalytics/1.0.0-alpha.20220829.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "e61d128fdf0361d1d7f0544ec217b83a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "0",
+        "Content-Type": "application/json",
+        "Date": "Mon, 29 Aug 2022 07:54:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNetMvc-Version": "5.0",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "86677f08-49a2-4823-ae98-e30734d8337e",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "e61d128f-df03-61d1-d7f0-544ec217b83a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220829T075403Z:86677f08-49a2-4823-ae98-e30734d8337e",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1733514926",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

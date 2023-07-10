@@ -38,13 +38,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            writer.WritePropertyName("statements"u8);
-            writer.WriteStartArray();
-            foreach (var item in Statements)
+            if (Optional.IsDefined(Description))
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
-            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Conditions))
+            {
+                writer.WritePropertyName("conditions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Conditions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -62,7 +70,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
-            IList<RoutePolicyStatementProperties> statements = default;
+            Optional<string> description = default;
+            Optional<IList<RoutePolicyPropertiesConditionsItem>> conditions = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -123,14 +132,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             annotation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("statements"u8))
+                        if (property0.NameEquals("description"u8))
                         {
-                            List<RoutePolicyStatementProperties> array = new List<RoutePolicyStatementProperties>();
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("conditions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<RoutePolicyPropertiesConditionsItem> array = new List<RoutePolicyPropertiesConditionsItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutePolicyStatementProperties.DeserializeRoutePolicyStatementProperties(item));
+                                array.Add(RoutePolicyPropertiesConditionsItem.DeserializeRoutePolicyPropertiesConditionsItem(item));
                             }
-                            statements = array;
+                            conditions = array;
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -146,7 +164,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new RoutePolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, statements, Optional.ToNullable(provisioningState));
+            return new RoutePolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, description.Value, Optional.ToList(conditions), Optional.ToNullable(provisioningState));
         }
     }
 }

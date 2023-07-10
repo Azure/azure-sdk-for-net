@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NniType))
-            {
-                writer.WritePropertyName("nniType"u8);
-                writer.WriteStringValue(NniType.Value.ToString());
-            }
             if (Optional.IsDefined(IsManagementType))
             {
                 writer.WritePropertyName("isManagementType"u8);
@@ -58,11 +53,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<NniType> nniType = default;
             Optional<EnabledDisabledState> administrativeState = default;
             Optional<BooleanEnumProperty> isManagementType = default;
             Optional<BooleanEnumProperty> useOptionB = default;
-            Optional<Layer2Configuration> layer2Configuration = default;
+            Optional<NetworkToNetworkInterconnectPropertiesLayer2Configuration> layer2Configuration = default;
             Optional<Layer3Configuration> layer3Configuration = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -100,15 +94,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("nniType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            nniType = new NniType(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("administrativeState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -142,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(property0.Value);
+                            layer2Configuration = NetworkToNetworkInterconnectPropertiesLayer2Configuration.DeserializeNetworkToNetworkInterconnectPropertiesLayer2Configuration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("layer3Configuration"u8))
@@ -167,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkToNetworkInterconnectData(id, name, type, systemData.Value, Optional.ToNullable(nniType), Optional.ToNullable(administrativeState), Optional.ToNullable(isManagementType), Optional.ToNullable(useOptionB), layer2Configuration.Value, layer3Configuration.Value, Optional.ToNullable(provisioningState));
+            return new NetworkToNetworkInterconnectData(id, name, type, systemData.Value, Optional.ToNullable(administrativeState), Optional.ToNullable(isManagementType), Optional.ToNullable(useOptionB), layer2Configuration.Value, layer3Configuration.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

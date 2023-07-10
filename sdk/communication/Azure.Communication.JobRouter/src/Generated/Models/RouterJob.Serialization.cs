@@ -101,10 +101,10 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(MatchingMode))
+            if (Optional.IsDefined(_matchingMode))
             {
                 writer.WritePropertyName("matchingMode"u8);
-                writer.WriteObjectValue(MatchingMode);
+                writer.WriteObjectValue(_matchingMode);
             }
             writer.WriteEndObject();
         }
@@ -131,7 +131,7 @@ namespace Azure.Communication.JobRouter.Models
             Optional<IDictionary<string, object>> tags = default;
             Optional<IDictionary<string, string>> notes = default;
             Optional<DateTimeOffset> scheduledAt = default;
-            Optional<JobMatchingMode> matchingMode = default;
+            Optional<JobMatchingModeInternal> matchingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -304,7 +304,7 @@ namespace Azure.Communication.JobRouter.Models
                     {
                         continue;
                     }
-                    matchingMode = JobMatchingMode.DeserializeJobMatchingMode(property.Value);
+                    matchingMode = JobMatchingModeInternal.DeserializeJobMatchingModeInternal(property.Value);
                     continue;
                 }
             }

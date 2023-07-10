@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownConfigurationSettings. </summary>
-    internal partial class UnknownConfigurationSettings : SiteRecoveryReplicationProviderSettings
+    internal partial class UnknownConfigurationSettings : ConfigurationSettings
     {
         /// <summary> Initializes a new instance of UnknownConfigurationSettings. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>

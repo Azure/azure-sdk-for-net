@@ -6,13 +6,9 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Used to specify a match mode when no action is taken on a job.
     /// </summary>
-    public class SuspendMode
+    public class SuspendMode : JobMatchingMode
     {
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        public SuspendMode()
-        {
-        }
+        /// <inheritdoc />
+        public override string Kind => nameof(SuspendMode);
     }
 }

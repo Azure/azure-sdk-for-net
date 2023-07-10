@@ -11,7 +11,6 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry.PersistentStorage.Abstractions;
@@ -53,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Transmit
             var mockResponse = new MockResponse(200).SetContent("Ok");
             using var transmitter = GetTransmitter(mockResponse);
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -71,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
             using var transmitter = GetTransmitter(mockResponse);
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -91,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("Too Many Requests");
             using var transmitter = GetTransmitter(mockResponse);
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -117,7 +116,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("{\"itemsReceived\": 3,\"itemsAccepted\": 1,\"errors\":[{\"index\": 0,\"statusCode\": 429,\"message\": \"Throttle\"},{\"index\": 1,\"statusCode\": 429,\"message\": \"Throttle\"}]}");
             using var transmitter = GetTransmitter(mockResponse);
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -148,7 +147,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var mockResponseSuccess = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
             var transmitter = GetTransmitter(mockResponseError, mockResponseSuccess);
 
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -182,7 +181,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var mockResponseSuccess = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
             var transmitter = GetTransmitter(mockResponseError, mockResponseSuccess);
 
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -210,7 +209,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
             var transmitter = GetTransmitter(mockResponse, mockResponse);
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
             Assert.NotNull(transmitter._fileBlobProvider);
@@ -227,34 +226,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Assert
             // Blob will not be deleted as the transmission state is open.
             Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
-            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
-
-            transmitter.Dispose();
-        }
-
-        [Fact]
-        public void TelemetryIsStoredOfflineWhenTransmissionStateIsSetToOpen()
-        {
-            using var activity = CreateActivity("TestActivity");
-            var telemetryItem = CreateTelemetryItem(activity);
-            List<TelemetryItem> telemetryItems = new List<TelemetryItem>
-            {
-                telemetryItem
-            };
-
-            var mockResponse = new MockResponse(200).SetContent("Ok");
-            var transmitter = GetTransmitter(mockResponse);
-
-            // Set the state to Open
-            transmitter._transmissionStateManager.OpenTransmission();
-            Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
-
-            // Transmit
-            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
-
-            //Assert
-            // Telemetry should be stored offline as the state is open.
-            Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
 
             transmitter.Dispose();

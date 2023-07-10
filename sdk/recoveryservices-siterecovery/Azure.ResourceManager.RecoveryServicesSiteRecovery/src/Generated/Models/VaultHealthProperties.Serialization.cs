@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> vaultErrors = default;
+            Optional<IReadOnlyList<HealthError>> vaultErrors = default;
             Optional<ResourceHealthSummary> protectedItemsHealth = default;
             Optional<ResourceHealthSummary> fabricsHealth = default;
             Optional<ResourceHealthSummary> containersHealth = default;
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
+                    List<HealthError> array = new List<HealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(HealthError.DeserializeHealthError(item));
                     }
                     vaultErrors = array;
                     continue;

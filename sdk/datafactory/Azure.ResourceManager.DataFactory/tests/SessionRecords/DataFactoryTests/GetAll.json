@@ -1,0 +1,180 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/DataFactory-RG-2548?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b824e6b5d198e166be0fe8c252d80ee4-30ce159f1d71573c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "817038c556fda2ceeb595cb1a99158eb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "236",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 01 Aug 2022 13:13:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fac7cf12-823f-43c2-bcb5-21194f5d512e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11896",
+        "x-ms-request-id": "fac7cf12-823f-43c2-bcb5-21194f5d512e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220801T131337Z:fac7cf12-823f-43c2-bcb5-21194f5d512e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2548",
+        "name": "DataFactory-RG-2548",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus2",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2548/providers/Microsoft.DataFactory/factories/dataFactory-1682?api-version=2018-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "48",
+        "Content-Type": "application/json",
+        "traceparent": "00-e705be7fed76b531e2b11cd469f7c51e-bac61417c85b80b4-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataFactory/1.0.0-alpha.20220801.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "d22525892af46d509c5078ed265b2d7f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "westus2",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "466",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 01 Aug 2022 13:13:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b35b494d-04dd-4745-ac9d-76a44f641048",
+        "x-ms-ratelimit-remaining-subscription-writes": "1116",
+        "x-ms-request-id": "b35b494d-04dd-4745-ac9d-76a44f641048",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220801T131341Z:b35b494d-04dd-4745-ac9d-76a44f641048"
+      },
+      "ResponseBody": {
+        "name": "dataFactory-1682",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-2548/providers/Microsoft.DataFactory/factories/datafactory-1682",
+        "type": "Microsoft.DataFactory/factories",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "createTime": "2022-08-01T13:13:40.4739669Z",
+          "version": "2018-06-01"
+        },
+        "eTag": "\u00221c00d77e-0000-0800-0000-62e7d1840000\u0022",
+        "location": "westus2",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2548/providers/Microsoft.DataFactory/factories?api-version=2018-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-71bf99d2aa419fa7ced45c0e590487df-cc9ed01521fc1b5c-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataFactory/1.0.0-alpha.20220801.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "9993ce762f0bdd65ad10bc8fa18da4c6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2099",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 01 Aug 2022 13:13:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c8268312-8e14-4b02-a2c8-914ff6f8fddf",
+        "x-ms-ratelimit-remaining-subscription-reads": "11895",
+        "x-ms-request-id": "c8268312-8e14-4b02-a2c8-914ff6f8fddf",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220801T131341Z:c8268312-8e14-4b02-a2c8-914ff6f8fddf"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "dataFactory-8687",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-2548/providers/Microsoft.DataFactory/factories/datafactory-8687",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2022-08-01T13:13:17.1690097Z",
+              "version": "2018-06-01"
+            },
+            "eTag": "\u00221c00df7d-0000-0800-0000-62e7d16d0000\u0022",
+            "location": "westus2",
+            "tags": {}
+          },
+          {
+            "name": "dataFactory-5406",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-2548/providers/Microsoft.DataFactory/factories/datafactory-5406",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2022-08-01T13:13:30.1587471Z",
+              "version": "2018-06-01"
+            },
+            "eTag": "\u00221c00647e-0000-0800-0000-62e7d17a0000\u0022",
+            "location": "westus2",
+            "tags": {}
+          },
+          {
+            "name": "dataFactory-6854",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-2548/providers/Microsoft.DataFactory/factories/datafactory-6854",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2022-08-01T13:13:35.4536183Z",
+              "version": "2018-06-01"
+            },
+            "eTag": "\u00221c00a17e-0000-0800-0000-62e7d17f0000\u0022",
+            "location": "westus2",
+            "tags": {}
+          },
+          {
+            "name": "dataFactory-1682",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-2548/providers/Microsoft.DataFactory/factories/datafactory-1682",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2022-08-01T13:13:40.4739669Z",
+              "version": "2018-06-01"
+            },
+            "eTag": "\u00221c00d77e-0000-0800-0000-62e7d1840000\u0022",
+            "location": "westus2",
+            "tags": {}
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "794524779",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

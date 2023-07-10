@@ -18,16 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> targetStorageClassificationId = default;
+            Optional<string> targetStorageClassificationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetStorageClassificationId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetStorageClassificationId = new ResourceIdentifier(property.Value.GetString());
+                    targetStorageClassificationId = property.Value.GetString();
                     continue;
                 }
             }

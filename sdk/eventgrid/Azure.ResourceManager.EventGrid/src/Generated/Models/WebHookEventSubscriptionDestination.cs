@@ -34,8 +34,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
         /// </param>
-        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version that should be supported by webhook endpoint. </param>
-        internal WebHookEventSubscriptionDestination(EndpointType endpointType, Uri endpoint, Uri baseEndpoint, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, Guid? azureActiveDirectoryTenantId, string uriOrAzureActiveDirectoryApplicationId, IList<DeliveryAttributeMapping> deliveryAttributeMappings, TlsVersion? minimumTlsVersionAllowed) : base(endpointType)
+        internal WebHookEventSubscriptionDestination(EndpointType endpointType, Uri endpoint, Uri baseEndpoint, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, Guid? azureActiveDirectoryTenantId, string uriOrAzureActiveDirectoryApplicationId, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType)
         {
             Endpoint = endpoint;
             BaseEndpoint = baseEndpoint;
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             AzureActiveDirectoryTenantId = azureActiveDirectoryTenantId;
             UriOrAzureActiveDirectoryApplicationId = uriOrAzureActiveDirectoryApplicationId;
             DeliveryAttributeMappings = deliveryAttributeMappings;
-            MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
             EndpointType = endpointType;
         }
 
@@ -66,7 +64,5 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
         /// </summary>
         public IList<DeliveryAttributeMapping> DeliveryAttributeMappings { get; }
-        /// <summary> Minimum TLS version that should be supported by webhook endpoint. </summary>
-        public TlsVersion? MinimumTlsVersionAllowed { get; set; }
     }
 }

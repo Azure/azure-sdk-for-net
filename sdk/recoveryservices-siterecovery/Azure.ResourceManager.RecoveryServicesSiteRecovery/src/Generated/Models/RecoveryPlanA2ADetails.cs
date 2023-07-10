@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryZone"> The recovery zone. </param>
         /// <param name="primaryExtendedLocation"> The primary extended location. </param>
         /// <param name="recoveryExtendedLocation"> The recovery extended location. </param>
-        internal RecoveryPlanA2ADetails(string instanceType, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation) : base(instanceType)
+        internal RecoveryPlanA2ADetails(string instanceType, string primaryZone, string recoveryZone, ExtendedLocation primaryExtendedLocation, ExtendedLocation recoveryExtendedLocation) : base(instanceType)
         {
             PrimaryZone = primaryZone;
             RecoveryZone = recoveryZone;
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The recovery zone. </summary>
         public string RecoveryZone { get; }
         /// <summary> The primary extended location. </summary>
-        public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
+        public ExtendedLocation PrimaryExtendedLocation { get; }
         /// <summary> The recovery extended location. </summary>
-        public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
+        public ExtendedLocation RecoveryExtendedLocation { get; }
     }
 }

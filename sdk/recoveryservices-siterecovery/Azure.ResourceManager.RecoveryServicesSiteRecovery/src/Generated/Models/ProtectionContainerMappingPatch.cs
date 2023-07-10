@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Update protection container mapping input properties. </summary>
-        internal UpdateProtectionContainerMappingContentProperties Properties { get; set; }
+        internal UpdateProtectionContainerMappingInputProperties Properties { get; set; }
         /// <summary>
         /// Provider specific input for updating protection container mapping.
-        /// Please note <see cref="ReplicationProviderSpecificUpdateContainerMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AUpdateContainerMappingContent"/> and <see cref="InMageRcmUpdateContainerMappingContent"/>.
+        /// Please note <see cref="ReplicationProviderSpecificUpdateContainerMappingInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AUpdateContainerMappingInput"/> and <see cref="InMageRcmUpdateContainerMappingInput"/>.
         /// </summary>
-        public ReplicationProviderSpecificUpdateContainerMappingContent ProviderSpecificContent
+        public ReplicationProviderSpecificUpdateContainerMappingInput ProviderSpecificInput
         {
-            get => Properties is null ? default : Properties.ProviderSpecificContent;
+            get => Properties is null ? default : Properties.ProviderSpecificInput;
             set
             {
                 if (Properties is null)
-                    Properties = new UpdateProtectionContainerMappingContentProperties();
-                Properties.ProviderSpecificContent = value;
+                    Properties = new UpdateProtectionContainerMappingInputProperties();
+                Properties.ProviderSpecificInput = value;
             }
         }
     }

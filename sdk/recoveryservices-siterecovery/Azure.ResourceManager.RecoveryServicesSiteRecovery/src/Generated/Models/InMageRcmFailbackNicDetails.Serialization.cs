@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> macAddress = default;
             Optional<string> networkName = default;
             Optional<string> adapterType = default;
-            Optional<IPAddress> sourceIPAddress = default;
+            Optional<string> sourceIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("macAddress"u8))
@@ -42,11 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("sourceIpAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceIPAddress = IPAddress.Parse(property.Value.GetString());
+                    sourceIPAddress = property.Value.GetString();
                     continue;
                 }
             }

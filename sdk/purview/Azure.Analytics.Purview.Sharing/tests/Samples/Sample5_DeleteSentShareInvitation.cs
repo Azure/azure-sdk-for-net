@@ -24,11 +24,11 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
             var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
             var sentShareClient = new SentSharesClient(endPoint, credential);
 
-            Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitUntil.Completed, "sentShareId", "sentShareInvitationId", new());
+            Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitUntil.Completed, "sentShareId", "sentShareInvitationId");
 #else
             var sentShareClient = GetSentSharesClient();
 
-            Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitUntil.Completed, "016eb068-ddaa-41be-8804-8bef566663a5", "4ae8a8dc-0662-4027-960e-92b4778fc5ff", new());
+            Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitUntil.Completed, "016eb068-ddaa-41be-8804-8bef566663a5", "4ae8a8dc-0662-4027-960e-92b4778fc5ff");
 #endif
 
             #endregion

@@ -15,6 +15,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// <summary> Represents an ingestion configuration. </summary>
     public partial class AssetConversionConfiguration
     {
+
         /// <summary> Initializes a new instance of AssetConversionConfiguration. </summary>
         /// <param name="assetDimensionsWrapper"> Dimensions of the asset. </param>
         /// <param name="boundingBoxCenterWrapper"> BoundingBoxCenter of the asset. </param>

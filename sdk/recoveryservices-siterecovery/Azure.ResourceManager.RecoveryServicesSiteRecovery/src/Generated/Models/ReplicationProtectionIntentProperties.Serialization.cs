@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> jobId = default;
+            Optional<string> jobId = default;
             Optional<string> jobState = default;
             Optional<bool> isActive = default;
             Optional<string> creationTimeUTC = default;
@@ -33,11 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("jobId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    jobId = new ResourceIdentifier(property.Value.GetString());
+                    jobId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("jobState"u8))

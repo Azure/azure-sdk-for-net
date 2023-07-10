@@ -43,12 +43,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             return result;
         }
 
-        public static BlobPath ParseAndValidate(string value, bool isContainerBinding = false, bool isParameterBindingData = false)
+        public static BlobPath ParseAndValidate(string value, bool isContainerBinding = false)
         {
             string errorMessage;
             BlobPath path;
 
-            if (!TryParseAndValidate(value, out errorMessage, out path, isContainerBinding, isParameterBindingData))
+            if (!TryParseAndValidate(value, out errorMessage, out path, isContainerBinding))
             {
                 throw new FormatException(errorMessage);
             }
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             return false;
         }
 
-        public static bool TryParse(string value, bool isContainerBinding, bool isParameterBindingData, out BlobPath path)
+        public static bool TryParse(string value, bool isContainerBinding, out BlobPath path)
         {
             path = null;
 
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             }
 
             int slashIndex = value.IndexOf('/');
-            if (!isParameterBindingData && !isContainerBinding && slashIndex <= 0)
+            if (!isContainerBinding && slashIndex <= 0)
             {
                 return false;
             }
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             return true;
         }
 
-        private static bool TryParseAndValidate(string value, out string errorMessage, out BlobPath path, bool isContainerBinding = false, bool isParameterBindingData = false)
+        private static bool TryParseAndValidate(string value, out string errorMessage, out BlobPath path, bool isContainerBinding = false)
         {
             BlobPath possiblePath;
 
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 return true;
             }
 
-            if (!TryParse(value, isContainerBinding, isParameterBindingData, out possiblePath))
+            if (!TryParse(value, isContainerBinding, out possiblePath))
             {
                 errorMessage = $"Invalid blob path specified : '{value}'. Blob identifiers must be in the format 'container/blob'.";
                 path = null;
@@ -136,9 +136,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 return false;
             }
 
-            // for container bindings or parameter binding data, we allow an empty blob name/path
+            // for container bindings, we allow an empty blob name/path
             string possibleErrorMessage;
-            if (!((isContainerBinding || isParameterBindingData) && string.IsNullOrEmpty(possiblePath.BlobName)) &&
+            if (!(isContainerBinding && string.IsNullOrEmpty(possiblePath.BlobName)) &&
                 !BlobClientExtensions.IsValidBlobName(possiblePath.BlobName, out possibleErrorMessage))
             {
                 errorMessage = possibleErrorMessage;

@@ -1,0 +1,885 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-58e75963d4bc6ebf5218cd160e80ff72-c7a5ff879b983a14-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "d049457c131df21d824cdc06c5c74f7e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 04:33:48 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d6e600a1-8679-475f-afd9-90eaeb9a27f8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "d6e600a1-8679-475f-afd9-90eaeb9a27f8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T043349Z:d6e600a1-8679-475f-afd9-90eaeb9a27f8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/SdkRg7546?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "22",
+        "Content-Type": "application/json",
+        "traceparent": "00-baed1f786b9d1bc40cde5622b5e2c5c9-786b4e7bace950f0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "0f0af7ecc165146dfb5dc6c4e504b780",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus2"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 04:33:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6f488bd3-2fbf-4979-b3d0-0b32c5cf6dec",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "6f488bd3-2fbf-4979-b3d0-0b32c5cf6dec",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T043353Z:6f488bd3-2fbf-4979-b3d0-0b32c5cf6dec"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7546",
+        "name": "SdkRg7546",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus2",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/SdkRg7546?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1ce46ee3fa0c9ddc0a84a0cb1860966-e55c3f2c75375762-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "99abe13498e2574837a6d6f2c19b6871",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 04:33:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "de62f96e-4495-46f0-90fe-ed211692547d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "de62f96e-4495-46f0-90fe-ed211692547d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T043353Z:de62f96e-4495-46f0-90fe-ed211692547d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7546",
+        "name": "SdkRg7546",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus2",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7546/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer9813?api-version=2022-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "48",
+        "Content-Type": "application/json",
+        "traceparent": "00-69f98aa28edb4927f689e55a6adac35d-77a2247ae55a1581-00",
+        "User-Agent": "azsdk-net-ResourceManager.FluidRelay/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "f983949d17dedc83bc22b5562e9d4824",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "westus2",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "915",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 04:34:01 GMT",
+        "ETag": "\u00221d00666b-0000-0500-0000-63084d390000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "af1a509e-d9e7-45f4-86d7-8713852b9896",
+        "x-ms-correlation-request-id": "563a14b5-4262-405d-9bb0-70cb7e2e44e5",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "6cf2300e-f5e0-4884-9a1b-baa5b8a613c9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T043402Z:563a14b5-4262-405d-9bb0-70cb7e2e44e5",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7546/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer9813",
+        "name": "SdkFluidRelayServer9813",
+        "type": "microsoft.fluidrelay/fluidrelayservers",
+        "location": "westus2",
+        "tags": {},
+        "systemData": {
+          "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+          "createdByType": "Application",
+          "createdAt": "2022-08-26T04:33:57.5331591Z",
+          "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-08-26T04:33:57.5331591Z"
+        },
+        "identity": {
+          "type": "None"
+        },
+        "properties": {
+          "frsTenantId": "e28eae2a-7523-4277-afca-76325d6fb4e8",
+          "fluidRelayEndpoints": {
+            "ordererEndpoints": [
+              "https://alfred.westus2.fluidrelay.azure.com"
+            ],
+            "storageEndpoints": [
+              "https://historian.westus2.fluidrelay.azure.com"
+            ],
+            "serviceEndpoints": [
+              "https://us.fluidrelay.azure.com"
+            ]
+          },
+          "storagesku": "standard",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7546/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer9813?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-085ddede98562dbe84b019796627aced-0064eb0f80bcd1e3-00",
+        "User-Agent": "azsdk-net-ResourceManager.FluidRelay/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "6d93978628d35f0ac2b82e1b962139c2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "915",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 04:34:02 GMT",
+        "ETag": "\u00221d00666b-0000-0500-0000-63084d390000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "43bdacb9-4ae8-4536-bd03-fcc150f7e94b",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "277ab446-0cd8-4ade-9203-9187cd9daed2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T043402Z:43bdacb9-4ae8-4536-bd03-fcc150f7e94b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7546/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer9813",
+        "name": "SdkFluidRelayServer9813",
+        "type": "microsoft.fluidrelay/fluidrelayservers",
+        "location": "westus2",
+        "tags": {},
+        "systemData": {
+          "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+          "createdByType": "Application",
+          "createdAt": "2022-08-26T04:33:57.5331591Z",
+          "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-08-26T04:33:57.5331591Z"
+        },
+        "identity": {
+          "type": "None"
+        },
+        "properties": {
+          "frsTenantId": "e28eae2a-7523-4277-afca-76325d6fb4e8",
+          "fluidRelayEndpoints": {
+            "ordererEndpoints": [
+              "https://alfred.westus2.fluidrelay.azure.com"
+            ],
+            "storageEndpoints": [
+              "https://historian.westus2.fluidrelay.azure.com"
+            ],
+            "serviceEndpoints": [
+              "https://us.fluidrelay.azure.com"
+            ]
+          },
+          "storagesku": "standard",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7546/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer9813/listKeys?api-version=2022-06-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-376eb091e1b2ef7dd7db2f1d20f337ae-94de75cd42d07afb-00",
+        "User-Agent": "azsdk-net-ResourceManager.FluidRelay/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "6f47525e87341c4f5ecfddc0e2f1289a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "85",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 04:34:03 GMT",
+        "ETag": "W/\u002255-I52gkYpK1Men3BILKQN640KousE\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9d5c90a4-f63d-4cf6-a19e-8ab36281fccf",
+        "x-ms-correlation-request-id": "e1da150b-5c2e-4f62-965e-858001323c33",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "199ab08c-aef7-47c7-92d7-afae03703d29",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T043404Z:e1da150b-5c2e-4f62-965e-858001323c33",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "key1": "2061fefcc558afe07e4bf7f8305e3166",
+        "key2": "faa3486b179626b5eab4fa874c54a165"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.FluidRelay/fluidRelayServers?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-73516df63a5e9bd0c49ff8985d8ed74c-ff3697df0f9a26d7-00",
+        "User-Agent": "azsdk-net-ResourceManager.FluidRelay/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "296cb15dfa07759e8a243625e968459a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "5433",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 04:34:04 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "370af257-6a11-43b0-82f2-b56b235aeae4",
+        "x-ms-original-request-ids": [
+          "bfa4d3e1-2435-4f19-903f-43d5e546d97b",
+          "18e91e1d-8f88-4627-b4b1-8385a1d4740e",
+          "91138ff6-2b76-45dd-8442-86f18656931c",
+          "b2e7ee78-1e9f-43fb-bfef-c7f86591d813",
+          "06729108-2814-46bc-85e1-743107282b8e",
+          "36d7617a-2cd2-4d4d-b6f7-cdeb84c67d7b",
+          "6fb9e31d-58e8-4384-8c0c-93ff51b128ee",
+          "91ac53a6-1e15-44c7-ad5f-4ee8df40e2ed",
+          "82b62739-37aa-4310-978d-0cbe229246a3",
+          "551d6a6a-c0bf-4111-b28f-f0fb0b1faa40",
+          "2cab74c9-a704-4e80-b8b6-e640dc79ca9d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "370af257-6a11-43b0-82f2-b56b235aeae4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T043405Z:370af257-6a11-43b0-82f2-b56b235aeae4"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-3246/providers/Microsoft.FluidRelay/fluidRelayServers/test-frs",
+            "name": "test-frs",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "arthurma@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-08-26T03:45:13.9102198Z",
+              "lastModifiedBy": "arthurma@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-08-26T03:45:13.9102198Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "58115b86-5ddf-458d-9a91-8529ef4951b7",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7202/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer4304",
+            "name": "SdkFluidRelayServer4304",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "createdByType": "Application",
+              "createdAt": "2022-08-26T03:45:42.5581957Z",
+              "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-26T03:45:42.5581957Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "0f90d43a-ba40-4d61-9608-ad909d81c64a",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg2519/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer4130",
+            "name": "SdkFluidRelayServer4130",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "createdByType": "Application",
+              "createdAt": "2022-08-26T04:10:05.4832867Z",
+              "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-26T04:10:05.4832867Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "1d17c5dd-40f2-43b7-aae5-ce3d414284c4",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg296/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer785",
+            "name": "SdkFluidRelayServer785",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "createdByType": "Application",
+              "createdAt": "2022-08-26T04:14:42.9010372Z",
+              "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-26T04:14:42.9010372Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "f338b7d2-2561-4b6e-8a44-c1a0c03f469d",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg8883/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer1623",
+            "name": "SdkFluidRelayServer1623",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "createdByType": "Application",
+              "createdAt": "2022-08-26T04:26:28.5240637Z",
+              "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-26T04:26:28.5240637Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "4a495750-cab6-4247-86bf-9488df0ac8fa",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7546/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer9813",
+            "name": "SdkFluidRelayServer9813",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "createdByType": "Application",
+              "createdAt": "2022-08-26T04:33:57.5331591Z",
+              "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-26T04:33:57.5331591Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "e28eae2a-7523-4277-afca-76325d6fb4e8",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.FluidRelay/fluidRelayServers?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7b1fbd9d5349150fe80ec0981fb00b4e-86506f08289806d6-00",
+        "User-Agent": "azsdk-net-ResourceManager.FluidRelay/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "dcf8f3e8d955fff047760f044b4a7dd0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "5433",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 04:34:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "99624344-40b3-43c1-ba6e-28df41dd9fe2",
+        "x-ms-original-request-ids": [
+          "3526be19-c710-47cc-826c-e29cf93fe578",
+          "57fa5fe2-4e3e-4d6c-839e-53c8ceb59399",
+          "6680d1d1-a756-4086-9038-a1f7db47e791",
+          "c8329391-4749-4caf-8079-66dc17cc39b2",
+          "12529602-2395-499c-af86-8ebce9a12b08",
+          "2faeecc8-ae57-446d-b0fc-659ff5361823",
+          "77b8721d-4f3b-4c9e-b243-bdfa8c815a64",
+          "482472a1-0770-44d0-acfb-9fb1c2513ef0",
+          "5786fa49-5bac-41bf-adcb-7723991cf940",
+          "4dde6f72-8c2c-42db-806b-75c4c1a9f474",
+          "ff1860a7-fe5a-4441-b936-5c3b206c6ab6"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "99624344-40b3-43c1-ba6e-28df41dd9fe2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T043406Z:99624344-40b3-43c1-ba6e-28df41dd9fe2"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-3246/providers/Microsoft.FluidRelay/fluidRelayServers/test-frs",
+            "name": "test-frs",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "arthurma@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-08-26T03:45:13.9102198Z",
+              "lastModifiedBy": "arthurma@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2022-08-26T03:45:13.9102198Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "58115b86-5ddf-458d-9a91-8529ef4951b7",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7202/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer4304",
+            "name": "SdkFluidRelayServer4304",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "createdByType": "Application",
+              "createdAt": "2022-08-26T03:45:42.5581957Z",
+              "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-26T03:45:42.5581957Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "0f90d43a-ba40-4d61-9608-ad909d81c64a",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg2519/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer4130",
+            "name": "SdkFluidRelayServer4130",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "createdByType": "Application",
+              "createdAt": "2022-08-26T04:10:05.4832867Z",
+              "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-26T04:10:05.4832867Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "1d17c5dd-40f2-43b7-aae5-ce3d414284c4",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg296/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer785",
+            "name": "SdkFluidRelayServer785",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "createdByType": "Application",
+              "createdAt": "2022-08-26T04:14:42.9010372Z",
+              "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-26T04:14:42.9010372Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "f338b7d2-2561-4b6e-8a44-c1a0c03f469d",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg8883/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer1623",
+            "name": "SdkFluidRelayServer1623",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "createdByType": "Application",
+              "createdAt": "2022-08-26T04:26:28.5240637Z",
+              "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-26T04:26:28.5240637Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "4a495750-cab6-4247-86bf-9488df0ac8fa",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7546/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer9813",
+            "name": "SdkFluidRelayServer9813",
+            "type": "microsoft.fluidrelay/fluidrelayservers",
+            "location": "westus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "createdByType": "Application",
+              "createdAt": "2022-08-26T04:33:57.5331591Z",
+              "lastModifiedBy": "18521949-6d6e-454b-b208-4d3141df8607",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-26T04:33:57.5331591Z"
+            },
+            "identity": {
+              "type": "None"
+            },
+            "properties": {
+              "frsTenantId": "e28eae2a-7523-4277-afca-76325d6fb4e8",
+              "fluidRelayEndpoints": {
+                "ordererEndpoints": [
+                  "https://alfred.westus2.fluidrelay.azure.com"
+                ],
+                "storageEndpoints": [
+                  "https://historian.westus2.fluidrelay.azure.com"
+                ],
+                "serviceEndpoints": [
+                  "https://us.fluidrelay.azure.com"
+                ]
+              },
+              "storagesku": "standard",
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7546/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer9813/regenerateKey?api-version=2022-06-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "18",
+        "Content-Type": "application/json",
+        "traceparent": "00-d56787b779b1a6dcf61416e8f3587d74-608e394dcb85a026-00",
+        "User-Agent": "azsdk-net-ResourceManager.FluidRelay/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "e5bd938f0fb563bbb3d2e410502a33f6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "keyName": "key1"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "85",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 04:34:07 GMT",
+        "ETag": "W/\u002255-QsEP1vLeIbmDA5Z5QwBidW4SeQ8\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c7519522-7a69-4002-8533-a6ac83b54eff",
+        "x-ms-correlation-request-id": "00fe09ec-7cef-41f0-99ae-a7ec73697fe0",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "98bac3b6-038d-486b-b574-7307ec3f0946",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T043407Z:00fe09ec-7cef-41f0-99ae-a7ec73697fe0",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": {
+        "key1": "32a3b78e2f963a711f05acb73a13fee2",
+        "key2": "faa3486b179626b5eab4fa874c54a165"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SdkRg7546/providers/Microsoft.FluidRelay/fluidRelayServers/SdkFluidRelayServer9813?api-version=2022-06-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e905f02cbb51164ff88c3616c5707465-ecb10c3c29cbbe4e-00",
+        "User-Agent": "azsdk-net-ResourceManager.FluidRelay/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "efd742894bf98445c06de290eb9a2940",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 26 Aug 2022 04:34:14 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "18142740-de15-4612-8c3a-f656003945ae",
+        "x-ms-correlation-request-id": "ae559a15-c3cc-4595-b2bf-6a2a861ccf6d",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220826T043414Z:ae559a15-c3cc-4595-b2bf-6a2a861ccf6d",
+        "X-Powered-By": "Express"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1246766798",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

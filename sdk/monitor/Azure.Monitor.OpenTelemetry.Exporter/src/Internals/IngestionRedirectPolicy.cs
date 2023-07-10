@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (!TryGetRedirectUri(response, out redirectUri))
                 {
-                    AzureMonitorExporterEventSource.Log.RedirectHeaderParseFailed();
+                    AzureMonitorExporterEventSource.Log.WriteInformational("RedirectHeaderParseFailed", "Failed to parse redirect headers.");
                     break;
                 }
 
@@ -77,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (!TryGetRedirectCacheTimeSpan(response, out TimeSpan cacheExpirationDuration))
                 {
                     // if failed to read cache, use default
-                    AzureMonitorExporterEventSource.Log.ParseRedirectCacheFailed();
+                    AzureMonitorExporterEventSource.Log.WriteWarning("ParseRedirectCacheFailed", "Failed to parse redirect cache, using default.");
                     cacheExpirationDuration = _defaultCacheExpirationDuration;
                 }
 

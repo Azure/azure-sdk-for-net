@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Event details for InMageRcmFailback provider. </summary>
-    public partial class InMageRcmFailbackEventDetails : SiteRecoveryEventProviderSpecificDetails
+    public partial class InMageRcmFailbackEventDetails : EventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageRcmFailbackEventDetails. </summary>
         internal InMageRcmFailbackEventDetails()

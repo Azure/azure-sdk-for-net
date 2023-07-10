@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System.Net;
-using Azure.Core;
-
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> VMwareCbt NIC details. </summary>
@@ -33,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="testIPAddressType"> The test IP address type. </param>
         /// <param name="targetNicName"> Target NIC name. </param>
         /// <param name="isSelectedForMigration"> A value indicating whether this NIC is selected for migration. </param>
-        internal VMwareCbtNicDetails(string nicId, string isPrimaryNic, IPAddress sourceIPAddress, SiteRecoveryEthernetAddressType? sourceIPAddressType, ResourceIdentifier sourceNetworkId, IPAddress targetIPAddress, SiteRecoveryEthernetAddressType? targetIPAddressType, string targetSubnetName, ResourceIdentifier testNetworkId, string testSubnetName, IPAddress testIPAddress, SiteRecoveryEthernetAddressType? testIPAddressType, string targetNicName, string isSelectedForMigration)
+        internal VMwareCbtNicDetails(string nicId, string isPrimaryNic, string sourceIPAddress, EthernetAddressType? sourceIPAddressType, string sourceNetworkId, string targetIPAddress, EthernetAddressType? targetIPAddressType, string targetSubnetName, string testNetworkId, string testSubnetName, string testIPAddress, EthernetAddressType? testIPAddressType, string targetNicName, string isSelectedForMigration)
         {
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
@@ -56,25 +53,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> A value indicating whether this is the primary NIC. </summary>
         public string IsPrimaryNic { get; }
         /// <summary> The source IP address. </summary>
-        public IPAddress SourceIPAddress { get; }
+        public string SourceIPAddress { get; }
         /// <summary> The source IP address type. </summary>
-        public SiteRecoveryEthernetAddressType? SourceIPAddressType { get; }
+        public EthernetAddressType? SourceIPAddressType { get; }
         /// <summary> Source network Id. </summary>
-        public ResourceIdentifier SourceNetworkId { get; }
+        public string SourceNetworkId { get; }
         /// <summary> The target IP address. </summary>
-        public IPAddress TargetIPAddress { get; }
+        public string TargetIPAddress { get; }
         /// <summary> The target IP address type. </summary>
-        public SiteRecoveryEthernetAddressType? TargetIPAddressType { get; }
+        public EthernetAddressType? TargetIPAddressType { get; }
         /// <summary> Target subnet name. </summary>
         public string TargetSubnetName { get; }
         /// <summary> Source network Id. </summary>
-        public ResourceIdentifier TestNetworkId { get; }
+        public string TestNetworkId { get; }
         /// <summary> Test subnet name. </summary>
         public string TestSubnetName { get; }
         /// <summary> The test IP address. </summary>
-        public IPAddress TestIPAddress { get; }
+        public string TestIPAddress { get; }
         /// <summary> The test IP address type. </summary>
-        public SiteRecoveryEthernetAddressType? TestIPAddressType { get; }
+        public EthernetAddressType? TestIPAddressType { get; }
         /// <summary> Target NIC name. </summary>
         public string TargetNicName { get; }
         /// <summary> A value indicating whether this NIC is selected for migration. </summary>

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> priority = default;
             Optional<SecurityConfigurationRuleDirection> direction = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -216,20 +214,11 @@ namespace Azure.ResourceManager.Network.Models
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("resourceGuid"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceGuid = property0.Value.GetGuid();
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new NetworkDefaultAdminRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), description.Value, flag.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            return new NetworkDefaultAdminRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), description.Value, flag.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState));
         }
     }
 }

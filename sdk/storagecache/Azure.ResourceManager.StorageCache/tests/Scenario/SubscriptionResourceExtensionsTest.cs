@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageCache.Models;
 using NUnit.Framework;
 

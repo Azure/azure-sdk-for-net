@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Hyper-V Replica Azure specific protection profile details. </summary>
@@ -26,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="onlineReplicationStartTime"> The scheduled start time for the initial replication. If this parameter is Null, the initial replication starts immediately. </param>
         /// <param name="encryption"> A value indicating whether encryption is enabled for virtual machines in this cloud. </param>
         /// <param name="activeStorageAccountId"> The active storage account Id. </param>
-        internal HyperVReplicaAzurePolicyDetails(string instanceType, int? recoveryPointHistoryDurationInHours, int? applicationConsistentSnapshotFrequencyInHours, int? replicationInterval, string onlineReplicationStartTime, string encryption, ResourceIdentifier activeStorageAccountId) : base(instanceType)
+        internal HyperVReplicaAzurePolicyDetails(string instanceType, int? recoveryPointHistoryDurationInHours, int? applicationConsistentSnapshotFrequencyInHours, int? replicationInterval, string onlineReplicationStartTime, string encryption, string activeStorageAccountId) : base(instanceType)
         {
             RecoveryPointHistoryDurationInHours = recoveryPointHistoryDurationInHours;
             ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHours;
@@ -48,6 +46,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> A value indicating whether encryption is enabled for virtual machines in this cloud. </summary>
         public string Encryption { get; }
         /// <summary> The active storage account Id. </summary>
-        public ResourceIdentifier ActiveStorageAccountId { get; }
+        public string ActiveStorageAccountId { get; }
     }
 }

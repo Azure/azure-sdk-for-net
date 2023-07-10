@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<Uri> diskUri = default;
-            Optional<ResourceIdentifier> recoveryAzureStorageAccountId = default;
-            Optional<ResourceIdentifier> primaryDiskAzureStorageAccountId = default;
+            Optional<string> recoveryAzureStorageAccountId = default;
+            Optional<string> primaryDiskAzureStorageAccountId = default;
             Optional<Uri> recoveryDiskUri = default;
             Optional<string> diskName = default;
             Optional<long> diskCapacityInBytes = default;
-            Optional<ResourceIdentifier> primaryStagingAzureStorageAccountId = default;
+            Optional<string> primaryStagingAzureStorageAccountId = default;
             Optional<string> diskType = default;
             Optional<bool> resyncRequired = default;
             Optional<int> monitoringPercentageCompletion = default;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<string>> allowedDiskLevelOperation = default;
             Optional<bool> isDiskEncrypted = default;
             Optional<string> secretIdentifier = default;
-            Optional<ResourceIdentifier> dekKeyVaultArmId = default;
+            Optional<string> dekKeyVaultArmId = default;
             Optional<bool> isDiskKeyEncrypted = default;
             Optional<string> keyIdentifier = default;
-            Optional<ResourceIdentifier> kekKeyVaultArmId = default;
+            Optional<string> kekKeyVaultArmId = default;
             Optional<string> failoverDiskName = default;
             Optional<string> tfoDiskName = default;
             foreach (var property in element.EnumerateObject())
@@ -56,20 +56,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryAzureStorageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryAzureStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryAzureStorageAccountId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("primaryDiskAzureStorageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    primaryDiskAzureStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    primaryDiskAzureStorageAccountId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("recoveryDiskUri"u8))
@@ -97,11 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("primaryStagingAzureStorageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    primaryStagingAzureStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    primaryStagingAzureStorageAccountId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("diskType"u8))
@@ -185,11 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("dekKeyVaultArmId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dekKeyVaultArmId = new ResourceIdentifier(property.Value.GetString());
+                    dekKeyVaultArmId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isDiskKeyEncrypted"u8))
@@ -208,11 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("kekKeyVaultArmId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    kekKeyVaultArmId = new ResourceIdentifier(property.Value.GetString());
+                    kekKeyVaultArmId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("failoverDiskName"u8))

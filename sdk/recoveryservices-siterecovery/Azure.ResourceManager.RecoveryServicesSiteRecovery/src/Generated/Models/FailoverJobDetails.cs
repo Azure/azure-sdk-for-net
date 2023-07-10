@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class represents the details for a failover job. </summary>
-    public partial class FailoverJobDetails : SiteRecoveryJobDetails
+    public partial class FailoverJobDetails : JobDetails
     {
         /// <summary> Initializes a new instance of FailoverJobDetails. </summary>
         internal FailoverJobDetails()

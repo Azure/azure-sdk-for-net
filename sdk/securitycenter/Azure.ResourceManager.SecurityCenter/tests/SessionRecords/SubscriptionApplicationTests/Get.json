@@ -1,0 +1,262 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f74ba61a8e64324e852e3bfff5da7447-4b6cf0a19fead443-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "61b9e833ab0f2fee23f77c49cca2848e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Oct 2022 03:23:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4b24599b-8c15-4ffd-9423-5357bbc4cf26",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "4b24599b-8c15-4ffd-9423-5357bbc4cf26",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T032337Z:4b24599b-8c15-4ffd-9423-5357bbc4cf26"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/applications/149a6cd5-aae4-c21b-b33b-fdeee09fddef?api-version=2022-07-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "253",
+        "Content-Type": "application/json",
+        "traceparent": "00-51e3ea345e874d4c9381029e554d2fed-dd6a0cc92b19dd4e-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6ea07e2b3435389b5a395715de41ee55",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "displayName": "GCP Admin\u0027s application",
+          "description": "An application on critical GCP recommendations",
+          "sourceResourceType": "Assessments",
+          "conditionSets": [
+            {
+              "conditions": [
+                {
+                  "property": "$.Id",
+                  "value": "-prod-",
+                  "operator": "contains"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "473",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Oct 2022 03:23:37 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "29f64517-1728-4b6c-a616-a09074ca5f8e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "29f64517-1728-4b6c-a616-a09074ca5f8e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T032337Z:29f64517-1728-4b6c-a616-a09074ca5f8e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/applications/149a6cd5-aae4-c21b-b33b-fdeee09fddef",
+        "name": "149a6cd5-aae4-c21b-b33b-fdeee09fddef",
+        "type": "Microsoft.Security/applications",
+        "properties": {
+          "displayName": "GCP Admin\u0027s application",
+          "description": "An application on critical GCP recommendations",
+          "conditionSets": [
+            {
+              "conditions": [
+                {
+                  "property": "$.Id",
+                  "value": "-prod-",
+                  "operator": "Contains"
+                }
+              ]
+            }
+          ],
+          "sourceResourceType": "Assessments"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/applications/149a6cd5-aae4-c21b-b33b-fdeee09fddef?api-version=2022-07-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9c54a06257cdbe41b768c0b329cfe1d2-e2b5e6f444acc342-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "adaaf7cd6449882eccf6add3ad004e84",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "473",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Oct 2022 03:23:37 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "81baa1d0-0980-4a99-8581-aa03d565e57e",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "743",
+        "x-ms-request-id": "81baa1d0-0980-4a99-8581-aa03d565e57e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T032338Z:81baa1d0-0980-4a99-8581-aa03d565e57e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/applications/149a6cd5-aae4-c21b-b33b-fdeee09fddef",
+        "name": "149a6cd5-aae4-c21b-b33b-fdeee09fddef",
+        "type": "Microsoft.Security/applications",
+        "properties": {
+          "displayName": "GCP Admin\u0027s application",
+          "description": "An application on critical GCP recommendations",
+          "conditionSets": [
+            {
+              "conditions": [
+                {
+                  "property": "$.Id",
+                  "value": "-prod-",
+                  "operator": "Contains"
+                }
+              ]
+            }
+          ],
+          "sourceResourceType": "Assessments"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/applications?api-version=2022-07-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f6b2f3aff664da45b5c988460dffb99c-61b5a0aa47d15d43-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4d1e8c1a1601a059d062b9aa5306e472",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "485",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Oct 2022 03:23:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "57d38f9b-3b76-4464-abb9-12143b4be252",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "742",
+        "x-ms-request-id": "57d38f9b-3b76-4464-abb9-12143b4be252",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T032338Z:57d38f9b-3b76-4464-abb9-12143b4be252"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/applications/149a6cd5-aae4-c21b-b33b-fdeee09fddef",
+            "name": "149a6cd5-aae4-c21b-b33b-fdeee09fddef",
+            "type": "Microsoft.Security/applications",
+            "properties": {
+              "displayName": "GCP Admin\u0027s application",
+              "description": "An application on critical GCP recommendations",
+              "conditionSets": [
+                {
+                  "conditions": [
+                    {
+                      "property": "$.Id",
+                      "value": "-prod-",
+                      "operator": "Contains"
+                    }
+                  ]
+                }
+              ],
+              "sourceResourceType": "Assessments"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/applications/149a6cd5-aae4-c21b-b33b-fdeee09fddef?api-version=2022-07-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-84b61f672abe03498129807c9f980d1d-fadc6b888cda9343-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e920a84d2ff4c6a65017a13e87c78a59",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Mon, 24 Oct 2022 03:23:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "394cbd9b-5e44-4fc4-b6d7-5d8b5c1cccb9",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14996",
+        "x-ms-request-id": "394cbd9b-5e44-4fc4-b6d7-5d8b5c1cccb9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T032338Z:394cbd9b-5e44-4fc4-b6d7-5d8b5c1cccb9"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "2121736753",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

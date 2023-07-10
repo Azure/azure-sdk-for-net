@@ -1,0 +1,134 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricRG-9099/providers/Microsoft.ServiceFabric/clusters/cluster1248?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a5cc946dc883714090e18718aaa5e6b1-056abeac18ca7c40-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceFabric/1.0.0-alpha.20220822.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1fd3b3ef614e1443eb11ffe3ace1d6da",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1927",
+        "Content-Type": "application/json",
+        "Date": "Mon, 22 Aug 2022 03:01:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1fd3b3ef614e1443eb11ffe3ace1d6da",
+        "x-ms-correlation-request-id": "5fd953db-b5a6-4d08-b926-d0478a0cad06",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "5fd953db-b5a6-4d08-b926-d0478a0cad06",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220822T030147Z:5fd953db-b5a6-4d08-b926-d0478a0cad06"
+      },
+      "ResponseBody": {
+        "type": "Microsoft.ServiceFabric/clusters",
+        "location": "westus2",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricRG-9099/providers/Microsoft.ServiceFabric/clusters/cluster1248",
+        "name": "cluster1248",
+        "tags": {},
+        "etag": "W/\u0022637967341053484467\u0022",
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2022-08-22T03:01:45.2448146\u002B00:00",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-08-22T03:01:45.2448146\u002B00:00"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "clusterId": "1debfe21-be30-4de4-a262-27134357c6c6",
+          "clusterCodeVersion": "9.0.1048.9590",
+          "clusterState": "WaitingForNodes",
+          "managementEndpoint": "https://cluster1248.westus2.cloudapp.azure.com:19080/",
+          "clusterEndpoint": "https://westus2.servicefabric.azure.com/runtime/clusters/1debfe21-be30-4de4-a262-27134357c6c6",
+          "clientCertificateThumbprints": [],
+          "clientCertificateCommonNames": [],
+          "fabricSettings": [],
+          "reliabilityLevel": "Silver",
+          "nodeTypes": [
+            {
+              "name": "Type812",
+              "clientConnectionEndpointPort": 19000,
+              "httpGatewayEndpointPort": 19080,
+              "applicationPorts": {
+                "startPort": 20000,
+                "endPort": 30000
+              },
+              "ephemeralPorts": {
+                "startPort": 49152,
+                "endPort": 65534
+              },
+              "isPrimary": true,
+              "durabilityLevel": "Bronze",
+              "vmInstanceCount": 5,
+              "isStateless": false
+            }
+          ],
+          "upgradeMode": "Automatic",
+          "availableClusterVersions": [
+            {
+              "codeVersion": "9.0.1048.9590",
+              "supportExpiryUtc": "9999-12-31T23:59:59.9999999",
+              "environment": "Windows"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricRG-9099/providers/Microsoft.ServiceFabric/clusters/cluster1248/applications?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7f9376514a44fc45a62992c4b8e68613-f91f0b156051cf4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceFabric/1.0.0-alpha.20220822.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "9ad16f5d7efbf5de753ba1b07a471513",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "19",
+        "Content-Type": "application/json",
+        "Date": "Mon, 22 Aug 2022 03:01:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9ad16f5d7efbf5de753ba1b07a471513",
+        "x-ms-correlation-request-id": "e28b83de-9fe6-4331-9086-954e82ebf78f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "e28b83de-9fe6-4331-9086-954e82ebf78f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220822T030147Z:e28b83de-9fe6-4331-9086-954e82ebf78f"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "589324592",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

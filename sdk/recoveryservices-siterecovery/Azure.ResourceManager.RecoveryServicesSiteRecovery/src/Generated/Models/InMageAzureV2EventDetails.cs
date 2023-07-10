@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Model class for event details of a VMwareAzureV2 event. </summary>
-    public partial class InMageAzureV2EventDetails : SiteRecoveryEventProviderSpecificDetails
+    public partial class InMageAzureV2EventDetails : EventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageAzureV2EventDetails. </summary>
         internal InMageAzureV2EventDetails()

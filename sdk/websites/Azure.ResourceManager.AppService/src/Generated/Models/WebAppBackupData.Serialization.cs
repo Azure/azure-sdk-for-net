@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("storageAccountUrl"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("created"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("lastRestoreTimeStamp"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("finishedTimeStamp"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }

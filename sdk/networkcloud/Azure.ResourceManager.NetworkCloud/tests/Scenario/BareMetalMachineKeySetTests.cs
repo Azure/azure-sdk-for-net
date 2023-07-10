@@ -22,19 +22,16 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         {
             // get the collection of this BareMetalMachineKeySetResource
             string bareMetalMachineKeySetName = Recording.GenerateAssetName("bareMetalMachineKeySet");
-
-            // retrieve a parent cluster
             ClusterResource cluster = Client.GetClusterResource(TestEnvironment.ClusterId);
             cluster = await cluster.GetAsync();
-
             BareMetalMachineKeySetCollection collection = cluster.GetBareMetalMachineKeySets();
-            ResourceIdentifier bareMetalMachineKeySetResourceId = BareMetalMachineKeySetResource.CreateResourceIdentifier(cluster.Id.SubscriptionId, cluster.Id.ResourceGroupName, cluster.Data.Name, bareMetalMachineKeySetName);
+            ResourceIdentifier bareMetalMachineKeySetResourceId = BareMetalMachineKeySetResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, cluster.Id.ResourceGroupName, cluster.Data.Name, bareMetalMachineKeySetName);
             BareMetalMachineKeySetResource bareMetalMachineKeySet = Client.GetBareMetalMachineKeySetResource(bareMetalMachineKeySetResourceId);
 
             // Create
              BareMetalMachineKeySetData data = new BareMetalMachineKeySetData
              (
-                cluster.Data.Location,
+                TestEnvironment.Location,
                 cluster.Data.ClusterExtendedLocation,
                 "fake-id",
                 TestEnvironment.DayFromNow,
@@ -63,13 +60,21 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             var getResult = await bareMetalMachineKeySet.GetAsync();
             Assert.AreEqual(bareMetalMachineKeySetName, getResult.Value.Data.Name);
 
-            // List by cluster
-            var listByCluster = new List<BareMetalMachineKeySetResource>();
+            // List by Resource Group
+            var listByResourceGroup = new List<BareMetalMachineKeySetResource>();
             await foreach (BareMetalMachineKeySetResource item in collection.GetAllAsync())
             {
-                listByCluster.Add(item);
+                listByResourceGroup.Add(item);
             }
-            Assert.IsNotEmpty(listByCluster);
+            Assert.IsNotEmpty(listByResourceGroup);
+
+            // List by Subscription
+            // var listBySubscription = new List<BareMetalMachineKeySetResource>();
+            // await foreach (BareMetalMachineKeySetResource item in SubscriptionResource.GetBareMetalMachineKeySetsAsync(cluster.Data.Name))
+            // {
+            //     listBySubscription.Add(item);
+            // }
+            // Assert.IsNotEmpty(listBySubscription);
 
             // Update
             BareMetalMachineKeySetPatch patch = new BareMetalMachineKeySetPatch()

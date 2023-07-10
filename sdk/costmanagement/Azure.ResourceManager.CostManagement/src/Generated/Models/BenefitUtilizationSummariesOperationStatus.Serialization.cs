@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<BenefitUtilizationSummariesContent> input = default;
+            Optional<BenefitUtilizationSummariesRequest> input = default;
             Optional<OperationStatusType> status = default;
             Optional<AsyncOperationStatusProperties> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    input = BenefitUtilizationSummariesContent.DeserializeBenefitUtilizationSummariesContent(property.Value);
+                    input = BenefitUtilizationSummariesRequest.DeserializeBenefitUtilizationSummariesRequest(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

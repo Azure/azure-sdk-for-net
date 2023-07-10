@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> vCenterId = default;
             Optional<string> vCenterFqdn = default;
             Optional<IReadOnlyList<string>> datastores = default;
-            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
+            Optional<IReadOnlyList<string>> ipAddresses = default;
             Optional<string> vmwareToolsStatus = default;
             Optional<string> powerStatus = default;
             Optional<string> vmFqdn = default;
@@ -65,17 +64,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<IPAddress> array = new List<IPAddress>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(IPAddress.Parse(item.GetString()));
-                        }
+                        array.Add(item.GetString());
                     }
                     ipAddresses = array;
                     continue;

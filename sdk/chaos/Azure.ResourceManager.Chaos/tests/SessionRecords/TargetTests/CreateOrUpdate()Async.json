@@ -1,0 +1,143 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e4fddb2fd50258ff1dcdd23c979e61c5-6b8145d438f4de25-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "c773d2ed9f60f4543308017435dbe9b0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "405",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 07 Dec 2022 00:09:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6d9f9ef1-67f6-44bb-8886-69e598c5b7e3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11955",
+        "x-ms-request-id": "6d9f9ef1-67f6-44bb-8886-69e598c5b7e3",
+        "x-ms-routing-request-id": "WESTUS2:20221207T000936Z:6d9f9ef1-67f6-44bb-8886-69e598c5b7e3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14",
+        "authorizationSource": "Bypassed",
+        "managedByTenants": [],
+        "subscriptionId": "fb74b135-894b-4c1d-9b2e-8a3c231abc14",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "ChaosRP-Test-MSFT-Manual-1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourcegroups/rg-chaos-sdk-test-recording?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d74faf2781ea2209eb1bdf8d0ec8b914-57564b8f33935b18-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "30cfe163878413128f279d20ad75e345",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "352",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 07 Dec 2022 00:09:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "48f09e28-2b17-4cf2-afb2-d150a61bc32b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11954",
+        "x-ms-request-id": "48f09e28-2b17-4cf2-afb2-d150a61bc32b",
+        "x-ms-routing-request-id": "WESTUS2:20221207T000936Z:48f09e28-2b17-4cf2-afb2-d150a61bc32b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording",
+        "name": "rg-chaos-sdk-test-recording",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "ServiceDirectory": "chaos",
+          "DeleteAfter": "2022-12-11T06:39:47.2089768Z",
+          "Owners": "brrusino"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-5/providers/Microsoft.Chaos/targets/Microsoft-VirtualMachineScaleSet?api-version=2022-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "17",
+        "Content-Type": "application/json",
+        "traceparent": "00-57f2930f3e87e48db2e7ef6217ba625e-083c87d8b0f72bbb-00",
+        "User-Agent": "azsdk-net-ResourceManager.Chaos/1.0.0-alpha.20221206.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "5c74c7b0495a077bd69f6f1806188069",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2021-07-05-preview, 2021-08-11-preview, 2021-09-15-preview, 2022-07-01-preview, 2022-10-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "495",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 07 Dec 2022 00:09:36 GMT",
+        "ETag": "\u00220503aa8e-0000-0100-0000-638fd9c10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "bfb07f36-b1a7-4be7-85ec-09e8e7a992dd",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "198",
+        "x-ms-request-id": "bfb07f36-b1a7-4be7-85ec-09e8e7a992dd",
+        "x-ms-routing-request-id": "WESTUS2:20221207T000937Z:bfb07f36-b1a7-4be7-85ec-09e8e7a992dd"
+      },
+      "ResponseBody": {
+        "location": "eastus",
+        "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-5/providers/Microsoft.Chaos/targets/Microsoft-VirtualMachineScaleSet",
+        "name": "Microsoft-VirtualMachineScaleSet",
+        "systemData": {
+          "createdAt": "2022-12-06T05:16:45.4839077\u002B00:00",
+          "lastModifiedAt": "2022-12-07T00:09:37.3535181\u002B00:00",
+          "createdByType": "User"
+        },
+        "type": "Microsoft.Chaos/targets",
+        "properties": {}
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "LOCATION": "eastus",
+    "RandomSeed": "497884676",
+    "RESOURCE_GROUP": "rg-chaos-sdk-test-recording",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "fb74b135-894b-4c1d-9b2e-8a3c231abc14"
+  }
+}

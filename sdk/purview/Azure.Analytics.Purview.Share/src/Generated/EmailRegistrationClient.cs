@@ -145,7 +145,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='RegisterAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> RegisterAsync(string repeatabilityRequestId, RequestContext context)
+        public virtual async Task<Response> RegisterAsync(string repeatabilityRequestId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("EmailRegistrationClient.Register");
             scope.Start();
@@ -176,7 +176,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/EmailRegistrationClient.xml" path="doc/members/member[@name='Register(string,RequestContext)']/*" />
-        public virtual Response Register(string repeatabilityRequestId, RequestContext context)
+        public virtual Response Register(string repeatabilityRequestId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("EmailRegistrationClient.Register");
             scope.Start();
@@ -202,11 +202,11 @@ namespace Azure.Analytics.Purview.Share
             uri.AppendPath("/activateEmail", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             if (repeatabilityRequestId != null)
             {
                 request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
             }
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -222,11 +222,11 @@ namespace Azure.Analytics.Purview.Share
             uri.AppendPath("/registerEmail", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             if (repeatabilityRequestId != null)
             {
                 request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> targetProtectionContainerId = default;
+            Optional<string> targetProtectionContainerId = default;
             Optional<string> targetProtectionContainerFriendlyName = default;
             Optional<ProtectionContainerMappingProviderSpecificDetails> providerSpecificDetails = default;
             Optional<string> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
-            Optional<ResourceIdentifier> policyId = default;
+            Optional<IReadOnlyList<HealthError>> healthErrorDetails = default;
+            Optional<string> policyId = default;
             Optional<string> state = default;
             Optional<string> sourceProtectionContainerFriendlyName = default;
             Optional<string> sourceFabricFriendlyName = default;
@@ -34,11 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("targetProtectionContainerId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetProtectionContainerId = new ResourceIdentifier(property.Value.GetString());
+                    targetProtectionContainerId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("targetProtectionContainerFriendlyName"u8))
@@ -66,21 +62,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
+                    List<HealthError> array = new List<HealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(HealthError.DeserializeHealthError(item));
                     }
                     healthErrorDetails = array;
                     continue;
                 }
                 if (property.NameEquals("policyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    policyId = new ResourceIdentifier(property.Value.GetString());
+                    policyId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("state"u8))

@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                 }
             };
             //Create
-            Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data), new());
+            Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
             Assert.AreEqual(201, createResponse.Status);
             //Get
             Response getResponse = await client.GetPropertiesAsync(new());
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             JsonElement getBodyJson = jsonDocument.RootElement;
             Assert.AreEqual("datasources/test-datasources3", getBodyJson.GetProperty("id").GetString());
             //Delete
-            Response deleteResponse = await client.DeleteAsync(new());
+            Response deleteResponse = await client.DeleteAsync();
             Assert.AreEqual(200, deleteResponse.Status);
         }
         [RecordedTest]

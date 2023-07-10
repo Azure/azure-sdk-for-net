@@ -13,6 +13,7 @@ namespace Azure.Storage.Queues.Models
     /// <summary> Storage Service Properties. </summary>
     public partial class QueueServiceProperties
     {
+
         /// <summary> Initializes a new instance of QueueServiceProperties. </summary>
         /// <param name="logging"> Azure Analytics Logging settings. </param>
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for queues. </param>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> vmProtectionState = default;
             Optional<string> vmProtectionStateDescription = default;
             Optional<InitialReplicationDetails> initialReplicationDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryDiskDetails>> vmDiskDetails = default;
+            Optional<IReadOnlyList<DiskDetails>> vmDiskDetails = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<SiteRecoveryDiskDetails> array = new List<SiteRecoveryDiskDetails>();
+                    List<DiskDetails> array = new List<DiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item));
+                        array.Add(DiskDetails.DeserializeDiskDetails(item));
                     }
                     vmDiskDetails = array;
                     continue;

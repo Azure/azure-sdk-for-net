@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2023-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteRecoveryJobListResult>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.JobCollection>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryJobListResult value = default;
+                        Models.JobCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteRecoveryJobListResult.DeserializeSiteRecoveryJobListResult(document.RootElement);
+                        value = Models.JobCollection.DeserializeJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteRecoveryJobListResult> List(string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<Models.JobCollection> List(string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryJobListResult value = default;
+                        Models.JobCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteRecoveryJobListResult.DeserializeSiteRecoveryJobListResult(document.RootElement);
+                        value = Models.JobCollection.DeserializeJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteRecoveryJobData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string jobName, CancellationToken cancellationToken = default)
+        public async Task<Response<JobData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -165,13 +165,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryJobData value = default;
+                        JobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteRecoveryJobData.DeserializeSiteRecoveryJobData(document.RootElement);
+                        value = JobData.DeserializeJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteRecoveryJobData)null, message.Response);
+                    return Response.FromValue((JobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteRecoveryJobData> Get(string subscriptionId, string resourceGroupName, string resourceName, string jobName, CancellationToken cancellationToken = default)
+        public Response<JobData> Get(string subscriptionId, string resourceGroupName, string resourceName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -198,13 +198,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryJobData value = default;
+                        JobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteRecoveryJobData.DeserializeSiteRecoveryJobData(document.RootElement);
+                        value = JobData.DeserializeJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SiteRecoveryJobData)null, message.Response);
+                    return Response.FromValue((JobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        internal HttpMessage CreateResumeRequest(string subscriptionId, string resourceGroupName, string resourceName, string jobName, ReplicationResumeJobContent content)
+        internal HttpMessage CreateResumeRequest(string subscriptionId, string resourceGroupName, string resourceName, string jobName, ResumeJobParams resumeJobParams)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(resumeJobParams);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -396,19 +396,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="jobName"> Job identifier. </param>
-        /// <param name="content"> Resume rob comments. </param>
+        /// <param name="resumeJobParams"> Resume rob comments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="jobName"/> or <paramref name="resumeJobParams"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResumeAsync(string subscriptionId, string resourceGroupName, string resourceName, string jobName, ReplicationResumeJobContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> ResumeAsync(string subscriptionId, string resourceGroupName, string resourceName, string jobName, ResumeJobParams resumeJobParams, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(resumeJobParams, nameof(resumeJobParams));
 
-            using var message = CreateResumeRequest(subscriptionId, resourceGroupName, resourceName, jobName, content);
+            using var message = CreateResumeRequest(subscriptionId, resourceGroupName, resourceName, jobName, resumeJobParams);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -425,19 +425,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="jobName"> Job identifier. </param>
-        /// <param name="content"> Resume rob comments. </param>
+        /// <param name="resumeJobParams"> Resume rob comments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="jobName"/> or <paramref name="resumeJobParams"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Resume(string subscriptionId, string resourceGroupName, string resourceName, string jobName, ReplicationResumeJobContent content, CancellationToken cancellationToken = default)
+        public Response Resume(string subscriptionId, string resourceGroupName, string resourceName, string jobName, ResumeJobParams resumeJobParams, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(resumeJobParams, nameof(resumeJobParams));
 
-            using var message = CreateResumeRequest(subscriptionId, resourceGroupName, resourceName, jobName, content);
+            using var message = CreateResumeRequest(subscriptionId, resourceGroupName, resourceName, jobName, resumeJobParams);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        internal HttpMessage CreateExportRequest(string subscriptionId, string resourceGroupName, string resourceName, SiteRecoveryJobQueryContent content)
+        internal HttpMessage CreateExportRequest(string subscriptionId, string resourceGroupName, string resourceName, JobQueryParameter jobQueryParameter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -467,9 +467,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(jobQueryParameter);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -478,18 +478,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="content"> job query filter. </param>
+        /// <param name="jobQueryParameter"> job query filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobQueryParameter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ExportAsync(string subscriptionId, string resourceGroupName, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> ExportAsync(string subscriptionId, string resourceGroupName, string resourceName, JobQueryParameter jobQueryParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(jobQueryParameter, nameof(jobQueryParameter));
 
-            using var message = CreateExportRequest(subscriptionId, resourceGroupName, resourceName, content);
+            using var message = CreateExportRequest(subscriptionId, resourceGroupName, resourceName, jobQueryParameter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -505,18 +505,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="content"> job query filter. </param>
+        /// <param name="jobQueryParameter"> job query filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobQueryParameter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Export(string subscriptionId, string resourceGroupName, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
+        public Response Export(string subscriptionId, string resourceGroupName, string resourceName, JobQueryParameter jobQueryParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(jobQueryParameter, nameof(jobQueryParameter));
 
-            using var message = CreateExportRequest(subscriptionId, resourceGroupName, resourceName, content);
+            using var message = CreateExportRequest(subscriptionId, resourceGroupName, resourceName, jobQueryParameter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteRecoveryJobListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.JobCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -564,9 +564,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryJobListResult value = default;
+                        Models.JobCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteRecoveryJobListResult.DeserializeSiteRecoveryJobListResult(document.RootElement);
+                        value = Models.JobCollection.DeserializeJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteRecoveryJobListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<Models.JobCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -596,9 +596,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SiteRecoveryJobListResult value = default;
+                        Models.JobCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteRecoveryJobListResult.DeserializeSiteRecoveryJobListResult(document.RootElement);
+                        value = Models.JobCollection.DeserializeJobCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

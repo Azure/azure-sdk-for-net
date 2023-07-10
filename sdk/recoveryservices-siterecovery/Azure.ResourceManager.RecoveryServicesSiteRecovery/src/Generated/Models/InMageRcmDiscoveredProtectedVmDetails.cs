@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal InMageRcmDiscoveredProtectedVmDetails()
         {
             Datastores = new ChangeTrackingList<string>();
-            IPAddresses = new ChangeTrackingList<IPAddress>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of InMageRcmDiscoveredProtectedVmDetails. </summary>
@@ -31,11 +30,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="powerStatus"> The VM power status. </param>
         /// <param name="vmFqdn"> The VM fqdn. </param>
         /// <param name="osName"> The VM's OS name. </param>
-        /// <param name="createdOn"> The SDS created timestamp. </param>
-        /// <param name="updatedOn"> The SDS updated timestamp. </param>
+        /// <param name="createdTimestamp"> The SDS created timestamp. </param>
+        /// <param name="updatedTimestamp"> The SDS updated timestamp. </param>
         /// <param name="isDeleted"> A value indicating whether the VM is deleted. </param>
         /// <param name="lastDiscoveryTimeInUtc"> The last time when SDS information discovered in SRS. </param>
-        internal InMageRcmDiscoveredProtectedVmDetails(string vCenterId, string vCenterFqdn, IReadOnlyList<string> datastores, IReadOnlyList<IPAddress> ipAddresses, string vmwareToolsStatus, string powerStatus, string vmFqdn, string osName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, bool? isDeleted, DateTimeOffset? lastDiscoveryTimeInUtc)
+        internal InMageRcmDiscoveredProtectedVmDetails(string vCenterId, string vCenterFqdn, IReadOnlyList<string> datastores, IReadOnlyList<string> ipAddresses, string vmwareToolsStatus, string powerStatus, string vmFqdn, string osName, DateTimeOffset? createdTimestamp, DateTimeOffset? updatedTimestamp, bool? isDeleted, DateTimeOffset? lastDiscoveryTimeInUtc)
         {
             VCenterId = vCenterId;
             VCenterFqdn = vCenterFqdn;
@@ -45,8 +44,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PowerStatus = powerStatus;
             VmFqdn = vmFqdn;
             OSName = osName;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
+            CreatedTimestamp = createdTimestamp;
+            UpdatedTimestamp = updatedTimestamp;
             IsDeleted = isDeleted;
             LastDiscoveryTimeInUtc = lastDiscoveryTimeInUtc;
         }
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The list of datastores. </summary>
         public IReadOnlyList<string> Datastores { get; }
         /// <summary> The list of IP addresses. </summary>
-        public IReadOnlyList<IPAddress> IPAddresses { get; }
+        public IReadOnlyList<string> IPAddresses { get; }
         /// <summary> The VMware tools status. </summary>
         public string VMwareToolsStatus { get; }
         /// <summary> The VM power status. </summary>
@@ -68,9 +67,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The VM's OS name. </summary>
         public string OSName { get; }
         /// <summary> The SDS created timestamp. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedTimestamp { get; }
         /// <summary> The SDS updated timestamp. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
+        public DateTimeOffset? UpdatedTimestamp { get; }
         /// <summary> A value indicating whether the VM is deleted. </summary>
         public bool? IsDeleted { get; }
         /// <summary> The last time when SDS information discovered in SRS. </summary>

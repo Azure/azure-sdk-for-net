@@ -171,12 +171,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             if (queueLabels != default)
             {
                 var labelsWithID = queueLabels.ToDictionary(k => k.Key, k => k.Value);
-
-                if (!labelsWithID.ContainsKey("Id"))
-                {
-                    labelsWithID.Add("Id", new LabelValue(queueId));
-                }
-
+                labelsWithID.Add("Id", new LabelValue(queueId));
                 Assert.AreEqual(labelsWithID.ToDictionary(x => x.Key, x => x.Value.Value), response.Labels.ToDictionary(x => x.Key, x => x.Value.Value));
             }
 

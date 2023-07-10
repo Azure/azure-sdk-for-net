@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.ErrorCreatingStorageFolder(path, ex);
+                AzureMonitorExporterEventSource.Log.WriteError("ErrorCreatingStorageFolder", ex);
                 return false;
             }
         }

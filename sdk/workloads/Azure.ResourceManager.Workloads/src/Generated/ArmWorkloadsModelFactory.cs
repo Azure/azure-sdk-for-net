@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmWorkloadsModelFactory
     {
+
         /// <summary> Initializes a new instance of SapSupportedResourceSkusResult. </summary>
         /// <param name="supportedSkus"> Gets the list of SAP supported SKUs. </param>
         /// <returns> A new <see cref="Models.SapSupportedResourceSkusResult"/> instance for mocking. </returns>

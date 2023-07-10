@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm appliance specific details. </summary>
-    public partial class InMageRcmApplianceSpecificDetails : SiteRecoveryApplianceSpecificDetails
+    public partial class InMageRcmApplianceSpecificDetails : ApplianceSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageRcmApplianceSpecificDetails. </summary>
         internal InMageRcmApplianceSpecificDetails()

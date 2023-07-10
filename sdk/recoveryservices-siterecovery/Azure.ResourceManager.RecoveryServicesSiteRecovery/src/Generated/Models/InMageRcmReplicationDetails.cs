@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentUpgradeBlockingErrorDetails"> The agent upgrade blocking error information. </param>
         /// <param name="vmNics"> The network details. </param>
         /// <param name="discoveredVmDetails"> The discovered VM details. </param>
-        internal InMageRcmReplicationDetails(string instanceType, string internalIdentifier, string fabricDiscoveryMachineId, string multiVmGroupName, string discoveryType, Guid? processServerId, int? processorCoreCount, double? allocatedMemoryInMB, string processServerName, string runAsAccountId, string osType, string firmwareType, IPAddress primaryNicIPAddress, string targetGeneration, string licenseType, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, string targetLocation, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, ResourceIdentifier failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, long? lastRpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, ResourceIdentifier lastRecoveryPointId, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, SiteRecoveryResyncState? resyncState, MobilityAgentUpgradeState? agentUpgradeState, string lastAgentUpgradeType, string agentUpgradeJobId, string agentUpgradeAttemptToVersion, IReadOnlyList<InMageRcmProtectedDiskDetails> protectedDisks, string isLastUpgradeSuccessful, bool? isAgentRegistrationSuccessfulAfterFailover, InMageRcmMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails, IReadOnlyList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails, IReadOnlyList<InMageRcmNicDetails> vmNics, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails) : base(instanceType)
+        internal InMageRcmReplicationDetails(string instanceType, string internalIdentifier, string fabricDiscoveryMachineId, string multiVmGroupName, string discoveryType, string processServerId, int? processorCoreCount, double? allocatedMemoryInMB, string processServerName, string runAsAccountId, string osType, string firmwareType, string primaryNicIPAddress, string targetGeneration, string licenseType, string storageAccountId, string targetVmName, string targetVmSize, string targetResourceGroupId, string targetLocation, string targetAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, string targetBootDiagnosticsStorageAccountId, string targetNetworkId, string testNetworkId, string failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, long? lastRpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string lastRecoveryPointId, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, ResyncState? resyncState, MobilityAgentUpgradeState? agentUpgradeState, string lastAgentUpgradeType, string agentUpgradeJobId, string agentUpgradeAttemptToVersion, IReadOnlyList<InMageRcmProtectedDiskDetails> protectedDisks, string isLastUpgradeSuccessful, bool? isAgentRegistrationSuccessfulAfterFailover, InMageRcmMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails, IReadOnlyList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails, IReadOnlyList<InMageRcmNicDetails> vmNics, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails) : base(instanceType)
         {
             InternalIdentifier = internalIdentifier;
             FabricDiscoveryMachineId = fabricDiscoveryMachineId;
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The type of the discovered VM. </summary>
         public string DiscoveryType { get; }
         /// <summary> The process server Id. </summary>
-        public Guid? ProcessServerId { get; }
+        public string ProcessServerId { get; }
         /// <summary> The processor core count. </summary>
         public int? ProcessorCoreCount { get; }
         /// <summary> The allocated memory in MB. </summary>
@@ -159,35 +158,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The firmware type. </summary>
         public string FirmwareType { get; }
         /// <summary> The IP address of the primary network interface. </summary>
-        public IPAddress PrimaryNicIPAddress { get; }
+        public string PrimaryNicIPAddress { get; }
         /// <summary> The target generation. </summary>
         public string TargetGeneration { get; }
         /// <summary> License Type of the VM to be used. </summary>
         public string LicenseType { get; }
         /// <summary> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </summary>
-        public ResourceIdentifier StorageAccountId { get; }
+        public string StorageAccountId { get; }
         /// <summary> Target VM name. </summary>
         public string TargetVmName { get; }
         /// <summary> The target VM size. </summary>
         public string TargetVmSize { get; }
         /// <summary> The target resource group Id. </summary>
-        public ResourceIdentifier TargetResourceGroupId { get; }
+        public string TargetResourceGroupId { get; }
         /// <summary> The target location. </summary>
         public string TargetLocation { get; }
         /// <summary> The target availability set Id. </summary>
-        public ResourceIdentifier TargetAvailabilitySetId { get; }
+        public string TargetAvailabilitySetId { get; }
         /// <summary> The target availability zone. </summary>
         public string TargetAvailabilityZone { get; }
         /// <summary> The target proximity placement group Id. </summary>
-        public ResourceIdentifier TargetProximityPlacementGroupId { get; }
+        public string TargetProximityPlacementGroupId { get; }
         /// <summary> The target boot diagnostics storage account ARM Id. </summary>
-        public ResourceIdentifier TargetBootDiagnosticsStorageAccountId { get; }
+        public string TargetBootDiagnosticsStorageAccountId { get; }
         /// <summary> The target network Id. </summary>
-        public ResourceIdentifier TargetNetworkId { get; }
+        public string TargetNetworkId { get; }
         /// <summary> The test network Id. </summary>
-        public ResourceIdentifier TestNetworkId { get; }
+        public string TestNetworkId { get; }
         /// <summary> The recovery point Id to which the VM was failed over. </summary>
-        public ResourceIdentifier FailoverRecoveryPointId { get; }
+        public string FailoverRecoveryPointId { get; }
         /// <summary> The last recovery point received time. </summary>
         public DateTimeOffset? LastRecoveryPointReceived { get; }
         /// <summary> The last recovery point objective value. </summary>
@@ -195,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The last recovery point objective calculated time. </summary>
         public DateTimeOffset? LastRpoCalculatedOn { get; }
         /// <summary> The last recovery point Id. </summary>
-        public ResourceIdentifier LastRecoveryPointId { get; }
+        public string LastRecoveryPointId { get; }
         /// <summary> The initial replication progress percentage. This is calculated based on total bytes processed for all disks in the source VM. </summary>
         public int? InitialReplicationProgressPercentage { get; }
         /// <summary> The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </summary>
@@ -215,7 +214,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> A value indicating whether resync is required. </summary>
         public string ResyncRequired { get; }
         /// <summary> The resync state. </summary>
-        public SiteRecoveryResyncState? ResyncState { get; }
+        public ResyncState? ResyncState { get; }
         /// <summary> The agent auto upgrade state. </summary>
         public MobilityAgentUpgradeState? AgentUpgradeState { get; }
         /// <summary> The last agent upgrade type. </summary>

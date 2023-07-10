@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The request payload to update an alert. </summary>
@@ -30,14 +28,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> alert status. </summary>
         public CostManagementAlertStatus? Status { get; set; }
         /// <summary> dateTime in which alert was created. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public string CreationTime { get; set; }
         /// <summary> dateTime in which alert was closed. </summary>
-        public DateTimeOffset? CloseOn { get; set; }
+        public string CloseTime { get; set; }
         /// <summary> dateTime in which alert was last modified. </summary>
-        public DateTimeOffset? ModifiedOn { get; set; }
+        public string ModificationTime { get; set; }
         /// <summary> User who last modified the alert. </summary>
         public string StatusModificationUserName { get; set; }
         /// <summary> dateTime in which the alert status was last modified. </summary>
-        public DateTimeOffset? StatusModifiedOn { get; set; }
+        public string StatusModificationTime { get; set; }
     }
 }

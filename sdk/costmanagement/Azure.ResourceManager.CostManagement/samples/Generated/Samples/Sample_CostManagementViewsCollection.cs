@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Metric = ViewMetricType.ActualCost,
                 Kpis =
 {
-new ViewKpiProperties()
+new KpiProperties()
 {
-KpiType = ViewKpiType.Forecast,
+ViewKpiType = ViewKpiType.Forecast,
 Id = null,
-IsEnabled = true,
-},new ViewKpiProperties()
+Enabled = true,
+},new KpiProperties()
 {
-KpiType = ViewKpiType.Budget,
-Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Consumption/budgets/swaggerDemo"),
-IsEnabled = true,
+ViewKpiType = ViewKpiType.Budget,
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Consumption/budgets/swaggerDemo",
+Enabled = true,
 }
 },
                 Pivots =

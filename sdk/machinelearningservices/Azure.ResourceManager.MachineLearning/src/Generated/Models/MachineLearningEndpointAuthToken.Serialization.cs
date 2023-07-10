@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    expiryTimeUtc = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    expiryTimeUtc = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
                 if (property.NameEquals("refreshAfterTimeUtc"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    refreshAfterTimeUtc = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    refreshAfterTimeUtc = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
                 if (property.NameEquals("tokenType"u8))

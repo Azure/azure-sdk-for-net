@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownApplianceSpecificDetails. </summary>
-    internal partial class UnknownApplianceSpecificDetails : SiteRecoveryApplianceSpecificDetails
+    internal partial class UnknownApplianceSpecificDetails : ApplianceSpecificDetails
     {
         /// <summary> Initializes a new instance of UnknownApplianceSpecificDetails. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>

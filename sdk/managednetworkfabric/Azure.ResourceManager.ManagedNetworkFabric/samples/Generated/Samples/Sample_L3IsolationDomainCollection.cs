@@ -48,18 +48,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             {
                 RedistributeConnectedSubnets = RedistributeConnectedSubnet.True,
                 RedistributeStaticRoutes = RedistributeStaticRoute.False,
-                AggregateRouteConfiguration = new AggregateRouteConfiguration()
+                AggregateRouteConfiguration = new L3IsolationDomainPatchPropertiesAggregateRouteConfiguration()
                 {
                     IPv4Routes =
 {
-new AggregateRoute()
+new L3IsolationDomainPatchPropertiesAggregateRouteConfigurationIPv4RoutesItem()
 {
 Prefix = "10.0.0.0/24",
 }
 },
                     IPv6Routes =
 {
-new AggregateRoute()
+new L3IsolationDomainPatchPropertiesAggregateRouteConfigurationIPv6RoutesItem()
 {
 Prefix = "10.0.0.1",
 }

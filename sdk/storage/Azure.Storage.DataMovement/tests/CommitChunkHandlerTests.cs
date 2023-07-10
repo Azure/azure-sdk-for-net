@@ -9,7 +9,6 @@ using NUnit.Framework;
 using System.Threading;
 using Azure.Core;
 using Azure.Storage.Tests.Shared;
-using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -21,8 +20,6 @@ namespace Azure.Storage.DataMovement.Tests
         private readonly string _putBlockMsg = "Amount of Put Block Task calls were incorrect";
         private readonly string _reportProgressInBytesMsg = "Amount of Progress amount calls were incorrect.";
         private readonly string _commitBlockMsg = "Amount of Commit Block Task calls were incorrect";
-
-        private ClientDiagnostics ClientDiagnostics => new(ClientOptions.Default);
 
         private void VerifyDelegateInvocations(
             MockCommitChunkBehaviors behaviors,
@@ -160,7 +157,6 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Concurrent,
-                ClientDiagnostics,
                 CancellationToken.None);
 
             // Make one chunk that would meet the expected length
@@ -202,7 +198,6 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Concurrent,
-                ClientDiagnostics,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes but not cause a commit block list to occur
@@ -264,7 +259,6 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Concurrent,
-                ClientDiagnostics,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes that would cause the bytes to exceed the expected amount
@@ -309,7 +303,6 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Concurrent,
-                ClientDiagnostics,
                 CancellationToken.None);
 
             List<Task> runningTasks = new List<Task>();
@@ -361,7 +354,6 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Sequential,
-                ClientDiagnostics,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes but not cause a commit block list to occur
@@ -423,7 +415,6 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 TransferType.Sequential,
-                ClientDiagnostics,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes that would cause the bytes to exceed the expected amount
@@ -467,7 +458,6 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 transferType: TransferType.Sequential,
-                ClientDiagnostics,
                 CancellationToken.None);
 
             // Act
@@ -509,7 +499,6 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 transferType: TransferType.Concurrent,
-                ClientDiagnostics,
                 CancellationToken.None);
 
             // Act
@@ -550,7 +539,6 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 transferType: TransferType.Concurrent,
-                ClientDiagnostics,
                 CancellationToken.None);
 
             // Act

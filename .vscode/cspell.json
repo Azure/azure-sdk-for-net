@@ -632,9 +632,7 @@
         "Dpdk",
         "Sriov",
         "Sata",
-        "Uefi",
-        "Ipvlan",
-        "Macvlan"
+        "Uefi"
       ]
     },
     {

@@ -103,35 +103,6 @@ namespace Azure.Maps.Routing
             RestClient = new RouteRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsRoutingClient. </summary>
-        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
-        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
-        public MapsRoutingClient(AzureSasCredential credential)
-        {
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            var endpoint = new Uri("https://atlas.microsoft.com");
-            var options = new MapsRoutingClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
-            RestClient = new RouteRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
-        }
-
-        /// <summary> Initializes a new instance of MapsRoutingClient. </summary>
-        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
-        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public MapsRoutingClient(AzureSasCredential credential, MapsRoutingClientOptions options)
-        {
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            var endpoint = options.Endpoint;
-            options ??= new MapsRoutingClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
-            RestClient = new RouteRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
-        }
-
         /// <summary>
         /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) request.
         /// For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
@@ -150,8 +121,8 @@ namespace Azure.Maps.Routing
             {
                 var options = new RouteMatrixOptions(routeMatrixQuery);
                 return await RestClient.RequestRouteMatrixSyncAsync(
-                    JsonFormat.Json,
                     options.Query,
+                    JsonFormat.Json,
                     true, // WaitForResult only supports for async request. Set to `true` for sync request.
                     options?.TravelTimeType,
                     options?.SectionFilter,
@@ -199,8 +170,8 @@ namespace Azure.Maps.Routing
             try
             {
                 return await RestClient.RequestRouteMatrixSyncAsync(
-                    JsonFormat.Json,
                     options.Query,
+                    JsonFormat.Json,
                     true, // WaitForResult only supports for async request. Set to `true` for sync request.
                     options?.TravelTimeType,
                     options?.SectionFilter,
@@ -245,8 +216,8 @@ namespace Azure.Maps.Routing
             {
                 var options = new RouteMatrixOptions(routeMatrixQuery);
                 return RestClient.RequestRouteMatrixSync(
-                    JsonFormat.Json,
                     options.Query,
+                    JsonFormat.Json,
                     true, // WaitForResult only supports for async request. Set to `true` for sync request.
                     options?.TravelTimeType,
                     options?.SectionFilter,
@@ -292,8 +263,8 @@ namespace Azure.Maps.Routing
             try
             {
                 return RestClient.RequestRouteMatrixSync(
-                    JsonFormat.Json,
                     options.Query,
+                    JsonFormat.Json,
                     true, // WaitForResult only supports for async request. Set to `true` for sync request.
                     options?.TravelTimeType,
                     options?.SectionFilter,
@@ -349,8 +320,8 @@ namespace Azure.Maps.Routing
                 if (options?.RouteDirectionParameters == null)
                 {
                     return await RestClient.GetRouteDirectionsAsync(
-                        ResponseFormat.Json,
                         stringRoutePoints,
+                        ResponseFormat.Json,
                         options?.MaxAlternatives,
                         options?.AlternativeType,
                         options?.MinDeviationDistance,
@@ -398,9 +369,9 @@ namespace Azure.Maps.Routing
                 else
                 {
                     return await RestClient.GetRouteDirectionsWithAdditionalParametersAsync(
-                        ResponseFormat.Json,
                         stringRoutePoints,
                         options.RouteDirectionParameters,
+                        ResponseFormat.Json,
                         options?.MaxAlternatives,
                         options?.AlternativeType,
                         options?.MinDeviationDistance,
@@ -481,8 +452,8 @@ namespace Azure.Maps.Routing
                 if (options?.RouteDirectionParameters == null)
                 {
                     return RestClient.GetRouteDirections(
-                        ResponseFormat.Json,
                         stringRoutePoints,
+                        ResponseFormat.Json,
                         options?.MaxAlternatives,
                         options?.AlternativeType,
                         options?.MinDeviationDistance,
@@ -530,9 +501,9 @@ namespace Azure.Maps.Routing
                 else
                 {
                     return RestClient.GetRouteDirectionsWithAdditionalParameters(
-                        ResponseFormat.Json,
                         stringRoutePoints,
                         options.RouteDirectionParameters,
+                        ResponseFormat.Json,
                         options?.MaxAlternatives,
                         options?.AlternativeType,
                         options?.MinDeviationDistance,
@@ -602,8 +573,8 @@ namespace Azure.Maps.Routing
             try
             {
                 return await RestClient.GetRouteRangeAsync(
-                    ResponseFormat.Json,
                     options.Query,
+                    ResponseFormat.Json,
                     options.FuelBudgetInLiters,
                     options.EnergyBudgetInKilowattHours,
                     options.TimeBudget?.TotalSeconds,
@@ -662,8 +633,8 @@ namespace Azure.Maps.Routing
             try
             {
                 return RestClient.GetRouteRange(
-                    ResponseFormat.Json,
                     options.Query,
+                    ResponseFormat.Json,
                     options.FuelBudgetInLiters,
                     options.EnergyBudgetInKilowattHours,
                     options.TimeBudget?.TotalSeconds,
@@ -721,7 +692,7 @@ namespace Azure.Maps.Routing
             try
             {
                 var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
-                return await RestClient.RequestRouteDirectionsBatchSyncAsync(JsonFormat.Json, batchItems, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RequestRouteDirectionsBatchSyncAsync(batchItems, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -746,7 +717,7 @@ namespace Azure.Maps.Routing
             try
             {
                 var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
-                return RestClient.RequestRouteDirectionsBatchSync(JsonFormat.Json, batchItems, cancellationToken);
+                return RestClient.RequestRouteDirectionsBatchSync(batchItems, null, cancellationToken);
             }
             catch (Exception e)
             {
@@ -775,8 +746,8 @@ namespace Azure.Maps.Routing
             try
             {
                 var response = await RestClient.RequestRouteMatrixAsync(
-                    JsonFormat.Json,
                     options.Query,
+                    JsonFormat.Json,
                     false,
                     options?.TravelTimeType,
                     options?.SectionFilter,
@@ -836,8 +807,8 @@ namespace Azure.Maps.Routing
             try
             {
                 var response = RestClient.RequestRouteMatrix(
-                    JsonFormat.Json,
                     options.Query,
+                    JsonFormat.Json,
                     false,
                     options?.TravelTimeType,
                     options?.SectionFilter,
@@ -893,7 +864,7 @@ namespace Azure.Maps.Routing
             {
                 var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
                 var response = await RestClient.RequestRouteDirectionsBatchAsync(
-                    JsonFormat.Json, batchItems, cancellationToken).ConfigureAwait(false);
+                    batchItems, null, cancellationToken).ConfigureAwait(false);
 
                 // Create operation for route direction
                 var operation = new GetDirectionsOperation(this, new Uri(response.Headers.Location));
@@ -931,7 +902,7 @@ namespace Azure.Maps.Routing
             {
                 var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
                 var response = RestClient.RequestRouteDirectionsBatch(
-                    JsonFormat.Json, batchItems, cancellationToken);
+                    batchItems, null, cancellationToken);
 
                 // Create operation for route direction
                 var operation = new GetDirectionsOperation(this, new Uri(response.Headers.Location));

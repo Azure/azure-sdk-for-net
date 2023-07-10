@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> diskSizeInMB = default;
             Optional<string> diskType = default;
             Optional<string> diskConfiguration = default;
-            Optional<IReadOnlyList<SiteRecoveryDiskVolumeDetails>> volumeList = default;
+            Optional<IReadOnlyList<DiskVolumeDetails>> volumeList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<SiteRecoveryDiskVolumeDetails> array = new List<SiteRecoveryDiskVolumeDetails>();
+                    List<DiskVolumeDetails> array = new List<DiskVolumeDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDiskVolumeDetails.DeserializeSiteRecoveryDiskVolumeDetails(item));
+                        array.Add(DiskVolumeDetails.DeserializeDiskVolumeDetails(item));
                     }
                     volumeList = array;
                     continue;

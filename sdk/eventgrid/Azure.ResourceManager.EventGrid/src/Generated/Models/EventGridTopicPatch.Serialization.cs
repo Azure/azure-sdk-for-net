@@ -31,11 +31,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PublicNetworkAccess))
@@ -53,11 +48,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinimumTlsVersionAllowed))
-            {
-                writer.WritePropertyName("minimumTlsVersionAllowed"u8);
-                writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
-            }
             if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
@@ -67,11 +57,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 writer.WritePropertyName("dataResidencyBoundary"u8);
                 writer.WriteStringValue(DataResidencyBoundary.Value.ToString());
-            }
-            if (Optional.IsDefined(EventTypeInfo))
-            {
-                writer.WritePropertyName("eventTypeInfo"u8);
-                writer.WriteObjectValue(EventTypeInfo);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

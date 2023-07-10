@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            ResourceIdentifier azureStorageAccountId = default;
+            string azureStorageAccountId = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureStorageAccountId"u8))
                 {
-                    azureStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    azureStorageAccountId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))

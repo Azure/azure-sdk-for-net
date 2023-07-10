@@ -8,7 +8,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync with required para
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -33,7 +33,7 @@ This sample shows how to call GetCascadeDeleteJobDetails with required parameter
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
+Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -58,7 +58,7 @@ This sample shows how to call GetApplicationDataAsync with required parameters a
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-Response response = await client.GetApplicationDataAsync("<partyId>", "<applicationDataId>", new RequestContext());
+Response response = await client.GetApplicationDataAsync("<partyId>", "<applicationDataId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
@@ -100,7 +100,7 @@ This sample shows how to call GetApplicationData with required parameters and pa
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-Response response = client.GetApplicationData("<partyId>", "<applicationDataId>", new RequestContext());
+Response response = client.GetApplicationData("<partyId>", "<applicationDataId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
@@ -349,12 +349,23 @@ Console.WriteLine(response.Status);
     </member>
     <member name="GetAllApplicationDataAsync(double?,double?,double?,double?,IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetAllApplicationDataAsync with required parameters and parse the result.
+This sample shows how to call GetAllApplicationDataAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-await foreach (var item in client.GetAllApplicationDataAsync(3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<applicationIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetAllApplicationDataAsync())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetAllApplicationDataAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
+
+await foreach (var item in client.GetAllApplicationDataAsync(3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<applicationIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
@@ -392,12 +403,23 @@ await foreach (var item in client.GetAllApplicationDataAsync(3.14, 3.14, 3.14, 3
     </member>
     <member name="GetAllApplicationData(double?,double?,double?,double?,IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetAllApplicationData with required parameters and parse the result.
+This sample shows how to call GetAllApplicationData and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-foreach (var item in client.GetAllApplicationData(3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<applicationIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetAllApplicationData())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetAllApplicationData with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
+
+foreach (var item in client.GetAllApplicationData(3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<applicationIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
@@ -440,7 +462,18 @@ This sample shows how to call GetAllApplicationDataByPartyIdAsync with required 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-await foreach (var item in client.GetAllApplicationDataByPartyIdAsync("<partyId>", 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetAllApplicationDataByPartyIdAsync("<partyId>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetAllApplicationDataByPartyIdAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
+
+await foreach (var item in client.GetAllApplicationDataByPartyIdAsync("<partyId>", 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
@@ -483,7 +516,18 @@ This sample shows how to call GetAllApplicationDataByPartyId with required param
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-foreach (var item in client.GetAllApplicationDataByPartyId("<partyId>", 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetAllApplicationDataByPartyId("<partyId>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetAllApplicationDataByPartyId with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
+
+foreach (var item in client.GetAllApplicationDataByPartyId("<partyId>", 3.14, 3.14, 3.14, 3.14, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
@@ -526,7 +570,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync with required paramete
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<applicationDataId>", new RequestContext());
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<applicationDataId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -552,7 +596,7 @@ This sample shows how to call CreateCascadeDeleteJob with required parameters an
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<applicationDataId>", new RequestContext());
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<applicationDataId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

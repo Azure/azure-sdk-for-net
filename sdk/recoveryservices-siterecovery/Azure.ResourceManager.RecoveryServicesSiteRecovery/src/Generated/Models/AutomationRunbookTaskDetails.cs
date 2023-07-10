@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class represents the task details for an automation runbook. </summary>
-    public partial class AutomationRunbookTaskDetails : SiteRecoveryTaskTypeDetails
+    public partial class AutomationRunbookTaskDetails : TaskTypeDetails
     {
         /// <summary> Initializes a new instance of AutomationRunbookTaskDetails. </summary>
         internal AutomationRunbookTaskDetails()
@@ -29,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="jobId"> The job Id of the runbook execution. </param>
         /// <param name="jobOutput"> The execution output of the runbook. </param>
         /// <param name="isPrimarySideScript"> A value indicating whether it is a primary side script or not. </param>
-        internal AutomationRunbookTaskDetails(string instanceType, string name, string cloudServiceName, string subscriptionId, string accountName, string runbookId, string runbookName, ResourceIdentifier jobId, string jobOutput, bool? isPrimarySideScript) : base(instanceType)
+        internal AutomationRunbookTaskDetails(string instanceType, string name, string cloudServiceName, string subscriptionId, string accountName, string runbookId, string runbookName, string jobId, string jobOutput, bool? isPrimarySideScript) : base(instanceType)
         {
             Name = name;
             CloudServiceName = cloudServiceName;
@@ -56,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The runbook name. </summary>
         public string RunbookName { get; }
         /// <summary> The job Id of the runbook execution. </summary>
-        public ResourceIdentifier JobId { get; }
+        public string JobId { get; }
         /// <summary> The execution output of the runbook. </summary>
         public string JobOutput { get; }
         /// <summary> A value indicating whether it is a primary side script or not. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class represents details for export jobs workflow. </summary>
-    public partial class ExportJobDetails : SiteRecoveryJobDetails
+    public partial class ExportJobDetails : JobDetails
     {
         /// <summary> Initializes a new instance of ExportJobDetails. </summary>
         internal ExportJobDetails()

@@ -1,0 +1,174 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e9e3b4701ecf294989afeba54034f669-103696b39e25af42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f0f33e4ff22f585f79f2876088ba4c0d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "456",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Sep 2022 22:07:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "99064359-86ba-495a-910e-e61e4d18bde0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11956",
+        "x-ms-request-id": "99064359-86ba-495a-910e-e61e4d18bde0",
+        "x-ms-routing-request-id": "WESTUS2:20220906T220711Z:99064359-86ba-495a-910e-e61e4d18bde0"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071",
+        "authorizationSource": "Bypassed",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "subscriptionId": "f66367e1-cf7d-407b-ba39-53230cc79071",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "MGMT GCRP Package Test 001",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourcegroups/aashishDeleteRG?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-322bdebd12211b47adf65c2ead28336e-cfc6d35a8b841047-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8b6ee813e360192dc8b863545ba2adf7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "232",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Sep 2022 22:07:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "191b97d2-d046-4fc6-86b2-59947e1250f8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11955",
+        "x-ms-request-id": "191b97d2-d046-4fc6-86b2-59947e1250f8",
+        "x-ms-routing-request-id": "WESTUS2:20220906T220711Z:191b97d2-d046-4fc6-86b2-59947e1250f8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/aashishDeleteRG",
+        "name": "aashishDeleteRG",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2euap",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/aashishDeleteRG/providers/Microsoft.Compute/virtualMachineScaleSets/vmssNeela/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/EnforcePasswordHistory%24pidrt3t6jlihetr2?api-version=2022-01-25",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c512eab0a7ae854eb6cf920a1b8d3f2f-574c0800548d4f43-00",
+        "User-Agent": "azsdk-net-ResourceManager.GuestConfiguration/1.0.0-alpha.20220906.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "29702abc2d82a4f1065cd865f184c446",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2093",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Sep 2022 22:07:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0fd5d28d-bdce-4075-9b65-8cebe8493a62",
+        "x-ms-ratelimit-remaining-subscription-reads": "11954",
+        "x-ms-request-id": "0fd5d28d-bdce-4075-9b65-8cebe8493a62",
+        "x-ms-routing-request-id": "WESTUS2:20220906T220712Z:0fd5d28d-bdce-4075-9b65-8cebe8493a62",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "location": "centraluseuap",
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/aashishDeleteRG/providers/Microsoft.Compute/virtualMachineScaleSets/vmssNeela/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/EnforcePasswordHistory$pidrt3t6jlihetr2",
+        "name": "EnforcePasswordHistory$pidrt3t6jlihetr2",
+        "properties": {
+          "complianceStatus": "NonCompliant",
+          "assignmentHash": "447C29C2E7B7330CE51C1B5B69DBDFE9E5A727BDB87D63846303055DDA6275C7.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+          "parameterHash": "",
+          "latestReportId": null,
+          "lastComplianceStatusChecked": "2022-09-06T22:03:23.4631886Z",
+          "context": null,
+          "guestConfiguration": {
+            "kind": null,
+            "name": "EnforcePasswordHistory",
+            "version": "1.*",
+            "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/EnforcePasswordHistory/EnforcePasswordHistory_1.1.0.0.zip",
+            "contentHash": "447C29C2E7B7330CE51C1B5B69DBDFE9E5A727BDB87D63846303055DDA6275C7",
+            "contentType": null,
+            "assignmentType": null,
+            "assignmentSource": "Manual assignment",
+            "configurationParameter": [],
+            "configurationProtectedParameter": [],
+            "configurationSetting": {
+              "configurationMode": "MonitorOnly",
+              "allowModuleOverwrite": false,
+              "actionAfterReboot": "",
+              "refreshFrequencyMins": 5,
+              "rebootIfNeeded": true,
+              "configurationModeFrequencyMins": 15
+            }
+          },
+          "provisioningState": "Succeeded",
+          "resourceType": "VMSS",
+          "vmssVMList": [
+            {
+              "VMId": "40e0fc71-8000-4917-86ce-e352a6d7ddca",
+              "VMResourceId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/aashishDeleteRG/providers/Microsoft.Compute/virtualMachineScaleSets/vmssNeela/virtualMachines/1",
+              "complianceStatus": "NonCompliant",
+              "latestReportId": "ccf647f0-1d0d-4dfb-9bbc-0a90be619a9d",
+              "lastComplianceChecked": "2022-09-06T22:03:17Z"
+            },
+            {
+              "VMId": "71e0b749-7b37-4b6f-8490-681e62ce32b0",
+              "VMResourceId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/aashishDeleteRG/providers/Microsoft.Compute/virtualMachineScaleSets/vmssNeela/virtualMachines/0",
+              "complianceStatus": "NonCompliant",
+              "latestReportId": "6891bec1-e44e-4e32-a2a2-ea26b771c6fa",
+              "lastComplianceChecked": "2022-09-06T22:03:20Z"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1708715112",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "f66367e1-cf7d-407b-ba39-53230cc79071"
+  }
+}

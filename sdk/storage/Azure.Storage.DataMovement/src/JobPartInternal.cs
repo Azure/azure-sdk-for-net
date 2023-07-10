@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Models.JobPlan;
 
@@ -59,7 +58,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Specifies the options for error handling.
         /// </summary>
-        internal ErrorHandlingBehavior _errorHandling;
+        internal ErrorHandlingOptions _errorHandling;
 
         /// <summary>
         /// Determines how files are created and overwrite behavior for files that already exists.
@@ -111,8 +110,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public bool IsFinalPart { get; internal set; }
 
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
         /// </summary>
@@ -157,7 +154,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceSingle destinationResource,
             long? maximumTransferChunkSize,
             long? initialTransferSize,
-            ErrorHandlingBehavior errorHandling,
+            ErrorHandlingOptions errorHandling,
             StorageResourceCreateMode createMode,
             TransferCheckpointer checkpointer,
             TransferProgressTracker progressTracker,
@@ -168,13 +165,10 @@ namespace Azure.Storage.DataMovement
             SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
             SyncAsyncEventHandler<TransferSkippedEventArgs> skippedEventHandler,
             SyncAsyncEventHandler<SingleTransferCompletedEventArgs> singleTransferEventHandler,
-            ClientDiagnostics clientDiagnostics,
             CancellationToken cancellationToken,
             StorageTransferStatus jobPartStatus = StorageTransferStatus.Queued,
             long? length = default)
         {
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
-
             JobPartStatus = jobPartStatus;
             PartNumber = partNumber;
             _dataTransfer = dataTransfer;
@@ -193,7 +187,6 @@ namespace Azure.Storage.DataMovement
             TransferFailedEventHandler = failedEventHandler;
             TransferSkippedEventHandler = skippedEventHandler;
             SingleTransferCompletedEventHandler = singleTransferEventHandler;
-            ClientDiagnostics = clientDiagnostics;
 
             _initialTransferSize = _destinationResource.MaxChunkSize;
             if (initialTransferSize.HasValue)
@@ -331,16 +324,11 @@ namespace Azure.Storage.DataMovement
                 await SetCheckpointerStatus(transferStatus).ConfigureAwait(false);
 
                 // TODO: change to RaiseAsync
-                await PartTransferStatusEventHandler.RaiseAsync(
-                    new TransferStatusEventArgs(
-                        _dataTransfer.Id,
-                        transferStatus,
-                        false,
-                        _cancellationToken),
-                    nameof(JobPartInternal),
-                    nameof(PartTransferStatusEventHandler),
-                    ClientDiagnostics)
-                    .ConfigureAwait(false);
+                await PartTransferStatusEventHandler.Invoke(new TransferStatusEventArgs(
+                    _dataTransfer.Id,
+                    transferStatus,
+                    false,
+                    _cancellationToken)).ConfigureAwait(false);
             }
         }
 
@@ -357,17 +345,13 @@ namespace Azure.Storage.DataMovement
         {
             if (SingleTransferCompletedEventHandler != null)
             {
-                await SingleTransferCompletedEventHandler.RaiseAsync(
+                await SingleTransferCompletedEventHandler.Invoke(
                     new SingleTransferCompletedEventArgs(
                         _dataTransfer.Id,
                         _sourceResource,
                         _destinationResource,
                         false,
-                        _cancellationToken),
-                    nameof(JobPartInternal),
-                    nameof(SingleTransferCompletedEventHandler),
-                    ClientDiagnostics)
-                    .ConfigureAwait(false);
+                        _cancellationToken)).ConfigureAwait(false);
             }
         }
 
@@ -379,17 +363,12 @@ namespace Azure.Storage.DataMovement
             if (TransferSkippedEventHandler != null)
             {
                 // TODO: change to RaiseAsync
-                await TransferSkippedEventHandler.RaiseAsync(
-                    new TransferSkippedEventArgs(
-                        _dataTransfer.Id,
-                        _sourceResource,
-                        _destinationResource,
-                        false,
-                        _cancellationToken),
-                    nameof(JobPartInternal),
-                    nameof(TransferSkippedEventHandler),
-                    ClientDiagnostics)
-                    .ConfigureAwait(false);
+                await TransferSkippedEventHandler.Invoke(new TransferSkippedEventArgs(
+                    _dataTransfer.Id,
+                    _sourceResource,
+                    _destinationResource,
+                    false,
+                    _cancellationToken)).ConfigureAwait(false);
             }
             await OnTransferStatusChanged(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
         }
@@ -406,18 +385,13 @@ namespace Azure.Storage.DataMovement
                 if (TransferFailedEventHandler != null)
                 {
                     // TODO: change to RaiseAsync
-                    await TransferFailedEventHandler.RaiseAsync(
-                        new TransferFailedEventArgs(
-                            _dataTransfer.Id,
-                            _sourceResource,
-                            _destinationResource,
-                            ex,
-                            false,
-                            _cancellationToken),
-                        nameof(JobPartInternal),
-                        nameof(TransferFailedEventHandler),
-                        ClientDiagnostics)
-                        .ConfigureAwait(false);
+                    await TransferFailedEventHandler.Invoke(new TransferFailedEventArgs(
+                        _dataTransfer.Id,
+                        _sourceResource,
+                        _destinationResource,
+                        ex,
+                        false,
+                        _cancellationToken)).ConfigureAwait(false);
                 }
             }
             // Trigger job cancellation if the failed handler is enabled

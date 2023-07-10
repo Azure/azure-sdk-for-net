@@ -59,11 +59,18 @@ namespace Azure.ResourceManager.NetworkCloud
             return GetCachedClient(Client => new ClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of KubernetesClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of KubernetesClusterResources and their operations over a KubernetesClusterResource. </returns>
-        public virtual KubernetesClusterCollection GetKubernetesClusters()
+        /// <summary> Gets a collection of DefaultCniNetworkResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DefaultCniNetworkResources and their operations over a DefaultCniNetworkResource. </returns>
+        public virtual DefaultCniNetworkCollection GetDefaultCniNetworks()
         {
-            return GetCachedClient(Client => new KubernetesClusterCollection(Client, Id));
+            return GetCachedClient(Client => new DefaultCniNetworkCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of HybridAksClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HybridAksClusterResources and their operations over a HybridAksClusterResource. </returns>
+        public virtual HybridAksClusterCollection GetHybridAksClusters()
+        {
+            return GetCachedClient(Client => new HybridAksClusterCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of L2NetworkResources in the ResourceGroupResource. </summary>

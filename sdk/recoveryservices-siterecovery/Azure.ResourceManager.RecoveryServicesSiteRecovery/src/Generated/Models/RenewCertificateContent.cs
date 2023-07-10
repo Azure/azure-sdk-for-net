@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Renew certificate input properties. </summary>
-        internal RenewCertificateContentProperties Properties { get; set; }
+        internal RenewCertificateInputProperties Properties { get; set; }
         /// <summary> Renew certificate type. </summary>
         public string RenewCertificateType
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             set
             {
                 if (Properties is null)
-                    Properties = new RenewCertificateContentProperties();
+                    Properties = new RenewCertificateInputProperties();
                 Properties.RenewCertificateType = value;
             }
         }

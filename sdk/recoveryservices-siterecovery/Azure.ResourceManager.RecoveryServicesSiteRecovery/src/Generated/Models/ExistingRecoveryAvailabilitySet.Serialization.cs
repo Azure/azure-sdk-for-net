@@ -31,17 +31,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
+            Optional<string> recoveryAvailabilitySetId = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryAvailabilitySetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryAvailabilitySetId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))

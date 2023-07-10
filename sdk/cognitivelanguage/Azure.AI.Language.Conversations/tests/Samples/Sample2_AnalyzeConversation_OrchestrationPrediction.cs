@@ -111,22 +111,49 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             string respondingProjectName = orchestrationPrediction.TopIntent;
             dynamic targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.TargetProjectKind == "QuestionAnswering")
+            if (targetIntentResult.TargetProjectKind == "Conversation")
             {
-                dynamic questionAnsweringResult = targetIntentResult.Result;
+                dynamic conversationResult = targetIntentResult.Result;
+                dynamic conversationPrediction = conversationResult.Prediction;
 
-                Console.WriteLine($"Answers:");
-                foreach (dynamic answer in questionAnsweringResult.Answers)
+                Console.WriteLine($"Top Intent: {conversationPrediction.TopIntent}");
+                Console.WriteLine($"Intents:");
+                foreach (dynamic intent in conversationPrediction.Intents)
                 {
-                    Console.WriteLine($"{answer.Answer}");
-                    Console.WriteLine($"Confidence: {answer.ConfidenceScore}");
+                    Console.WriteLine($"Intent Category: {intent.Category}");
+                    Console.WriteLine($"Confidence: {intent.ConfidenceScore}");
                     Console.WriteLine();
+                }
+
+                Console.WriteLine($"Entities:");
+                foreach (dynamic entity in conversationPrediction.Entities)
+                {
+                    Console.WriteLine($"Entity Text: {entity.Text}");
+                    Console.WriteLine($"Entity Category: {entity.Category}");
+                    Console.WriteLine($"Confidence: {entity.ConfidenceScore}");
+                    Console.WriteLine($"Starting Position: {entity.Offset}");
+                    Console.WriteLine($"Length: {entity.Length}");
+                    Console.WriteLine();
+
+                    if (entity.resolutions is not null)
+                    {
+                        foreach (dynamic resolution in entity.Resolutions)
+                        {
+                            if (resolution.ResolutionKind == "DateTimeResolution")
+                            {
+                                Console.WriteLine($"Datetime Sub Kind: {resolution.DateTimeSubKind}");
+                                Console.WriteLine($"Timex: {resolution.Timex}");
+                                Console.WriteLine($"Value: {resolution.Value}");
+                                Console.WriteLine();
+                            }
+                        }
+                    }
                 }
             }
             #endregion
 
-            Assert.That(targetIntentResult.TargetProjectKind?.ToString(), Is.EqualTo("QuestionAnswering"));
-            Assert.That(orchestrationPrediction.TopIntent?.ToString(), Is.EqualTo("ChitChat-QnA"));
+            Assert.That(targetIntentResult.TargetProjectKind?.ToString(), Is.EqualTo("Conversation"));
+            Assert.That(orchestrationPrediction.TopIntent?.ToString(), Is.EqualTo("EmailIntent"));
         }
 
         [SyncOnly]

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> protectedItemName = default;
             Optional<string> vmName = default;
             Optional<string> latestAgentVersion = default;
-            Optional<ResourceIdentifier> jobId = default;
+            Optional<string> jobId = default;
             Optional<string> fabricName = default;
             Optional<string> applianceName = default;
             Optional<string> serverType = default;
@@ -46,11 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("jobId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    jobId = new ResourceIdentifier(property.Value.GetString());
+                    jobId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fabricName"u8))

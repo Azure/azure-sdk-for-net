@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Network and credentials configuration already applied to terminal server. </summary>
-        public TerminalServerPatchableProperties TerminalServerConfiguration { get; set; }
+        public TerminalServerPatchParametersTerminalServerConfiguration TerminalServerConfiguration { get; set; }
         /// <summary> List of NetworkRack resource IDs under the Network Fabric. The number of racks allowed depends on the Network Fabric SKU. </summary>
         public IReadOnlyList<string> Racks { get; }
         /// <summary> List of L2IsolationDomain resource IDs under the Network Fabric. </summary>

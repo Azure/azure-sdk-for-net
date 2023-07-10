@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -34,9 +35,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this RoutePolicyResource created on azure
             // for more information of creating RoutePolicyResource, please refer to the document of RoutePolicyResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "aaaaa";
             string resourceGroupName = "rgRoutePolicies";
-            string routePolicyName = "routePolicyName";
+            string routePolicyName = "aaaaaaa";
             ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
             RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
 
@@ -65,18 +66,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this RoutePolicyResource created on azure
             // for more information of creating RoutePolicyResource, please refer to the document of RoutePolicyResource
-            string subscriptionId = "97D66995-95BA-464A-A250-FB6E25E499A8";
-            string resourceGroupName = "resourceGroupName";
-            string routePolicyName = "routePolicyName";
+            string subscriptionId = "aaaaa";
+            string resourceGroupName = "rgRoutePolicies";
+            string routePolicyName = "aaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
             RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
 
             // invoke the operation
             RoutePolicyPatch patch = new RoutePolicyPatch()
             {
+                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                {
+                }),
                 Tags =
 {
-["key8254"] = "",
+["key1917"] = "aaaaaaaaaaaaa",
 },
             };
             ArmOperation<RoutePolicyResource> lro = await routePolicy.UpdateAsync(WaitUntil.Completed, patch);
@@ -104,9 +108,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this RoutePolicyResource created on azure
             // for more information of creating RoutePolicyResource, please refer to the document of RoutePolicyResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "aaaaa";
             string resourceGroupName = "rgRoutePolicies";
-            string routePolicyName = "routePolicyName";
+            string routePolicyName = "aaaaaaaaaaaaaaaa";
             ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
             RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
 

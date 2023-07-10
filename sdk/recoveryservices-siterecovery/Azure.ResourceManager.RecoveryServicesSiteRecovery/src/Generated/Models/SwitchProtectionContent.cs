@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Switch protection properties. </summary>
-        public SwitchProtectionProperties Properties { get; set; }
+        public SwitchProtectionInputProperties Properties { get; set; }
     }
 }

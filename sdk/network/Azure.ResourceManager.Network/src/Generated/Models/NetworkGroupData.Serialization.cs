@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -43,7 +42,6 @@ namespace Azure.ResourceManager.Network
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -102,20 +100,11 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("resourceGuid"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceGuid = property0.Value.GetGuid();
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new NetworkGroupData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(etag));
+            return new NetworkGroupData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(etag));
         }
     }
 }

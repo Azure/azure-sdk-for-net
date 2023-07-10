@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Hyper-V Managed disk details. </summary>
@@ -22,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
         /// <param name="replicaDiskType"> The replica disk type. </param>
         /// <param name="diskEncryptionSetId"> The disk encryption set ARM Id. </param>
-        internal HyperVReplicaAzureManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, ResourceIdentifier diskEncryptionSetId)
+        internal HyperVReplicaAzureManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, string diskEncryptionSetId)
         {
             DiskId = diskId;
             SeedManagedDiskId = seedManagedDiskId;
@@ -37,6 +35,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The replica disk type. </summary>
         public string ReplicaDiskType { get; }
         /// <summary> The disk encryption set ARM Id. </summary>
-        public ResourceIdentifier DiskEncryptionSetId { get; }
+        public string DiskEncryptionSetId { get; }
     }
 }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryVmSecurityType> targetVmSecurityType = default;
+            Optional<VirtualMachineSecurityType> targetVmSecurityType = default;
             Optional<string> isTargetVmSecureBootEnabled = default;
             Optional<string> isTargetVmTpmEnabled = default;
             Optional<string> isTargetVmIntegrityMonitoringEnabled = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecurityType = new SiteRecoveryVmSecurityType(property.Value.GetString());
+                    targetVmSecurityType = new VirtualMachineSecurityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isTargetVmSecureBootEnabled"u8))

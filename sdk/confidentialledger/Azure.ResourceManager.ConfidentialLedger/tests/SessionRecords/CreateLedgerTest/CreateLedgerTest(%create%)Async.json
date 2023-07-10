@@ -1,0 +1,97 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5b8141389841220fc95a998198f23578-a78bb78b12490aaa-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3bbf2dacc013e9f7a4e0563e08bb1afb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "481",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:57:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e870ece5-4fd1-44eb-80b7-4fc0feb18663",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "e870ece5-4fd1-44eb-80b7-4fc0feb18663",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205713Z:e870ece5-4fd1-44eb-80b7-4fc0feb18663"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "NRMSBreakGlass": "265834889",
+          "NRMSTagUpdate": "true"
+        },
+        "subscriptionId": "027da7f8-2fc6-46d4-9be9-560706b60fec",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Azure Confidential Compute Ledger Test 1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourcegroups/sdk-test-rg-create?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "25",
+        "Content-Type": "application/json",
+        "traceparent": "00-1fa373157b29ba2656d32e358bc9d272-e3bebd64d684f13e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "31e87872250a38832ed61f70954f0e4a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westeurope"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "237",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 10 Sep 2022 20:57:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3223b9c2-9e32-4e11-9e96-3a7d456460fc",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "3223b9c2-9e32-4e11-9e96-3a7d456460fc",
+        "x-ms-routing-request-id": "UKSOUTH:20220910T205714Z:3223b9c2-9e32-4e11-9e96-3a7d456460fc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/027da7f8-2fc6-46d4-9be9-560706b60fec/resourceGroups/sdk-test-rg-create",
+        "name": "sdk-test-rg-create",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westeurope",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "1590319371",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "027da7f8-2fc6-46d4-9be9-560706b60fec"
+  }
+}

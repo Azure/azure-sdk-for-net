@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         protected async Task SetUp()
         {
             await BaseSetUp(database: true);
-
             DatabaseData = (KustoReadWriteDatabase)Database.Data;
+
             FollowingCluster = (await ResourceGroup.GetKustoClusterAsync(TE.FollowingClusterName)).Value;
         }
 
@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var attachedDatabaseConfigurationCollection = FollowingCluster.GetKustoAttachedDatabaseConfigurations();
 
-            var attachedDatabaseConfigurationName = GenerateAssetName("sdkAttachedDatabaseConfiguration");
+            var attachedDatabaseConfigurationName =
+                GenerateAssetName("sdkAttachedDatabaseConfiguration");
 
             var attachedDatabaseConfigurationDataCreate = new KustoAttachedDatabaseConfigurationData {ClusterResourceId = Cluster.Id, DatabaseName = TE.DatabaseName, DefaultPrincipalsModificationKind = KustoDatabaseDefaultPrincipalsModificationKind.Replace, Location = Location};
 
@@ -112,15 +113,6 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             Assert.IsNull(await Cluster.GetFollowerDatabasesAsync().FirstOrDefaultAsync());
 
             await ValidateReadWriteDatabase(false);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task DatabaseInviteFollowerTest()
-        {
-            var content = new DatabaseInviteFollowerContent("user@contoso.com");
-            var invitation = await Database.InviteFollowerDatabaseAsync(content).ConfigureAwait(false);
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(invitation.Value.GeneratedInvitation));
         }
 
         private async Task ReadOnlyFollowingDatabaseResourceTests(KustoDatabaseResource followingDatabase)

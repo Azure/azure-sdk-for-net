@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentVersion"> The agent version. </param>
         /// <param name="agentUpdateStatus"> A value indicating whether installed agent needs to be updated. </param>
         /// <param name="postUpdateRebootStatus"> A value indicating whether reboot is required after update is applied. </param>
-        /// <param name="agentExpireOn"> Agent expiry date. </param>
-        internal InMageAgentDetails(string agentVersion, string agentUpdateStatus, string postUpdateRebootStatus, DateTimeOffset? agentExpireOn)
+        /// <param name="agentExpiryOn"> Agent expiry date. </param>
+        internal InMageAgentDetails(string agentVersion, string agentUpdateStatus, string postUpdateRebootStatus, DateTimeOffset? agentExpiryOn)
         {
             AgentVersion = agentVersion;
             AgentUpdateStatus = agentUpdateStatus;
             PostUpdateRebootStatus = postUpdateRebootStatus;
-            AgentExpireOn = agentExpireOn;
+            AgentExpiryOn = agentExpiryOn;
         }
 
         /// <summary> The agent version. </summary>
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> A value indicating whether reboot is required after update is applied. </summary>
         public string PostUpdateRebootStatus { get; }
         /// <summary> Agent expiry date. </summary>
-        public DateTimeOffset? AgentExpireOn { get; }
+        public DateTimeOffset? AgentExpiryOn { get; }
     }
 }

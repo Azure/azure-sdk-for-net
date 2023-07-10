@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement.Models;
@@ -35,13 +34,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="details"> Alert details. </param>
         /// <param name="costEntityId"> related budget. </param>
         /// <param name="status"> alert status. </param>
-        /// <param name="createdOn"> dateTime in which alert was created. </param>
-        /// <param name="closeOn"> dateTime in which alert was closed. </param>
-        /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
+        /// <param name="creationTime"> dateTime in which alert was created. </param>
+        /// <param name="closeTime"> dateTime in which alert was closed. </param>
+        /// <param name="modificationTime"> dateTime in which alert was last modified. </param>
         /// <param name="statusModificationUserName"> User who last modified the alert. </param>
-        /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
+        /// <param name="statusModificationTime"> dateTime in which the alert status was last modified. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertPropertiesDefinition definition, string description, CostManagementAlertSource? source, AlertPropertiesDetails details, string costEntityId, CostManagementAlertStatus? status, DateTimeOffset? createdOn, DateTimeOffset? closeOn, DateTimeOffset? modifiedOn, string statusModificationUserName, DateTimeOffset? statusModifiedOn, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal CostManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertPropertiesDefinition definition, string description, CostManagementAlertSource? source, AlertPropertiesDetails details, string costEntityId, CostManagementAlertStatus? status, string creationTime, string closeTime, string modificationTime, string statusModificationUserName, string statusModificationTime, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Definition = definition;
             Description = description;
@@ -49,11 +48,11 @@ namespace Azure.ResourceManager.CostManagement
             Details = details;
             CostEntityId = costEntityId;
             Status = status;
-            CreatedOn = createdOn;
-            CloseOn = closeOn;
-            ModifiedOn = modifiedOn;
+            CreationTime = creationTime;
+            CloseTime = closeTime;
+            ModificationTime = modificationTime;
             StatusModificationUserName = statusModificationUserName;
-            StatusModifiedOn = statusModifiedOn;
+            StatusModificationTime = statusModificationTime;
             ETag = eTag;
         }
 
@@ -70,15 +69,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> alert status. </summary>
         public CostManagementAlertStatus? Status { get; set; }
         /// <summary> dateTime in which alert was created. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public string CreationTime { get; set; }
         /// <summary> dateTime in which alert was closed. </summary>
-        public DateTimeOffset? CloseOn { get; set; }
+        public string CloseTime { get; set; }
         /// <summary> dateTime in which alert was last modified. </summary>
-        public DateTimeOffset? ModifiedOn { get; set; }
+        public string ModificationTime { get; set; }
         /// <summary> User who last modified the alert. </summary>
         public string StatusModificationUserName { get; set; }
         /// <summary> dateTime in which the alert status was last modified. </summary>
-        public DateTimeOffset? StatusModifiedOn { get; set; }
+        public string StatusModificationTime { get; set; }
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
         public ETag? ETag { get; set; }
     }

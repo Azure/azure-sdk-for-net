@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-02";
+            _apiVersion = apiVersion ?? "2022-12-29";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Checks that the databases resource name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Checks that the databases resource name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
-        internal HttpMessage CreateListByClusterRequest(string subscriptionId, string resourceGroupName, string clusterName, int? top, string skiptoken)
+        internal HttpMessage CreateListByClusterRequest(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -139,14 +139,6 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/databases", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (skiptoken != null)
-            {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -154,21 +146,19 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns the list of databases of the given Kusto cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="top"> limit the number of results. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseListResult>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string clusterName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseListResult>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName, top, skiptoken);
+            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -185,21 +175,19 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns the list of databases of the given Kusto cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="top"> limit the number of results. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseListResult> ListByCluster(string subscriptionId, string resourceGroupName, string clusterName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<DatabaseListResult> ListByCluster(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName, top, skiptoken);
+            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -238,8 +226,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns a database. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -271,8 +259,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns a database. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -334,8 +322,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Creates or updates a database. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="data"> The database parameters supplied to the CreateOrUpdate operation. </param>
@@ -365,8 +353,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Creates or updates a database. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="data"> The database parameters supplied to the CreateOrUpdate operation. </param>
@@ -426,8 +414,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Updates a database. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="data"> The database parameters supplied to the Update operation. </param>
@@ -457,8 +445,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Updates a database. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="data"> The database parameters supplied to the Update operation. </param>
@@ -510,8 +498,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Deletes the database with the given name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -538,8 +526,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Deletes the database with the given name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -589,8 +577,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns a list of database principals of the given Kusto cluster and database. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -620,8 +608,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns a list of database principals of the given Kusto cluster and database. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -678,8 +666,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Add Database principals permissions. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="databasePrincipalsToAdd"> List of database principals to add. </param>
@@ -711,8 +699,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Add Database principals permissions. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="databasePrincipalsToAdd"> List of database principals to add. </param>
@@ -771,8 +759,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Remove Database principals permissions. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="databasePrincipalsToRemove"> List of database principals to remove. </param>
@@ -804,8 +792,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Remove Database principals permissions. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="databasePrincipalsToRemove"> List of database principals to remove. </param>
@@ -829,86 +817,6 @@ namespace Azure.ResourceManager.Kusto
                         DatabasePrincipalListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = DatabasePrincipalListResult.DeserializeDatabasePrincipalListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListByClusterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, int? top, string skiptoken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Returns the list of databases of the given Kusto cluster. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="top"> limit the number of results. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseListResult>> ListByClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, top, skiptoken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns the list of databases of the given Kusto cluster. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="top"> limit the number of results. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseListResult> ListByClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, top, skiptoken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseListResult.DeserializeDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

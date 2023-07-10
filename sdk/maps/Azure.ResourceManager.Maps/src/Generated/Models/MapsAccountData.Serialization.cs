@@ -25,11 +25,6 @@ namespace Azure.ResourceManager.Maps
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -59,7 +54,6 @@ namespace Azure.ResourceManager.Maps
             }
             MapsSku sku = default;
             Optional<MapsAccountKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
             Optional<MapsAccountProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -81,15 +75,6 @@ namespace Azure.ResourceManager.Maps
                         continue;
                     }
                     kind = new MapsAccountKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -145,7 +130,7 @@ namespace Azure.ResourceManager.Maps
                     continue;
                 }
             }
-            return new MapsAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(kind), identity, properties.Value);
+            return new MapsAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(kind), properties.Value);
         }
     }
 }

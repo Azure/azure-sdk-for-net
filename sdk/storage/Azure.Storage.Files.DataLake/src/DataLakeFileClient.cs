@@ -1135,11 +1135,11 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<DataLakePathClient> response = base.Rename(
-                    destinationPath: destinationPath,
-                    destinationFileSystem: destinationFileSystem,
-                    sourceConditions: sourceConditions,
-                    destinationConditions: destinationConditions,
-                    cancellationToken: cancellationToken);
+                    destinationFileSystem,
+                    destinationPath,
+                    sourceConditions,
+                    destinationConditions,
+                    cancellationToken);
 
                 return Response.FromValue(
                     new DataLakeFileClient(response.Value.DfsUri, response.Value.ClientConfiguration),
@@ -1202,11 +1202,11 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<DataLakePathClient> response = await base.RenameAsync(
-                    destinationPath: destinationPath,
-                    destinationFileSystem: destinationFileSystem,
-                    sourceConditions: sourceConditions,
-                    destinationConditions: destinationConditions,
-                    cancellationToken: cancellationToken)
+                    destinationFileSystem,
+                    destinationPath,
+                    sourceConditions,
+                    destinationConditions,
+                    cancellationToken)
                     .ConfigureAwait(false);
 
                 return Response.FromValue(

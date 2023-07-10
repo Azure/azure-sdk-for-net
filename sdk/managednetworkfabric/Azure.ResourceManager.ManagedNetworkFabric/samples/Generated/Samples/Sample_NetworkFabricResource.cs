@@ -74,12 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkFabricPatch patch = new NetworkFabricPatch()
             {
-                Tags =
-{
-["key1758"] = "",
-},
-                Annotation = "annotationValue",
-                TerminalServerConfiguration = new TerminalServerPatchableProperties()
+                TerminalServerConfiguration = new TerminalServerPatchParametersTerminalServerConfiguration()
                 {
                     Username = "username",
                     Password = "xxxxxxx",

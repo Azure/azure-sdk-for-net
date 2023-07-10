@@ -39,7 +39,7 @@
 /sdk/entra/                                                        @pallavit @jsquire
 /sdk/graphrbac/                                                    @pallavit @jsquire
 /sdk/machinelearningservices/                                      @pallavit @jsquire
-/sdk/maps/                                                         @pallavit @jsquire @dubiety @khmic5 @andykao1213
+/sdk/maps/                                                         @pallavit @jsquire
 # Note there are some sub-rules for this directory, defined below
 /sdk/operationalinsights/                                          @pallavit @jsquire
 /sdk/purview/                                                      @pallavit @jsquire
@@ -154,7 +154,7 @@
 
 # PRLabel: %Cognitive - Language
 # ServiceLabel: %Cognitive - Language %Service Attention
-/sdk/cognitivelanguage/                                            @quentinRobinson @wangyuantao @heaths
+/sdk/cognitivelanguage/                                            @heaths @rokulka @mshaban-msft
 
 # ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
 /sdk/cognitiveservices/AnomalyDetector/                            @yingqunpku @bowgong
@@ -196,7 +196,7 @@
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                                                @quentinRobinson @wangyuantao @joseharriaga @kinelski @heaths
+/sdk/textanalytics/                                                @joseharriaga @kinelski @heaths
 
 # ServiceLabel: %Cognitive - Text Analytics %Service Attention
 /sdk/cognitiveservices/Language.TextAnalytics/                     @assafi

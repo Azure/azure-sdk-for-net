@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<SystemData> systemData = default;
             string model = default;
             Optional<string> manufacturer = default;
-            Optional<IList<SupportedVersionProperties>> supportedVersions = default;
-            Optional<DeviceLimits> limits = default;
+            Optional<IList<NetworkDeviceSkuPropertiesSupportedVersionsItem>> supportedVersions = default;
+            Optional<NetworkDeviceSkuPropertiesLimits> limits = default;
             Optional<IList<NetworkDeviceRoleName>> supportedRoleTypes = default;
-            Optional<IList<DeviceInterfaceProperties>> interfaces = default;
+            Optional<IList<NetworkDeviceSkuPropertiesInterfacesItem>> interfaces = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<SupportedVersionProperties> array = new List<SupportedVersionProperties>();
+                            List<NetworkDeviceSkuPropertiesSupportedVersionsItem> array = new List<NetworkDeviceSkuPropertiesSupportedVersionsItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SupportedVersionProperties.DeserializeSupportedVersionProperties(item));
+                                array.Add(NetworkDeviceSkuPropertiesSupportedVersionsItem.DeserializeNetworkDeviceSkuPropertiesSupportedVersionsItem(item));
                             }
                             supportedVersions = array;
                             continue;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            limits = DeviceLimits.DeserializeDeviceLimits(property0.Value);
+                            limits = NetworkDeviceSkuPropertiesLimits.DeserializeNetworkDeviceSkuPropertiesLimits(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportedRoleTypes"u8))
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<DeviceInterfaceProperties> array = new List<DeviceInterfaceProperties>();
+                            List<NetworkDeviceSkuPropertiesInterfacesItem> array = new List<NetworkDeviceSkuPropertiesInterfacesItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeviceInterfaceProperties.DeserializeDeviceInterfaceProperties(item));
+                                array.Add(NetworkDeviceSkuPropertiesInterfacesItem.DeserializeNetworkDeviceSkuPropertiesInterfacesItem(item));
                             }
                             interfaces = array;
                             continue;

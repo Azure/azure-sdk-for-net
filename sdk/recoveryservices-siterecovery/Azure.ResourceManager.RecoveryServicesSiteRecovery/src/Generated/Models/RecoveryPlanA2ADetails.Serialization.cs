@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> primaryZone = default;
             Optional<string> recoveryZone = default;
-            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
-            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
+            Optional<ExtendedLocation> primaryExtendedLocation = default;
+            Optional<ExtendedLocation> recoveryExtendedLocation = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    primaryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryExtendedLocation"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    recoveryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

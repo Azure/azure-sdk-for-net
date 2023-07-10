@@ -52,7 +52,6 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> linkIdentifier = default;
-            Optional<string> privateEndpointLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -128,16 +127,11 @@ namespace Azure.ResourceManager.Network
                             linkIdentifier = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointLocation"u8))
-                        {
-                            privateEndpointLocation = property0.Value.GetString();
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new NetworkPrivateEndpointConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), linkIdentifier.Value, privateEndpointLocation.Value);
+            return new NetworkPrivateEndpointConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), linkIdentifier.Value);
         }
     }
 }

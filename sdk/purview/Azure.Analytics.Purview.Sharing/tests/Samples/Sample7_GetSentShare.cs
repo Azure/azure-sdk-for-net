@@ -24,11 +24,11 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
             var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
             var sentShareClient = new SentSharesClient(endPoint, credential);
 
-            Response response = await sentShareClient.GetSentShareAsync("sentShareId", new());
+            Response response = await sentShareClient.GetSentShareAsync("sentShareId");
 #else
             var sentShareClient = GetSentSharesClient();
 
-            Response response = await sentShareClient.GetSentShareAsync("fe11781e-9a7d-488d-bd22-cc2c95536e96", new());
+            Response response = await sentShareClient.GetSentShareAsync("fe11781e-9a7d-488d-bd22-cc2c95536e96");
 #endif
 
             #endregion

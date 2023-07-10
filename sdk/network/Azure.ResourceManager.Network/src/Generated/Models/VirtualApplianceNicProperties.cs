@@ -19,13 +19,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> NIC name. </param>
         /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="privateIPAddress"> Private IP address. </param>
-        /// <param name="instanceName"> Instance on which nic is attached. </param>
-        internal VirtualApplianceNicProperties(string name, string publicIPAddress, string privateIPAddress, string instanceName)
+        internal VirtualApplianceNicProperties(string name, string publicIPAddress, string privateIPAddress)
         {
             Name = name;
             PublicIPAddress = publicIPAddress;
             PrivateIPAddress = privateIPAddress;
-            InstanceName = instanceName;
         }
 
         /// <summary> NIC name. </summary>
@@ -34,7 +32,5 @@ namespace Azure.ResourceManager.Network.Models
         public string PublicIPAddress { get; }
         /// <summary> Private IP address. </summary>
         public string PrivateIPAddress { get; }
-        /// <summary> Instance on which nic is attached. </summary>
-        public string InstanceName { get; }
     }
 }

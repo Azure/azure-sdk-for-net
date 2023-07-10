@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string applicationId = default;
             Optional<string> password = default;
             string principalId = default;
-            string tenantId = default;
+            Guid tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("tenantId"u8))
                 {
-                    tenantId = property.Value.GetString();
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
             }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,20 +9,6 @@
 ### Bugs Fixed
 
 ### Other Changes
-
-## 1.0.0-beta.3 (2023-06-27)
-
-### Features Added
-
-- Added `DataFactoryKeyVaultSecretReference`, `DataFactoryLinkedServiceReference`, `DataFactorySecretString`, and `DataFactorySecretBaseDefinition` types.
-
-### Breaking Changes
-
-- Renamed `DataFactoryMaskedString` to `DataFactorySecretString`.
-
-### Bugs Fixed
-
-- Fixed serialization of Key Vault References.
 
 ## 1.0.0-beta.2 (2023-04-10)
 

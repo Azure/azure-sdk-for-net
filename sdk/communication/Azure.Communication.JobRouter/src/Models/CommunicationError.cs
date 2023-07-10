@@ -12,7 +12,7 @@ namespace Azure.Communication.JobRouter.Models
     /// Error model.
     /// </summary>
     [CodeGenModel("CommunicationError")]
-    internal partial class CommunicationError
+    public partial class CommunicationError
     {
     }
 }

@@ -47,30 +47,30 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreationTime))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value);
+                writer.WriteStringValue(CreationTime);
             }
-            if (Optional.IsDefined(CloseOn))
+            if (Optional.IsDefined(CloseTime))
             {
                 writer.WritePropertyName("closeTime"u8);
-                writer.WriteStringValue(CloseOn.Value);
+                writer.WriteStringValue(CloseTime);
             }
-            if (Optional.IsDefined(ModifiedOn))
+            if (Optional.IsDefined(ModificationTime))
             {
                 writer.WritePropertyName("modificationTime"u8);
-                writer.WriteStringValue(ModifiedOn.Value);
+                writer.WriteStringValue(ModificationTime);
             }
             if (Optional.IsDefined(StatusModificationUserName))
             {
                 writer.WritePropertyName("statusModificationUserName"u8);
                 writer.WriteStringValue(StatusModificationUserName);
             }
-            if (Optional.IsDefined(StatusModifiedOn))
+            if (Optional.IsDefined(StatusModificationTime))
             {
                 writer.WritePropertyName("statusModificationTime"u8);
-                writer.WriteStringValue(StatusModifiedOn.Value);
+                writer.WriteStringValue(StatusModificationTime);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

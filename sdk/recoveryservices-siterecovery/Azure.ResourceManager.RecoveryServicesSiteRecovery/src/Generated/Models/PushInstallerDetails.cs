@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
         internal PushInstallerDetails()
         {
-            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
+            HealthErrors = new ChangeTrackingList<HealthError>();
         }
 
         /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricObjectId"> The fabric object Id. </param>
         /// <param name="fqdn"> The push installer Fqdn. </param>
         /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the push installer. </param>
+        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the push installer. </param>
         /// <param name="health"> The health of the push installer. </param>
         /// <param name="healthErrors"> The health errors. </param>
-        internal PushInstallerDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
+        internal PushInstallerDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors)
         {
             Id = id;
             Name = name;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             FabricObjectId = fabricObjectId;
             Fqdn = fqdn;
             Version = version;
-            LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
+            LastHeartbeatUtc = lastHeartbeatUtc;
             Health = health;
             HealthErrors = healthErrors;
         }
@@ -50,16 +50,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The push installer Bios Id. </summary>
         public string BiosId { get; }
         /// <summary> The fabric object Id. </summary>
-        public ResourceIdentifier FabricObjectId { get; }
+        public string FabricObjectId { get; }
         /// <summary> The push installer Fqdn. </summary>
         public string Fqdn { get; }
         /// <summary> The version. </summary>
         public string Version { get; }
         /// <summary> The last heartbeat received from the push installer. </summary>
-        public DateTimeOffset? LastHeartbeatReceivedOn { get; }
+        public DateTimeOffset? LastHeartbeatUtc { get; }
         /// <summary> The health of the push installer. </summary>
-        public SiteRecoveryProtectionHealth? Health { get; }
+        public ProtectionHealth? Health { get; }
         /// <summary> The health errors. </summary>
-        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
+        public IReadOnlyList<HealthError> HealthErrors { get; }
     }
 }

@@ -1,0 +1,291 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-219cec04222bf041a38fb8c3e7fc3159-9302d34e52505542-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "00bb4d1f783c8c37f2405b0fd7679a67",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 06:26:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8551e8f0-1bc0-4753-900d-162e31798942",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "8551e8f0-1bc0-4753-900d-162e31798942",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221026T062632Z:8551e8f0-1bc0-4753-900d-162e31798942"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/alertsSuppressionRules/testrule9236?api-version=2019-01-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "212",
+        "Content-Type": "application/json",
+        "traceparent": "00-ed9a0985e323c348b68a01bc2cb05445-bf997fe2de80384f-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221026.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6468a3165f256c12bf19598809a4235f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "alertType": "IpAnomaly",
+          "reason": "FalsePositive",
+          "state": "Enabled",
+          "comment": "Test VM",
+          "suppressionAlertsScope": {
+            "allOf": [
+              {
+                "field": "entities.ip.address",
+                "in": [
+                  "104.215.95.187",
+                  "52.164.206.56"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "509",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 06:26:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3ec02d60-b2eb-4f19-90b4-62fa4e293902",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "3ec02d60-b2eb-4f19-90b4-62fa4e293902",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221026T062633Z:3ec02d60-b2eb-4f19-90b4-62fa4e293902"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/alertsSuppressionRules/testrule9236",
+        "name": "testrule9236",
+        "type": "Microsoft.Security/alertsSuppressionRules",
+        "properties": {
+          "alertType": "IpAnomaly",
+          "lastModifiedUTC": "2022-10-26T06:26:33.6135254Z",
+          "expirationDateUTC": "2023-04-26T06:26:33.6135254Z",
+          "state": "Enabled",
+          "reason": "FalsePositive",
+          "comment": "Test VM",
+          "suppressionAlertsScope": {
+            "allOf": [
+              {
+                "in": [
+                  "104.215.95.187",
+                  "52.164.206.56"
+                ],
+                "field": "entities.ip.address"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/alertsSuppressionRules/testrule9236?api-version=2019-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7509abdbd3a48046821020c0738021c3-4c07aa9394e3b94d-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221026.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "83fde10e6c64f09c4a9113fb64cc1dab",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "509",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 06:26:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8e320f59-f441-4016-92a8-d01c76af29cf",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "748",
+        "x-ms-request-id": "8e320f59-f441-4016-92a8-d01c76af29cf",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221026T062634Z:8e320f59-f441-4016-92a8-d01c76af29cf"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/alertsSuppressionRules/testrule9236",
+        "name": "testrule9236",
+        "type": "Microsoft.Security/alertsSuppressionRules",
+        "properties": {
+          "alertType": "IpAnomaly",
+          "lastModifiedUTC": "2022-10-26T06:26:33.6135254Z",
+          "expirationDateUTC": "2023-04-26T06:26:33.6135254Z",
+          "state": "Enabled",
+          "reason": "FalsePositive",
+          "comment": "Test VM",
+          "suppressionAlertsScope": {
+            "allOf": [
+              {
+                "in": [
+                  "104.215.95.187",
+                  "52.164.206.56"
+                ],
+                "field": "entities.ip.address"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/alertsSuppressionRules/testrule9236?api-version=2019-01-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9c1908205a264d42b83dc20da2a750f0-f1a30d697583a246-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221026.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "48d25c382082eefaa8947c5fde03e99b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Date": "Wed, 26 Oct 2022 06:26:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4bb84a06-c0c2-4a2b-ad68-88727a8da19a",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "247",
+        "x-ms-request-id": "4bb84a06-c0c2-4a2b-ad68-88727a8da19a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221026T062635Z:4bb84a06-c0c2-4a2b-ad68-88727a8da19a"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/alertsSuppressionRules/testrule9236?api-version=2019-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-48b732c1896cb3489d12e9b2dba9cb98-c8330fd8a02fb047-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221026.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "86c9b038e49caa7b07771a934c1707f3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "276",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 06:26:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8df72db1-5062-44df-bfa1-b18e23cad209",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "747",
+        "x-ms-request-id": "8df72db1-5062-44df-bfa1-b18e23cad209",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221026T062635Z:8df72db1-5062-44df-bfa1-b18e23cad209"
+      },
+      "ResponseBody": {
+        "HttpStatusCode": 404,
+        "ErrorCode": "Not Found",
+        "Message": "The following auto dismiss rule: \u0027testrule9236\u0027 for subscription db1ab6f0-4769-4b27-930e-01e2ef9c123c was not found",
+        "Data": {},
+        "InnerException": null,
+        "StackTrace": null,
+        "HelpLink": null,
+        "Source": null,
+        "HResult": -2146233088
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Security/alertsSuppressionRules?api-version=2019-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c73c7cb7137f724bb3fa674d259b1740-b54d2cd268998640-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221026.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ad4fadfbdad2eddce60fdad0ef3c1246",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "12",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 06:26:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9c65a7dc-8c05-4fc9-8fa0-3c9d3e0ceeb4",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "746",
+        "x-ms-request-id": "9c65a7dc-8c05-4fc9-8fa0-3c9d3e0ceeb4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221026T062636Z:9c65a7dc-8c05-4fc9-8fa0-3c9d3e0ceeb4"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "685633173",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

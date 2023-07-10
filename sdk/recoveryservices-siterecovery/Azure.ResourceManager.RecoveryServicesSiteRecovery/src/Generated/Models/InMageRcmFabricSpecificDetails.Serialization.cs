@@ -20,41 +20,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vmwareSiteId = default;
-            Optional<ResourceIdentifier> physicalSiteId = default;
+            Optional<string> vmwareSiteId = default;
+            Optional<string> physicalSiteId = default;
             Optional<string> serviceEndpoint = default;
-            Optional<ResourceIdentifier> serviceResourceId = default;
+            Optional<string> serviceResourceId = default;
             Optional<string> serviceContainerId = default;
             Optional<Uri> dataPlaneUri = default;
             Optional<Uri> controlPlaneUri = default;
             Optional<IdentityProviderDetails> sourceAgentIdentityDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
+            Optional<IReadOnlyList<ProcessServerDetails>> processServers = default;
             Optional<IReadOnlyList<RcmProxyDetails>> rcmProxies = default;
             Optional<IReadOnlyList<PushInstallerDetails>> pushInstallers = default;
             Optional<IReadOnlyList<ReplicationAgentDetails>> replicationAgents = default;
             Optional<IReadOnlyList<ReprotectAgentDetails>> reprotectAgents = default;
             Optional<IReadOnlyList<MarsAgentDetails>> marsAgents = default;
-            Optional<IReadOnlyList<SiteRecoveryDraDetails>> dras = default;
-            Optional<IReadOnlyList<SiteRecoveryAgentDetails>> agentDetails = default;
+            Optional<IReadOnlyList<DraDetails>> dras = default;
+            Optional<IReadOnlyList<AgentDetails>> agentDetails = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmwareSiteId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    vmwareSiteId = new ResourceIdentifier(property.Value.GetString());
+                    vmwareSiteId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("physicalSiteId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    physicalSiteId = new ResourceIdentifier(property.Value.GetString());
+                    physicalSiteId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serviceEndpoint"u8))
@@ -64,11 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("serviceResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serviceResourceId = new ResourceIdentifier(property.Value.GetString());
+                    serviceResourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serviceContainerId"u8))
@@ -109,10 +97,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<SiteRecoveryProcessServerDetails> array = new List<SiteRecoveryProcessServerDetails>();
+                    List<ProcessServerDetails> array = new List<ProcessServerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(item));
+                        array.Add(ProcessServerDetails.DeserializeProcessServerDetails(item));
                     }
                     processServers = array;
                     continue;
@@ -193,10 +181,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<SiteRecoveryDraDetails> array = new List<SiteRecoveryDraDetails>();
+                    List<DraDetails> array = new List<DraDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDraDetails.DeserializeSiteRecoveryDraDetails(item));
+                        array.Add(DraDetails.DeserializeDraDetails(item));
                     }
                     dras = array;
                     continue;
@@ -207,10 +195,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<SiteRecoveryAgentDetails> array = new List<SiteRecoveryAgentDetails>();
+                    List<AgentDetails> array = new List<AgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryAgentDetails.DeserializeSiteRecoveryAgentDetails(item));
+                        array.Add(Models.AgentDetails.DeserializeAgentDetails(item));
                     }
                     agentDetails = array;
                     continue;

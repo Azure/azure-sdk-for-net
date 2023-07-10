@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            ResourceIdentifier recoveryVirtualNetworkId = default;
+            string recoveryVirtualNetworkId = default;
             Optional<string> recoverySubnetName = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryVirtualNetworkId"u8))
                 {
-                    recoveryVirtualNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryVirtualNetworkId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("recoverySubnetName"u8))

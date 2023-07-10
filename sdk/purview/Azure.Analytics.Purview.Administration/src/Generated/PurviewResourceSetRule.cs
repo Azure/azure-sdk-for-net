@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='GetResourceSetRuleAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetResourceSetRuleAsync(RequestContext context)
+        public virtual async Task<Response> GetResourceSetRuleAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='GetResourceSetRule(RequestContext)']/*" />
-        public virtual Response GetResourceSetRule(RequestContext context)
+        public virtual Response GetResourceSetRule(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();

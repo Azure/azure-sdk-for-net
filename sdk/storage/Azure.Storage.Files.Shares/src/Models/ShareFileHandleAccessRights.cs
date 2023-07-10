@@ -12,11 +12,6 @@ namespace Azure.Storage.Files.Shares.Models
     public enum ShareFileHandleAccessRights
     {
         /// <summary>
-        /// Indicates no operations are permitted.
-        /// </summary>
-        None = 0,
-
-        /// <summary>
         /// Indicates that Read is permitted.
         /// </summary>
         Read = 1,

@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         internal static bool IsSuccess(Activity activity, string? responseCode, OperationType operationType)
         {
-            if (operationType.HasFlag(OperationType.Http)
+            if (operationType == OperationType.Http
                 && responseCode != null
                 && int.TryParse(responseCode, out int statusCode))
             {

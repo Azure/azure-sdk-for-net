@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageAzureV2 Managed disk details. </summary>
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="replicaDiskType"> The replica disk type. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
         /// <param name="targetDiskName"> The target disk name. </param>
-        internal InMageAzureV2ManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, ResourceIdentifier diskEncryptionSetId, string targetDiskName)
+        internal InMageAzureV2ManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, string diskEncryptionSetId, string targetDiskName)
         {
             DiskId = diskId;
             SeedManagedDiskId = seedManagedDiskId;
@@ -39,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The replica disk type. </summary>
         public string ReplicaDiskType { get; }
         /// <summary> The DiskEncryptionSet ARM ID. </summary>
-        public ResourceIdentifier DiskEncryptionSetId { get; }
+        public string DiskEncryptionSetId { get; }
         /// <summary> The target disk name. </summary>
         public string TargetDiskName { get; }
     }

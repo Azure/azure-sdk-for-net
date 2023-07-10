@@ -98,9 +98,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var bestWorkerModeDistributionPolicyResponse = await routerClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(bestWorkerModeDistributionPolicyId, TimeSpan.FromSeconds(1),
                     new BestWorkerMode(
-                        new FunctionRouterRule(new Uri("https://my.function.app/api/myfunction?code=Kg=="))
+                        new FunctionRule(new Uri("https://my.function.app/api/myfunction?code=Kg=="))
                         {
-                            Credential = new FunctionRouterRuleCredential("MyAppKey", "MyClientId")
+                            Credential = new FunctionRuleCredential("MyAppKey", "MyClientId")
                         },
                         new List<ScoringRuleParameterSelector> { ScoringRuleParameterSelector.WorkerSelectors })
                     {
@@ -122,7 +122,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var scoringRule = ((BestWorkerMode)bestWorkerModeDistributionPolicy.Mode).ScoringRule;
             Assert.NotNull(scoringRule);
-            var azureFuncScoringRule = (FunctionRouterRule)scoringRule;
+            var azureFuncScoringRule = (FunctionRule)scoringRule;
             // Assert.AreEqual("https://my.function.app/api/myfunction?code=Kg==", azureFuncScoringRule.FunctionAppUrl);
             Assert.IsNotNull(azureFuncScoringRule.Credential);
 
@@ -139,9 +139,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 new UpdateDistributionPolicyOptions(bestWorkerModeDistributionPolicyId)
                 {
                     Mode = new BestWorkerMode(
-                        new FunctionRouterRule(new Uri("https://my.function.app/api/myfunction?code=Kg=="))
+                        new FunctionRule(new Uri("https://my.function.app/api/myfunction?code=Kg=="))
                         {
-                            Credential = new FunctionRouterRuleCredential("MyKey")
+                            Credential = new FunctionRuleCredential("MyKey")
                         },
                         new List<ScoringRuleParameterSelector> { ScoringRuleParameterSelector.WorkerSelectors })
                     {
@@ -163,7 +163,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             scoringRule = ((BestWorkerMode)bestWorkerModeDistributionPolicy.Mode).ScoringRule;
             Assert.NotNull(scoringRule);
-            azureFuncScoringRule = (FunctionRouterRule)scoringRule;
+            azureFuncScoringRule = (FunctionRule)scoringRule;
             Assert.AreEqual("https://my.function.app/api/myfunction?code=Kg==", azureFuncScoringRule.FunctionUri.ToString());
             Assert.IsNotNull(azureFuncScoringRule.Credential);
 

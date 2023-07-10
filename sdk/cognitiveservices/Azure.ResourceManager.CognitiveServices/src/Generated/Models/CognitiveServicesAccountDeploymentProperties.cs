@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesAccountDeploymentProperties()
         {
             Capabilities = new ChangeTrackingDictionary<string, string>();
-            RateLimits = new ChangeTrackingList<ServiceAccountThrottlingRule>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentProperties. </summary>
@@ -27,9 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="capabilities"> The capabilities. </param>
         /// <param name="raiPolicyName"> The name of RAI policy. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
-        /// <param name="rateLimits"></param>
-        /// <param name="versionUpgradeOption"> Deployment model version upgrade option. </param>
-        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IReadOnlyList<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption)
+        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit)
         {
             ProvisioningState = provisioningState;
             Model = model;
@@ -37,8 +34,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Capabilities = capabilities;
             RaiPolicyName = raiPolicyName;
             CallRateLimit = callRateLimit;
-            RateLimits = rateLimits;
-            VersionUpgradeOption = versionUpgradeOption;
         }
 
         /// <summary> Gets the status of the resource at the time the operation was called. </summary>
@@ -53,9 +48,5 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string RaiPolicyName { get; set; }
         /// <summary> The call rate limit Cognitive Services account. </summary>
         public ServiceAccountCallRateLimit CallRateLimit { get; }
-        /// <summary> Gets the rate limits. </summary>
-        public IReadOnlyList<ServiceAccountThrottlingRule> RateLimits { get; }
-        /// <summary> Deployment model version upgrade option. </summary>
-        public DeploymentModelVersionUpgradeOption? VersionUpgradeOption { get; set; }
     }
 }

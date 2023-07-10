@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of RecoveryPlanTestFailoverCleanupContent. </summary>
         /// <param name="properties"> The recovery plan test failover cleanup input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public RecoveryPlanTestFailoverCleanupContent(RecoveryPlanTestFailoverCleanupProperties properties)
+        public RecoveryPlanTestFailoverCleanupContent(RecoveryPlanTestFailoverCleanupInputProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The recovery plan test failover cleanup input properties. </summary>
-        internal RecoveryPlanTestFailoverCleanupProperties Properties { get; }
+        internal RecoveryPlanTestFailoverCleanupInputProperties Properties { get; }
         /// <summary> The test failover cleanup comments. </summary>
-        public string RecoveryPlanTestFailoverCleanupComments
+        public string RecoveryPlanTestFailoverCleanupInputComments
         {
             get => Properties?.Comments;
         }

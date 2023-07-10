@@ -1,0 +1,119 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e6c986dc1eaccd4d9f88aabf58432fb8-46449490c7ec964d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "8e81ca3c1bdf8158788c3bac01b02993",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Jun 2022 03:34:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e128c42e-e859-4950-9e5e-c2eb612fa9b6",
+        "x-ms-ratelimit-remaining-tenant-reads": "11995",
+        "x-ms-request-id": "e128c42e-e859-4950-9e5e-c2eb612fa9b6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T033419Z:e128c42e-e859-4950-9e5e-c2eb612fa9b6"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Authorization/dataPolicyManifests/Microsoft.Network.Data?api-version=2020-09-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4e552f9d15d4f145ab1610e455abb103-4a69a345131c8d42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "808061f47d9ca7027a50fafbda817091",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "830",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Jun 2022 03:34:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5ee478b7-fb83-407c-b79c-ef2ec0ec1828",
+        "x-ms-ratelimit-remaining-tenant-reads": "11994",
+        "x-ms-request-id": "5ee478b7-fb83-407c-b79c-ef2ec0ec1828",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T033419Z:5ee478b7-fb83-407c-b79c-ef2ec0ec1828"
+      },
+      "ResponseBody": {
+        "properties": {
+          "namespaces": [
+            "Microsoft.Network"
+          ],
+          "policyMode": "Microsoft.Network.Data",
+          "isBuiltInOnly": false,
+          "effects": [
+            {
+              "name": "addToNetworkGroup",
+              "detailsSchema": {
+                "type": "object",
+                "properties": {
+                  "networkGroupId": {
+                    "type": "string",
+                    "pattern": "(?i)^/subscriptions/[0-9A-F]{8}[-][0-9A-F]{4}[-][0-9A-F]{4}[-][0-9A-F]{4}[-][0-9A-F]{12}/resourceGroups/[-\\w\\._\\(\\)]{1,90}/providers/Microsoft\\.Network/networkManagers/[-\\w\\._]{2,64}/networkGroups/[-\\w\\._]{2,64}$"
+                  }
+                },
+                "required": [
+                  "networkGroupId"
+                ],
+                "additionalProperties": false
+              }
+            }
+          ],
+          "fieldValues": [
+            "id",
+            "name",
+            "type",
+            "location",
+            "tags"
+          ],
+          "resourceFunctions": {
+            "standard": [
+              "subscription",
+              "resourceGroup"
+            ],
+            "custom": []
+          }
+        },
+        "id": "/providers/Microsoft.Authorization/dataPolicyManifests/Microsoft.Network.Data",
+        "type": "Microsoft.Authorization/dataPolicyManifests",
+        "name": "Microsoft.Network.Data"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "397939330",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

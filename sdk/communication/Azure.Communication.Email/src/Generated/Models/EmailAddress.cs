@@ -13,6 +13,7 @@ namespace Azure.Communication.Email
     /// <summary> An object representing the email address and its display name. </summary>
     public readonly partial struct EmailAddress
     {
+
         /// <summary> Email address. </summary>
         public string Address { get; }
         /// <summary> Email display name. </summary>

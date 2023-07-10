@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageAzureV2 switch provider details. </summary>
@@ -22,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetResourceId"> The target resource Id. </param>
         /// <param name="targetFabricId"> The target fabric Id. </param>
         /// <param name="targetApplianceId"> The target appliance Id. </param>
-        internal InMageAzureV2SwitchProviderDetails(ResourceIdentifier targetVaultId, ResourceIdentifier targetResourceId, ResourceIdentifier targetFabricId, string targetApplianceId)
+        internal InMageAzureV2SwitchProviderDetails(string targetVaultId, string targetResourceId, string targetFabricId, string targetApplianceId)
         {
             TargetVaultId = targetVaultId;
             TargetResourceId = targetResourceId;
@@ -31,11 +29,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The target vault Id. </summary>
-        public ResourceIdentifier TargetVaultId { get; }
+        public string TargetVaultId { get; }
         /// <summary> The target resource Id. </summary>
-        public ResourceIdentifier TargetResourceId { get; }
+        public string TargetResourceId { get; }
         /// <summary> The target fabric Id. </summary>
-        public ResourceIdentifier TargetFabricId { get; }
+        public string TargetFabricId { get; }
         /// <summary> The target appliance Id. </summary>
         public string TargetApplianceId { get; }
     }

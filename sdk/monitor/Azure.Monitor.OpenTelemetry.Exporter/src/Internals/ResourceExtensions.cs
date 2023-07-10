@@ -92,7 +92,7 @@ internal static class ResourceExtensions
         }
         catch (Exception ex)
         {
-            AzureMonitorExporterEventSource.Log.ErrorInitializingRoleInstanceToHostName(ex);
+            AzureMonitorExporterEventSource.Log.WriteError("ErrorInitializingRoleInstanceToHostName", ex);
         }
 
         if (aksResourceProcessor != null)

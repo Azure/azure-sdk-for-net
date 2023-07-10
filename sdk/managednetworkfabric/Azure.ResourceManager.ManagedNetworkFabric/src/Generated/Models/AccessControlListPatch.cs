@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public AccessControlListPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Conditions = new ChangeTrackingList<AccessControlListConditionProperties>();
+            Conditions = new ChangeTrackingList<AccessControlListPatchPropertiesConditionsItem>();
         }
 
         /// <summary> Resource tags. </summary>
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> IP address family. Example: ipv4 | ipv6. </summary>
         public AddressFamily? AddressFamily { get; set; }
         /// <summary> Access Control List conditions. </summary>
-        public IList<AccessControlListConditionProperties> Conditions { get; }
+        public IList<AccessControlListPatchPropertiesConditionsItem> Conditions { get; }
     }
 }

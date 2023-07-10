@@ -1,0 +1,3525 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-d538e34fefa063439b294967a14c4d46-9c51669f23c58d46-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b645bf94fdad524a57c6d38470400b64",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "460",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:20:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d31262fd-4316-477b-830f-6e6321a11642",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "d31262fd-4316-477b-830f-6e6321a11642",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092031Z:d31262fd-4316-477b-830f-6e6321a11642"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "subscriptionId": "326100e2-f69d-4268-8503-075374f62b6e",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Azure Messaging PM Playground",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourcegroups/testservicebusRG-4033?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "44",
+        "Content-Type": "application/json",
+        "traceparent": "00-55fc4b189280964ebaa2e731ff9d6329-6de51c61cea8a244-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "2af59dc05da1d86e3a17a816cd6a0fde",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "test": "env"
+        },
+        "location": "eastus2"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "262",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:20:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "28c42416-48e6-46c8-a26d-5e2e4bda6e6b",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "28c42416-48e6-46c8-a26d-5e2e4bda6e6b",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092033Z:28c42416-48e6-46c8-a26d-5e2e4bda6e6b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033",
+        "name": "testservicebusRG-4033",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/providers/Microsoft.ServiceBus/CheckNameAvailability?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "32",
+        "Content-Type": "application/json",
+        "traceparent": "00-d8fc85c369b0f94d85b9162e19982bd1-faff0f6fc00cd749-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1214bfb011f95714917a032cbcde22bd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "testnamespacemgmt8603"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "53",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:20:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1214bfb011f95714917a032cbcde22bd",
+        "x-ms-correlation-request-id": "307b6b64-89cf-4da9-b00f-1cfbf2b7f0d9",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "bef775e6-ec9b-46cb-bb98-c722ca58182e_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092034Z:307b6b64-89cf-4da9-b00f-1cfbf2b7f0d9"
+      },
+      "ResponseBody": {
+        "nameAvailable": true,
+        "reason": "None",
+        "message": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603?api-version=2022-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "103",
+        "Content-Type": "application/json",
+        "traceparent": "00-48c03aa20f040a4889286ab6446bac93-f75c656dcfb2814d-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b287ad74f34dd761de72e6a13c895bc3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "tags": {},
+        "location": "eastus2",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:20:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b287ad74f34dd761de72e6a13c895bc3",
+        "x-ms-correlation-request-id": "4bbca5ab-50f4-47e6-bdbd-bc312d242be4",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "55ab4bd8-b6df-4b70-ae36-93390a1a32a5_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092036Z:4bbca5ab-50f4-47e6-bdbd-bc312d242be4"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+        "name": "testnamespacemgmt8603",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US 2",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt8603",
+          "createdAt": "2023-02-01T09:20:36.1Z",
+          "updatedAt": "2023-02-01T09:20:36.1Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt8603.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-48c03aa20f040a4889286ab6446bac93-2df889e65336d84e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "bd5958862b88bceb5d3c33862b721b07",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:20:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bd5958862b88bceb5d3c33862b721b07",
+        "x-ms-correlation-request-id": "564dd250-af91-456c-906c-9fe5c464f539",
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "71ae160f-5993-433b-b7b8-3e2cc5afc3ed_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092037Z:564dd250-af91-456c-906c-9fe5c464f539"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+        "name": "testnamespacemgmt8603",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US 2",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt8603",
+          "createdAt": "2023-02-01T09:20:36.1Z",
+          "updatedAt": "2023-02-01T09:20:36.1Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt8603.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-48c03aa20f040a4889286ab6446bac93-109094e07d89664e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "84863f1ed64e1a6de6fad17ae37e6c33",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:20:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "84863f1ed64e1a6de6fad17ae37e6c33",
+        "x-ms-correlation-request-id": "f9deb416-9b6e-4409-9e1d-ac72ff81757d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11978",
+        "x-ms-request-id": "924489f2-61b0-491f-a601-e714348a9eae_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092038Z:f9deb416-9b6e-4409-9e1d-ac72ff81757d"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+        "name": "testnamespacemgmt8603",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US 2",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt8603",
+          "createdAt": "2023-02-01T09:20:36.1Z",
+          "updatedAt": "2023-02-01T09:20:36.1Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt8603.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-48c03aa20f040a4889286ab6446bac93-e490457767478443-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e31aacf49e2f7a3a4cd3ee132640616e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:20:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e31aacf49e2f7a3a4cd3ee132640616e",
+        "x-ms-correlation-request-id": "ebfbfcbc-b6c6-4001-ad57-8a870910aee0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11977",
+        "x-ms-request-id": "edc0e9ae-21d9-40f8-ba75-d239ada7f40c_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092039Z:ebfbfcbc-b6c6-4001-ad57-8a870910aee0"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+        "name": "testnamespacemgmt8603",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US 2",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt8603",
+          "createdAt": "2023-02-01T09:20:36.1Z",
+          "updatedAt": "2023-02-01T09:20:36.1Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt8603.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-48c03aa20f040a4889286ab6446bac93-d11bcc01968e2547-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "2ac408b7f925b0ebeb3fd68e5970d9df",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:20:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2ac408b7f925b0ebeb3fd68e5970d9df",
+        "x-ms-correlation-request-id": "071c6bf4-78cf-4c0d-bde3-ce269cf4926d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11976",
+        "x-ms-request-id": "166b131a-d2b7-41e0-af15-dbe18c31cbe8_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092040Z:071c6bf4-78cf-4c0d-bde3-ce269cf4926d"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+        "name": "testnamespacemgmt8603",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US 2",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt8603",
+          "createdAt": "2023-02-01T09:20:36.1Z",
+          "updatedAt": "2023-02-01T09:20:36.1Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt8603.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-48c03aa20f040a4889286ab6446bac93-05e1b26d732d3848-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "7e9100d0385780d7050b387ae759f3a6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:20:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7e9100d0385780d7050b387ae759f3a6",
+        "x-ms-correlation-request-id": "aacdde41-5061-4b51-a859-05eb5439b8a4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11975",
+        "x-ms-request-id": "f7943a47-21e9-4804-a9fc-42f2400c7e7a_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092042Z:aacdde41-5061-4b51-a859-05eb5439b8a4"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+        "name": "testnamespacemgmt8603",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US 2",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt8603",
+          "createdAt": "2023-02-01T09:20:36.1Z",
+          "updatedAt": "2023-02-01T09:20:36.1Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt8603.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-48c03aa20f040a4889286ab6446bac93-e14ebc6781c5a946-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "dbc3639941b9fa0dc16af7f0c7ac20dc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:20:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "dbc3639941b9fa0dc16af7f0c7ac20dc",
+        "x-ms-correlation-request-id": "d8597512-9085-47be-aff7-a123087e9a4c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11974",
+        "x-ms-request-id": "d730f868-1f82-46a6-9f10-c0ce7a296fde_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092047Z:d8597512-9085-47be-aff7-a123087e9a4c"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+        "name": "testnamespacemgmt8603",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US 2",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt8603",
+          "createdAt": "2023-02-01T09:20:36.1Z",
+          "updatedAt": "2023-02-01T09:20:36.1Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt8603.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-48c03aa20f040a4889286ab6446bac93-654937730af6f349-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "26430ffae3ae7f163044251ac170c892",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:20:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "26430ffae3ae7f163044251ac170c892",
+        "x-ms-correlation-request-id": "c533abfb-84c4-4a3a-8d78-eee047778432",
+        "x-ms-ratelimit-remaining-subscription-reads": "11973",
+        "x-ms-request-id": "3e361d29-e906-4ccd-95ca-aaae7cc26ffd_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092055Z:c533abfb-84c4-4a3a-8d78-eee047778432"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+        "name": "testnamespacemgmt8603",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US 2",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt8603",
+          "createdAt": "2023-02-01T09:20:36.1Z",
+          "updatedAt": "2023-02-01T09:20:36.1Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt8603.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-48c03aa20f040a4889286ab6446bac93-3fd2dd664a326442-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "f6f42f4bfdad8e26f297bced40e7b858",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:21:10 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f6f42f4bfdad8e26f297bced40e7b858",
+        "x-ms-correlation-request-id": "e424cb84-286a-4d8e-83c4-286e51b6e3f7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11972",
+        "x-ms-request-id": "e921433b-c96e-468f-a118-788caa689116_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092111Z:e424cb84-286a-4d8e-83c4-286e51b6e3f7"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+        "name": "testnamespacemgmt8603",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US 2",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt8603",
+          "createdAt": "2023-02-01T09:20:36.1Z",
+          "updatedAt": "2023-02-01T09:20:36.1Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt8603.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-48c03aa20f040a4889286ab6446bac93-f77f8a3f8c6ae343-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d8805ceacd15b6f84c43ab741bf23951",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:21:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d8805ceacd15b6f84c43ab741bf23951",
+        "x-ms-correlation-request-id": "d1045d9c-7874-4302-90f4-8e0f6b29b5c2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11971",
+        "x-ms-request-id": "4d730c5a-dc20-414e-b387-afc5456ce062_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092143Z:d1045d9c-7874-4302-90f4-8e0f6b29b5c2"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+        "name": "testnamespacemgmt8603",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US 2",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt8603",
+          "createdAt": "2023-02-01T09:20:36.1Z",
+          "updatedAt": "2023-02-01T09:20:36.1Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt8603.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-48c03aa20f040a4889286ab6446bac93-c6f06098daa0824b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "98a464a22ab7fc2ee9b4331726293f48",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:22:15 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "98a464a22ab7fc2ee9b4331726293f48",
+        "x-ms-correlation-request-id": "a9399511-e94b-4de8-bb93-b398575124a6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11970",
+        "x-ms-request-id": "6517afa3-938f-4aea-b929-6851df7f638d_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092215Z:a9399511-e94b-4de8-bb93-b398575124a6"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+        "name": "testnamespacemgmt8603",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US 2",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Succeeded",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt8603",
+          "createdAt": "2023-02-01T09:20:36.1Z",
+          "updatedAt": "2023-02-01T09:21:47.893Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt8603.servicebus.windows.net:443/",
+          "status": "Active"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/providers/Microsoft.ServiceBus/CheckNameAvailability?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "32",
+        "Content-Type": "application/json",
+        "traceparent": "00-740d42716936664984c4ddfd862cbd55-abeaa22ea486774d-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "ef6530cc7cf0367e3ea96952b172ff5d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "testnamespacemgmt1356"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "53",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:22:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ef6530cc7cf0367e3ea96952b172ff5d",
+        "x-ms-correlation-request-id": "d33a1e98-8091-49dc-907a-8de99a148549",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "1c365f3a-f2d3-4b66-a5a3-10e41789eb9a_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092216Z:d33a1e98-8091-49dc-907a-8de99a148549"
+      },
+      "ResponseBody": {
+        "nameAvailable": true,
+        "reason": "None",
+        "message": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356?api-version=2022-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "102",
+        "Content-Type": "application/json",
+        "traceparent": "00-666d2db148ab984e9ef795de0d2cca7a-fe3aca9088374148-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "43db4a6ba1202dc083ef609ae18f2304",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "tags": {},
+        "location": "eastus",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:22:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "43db4a6ba1202dc083ef609ae18f2304",
+        "x-ms-correlation-request-id": "d21505eb-8763-492f-8a3a-f4f4f5a43b76",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "96b0fac1-8474-4442-806d-f855f8775157_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092224Z:d21505eb-8763-492f-8a3a-f4f4f5a43b76"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+        "name": "testnamespacemgmt1356",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1356",
+          "createdAt": "2023-02-01T09:22:17.93Z",
+          "updatedAt": "2023-02-01T09:22:17.93Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1356.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-666d2db148ab984e9ef795de0d2cca7a-5c391235b22f414b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "debab93305632b6c70376c001be455af",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:22:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "debab93305632b6c70376c001be455af",
+        "x-ms-correlation-request-id": "2bb98527-44cb-4d1e-80db-ce5a3d20364c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11969",
+        "x-ms-request-id": "90522c8c-8a4b-45be-bafe-5afa2d80f411_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092224Z:2bb98527-44cb-4d1e-80db-ce5a3d20364c"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+        "name": "testnamespacemgmt1356",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1356",
+          "createdAt": "2023-02-01T09:22:17.93Z",
+          "updatedAt": "2023-02-01T09:22:17.93Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1356.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-666d2db148ab984e9ef795de0d2cca7a-8d0fdd44c7f1064c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c9ef65863d230a8998f31cbe283f68d9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:22:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c9ef65863d230a8998f31cbe283f68d9",
+        "x-ms-correlation-request-id": "797a73f1-c10f-4497-b31e-f364a298150e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11968",
+        "x-ms-request-id": "cc4f4123-eb1b-444c-8411-e8ce4dffa456_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092226Z:797a73f1-c10f-4497-b31e-f364a298150e"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+        "name": "testnamespacemgmt1356",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1356",
+          "createdAt": "2023-02-01T09:22:17.93Z",
+          "updatedAt": "2023-02-01T09:22:17.93Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1356.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-666d2db148ab984e9ef795de0d2cca7a-fa243671ac6a9545-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "28661eb744d45da17c22529cf5b1cc41",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:22:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "28661eb744d45da17c22529cf5b1cc41",
+        "x-ms-correlation-request-id": "3ac90119-8618-41d1-8bc2-6b78bbd4508a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11967",
+        "x-ms-request-id": "bd6caed8-d497-4b57-ac76-9fa737d657a7_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092227Z:3ac90119-8618-41d1-8bc2-6b78bbd4508a"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+        "name": "testnamespacemgmt1356",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1356",
+          "createdAt": "2023-02-01T09:22:17.93Z",
+          "updatedAt": "2023-02-01T09:22:17.93Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1356.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-666d2db148ab984e9ef795de0d2cca7a-c1291bfe61dad94c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "5ff9c90b6ebaf61e30b0466fe8ad0330",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:22:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5ff9c90b6ebaf61e30b0466fe8ad0330",
+        "x-ms-correlation-request-id": "fcfdcd65-f04d-4e40-b047-91e023519d1e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "8340fcf1-b958-414a-8ed5-e21e533384a1_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092228Z:fcfdcd65-f04d-4e40-b047-91e023519d1e"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+        "name": "testnamespacemgmt1356",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1356",
+          "createdAt": "2023-02-01T09:22:17.93Z",
+          "updatedAt": "2023-02-01T09:22:17.93Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1356.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-666d2db148ab984e9ef795de0d2cca7a-24c5eabf05a1ee44-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "fc4992cf2d7d42dac4924c00eaec14e6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:22:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fc4992cf2d7d42dac4924c00eaec14e6",
+        "x-ms-correlation-request-id": "3e7128b3-f8e7-4784-be5d-73ece045786b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "2b8e71cd-4a8f-4f11-b512-afa31b427c2d_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092230Z:3e7128b3-f8e7-4784-be5d-73ece045786b"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+        "name": "testnamespacemgmt1356",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1356",
+          "createdAt": "2023-02-01T09:22:17.93Z",
+          "updatedAt": "2023-02-01T09:22:17.93Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1356.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-666d2db148ab984e9ef795de0d2cca7a-d4e7889075cf3747-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "5eb2da260845491e0070f724fd3174cf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:22:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5eb2da260845491e0070f724fd3174cf",
+        "x-ms-correlation-request-id": "6db0b683-4dcc-4f7e-9ec4-7158b4ffbbda",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "02ddc85b-e3b8-476a-bb2a-1e898f911705_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092234Z:6db0b683-4dcc-4f7e-9ec4-7158b4ffbbda"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+        "name": "testnamespacemgmt1356",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1356",
+          "createdAt": "2023-02-01T09:22:17.93Z",
+          "updatedAt": "2023-02-01T09:22:17.93Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1356.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-666d2db148ab984e9ef795de0d2cca7a-eb1826136debeb46-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "62cc221fcf68dec4efb79b28211d0c43",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:22:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "62cc221fcf68dec4efb79b28211d0c43",
+        "x-ms-correlation-request-id": "243b76cb-49f9-4953-b934-83537593876b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11963",
+        "x-ms-request-id": "5eb584bc-40ca-4056-a80f-dba5ed7a3579_M0SN1_M0SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092242Z:243b76cb-49f9-4953-b934-83537593876b"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+        "name": "testnamespacemgmt1356",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1356",
+          "createdAt": "2023-02-01T09:22:17.93Z",
+          "updatedAt": "2023-02-01T09:22:17.93Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1356.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-666d2db148ab984e9ef795de0d2cca7a-6b9acf31180a9142-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "0d48609ca5fac6ea7400fc0c35b64493",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:22:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0d48609ca5fac6ea7400fc0c35b64493",
+        "x-ms-correlation-request-id": "e6800b26-b996-4e94-ac1b-f5768a9164e3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11962",
+        "x-ms-request-id": "8955c343-b575-4728-a495-a1cc5f9c7655_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092259Z:e6800b26-b996-4e94-ac1b-f5768a9164e3"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+        "name": "testnamespacemgmt1356",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1356",
+          "createdAt": "2023-02-01T09:22:17.93Z",
+          "updatedAt": "2023-02-01T09:22:17.93Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1356.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-666d2db148ab984e9ef795de0d2cca7a-eeb8ea654883904c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c7e17d1db11f577e16d46e8e6df527e3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "751",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:23:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c7e17d1db11f577e16d46e8e6df527e3",
+        "x-ms-correlation-request-id": "faa711bb-cc38-4192-8848-895f141e6d06",
+        "x-ms-ratelimit-remaining-subscription-reads": "11961",
+        "x-ms-request-id": "7fce572c-8999-4185-b6f5-1a878b0deae2_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092331Z:faa711bb-cc38-4192-8848-895f141e6d06"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+        "name": "testnamespacemgmt1356",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Created",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1356",
+          "createdAt": "2023-02-01T09:22:17.93Z",
+          "updatedAt": "2023-02-01T09:22:17.93Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1356.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-666d2db148ab984e9ef795de0d2cca7a-0e33cf9c2048dc47-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "9d87b46466e87ad43806ee67d3b7a839",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "749",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9d87b46466e87ad43806ee67d3b7a839",
+        "x-ms-correlation-request-id": "08d1c9e3-b5b7-45f7-bd1f-fd48812ed48f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11960",
+        "x-ms-request-id": "69ae6c5a-1a15-4c41-8c6a-68b62b496c85_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092403Z:08d1c9e3-b5b7-45f7-bd1f-fd48812ed48f"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Premium",
+          "tier": "Premium",
+          "capacity": 1
+        },
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+        "name": "testnamespacemgmt1356",
+        "type": "Microsoft.ServiceBus/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "premiumMessagingPartitions": 1,
+          "minimumTlsVersion": "1.2",
+          "publicNetworkAccess": "Enabled",
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "provisioningState": "Succeeded",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1356",
+          "createdAt": "2023-02-01T09:22:17.93Z",
+          "updatedAt": "2023-02-01T09:23:43.36Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1356.servicebus.windows.net:443/",
+          "status": "Active"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/AuthorizationRules/authorizationrule1137?api-version=2022-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "traceparent": "00-dfdf4210bcf73b489048cd420dfb2dd6-afcf831b32d3c84c-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "3ba40a082344e1eaf1f726365b597ed8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "rights": [
+            "Listen",
+            "Send"
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "356",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "82f1b20b-ef88-47f5-9b03-e7b52aa803b8",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "82f1b20b-ef88-47f5-9b03-e7b52aa803b8",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092410Z:82f1b20b-ef88-47f5-9b03-e7b52aa803b8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/AuthorizationRules/authorizationrule1137",
+        "name": "authorizationrule1137",
+        "type": "Microsoft.ServiceBus/Namespaces/AuthorizationRules",
+        "location": "eastus2",
+        "properties": {
+          "rights": [
+            "Listen",
+            "Send"
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "190",
+        "Content-Type": "application/json",
+        "traceparent": "00-56a2439ad5445b47b1a7770f0605ef60-17b770cf5b40e449-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a72e80a8b7aa67a88f19c316845e2b35",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a72e80a8b7aa67a88f19c316845e2b35",
+        "x-ms-correlation-request-id": "aab6e3d0-95d6-4ca9-ad23-84ab887c86ad",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "7b50d9d8-b815-441e-ade6-9543ebb41ab3_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092417Z:aab6e3d0-95d6-4ca9-ad23-84ab887c86ad"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-659a8e8e9d0a064cad3fb8599645cd5a-e8b49961ed8cff4d-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "83eb641b1fa79d91bbf66eae43dcac70",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "83eb641b1fa79d91bbf66eae43dcac70",
+        "x-ms-correlation-request-id": "005fa7c5-f834-4df0-8d74-1ba6dafb687b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11959",
+        "x-ms-request-id": "4634c11b-cd7a-44c3-850f-cf57cb0c4735_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092418Z:005fa7c5-f834-4df0-8d74-1ba6dafb687b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-50fe422080850a4587e69957ebb0678d-1ae2fc94f752df4e-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "280eb98ecc0b535dfbd4b50926ca6d98",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "569",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "280eb98ecc0b535dfbd4b50926ca6d98",
+        "x-ms-correlation-request-id": "ac5a1361-73dd-487d-939b-1a6d663cf673",
+        "x-ms-ratelimit-remaining-subscription-reads": "11958",
+        "x-ms-request-id": "c97eb059-951e-438f-84b9-ea416618438a_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092418Z:ac5a1361-73dd-487d-939b-1a6d663cf673"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603",
+          "role": "Secondary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fb036a0a5f28a34190d2943cf64d7e8c-da7509b53cd21747-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "f44001fa55928872ef90ebb448fa23b3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f44001fa55928872ef90ebb448fa23b3",
+        "x-ms-correlation-request-id": "3d5ab8a7-2ab0-418c-9636-683da44c5ce8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11957",
+        "x-ms-request-id": "4229234d-5711-4a2f-a46f-e226cf01d9ed_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092418Z:3d5ab8a7-2ab0-418c-9636-683da44c5ce8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-151b15f466283f4d82890918e174643e-6a2b8182491e5c43-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "ca88536d034f4f29079788d26a8776f1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ca88536d034f4f29079788d26a8776f1",
+        "x-ms-correlation-request-id": "51ef9cde-3436-4a1a-b4c8-914741d215dd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11956",
+        "x-ms-request-id": "e47eecc2-504d-4003-8e36-221429c239a3_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092423Z:51ef9cde-3436-4a1a-b4c8-914741d215dd"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-524c1e33b0235f4b863990b3921d81b5-aee464f159206f40-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "42b3d589b79b38dd4786387ae0a90a01",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "42b3d589b79b38dd4786387ae0a90a01",
+        "x-ms-correlation-request-id": "b07fa1dd-29c6-4253-be65-6f867bb518b3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11955",
+        "x-ms-request-id": "947d4015-be9e-4233-8a3e-f91731ff412b_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092429Z:b07fa1dd-29c6-4253-be65-6f867bb518b3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-21eb2f9651b09f41855b04ff1b2620f4-c815b0cf6bde364a-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d39c02b0a342f749d7f1edfacd9f1e67",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d39c02b0a342f749d7f1edfacd9f1e67",
+        "x-ms-correlation-request-id": "21e6e9fa-9e29-47dc-a2ec-95ed77f5b476",
+        "x-ms-ratelimit-remaining-subscription-reads": "11954",
+        "x-ms-request-id": "93310984-f501-4d8f-bbfb-e2bc2543e574_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092434Z:21e6e9fa-9e29-47dc-a2ec-95ed77f5b476"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9f1d9c5f3a1be5438b75da652036f42d-9f7decda7f82d048-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "722bfa1ae146b517754f82c9caaf6e5e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "722bfa1ae146b517754f82c9caaf6e5e",
+        "x-ms-correlation-request-id": "22ee3b6e-0351-4c5d-84c6-dc643e49ffb8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11953",
+        "x-ms-request-id": "4c329160-b06f-47ef-8367-c69857475084_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092439Z:22ee3b6e-0351-4c5d-84c6-dc643e49ffb8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4aa86aea3e8a1e4c9517cf5e6540ebf2-1539be0f5427d544-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "6822868da2ebe6ae8cbc6aa9cae26ba8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6822868da2ebe6ae8cbc6aa9cae26ba8",
+        "x-ms-correlation-request-id": "a9167665-5f05-49a4-9315-4c6b30fd0f98",
+        "x-ms-ratelimit-remaining-subscription-reads": "11952",
+        "x-ms-request-id": "b1697f86-dc12-43cf-89db-d89091b03c63_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092444Z:a9167665-5f05-49a4-9315-4c6b30fd0f98"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ecb3804eff4f5e4ab8724617baa15f4f-4c6b567aa8aeb649-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e660d067977ecebaeae75ef3207f2c28",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e660d067977ecebaeae75ef3207f2c28",
+        "x-ms-correlation-request-id": "b720086f-cf24-4fee-89de-9fc1ff19d9c3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11951",
+        "x-ms-request-id": "b7391953-a5b8-4bdd-bac5-df91f3fabc86_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092450Z:b720086f-cf24-4fee-89de-9fc1ff19d9c3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-df684c58cd969f4e9ecb2410e22faaef-0878a6bd12c9ae4e-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "466d8f83b57c777c4b44e689776dea93",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:24:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "466d8f83b57c777c4b44e689776dea93",
+        "x-ms-correlation-request-id": "8c523762-56d8-4970-806e-41a203cf17ba",
+        "x-ms-ratelimit-remaining-subscription-reads": "11950",
+        "x-ms-request-id": "570d783c-2b02-4d0e-abcb-bf980a364ca9_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092455Z:8c523762-56d8-4970-806e-41a203cf17ba"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ea1e734e8f91fb4697f2b5c6c8171b3c-2b276e4647eb2743-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "fa61dae3874ef5e0cc547d0444bbc60d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:00 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fa61dae3874ef5e0cc547d0444bbc60d",
+        "x-ms-correlation-request-id": "cfa62ab0-f4ad-45f8-9b7d-85b4a6e875ed",
+        "x-ms-ratelimit-remaining-subscription-reads": "11949",
+        "x-ms-request-id": "15d37e96-2a94-4212-8830-b71fa94093d8_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092500Z:cfa62ab0-f4ad-45f8-9b7d-85b4a6e875ed"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f380d5a7b4f3df409cf851d0384dab6b-e07aabfb3989224c-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "3b2641902474b22b54e99b39b131577d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3b2641902474b22b54e99b39b131577d",
+        "x-ms-correlation-request-id": "6b4aedf6-231b-417e-af44-102609fc6c2f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11948",
+        "x-ms-request-id": "c1a25a0e-e88f-4ea4-938b-ebef9a52b925_M1SN1_M1SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092505Z:6b4aedf6-231b-417e-af44-102609fc6c2f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-97e140c25553df43a205a6f6947da288-a5ae18bab63f3940-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "450fcafc311dfbd9ae787a283777328f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "450fcafc311dfbd9ae787a283777328f",
+        "x-ms-correlation-request-id": "7462c4f6-2db3-4a12-b0e4-33d6b209d056",
+        "x-ms-ratelimit-remaining-subscription-reads": "11947",
+        "x-ms-request-id": "d5f1bcb1-b489-4cd2-a96d-d07ac7070b25_M5SN1_M5SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092513Z:7462c4f6-2db3-4a12-b0e4-33d6b209d056"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ad6bef8f2dc9f440af88283b6bbd3f3f-d1a07a73ad49c142-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "35f9d87eae46bf1eafafa565eca7439a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "35f9d87eae46bf1eafafa565eca7439a",
+        "x-ms-correlation-request-id": "79498e8c-60af-4fd7-82af-8207df9dd365",
+        "x-ms-ratelimit-remaining-subscription-reads": "11946",
+        "x-ms-request-id": "e74be3cb-b548-4cb0-9519-673685645af7_M4SN1_M4SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092518Z:79498e8c-60af-4fd7-82af-8207df9dd365"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-16b9b42019af81458ccb6f027c4612db-cebbe61aec604143-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "7a0800fd80ac5eef672b8cfcaa027adc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7a0800fd80ac5eef672b8cfcaa027adc",
+        "x-ms-correlation-request-id": "572c69be-9c0a-43d8-a91b-40ad50fd12ba",
+        "x-ms-ratelimit-remaining-subscription-reads": "11945",
+        "x-ms-request-id": "7828dc85-3c8b-4b32-b30d-769ba02b7733_M4SN1_M4SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092523Z:572c69be-9c0a-43d8-a91b-40ad50fd12ba"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8111fe2b73316f43b20ba5859d4be4f7-831412f6d5144442-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d8ba0bb621374d36ab4f956d8b740e07",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d8ba0bb621374d36ab4f956d8b740e07",
+        "x-ms-correlation-request-id": "1f7aaf41-bbe6-4d9d-a143-c6f18d915298",
+        "x-ms-ratelimit-remaining-subscription-reads": "11944",
+        "x-ms-request-id": "bfe65051-1445-48c0-9f0d-a7a613459de1_M4SN1_M4SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092528Z:1f7aaf41-bbe6-4d9d-a143-c6f18d915298"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "close",
+        "traceparent": "00-c047fe51e16d3848a4c58c55cc5a9e7e-c014b9651f4ea545-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "372bdf34b86ffee3e89acd1b222215ac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Connection": "close",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "372bdf34b86ffee3e89acd1b222215ac",
+        "x-ms-correlation-request-id": "e4c4bd4b-fb31-4ebd-9ff9-29943568e1e8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11943",
+        "x-ms-request-id": "2a871430-d242-4829-9a90-4b652f9e7492_M4SN1_M4SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092533Z:e4c4bd4b-fb31-4ebd-9ff9-29943568e1e8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b71dd2f45e4d274489b8639db64e8390-714bce8515175740-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e0afc9356aecdb62cabace5cea82d2f3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e0afc9356aecdb62cabace5cea82d2f3",
+        "x-ms-correlation-request-id": "6e96b2a7-0dbf-4b5b-ac1b-a2b6c37b4c62",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "2babc861-c268-4a8c-adde-ea5b38ba745a_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092539Z:6e96b2a7-0dbf-4b5b-ac1b-a2b6c37b4c62"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fe5e0b31bf362142b2a9abae06fc38b9-3116d5e2a5e96643-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "cac8851c43d6fe6c28bbf09d531b2b89",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "cac8851c43d6fe6c28bbf09d531b2b89",
+        "x-ms-correlation-request-id": "3e7cb482-4751-43f7-977b-8f920d85c186",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "e23abb29-2e9a-4606-abff-21790a58e8d4_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092544Z:3e7cb482-4751-43f7-977b-8f920d85c186"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-53b02c53f72982498cc380d3d9957f9b-b341ace50026df40-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c238e93a2ec4c91a7c506db5e9861366",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "606",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c238e93a2ec4c91a7c506db5e9861366",
+        "x-ms-correlation-request-id": "cf854c98-26b9-46a5-b05b-2fb0df9bce8a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "ad24999b-db06-4b73-85ba-cde16821c2a2_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092550Z:cf854c98-26b9-46a5-b05b-2fb0df9bce8a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication",
+          "pendingReplicationOperationsCount": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/CheckNameAvailability?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "31",
+        "Content-Type": "application/json",
+        "traceparent": "00-0f1b87a0a4ba224da2d996304b38bd87-eaccab89de2bc048-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "9dfed9c84a59f2d65cb1b8317ac587ae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "disasterrecovery3998"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "159",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9dfed9c84a59f2d65cb1b8317ac587ae",
+        "x-ms-correlation-request-id": "73e0e38f-a0ee-4b2b-b835-e7a4ed42fe68",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "6026d005-b7e4-4040-9df1-64133be6c335_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092550Z:73e0e38f-a0ee-4b2b-b835-e7a4ed42fe68"
+      },
+      "ResponseBody": {
+        "nameAvailable": false,
+        "reason": "NameInUse",
+        "message": "The specified name is not available. For more information visit https://aka.ms/eventhubsarmexceptions."
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998/authorizationRules?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2582aee5474d8e4b85f6c239344f9297-2a43210ef950594b-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "0121448f0f4aee2e6afe4d86d5b714a1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "836",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0121448f0f4aee2e6afe4d86d5b714a1",
+        "x-ms-correlation-request-id": "d4cc333b-e52a-4093-b4ad-adc37ab166c4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "04d0fabe-0a70-4eb4-bdaa-69875a8c2d4a_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092551Z:d4cc333b-e52a-4093-b4ad-adc37ab166c4"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998/authorizationRules/RootManageSharedAccessKey",
+            "name": "RootManageSharedAccessKey",
+            "type": "Microsoft.ServiceBus/Namespaces/AuthorizationRules",
+            "location": "East US 2",
+            "properties": {
+              "rights": [
+                "Listen",
+                "Manage",
+                "Send"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998/authorizationRules/authorizationrule1137",
+            "name": "authorizationrule1137",
+            "type": "Microsoft.ServiceBus/Namespaces/AuthorizationRules",
+            "location": "East US 2",
+            "properties": {
+              "rights": [
+                "Listen",
+                "Send"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998/authorizationRules/RootManageSharedAccessKey/listKeys?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-f4d133754a290245ad852e58e3245f3c-2b85b97451be7f40-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "79d489a88e1cef2f1245661376e94eb6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "163",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "79d489a88e1cef2f1245661376e94eb6",
+        "x-ms-correlation-request-id": "c4200978-f4fc-41ee-a8d6-c2b67914bdac",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "355a3669-9c59-4e37-993d-266ab073aed6_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092551Z:c4200978-f4fc-41ee-a8d6-c2b67914bdac"
+      },
+      "ResponseBody": {
+        "aliasPrimaryConnectionString": "Sanitized",
+        "aliasSecondaryConnectionString": "Sanitized",
+        "primaryKey": "Sanitized",
+        "secondaryKey": "Sanitized",
+        "keyName": "Sanitized"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998/breakPairing?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-cdc041e9b5e09941a919e9c7e90fdf92-b50b33fe3660d844-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a425bec81165b81cab10325afd4f1ca4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Wed, 01 Feb 2023 09:25:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a425bec81165b81cab10325afd4f1ca4",
+        "x-ms-correlation-request-id": "8fa16daa-b6cc-4019-a6e5-5ceffaa326b7",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "e8c7d835-7790-4825-b4f6-f01699c381b3_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092552Z:8fa16daa-b6cc-4019-a6e5-5ceffaa326b7"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-49798344fa0ef946a09a206edfbe25e7-5c11d1f0c567514a-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "f188169c0ef100911532ee04a91a7880",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f188169c0ef100911532ee04a91a7880",
+        "x-ms-correlation-request-id": "9e1daf63-d2be-42ad-add3-7548ae72d0f6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "bd06ddfb-82ee-4a57-9e78-21264ae7fc81_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092552Z:9e1daf63-d2be-42ad-add3-7548ae72d0f6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-870255253cb37047a6aecf066011876b-d9b232e1acc10d4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "17be96b06f91963c6d1bce0c5bd4f2c3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:25:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "17be96b06f91963c6d1bce0c5bd4f2c3",
+        "x-ms-correlation-request-id": "d8428c62-61db-43b8-8d93-206e072f43ef",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "553d13d4-5321-4ca3-b4d2-a9f8f561e713_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092557Z:d8428c62-61db-43b8-8d93-206e072f43ef"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-80a03c533bec0942a95d83b9235b3463-19777ec2da691249-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "5f76c1285d60bac52d258f3222180f90",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:26:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5f76c1285d60bac52d258f3222180f90",
+        "x-ms-correlation-request-id": "37d8e152-9a77-428b-b47b-d2807dde09f3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "a58c261b-857f-418f-b684-4c222b0464e3_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092603Z:37d8e152-9a77-428b-b47b-d2807dde09f3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-445bdbb618cb5649b28d27cf61fb8281-1ba83e7004142d40-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "66aab29805912d12daf284d63f85a540",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:26:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "66aab29805912d12daf284d63f85a540",
+        "x-ms-correlation-request-id": "e97693b5-dca1-466a-b7eb-c9879950d331",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "75a22b00-47fb-403d-9425-4cae7b7fafa9_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092608Z:e97693b5-dca1-466a-b7eb-c9879950d331"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f846dfdc10df31428a63c4d34359d9ab-f5628aa80a226a45-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e7db2b3f19a4521fd103ea6cdf097354",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:26:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e7db2b3f19a4521fd103ea6cdf097354",
+        "x-ms-correlation-request-id": "9bad7eb3-47cf-4c0d-859e-2bae430befed",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "9b98e177-7d22-4316-9b72-54f13e2a3a06_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092613Z:9bad7eb3-47cf-4c0d-859e-2bae430befed"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-433ce79db1796645a24977ad61226d6c-15b4be1b9c9a264c-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a8743e0b8b292331af49846ed9ef7ba7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:26:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a8743e0b8b292331af49846ed9ef7ba7",
+        "x-ms-correlation-request-id": "848de1ac-4129-4d9d-a870-427e71bb79f8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "a9cd1dfa-f80a-4b75-b453-e1b56b26202a_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092618Z:848de1ac-4129-4d9d-a870-427e71bb79f8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2c916de602b40f45b38d179bc3e3aeb1-aed5162089220f46-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "f7f24f7f273c7fec9258958d1ba54ed1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:26:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f7f24f7f273c7fec9258958d1ba54ed1",
+        "x-ms-correlation-request-id": "a08f0dba-5911-4afc-84ba-03cbf7bfcb85",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "726339b8-b672-4823-b120-4c5f61ecc147_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092623Z:a08f0dba-5911-4afc-84ba-03cbf7bfcb85"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3dfd31666488904fa3cbaacacfdea53d-1dc9c8630de0a84d-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "00ca2f7efc11b416fab8385a94b079e1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:26:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "00ca2f7efc11b416fab8385a94b079e1",
+        "x-ms-correlation-request-id": "b9e45562-721f-4411-b316-ab11427d831c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "d502fa32-5f08-4cda-9ed7-b32207c01094_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092629Z:b9e45562-721f-4411-b316-ab11427d831c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1c1e2529f733b543baab2173b7cf67e2-ce30a15c2ee0a947-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "8fed42887c16e31852f515d1f6a30709",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:26:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8fed42887c16e31852f515d1f6a30709",
+        "x-ms-correlation-request-id": "ef5225d9-dc81-4b2f-9720-c922b1675606",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "ca7b52f8-2319-482f-ad1e-e757c26829ce_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092634Z:ef5225d9-dc81-4b2f-9720-c922b1675606"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-12ae5536b369034d82b48599012b592f-fdb19c88054c0548-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "aaefb2fb7a258296393efc84ef91eae2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:26:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "aaefb2fb7a258296393efc84ef91eae2",
+        "x-ms-correlation-request-id": "7330a309-7a01-40c6-9e9a-6c3a1806477a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "70b63f0c-d2a8-4416-b7bd-003278ad5bf4_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092639Z:7330a309-7a01-40c6-9e9a-6c3a1806477a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-201d581cea802f4d8219698a31b22653-d83836f37d7fd44a-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d905b3dfbeb802bb16e6ad1ce644be56",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:26:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d905b3dfbeb802bb16e6ad1ce644be56",
+        "x-ms-correlation-request-id": "d0e4b0b6-d534-4a1b-a89a-0254f4aaf378",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "8a784eb8-19fa-4ae9-bee4-9b08607ed5db_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092644Z:d0e4b0b6-d534-4a1b-a89a-0254f4aaf378"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-869fe975f1a5524bad1641a6da2982d2-639ea37004927d41-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e25f2eb0cec10dbcab6a56d77f93f4c1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:26:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e25f2eb0cec10dbcab6a56d77f93f4c1",
+        "x-ms-correlation-request-id": "1b2648c3-6476-4937-9e54-264f4cdc38e0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "a40fb124-eb40-441a-be74-213d419021c2_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092650Z:1b2648c3-6476-4937-9e54-264f4cdc38e0"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fbf03614d14e1147bbff228ef76d2f4d-4684cc334436454c-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "42f2330a2e9e3d51f7ed933fcc7a9cf4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:26:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "42f2330a2e9e3d51f7ed933fcc7a9cf4",
+        "x-ms-correlation-request-id": "4152d199-1a97-4988-a029-2682471f27ad",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "15e8a675-cec8-4e4c-b315-c51885892db9_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092655Z:4152d199-1a97-4988-a029-2682471f27ad"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6d22e4024cedc44bbb5df78da0e165d5-0359cd537747cd4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c1d4a58008311020f6f72d4d67e38282",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:27:00 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c1d4a58008311020f6f72d4d67e38282",
+        "x-ms-correlation-request-id": "e567cab8-ff42-42a4-9415-59316db0e2fa",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "efbc85fc-65a1-4de9-b662-f2385e667327_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092700Z:e567cab8-ff42-42a4-9415-59316db0e2fa"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9e7dd2c9d3433a4b916410928e5b7f92-84d29bda18140040-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b211ecf17b5282b8dc22ead33b7d4130",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:27:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b211ecf17b5282b8dc22ead33b7d4130",
+        "x-ms-correlation-request-id": "993aca56-1f97-40f7-9589-2e9b299f3d2d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "a1e82714-fea9-4934-b2ec-e46f87d0c900_M5SN1_M5SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092706Z:993aca56-1f97-40f7-9589-2e9b299f3d2d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-61a3ec8ec5ee7942b98e5339ee8636c4-e0c7a85ec85eca43-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d95762ce33bf028f12e24ba70004d514",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "567",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:27:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d95762ce33bf028f12e24ba70004d514",
+        "x-ms-correlation-request-id": "35ab02ac-812a-419e-844e-6b1322099ca1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "5e418487-b1b5-4986-9c8c-714a6652e720_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092711Z:35ab02ac-812a-419e-844e-6b1322099ca1"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Accepted",
+          "partnerNamespace": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt1356",
+          "role": "Primary",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4fef4c4b9db30548bc5620c0a53269db-b4ca72d7ca746141-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e04d106ae96904a2ed51e40f1d4dd579",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "430",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:27:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e04d106ae96904a2ed51e40f1d4dd579",
+        "x-ms-correlation-request-id": "325e749e-0347-4cc6-a210-a5cb77966864",
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "216dfeb8-1fbd-4876-9906-ffdb58264857_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092716Z:325e749e-0347-4cc6-a210-a5cb77966864"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+        "name": "disasterrecovery3998",
+        "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "partnerNamespace": "",
+          "role": "PrimaryNotReplicating",
+          "type": "MetadataReplication"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7549e49c1cf71946b3d1f65e03f23b35-9785f12e6ba11347-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "047ffdb6a98bbec35d0e9f6f2f1181d8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "442",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 01 Feb 2023 09:27:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "047ffdb6a98bbec35d0e9f6f2f1181d8",
+        "x-ms-correlation-request-id": "ac3859f5-1565-4a44-9a2a-f815c67e9ce4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11978",
+        "x-ms-request-id": "b4673b3c-adc9-4ffa-bc86-e7fad9b066a5_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092717Z:ac3859f5-1565-4a44-9a2a-f815c67e9ce4"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998",
+            "name": "disasterrecovery3998",
+            "type": "Microsoft.ServiceBus/Namespaces/disasterrecoveryconfigs",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "partnerNamespace": "",
+              "role": "PrimaryNotReplicating",
+              "type": "MetadataReplication"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testservicebusRG-4033/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt8603/disasterRecoveryConfigs/disasterrecovery3998?api-version=2022-10-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-bb1355efd7523b409e2fd06525d4a9b3-757e4f3e415bf643-00",
+        "User-Agent": "azsdk-net-ResourceManager.ServiceBus/1.1.0-alpha.20230201.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "2a69d64c6030e5c7c052eb6e4f7fe5c5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Wed, 01 Feb 2023 09:27:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/SN1",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2a69d64c6030e5c7c052eb6e4f7fe5c5",
+        "x-ms-correlation-request-id": "2f9fbdf4-60e7-42a8-b1c0-0f62ee2a4004",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "d24585a0-a919-4f49-a990-f7d3f7b45c2f_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230201T092718Z:2f9fbdf4-60e7-42a8-b1c0-0f62ee2a4004"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1252720255",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "326100e2-f69d-4268-8503-075374f62b6e"
+  }
+}

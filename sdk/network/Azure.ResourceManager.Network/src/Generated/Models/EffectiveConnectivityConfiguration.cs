@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -32,8 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal EffectiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid)
+        internal EffectiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering)
         {
             Id = id;
             ConfigurationGroups = configurationGroups;
@@ -44,7 +42,6 @@ namespace Azure.ResourceManager.Network.Models
             AppliesToGroups = appliesToGroups;
             ProvisioningState = provisioningState;
             DeleteExistingPeering = deleteExistingPeering;
-            ResourceGuid = resourceGuid;
         }
 
         /// <summary> Connectivity configuration ID. </summary>
@@ -65,7 +62,5 @@ namespace Azure.ResourceManager.Network.Models
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Flag if need to remove current existing peerings. </summary>
         public DeleteExistingPeering? DeleteExistingPeering { get; }
-        /// <summary> Unique identifier for this resource. </summary>
-        public Guid? ResourceGuid { get; }
     }
 }

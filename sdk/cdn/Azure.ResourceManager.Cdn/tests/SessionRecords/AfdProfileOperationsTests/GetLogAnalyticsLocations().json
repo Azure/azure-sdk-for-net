@@ -1,0 +1,1523 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-670b2ba70d99cb45a0380516e51490ad-01fd6e50add5eb48-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c34eb77e79bcd1f334fa05a3fcf70cab",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "410",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:10:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ff83e323-8327-4960-ba26-f70b74defe56",
+        "x-ms-ratelimit-remaining-subscription-reads": "11969",
+        "x-ms-request-id": "ff83e323-8327-4960-ba26-f70b74defe56",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151055Z:ff83e323-8327-4960-ba26-f70b74defe56"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "f3d94233-a9aa-4241-ac82-2dfb63ce637a",
+        "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+        "displayName": "Visual Studio Enterprise Subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "MSDN_2014-09-01",
+          "spendingLimit": "On"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8522?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-b2fbeb9cef14b84ab6e315afdc29370e-632f8e1eeb602341-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "e7ea1f089206a9460b388082e1931a07",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "219",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:10:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "08057a70-cdc9-4925-b107-1c232b01ef18",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "08057a70-cdc9-4925-b107-1c232b01ef18",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151055Z:08057a70-cdc9-4925-b107-1c232b01ef18"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8522",
+        "name": "testRg-8522",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8522/providers/Microsoft.Cdn/profiles/AFDProfile-3692?api-version=2021-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "121",
+        "Content-Type": "application/json",
+        "traceparent": "00-20fe44bb79ca9f449bb8f9e07e0010dc-0889af826f204046-00",
+        "User-Agent": "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c6be94bcf1eba5a58eb92ce353f34c0e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "Standard_AzureFrontDoor"
+        },
+        "tags": {},
+        "location": "Global",
+        "properties": {
+          "originResponseTimeoutSeconds": 60
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8522/providers/Microsoft.Cdn/operationresults/148473bb-c9c0-4c6d-b4d6-2f9eb8c39d64?api-version=2021-06-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "443",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:10:59 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c6be94bcf1eba5a58eb92ce353f34c0e",
+        "x-ms-correlation-request-id": "12410e4f-7ec0-479a-bd3c-eb390ad9df9e",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "21",
+        "x-ms-request-id": "fb4077a8-4c3b-4ba3-95f7-56fef24fd236",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151059Z:12410e4f-7ec0-479a-bd3c-eb390ad9df9e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8522/providers/Microsoft.Cdn/profiles/AFDProfile-3692",
+        "type": "Microsoft.Cdn/profiles",
+        "name": "AFDProfile-3692",
+        "location": "Global",
+        "kind": "frontdoor",
+        "tags": {},
+        "sku": {
+          "name": "Standard_AzureFrontDoor"
+        },
+        "properties": {
+          "originResponseTimeoutSeconds": 60,
+          "frontDoorId": "b18423a9-0ea7-4f38-95f0-630b21006f7b",
+          "resourceState": "Creating",
+          "provisioningState": "Creating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8522/providers/Microsoft.Cdn/operationresults/148473bb-c9c0-4c6d-b4d6-2f9eb8c39d64?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-20fe44bb79ca9f449bb8f9e07e0010dc-9a723c456c83ef4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "773ba99b0bed2e1c444278d81ac5b844",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:10:59 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "773ba99b0bed2e1c444278d81ac5b844",
+        "x-ms-correlation-request-id": "10a66731-0139-4b2c-a9ca-cee9a9a6391d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11968",
+        "x-ms-request-id": "e130ba30-64ee-4b94-8a31-3b8523f9fd6a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151059Z:10a66731-0139-4b2c-a9ca-cee9a9a6391d"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8522/providers/Microsoft.Cdn/operationresults/148473bb-c9c0-4c6d-b4d6-2f9eb8c39d64?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-20fe44bb79ca9f449bb8f9e07e0010dc-cfbc8536693f634a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1ea87333fc9e43986eb5ac3bb032553b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:11:00 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1ea87333fc9e43986eb5ac3bb032553b",
+        "x-ms-correlation-request-id": "88387df3-b08f-4c03-bef5-0a89a6248693",
+        "x-ms-ratelimit-remaining-subscription-reads": "11967",
+        "x-ms-request-id": "dbde2fa8-1dbf-4e36-b6b4-dddfeb46eaf1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151101Z:88387df3-b08f-4c03-bef5-0a89a6248693"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8522/providers/Microsoft.Cdn/operationresults/148473bb-c9c0-4c6d-b4d6-2f9eb8c39d64?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-20fe44bb79ca9f449bb8f9e07e0010dc-d785fd5f1f14324e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a9474152d4b82e21584dc677ff4ded54",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:11:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a9474152d4b82e21584dc677ff4ded54",
+        "x-ms-correlation-request-id": "e1a22f02-3dd1-4dd1-9966-3120c4741451",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "fde2528d-b57d-42d6-9524-4ffe4245865a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151102Z:e1a22f02-3dd1-4dd1-9966-3120c4741451"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8522/providers/Microsoft.Cdn/operationresults/148473bb-c9c0-4c6d-b4d6-2f9eb8c39d64?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-20fe44bb79ca9f449bb8f9e07e0010dc-5cf70dc9fff29d4a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "dc3ffcf848aa9f4c11f709375fe17d12",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:11:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "dc3ffcf848aa9f4c11f709375fe17d12",
+        "x-ms-correlation-request-id": "38be05e1-24b5-4f44-800a-8b89388af38e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "d0033e1e-3e84-415a-9525-25f9504c9edd",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151103Z:38be05e1-24b5-4f44-800a-8b89388af38e"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8522/providers/Microsoft.Cdn/operationresults/148473bb-c9c0-4c6d-b4d6-2f9eb8c39d64?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-20fe44bb79ca9f449bb8f9e07e0010dc-ec0e345a4a4eed41-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d8853ced0e7e5f8b517ac55035214321",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:11:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d8853ced0e7e5f8b517ac55035214321",
+        "x-ms-correlation-request-id": "2f268179-7fce-4f9d-93be-88545386e3af",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "e7946c7b-0987-4c04-91de-1a1434ae3512",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151106Z:2f268179-7fce-4f9d-93be-88545386e3af"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8522/providers/Microsoft.Cdn/operationresults/148473bb-c9c0-4c6d-b4d6-2f9eb8c39d64?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-20fe44bb79ca9f449bb8f9e07e0010dc-dcfb8547be34a440-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b34257c778f20991f5a798c0cbeace76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:11:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b34257c778f20991f5a798c0cbeace76",
+        "x-ms-correlation-request-id": "6a6f1097-1be1-42d1-bb62-8880a8da6448",
+        "x-ms-ratelimit-remaining-subscription-reads": "11963",
+        "x-ms-request-id": "8f6462bb-93f3-49d9-8418-f3fdc7666a18",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151110Z:6a6f1097-1be1-42d1-bb62-8880a8da6448"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8522/providers/Microsoft.Cdn/operationresults/148473bb-c9c0-4c6d-b4d6-2f9eb8c39d64?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-20fe44bb79ca9f449bb8f9e07e0010dc-004b51397d543746-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c38ab3cf15c7e9d570e08a3083fb6aef",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "61",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:11:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c38ab3cf15c7e9d570e08a3083fb6aef",
+        "x-ms-correlation-request-id": "63affb78-a50a-4cd2-ab5c-d03a1a678768",
+        "x-ms-ratelimit-remaining-subscription-reads": "11962",
+        "x-ms-request-id": "39b908b2-dce6-4818-92cc-edafe8e5c009",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151118Z:63affb78-a50a-4cd2-ab5c-d03a1a678768"
+      },
+      "ResponseBody": {
+        "status": "Succeeded",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8522/providers/Microsoft.Cdn/profiles/AFDProfile-3692?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-20fe44bb79ca9f449bb8f9e07e0010dc-caf978c98bead54f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "076fe7b3ca9e741fab7ce3d676ca9367",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "442",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:11:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "076fe7b3ca9e741fab7ce3d676ca9367",
+        "x-ms-correlation-request-id": "90ef017e-fe5e-4a73-bdee-c5f17e46a903",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "45",
+        "x-ms-request-id": "7c0dde5e-f34d-4634-870c-8495a6cfef2a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151119Z:90ef017e-fe5e-4a73-bdee-c5f17e46a903"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/testRg-8522/providers/Microsoft.Cdn/profiles/AFDProfile-3692",
+        "type": "Microsoft.Cdn/profiles",
+        "name": "AFDProfile-3692",
+        "location": "Global",
+        "kind": "frontdoor",
+        "tags": {},
+        "sku": {
+          "name": "Standard_AzureFrontDoor"
+        },
+        "properties": {
+          "originResponseTimeoutSeconds": 60,
+          "frontDoorId": "b18423a9-0ea7-4f38-95f0-630b21006f7b",
+          "resourceState": "Active",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-8522/providers/Microsoft.Cdn/profiles/AFDProfile-3692/getLogAnalyticsLocations?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b2dc1a3b08a838418d0c9b20e49f0aae-dd5bbe72f193bc4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20220621.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "81804fab8097b25a81594312ee6086f9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "9334",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Jun 2022 15:11:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "81804fab8097b25a81594312ee6086f9",
+        "x-ms-correlation-request-id": "a86741c1-f064-419c-a2bb-cc14edddcc38",
+        "x-ms-ratelimit-remaining-subscription-reads": "11961",
+        "x-ms-request-id": "a0708503-39a3-4306-9a0b-c68dd6bcc628",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T151119Z:a86741c1-f064-419c-a2bb-cc14edddcc38"
+      },
+      "ResponseBody": {
+        "continents": [
+          {
+            "id": "africa"
+          },
+          {
+            "id": "antarctica"
+          },
+          {
+            "id": "asia"
+          },
+          {
+            "id": "europe"
+          },
+          {
+            "id": "northAmerica"
+          },
+          {
+            "id": "oceania"
+          },
+          {
+            "id": "southAmerica"
+          }
+        ],
+        "countryOrRegions": [
+          {
+            "id": "dz",
+            "continentId": "africa"
+          },
+          {
+            "id": "ao",
+            "continentId": "africa"
+          },
+          {
+            "id": "bw",
+            "continentId": "africa"
+          },
+          {
+            "id": "bi",
+            "continentId": "africa"
+          },
+          {
+            "id": "cm",
+            "continentId": "africa"
+          },
+          {
+            "id": "cv",
+            "continentId": "africa"
+          },
+          {
+            "id": "cf",
+            "continentId": "africa"
+          },
+          {
+            "id": "td",
+            "continentId": "africa"
+          },
+          {
+            "id": "km",
+            "continentId": "africa"
+          },
+          {
+            "id": "yt",
+            "continentId": "africa"
+          },
+          {
+            "id": "cg",
+            "continentId": "africa"
+          },
+          {
+            "id": "cd",
+            "continentId": "africa"
+          },
+          {
+            "id": "bj",
+            "continentId": "africa"
+          },
+          {
+            "id": "gq",
+            "continentId": "africa"
+          },
+          {
+            "id": "et",
+            "continentId": "africa"
+          },
+          {
+            "id": "er",
+            "continentId": "africa"
+          },
+          {
+            "id": "dj",
+            "continentId": "africa"
+          },
+          {
+            "id": "ga",
+            "continentId": "africa"
+          },
+          {
+            "id": "gm",
+            "continentId": "africa"
+          },
+          {
+            "id": "gh",
+            "continentId": "africa"
+          },
+          {
+            "id": "gn",
+            "continentId": "africa"
+          },
+          {
+            "id": "ci",
+            "continentId": "africa"
+          },
+          {
+            "id": "ke",
+            "continentId": "africa"
+          },
+          {
+            "id": "ls",
+            "continentId": "africa"
+          },
+          {
+            "id": "lr",
+            "continentId": "africa"
+          },
+          {
+            "id": "ly",
+            "continentId": "africa"
+          },
+          {
+            "id": "mg",
+            "continentId": "africa"
+          },
+          {
+            "id": "mw",
+            "continentId": "africa"
+          },
+          {
+            "id": "ml",
+            "continentId": "africa"
+          },
+          {
+            "id": "mr",
+            "continentId": "africa"
+          },
+          {
+            "id": "mu",
+            "continentId": "africa"
+          },
+          {
+            "id": "ma",
+            "continentId": "africa"
+          },
+          {
+            "id": "mz",
+            "continentId": "africa"
+          },
+          {
+            "id": "na",
+            "continentId": "africa"
+          },
+          {
+            "id": "ne",
+            "continentId": "africa"
+          },
+          {
+            "id": "ng",
+            "continentId": "africa"
+          },
+          {
+            "id": "gw",
+            "continentId": "africa"
+          },
+          {
+            "id": "re",
+            "continentId": "africa"
+          },
+          {
+            "id": "rw",
+            "continentId": "africa"
+          },
+          {
+            "id": "sh",
+            "continentId": "africa"
+          },
+          {
+            "id": "st",
+            "continentId": "africa"
+          },
+          {
+            "id": "sn",
+            "continentId": "africa"
+          },
+          {
+            "id": "sc",
+            "continentId": "africa"
+          },
+          {
+            "id": "sl",
+            "continentId": "africa"
+          },
+          {
+            "id": "so",
+            "continentId": "africa"
+          },
+          {
+            "id": "za",
+            "continentId": "africa"
+          },
+          {
+            "id": "zw",
+            "continentId": "africa"
+          },
+          {
+            "id": "ss",
+            "continentId": "africa"
+          },
+          {
+            "id": "eh",
+            "continentId": "africa"
+          },
+          {
+            "id": "sd",
+            "continentId": "africa"
+          },
+          {
+            "id": "sz",
+            "continentId": "africa"
+          },
+          {
+            "id": "tg",
+            "continentId": "africa"
+          },
+          {
+            "id": "tn",
+            "continentId": "africa"
+          },
+          {
+            "id": "ug",
+            "continentId": "africa"
+          },
+          {
+            "id": "eg",
+            "continentId": "africa"
+          },
+          {
+            "id": "tz",
+            "continentId": "africa"
+          },
+          {
+            "id": "bf",
+            "continentId": "africa"
+          },
+          {
+            "id": "zm",
+            "continentId": "africa"
+          },
+          {
+            "id": "aq",
+            "continentId": "antarctica"
+          },
+          {
+            "id": "bv",
+            "continentId": "antarctica"
+          },
+          {
+            "id": "gs",
+            "continentId": "antarctica"
+          },
+          {
+            "id": "tf",
+            "continentId": "antarctica"
+          },
+          {
+            "id": "hm",
+            "continentId": "antarctica"
+          },
+          {
+            "id": "af",
+            "continentId": "asia"
+          },
+          {
+            "id": "bh",
+            "continentId": "asia"
+          },
+          {
+            "id": "bd",
+            "continentId": "asia"
+          },
+          {
+            "id": "bt",
+            "continentId": "asia"
+          },
+          {
+            "id": "io",
+            "continentId": "asia"
+          },
+          {
+            "id": "bn",
+            "continentId": "asia"
+          },
+          {
+            "id": "mm",
+            "continentId": "asia"
+          },
+          {
+            "id": "kh",
+            "continentId": "asia"
+          },
+          {
+            "id": "lk",
+            "continentId": "asia"
+          },
+          {
+            "id": "cn",
+            "continentId": "asia"
+          },
+          {
+            "id": "tw",
+            "continentId": "asia"
+          },
+          {
+            "id": "cx",
+            "continentId": "asia"
+          },
+          {
+            "id": "cc",
+            "continentId": "asia"
+          },
+          {
+            "id": "cy",
+            "continentId": "asia"
+          },
+          {
+            "id": "ps",
+            "continentId": "asia"
+          },
+          {
+            "id": "hk",
+            "continentId": "asia"
+          },
+          {
+            "id": "in",
+            "continentId": "asia"
+          },
+          {
+            "id": "id",
+            "continentId": "asia"
+          },
+          {
+            "id": "ir",
+            "continentId": "asia"
+          },
+          {
+            "id": "iq",
+            "continentId": "asia"
+          },
+          {
+            "id": "il",
+            "continentId": "asia"
+          },
+          {
+            "id": "jp",
+            "continentId": "asia"
+          },
+          {
+            "id": "kz",
+            "continentId": "asia"
+          },
+          {
+            "id": "jo",
+            "continentId": "asia"
+          },
+          {
+            "id": "kp",
+            "continentId": "asia"
+          },
+          {
+            "id": "kr",
+            "continentId": "asia"
+          },
+          {
+            "id": "kw",
+            "continentId": "asia"
+          },
+          {
+            "id": "kg",
+            "continentId": "asia"
+          },
+          {
+            "id": "la",
+            "continentId": "asia"
+          },
+          {
+            "id": "lb",
+            "continentId": "asia"
+          },
+          {
+            "id": "mo",
+            "continentId": "asia"
+          },
+          {
+            "id": "my",
+            "continentId": "asia"
+          },
+          {
+            "id": "mv",
+            "continentId": "asia"
+          },
+          {
+            "id": "mn",
+            "continentId": "asia"
+          },
+          {
+            "id": "om",
+            "continentId": "asia"
+          },
+          {
+            "id": "np",
+            "continentId": "asia"
+          },
+          {
+            "id": "pk",
+            "continentId": "asia"
+          },
+          {
+            "id": "ph",
+            "continentId": "asia"
+          },
+          {
+            "id": "tl",
+            "continentId": "asia"
+          },
+          {
+            "id": "qa",
+            "continentId": "asia"
+          },
+          {
+            "id": "sa",
+            "continentId": "asia"
+          },
+          {
+            "id": "sg",
+            "continentId": "asia"
+          },
+          {
+            "id": "vn",
+            "continentId": "asia"
+          },
+          {
+            "id": "sy",
+            "continentId": "asia"
+          },
+          {
+            "id": "tj",
+            "continentId": "asia"
+          },
+          {
+            "id": "th",
+            "continentId": "asia"
+          },
+          {
+            "id": "ae",
+            "continentId": "asia"
+          },
+          {
+            "id": "tr",
+            "continentId": "asia"
+          },
+          {
+            "id": "tm",
+            "continentId": "asia"
+          },
+          {
+            "id": "uz",
+            "continentId": "asia"
+          },
+          {
+            "id": "ye",
+            "continentId": "asia"
+          },
+          {
+            "id": "xe",
+            "continentId": "asia"
+          },
+          {
+            "id": "xd",
+            "continentId": "asia"
+          },
+          {
+            "id": "xs",
+            "continentId": "asia"
+          },
+          {
+            "id": "al",
+            "continentId": "europe"
+          },
+          {
+            "id": "ad",
+            "continentId": "europe"
+          },
+          {
+            "id": "az",
+            "continentId": "europe"
+          },
+          {
+            "id": "at",
+            "continentId": "europe"
+          },
+          {
+            "id": "am",
+            "continentId": "europe"
+          },
+          {
+            "id": "be",
+            "continentId": "europe"
+          },
+          {
+            "id": "ba",
+            "continentId": "europe"
+          },
+          {
+            "id": "bg",
+            "continentId": "europe"
+          },
+          {
+            "id": "by",
+            "continentId": "europe"
+          },
+          {
+            "id": "hr",
+            "continentId": "europe"
+          },
+          {
+            "id": "cz",
+            "continentId": "europe"
+          },
+          {
+            "id": "dk",
+            "continentId": "europe"
+          },
+          {
+            "id": "ee",
+            "continentId": "europe"
+          },
+          {
+            "id": "fo",
+            "continentId": "europe"
+          },
+          {
+            "id": "fi",
+            "continentId": "europe"
+          },
+          {
+            "id": "ax",
+            "continentId": "europe"
+          },
+          {
+            "id": "fr",
+            "continentId": "europe"
+          },
+          {
+            "id": "ge",
+            "continentId": "europe"
+          },
+          {
+            "id": "de",
+            "continentId": "europe"
+          },
+          {
+            "id": "gi",
+            "continentId": "europe"
+          },
+          {
+            "id": "gr",
+            "continentId": "europe"
+          },
+          {
+            "id": "va",
+            "continentId": "europe"
+          },
+          {
+            "id": "hu",
+            "continentId": "europe"
+          },
+          {
+            "id": "is",
+            "continentId": "europe"
+          },
+          {
+            "id": "ie",
+            "continentId": "europe"
+          },
+          {
+            "id": "it",
+            "continentId": "europe"
+          },
+          {
+            "id": "lv",
+            "continentId": "europe"
+          },
+          {
+            "id": "li",
+            "continentId": "europe"
+          },
+          {
+            "id": "lt",
+            "continentId": "europe"
+          },
+          {
+            "id": "lu",
+            "continentId": "europe"
+          },
+          {
+            "id": "mt",
+            "continentId": "europe"
+          },
+          {
+            "id": "mc",
+            "continentId": "europe"
+          },
+          {
+            "id": "md",
+            "continentId": "europe"
+          },
+          {
+            "id": "me",
+            "continentId": "europe"
+          },
+          {
+            "id": "nl",
+            "continentId": "europe"
+          },
+          {
+            "id": "no",
+            "continentId": "europe"
+          },
+          {
+            "id": "pl",
+            "continentId": "europe"
+          },
+          {
+            "id": "pt",
+            "continentId": "europe"
+          },
+          {
+            "id": "ro",
+            "continentId": "europe"
+          },
+          {
+            "id": "ru",
+            "continentId": "europe"
+          },
+          {
+            "id": "sm",
+            "continentId": "europe"
+          },
+          {
+            "id": "rs",
+            "continentId": "europe"
+          },
+          {
+            "id": "sk",
+            "continentId": "europe"
+          },
+          {
+            "id": "si",
+            "continentId": "europe"
+          },
+          {
+            "id": "es",
+            "continentId": "europe"
+          },
+          {
+            "id": "sj",
+            "continentId": "europe"
+          },
+          {
+            "id": "se",
+            "continentId": "europe"
+          },
+          {
+            "id": "ch",
+            "continentId": "europe"
+          },
+          {
+            "id": "ua",
+            "continentId": "europe"
+          },
+          {
+            "id": "mk",
+            "continentId": "europe"
+          },
+          {
+            "id": "gb",
+            "continentId": "europe"
+          },
+          {
+            "id": "gg",
+            "continentId": "europe"
+          },
+          {
+            "id": "je",
+            "continentId": "europe"
+          },
+          {
+            "id": "im",
+            "continentId": "europe"
+          },
+          {
+            "id": "ag",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "bs",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "bb",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "bm",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "bz",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "vg",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "ca",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "ky",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "cr",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "cu",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "dm",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "do",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "sv",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "gl",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "gd",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "gp",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "gt",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "ht",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "hn",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "jm",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "mq",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "mx",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "ms",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "an",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "cw",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "aw",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "sx",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "bq",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "ni",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "um",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "pa",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "pr",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "bl",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "kn",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "ai",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "lc",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "mf",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "pm",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "vc",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "tt",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "tc",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "us",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "vi",
+            "continentId": "northAmerica"
+          },
+          {
+            "id": "as",
+            "continentId": "oceania"
+          },
+          {
+            "id": "au",
+            "continentId": "oceania"
+          },
+          {
+            "id": "sb",
+            "continentId": "oceania"
+          },
+          {
+            "id": "ck",
+            "continentId": "oceania"
+          },
+          {
+            "id": "fj",
+            "continentId": "oceania"
+          },
+          {
+            "id": "pf",
+            "continentId": "oceania"
+          },
+          {
+            "id": "ki",
+            "continentId": "oceania"
+          },
+          {
+            "id": "gu",
+            "continentId": "oceania"
+          },
+          {
+            "id": "nr",
+            "continentId": "oceania"
+          },
+          {
+            "id": "nc",
+            "continentId": "oceania"
+          },
+          {
+            "id": "vu",
+            "continentId": "oceania"
+          },
+          {
+            "id": "nz",
+            "continentId": "oceania"
+          },
+          {
+            "id": "nu",
+            "continentId": "oceania"
+          },
+          {
+            "id": "nf",
+            "continentId": "oceania"
+          },
+          {
+            "id": "mp",
+            "continentId": "oceania"
+          },
+          {
+            "id": "fm",
+            "continentId": "oceania"
+          },
+          {
+            "id": "mh",
+            "continentId": "oceania"
+          },
+          {
+            "id": "pw",
+            "continentId": "oceania"
+          },
+          {
+            "id": "pg",
+            "continentId": "oceania"
+          },
+          {
+            "id": "pn",
+            "continentId": "oceania"
+          },
+          {
+            "id": "tk",
+            "continentId": "oceania"
+          },
+          {
+            "id": "to",
+            "continentId": "oceania"
+          },
+          {
+            "id": "tv",
+            "continentId": "oceania"
+          },
+          {
+            "id": "wf",
+            "continentId": "oceania"
+          },
+          {
+            "id": "ws",
+            "continentId": "oceania"
+          },
+          {
+            "id": "xx",
+            "continentId": "oceania"
+          },
+          {
+            "id": "ar",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "bo",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "br",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "cl",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "co",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "ec",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "fk",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "gf",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "gy",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "py",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "pe",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "sr",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "uy",
+            "continentId": "southAmerica"
+          },
+          {
+            "id": "ve",
+            "continentId": "southAmerica"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2060527907",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "f3d94233-a9aa-4241-ac82-2dfb63ce637a"
+  }
+}

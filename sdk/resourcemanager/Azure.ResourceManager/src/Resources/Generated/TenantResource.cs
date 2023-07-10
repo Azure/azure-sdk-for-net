@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class TenantResource : ArmResource
     {
+
         private readonly ClientDiagnostics _tenantClientDiagnostics;
         private readonly TenantsRestOperations _tenantRestClient;
         private readonly ClientDiagnostics _resourceProviderProvidersClientDiagnostics;

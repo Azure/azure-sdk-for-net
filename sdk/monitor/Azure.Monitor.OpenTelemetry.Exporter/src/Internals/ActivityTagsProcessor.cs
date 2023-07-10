@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeDbSystem,
             SemanticConventions.AttributeDbName,
 
-            // required - HTTP
+            // required
             SemanticConventions.AttributeHttpMethod,
             SemanticConventions.AttributeHttpUrl,
             SemanticConventions.AttributeHttpStatusCode,
@@ -26,19 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeHttpClientIP,
             SemanticConventions.AttributeHttpRoute,
 
-            // required - HTTP V2
-            SemanticConventions.AttributeHttpRequestMethod,
-            SemanticConventions.AttributeHttpResponseStatusCode,
-            SemanticConventions.AttributeNetworkProtocolVersion,
-            SemanticConventions.AttributeServerAddress,
-            SemanticConventions.AttributeServerPort,
-            SemanticConventions.AttributeUrlFull,
-            SemanticConventions.AttributeUrlPath,
-            SemanticConventions.AttributeUrlScheme,
-            SemanticConventions.AttributeUrlQuery,
-            SemanticConventions.AttributeUserAgentOriginal,
-
-            // required - Azure
+            // required
             SemanticConventions.AttributeAzureNameSpace,
 
             SemanticConventions.AttributePeerService,
@@ -54,12 +42,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             "sampleRate",
 
             SemanticConventions.AttributeRpcService,
-            // required - RPC
+            // required
             SemanticConventions.AttributeRpcSystem,
             SemanticConventions.AttributeRpcStatus,
 
+            // required
+            SemanticConventions.AttributeFaasTrigger,
+            SemanticConventions.AttributeFaasExecution,
+            SemanticConventions.AttributeFaasColdStart,
+            SemanticConventions.AttributeFaasDocumentCollection,
+            SemanticConventions.AttributeFaasDocumentOperation,
+            SemanticConventions.AttributeFaasDocumentTime,
+            SemanticConventions.AttributeFaasDocumentName,
+            SemanticConventions.AttributeFaasCron,
+            SemanticConventions.AttributeFaasTime,
+
             SemanticConventions.AttributeEndpointAddress,
-            // required - Messaging
+            // required
             SemanticConventions.AttributeMessagingSystem,
             SemanticConventions.AttributeMessagingDestination,
             SemanticConventions.AttributeMessagingDestinationKind,
@@ -102,9 +101,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         case SemanticConventions.AttributeHttpMethod:
                             activityType = OperationType.Http;
-                            break;
-                        case SemanticConventions.AttributeHttpRequestMethod:
-                            activityType = OperationType.Http | OperationType.V2;
                             break;
                         case SemanticConventions.AttributeDbSystem:
                             activityType = OperationType.Db;

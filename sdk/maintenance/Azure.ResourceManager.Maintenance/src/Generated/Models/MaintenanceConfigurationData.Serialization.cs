@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Maintenance
 {
     public partial class MaintenanceConfigurationData : IUtf8JsonSerializable
     {
+
         internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

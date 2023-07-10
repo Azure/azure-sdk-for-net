@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetApplicationGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/ApplicationGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/ApplicationGatewayGet.json
             // this example is just showing the usage of "ApplicationGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetApplicationGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/ApplicationGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/ApplicationGatewayGet.json
             // this example is just showing the usage of "ApplicationGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateApplicationGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/ApplicationGatewayCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/ApplicationGatewayCreate.json
             // this example is just showing the usage of "ApplicationGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,13 +205,7 @@ Name = "appgwpool",
 {
 BackendAddresses =
 {
-new ApplicationGatewayBackendAddress()
-{
-IPAddress = "10.0.0.1",
-},new ApplicationGatewayBackendAddress()
-{
-IPAddress = "10.0.0.2",
-}
+null,null
 },
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendAddressPools/appgwpool1"),
 Name = "appgwpool1",
@@ -274,6 +268,32 @@ VerifyClientCertIssuerDN = true,
 Name = "sslProfile1",
 }
 },
+                UrlPathMaps =
+{
+new ApplicationGatewayUrlPathMap()
+{
+DefaultBackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendAddressPools/appgwpool"),
+DefaultBackendHttpSettingsId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendHttpSettingsCollection/appgwbhs"),
+DefaultRewriteRuleSetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/rewriteRuleSets/rewriteRuleSet1"),
+DefaultLoadDistributionPolicyId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/loadDistributionPolicies/ldp1"),
+PathRules =
+{
+new ApplicationGatewayPathRule()
+{
+Paths =
+{
+"/api","/v1/api"
+},
+BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendAddressPools/appgwpool"),
+BackendHttpSettingsId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendHttpSettingsCollection/appgwbhs"),
+RewriteRuleSetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/rewriteRuleSets/rewriteRuleSet1"),
+LoadDistributionPolicyId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/loadDistributionPolicies/ldp1"),
+Name = "apiPaths",
+}
+},
+Name = "pathMap1",
+}
+},
                 RequestRoutingRules =
 {
 new ApplicationGatewayRequestRoutingRule()
@@ -284,7 +304,15 @@ BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGrou
 BackendHttpSettingsId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendHttpSettingsCollection/appgwbhs"),
 HttpListenerId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/httpListeners/appgwhl"),
 RewriteRuleSetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/rewriteRuleSets/rewriteRuleSet1"),
+LoadDistributionPolicyId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/loadDistributionPolicies/ldp1"),
 Name = "appgwrule",
+},new ApplicationGatewayRequestRoutingRule()
+{
+RuleType = ApplicationGatewayRequestRoutingRuleType.PathBasedRouting,
+Priority = 20,
+HttpListenerId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/httpListeners/appgwhttplistener"),
+UrlPathMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/urlPathMaps/pathMap1"),
+Name = "appgwPathBasedRule",
 }
 },
                 RewriteRuleSets =
@@ -335,6 +363,28 @@ ModifiedPath = "/abc",
 Name = "rewriteRuleSet1",
 }
 },
+                LoadDistributionPolicies =
+{
+new ApplicationGatewayLoadDistributionPolicy()
+{
+LoadDistributionTargets =
+{
+new ApplicationGatewayLoadDistributionTarget()
+{
+WeightPerServer = 40,
+BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendAddressPools/appgwpool"),
+Name = "ld11",
+},new ApplicationGatewayLoadDistributionTarget()
+{
+WeightPerServer = 60,
+BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendAddressPools/appgwpool1"),
+Name = "ld11",
+}
+},
+LoadDistributionAlgorithm = ApplicationGatewayLoadDistributionAlgorithm.RoundRobin,
+Name = "ldp1",
+}
+},
                 GlobalConfiguration = new ApplicationGatewayGlobalConfiguration()
                 {
                     EnableRequestBuffering = true,
@@ -357,7 +407,7 @@ Name = "rewriteRuleSet1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListsAllApplicationGatewaysInAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/ApplicationGatewayList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/ApplicationGatewayList.json
             // this example is just showing the usage of "ApplicationGateways_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

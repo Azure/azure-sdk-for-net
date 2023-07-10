@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
 
             List<VerifyBlockBlobCopyFromUriInfo> copyBlobInfo = new List<VerifyBlockBlobCopyFromUriInfo>(blobCount);
@@ -192,7 +192,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToBlockBlob_SmallChunk()
         {
             long size = Constants.KB;
-            int waitTimeInSec = 25;
+            int waitTimeInSec = 10;
 
             TransferOptions options = new TransferOptions()
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of PauseReplicationContent. </summary>
         /// <param name="properties"> Pause replication input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public PauseReplicationContent(PauseReplicationProperties properties)
+        public PauseReplicationContent(PauseReplicationInputProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Pause replication input properties. </summary>
-        internal PauseReplicationProperties Properties { get; }
+        internal PauseReplicationInputProperties Properties { get; }
         /// <summary> The class type. </summary>
-        public string PauseReplicationInstanceType
+        public string PauseReplicationInputInstanceType
         {
             get => Properties?.InstanceType;
         }

@@ -13,14 +13,14 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             Assert.Throws<MissingMethodException>(() =>
             {
-                var rule = Activator.CreateInstance(typeof(ExpressionRouterRule), "PowerFx", "expression");
+                var rule = Activator.CreateInstance(typeof(ExpressionRule), "PowerFx", "expression");
             });
         }
 
         [Test]
         public void LanguageOnExpressionContainerDoesNotHaveSetter()
         {
-            var type = typeof(ExpressionRouterRule);
+            var type = typeof(ExpressionRule);
             var languagePropertyInfo = type.GetProperty("Language");
             if (languagePropertyInfo is not null)
             {

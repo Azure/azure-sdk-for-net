@@ -58,7 +58,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     {
                         continue;
                     }
-                    startTime = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    startTime = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                         endTime = null;
                         continue;
                     }
-                    endTime = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    endTime = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
             }

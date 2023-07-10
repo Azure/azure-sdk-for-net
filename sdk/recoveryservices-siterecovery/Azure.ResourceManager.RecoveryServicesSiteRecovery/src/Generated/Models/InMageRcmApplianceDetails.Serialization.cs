@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<ResourceIdentifier> fabricArmId = default;
-            Optional<SiteRecoveryProcessServerDetails> processServer = default;
+            Optional<string> fabricArmId = default;
+            Optional<ProcessServerDetails> processServer = default;
             Optional<RcmProxyDetails> rcmProxy = default;
             Optional<PushInstallerDetails> pushInstaller = default;
             Optional<ReplicationAgentDetails> replicationAgent = default;
             Optional<ReprotectAgentDetails> reprotectAgent = default;
             Optional<MarsAgentDetails> marsAgent = default;
-            Optional<SiteRecoveryDraDetails> dra = default;
+            Optional<DraDetails> dra = default;
             Optional<IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,11 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("fabricArmId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fabricArmId = new ResourceIdentifier(property.Value.GetString());
+                    fabricArmId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("processServer"u8))
@@ -57,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    processServer = SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(property.Value);
+                    processServer = ProcessServerDetails.DeserializeProcessServerDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rcmProxy"u8))
@@ -111,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    dra = SiteRecoveryDraDetails.DeserializeSiteRecoveryDraDetails(property.Value);
+                    dra = DraDetails.DeserializeDraDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("switchProviderBlockingErrorDetails"u8))

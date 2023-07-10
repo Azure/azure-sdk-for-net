@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
         internal ReplicationAgentDetails()
         {
-            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
+            HealthErrors = new ChangeTrackingList<HealthError>();
         }
 
         /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastHeartbeatUtc"> The last heartbeat received from the replication agent. </param>
         /// <param name="health"> The health of the replication agent. </param>
         /// <param name="healthErrors"> The health errors. </param>
-        internal ReplicationAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
+        internal ReplicationAgentDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors)
         {
             Id = id;
             Name = name;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The replication agent Bios Id. </summary>
         public string BiosId { get; }
         /// <summary> The fabric object Id. </summary>
-        public ResourceIdentifier FabricObjectId { get; }
+        public string FabricObjectId { get; }
         /// <summary> The replication agent Fqdn. </summary>
         public string Fqdn { get; }
         /// <summary> The version. </summary>
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The last heartbeat received from the replication agent. </summary>
         public DateTimeOffset? LastHeartbeatUtc { get; }
         /// <summary> The health of the replication agent. </summary>
-        public SiteRecoveryProtectionHealth? Health { get; }
+        public ProtectionHealth? Health { get; }
         /// <summary> The health errors. </summary>
-        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
+        public IReadOnlyList<HealthError> HealthErrors { get; }
     }
 }

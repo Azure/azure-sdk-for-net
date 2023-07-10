@@ -44,9 +44,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string networkFabricName = "FabricName";
-            NetworkFabricData data = new NetworkFabricData(new AzureLocation("eastuseuap"))
+            NetworkFabricData data = new NetworkFabricData(new AzureLocation("eastus"))
             {
-                Annotation = "annotationValue",
                 NetworkFabricSku = "M4-A400-A100-C16-aa",
                 RackCount = 4,
                 ServerCountPerRack = 8,
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 IPv6Prefix = "3FFE:FFFF:0:CD40::/59",
                 FabricASN = 29249,
                 NetworkFabricControllerId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/fabricControllerName",
-                TerminalServerConfiguration = new TerminalServerConfiguration()
+                TerminalServerConfiguration = new NetworkFabricPropertiesTerminalServerConfiguration()
                 {
                     Username = "username",
                     Password = "xxxx",
@@ -64,49 +63,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                     SecondaryIPv4Prefix = "20.0.0.13/30",
                     SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::ac/126",
                 },
-                ManagementNetworkConfiguration = new ManagementNetworkConfiguration(new VpnConfigurationProperties(PeeringOption.OptionA)
-                {
-                    OptionBProperties = new NetworkFabricOptionBProperties(new string[]
+                ManagementNetworkConfiguration = new NetworkFabricPropertiesManagementNetworkConfiguration(new NetworkFabricPropertiesManagementNetworkConfigurationInfrastructureVpnConfiguration(new NetworkFabricOptionBProperties(new string[]
             {
 "65046:10039"
             }, new string[]
             {
 "65046:10039"
-            }),
-                    OptionAProperties = new NetworkFabricOptionAProperties()
-                    {
-                        Mtu = 5892,
-                        VlanId = 2724,
-                        PeerASN = 42666,
-                        PrimaryIPv4Prefix = "20.0.0.12/30",
-                        PrimaryIPv6Prefix = "3FFE:FFFF:0:CD30::a8/126",
-                        SecondaryIPv4Prefix = "20.0.0.13/30",
-                        SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::ac/126",
-                    },
-                }, new VpnConfigurationProperties(PeeringOption.OptionA)
+            }))
                 {
-                    OptionBProperties = new NetworkFabricOptionBProperties(new string[]
+                    PeeringOption = PeeringOption.OptionA,
+                    OptionAProperties = null,
+                }, new NetworkFabricPropertiesManagementNetworkConfigurationWorkloadVpnConfiguration(new NetworkFabricOptionBProperties(new string[]
             {
 "65046:10050"
             }, new string[]
             {
 "65046:10050"
-            }),
-                    OptionAProperties = new NetworkFabricOptionAProperties()
-                    {
-                        Mtu = 5892,
-                        VlanId = 2724,
-                        PeerASN = 42666,
-                        PrimaryIPv4Prefix = "10.0.0.14/30",
-                        PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/126",
-                        SecondaryIPv4Prefix = "10.0.0.15/30",
-                        SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
-                    },
+            }))
+                {
+                    PeeringOption = PeeringOption.OptionA,
+                    OptionAProperties = null,
                 }),
-                Tags =
-{
-["key6468"] = "",
-},
             };
             ArmOperation<NetworkFabricResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFabricName, data);
             NetworkFabricResource result = lro.Value;

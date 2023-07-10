@@ -1,14 +1,16 @@
 # Release History
 
-## 1.2.0 (2023-07-20)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
-
-- Added new resourceGuardProxy Api's.
 
 ### Breaking Changes
 
 - Add property `JobResourceId` to class `DataProtectionOperationJobExtendedInfo`, replace the `JobId`.
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.2.0-beta.1 (2023-05-29)
 

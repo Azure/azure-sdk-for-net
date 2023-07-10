@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/0724e72994ed3c77f76ed0bfa2df3b1f0c33a41b/specification/dataprotection/resource-manager/readme.md
-tag: package-2023-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/42e62bef21fca828da9a9a81d845d00aae466877/specification/dataprotection/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -244,8 +243,6 @@ rename-mapping:
   SecuritySettings: BackupVaultSecuritySettings
   SoftDeleteSettings: BackupVaultSoftDeleteSettings
   SoftDeleteState: BackupVaultSoftDeleteState
-  UnlockDeleteRequest: DataProtectionUnlockDeleteContent
-  UnlockDeleteResponse: DataProtectionUnlockDeleteResult
 
 directive:
 # Correct the type of properties

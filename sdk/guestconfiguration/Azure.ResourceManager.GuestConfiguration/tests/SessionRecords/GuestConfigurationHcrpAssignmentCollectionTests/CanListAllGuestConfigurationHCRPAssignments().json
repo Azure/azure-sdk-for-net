@@ -1,0 +1,1029 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-043c7adf4e2b0542b052a647d98c1616-8c26cec313379649-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0bf7a84f8cb4dbba1caeceeda2d21d6b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "456",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Sep 2022 22:07:04 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ccf4948a-c433-4603-b76e-a2d491049c26",
+        "x-ms-ratelimit-remaining-subscription-reads": "11972",
+        "x-ms-request-id": "ccf4948a-c433-4603-b76e-a2d491049c26",
+        "x-ms-routing-request-id": "WESTUS2:20220906T220704Z:ccf4948a-c433-4603-b76e-a2d491049c26"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071",
+        "authorizationSource": "Bypassed",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "subscriptionId": "f66367e1-cf7d-407b-ba39-53230cc79071",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "MGMT GCRP Package Test 001",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourcegroups/neela-sdk-rg?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-52c8b693fe427d4db48ef016dae0a5b8-d5102ed8019dc349-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "03f1e48c2585ae560bf8d02fb44ea3f8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "231",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Sep 2022 22:07:04 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9433b0b4-eb92-451c-a674-e1911f83c1da",
+        "x-ms-ratelimit-remaining-subscription-reads": "11971",
+        "x-ms-request-id": "9433b0b4-eb92-451c-a674-e1911f83c1da",
+        "x-ms-routing-request-id": "WESTUS2:20220906T220704Z:9433b0b4-eb92-451c-a674-e1911f83c1da"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg",
+        "name": "neela-sdk-rg",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments?api-version=2022-01-25",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-610b69e66e2f324084f383cf2546db1c-9abf3ceb970fc04b-00",
+        "User-Agent": "azsdk-net-ResourceManager.GuestConfiguration/1.0.0-alpha.20220906.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d08e4bf93c33a5e71d45d5db479fd580",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "38626",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Sep 2022 22:07:04 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8808604d-54c1-4b42-baaa-514104a3e3e6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11970",
+        "x-ms-request-id": "8808604d-54c1-4b42-baaa-514104a3e3e6",
+        "x-ms-routing-request-id": "WESTUS2:20220906T220704Z:8808604d-54c1-4b42-baaa-514104a3e3e6",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "location": "westcentralus",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol",
+            "name": "AuditSecureProtocol",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "",
+              "parameterHash": "PQ==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/6c94b99d-caf5-4b05-b294-065617e83cd2",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:37Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "AuditSecureProtocol",
+                "version": "1.0.0.3",
+                "contentUri": null,
+                "contentHash": null,
+                "contentType": null,
+                "assignmentType": "ApplyAndAutoCorrect",
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": null,
+                    "value": null
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsPendingReboot",
+            "name": "WindowsPendingReboot",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "E8F6587B27C35A1094EC306D9542437B3F39F03463C68CACD87E8004DF1F8DDE.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsPendingReboot/reports/03e7f70d-d984-4c34-ad2f-9a2df4e98702",
+              "lastComplianceStatusChecked": "2022-09-06T21:53:47Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsPendingReboot",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsPendingReboot/WindowsPendingReboot_1.2.0.0.zip",
+                "contentHash": "E8F6587B27C35A1094EC306D9542437B3F39F03463C68CACD87E8004DF1F8DDE",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDscConfiguration",
+            "name": "WindowsDscConfiguration",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "2361330D667D13524284A193E8F0A9BC026EC38BBA8E9CD42AF76672DBC137D9.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDscConfiguration/reports/da7d9f73-c863-4a93-a799-21088e49c0f2",
+              "lastComplianceStatusChecked": "2022-09-06T21:54:16Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsDscConfiguration",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsDscConfiguration/WindowsDscConfiguration_1.4.0.0.zip",
+                "contentHash": "2361330D667D13524284A193E8F0A9BC026EC38BBA8E9CD42AF76672DBC137D9",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDefenderExploitGuard",
+            "name": "WindowsDefenderExploitGuard",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "E79CFED8B86245F8090E6CA5469F861D8EB3C7411E6C98CB4DF99A7628F11573.517E990CF48B300455C7E3CDCA6431A3B90079559088C45934D7CC3EF1F8E82B",
+              "parameterHash": "W1dpbmRvd3NEZWZlbmRlckV4cGxvaXRHdWFyZF1XaW5kb3dzRGVmZW5kZXJFeHBsb2l0R3VhcmQxO05vdEF2YWlsYWJsZU1hY2hpbmVTdGF0ZT1Ob24tQ29tcGxpYW50",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDefenderExploitGuard/reports/7f4fca08-4cc0-40fa-b88d-72739016bbe9",
+              "lastComplianceStatusChecked": "2022-09-06T21:23:23Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsDefenderExploitGuard",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsDefenderExploitGuard/WindowsDefenderExploitGuard_1.14.0.0.zip",
+                "contentHash": "E79CFED8B86245F8090E6CA5469F861D8EB3C7411E6C98CB4DF99A7628F11573",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[WindowsDefenderExploitGuard]WindowsDefenderExploitGuard1;NotAvailableMachineState",
+                    "value": "Non-Compliant"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AdministratorsGroupMembersToExclude",
+            "name": "AdministratorsGroupMembersToExclude",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "86585B863F156D3401FA6495CE3B9C537C7F56BA0B5ED979F6B1C461A018A8C9.DDCEC7FF2C6ABA4F1C81237F14FAB71CA73007EAA4635425CF88E8A8F2FD4A80",
+              "parameterHash": "W0xvY2FsR3JvdXBdQWRtaW5pc3RyYXRvcnNHcm91cDtNZW1iZXJzVG9FeGNsdWRlPWZvbw==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AdministratorsGroupMembersToExclude/reports/89cb3915-3246-40f8-8fac-d0d97907ab5e",
+              "lastComplianceStatusChecked": "2022-09-06T21:54:59Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "AdministratorsGroupMembersToExclude",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/AdministratorsGroupMembersToExclude/AdministratorsGroupMembersToExclude_1.0.0.0.zip",
+                "contentHash": "86585B863F156D3401FA6495CE3B9C537C7F56BA0B5ED979F6B1C461A018A8C9",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[LocalGroup]AdministratorsGroup;MembersToExclude",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsLogAnalyticsAgentConnection",
+            "name": "WindowsLogAnalyticsAgentConnection",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "3FF1DCDBDBD11685585F15C6EC505D99EA0FF741DEF11EF219FFCDDA7BAA458A.E2D9DC438C5314CC3E0B659A4F77D0929ED8365554537AA07D8742EAB583067C",
+              "parameterHash": "W0xvZ0FuYWx5dGljc0FnZW50XUxvZ0FuYWx5dGljc0FnZW50MTtXb3Jrc3BhY2VJZD0xMjM0NTY3ODk=",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsLogAnalyticsAgentConnection/reports/0ecacf1d-18d3-43ff-9f29-1c4910b617c9",
+              "lastComplianceStatusChecked": "2022-09-06T21:55:02Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsLogAnalyticsAgentConnection",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsLogAnalyticsAgentConnection/WindowsLogAnalyticsAgentConnection_1.0.0.0.zip",
+                "contentHash": "3FF1DCDBDBD11685585F15C6EC505D99EA0FF741DEF11EF219FFCDDA7BAA458A",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[LogAnalyticsAgent]LogAnalyticsAgent1;WorkspaceId",
+                    "value": "123456789"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsServiceStatus",
+            "name": "WindowsServiceStatus",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "0D4EFB2626B29E1315B1FDA616F42A21BF99633487DA98DA38C697BF2676B114.F9811F33624BC9B89783770384FA4E9A62D8DFEA2B4AD55E9B828EE06315457B",
+              "parameterHash": "W1dpbmRvd3NTZXJ2aWNlU3RhdHVzXVdpbmRvd3NTZXJ2aWNlU3RhdHVzMTtTZXJ2aWNlTmFtZT1mb28=",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsServiceStatus/reports/1aad485a-817f-4885-aa01-808da0121d56",
+              "lastComplianceStatusChecked": "2022-09-06T21:55:04Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsServiceStatus",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsServiceStatus/WindowsServiceStatus_1.6.0.0.zip",
+                "contentHash": "0D4EFB2626B29E1315B1FDA616F42A21BF99633487DA98DA38C697BF2676B114",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[WindowsServiceStatus]WindowsServiceStatus1;ServiceName",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDomainMembership",
+            "name": "WindowsDomainMembership",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "A2B558D3AC26948FD4920CF9AA25BF626AF938EC5BDB4FBF13CF32BCD513EDC0.57003021CBC439E383CF89FB84644950EC74A7A8E58E0002C0FE4CCD8CB6ED3F",
+              "parameterHash": "W0RvbWFpbk1lbWJlcnNoaXBdV2luZG93c0RvbWFpbk1lbWJlcnNoaXA7RG9tYWluTmFtZT1mb28=",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsDomainMembership/reports/374976c8-39f8-478a-bb28-a95eb980206b",
+              "lastComplianceStatusChecked": "2022-09-06T21:55:07Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsDomainMembership",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsDomainMembership/WindowsDomainMembership_1.0.0.1.zip",
+                "contentHash": "A2B558D3AC26948FD4920CF9AA25BF626AF938EC5BDB4FBF13CF32BCD513EDC0",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[DomainMembership]WindowsDomainMembership;DomainName",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MachineLastBootUpTime",
+            "name": "MachineLastBootUpTime",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "BACD1E947E246E87B4BFA1DB5997C8FE68A771E9BE5E4B37AF30B64933F53062.FF9AF857EC2FB8E82DCB343CD965CE2375D4FA4C0A578A034D32C3343932E0F8",
+              "parameterHash": "W01hY2hpbmVVcFRpbWVdTWFjaGluZUxhc3RCb290VXBUaW1lO051bWJlck9mRGF5cz0xMg==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MachineLastBootUpTime/reports/21c93492-8e61-4a1d-9f8d-ad409ec843b5",
+              "lastComplianceStatusChecked": "2022-09-06T21:55:10Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "MachineLastBootUpTime",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/MachineLastBootUpTime/MachineLastBootUpTime_1.0.0.2.zip",
+                "contentHash": "BACD1E947E246E87B4BFA1DB5997C8FE68A771E9BE5E4B37AF30B64933F53062",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[MachineUpTime]MachineLastBootUpTime;NumberOfDays",
+                    "value": "12"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WhitelistedApplication",
+            "name": "WhitelistedApplication",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "943383BA3D98E328D4F7B50AA6C2C184EBB53BE0F5749B170843D5916EEC0636.46289149C966CE13132789EDA471E59FFF83E6C0049C11DEAD81252F85761901",
+              "parameterHash": "W0luc3RhbGxlZEFwcGxpY2F0aW9uXWJ3aGl0ZWxpc3RlZGFwcDtOYW1lPWZvbw==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WhitelistedApplication/reports/1e22b175-e136-436a-9924-ad14627372fa",
+              "lastComplianceStatusChecked": "2022-09-06T21:55:13Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WhitelistedApplication",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WhitelistedApplication/WhitelistedApplication_1.9.0.0.zip",
+                "contentHash": "943383BA3D98E328D4F7B50AA6C2C184EBB53BE0F5749B170843D5916EEC0636",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[InstalledApplication]bwhitelistedapp;Name",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsRemoteConnection",
+            "name": "WindowsRemoteConnection",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "FF99C173178328E2F6F18CC6F3F08F401DFB8B03B71362BDCFBE42D69241A852.D7334FD945595FCEDD42099E70BE8FB7FBA67D027978A627FA1382F5C81A2623",
+              "parameterHash": "W1dpbmRvd3NSZW1vdGVDb25uZWN0aW9uXVdpbmRvd3NSZW1vdGVDb25uZWN0aW9uMTtob3N0PTEwLjAuMC4xLFtXaW5kb3dzUmVtb3RlQ29ubmVjdGlvbl1XaW5kb3dzUmVtb3RlQ29ubmVjdGlvbjE7cG9ydD04OCxbV2luZG93c1JlbW90ZUNvbm5lY3Rpb25dV2luZG93c1JlbW90ZUNvbm5lY3Rpb24xO3Nob3VsZENvbm5lY3Q9RmFsc2U=",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsRemoteConnection/reports/18d0706b-67f2-44d1-9962-3727d3fc9fe6",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:02Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsRemoteConnection",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsRemoteConnection/WindowsRemoteConnection_1.8.0.0.zip",
+                "contentHash": "FF99C173178328E2F6F18CC6F3F08F401DFB8B03B71362BDCFBE42D69241A852",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[WindowsRemoteConnection]WindowsRemoteConnection1;host",
+                    "value": "10.0.0.1"
+                  },
+                  {
+                    "name": "[WindowsRemoteConnection]WindowsRemoteConnection1;port",
+                    "value": "88"
+                  },
+                  {
+                    "name": "[WindowsRemoteConnection]WindowsRemoteConnection1;shouldConnect",
+                    "value": "False"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/NotInstalledApplication",
+            "name": "NotInstalledApplication",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "888EF085E390A83166C1C04C9506416462594594653F473A271B74E291DB34A9.2392ADE6C7A850B9DF40B19B4D5D125D90FE0A2E8AC6C5ED9211A78DDA07495D",
+              "parameterHash": "W0luc3RhbGxlZEFwcGxpY2F0aW9uXU5vdEluc3RhbGxlZEFwcGxpY2F0aW9uUmVzb3VyY2UxO05hbWU9Zm9v",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/NotInstalledApplication/reports/1315a441-1505-4104-9135-a040548ec737",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:05Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "NotInstalledApplication",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/NotInstalledApplication/NotInstalledApplication_1.4.0.0.zip",
+                "contentHash": "888EF085E390A83166C1C04C9506416462594594653F473A271B74E291DB34A9",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[InstalledApplication]NotInstalledApplicationResource1;Name",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsTimeZone",
+            "name": "WindowsTimeZone",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "C5CE8E99498DFC578F5F29850F1C08CC39124C0439C0E371CF135012ECFC3DBD.CC858FFB9BED9CB6ECD5074697FA37F682C19D67FFB3DEC159F18F49EE5F019C",
+              "parameterHash": "W1dpbmRvd3NUaW1lWm9uZV1XaW5kb3dzVGltZVpvbmUxO1RpbWVab25lPShVVEMtMDg6MDApIFBhY2lmaWMgVGltZSAoVVMgJiBDYW5hZGEp",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsTimeZone/reports/f3bd012e-c095-4a31-81e8-3539d73a551b",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:07Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsTimeZone",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsTimeZone/WindowsTimeZone_1.1.0.0.zip",
+                "contentHash": "C5CE8E99498DFC578F5F29850F1C08CC39124C0439C0E371CF135012ECFC3DBD",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[WindowsTimeZone]WindowsTimeZone1;TimeZone",
+                    "value": "(UTC-08:00) Pacific Time (US \u0026 Canada)"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/SetWindowsTimeZone",
+            "name": "SetWindowsTimeZone",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "6BD58EE082519E7880F64659188C663893E8FC375F052A92EAFB9DFDA0328E02.CC858FFB9BED9CB6ECD5074697FA37F682C19D67FFB3DEC159F18F49EE5F019C",
+              "parameterHash": "W1dpbmRvd3NUaW1lWm9uZV1XaW5kb3dzVGltZVpvbmUxO1RpbWVab25lPShVVEMtMDg6MDApIFBhY2lmaWMgVGltZSAoVVMgJiBDYW5hZGEp",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/SetWindowsTimeZone/reports/5ee4ea7c-fdbd-43bf-8ce9-3346ede23713",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:09Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "SetWindowsTimeZone",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/SetWindowsTimeZone/SetWindowsTimeZone_1.0.0.0.zip",
+                "contentHash": "6BD58EE082519E7880F64659188C663893E8FC375F052A92EAFB9DFDA0328E02",
+                "contentType": null,
+                "assignmentType": "DeployAndAutoCorrect",
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[WindowsTimeZone]WindowsTimeZone1;TimeZone",
+                    "value": "(UTC-08:00) Pacific Time (US \u0026 Canada)"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/EnforcePasswordHistory$pid4l2wmadqrbtnm",
+            "name": "EnforcePasswordHistory$pid4l2wmadqrbtnm",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "85EAF241398562D7642302B6CA7A519F32E1BDF522A91A0D51F7EA9D60A38A3D.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/EnforcePasswordHistory$pid4l2wmadqrbtnm/reports/3b26d4fc-8b84-483b-a2e4-fdec62f0ccd4",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:12Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "EnforcePasswordHistory",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/EnforcePasswordHistory/EnforcePasswordHistory_1.1.0.0.zip",
+                "contentHash": "85EAF241398562D7642302B6CA7A519F32E1BDF522A91A0D51F7EA9D60A38A3D",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsLogAnalyticsAgentInstalled",
+            "name": "WindowsLogAnalyticsAgentInstalled",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "BF0CAAD6586E82D26A4B7D279A416A24AB09CEF314FAF10E1E8842B50F3CECC7.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/WindowsLogAnalyticsAgentInstalled/reports/4aff14eb-5917-4f16-83e9-63cd56ce6272",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:14Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "WindowsLogAnalyticsAgentInstalled",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/WindowsLogAnalyticsAgentInstalled/WindowsLogAnalyticsAgentInstalled_1.11.0.0.zip",
+                "contentHash": "BF0CAAD6586E82D26A4B7D279A416A24AB09CEF314FAF10E1E8842B50F3CECC7",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MinimumPasswordAge",
+            "name": "MinimumPasswordAge",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "884FC235767ABE8FEE1BCA84ADEC88C34C6601582FA6AE4B7548D25AEB61CD3F.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MinimumPasswordAge/reports/9e2ee749-c4e2-4df4-8452-bf3af1f5ef78",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:16Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "MinimumPasswordAge",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/MinimumPasswordAge/MinimumPasswordAge_1.12.0.0.zip",
+                "contentHash": "884FC235767ABE8FEE1BCA84ADEC88C34C6601582FA6AE4B7548D25AEB61CD3F",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MaximumPasswordAge",
+            "name": "MaximumPasswordAge",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "91BB3DB1428495C5D6EBA458D76CB5229BA7DB512A2D668436F9A1959D471DC3.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MaximumPasswordAge/reports/6ab6bff1-f4d4-4058-85ac-51b9afdebb9e",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:19Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "MaximumPasswordAge",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/MaximumPasswordAge/MaximumPasswordAge_1.1.0.0.zip",
+                "contentHash": "91BB3DB1428495C5D6EBA458D76CB5229BA7DB512A2D668436F9A1959D471DC3",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/PasswordMustMeetComplexityRequirements",
+            "name": "PasswordMustMeetComplexityRequirements",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "384CD91B0CE343DA488411FD7410E20730460DB2DE3CFC3C68406D83DB0A8BB8.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/PasswordMustMeetComplexityRequirements/reports/df19d727-ee86-4313-a15c-3bc158162f72",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:22Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "PasswordMustMeetComplexityRequirements",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/PasswordMustMeetComplexityRequirements/PasswordMustMeetComplexityRequirements_1.2.0.0.zip",
+                "contentHash": "384CD91B0CE343DA488411FD7410E20730460DB2DE3CFC3C68406D83DB0A8BB8",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/StorePasswordsUsingReversibleEncryption",
+            "name": "StorePasswordsUsingReversibleEncryption",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "A8F8DDAB043F8104431AAC96274B94673AD94A7E661DC24EDCDA223D049CC79A.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/StorePasswordsUsingReversibleEncryption/reports/3c78319f-fa38-49c2-b4b6-42f445275eb6",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:24Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "StorePasswordsUsingReversibleEncryption",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/StorePasswordsUsingReversibleEncryption/StorePasswordsUsingReversibleEncryption_1.2.0.0.zip",
+                "contentHash": "A8F8DDAB043F8104431AAC96274B94673AD94A7E661DC24EDCDA223D049CC79A",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MinimumPasswordLength",
+            "name": "MinimumPasswordLength",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "8DD4119898B8F8732418E7653FC18C8DD8E1A1EAFAA265A83807701298A6495B.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/MinimumPasswordLength/reports/30d2681d-08a9-4016-834d-67ac85d19a95",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:26Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "MinimumPasswordLength",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/MinimumPasswordLength/MinimumPasswordLength_1.1.0.0.zip",
+                "contentHash": "8DD4119898B8F8732418E7653FC18C8DD8E1A1EAFAA265A83807701298A6495B",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/EnforcePasswordHistory",
+            "name": "EnforcePasswordHistory",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "85EAF241398562D7642302B6CA7A519F32E1BDF522A91A0D51F7EA9D60A38A3D.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/EnforcePasswordHistory/reports/8b957976-1019-4a64-8534-f490647c6366",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:29Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "EnforcePasswordHistory",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/EnforcePasswordHistory/EnforcePasswordHistory_1.1.0.0.zip",
+                "contentHash": "85EAF241398562D7642302B6CA7A519F32E1BDF522A91A0D51F7EA9D60A38A3D",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AdministratorsGroupMembersToInclude",
+            "name": "AdministratorsGroupMembersToInclude",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "7C52765C0A4C634FE42B493787353D35A91705DC10664758B2FDAA0391E0D9D6.9BDE463CDBA9A857B50F294D9D47D90D614ADAEC91EED0436BCB65C4FE683F3D",
+              "parameterHash": "W0xvY2FsR3JvdXBdQWRtaW5pc3RyYXRvcnNHcm91cDtNZW1iZXJzVG9JbmNsdWRlPWZvbw==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/neela-sdk-rg/providers/Microsoft.HybridCompute/machines/LAPTOP-4B77J53J/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AdministratorsGroupMembersToInclude/reports/4479964e-8d6b-46a6-88bb-ab8e83b8cb72",
+              "lastComplianceStatusChecked": "2022-09-06T22:04:35Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "AdministratorsGroupMembersToInclude",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/AdministratorsGroupMembersToInclude/AdministratorsGroupMembersToInclude_1.0.0.0.zip",
+                "contentHash": "7C52765C0A4C634FE42B493787353D35A91705DC10664758B2FDAA0391E0D9D6",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": "[LocalGroup]AdministratorsGroup;MembersToInclude",
+                    "value": "foo"
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "857229923",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "f66367e1-cf7d-407b-ba39-53230cc79071"
+  }
+}

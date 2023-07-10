@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The JobMatchModeType. </summary>
-    public readonly partial struct JobMatchModeType : IEquatable<JobMatchModeType>
+    internal readonly partial struct JobMatchModeType : IEquatable<JobMatchModeType>
     {
         private readonly string _value;
 

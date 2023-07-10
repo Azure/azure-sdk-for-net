@@ -41,8 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableIPConnect"> Enable/Disable IP Connect feature of the Bastion Host resource. </param>
         /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
         /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
-        /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
-        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos) : base(id, name, resourceType, location, tags)
+        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
             Sku = sku;
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.Network
             EnableIPConnect = enableIPConnect;
             EnableShareableLink = enableShareableLink;
             EnableTunneling = enableTunneling;
-            EnableKerberos = enableKerberos;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -92,7 +90,5 @@ namespace Azure.ResourceManager.Network
         public bool? EnableShareableLink { get; set; }
         /// <summary> Enable/Disable Tunneling feature of the Bastion Host resource. </summary>
         public bool? EnableTunneling { get; set; }
-        /// <summary> Enable/Disable Kerberos feature of the Bastion Host resource. </summary>
-        public bool? EnableKerberos { get; set; }
     }
 }

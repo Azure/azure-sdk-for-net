@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Storage mapping input. </summary>
@@ -18,15 +16,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Storage mapping input properties. </summary>
-        internal StorageMappingProperties Properties { get; set; }
+        internal StorageMappingInputProperties Properties { get; set; }
         /// <summary> The ID of the storage object. </summary>
-        public ResourceIdentifier TargetStorageClassificationId
+        public string TargetStorageClassificationId
         {
             get => Properties is null ? default : Properties.TargetStorageClassificationId;
             set
             {
                 if (Properties is null)
-                    Properties = new StorageMappingProperties();
+                    Properties = new StorageMappingInputProperties();
                 Properties.TargetStorageClassificationId = value;
             }
         }

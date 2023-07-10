@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> summaryCode = default;
             Optional<HealthErrorCategory> category = default;
-            Optional<SiteRecoveryErrorSeverity> severity = default;
+            Optional<Severity> severity = default;
             Optional<string> summaryMessage = default;
             Optional<string> affectedResourceType = default;
             Optional<string> affectedResourceSubtype = default;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    severity = new SiteRecoveryErrorSeverity(property.Value.GetString());
+                    severity = new Severity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("summaryMessage"u8))

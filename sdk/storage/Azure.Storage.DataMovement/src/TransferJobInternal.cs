@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
@@ -81,7 +80,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The error handling options
         /// </summary>
-        internal ErrorHandlingBehavior _errorHandling;
+        internal ErrorHandlingOptions _errorHandling;
 
         /// <summary>
         /// Determines how files are created or if they should be overwritten if they already exists
@@ -125,8 +124,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompletedEventHandler { get; internal set; }
 
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary>
         /// Array pools for reading from streams to upload
         /// </summary>
@@ -153,17 +150,14 @@ namespace Azure.Storage.DataMovement
             DataTransfer dataTransfer,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkPointer,
-            ErrorHandlingBehavior errorHandling,
+            ErrorHandlingOptions errorHandling,
             StorageResourceCreateMode createMode,
             ArrayPool<byte> arrayPool,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
             SyncAsyncEventHandler<TransferSkippedEventArgs> skippedEventHandler,
-            SyncAsyncEventHandler<SingleTransferCompletedEventArgs> singleTransferEventHandler,
-            ClientDiagnostics clientDiagnostics)
+            SyncAsyncEventHandler<SingleTransferCompletedEventArgs> singleTransferEventHandler)
         {
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
-
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
             _dataTransfer._state.TrySetTransferStatus(StorageTransferStatus.Queued);
             _errorHandling = errorHandling;
@@ -183,7 +177,6 @@ namespace Azure.Storage.DataMovement
             TransferFailedEventHandler = failedEventHandler;
             TransferSkippedEventHandler = skippedEventHandler;
             SingleTransferCompletedEventHandler = singleTransferEventHandler;
-            ClientDiagnostics = clientDiagnostics;
         }
 
         /// <summary>
@@ -196,9 +189,8 @@ namespace Azure.Storage.DataMovement
             TransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
-            ErrorHandlingBehavior errorHandling,
-            ArrayPool<byte> arrayPool,
-            ClientDiagnostics clientDiagnostics)
+            ErrorHandlingOptions errorHandling,
+            ArrayPool<byte> arrayPool)
             : this(dataTransfer,
                   queueChunkTask,
                   checkpointer,
@@ -208,8 +200,7 @@ namespace Azure.Storage.DataMovement
                   transferOptions.GetTransferStatus(),
                   transferOptions.GetFailed(),
                   transferOptions.GetSkipped(),
-                  default,
-                  clientDiagnostics)
+                  default)
         {
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
@@ -229,9 +220,8 @@ namespace Azure.Storage.DataMovement
             TransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
-            ErrorHandlingBehavior errorHandling,
-            ArrayPool<byte> arrayPool,
-            ClientDiagnostics clientDiagnostics)
+            ErrorHandlingOptions errorHandling,
+            ArrayPool<byte> arrayPool)
             : this(dataTransfer,
                   queueChunkTask,
                   checkpointer,
@@ -241,8 +231,7 @@ namespace Azure.Storage.DataMovement
                   transferOptions.GetTransferStatus(),
                   transferOptions.GetFailed(),
                   transferOptions.GetSkipped(),
-                  transferOptions.GetCompleted(),
-                  clientDiagnostics)
+                  transferOptions.GetCompleted())
         {
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
@@ -304,18 +293,13 @@ namespace Azure.Storage.DataMovement
                 if (TransferFailedEventHandler != null)
                 {
                     // TODO: change to RaiseAsync
-                    await TransferFailedEventHandler.RaiseAsync(
-                        new TransferFailedEventArgs(
-                            _dataTransfer.Id,
-                            _sourceResource,
-                            _destinationResource,
-                            ex,
-                            false,
-                            _cancellationToken),
-                        nameof(TransferJobInternal),
-                        nameof(TransferFailedEventHandler),
-                        ClientDiagnostics)
-                        .ConfigureAwait(false);
+                    await TransferFailedEventHandler.Invoke(new TransferFailedEventArgs(
+                        _dataTransfer.Id,
+                        _sourceResource,
+                        _destinationResource,
+                        ex,
+                        false,
+                        _cancellationToken)).ConfigureAwait(false);
                 }
             }
             // Trigger job cancellation if the failed handler is enabled
@@ -351,7 +335,7 @@ namespace Azure.Storage.DataMovement
             }
 
             // Cancel the entire job if one job part fails and StopOnFailure is set
-            if (_errorHandling == ErrorHandlingBehavior.StopOnAllFailures &&
+            if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures &&
                 jobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers &&
                 jobStatus != StorageTransferStatus.CancellationInProgress &&
                 jobStatus != StorageTransferStatus.CompletedWithFailedTransfers &&
@@ -400,15 +384,12 @@ namespace Azure.Storage.DataMovement
 
                 if (TransferStatusEventHandler != null)
                 {
-                    await TransferStatusEventHandler.RaiseAsync(
+                    await TransferStatusEventHandler.Invoke(
                         new TransferStatusEventArgs(
                             transferId: _dataTransfer.Id,
                             transferStatus: status,
                             isRunningSynchronously: false,
-                            cancellationToken: _cancellationToken),
-                        nameof(TransferJobInternal),
-                        nameof(TransferStatusEventHandler),
-                        ClientDiagnostics).ConfigureAwait(false);
+                            cancellationToken: _cancellationToken)).ConfigureAwait(false);
                 }
                 await SetCheckpointerStatus(status).ConfigureAwait(false);
             }
@@ -417,16 +398,12 @@ namespace Azure.Storage.DataMovement
         public async Task OnJobPartStatusChangedAsync(StorageTransferStatus status)
         {
             //TODO: change to RaiseAsync after implementing ClientDiagnostics for TransferManager
-            await JobPartStatusEvents.RaiseAsync(
+            await JobPartStatusEvents.Invoke(
                 new TransferStatusEventArgs(
                     transferId: _dataTransfer.Id,
                     transferStatus: status,
                     isRunningSynchronously: false,
-                    cancellationToken: _cancellationToken),
-                nameof(TransferJobInternal),
-                nameof(JobPartStatusEvents),
-                ClientDiagnostics)
-                .ConfigureAwait(false);
+                    cancellationToken: _cancellationToken)).ConfigureAwait(false);
         }
 
         internal async virtual Task SetCheckpointerStatus(StorageTransferStatus status)

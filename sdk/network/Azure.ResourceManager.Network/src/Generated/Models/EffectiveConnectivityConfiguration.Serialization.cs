@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -29,7 +28,6 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<ConnectivityGroupItem>> appliesToGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<DeleteExistingPeering> deleteExistingPeering = default;
-            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,20 +127,11 @@ namespace Azure.ResourceManager.Network.Models
                             deleteExistingPeering = new DeleteExistingPeering(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("resourceGuid"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceGuid = property0.Value.GetGuid();
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new EffectiveConnectivityConfiguration(id.Value, Optional.ToList(configurationGroups), description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid));
+            return new EffectiveConnectivityConfiguration(id.Value, Optional.ToList(configurationGroups), description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering));
         }
     }
 }

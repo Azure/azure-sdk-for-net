@@ -9,10 +9,9 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
-using Azure.Maps;
 using Azure.Maps.Search.Models;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search
 {
@@ -94,35 +93,6 @@ namespace Azure.Maps.Search
             RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
-        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
-        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
-        public MapsSearchClient(AzureSasCredential credential)
-        {
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            var endpoint = new Uri("https://atlas.microsoft.com");
-            var options = new MapsSearchClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
-            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
-        }
-
-        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
-        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
-        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public MapsSearchClient(AzureSasCredential credential, MapsSearchClientOptions options)
-        {
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            var endpoint = options.Endpoint;
-            options ??= new MapsSearchClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
-            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
-        }
-
         /// <summary>
         /// The Get Polygon service allows you to request the geometry data such as a city or country  outline for a set of entities, previously retrieved from an Online Search request in GeoJSON format. The geometry ID is returned in the sourceGeometry object under &quot;geometry&quot; and &quot;id&quot; in either a Search Address or Search Fuzzy call.
         /// </summary>
@@ -134,7 +104,7 @@ namespace Azure.Maps.Search
             scope.Start();
             try
             {
-                return await RestClient.ListPolygonsAsync(JsonFormat.Json, geometryIds, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ListPolygonsAsync(geometryIds, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -154,7 +124,7 @@ namespace Azure.Maps.Search
             scope.Start();
             try
             {
-                return RestClient.ListPolygons(JsonFormat.Json, geometryIds, cancellationToken);
+                return RestClient.ListPolygons(geometryIds, JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -180,7 +150,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return await RestClient.FuzzySearchAsync(ResponseFormat.Json, query, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, localizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.FuzzySearchAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, localizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -206,7 +176,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return RestClient.FuzzySearch(ResponseFormat.Json, query, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, localizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.FuzzySearch(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, localizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -235,7 +205,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return await RestClient.SearchPointOfInterestAsync(ResponseFormat.Json, query, IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, BoundingBox != null ? BoundingBox.North + "," + BoundingBox.West : null, BoundingBox != null ? BoundingBox.South + "," + BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchPointOfInterestAsync(query, ResponseFormat.Json, IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, BoundingBox != null ? BoundingBox.North + "," + BoundingBox.West : null, BoundingBox != null ? BoundingBox.South + "," + BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -264,7 +234,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return RestClient.SearchPointOfInterest(ResponseFormat.Json, query, IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, BoundingBox != null ? BoundingBox.North + "," + BoundingBox.West : null, BoundingBox != null ? BoundingBox.South + "," + BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, OperatingHours, cancellationToken);
+                return RestClient.SearchPointOfInterest(query, ResponseFormat.Json, IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, BoundingBox != null ? BoundingBox.North + "," + BoundingBox.West : null, BoundingBox != null ? BoundingBox.South + "," + BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -290,10 +260,9 @@ namespace Azure.Maps.Search
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
                 return await RestClient.SearchNearbyPointOfInterestAsync(
-                    ResponseFormat.Json,
                     Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat),
-                    options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.RadiusInMeters, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, cancellationToken
+                    ResponseFormat.Json, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.RadiusInMeters, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, cancellationToken
                 ).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -320,10 +289,9 @@ namespace Azure.Maps.Search
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
                 return RestClient.SearchNearbyPointOfInterest(
-                    ResponseFormat.Json,
                     Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat),
-                    options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.RadiusInMeters, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, cancellationToken
+                    ResponseFormat.Json, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.RadiusInMeters, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, cancellationToken
                 );
             }
             catch (Exception e)
@@ -349,7 +317,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return await RestClient.SearchPointOfInterestCategoryAsync(ResponseFormat.Json, options?.query, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchPointOfInterestCategoryAsync(options?.query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -374,7 +342,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return RestClient.SearchPointOfInterestCategory(ResponseFormat.Json, options?.query, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.SearchPointOfInterestCategory(options?.query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -446,7 +414,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return await RestClient.SearchAddressAsync(ResponseFormat.Json, query, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.EntityType, localizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAddressAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.EntityType, localizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -472,7 +440,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return RestClient.SearchAddress(ResponseFormat.Json, query, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.EntityType, localizedMapView, cancellationToken);
+                return RestClient.SearchAddress(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language.ToString(), options?.ExtendedPostalCodesFor, options?.EntityType, localizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -498,12 +466,11 @@ namespace Azure.Maps.Search
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
                 return await RestClient.ReverseSearchAddressAsync(
-                    ResponseFormat.Json,
                     new double[] {
                         Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                         Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                     },
-                    options?.Language.ToString(), options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.StreetNumber?.ToString(CultureInfo.InvariantCulture), options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, localizedMapView, cancellationToken).ConfigureAwait(false);
+                    ResponseFormat.Json, options?.Language.ToString(), options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.StreetNumber?.ToString(CultureInfo.InvariantCulture), options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, localizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -529,12 +496,11 @@ namespace Azure.Maps.Search
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
                 return RestClient.ReverseSearchAddress(
-                    ResponseFormat.Json,
                     new double[] {
                         Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                         Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                     },
-                    options?.Language.ToString(), options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.StreetNumber?.ToString(CultureInfo.InvariantCulture), options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, localizedMapView, cancellationToken
+                    ResponseFormat.Json, options?.Language.ToString(), options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.StreetNumber?.ToString(CultureInfo.InvariantCulture), options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, localizedMapView, cancellationToken
                 );
             }
             catch (Exception e)
@@ -562,12 +528,11 @@ namespace Azure.Maps.Search
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
                 return await RestClient.ReverseSearchCrossStreetAddressAsync(
-                    ResponseFormat.Json,
                     new double[] {
                         Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                         Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                     },
-                    options?.Top, options?.Heading, options?.RadiusInMeters, options?.Language.ToString(), localizedMapView, cancellationToken
+                    ResponseFormat.Json, options?.Top, options?.Heading, options?.RadiusInMeters, options?.Language.ToString(), localizedMapView, cancellationToken
                 ).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -595,12 +560,11 @@ namespace Azure.Maps.Search
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
                 return RestClient.ReverseSearchCrossStreetAddress(
-                    ResponseFormat.Json,
                     new double[] {
                         Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                         Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                     },
-                    options?.Top, options?.Heading, options?.RadiusInMeters, options?.Language.ToString(), localizedMapView, cancellationToken
+                    ResponseFormat.Json, options?.Top, options?.Heading, options?.RadiusInMeters, options?.Language.ToString(), localizedMapView, cancellationToken
                 );
             }
             catch (Exception e)
@@ -627,7 +591,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return await RestClient.SearchStructuredAddressAsync(ResponseFormat.Json, address.CountryCode, options?.Language.ToString(), options?.Top, options?.Skip, address.StreetNumber, address.StreetName, address.CrossStreet, address.Municipality, address.MunicipalitySubdivision, address.CountryTertiarySubdivision, address.CountrySecondarySubdivision, address.CountrySubdivision, address.PostalCode, options?.ExtendedPostalCodesFor, options?.EntityType, localizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchStructuredAddressAsync(address.CountryCode, ResponseFormat.Json, options?.Language.ToString(), options?.Top, options?.Skip, address.StreetNumber, address.StreetName, address.CrossStreet, address.Municipality, address.MunicipalitySubdivision, address.CountryTertiarySubdivision, address.CountrySecondarySubdivision, address.CountrySubdivision, address.PostalCode, options?.ExtendedPostalCodesFor, options?.EntityType, localizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -653,7 +617,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return RestClient.SearchStructuredAddress(ResponseFormat.Json, address.CountryCode, options?.Language.ToString(), options?.Top, options?.Skip, address.StreetNumber, address.StreetName, address.CrossStreet, address.Municipality, address.MunicipalitySubdivision, address.CountryTertiarySubdivision, address.CountrySecondarySubdivision, address.CountrySubdivision, address.PostalCode, options?.ExtendedPostalCodesFor, options?.EntityType, localizedMapView, cancellationToken);
+                return RestClient.SearchStructuredAddress(address.CountryCode, ResponseFormat.Json, options?.Language.ToString(), options?.Top, options?.Skip, address.StreetNumber, address.StreetName, address.CrossStreet, address.Municipality, address.MunicipalitySubdivision, address.CountryTertiarySubdivision, address.CountrySecondarySubdivision, address.CountrySubdivision, address.PostalCode, options?.ExtendedPostalCodesFor, options?.EntityType, localizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -680,7 +644,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return await RestClient.SearchInsideGeometryAsync(ResponseFormat.Json, query, new SearchInsideGeometryRequest(geometry), options?.Top, options?.Language.ToString(), options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, localizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest(geometry), ResponseFormat.Json, options?.Top, options?.Language.ToString(), options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, localizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -707,7 +671,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return await RestClient.SearchInsideGeometryAsync(ResponseFormat.Json, query, new SearchInsideGeometryRequest(geometryCollection), options?.Top, options?.Language.ToString(), options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, localizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest(geometryCollection), ResponseFormat.Json, options?.Top, options?.Language.ToString(), options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, localizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -734,7 +698,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return RestClient.SearchInsideGeometry(ResponseFormat.Json, query, new SearchInsideGeometryRequest(geometry), options?.Top, options?.Language.ToString(), options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, localizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest(geometry), ResponseFormat.Json, options?.Top, options?.Language.ToString(), options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, localizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -761,7 +725,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return RestClient.SearchInsideGeometry(ResponseFormat.Json, query, new SearchInsideGeometryRequest(geometryCollection), options?.Top, options?.Language.ToString(), options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, localizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest(geometryCollection), ResponseFormat.Json, options?.Top, options?.Language.ToString(), options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, localizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -789,7 +753,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return await RestClient.SearchAlongRouteAsync(ResponseFormat.Json, query, maxDetourTime, new SearchAlongRouteRequest(route), options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAlongRouteAsync(query, maxDetourTime, new SearchAlongRouteRequest(route), ResponseFormat.Json, options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -817,7 +781,7 @@ namespace Azure.Maps.Search
                 {
                     localizedMapView = new LocalizedMapView(options?.LocalizedMapView.ToString());
                 }
-                return RestClient.SearchAlongRoute(ResponseFormat.Json, query, maxDetourTime, new SearchAlongRouteRequest(route), options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.SearchAlongRoute(query, maxDetourTime, new SearchAlongRouteRequest(route), ResponseFormat.Json, options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, localizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -838,7 +802,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchRequests = MapsSearchClient.fuzzySearchQueriesToBatchRequestInternal(queries);
-                return await RestClient.FuzzySearchBatchSyncAsync(JsonFormat.Json, batchRequests, cancellationToken).ConfigureAwait(false);
+                return await RestClient.FuzzySearchBatchSyncAsync(batchRequests, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -859,7 +823,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchRequests = MapsSearchClient.fuzzySearchQueriesToBatchRequestInternal(queries);
-                return RestClient.FuzzySearchBatchSync(JsonFormat.Json, batchRequests, cancellationToken);
+                return RestClient.FuzzySearchBatchSync(batchRequests, JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -881,7 +845,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchRequests = MapsSearchClient.searchAddressQueriesToBatchRequestInternal(queries);
-                return await RestClient.SearchAddressBatchSyncAsync(JsonFormat.Json, batchRequests, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAddressBatchSyncAsync(batchRequests, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -903,7 +867,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchRequests = MapsSearchClient.searchAddressQueriesToBatchRequestInternal(queries);
-                return RestClient.SearchAddressBatchSync(JsonFormat.Json, batchRequests, cancellationToken);
+                return RestClient.SearchAddressBatchSync(batchRequests, JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -925,7 +889,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchRequests = MapsSearchClient.reverseSearchAddressQueriesToBatchRequestInternal(queries);
-                return await RestClient.ReverseSearchAddressBatchSyncAsync(JsonFormat.Json, batchRequests, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ReverseSearchAddressBatchSyncAsync(batchRequests, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -947,7 +911,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchRequests = MapsSearchClient.reverseSearchAddressQueriesToBatchRequestInternal(queries);
-                return RestClient.ReverseSearchAddressBatchSync(JsonFormat.Json, batchRequests, cancellationToken);
+                return RestClient.ReverseSearchAddressBatchSync(batchRequests, JsonFormat.Json, cancellationToken);
             }
             catch (Exception e)
             {
@@ -975,7 +939,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchRequests = MapsSearchClient.fuzzySearchQueriesToBatchRequestInternal(queries);
-                var originalResponse = await RestClient.FuzzySearchBatchAsync(JsonFormat.Json, batchRequests, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await RestClient.FuzzySearchBatchAsync(batchRequests, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
                 var operation = new FuzzySearchBatchOperation(this, new Uri(originalResponse.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -1011,7 +975,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchRequest = fuzzySearchQueriesToBatchRequestInternal(queries);
-                var originalResponse = RestClient.FuzzySearchBatch(JsonFormat.Json, batchRequest, cancellationToken);
+                var originalResponse = RestClient.FuzzySearchBatch(batchRequest, JsonFormat.Json, cancellationToken);
                 var operation = new FuzzySearchBatchOperation(this, new Uri(originalResponse.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -1045,7 +1009,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchRequest = MapsSearchClient.searchAddressQueriesToBatchRequestInternal(queries);
-                var originalResponse = await RestClient.SearchAddressBatchAsync(JsonFormat.Json, batchRequest, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await RestClient.SearchAddressBatchAsync(batchRequest, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
                 var operation = new SearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -1081,7 +1045,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchRequest = searchAddressQueriesToBatchRequestInternal(queries);
-                var originalResponse = RestClient.SearchAddressBatch(JsonFormat.Json, batchRequest, cancellationToken);
+                var originalResponse = RestClient.SearchAddressBatch(batchRequest, JsonFormat.Json, cancellationToken);
                 var operation = new SearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -1115,7 +1079,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchQuery = MapsSearchClient.reverseSearchAddressQueriesToBatchRequestInternal(queries);
-                var originalResponse = await RestClient.ReverseSearchAddressBatchAsync(JsonFormat.Json, batchQuery, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await RestClient.ReverseSearchAddressBatchAsync(batchQuery, JsonFormat.Json, cancellationToken).ConfigureAwait(false);
                 var operation = new ReverseSearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -1151,7 +1115,7 @@ namespace Azure.Maps.Search
             try
             {
                 var batchRequest = MapsSearchClient.reverseSearchAddressQueriesToBatchRequestInternal(queries);
-                var originalResponse = RestClient.ReverseSearchAddressBatch(JsonFormat.Json, batchRequest, cancellationToken);
+                var originalResponse = RestClient.ReverseSearchAddressBatch(batchRequest, JsonFormat.Json, cancellationToken);
                 var operation = new ReverseSearchAddressBatchOperation(this, new Uri(originalResponse.Headers.Location));
                 if (waitUntil == WaitUntil.Completed)
                 {

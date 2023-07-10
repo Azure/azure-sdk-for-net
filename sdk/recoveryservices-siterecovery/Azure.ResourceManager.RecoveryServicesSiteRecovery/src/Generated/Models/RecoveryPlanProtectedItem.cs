@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery plan protected item. </summary>
@@ -20,14 +18,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of RecoveryPlanProtectedItem. </summary>
         /// <param name="id"> The ARM Id of the recovery plan protected item. </param>
         /// <param name="virtualMachineId"> The virtual machine Id. </param>
-        internal RecoveryPlanProtectedItem(ResourceIdentifier id, string virtualMachineId)
+        internal RecoveryPlanProtectedItem(string id, string virtualMachineId)
         {
             Id = id;
             VirtualMachineId = virtualMachineId;
         }
 
         /// <summary> The ARM Id of the recovery plan protected item. </summary>
-        public ResourceIdentifier Id { get; set; }
+        public string Id { get; set; }
         /// <summary> The virtual machine Id. </summary>
         public string VirtualMachineId { get; set; }
     }

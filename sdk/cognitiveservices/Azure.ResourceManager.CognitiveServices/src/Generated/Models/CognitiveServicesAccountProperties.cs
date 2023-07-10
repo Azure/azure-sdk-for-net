@@ -53,8 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="scheduledPurgeDate"> The scheduled purge date, only available for deleted account. </param>
         /// <param name="locations"> The multiregion settings of Cognitive Services account. </param>
         /// <param name="commitmentPlanAssociations"> The commitment plan associations of Cognitive Services account. </param>
-        /// <param name="abusePenalty"> The abuse penalty. </param>
-        internal CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IReadOnlyList<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IList<ServiceAccountUserOwnedStorage> userOwnedStorage, IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty)
+        internal CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IReadOnlyList<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IList<ServiceAccountUserOwnedStorage> userOwnedStorage, IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations)
         {
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
@@ -82,7 +81,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ScheduledPurgeDate = scheduledPurgeDate;
             Locations = locations;
             CommitmentPlanAssociations = commitmentPlanAssociations;
-            AbusePenalty = abusePenalty;
         }
 
         /// <summary> Gets the status of the cognitive services account at the time the operation was called. </summary>
@@ -137,7 +135,5 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesMultiRegionSettings Locations { get; set; }
         /// <summary> The commitment plan associations of Cognitive Services account. </summary>
         public IReadOnlyList<CommitmentPlanAssociation> CommitmentPlanAssociations { get; }
-        /// <summary> The abuse penalty. </summary>
-        public AbusePenalty AbusePenalty { get; }
     }
 }

@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The properties of the PS Failover request. </summary>
-        public FailoverProcessServerProperties Properties { get; set; }
+        public FailoverProcessServerRequestProperties Properties { get; set; }
     }
 }

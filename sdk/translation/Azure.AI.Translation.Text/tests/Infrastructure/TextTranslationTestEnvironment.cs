@@ -38,7 +38,7 @@ namespace Azure.AI.Translation.Text.Tests
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
             string endpoint = GetOptionalVariable(EndpointEnvironmentVariableName);
-            TextTranslationClient client = new TextTranslationClient(Credential, new Uri(endpoint));
+            var client = new TextTranslationClient(Credential, new Uri(endpoint));
             try
             {
                 await client.GetLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);

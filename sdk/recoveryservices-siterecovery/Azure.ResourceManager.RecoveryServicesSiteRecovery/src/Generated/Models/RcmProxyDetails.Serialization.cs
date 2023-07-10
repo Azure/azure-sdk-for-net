@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> biosId = default;
-            Optional<ResourceIdentifier> fabricObjectId = default;
+            Optional<string> fabricObjectId = default;
             Optional<string> fqdn = default;
             Optional<string> clientAuthenticationType = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<SiteRecoveryProtectionHealth> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Optional<ProtectionHealth> health = default;
+            Optional<IReadOnlyList<HealthError>> healthErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,11 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("fabricObjectId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fabricObjectId = new ResourceIdentifier(property.Value.GetString());
+                    fabricObjectId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fqdn"u8))
@@ -86,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    health = new SiteRecoveryProtectionHealth(property.Value.GetString());
+                    health = new ProtectionHealth(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("healthErrors"u8))
@@ -95,10 +91,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
+                    List<HealthError> array = new List<HealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(HealthError.DeserializeHealthError(item));
                     }
                     healthErrors = array;
                     continue;

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
             AddressFamily addressFamily = default;
-            IList<AccessControlListConditionProperties> conditions = default;
+            IList<AccessControlListPropertiesConditionsItem> conditions = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("conditions"u8))
                         {
-                            List<AccessControlListConditionProperties> array = new List<AccessControlListConditionProperties>();
+                            List<AccessControlListPropertiesConditionsItem> array = new List<AccessControlListPropertiesConditionsItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AccessControlListConditionProperties.DeserializeAccessControlListConditionProperties(item));
+                                array.Add(AccessControlListPropertiesConditionsItem.DeserializeAccessControlListPropertiesConditionsItem(item));
                             }
                             conditions = array;
                             continue;

@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.TrafficManager
     /// </summary>
     public partial class TrafficManagerUserMetricsResource : ArmResource
     {
+
         private readonly ClientDiagnostics _trafficManagerUserMetricsTrafficManagerUserMetricsKeysClientDiagnostics;
         private readonly TrafficManagerUserMetricsKeysRestOperations _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient;
         private readonly TrafficManagerUserMetricData _data;

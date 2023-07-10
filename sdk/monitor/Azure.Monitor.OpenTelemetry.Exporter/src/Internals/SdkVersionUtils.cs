@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.ErrorInitializingPartOfSdkVersion(type.Name, ex);
+                AzureMonitorExporterEventSource.Log.WriteError("ErrorInitializingPartOfSdkVersion", ex);
                 return null;
             }
         }
@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.SdkVersionCreateFailed(ex);
+                AzureMonitorExporterEventSource.Log.WriteWarning("SdkVersionCreateFailed", ex);
                 return null;
             }
         }
