@@ -11,7 +11,7 @@ using System.Linq;
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class QuestionAnsweringModelFactory
+    public static partial class AILanguageQuestionAnsweringModelFactory
     {
         /// <summary> Initializes a new instance of AnswersResult. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
