@@ -147,17 +147,4 @@ internal static class AzMonNewListExtensions
     {
         return port == 0 || port == 80 || port == 443;
     }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static bool TryGetNonDefaultPort(string? stringport, out string? port)
-    {
-        port = stringport;
-
-        if (string.IsNullOrEmpty(stringport) || stringport == "80" || stringport == "443")
-        {
-            return false;
-        }
-
-        return true;
-    }
 }
