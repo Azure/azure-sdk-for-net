@@ -12,8 +12,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class ModelXmlTests
     {
-        [TestCase("D")]
-        [TestCase("W")]
+        [TestCase(ModelSerializerOptions.Format.Data)]
+        [TestCase(ModelSerializerOptions.Format.Wire)]
         public void CanRoundTripFutureVersionWithoutLoss(string format)
         {
             ModelSerializerOptions options = new ModelSerializerOptions(format);
@@ -28,7 +28,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 "</Tag>";
 
             var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
-            if (format == "D")
+            if (format == ModelSerializerOptions.Format.Data.ToString())
                 expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
             expectedSerializedString += "</Tag>";
 
@@ -50,7 +50,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             Assert.AreEqual(correctModelXml.Key, model2.Key);
             Assert.AreEqual(correctModelXml.Value, model2.Value);
-            if (format == "D")
+            if (format == ModelSerializerOptions.Format.Data.ToString())
                 Assert.AreEqual(correctModelXml.ReadOnlyProperty, model2.ReadOnlyProperty);
         }
     }

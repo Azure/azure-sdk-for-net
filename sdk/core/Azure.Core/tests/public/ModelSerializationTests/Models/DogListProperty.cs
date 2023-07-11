@@ -37,7 +37,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public static explicit operator DogListProperty(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            var serializationOptions = new ModelSerializerOptions("D");
+            var serializationOptions = new ModelSerializerOptions(ModelSerializerOptions.Format.Data.ToString());
             return DeserializeDogListProperty(jsonDocument.RootElement, serializationOptions);
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             MemoryStream stream = new MemoryStream();
             Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
-            if (options.Format == "D")
+            if (options.FormatType == ModelSerializerOptions.Format.Data.ToString())
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -89,7 +89,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 writer.WriteEndArray();
             }
 
-            if (options.Format == "D")
+            if (options.FormatType == ModelSerializerOptions.Format.Data.ToString())
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -147,7 +147,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     }
                     continue;
                 }
-                if (options.Format == "D")
+                if (options.FormatType == ModelSerializerOptions.Format.Data.ToString())
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -183,7 +183,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                string format = modelConverter is not null ? modelConverter.Format : "W";
+                string format = modelConverter is not null ? modelConverter.Format : "Wire";
                 return new ModelSerializerOptions(format);
             }
         }

@@ -15,8 +15,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class NewtonSoftTests
     {
-        [TestCase("D")]
-        [TestCase("W")]
+        [TestCase(ModelSerializerOptions.Format.Data)]
+        [TestCase(ModelSerializerOptions.Format.Wire)]
         public void CanRoundTripFutureVersionWithoutLoss(string format)
         {
             Stream stream = new MemoryStream();
@@ -26,7 +26,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             StringBuilder expectedSerialized = new StringBuilder("{");
             expectedSerialized.Append("\"IsHungry\":false,");
             expectedSerialized.Append("\"Weight\":2.5,");
-            if (format == "D")
+            if (format == ModelSerializerOptions.Format.Data.ToString())
             {
                 expectedSerialized.Append("\"LatinName\":\"Animalia\",");
             }
@@ -36,7 +36,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             ModelSerializerOptions options = new ModelSerializerOptions(format);
 
-            if (format == "W")
+            if (format == ModelSerializerOptions.Format.Wire.ToString())
             {
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             var model = ModelSerializer.Deserialize<Animal>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
-            if (format == "D")
+            if (format == ModelSerializerOptions.Format.Data.ToString())
             {
                 Assert.That(model.LatinName, Is.EqualTo("Animalia"));
             }

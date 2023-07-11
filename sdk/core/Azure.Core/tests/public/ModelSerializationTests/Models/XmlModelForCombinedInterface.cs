@@ -72,7 +72,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteStartElement("Value");
             writer.WriteValue(Value);
             writer.WriteEndElement();
-            if (options.Format == "D")
+            if (options.FormatType == ModelSerializerOptions.Format.Data.ToString())
             {
                 writer.WriteStartElement("ReadOnlyProperty");
                 writer.WriteValue(ReadOnlyProperty);
