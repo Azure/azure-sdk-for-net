@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources
 {
-    public partial class ResourceProviderData : IUtf8JsonSerializable, IModelSerializable
+    public partial class ResourceProviderData : IUtf8JsonSerializable, IJsonModelSerializable
     {
         public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelSerializerOptions options = default)
         {
@@ -91,24 +91,12 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
-        {
-            using var multiBufferRequestContent = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(multiBufferRequestContent);
-            Serialize(writer, options);
-            writer.Flush();
-            multiBufferRequestContent.TryComputeLength(out var length);
-            using var stream = new MemoryStream((int)length);
-            multiBufferRequestContent.WriteTo(stream, default);
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-        }
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
         // only used for public access to internal serialize
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))

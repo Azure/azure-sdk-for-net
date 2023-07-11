@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Envelope<T> : IModelSerializable, IUtf8JsonSerializable
+    public class Envelope<T> : IJsonModelSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -39,20 +39,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public T ModelT { get; set; }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
             {
@@ -61,12 +51,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             }
 
             writer.WritePropertyName("modelA"u8);
-            BinaryData data = ((IModelSerializable)ModelA).Serialize(options);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
+            ((IJsonModelSerializable)ModelA).Serialize(writer, options);
             writer.WritePropertyName("modelC"u8);
             SerializeT(writer, options);
 
@@ -84,9 +69,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
             }
             writer.WriteEndObject();
-            writer.Flush();
-            stream.Position = 0;
-            return new BinaryData(stream.ToArray());
         }
 
         internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions options)

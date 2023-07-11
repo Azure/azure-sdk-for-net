@@ -17,11 +17,11 @@ using Azure.Core.Tests.Public.ResourceManager.Resources.Models;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Compute
 {
-    public partial class AvailabilitySetData : IUtf8JsonSerializable, IModelSerializable
+    public partial class AvailabilitySetData : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
@@ -231,18 +231,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
                 }
             }
             return new AvailabilitySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachines), proximityPlacementGroup, Optional.ToList(statuses));
-        }
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
-        {
-            using var multiBufferRequestContent = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(multiBufferRequestContent);
-            Serialize(writer, options);
-            writer.Flush();
-            multiBufferRequestContent.TryComputeLength(out var length);
-            using var stream = new MemoryStream((int)length);
-            multiBufferRequestContent.WriteTo(stream, default);
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)

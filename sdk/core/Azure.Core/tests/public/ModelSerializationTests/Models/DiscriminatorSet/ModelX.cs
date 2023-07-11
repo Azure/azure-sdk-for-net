@@ -12,7 +12,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    public class ModelX : BaseModel, IUtf8JsonSerializable, IModelSerializable
+    public class ModelX : BaseModel, IUtf8JsonSerializable, IJsonModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -31,13 +31,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public int XProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            var options = new ModelSerializerOptions();
-            options.IgnoreAdditionalProperties = true;
-            options.IgnoreReadOnlyProperties = true;
-            Serialize(writer, options);
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
         public static implicit operator RequestContent(ModelX modelX)
         {
@@ -46,7 +40,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return content;
         }
 
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -75,15 +69,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 }
             }
             writer.WriteEndObject();
-        }
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
-        {
-            MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            Serialize(writer, options);
-            writer.Flush();
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
         internal static ModelX DeserializeModelX(JsonElement element, ModelSerializerOptions options = default)

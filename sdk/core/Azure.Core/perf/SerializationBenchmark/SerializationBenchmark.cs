@@ -1,132 +1,165 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using BenchmarkDotNet.Attributes;
-using System.Text.Json;
-using System.IO;
-using Azure.Core.Serialization;
 using System;
-using Azure.Core.Tests.Public.ResourceManager.Compute;
+using System.IO;
 using System.Reflection;
-using BenchmarkDotNet.Configs;
-using Azure.Core.TestFramework;
 using System.Text;
-using Microsoft.Extensions.Options;
+using System.Text.Json;
+using Azure.Core.Serialization;
+using Azure.Core.TestFramework;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Configs;
 
 namespace Azure.Core.Perf
 {
     [MemoryDiagnoser]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public class SerializationBenchmark
+    public abstract class SerializationBenchmark<T> where T : class, IJsonModelSerializable
     {
-        private string _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "SerializationBenchmark", "TestData", "AvailabilitySetData.json"));
-        private AvailabilitySetData _model;
-        private Response _response;
+        private string _json;
+        protected T _model;
+        protected Response _response;
         private ModelSerializerOptions _options;
         private BinaryData _data;
 
+        protected abstract void Deserialize(JsonElement jsonElement);
+
+        protected abstract void Serialize(Utf8JsonWriter writer);
+
+        protected abstract void CastToRequestContent();
+
+        protected abstract void CastFromResponse();
+
+        protected abstract string JsonFileName { get; }
+
         public SerializationBenchmark()
         {
+            _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "SerializationBenchmark", "TestData", JsonFileName));
             _data = BinaryData.FromString(_json);
-            _model = ModelSerializer.Deserialize<AvailabilitySetData>(_data);
+            _model = ModelSerializer.Deserialize<T>(_data);
             MockResponse response = new MockResponse(200);
             response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
             _response = response;
-            _options = new ModelSerializerOptions();
-            _options.IgnoreReadOnlyProperties = true;
-            _options.IgnoreAdditionalProperties = true;
+            _options = ModelSerializerOptions.AzureSerivceDefault;
         }
 
         [Benchmark]
         [BenchmarkCategory("Internal")]
-        public void Serialize_UseInternal()
+        public void Serialize_InternalWithWriter()
         {
             using var stream = new MemoryStream();
-            var writer = new Utf8JsonWriter(stream);
-            _model.Serialize(writer);
+            using var writer = new Utf8JsonWriter(stream);
+            Serialize(writer);
+            writer.Flush();
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Internal")]
+        public void Serialize_InternalWithBuffer()
+        {
+            using var content = new MultiBufferRequestContent();
+            using var writer = new Utf8JsonWriter(content);
+            Serialize(writer);
             writer.Flush();
         }
 
         [Benchmark]
         [BenchmarkCategory("Cast")]
-        public RequestContent Serialize_UseImplicitCast()
+        public void Serialize_ImplicitCast()
         {
-            RequestContent content = _model;
-            return content;
+            CastToRequestContent();
         }
 
         [Benchmark]
         [BenchmarkCategory("ModelJsonConverter")]
-        public string Serialize_UseModelJsonConverter()
+        public void Serialize_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.IgnoreReadOnlyProperties = true;
             options.Converters.Add(new ModelJsonConverter(true));
-            return JsonSerializer.Serialize(_model, options);
+            JsonSerializer.Serialize(_model, options);
         }
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
-        public BinaryData Serialize_UseModelSerializer()
+        public void Serialize_ModelSerializer()
         {
-            return ModelSerializer.Serialize(_model, _options);
+            ModelSerializer.Serialize(_model, _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public BinaryData Serialize_UsePublicInterface()
+        public void Serialize_PublicInterfaceWithWriter()
         {
-            return ((IModelSerializable)_model).Serialize(_options);
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream);
+            _model.Serialize(writer, _options);
+            writer.Flush();
         }
 
         [Benchmark]
-        [BenchmarkCategory("Buffer")]
-        public void Serialize_UseBuffer()//bool callWriteTo)
+        [BenchmarkCategory("PublicInterface")]
+        public void Serialize_PublicInterfaceWithBuffer()
         {
-            using var multiBufferRequestContent = new MultiBufferRequestContent();
-            var writer = new Utf8JsonWriter(multiBufferRequestContent);
-            _model.Serialize(writer);
+            using var content = new MultiBufferRequestContent();
+            using var writer = new Utf8JsonWriter(content);
+            _model.Serialize(writer, _options);
             writer.Flush();
         }
 
         [Benchmark]
         [BenchmarkCategory("Internal")]
-        public void Deserialize_UseInternal()
+        public void Deserialize_Internal()
         {
             using JsonDocument doc = JsonDocument.Parse(_json);
-            AvailabilitySetData.DeserializeAvailabilitySetData(doc.RootElement);
+            Deserialize(doc.RootElement);
         }
 
         [Benchmark]
         [BenchmarkCategory("Cast")]
-        public void Deserialize_UseExplicitCast()
+        public void Deserialize_ExplicitCast()
         {
-            var aset = (AvailabilitySetData)_response;
+            CastFromResponse();
             _response.ContentStream.Position = 0; //reset for reuse
         }
 
         [Benchmark]
         [BenchmarkCategory("ModelJsonConverter")]
-        public void Deserialize_UseModelJsonConverter()
+        public void Deserialize_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.IgnoreReadOnlyProperties = true;
             options.Converters.Add(new ModelJsonConverter(true));
-            JsonSerializer.Deserialize<AvailabilitySetData>(_json, options);
+            JsonSerializer.Deserialize<T>(_json, options);
         }
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
-        public void Deserialize_UseModelSerializer()
+        public void Deserialize_ModelSerializer()
         {
-            ModelSerializer.Deserialize<AvailabilitySetData>(BinaryData.FromString(_json), _options);
+            ModelSerializer.Deserialize<T>(BinaryData.FromString(_json), _options);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("ModelSerializer")]
+        public void Deserialize_ModelSerializerWithPreload()
+        {
+            ModelSerializer.Deserialize<T>(_data, _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public void Deserialize_UsePublicInterface()
+        public void Deserialize_PublicInterface()
         {
-            ((IModelSerializable)_model).Deserialize(BinaryData.FromString(_json), _options);
+            _model.Deserialize(BinaryData.FromString(_json), _options);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("PublicInterface")]
+        public void Deserialize_PublicInterfaceWithPreload()
+        {
+            _model.Deserialize(_data, _options);
         }
     }
 }

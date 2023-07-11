@@ -14,6 +14,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class AvailabilitySetDataTests
     {
+        private const string _serviceResponse = "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"location\":\"eastus\",\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"sku\":{\"name\":\"Classic\",\"extraSku\":\"extraSku\"},\"extraRoot\":\"extraRoot\"}";
+
         [TestCase(true, true)]
         [TestCase(true, false)]
         [TestCase(false, true)]
@@ -28,13 +30,15 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void BufferTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties) =>
             RoundTripTest(ignoreReadOnlyProperties, ignoreAdditionalProperties, SerializeWithBuffer);
 
+        [Test]
+        public void ImplicitCastTest() =>
+            RoundTripTest(true, true, SerializeWithImplicitCast);
+
         private void RoundTripTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize)
         {
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.IgnoreAdditionalProperties = ignoreAdditionalProperties;
             options.IgnoreReadOnlyProperties = ignoreReadOnlyProperties;
-
-            string serviceResponse = "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"location\":\"eastus\",\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"sku\":{\"name\":\"Classic\",\"extraSku\":\"extraSku\"},\"extraRoot\":\"extraRoot\"}";
 
             var expectedSerializedString = "{";
             if (!ignoreReadOnlyProperties)
@@ -47,7 +51,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             //    expectedSerializedString += ",\"extraRoot\":\"extraRoot\"";
             expectedSerializedString += "}";
 
-            AvailabilitySetData model = ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options);
+            AvailabilitySetData model = ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(_serviceResponse)), options);
 
             ValidateModel(model);
             string roundTrip = serialize(model, options);
@@ -58,6 +62,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             CompareModels(model, model2, ignoreReadOnlyProperties);
         }
 
+        private string SerializeWithImplicitCast(AvailabilitySetData model, ModelSerializerOptions options)
+        {
+            RequestContent content = model;
+            return GetStringFromContent(content);
+        }
+
         private string SerializeWithModelSerializer(AvailabilitySetData model, ModelSerializerOptions options)
         {
             var data = ModelSerializer.Serialize(model, options);
@@ -66,15 +76,19 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private string SerializeWithBuffer(AvailabilitySetData model, ModelSerializerOptions options)
         {
-            using var multiBufferRequestContent = new MultiBufferRequestContent(bufferSize: 4048);
-            var writer = new Utf8JsonWriter(multiBufferRequestContent);
-            model.Serialize(writer);
+            using var content = new MultiBufferRequestContent(bufferSize: 4048);
+            using var writer = new Utf8JsonWriter(content);
+            ((IJsonModelSerializable)model).Serialize(writer, options);
             writer.Flush();
-            RequestContent content = multiBufferRequestContent;
-            using var stream = new MemoryStream();
+            return GetStringFromContent(content);
+        }
+
+        private static string GetStringFromContent(RequestContent content)
+        {
+            MemoryStream stream = new MemoryStream();
             content.WriteTo(stream, default);
             stream.Position = 0;
-            using var reader = new StreamReader(stream);
+            StreamReader reader = new StreamReader(stream);
             return reader.ReadToEnd();
         }
 

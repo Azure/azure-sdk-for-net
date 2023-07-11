@@ -14,7 +14,7 @@ using System.Text.Json;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    internal class ModelXml : IXmlSerializable, IModelSerializable
+    internal class ModelXml : IXmlSerializable, IXmlModelSerializable
     {
         internal ModelXml() { }
 
@@ -42,9 +42,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         [XmlElement("ReadOnlyProperty")]
         public string ReadOnlyProperty { get; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions() {NameHint = nameHint});
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IXmlModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
-        private void Serialize(XmlWriter writer, ModelSerializerOptions options)
+        void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartElement(options.NameHint ?? "Tag");
             writer.WriteStartElement("Key");
@@ -80,16 +80,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 readonlyProperty = (string)readonlyPropertyElement;
             }
             return new ModelXml(key, value, readonlyProperty);
-        }
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
-        {
-            MemoryStream stream = new MemoryStream();
-            XmlWriter writer = XmlWriter.Create(stream);
-            Serialize(writer, options);
-            writer.Flush();
-            stream.Position = 0;
-            return new BinaryData(stream.ToArray());
         }
 
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)

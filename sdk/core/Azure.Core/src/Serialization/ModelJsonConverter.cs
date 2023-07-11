@@ -14,7 +14,7 @@ namespace Azure.Core.Serialization
     /// .
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class ModelJsonConverter : JsonConverter<IModelSerializable>
+    public class ModelJsonConverter : JsonConverter<IJsonModelSerializable>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
@@ -60,10 +60,10 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override IModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IJsonModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            return (IModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, ConvertOptions(options));
+            return (IJsonModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, ConvertOptions(options));
         }
 
         /// <summary>
@@ -73,15 +73,10 @@ namespace Azure.Core.Serialization
         /// <param name="value"></param>
         /// <param name="options"></param>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override void Write(Utf8JsonWriter writer, IModelSerializable value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IJsonModelSerializable value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            BinaryData data = value.Serialize(ConvertOptions(options));
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
+            value.Serialize(writer, ConvertOptions(options));
         }
 
         private ModelSerializerOptions ConvertOptions(JsonSerializerOptions options)

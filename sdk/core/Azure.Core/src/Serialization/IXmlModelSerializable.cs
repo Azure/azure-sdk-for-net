@@ -1,22 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.IO;
+using System.Xml;
 
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// TODO
+    /// .
     /// </summary>
-    public interface IModelSerializable
+    public interface IXmlModelSerializable : IModelSerializable
     {
         /// <summary>
         /// .
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="writer"></param>
         /// <param name="options"></param>
-        /// <returns></returns>
-        object Deserialize(BinaryData data, ModelSerializerOptions options);
+        void Serialize(XmlWriter writer, ModelSerializerOptions options);
     }
 }

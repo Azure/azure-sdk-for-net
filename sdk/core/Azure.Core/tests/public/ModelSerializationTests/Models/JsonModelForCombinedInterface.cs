@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal class JsonModelForCombinedInterface : IUtf8JsonSerializable, IModelSerializable
+    internal class JsonModelForCombinedInterface : IUtf8JsonSerializable, IJsonModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -45,15 +45,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string Value { get; set; }
         public string ReadOnlyProperty { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
         internal static JsonModelForCombinedInterface DeserializeJsonModelForCombinedInterface(JsonElement element, ModelSerializerOptions options)
         {
@@ -88,10 +80,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new JsonModelForCombinedInterface(key, value, readOnlyProperty, rawData);
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
@@ -116,9 +106,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 }
             }
             writer.WriteEndObject();
-            writer.Flush();
-            stream.Position = 0;
-            return new BinaryData(stream.ToArray());
         }
 
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)

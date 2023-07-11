@@ -11,6 +11,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Tests.Public.ResourceManager.Resources.Models;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources
 {
@@ -22,8 +23,10 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
     {
         public static implicit operator RequestContent(ResourceProviderData resourceProviderData)
         {
-            var content = new Utf8JsonRequestContent();
-            ((IUtf8JsonSerializable)resourceProviderData).Write(content.JsonWriter);
+            var content = new MultiBufferRequestContent();
+            using var writer = new Utf8JsonWriter(content);
+            ((IJsonModelSerializable)resourceProviderData).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+            writer.Flush();
             return content;
         }
 

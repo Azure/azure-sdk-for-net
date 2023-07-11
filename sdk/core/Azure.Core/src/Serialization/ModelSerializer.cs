@@ -4,6 +4,8 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
+using System.Xml;
 
 namespace Azure.Core.Serialization
 {
@@ -19,14 +21,43 @@ namespace Azure.Core.Serialization
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable
         {
             options ??= new ModelSerializerOptions();
 
             if (options.Serializers.TryGetValue(typeof(T), out var serializer))
                 return serializer.Serialize(model);
 
-            return model.Serialize(options ?? new ModelSerializerOptions());
+            switch (model)
+            {
+                case IJsonModelSerializable jsonModel:
+                    return SerializeJson(jsonModel, options);
+                case IXmlModelSerializable xmlModel:
+                    return SerializeXml(xmlModel, options);
+                default:
+                    throw new NotSupportedException("Model type is not supported.");
+            }
+        }
+
+        private static BinaryData SerializeXml(IXmlModelSerializable xmlModel, ModelSerializerOptions options)
+        {
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            xmlModel.Serialize(writer, options);
+            writer.Flush();
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+        }
+
+        private static BinaryData SerializeJson(IJsonModelSerializable jsonModel, ModelSerializerOptions options)
+        {
+            using var multiBufferRequestContent = new MultiBufferRequestContent();
+            using var writer = new Utf8JsonWriter(multiBufferRequestContent);
+            jsonModel.Serialize(writer, options);
+            writer.Flush();
+            multiBufferRequestContent.TryComputeLength(out var length);
+            using var stream = new MemoryStream((int)length);
+            multiBufferRequestContent.WriteTo(stream, default);
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
         /// <summary>

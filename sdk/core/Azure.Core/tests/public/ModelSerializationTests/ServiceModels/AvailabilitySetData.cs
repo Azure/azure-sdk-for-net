@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ResourceManager.Compute.Models;
 using Azure.Core.Tests.Public.ResourceManager.Models;
 using Azure.Core.Tests.Public.ResourceManager.Resources.Models;
@@ -24,8 +25,10 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 
         public static implicit operator RequestContent(AvailabilitySetData availabilitySetData)
         {
-            var content = new Utf8JsonRequestContent();
-            ((IUtf8JsonSerializable)availabilitySetData).Write(content.JsonWriter);
+            var content = new MultiBufferRequestContent();
+            using var writer = new Utf8JsonWriter(content);
+            ((IJsonModelSerializable)availabilitySetData).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+            writer.Flush();
             return content;
         }
 

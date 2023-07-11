@@ -12,27 +12,17 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    public abstract class BaseModel : IUtf8JsonSerializable, IModelSerializable
+    public abstract class BaseModel : IUtf8JsonSerializable, IJsonModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
         public string Kind { get; internal set; }
         public string Name { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -55,9 +45,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 }
             }
             writer.WriteEndObject();
-            writer.Flush();
-            stream.Position = 0;
-            return new BinaryData(stream.ToArray());
         }
 
         internal static BaseModel DeserializeBaseModel(BinaryData data, ModelSerializerOptions options)

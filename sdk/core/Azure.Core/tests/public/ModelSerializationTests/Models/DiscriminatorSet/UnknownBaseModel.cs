@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IModelSerializable
+    internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IJsonModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -29,20 +29,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             RawData = rawData;
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -65,9 +55,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 }
             }
             writer.WriteEndObject();
-            writer.Flush();
-            stream.Position = 0;
-            return new BinaryData(stream.ToArray());
         }
 
         internal static UnknownBaseModel DeserializeUnknownBaseModel(JsonElement element, ModelSerializerOptions options = default)

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    internal class XmlModelForCombinedInterface : IXmlSerializable, IModelSerializable
+    internal class XmlModelForCombinedInterface : IXmlSerializable, IXmlModelSerializable
     {
         public XmlModelForCombinedInterface() { }
 
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         [XmlElement("ReadOnlyProperty")]
         public string ReadOnlyProperty { get; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions() { NameHint = nameHint });
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IXmlModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions options = default)
         {
@@ -63,7 +63,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new XmlModelForCombinedInterface(key, value, readOnlyProperty);
         }
 
-        private void Serialize(XmlWriter writer, ModelSerializerOptions options)
+        void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartElement(options.NameHint ?? "Tag");
             writer.WriteStartElement("Key");
@@ -79,16 +79,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
-        }
-
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
-        {
-            MemoryStream stream = new MemoryStream();
-            XmlWriter writer = XmlWriter.Create(stream);
-            Serialize(writer, options);
-            writer.Flush();
-            stream.Position = 0;
-            return new BinaryData(stream.ToArray());
         }
 
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(XElement.Load(data.ToStream()), options);
