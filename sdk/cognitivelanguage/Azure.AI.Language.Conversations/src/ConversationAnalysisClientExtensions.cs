@@ -9,7 +9,7 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    [CodeGenType("ConversationsClientBuilderExtensions")]
+    [CodeGenType("AILanguageConversationsClientBuilderExtensions")]
     public static partial class ConversationAnalysisClientExtensions
     {
     }

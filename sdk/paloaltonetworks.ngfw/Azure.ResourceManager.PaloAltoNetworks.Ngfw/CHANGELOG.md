@@ -1,22 +1,12 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2023-07-14)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+This release is the first stable release of the Azure PaloAltoNetworks.Ngfw Management client library.
 
 ## 1.0.0-beta.1 (2023-05-04)
 
 This is the first beta release of Azure PaloAltoNetworks.Ngfw client library.
-
-## 1.0.0 (2023-07-14)
-
-This release is the first stable release of the Azure PaloAltoNetworks.Ngfw Management client library.
 
 ### General New Features
 

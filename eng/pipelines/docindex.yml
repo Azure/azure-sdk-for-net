@@ -1,5 +1,12 @@
 trigger: none
 
+variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+
+  # Globals sets skipComponentGovernanceDetection by default
+  - name: skipComponentGovernanceDetection
+    value: false
+
 jobs:
   - template: /eng/common/pipelines/templates/jobs/docindex.yml
 

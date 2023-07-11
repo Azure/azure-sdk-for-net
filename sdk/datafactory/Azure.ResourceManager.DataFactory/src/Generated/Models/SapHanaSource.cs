@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer). </summary>
         public DataFactoryElement<int> PacketSize { get; set; }
         /// <summary>
-        /// The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: "None", "PhysicalPartitionsOfTable", "SapHanaDynamicRange". 
+        /// The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: "None", "PhysicalPartitionsOfTable", "SapHanaDynamicRange".
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -1,14 +1,14 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2023-07-13)
 
 ### Features Added
 
-### Breaking Changes
+- Support SAS authentication
 
 ### Bugs Fixed
 
-### Other Changes
+- Update dependency libraries versions
 
 ## 1.0.0-beta.1 (2022-10-11)
 

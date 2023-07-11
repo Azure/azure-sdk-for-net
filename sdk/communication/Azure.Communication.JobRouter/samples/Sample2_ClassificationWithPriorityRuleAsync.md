@@ -28,7 +28,7 @@ string classificationPolicyId = "static-priority";
 Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
     {
-        PrioritizationRule = new StaticRule(new LabelValue(10))
+        PrioritizationRule = new StaticRouterRule(new LabelValue(10))
     });
 
 Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");
@@ -77,7 +77,7 @@ Console.WriteLine($"Job has been assigned a priority value: {queriedJob.Value.Pr
 
 ## Assign priority value to job using ExpressionRule
 
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyExpressionRule
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyExpressionRouterRule
 // In this scenario we are going to create a classification policy which assigns a priority value by evaluating a simple PowerFx expression
 // The classification policy will be setup to add only the priority value to a job
 // Hence, when the job will be created it will have a queueId assigned to it
@@ -87,7 +87,7 @@ string classificationPolicyId = "expression-priority";
 Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
     {
-        PrioritizationRule = new ExpressionRule("If(job.Escalated = true, 10, 1)") // this will check whether the job has a label "Escalated" set to "true"
+        PrioritizationRule = new ExpressionRouterRule("If(job.Escalated = true, 10, 1)") // this will check whether the job has a label "Escalated" set to "true"
     });
 
 Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");
@@ -189,7 +189,7 @@ module.exports = async function (context, req) {
 
 Setting up using the Router SDK:
 
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyAzureFunctionRule
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyAzureFunctionRouterRule
 // In this scenario we are going to create a classification policy which assigns a priority value by evaluating a simple AzureFunction
 // The classification policy will be setup to add only the priority value to a job
 // Hence, when the job will be created it will have a queueId assigned to it
@@ -199,7 +199,7 @@ string classificationPolicyId = "expression-priority";
 Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
     {
-        PrioritizationRule = new FunctionRule(new Uri("<insert azure function rule URI>")) // this will check whether the job has a label "Escalated" set to "true"
+        PrioritizationRule = new FunctionRouterRule(new Uri("<insert azure function rule URI>")) // this will check whether the job has a label "Escalated" set to "true"
     });
 
 Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");

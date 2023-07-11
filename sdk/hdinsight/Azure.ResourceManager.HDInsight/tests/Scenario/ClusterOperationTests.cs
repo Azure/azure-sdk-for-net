@@ -555,5 +555,23 @@ namespace Azure.ResourceManager.HDInsight.Tests
             Assert.AreEqual("admin4468", gatewaySetting.Value.UserName);
             Assert.AreEqual("Password1!9688", gatewaySetting.Value.Password);
         }
+
+        [RecordedTest]
+        public async Task TestCreateClusterWithSecureChannel()
+        {
+            string clusterName = "hdisdk-securechannel";
+            var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
+            properties.StorageAccounts.FirstOrDefault().EnableSecureChannel = true;
+
+            var data = new HDInsightClusterCreateOrUpdateContent()
+            {
+                Properties = properties,
+                Location = DefaultLocation,
+            };
+            data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
+            var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
+            Assert.IsNotNull(cluster);
+            Assert.IsTrue(cluster.Value.Data.Properties.StorageAccounts.FirstOrDefault().EnableSecureChannel);
+        }
     }
 }
