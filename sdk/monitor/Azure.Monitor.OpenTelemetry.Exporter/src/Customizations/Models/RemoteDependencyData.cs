@@ -82,23 +82,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         private void SetHttpDependencyPropertiesAndDependencyName(Activity activity, ref AzMonList httpTagObjects, bool isNewSchemaVersion, out string dependencyName)
         {
             string? httpUrl;
+            string? resultCode;
+            string? target;
+
             if (isNewSchemaVersion)
             {
                 httpUrl = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeUrlFull)?.ToString();
                 dependencyName = httpTagObjects.GetNewSchemaHttpDependencyName(httpUrl) ?? activity.DisplayName;
+                target = httpTagObjects.GetNewSchemaHttpDependencyTarget();
+                resultCode = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
             }
             else
             {
                 httpUrl = httpTagObjects.GetDependencyUrl();
                 dependencyName = httpTagObjects.GetHttpDependencyName(httpUrl) ?? activity.DisplayName;
+                target = httpTagObjects.GetHttpDependencyTarget();
+                resultCode = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeHttpStatusCode)
+                                        ?.ToString().Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength)
+                                        ?? "0";
             }
 
-            Data = httpUrl.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-            Target = httpTagObjects.GetHttpDependencyTarget().Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
             Type = "Http";
-            ResultCode = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeHttpStatusCode)
-                ?.ToString().Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength)
-                ?? "0";
+            Data = httpUrl.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
+            Target = target.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+            ResultCode = resultCode?.Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength) ?? "0";
         }
 
         private void SetDbDependencyProperties(ref AzMonList dbTagObjects)

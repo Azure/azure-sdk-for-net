@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     SetHttpRequestPropertiesAndResponseCode(activity, ref activityTagsProcessor.MappedTags, out responseCode);
                     break;
                 case OperationType.Messaging:
-                    SetMessagingRequestPropertiesAndResponseCode(activity, ref activityTagsProcessor.MappedTags, out responseCode);
+                    SetMessagingRequestPropertiesAndResponseCode(activity, ref activityTagsProcessor.MappedTags);
                     break;
             }
 
@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                 : SchemaConstants.Duration_MaxValue;
-            ResponseCode = responseCode;
+            ResponseCode = responseCode ?? "0";
 
             Success = IsSuccess(activity, ResponseCode, activityTagsProcessor.activityType);
 
@@ -83,13 +83,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                                     ?? "0";
         }
 
-        private void SetMessagingRequestPropertiesAndResponseCode(Activity activity, ref AzMonList messagingTagObjects, out string responseCode)
+        private void SetMessagingRequestPropertiesAndResponseCode(Activity activity, ref AzMonList messagingTagObjects)
         {
             Url = AzMonList.GetTagValue(ref messagingTagObjects, SemanticConventions.AttributeMessagingUrl)?.ToString().Truncate(SchemaConstants.RequestData_Url_MaxLength);
-            Name = TraceHelper.GetOperationName(activity, ref messagingTagObjects).Truncate(SchemaConstants.RequestData_Name_MaxLength);
-            responseCode = AzMonList.GetTagValue(ref messagingTagObjects, SemanticConventions.AttributeHttpStatusCode)
-                                                ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
-                                                ?? "0";
+            Name = activity.DisplayName;
         }
     }
 }

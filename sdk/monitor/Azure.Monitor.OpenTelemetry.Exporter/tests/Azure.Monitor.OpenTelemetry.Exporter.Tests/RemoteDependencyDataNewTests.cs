@@ -81,6 +81,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeUrlFull, httpUrl);
+            activity.SetTag(SemanticConventions.AttributeServerAddress, "www.foo.bar");
+            activity.SetTag(SemanticConventions.AttributeHttpResponseStatusCode, "200");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
@@ -89,7 +91,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("GET /search", remoteDependencyData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), remoteDependencyData.Id);
             Assert.Equal(httpUrl, remoteDependencyData.Data);
-            Assert.Equal("0", remoteDependencyData.ResultCode);
+            Assert.Equal("www.foo.bar", remoteDependencyData.Target);
+            Assert.Equal("200", remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
             Assert.True(remoteDependencyData.Properties.Count == 0);
