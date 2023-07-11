@@ -26,7 +26,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
     /// <remarks>
     /// Instances of this type are thread-safe.
     /// </remarks>
-    internal sealed class AzureBlobXmlRepository : IXmlRepository
+    public sealed class AzureBlobXmlRepository : IXmlRepository
     {
         private const int ConflictMaxRetries = 5;
         private static readonly TimeSpan ConflictBackoffPeriod = TimeSpan.FromMilliseconds(200);
