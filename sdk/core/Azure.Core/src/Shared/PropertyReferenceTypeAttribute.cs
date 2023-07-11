@@ -24,7 +24,10 @@ namespace Azure.Core
         /// Instantiate a new reference type attribute.
         /// </summary>
         /// <param name="optionalProperties"> An array of property names that are optional when comparing the type. </param>
-        /// <param name="internalPropertiesToInclude"></param>
+        /// <param name="internalPropertiesToInclude">An array of internal properties to include for the reference type when evaluating whether type
+        /// replacement should occur. When evaluating a type for replacement with a reference type, all internal properties are considered on the
+        /// type to be replaced. Thus this parameter can be used to specify internal properties to allow replacement to occur on a type with internal
+        /// properties.</param>
         public PropertyReferenceTypeAttribute(string[] optionalProperties, string[] internalPropertiesToInclude)
         {
             OptionalProperties = optionalProperties;
