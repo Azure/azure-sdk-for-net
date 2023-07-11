@@ -8,6 +8,7 @@
 - Added support for tracking progress of transfers. See `TransferOptions.ProgressHandler` and `TransferOptions.ProgressHandlerOptions`.
 - Added `TransferManager.GetResumableTransfers` to get information about transfers that can be resumed.
 - Added support for `Transfermanager.ResumeTransferAsync` to resume a transfer.
+- Added support authorization using Azure Active Directory when using Service to Service Copy. 
 
 ### Breaking Changes
 - [BREAKING CHANGE] Altered API signatures on `TransferManager` and `DataTransfer` for pausing.
