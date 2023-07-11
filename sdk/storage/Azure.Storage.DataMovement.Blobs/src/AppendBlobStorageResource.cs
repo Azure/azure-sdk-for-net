@@ -255,6 +255,22 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
+        /// Gets the Authorization Header for the storage resource if available.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        public override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        {
+            return await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Commits the block list given.
         /// </summary>
         public override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)

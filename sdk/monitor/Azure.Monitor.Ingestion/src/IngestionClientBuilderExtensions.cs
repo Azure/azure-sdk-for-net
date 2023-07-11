@@ -8,7 +8,7 @@ using Azure.Monitor.Ingestion;
 
 namespace Microsoft.Extensions.Azure
 {
-    [CodeGenType("IngestionUsingDataCollectionRulesClientBuilderExtensions")]
+    [CodeGenType("MonitorIngestionClientBuilderExtensions")]
     public static partial class IngestionClientBuilderExtensions
     {
     }

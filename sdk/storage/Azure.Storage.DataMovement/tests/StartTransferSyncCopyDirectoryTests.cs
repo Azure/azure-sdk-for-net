@@ -451,6 +451,55 @@ namespace Azure.Storage.DataMovement.Tests
                 options: options).ConfigureAwait(false);
         }
 
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task BlockBlobDirectoryToDirectory_OAuth()
+        {
+            // Arrange
+            long size = Constants.KB;
+            int waitTimeInSec = 10;
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
+            var containerName = GetNewContainerName();
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(
+                service,
+                containerName,
+                publicAccessType: PublicAccessType.BlobContainer);
+            string sourceBlobDirectoryName = "sourceFolder";
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobDirectoryName);
+
+            List<string> blobNames = new List<string>();
+
+            string blobName1 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
+            string blobName2 = Path.Combine(sourceBlobDirectoryName, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(testContainer.Container, testDirectory.DirectoryPath, blobName1, size);
+            await CreateBlockBlobAndSourceFile(testContainer.Container, testDirectory.DirectoryPath, blobName2, size);
+            blobNames.Add(blobName1);
+            blobNames.Add(blobName2);
+
+            string subDirName = "bar";
+            CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
+            string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(testContainer.Container, testDirectory.DirectoryPath, blobName3, size);
+            blobNames.Add(blobName3);
+
+            string subDirName2 = "pik";
+            CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
+            string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, GetNewBlobName());
+            await CreateBlockBlobAndSourceFile(testContainer.Container, testDirectory.DirectoryPath, blobName4, size);
+            blobNames.Add(blobName4);
+
+            string destinationFolder = "destFolder";
+
+            await CopyBlobDirectoryAndVerify(
+                testContainer.Container,
+                sourceBlobDirectoryName,
+                sourceFolderPath,
+                destinationFolder,
+                blobNames,
+                waitTimeInSec).ConfigureAwait(false);
+        }
+
         #region Single Concurrency
         private async Task CreateBlobDirectoryTree(
             BlobContainerClient client,
