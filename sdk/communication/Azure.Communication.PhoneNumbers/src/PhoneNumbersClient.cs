@@ -81,7 +81,7 @@ namespace Azure.Communication.PhoneNumbers
         { }
 
         private PhoneNumbersClient(string endpoint, HttpPipeline httpPipeline, PhoneNumbersClientOptions options)
-            : this(new ClientDiagnostics(options), httpPipeline, endpoint, options.AcceptedLanguage, options.Version)
+            : this(new ClientDiagnostics(options, suppressNestedClientActivities: true), httpPipeline, endpoint, options.AcceptedLanguage, options.Version)
         { }
 
         /// <summary> Initializes a new instance of PhoneNumbersClient. </summary>

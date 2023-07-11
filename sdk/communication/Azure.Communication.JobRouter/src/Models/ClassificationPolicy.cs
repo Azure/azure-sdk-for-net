@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
@@ -15,18 +14,44 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         internal ClassificationPolicy()
         {
-            QueueSelectors = new ChangeTrackingList<QueueSelectorAttachment>();
-            WorkerSelectors = new ChangeTrackingList<WorkerSelectorAttachment>();
+            _queueSelectors = new ChangeTrackingList<QueueSelectorAttachment>();
+            _workerSelectors = new ChangeTrackingList<WorkerSelectorAttachment>();
+        }
+
+        [CodeGenMember("QueueSelectors")]
+        internal IList<QueueSelectorAttachment> _queueSelectors
+        {
+            get
+            {
+                return QueueSelectors != null && QueueSelectors.Any()
+                    ? QueueSelectors.ToList()
+                    : new ChangeTrackingList<QueueSelectorAttachment>();
+            }
+            set
+            {
+                QueueSelectors.AddRange(value);
+            }
+        }
+
+        [CodeGenMember("WorkerSelectors")]
+        internal IList<WorkerSelectorAttachment> _workerSelectors
+        {
+            get
+            {
+                return WorkerSelectors != null && WorkerSelectors.Any()
+                    ? WorkerSelectors.ToList()
+                    : new ChangeTrackingList<WorkerSelectorAttachment>();
+            }
+            set
+            {
+                WorkerSelectors.AddRange(value);
+            }
         }
 
         /// <summary> The queue selectors to resolve a queue for a given job. </summary>
-        [CodeGenMember("QueueSelectors")]
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IList<QueueSelectorAttachment> QueueSelectors { get; set; }
+        public List<QueueSelectorAttachment> QueueSelectors { get; } = new List<QueueSelectorAttachment>();
 
         /// <summary> The worker label selectors to attach to a given job. </summary>
-        [CodeGenMember("WorkerSelectors")]
-        public IList<WorkerSelectorAttachment> WorkerSelectors { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
+        public List<WorkerSelectorAttachment> WorkerSelectors { get; } = new List<WorkerSelectorAttachment>();
     }
 }

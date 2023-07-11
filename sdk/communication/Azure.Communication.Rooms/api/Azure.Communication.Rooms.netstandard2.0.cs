@@ -59,10 +59,10 @@ namespace Azure.Communication.Rooms
     }
     public partial class RoomsClientOptions : Azure.Core.ClientOptions
     {
-        public RoomsClientOptions(Azure.Communication.Rooms.RoomsClientOptions.ServiceVersion version = Azure.Communication.Rooms.RoomsClientOptions.ServiceVersion.V2023_03_31_Preview) { }
+        public RoomsClientOptions(Azure.Communication.Rooms.RoomsClientOptions.ServiceVersion version = Azure.Communication.Rooms.RoomsClientOptions.ServiceVersion.V2023_06_14) { }
         public enum ServiceVersion
         {
-            V2023_03_31_Preview = 1,
+            V2023_06_14 = 1,
         }
     }
     public static partial class RoomsModelFactory

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -61,29 +62,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("url"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Uri);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
-#endif
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("url"u8);
+                JsonSerializer.Serialize(writer, Uri);
+            }
             if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AccountKey);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AccountKey.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AccountKey);
             }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ServicePrincipalId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServicePrincipalId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ServicePrincipalId);
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
@@ -93,20 +85,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Tenant);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Tenant.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Tenant);
             }
             if (Optional.IsDefined(AzureCloudType))
             {
                 writer.WritePropertyName("azureCloudType"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AzureCloudType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AzureCloudType.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AzureCloudType);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -125,16 +109,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ServicePrincipalCredentialType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServicePrincipalCredentialType.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ServicePrincipalCredentialType);
             }
             if (Optional.IsDefined(ServicePrincipalCredential))
             {
                 writer.WritePropertyName("servicePrincipalCredential"u8);
                 writer.WriteObjectValue(ServicePrincipalCredential);
+            }
+            if (Optional.IsDefined(SasUri))
+            {
+                writer.WritePropertyName("sasUri"u8);
+                JsonSerializer.Serialize(writer, SasUri);
+            }
+            if (Optional.IsDefined(SasToken))
+            {
+                writer.WritePropertyName("sasToken"u8);
+                writer.WriteObjectValue(SasToken);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -160,16 +150,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData url = default;
-            Optional<BinaryData> accountKey = default;
-            Optional<BinaryData> servicePrincipalId = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
-            Optional<BinaryData> tenant = default;
-            Optional<BinaryData> azureCloudType = default;
+            Optional<DataFactoryElement<string>> url = default;
+            Optional<DataFactoryElement<string>> accountKey = default;
+            Optional<DataFactoryElement<string>> servicePrincipalId = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactoryElement<string>> tenant = default;
+            Optional<DataFactoryElement<string>> azureCloudType = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<FactoryCredentialReference> credential = default;
-            Optional<BinaryData> servicePrincipalCredentialType = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalCredential = default;
+            Optional<DataFactoryCredentialReference> credential = default;
+            Optional<DataFactoryElement<string>> servicePrincipalCredentialType = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalCredential = default;
+            Optional<DataFactoryElement<string>> sasUri = default;
+            Optional<DataFactorySecretBaseDefinition> sasToken = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,7 +231,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("url"u8))
                         {
-                            url = BinaryData.FromString(property0.Value.GetRawText());
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accountKey"u8))
@@ -248,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accountKey = BinaryData.FromString(property0.Value.GetRawText());
+                            accountKey = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"u8))
@@ -257,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalId = BinaryData.FromString(property0.Value.GetRawText());
+                            servicePrincipalId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
@@ -266,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -275,7 +271,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            tenant = BinaryData.FromString(property0.Value.GetRawText());
+                            tenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("azureCloudType"u8))
@@ -284,7 +280,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            azureCloudType = BinaryData.FromString(property0.Value.GetRawText());
+                            azureCloudType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -302,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalCredentialType"u8))
@@ -311,7 +307,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalCredentialType = BinaryData.FromString(property0.Value.GetRawText());
+                            servicePrincipalCredentialType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalCredential"u8))
@@ -320,7 +316,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalCredential = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalCredential = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("sasUri"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sasUri = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("sasToken"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sasToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                     }
@@ -329,7 +343,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, accountKey.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, encryptedCredential.Value, credential.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential.Value);
+            return new AzureBlobFSLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url.Value, accountKey.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, encryptedCredential.Value, credential.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential.Value, sasUri.Value, sasToken.Value);
         }
     }
 }

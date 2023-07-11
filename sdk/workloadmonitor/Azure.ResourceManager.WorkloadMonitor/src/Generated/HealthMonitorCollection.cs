@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by monitor name).
+        /// Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by monitor name).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq &apos;logical-disks|C:|disk-free-space-mb.&apos;. </param>
+        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb.'. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HealthMonitorResource" /> that may take multiple service requests to iterate over. </returns>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by monitor name).
+        /// Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by monitor name).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq &apos;logical-disks|C:|disk-free-space-mb.&apos;. </param>
+        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb.'. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthMonitorResource" /> that may take multiple service requests to iterate over. </returns>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             Optional<int> version = default;
             Optional<string> serialNumber = default;
-            Optional<BinaryData> thumbprint = default;
+            Optional<string> thumbprint = default;
             Optional<string> subject = default;
             Optional<DateTimeOffset> notBefore = default;
             Optional<DateTimeOffset> notAfter = default;
@@ -46,11 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("thumbprint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
+                    thumbprint = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subject"u8))

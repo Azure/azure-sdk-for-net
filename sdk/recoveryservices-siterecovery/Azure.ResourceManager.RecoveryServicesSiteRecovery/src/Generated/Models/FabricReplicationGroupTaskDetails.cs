@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class represents the fabric replication group task details. </summary>
-    public partial class FabricReplicationGroupTaskDetails : JobTaskDetails
+    public partial class FabricReplicationGroupTaskDetails : SiteRecoveryJobTaskDetails
     {
         /// <summary> Initializes a new instance of FabricReplicationGroupTaskDetails. </summary>
         internal FabricReplicationGroupTaskDetails()
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="jobTask"> The job entity. </param>
         /// <param name="skippedReason"> The skipped reason. </param>
         /// <param name="skippedReasonString"> The skipped reason string. </param>
-        internal FabricReplicationGroupTaskDetails(string instanceType, JobEntity jobTask, string skippedReason, string skippedReasonString) : base(instanceType, jobTask)
+        internal FabricReplicationGroupTaskDetails(string instanceType, SiteRecoveryJobEntity jobTask, string skippedReason, string skippedReasonString) : base(instanceType, jobTask)
         {
             SkippedReason = skippedReason;
             SkippedReasonString = skippedReasonString;

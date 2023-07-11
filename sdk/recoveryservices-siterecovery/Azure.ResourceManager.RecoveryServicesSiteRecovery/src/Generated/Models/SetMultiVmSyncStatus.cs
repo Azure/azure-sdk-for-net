@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct SetMultiVmSyncStatus : IEquatable<SetMultiVmSyncStatus>
     {
         private readonly string _value;

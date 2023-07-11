@@ -5,17 +5,16 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: TrafficManager
 namespace: Azure.ResourceManager.TrafficManager
-require: https://github.com/Azure/azure-rest-api-specs/blob/5fc05d0f0b15cbf16de942cadce464b495c66a58/specification/trafficmanager/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4f4073bdb028bc84bc3e6405c1cbaf8e89b83caf/specification/trafficmanager/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 
 rename-mapping:
-  CheckTrafficManagerRelativeDnsNameAvailabilityParameters: TrafficManagerRelativeDnsNameAvailabilityParameters
+  CheckTrafficManagerRelativeDnsNameAvailabilityParameters: TrafficManagerRelativeDnsNameAvailabilityContent
   CheckTrafficManagerRelativeDnsNameAvailabilityParameters.type: -|resource-type
   Endpoint.properties.targetResourceId: -|arm-id
   EndpointPropertiesCustomHeadersItem: TrafficManagerEndpointCustomHeaderInfo
@@ -80,6 +79,7 @@ rename-rules:
 
 override-operation-name:
   Profiles_CheckTrafficManagerRelativeDnsNameAvailability: CheckTrafficManagerRelativeDnsNameAvailability
+  Profiles_checkTrafficManagerNameAvailabilityV2: CheckTrafficManagerNameAvailabilityV2
 
 directive:
   - from: trafficmanager.json

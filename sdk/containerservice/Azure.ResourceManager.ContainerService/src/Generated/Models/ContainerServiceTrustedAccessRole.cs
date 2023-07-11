@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRole. </summary>
         /// <param name="sourceResourceType"> Resource type of Azure resource. </param>
         /// <param name="name"> Name of role, name is unique under a source resource type. </param>
-        /// <param name="rules"> List of rules for the role. This maps to &apos;rules&apos; property of [Kubernetes Cluster Role](https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole). </param>
+        /// <param name="rules"> List of rules for the role. This maps to 'rules' property of [Kubernetes Cluster Role](https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole). </param>
         internal ContainerServiceTrustedAccessRole(string sourceResourceType, string name, IReadOnlyList<ContainerServiceTrustedAccessRoleRule> rules)
         {
             SourceResourceType = sourceResourceType;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public string SourceResourceType { get; }
         /// <summary> Name of role, name is unique under a source resource type. </summary>
         public string Name { get; }
-        /// <summary> List of rules for the role. This maps to &apos;rules&apos; property of [Kubernetes Cluster Role](https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole). </summary>
+        /// <summary> List of rules for the role. This maps to 'rules' property of [Kubernetes Cluster Role](https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole). </summary>
         public IReadOnlyList<ContainerServiceTrustedAccessRoleRule> Rules { get; }
     }
 }

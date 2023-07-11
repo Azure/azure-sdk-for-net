@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,7 +9,6 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry;
-using OpenTelemetry.Extensions.AzureMonitor;
 using OpenTelemetry.Trace;
 using Xunit;
 
@@ -104,8 +102,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
-                .SetSampler(new ApplicationInsightsSampler(new ApplicationInsightsSamplerOptions() { SamplingRatio = 1.0F }))
-                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
+                .SetSampler(new ApplicationInsightsSampler(samplingRatio: 1.0F))
+                .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems)
                 .Build();
 
             using (var activity = activitySource.StartActivity("SayHello"))
@@ -124,8 +122,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
-                .SetSampler(new ApplicationInsightsSampler(new ApplicationInsightsSamplerOptions() { SamplingRatio = 0.0F }))
-                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
+                .SetSampler(new ApplicationInsightsSampler(samplingRatio: 0.0F))
+                .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems)
                 .Build();
 
             using (var activity = activitySource.StartActivity("SayHello"))

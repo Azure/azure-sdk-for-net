@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct SessionAffinityEnabledState : IEquatable<SessionAffinityEnabledState>
     {
         private readonly string _value;

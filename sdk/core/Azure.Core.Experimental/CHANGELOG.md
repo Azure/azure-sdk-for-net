@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Removed `DynamicData` type.
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -17,12 +17,11 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class ScoringFunction
     {
-
         /// <summary> Initializes a new instance of ScoringFunction. </summary>
         /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
-        /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </param>
+        /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
         internal ScoringFunction(string type, string fieldName, double boost, ScoringFunctionInterpolation? interpolation)
         {
             Type = type;
@@ -37,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string FieldName { get; set; }
         /// <summary> A multiplier for the raw score. Must be a positive number not equal to 1.0. </summary>
         public double Boost { get; set; }
-        /// <summary> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </summary>
+        /// <summary> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </summary>
         public ScoringFunctionInterpolation? Interpolation { get; set; }
     }
 }

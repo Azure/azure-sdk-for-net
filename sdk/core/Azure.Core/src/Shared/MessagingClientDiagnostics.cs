@@ -170,10 +170,10 @@ namespace Azure.Core.Shared
                     DiagnosticScope.ActivityKind.Producer);
                 messageScope.Start();
 
-                Activity activity = Activity.Current;
+                Activity? activity = Activity.Current;
                 if (activity != null)
                 {
-                    traceparent = activity.Id;
+                    traceparent = activity.Id!;
                     properties[DiagnosticIdAttribute] = traceparent;
                     if (ActivityExtensions.SupportsActivitySource())
                     {

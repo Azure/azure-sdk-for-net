@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. </param>
         /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
-        /// <param name="familyId"> id of the backing snapshot&apos;s MIS family. </param>
+        /// <param name="familyId"> id of the backing snapshot's MIS family. </param>
         /// <param name="sourceUniqueId"> unique incarnation id of the source disk. </param>
         /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
         /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute
         public DiskPurchasePlan PurchasePlan { get; }
         /// <summary> List of supported capabilities for the image from which the OS disk was created. </summary>
         public SupportedCapabilities SupportedCapabilities { get; }
-        /// <summary> id of the backing snapshot&apos;s MIS family. </summary>
+        /// <summary> id of the backing snapshot's MIS family. </summary>
         public string FamilyId { get; }
         /// <summary> unique incarnation id of the source disk. </summary>
         public string SourceUniqueId { get; }

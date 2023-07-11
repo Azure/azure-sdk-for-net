@@ -15,20 +15,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettingsCredentials. </summary>
         /// <param name="username"> Username of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </param>
-        /// <param name="password"> Plain text password of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="password"/> is null. </exception>
-        public StorageCacheActiveDirectorySettingsCredentials(string username, string password)
+        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
+        public StorageCacheActiveDirectorySettingsCredentials(string username)
         {
             Argument.AssertNotNull(username, nameof(username));
-            Argument.AssertNotNull(password, nameof(password));
 
             Username = username;
-            Password = password;
         }
-
-        /// <summary> Username of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </summary>
-        public string Username { get; set; }
-        /// <summary> Plain text password of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </summary>
-        public string Password { get; set; }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <remarks>
-    /// See <see href="https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring"/> for more information about models you can pass to this client.
+    /// See <see href="https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring"/> for more information about models you can pass to this client.
     /// </remarks>
-    /// <seealso href="https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring"/>
+    /// <seealso href="https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring"/>
     [CodeGenClient("ConversationalAnalysisAuthoringClient")]
     public partial class ConversationAuthoringClient
     {
@@ -138,7 +138,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/export
+        /// https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/export
         ///
         /// Response Body:
         ///
@@ -242,7 +242,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/export
+        /// https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/export
         ///
         /// Response Body:
         ///

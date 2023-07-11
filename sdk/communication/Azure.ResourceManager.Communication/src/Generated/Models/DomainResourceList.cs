@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="value"> List of Domains resource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
         internal DomainResourceList(IReadOnlyList<CommunicationDomainResourceData> value, string nextLink)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Communication.Models
         public IReadOnlyList<CommunicationDomainResourceData> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

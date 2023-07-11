@@ -31,11 +31,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags["ai.user.userAgent"] = userAgent;
             }
 
+            SetAuthenticatedUserId(ref activityTagsProcessor);
+
             // we only have mapping for server spans
             // todo: non-server spans
             if (activity.Kind == ActivityKind.Server)
             {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
+                Tags[ContextTagKeys.AiOperationName.ToString()] = activityTagsProcessor.activityType.HasFlag(OperationType.V2)
+                                                                    ? TraceHelper.GetNewSchemaOperationName(activity, null, ref activityTagsProcessor.MappedTags)
+                                                                    : TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
                 Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
             }
 
@@ -107,6 +111,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         internal static DateTimeOffset FormatUtcTimestamp(System.DateTime utcTimestamp)
         {
             return DateTime.SpecifyKind(utcTimestamp, DateTimeKind.Utc);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetAuthenticatedUserId(ref ActivityTagsProcessor activityTagsProcessor)
+        {
+            if (activityTagsProcessor.EndUserId != null)
+            {
+                Tags[ContextTagKeys.AiUserAuthUserId.ToString()] = activityTagsProcessor.EndUserId;
+            }
         }
     }
 }

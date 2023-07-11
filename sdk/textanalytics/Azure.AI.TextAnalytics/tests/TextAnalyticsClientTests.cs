@@ -148,23 +148,23 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public void ExtractSummaryArgumentValidation()
+        public void ExtractiveSummarizeArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartExtractSummaryAsync((string[])null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.StartExtractSummaryAsync(Array.Empty<string>()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractiveSummarizeAsync(WaitUntil.Completed, (string[])null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractiveSummarizeAsync(WaitUntil.Completed, Array.Empty<string>()));
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartExtractSummaryAsync((TextDocumentInput[])null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.StartExtractSummaryAsync(Array.Empty<TextDocumentInput>()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractiveSummarizeAsync(WaitUntil.Completed, (TextDocumentInput[])null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractiveSummarizeAsync(WaitUntil.Completed, Array.Empty<TextDocumentInput>()));
         }
 
         [Test]
-        public void AbstractSummaryArgumentValidation()
+        public void AbstractiveSummarizeArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartAbstractSummaryAsync((string[])null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.StartAbstractSummaryAsync(Array.Empty<string>()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.AbstractiveSummarizeAsync(WaitUntil.Completed, (string[])null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.AbstractiveSummarizeAsync(WaitUntil.Completed, Array.Empty<string>()));
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartAbstractSummaryAsync((TextDocumentInput[])null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.StartAbstractSummaryAsync(Array.Empty<TextDocumentInput>()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.AbstractiveSummarizeAsync(WaitUntil.Completed, (TextDocumentInput[])null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.AbstractiveSummarizeAsync(WaitUntil.Completed, Array.Empty<TextDocumentInput>()));
         }
     }
 }

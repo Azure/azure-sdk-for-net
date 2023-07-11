@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            Response response = client.GetResourceSetRule();
+            Response response = client.GetResourceSetRule(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -139,7 +139,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            Response response = await client.GetResourceSetRuleAsync();
+            Response response = await client.GetResourceSetRuleAsync(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -371,7 +371,7 @@ namespace Azure.Analytics.Purview.Account.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -589,7 +589,7 @@ namespace Azure.Analytics.Purview.Account.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -699,7 +699,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            Response response = client.DeleteResourceSetRule(new RequestContext());
+            Response response = client.DeleteResourceSetRule();
             Console.WriteLine(response.Status);
         }
 
@@ -723,7 +723,7 @@ namespace Azure.Analytics.Purview.Account.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
 
-            Response response = await client.DeleteResourceSetRuleAsync(new RequestContext());
+            Response response = await client.DeleteResourceSetRuleAsync();
             Console.WriteLine(response.Status);
         }
     }
