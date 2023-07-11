@@ -319,8 +319,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
 
-        [Fact]
-        public void RequestNameMatchesOperationName()
+        [Theory]
+        [InlineData("GET")]
+        [InlineData(null)]
+        public void RequestNameMatchesOperationName(string? httpMethod)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -331,7 +333,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(activity);
             activity.DisplayName = "displayname";
-            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            if (httpMethod != null)
+            {
+                activity.SetTag(SemanticConventions.AttributeHttpMethod, httpMethod);
+            }
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
             var requestData = new RequestData(2, activity, ref activityTagsProcessor);

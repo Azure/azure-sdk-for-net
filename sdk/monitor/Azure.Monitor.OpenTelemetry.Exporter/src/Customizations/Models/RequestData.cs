@@ -30,6 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             Id = activity.Context.SpanId.ToHexString();
+            Name = Name ?? activity.DisplayName;
             Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                 : SchemaConstants.Duration_MaxValue;

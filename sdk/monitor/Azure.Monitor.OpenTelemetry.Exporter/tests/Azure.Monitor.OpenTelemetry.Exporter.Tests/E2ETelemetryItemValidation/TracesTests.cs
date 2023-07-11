@@ -107,7 +107,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 activity.SetTag("integer", 1);
                 activity.SetTag("message", "Hello World!");
                 activity.SetTag("intArray", new int[] { 1, 2, 3 });
-                activity.SetTag(SemanticConventions.AttributeMessagingSystem, "TestSystem");
                 activity?.SetStatus(ActivityStatusCode.Ok);
             }
 
