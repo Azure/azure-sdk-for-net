@@ -12,13 +12,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     public class AzMonNewListExtensionsTests
     {
         [Theory]
-        [InlineData("http", "example.com", "8080", "/search", "q=OpenTelemetry", "http://example.com:8080/search?q=OpenTelemetry")]
-        [InlineData(null, "example.com", "8080", "/search", "q=OpenTelemetry", "example.com:8080/search?q=OpenTelemetry")]
-        [InlineData("http", null, "8080", "/search", "q=OpenTelemetry", null)]
-        [InlineData("http", "example.com", null, "/search", "q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")]
-        [InlineData("http", "example.com", "8080", null, "q=OpenTelemetry", "http://example.com:8080/?q=OpenTelemetry")]
+        [InlineData("http", "example.com", "8080", "/search", "?q=OpenTelemetry", "http://example.com:8080/search?q=OpenTelemetry")]
+        [InlineData("http", "example.com", null, "/search", "?q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")]
+        [InlineData("http", "example.com", "8080", "/", "?q=OpenTelemetry", "http://example.com:8080/?q=OpenTelemetry")]
         [InlineData("http", "example.com", "8080", "/search", null, "http://example.com:8080/search")]
-        public void GetNewRequestUrl_ReturnsCorrectUrl(string urlScheme, string serverAddress, string serverPort, string urlPath, string urlQuery, string expectedUrl)
+        public void GetNewRequestUrl_ReturnsCorrectUrl(string urlScheme, string serverAddress, string? serverPort, string urlPath, string? urlQuery, string expectedUrl)
         {
             // Arrange
             AzMonList tagObjects = AzMonList.Initialize();
@@ -28,17 +26,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeUrlPath, urlPath));
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeUrlQuery, urlQuery));
 
+            // Validate the length with the same logic from code.
+            int colonLength = serverPort == null ? 0 : 1;
+            serverPort ??= string.Empty;
+            urlQuery ??= string.Empty;
+            var length = urlScheme.Length + Uri.SchemeDelimiter.Length + serverAddress.Length + serverPort.Length + colonLength + urlPath.Length + urlQuery.Length;
+
             // Act
             string? url = tagObjects.GetNewSchemaRequestUrl();
 
             // Assert
             Assert.Equal(expectedUrl, url);
-            if (url != null)
-            {
-                // Validate the length with the same logic from code.
-                var length = (urlScheme?.Length ?? 0) + (urlScheme?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + serverAddress.Length + (serverPort?.Length > 0 ? 1 : 0) + (serverPort?.Length ?? 0) + (urlPath?.Length ?? 1) + (urlQuery?.Length > 0 ? 1 : 0) + (urlQuery?.Length ?? 0);
-                Assert.Equal(length, url.Length);
-            }
+            Assert.Equal(length, url?.Length);
         }
 
         [Theory]
