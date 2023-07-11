@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
         /// </summary>
         /// <returns></returns>
         [TestCase]
-        [RecordedTest]
+        [LiveOnly(alwaysRunLocally: false)]
         public async Task ReviveDropped()
         {
             #region Initialize
