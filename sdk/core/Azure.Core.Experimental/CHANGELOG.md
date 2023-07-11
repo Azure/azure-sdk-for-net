@@ -1,16 +1,10 @@
 # Release History
 
-## 0.1.0-preview.28 (Unreleased)
-
-### Features Added
+## 0.1.0-preview.28 (2023-07-11)
 
 ### Breaking Changes
 
 - Removed `DynamicData` type.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 0.1.0-preview.27 (2023-05-09)
 
