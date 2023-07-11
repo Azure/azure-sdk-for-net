@@ -48,9 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RequestData",
-                                BaseData = activityTagsProcessor.activityType.HasFlag(OperationType.V2)
-                                                ? new RequestData(Version, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion)
-                                                : new RequestData(Version, activity, ref activityTagsProcessor)
+                                BaseData = new RequestData(Version, activity, ref activityTagsProcessor)
                             };
                             break;
                         case TelemetryType.Dependency:
