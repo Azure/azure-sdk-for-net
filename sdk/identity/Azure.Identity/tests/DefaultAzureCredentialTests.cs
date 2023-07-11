@@ -454,10 +454,6 @@ namespace Azure.Identity.Tests
                         Assert.AreEqual("overridetenantid", tenantId);
                     }
                 }
-                //else
-                //{
-                //    Assert.Ignore("Not an MSAL credential");
-                //}
             }
         }
 
