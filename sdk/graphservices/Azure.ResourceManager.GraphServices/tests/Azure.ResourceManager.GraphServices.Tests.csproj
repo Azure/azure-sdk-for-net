@@ -13,13 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="NUnit" />
-    <PackageReference Update="NUnit3TestAdapter" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" />
-    <PackageReference Update="Moq" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>
