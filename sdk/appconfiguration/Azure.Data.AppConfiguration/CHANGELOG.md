@@ -1,19 +1,23 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.2 (2023-07-11)
 
 ### Features Added
+
 - Added configuration settings snapshot feature which allow users to create a point-in-time snapshot of their configuration store.
 
 ### Other Changes
+
 - Removed protocol methods from the `ConfigurationClient`.
 
 ## 1.3.0-beta.1 (2022-10-10)
 
 ### Features Added
+
 - Added protocol methods to `ConfigurationClient` based on [this](https://github.com/Azure/azure-rest-api-specs/blob/e01d8afe9be7633ed36db014af16d47fec01f737/specification/appconfiguration/data-plane/Microsoft.AppConfiguration/stable/1.0/appconfiguration.json) swagger definition.
 
 ### Bugs Fixed
+
 - Fixed throwing `NullReferenceException` if the value of a `SecretReferenceConfigurationSetting` is null [(#31588)](https://github.com/Azure/azure-sdk-for-net/pull/31588).
 
 ## 1.2.0 (2021-10-05)

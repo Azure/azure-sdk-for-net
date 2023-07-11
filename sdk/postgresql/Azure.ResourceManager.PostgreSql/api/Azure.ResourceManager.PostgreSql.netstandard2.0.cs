@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 }
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public static partial class ArmFlexibleServersModelFactory
+    public static partial class ArmPostgreSqlFlexibleServersModelFactory
     {
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.CapabilityBase CapabilityBase(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexbileServerCapabilityStatus? status = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexbileServerCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.FlexibleServersLogFile FlexibleServersLogFile(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), long? sizeInKb = default(long?), string typePropertiesType = null, System.Uri uri = null) { throw null; }

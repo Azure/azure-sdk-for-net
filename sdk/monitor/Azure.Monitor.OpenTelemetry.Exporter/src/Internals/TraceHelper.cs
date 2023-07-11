@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             {
                                 BaseType = "RequestData",
                                 BaseData = activityTagsProcessor.activityType.HasFlag(OperationType.V2)
-                                                ? new RequestData(Version, activity, ref activityTagsProcessor, schemaVersion: "V2")
+                                                ? new RequestData(Version, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion)
                                                 : new RequestData(Version, activity, ref activityTagsProcessor)
                             };
                             break;
@@ -173,7 +173,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        internal static string GetV2OperationName(Activity activity, string? url,  ref AzMonList MappedTags)
+        internal static string GetNewSchemaOperationName(Activity activity, string? url,  ref AzMonList MappedTags)
         {
             var httpMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRequestMethod)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpMethod))
@@ -187,7 +187,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     return $"{httpMethod} {httpRoute}";
                 }
 
-                url ??= MappedTags.GetV2RequestUrl();
+                url ??= MappedTags.GetNewSchemaRequestUrl();
                 if (url != null)
                 {
                     return $"{httpMethod} {url}";

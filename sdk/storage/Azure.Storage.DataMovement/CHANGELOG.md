@@ -8,6 +8,7 @@
 - Added support for tracking progress of transfers. See `TransferOptions.ProgressHandler` and `TransferOptions.ProgressHandlerOptions`.
 - Added `TransferManager.GetResumableTransfers` to get information about transfers that can be resumed.
 - Added support for `Transfermanager.ResumeTransferAsync` to resume a transfer.
+- Added support authorization using Azure Active Directory when using Service to Service Copy. 
 
 ### Breaking Changes
 - [BREAKING CHANGE] Altered API signatures on `TransferManager` and `DataTransfer` for pausing.
@@ -17,6 +18,7 @@
 - [BREAKING CHANGE] Combined both `TransferManager.StartTransferAsync` methods into one that accepts single or container resources. All existing calls should continue to work due to inheritence.
 - [BREAKING CHANGE] Renamed `ErrorHandlingOptions` to `ErrorHandlingBehavior`.
 - [BREAKING CHANGE] Changed type of `StorageResource.CanProduceUri` to `bool`.
+- [BREAKING CHANGE] Removed `TransferOptions.ResumeFromCheckpointId`. Use `Transfermanager.ResumeTransferAsync` to resume a transfer instead.
 
 ### Bugs Fixed
 - Fix to prevent empty strings or null to be passed as paths for `LocalFileStorageResource` and `LocalDirectoryStorageResourceContainer`.
