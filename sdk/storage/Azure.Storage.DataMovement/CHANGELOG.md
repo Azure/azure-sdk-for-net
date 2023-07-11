@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-beta.3 (Unreleased)
+## 12.0.0-beta.3 (2023-07-11)
 
 ### Features Added
 - `TransferManager` new API `PauseAllRunningTransfersAsync`.
