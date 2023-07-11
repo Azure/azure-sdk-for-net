@@ -1,0 +1,116 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/gpt-35-turbo-0613/chat/completions?api-version=2023-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "71",
+        "Content-Type": "application/json",
+        "traceparent": "00-abf7b0206e7d5c9868afd1b0362714fc-556d65aa0da7f149-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230711.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "431e734192538aea14ae8984afe25d1c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "How do I cook a bell pepper?"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "441dc2d5-dc87-4810-a6a4-96670da27be7",
+        "azureml-model-group": "online",
+        "azureml-model-session": "aoai-gpt35-05172023-3",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "1820",
+        "Content-Type": "application/json",
+        "Date": "Tue, 11 Jul 2023 20:11:42 GMT",
+        "openai-model": "gpt-35-turbo",
+        "openai-processing-ms": "6586.5047",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "431e734192538aea14ae8984afe25d1c",
+        "x-ms-region": "East US",
+        "X-Request-ID": "769db0f3-ca65-42be-845b-b89d94df1ef2"
+      },
+      "ResponseBody": {
+        "id": "chatcmpl-7bDzsDQz5c9V08nU7MaN7rHENBSVp",
+        "object": "chat.completion",
+        "created": 1689106296,
+        "model": "gpt-35-turbo",
+        "prompt_annotations": [
+          {
+            "prompt_index": 0,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "There are several ways to cook a bell pepper:\n\n1. Roasting: Preheat the oven to 400\u00B0F. Cut the bell pepper in half and remove the seeds and stem. Place the pepper halves on a baking sheet, skin-side up. Roast for 20-25 minutes or until the skin is charred and the flesh is tender.\n\n2. Grilling: Heat your grill to medium-high heat. Cut the bell pepper in half and remove the seeds and stem. Grill the pepper halves for 5-7 minutes on each side or until they are charred and tender.\n\n3. Saut\u00E9ing: Cut the bell pepper into thin strips. Heat olive oil in a large skillet over medium-high heat. Add the peppers to the skillet and cook for 5-7 minutes or until they are tender.\n\n4. Stir-frying: Cut the bell pepper into thin strips. Heat oil in a wok or large skillet over high heat. Add the peppers and stir-fry for 2-3 minutes or until they are slightly softened.\n\n5. Boiling: Cut the bell pepper into small pieces. Bring a pot of salted water to a boil. Add the peppers to the boiling water and cook for 2-3 minutes or until they are tender. Drain and serve."
+            },
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
+        "usage": {
+          "completion_tokens": 261,
+          "prompt_tokens": 16,
+          "total_tokens": 277
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "CHAT_COMPLETIONS_DEPLOYMENT_NAME": "gpt-35-turbo",
+    "COMPLETIONS_DEPLOYMENT_NAME": "text-davinci-002",
+    "EMBEDDINGS_DEPLOYMENT_NAME": "text-embedding-ada-002",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "983254301",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

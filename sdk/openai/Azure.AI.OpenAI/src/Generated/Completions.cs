@@ -40,6 +40,7 @@ namespace Azure.AI.OpenAI
 
             Id = id;
             InternalCreatedSecondsAfterUnixEpoch = internalCreatedSecondsAfterUnixEpoch;
+            PromptFilterResults = new ChangeTrackingList<PromptFilterResult>();
             Choices = choices.ToList();
             Usage = usage;
         }
@@ -50,22 +51,32 @@ namespace Azure.AI.OpenAI
         /// The first timestamp associated with generation activity for this completions response,
         /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
         /// </param>
+        /// <param name="promptFilterResults">
+        /// Content filtering results for zero or more prompts in the request. In a streaming request,
+        /// results for different prompts may arrive at different times or in different orders.
+        /// </param>
         /// <param name="choices">
         /// The collection of completions choices associated with this completions response.
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        internal Completions(string id, int internalCreatedSecondsAfterUnixEpoch, IReadOnlyList<Choice> choices, CompletionsUsage usage)
+        internal Completions(string id, int internalCreatedSecondsAfterUnixEpoch, IReadOnlyList<PromptFilterResult> promptFilterResults, IReadOnlyList<Choice> choices, CompletionsUsage usage)
         {
             Id = id;
             InternalCreatedSecondsAfterUnixEpoch = internalCreatedSecondsAfterUnixEpoch;
+            PromptFilterResults = promptFilterResults;
             Choices = choices;
             Usage = usage;
         }
 
         /// <summary> A unique identifier associated with this completions response. </summary>
         public string Id { get; }
+        /// <summary>
+        /// Content filtering results for zero or more prompts in the request. In a streaming request,
+        /// results for different prompts may arrive at different times or in different orders.
+        /// </summary>
+        public IReadOnlyList<PromptFilterResult> PromptFilterResults { get; }
         /// <summary>
         /// The collection of completions choices associated with this completions response.
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.

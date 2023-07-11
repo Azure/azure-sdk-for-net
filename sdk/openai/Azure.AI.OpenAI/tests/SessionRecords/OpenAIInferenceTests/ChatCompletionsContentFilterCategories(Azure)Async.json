@@ -1,0 +1,116 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/gpt-35-turbo-0613/chat/completions?api-version=2023-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "71",
+        "Content-Type": "application/json",
+        "traceparent": "00-2496ce2f0447b881b732a8d9d294deda-af6df23f0acd5e38-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230711.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "286750588600f9afc7e64aa4b5dca4a9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "How do I cook a bell pepper?"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "a083a92e-e977-4182-95d2-e6c70e20f488",
+        "azureml-model-group": "online",
+        "azureml-model-session": "aoai-gpt35-05172023-3",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "1530",
+        "Content-Type": "application/json",
+        "Date": "Tue, 11 Jul 2023 20:14:22 GMT",
+        "openai-model": "gpt-35-turbo",
+        "openai-processing-ms": "6789.6788",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "286750588600f9afc7e64aa4b5dca4a9",
+        "x-ms-region": "East US",
+        "X-Request-ID": "09bf3bdc-9d07-426c-97a5-31067db8a2c9"
+      },
+      "ResponseBody": {
+        "id": "chatcmpl-7bE2S0lcee3iDu3C5nLguj8OOGXvB",
+        "object": "chat.completion",
+        "created": 1689106456,
+        "model": "gpt-35-turbo",
+        "prompt_annotations": [
+          {
+            "prompt_index": 0,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Here\u0027s a simple recipe for roasting bell peppers:\n\n1. Preheat your oven to 425\u00B0F.\n2. Wash the bell pepper(s) and dry them off with a towel.\n3. Cut the top off the bell pepper and slice it in half lengthwise. Remove the seeds and the membrane.\n4. Brush the pepper halves with olive oil and sprinkle with salt and pepper.\n5. Place the pepper halves on a baking sheet, cut-side down.\n6. Roast the peppers for about 20-25 minutes until the skin is blistered and starting to blacken.\n7. Remove the peppers from the oven and let them cool for a few minutes.\n8. Once they are cool enough to handle, you can remove the skin by gently peeling it off.\n9. Slice the pepper as desired and serve.\n\nYou can also grill, saut\u00E9, or stuff bell peppers for different cooking methods."
+            },
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
+        "usage": {
+          "completion_tokens": 185,
+          "prompt_tokens": 16,
+          "total_tokens": 201
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "CHAT_COMPLETIONS_DEPLOYMENT_NAME": "gpt-35-turbo",
+    "COMPLETIONS_DEPLOYMENT_NAME": "text-davinci-002",
+    "EMBEDDINGS_DEPLOYMENT_NAME": "text-embedding-ada-002",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "978675071",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

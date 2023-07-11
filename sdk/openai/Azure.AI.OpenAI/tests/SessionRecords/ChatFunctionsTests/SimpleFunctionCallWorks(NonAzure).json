@@ -1,0 +1,419 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.openai.com/v1/chat/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "647",
+        "Content-Type": "application/json",
+        "traceparent": "00-e5d7d18b3197bc6e9785352906f6ac00-082b839a50058bad-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230710.1 (.NET 6.0.18; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "1c5a85f7badaf059e73b8c88b8859899",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant."
+          },
+          {
+            "role": "user",
+            "content": "What should I wear in Honolulu next Thursday?"
+          }
+        ],
+        "functions": [
+          {
+            "name": "get_future_temperature",
+            "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "locationName": {
+                  "type": "string",
+                  "description": "the name or brief description of a location for weather information"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "the day, month, and year for which to retrieve weather information"
+                }
+              }
+            }
+          }
+        ],
+        "max_tokens": 512,
+        "model": "gpt-3.5-turbo"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": "h3=\u0022:443\u0022",
+        "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7e4d1febc847680b-SEA",
+        "Connection": "keep-alive",
+        "Content-Length": "584",
+        "Content-Type": "application/json",
+        "Date": "Tue, 11 Jul 2023 01:03:06 GMT",
+        "openai-model": "gpt-3.5-turbo-0613",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "659",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ratelimit-limit-requests": "3500",
+        "x-ratelimit-limit-tokens": "90000",
+        "x-ratelimit-remaining-requests": "3499",
+        "x-ratelimit-remaining-tokens": "89466",
+        "x-ratelimit-reset-requests": "17ms",
+        "x-ratelimit-reset-tokens": "355ms",
+        "X-Request-ID": "bc1ee6d3df5b94a8b69dab595be0a13e"
+      },
+      "ResponseBody": {
+        "id": "chatcmpl-7aw4POn39E3bx8AFlj1TIiOSvDmu2",
+        "object": "chat.completion",
+        "created": 1689037385,
+        "model": "gpt-3.5-turbo-0613",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": null,
+              "function_call": {
+                "name": "get_future_temperature",
+                "arguments": "{\n  \u0022locationName\u0022: \u0022Honolulu\u0022,\n  \u0022date\u0022: \u00222021-12-16\u0022\n}"
+              }
+            },
+            "finish_reason": "function_call"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 108,
+          "completion_tokens": 30,
+          "total_tokens": 138
+        }
+      }
+    },
+    {
+      "RequestUri": "https://api.openai.com/v1/chat/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "647",
+        "Content-Type": "application/json",
+        "traceparent": "00-e5d7d18b3197bc6e9785352906f6ac00-082b839a50058bad-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230710.1 (.NET 6.0.18; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "1c5a85f7badaf059e73b8c88b8859899",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant."
+          },
+          {
+            "role": "user",
+            "content": "What should I wear in Honolulu next Thursday?"
+          }
+        ],
+        "functions": [
+          {
+            "name": "get_future_temperature",
+            "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "locationName": {
+                  "type": "string",
+                  "description": "the name or brief description of a location for weather information"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "the day, month, and year for which to retrieve weather information"
+                }
+              }
+            }
+          }
+        ],
+        "max_tokens": 512,
+        "model": "gpt-3.5-turbo"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": "h3=\u0022:443\u0022",
+        "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7e4d1ff09d32680b-SEA",
+        "Connection": "keep-alive",
+        "Content-Length": "584",
+        "Content-Type": "application/json",
+        "Date": "Tue, 11 Jul 2023 01:03:07 GMT",
+        "openai-model": "gpt-3.5-turbo-0613",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "738",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ratelimit-limit-requests": "3500",
+        "x-ratelimit-limit-tokens": "90000",
+        "x-ratelimit-remaining-requests": "3499",
+        "x-ratelimit-remaining-tokens": "89467",
+        "x-ratelimit-reset-requests": "17ms",
+        "x-ratelimit-reset-tokens": "355ms",
+        "X-Request-ID": "1a2f0b132a63139a7f65ca055396b5bb"
+      },
+      "ResponseBody": {
+        "id": "chatcmpl-7aw4QwEcqYrbsrJrRWtraAgRutnn8",
+        "object": "chat.completion",
+        "created": 1689037386,
+        "model": "gpt-3.5-turbo-0613",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": null,
+              "function_call": {
+                "name": "get_future_temperature",
+                "arguments": "{\n  \u0022locationName\u0022: \u0022Honolulu\u0022,\n  \u0022date\u0022: \u00222022-06-30\u0022\n}"
+              }
+            },
+            "finish_reason": "function_call"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 108,
+          "completion_tokens": 30,
+          "total_tokens": 138
+        }
+      }
+    },
+    {
+      "RequestUri": "https://api.openai.com/v1/chat/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "989",
+        "Content-Type": "application/json",
+        "traceparent": "00-f75a61e72aa6a8d171ad6d20fce8d2c9-0b8fbefb148319d5-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230710.1 (.NET 6.0.18; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "83975ea62786a42c647b688621e40405",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant."
+          },
+          {
+            "role": "user",
+            "content": "What should I wear in Honolulu next Thursday?"
+          },
+          {
+            "role": "assistant",
+            "content": null,
+            "function_call": {
+              "name": "get_future_temperature",
+              "arguments": "{\n  \u0022locationName\u0022: \u0022Honolulu\u0022,\n  \u0022date\u0022: \u00222022-06-30\u0022\n}"
+            }
+          },
+          {
+            "role": "function",
+            "content": "{\u0022temperature\u0022:\u002231\u0022,\u0022unit\u0022:\u0022celsius\u0022}",
+            "name": "get_future_temperature"
+          }
+        ],
+        "functions": [
+          {
+            "name": "get_future_temperature",
+            "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "locationName": {
+                  "type": "string",
+                  "description": "the name or brief description of a location for weather information"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "the day, month, and year for which to retrieve weather information"
+                }
+              }
+            }
+          }
+        ],
+        "max_tokens": 512,
+        "model": "gpt-3.5-turbo"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": "h3=\u0022:443\u0022",
+        "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7e4d1ff5fafc680b-SEA",
+        "Connection": "keep-alive",
+        "Content-Length": "680",
+        "Content-Type": "application/json",
+        "Date": "Tue, 11 Jul 2023 01:03:08 GMT",
+        "openai-model": "gpt-3.5-turbo-0613",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "1128",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ratelimit-limit-requests": "3500",
+        "x-ratelimit-limit-tokens": "90000",
+        "x-ratelimit-remaining-requests": "3499",
+        "x-ratelimit-remaining-tokens": "89455",
+        "x-ratelimit-reset-requests": "17ms",
+        "x-ratelimit-reset-tokens": "362ms",
+        "X-Request-ID": "2046ffa3a0754b03fc782f50d47103d1"
+      },
+      "ResponseBody": {
+        "id": "chatcmpl-7aw4R49VQRzuumUpK4o9TzF1gQs48",
+        "object": "chat.completion",
+        "created": 1689037387,
+        "model": "gpt-3.5-turbo-0613",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "In Honolulu next Thursday, the anticipated temperature is 31 degrees Celsius. It would be a good idea to wear light and breathable clothing such as shorts, t-shirts, and dresses. Don\u0027t forget to wear sunscreen and a hat to protect yourself from the sun. Enjoy your time in Honolulu!"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 157,
+          "completion_tokens": 59,
+          "total_tokens": 216
+        }
+      }
+    },
+    {
+      "RequestUri": "https://api.openai.com/v1/chat/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "989",
+        "Content-Type": "application/json",
+        "traceparent": "00-f75a61e72aa6a8d171ad6d20fce8d2c9-0b8fbefb148319d5-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230710.1 (.NET 6.0.18; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "83975ea62786a42c647b688621e40405",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant."
+          },
+          {
+            "role": "user",
+            "content": "What should I wear in Honolulu next Thursday?"
+          },
+          {
+            "role": "assistant",
+            "content": null,
+            "function_call": {
+              "name": "get_future_temperature",
+              "arguments": "{\n  \u0022locationName\u0022: \u0022Honolulu\u0022,\n  \u0022date\u0022: \u00222022-06-30\u0022\n}"
+            }
+          },
+          {
+            "role": "function",
+            "content": "{\u0022temperature\u0022:\u002231\u0022,\u0022unit\u0022:\u0022celsius\u0022}",
+            "name": "get_future_temperature"
+          }
+        ],
+        "functions": [
+          {
+            "name": "get_future_temperature",
+            "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "locationName": {
+                  "type": "string",
+                  "description": "the name or brief description of a location for weather information"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "the day, month, and year for which to retrieve weather information"
+                }
+              }
+            }
+          }
+        ],
+        "max_tokens": 512,
+        "model": "gpt-3.5-turbo"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": "h3=\u0022:443\u0022",
+        "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7e4d1ffe3bcc680b-SEA",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Tue, 11 Jul 2023 01:03:09 GMT",
+        "openai-model": "gpt-3.5-turbo-0613",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "1288",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ratelimit-limit-requests": "3500",
+        "x-ratelimit-limit-tokens": "90000",
+        "x-ratelimit-remaining-requests": "3499",
+        "x-ratelimit-remaining-tokens": "89455",
+        "x-ratelimit-reset-requests": "17ms",
+        "x-ratelimit-reset-tokens": "362ms",
+        "X-Request-ID": "695ad87007b91cdf24f7f5021eb84d3b"
+      },
+      "ResponseBody": {
+        "id": "chatcmpl-7aw4TkftCIwJsjUoRJI9tlHjRY1tz",
+        "object": "chat.completion",
+        "created": 1689037389,
+        "model": "gpt-3.5-turbo-0613",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "The anticipated temperature in Honolulu next Thursday is 31\u00B0C. It will be quite warm, so you should consider wearing lightweight and breathable clothing such as shorts, t-shirts, dresses, and sandals. Don\u0027t forget to wear sunscreen and stay hydrated throughout the day."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 157,
+          "completion_tokens": 53,
+          "total_tokens": 210
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": "gpt-35-turbo",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-embedding-ada-002",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "1747117963",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

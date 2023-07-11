@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.AI.OpenAI
 {
@@ -46,6 +47,70 @@ namespace Azure.AI.OpenAI
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
             return new EmbeddingsUsage(promptTokens, totalTokens);
+        }
+
+        /// <summary> Initializes a new instance of PromptFilterResult. </summary>
+        /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
+        /// <param name="contentFilterResults"> Content filtering results for this prompt. </param>
+        /// <returns> A new <see cref="OpenAI.PromptFilterResult"/> instance for mocking. </returns>
+        public static PromptFilterResult PromptFilterResult(int promptIndex = default, ContentFilterResults contentFilterResults = null)
+        {
+            return new PromptFilterResult(promptIndex, contentFilterResults);
+        }
+
+        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <param name="sexual">
+        /// Describes language related to anatomical organs and genitals, romantic relationships,
+        ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including
+        ///  those portrayed as an assault or a forced sexual violent act against one’s will,
+        ///  prostitution, pornography, and abuse.
+        /// </param>
+        /// <param name="violence">
+        /// Describes language related to physical actions intended to hurt, injure, damage, or
+        /// kill someone or something; describes weapons, etc.
+        /// </param>
+        /// <param name="hate">
+        /// Describes language attacks or uses that include pejorative or discriminatory language
+        /// with reference to a person or identity group on the basis of certain differentiating
+        /// attributes of these groups including but not limited to race, ethnicity, nationality,
+        /// gender identity and expression, sexual orientation, religion, immigration status, ability
+        /// status, personal appearance, and body size.
+        /// </param>
+        /// <param name="selfHarm">
+        /// Describes language related to physical actions intended to purposely hurt, injure,
+        /// or damage one’s body, or kill oneself.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sexual"/>, <paramref name="violence"/>, <paramref name="hate"/> or <paramref name="selfHarm"/> is null. </exception>
+        /// <returns> A new <see cref="OpenAI.ContentFilterResults"/> instance for mocking. </returns>
+        public static ContentFilterResults ContentFilterResults(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null)
+        {
+            if (sexual == null)
+            {
+                throw new ArgumentNullException(nameof(sexual));
+            }
+            if (violence == null)
+            {
+                throw new ArgumentNullException(nameof(violence));
+            }
+            if (hate == null)
+            {
+                throw new ArgumentNullException(nameof(hate));
+            }
+            if (selfHarm == null)
+            {
+                throw new ArgumentNullException(nameof(selfHarm));
+            }
+
+            return new ContentFilterResults(sexual, violence, hate, selfHarm);
+        }
+
+        /// <summary> Initializes a new instance of ContentFilterResult. </summary>
+        /// <param name="severity"> Ratings for the intensity and risk level of filtered content. </param>
+        /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <returns> A new <see cref="OpenAI.ContentFilterResult"/> instance for mocking. </returns>
+        public static ContentFilterResult ContentFilterResult(ContentFilterSeverity severity = default, bool filtered = default)
+        {
+            return new ContentFilterResult(severity, filtered);
         }
 
         /// <summary> Initializes a new instance of Choice. </summary>
@@ -93,6 +158,20 @@ namespace Azure.AI.OpenAI
         public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default)
         {
             return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
+        }
+
+        /// <summary> Initializes a new instance of ImageLocation. </summary>
+        /// <param name="url"> The URL that provides temporary access to download the generated image. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        /// <returns> A new <see cref="OpenAI.ImageLocation"/> instance for mocking. </returns>
+        public static ImageLocation ImageLocation(Uri url = null)
+        {
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+
+            return new ImageLocation(url);
         }
     }
 }

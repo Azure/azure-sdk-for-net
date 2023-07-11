@@ -41,6 +41,7 @@ namespace Azure.AI.OpenAI
             Id = id;
             InternalCreatedSecondsAfterUnixEpoch = internalCreatedSecondsAfterUnixEpoch;
             Choices = choices.ToList();
+            PromptFilterResults = new ChangeTrackingList<PromptFilterResult>();
             Usage = usage;
         }
 
@@ -55,12 +56,17 @@ namespace Azure.AI.OpenAI
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
+        /// <param name="promptFilterResults">
+        /// Content filtering results for zero or more prompts in the request. In a streaming request,
+        /// results for different prompts may arrive at different times or in different orders.
+        /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        internal ChatCompletions(string id, int internalCreatedSecondsAfterUnixEpoch, IReadOnlyList<ChatChoice> choices, CompletionsUsage usage)
+        internal ChatCompletions(string id, int internalCreatedSecondsAfterUnixEpoch, IReadOnlyList<ChatChoice> choices, IReadOnlyList<PromptFilterResult> promptFilterResults, CompletionsUsage usage)
         {
             Id = id;
             InternalCreatedSecondsAfterUnixEpoch = internalCreatedSecondsAfterUnixEpoch;
             Choices = choices;
+            PromptFilterResults = promptFilterResults;
             Usage = usage;
         }
 
@@ -72,6 +78,11 @@ namespace Azure.AI.OpenAI
         /// Token limits and other settings may limit the number of choices generated.
         /// </summary>
         public IReadOnlyList<ChatChoice> Choices { get; }
+        /// <summary>
+        /// Content filtering results for zero or more prompts in the request. In a streaming request,
+        /// results for different prompts may arrive at different times or in different orders.
+        /// </summary>
+        public IReadOnlyList<PromptFilterResult> PromptFilterResults { get; }
         /// <summary> Usage information for tokens processed and generated as part of this completions operation. </summary>
         public CompletionsUsage Usage { get; }
     }

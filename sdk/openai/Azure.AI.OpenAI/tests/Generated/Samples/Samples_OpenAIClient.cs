@@ -75,9 +75,19 @@ namespace Azure.AI.OpenAI.Samples
     new ChatMessage(ChatRole.System)
 {
         Content = "<Content>",
+        Name = "<Name>",
+        FunctionCall = new FunctionCall("<name>", "<arguments>"),
     }
             })
             {
+                Functions =
+{
+        new FunctionDefinition("<name>")
+{
+            Description = "<Description>",
+            Parameters = BinaryData.FromString("<your binary data content>"),
+        }
+    },
                 MaxTokens = 1234,
                 Temperature = 3.14f,
                 NucleusSamplingFactor = 3.14f,

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview",
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/gpt-35-turbo-0613/chat/completions?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
-        "Content-Length": "276",
+        "Content-Length": "259",
         "Content-Type": "application/json",
-        "traceparent": "00-42823de3a2c644e45be266b4d0464609-f6e513a38ea30ef1-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "af29fa1dbc0870df50c26e7cd3828e3e",
+        "traceparent": "00-549e233d4dd5f8981980bf12d467a98e-e20b00c597aded89-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230710.1 (.NET 6.0.18; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "9f287efd39048a7a8e2bc54684a0495c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -31,56 +31,57 @@
             "role": "user",
             "content": "What temperature should I bake pizza at?"
           }
-        ],
-        "max_tokens": 512
+        ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "2a3932b4-1c98-4422-9ead-5b4f662c926f",
+        "apim-request-id": "7f033af1-9201-4a0a-999f-2b36486a8ce0",
+        "azureml-model-group": "online",
+        "azureml-model-session": "aoai-gpt35-05242023",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "571",
+        "Content-Length": "897",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 Mar 2023 00:43:25 GMT",
+        "Date": "Tue, 11 Jul 2023 16:01:36 GMT",
         "openai-model": "gpt-35-turbo",
-        "openai-processing-ms": "1459.2519",
+        "openai-processing-ms": "5279.2869",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "af29fa1dbc0870df50c26e7cd3828e3e",
+        "x-ms-client-request-id": "9f287efd39048a7a8e2bc54684a0495c",
         "x-ms-region": "East US",
-        "X-Request-ID": "afedf869-55e2-49de-be14-2e43021e6d4b"
+        "X-Request-ID": "11942c2f-9ba1-4cdc-87e8-4d5c112eefeb"
       },
       "ResponseBody": {
-        "id": "chatcmpl-6wKNvHTG53UWMPwJDQaxTru3yfYNy",
+        "id": "chatcmpl-7bA5r7qgPcyeFVDoWGk3PMIRcoLGB",
         "object": "chat.completion",
-        "created": 1679359403,
+        "created": 1689091291,
         "model": "gpt-35-turbo",
-        "usage": {
-          "prompt_tokens": 51,
-          "completion_tokens": 58,
-          "total_tokens": 109
-        },
         "choices": [
           {
+            "index": 0,
+            "finish_reason": "stop",
             "message": {
               "role": "assistant",
-              "content": "The recommended temperature for baking pizza is 425-450 degrees Fahrenheit (218-232 degrees Celsius). However, the exact temperature and baking time may vary depending on the type of pizza and the thickness of the crust. Be sure to follow the instructions on your pizza recipe or packaging."
-            },
-            "finish_reason": "stop",
-            "index": 0
+              "content": "The temperature you should bake pizza at really depends on the type of crust and toppings you are using. \n\nGenerally speaking, the ideal temperature range for baking pizza is between 425\u00B0F and 450\u00B0F (about 218\u00B0C and 232\u00B0C). A hotter oven will cook your pizza faster, while a cooler oven will allow it to bake more slowly, giving the cheese and other toppings more time to melt and meld together with the sauce.\n\nHowever, if you are using a pre-made pizza crust or frozen pizza, be sure to follow the instructions on the package as they may recommend a specific temperature and cooking time for best results."
+            }
           }
-        ]
+        ],
+        "usage": {
+          "completion_tokens": 126,
+          "prompt_tokens": 52,
+          "total_tokens": 178
+        }
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": "gpt-35-turbo",
-    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
-    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "CHAT_COMPLETIONS_DEPLOYMENT_NAME": "gpt-35-turbo",
+    "COMPLETIONS_DEPLOYMENT_NAME": "text-davinci-002",
+    "EMBEDDINGS_DEPLOYMENT_NAME": "text-embedding-ada-002",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1825443454",
+    "RandomSeed": "1156956710",
     "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }
