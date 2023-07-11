@@ -356,14 +356,15 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Gets the list of all purchased phone numbers. </summary>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbersAsync(int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
             scope.Start();
             try
             {
-                return InternalClient.ListPhoneNumbersAsync(skip: null, top: null, cancellationToken);
+                return InternalClient.ListPhoneNumbersAsync(skip: null, top: pageSizeHint, cancellationToken);
             }
             catch (Exception e)
             {
@@ -373,14 +374,15 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Gets the list of all purchased phone numbers. </summary>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbers(CancellationToken cancellationToken = default)
+        public virtual Pageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbers(int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
             scope.Start();
             try
             {
-                return InternalClient.ListPhoneNumbers(skip: null, top: null, cancellationToken);
+                return InternalClient.ListPhoneNumbers(skip: null, top: pageSizeHint, cancellationToken);
             }
             catch (Exception e)
             {
@@ -390,14 +392,15 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Lists the available countries from which to purchase phone numbers. </summary>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PhoneNumberCountry> GetAvailableCountriesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumberCountry> GetAvailableCountriesAsync(int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
             scope.Start();
             try
             {
-                return InternalClient.ListAvailableCountriesAsync(skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken);
+                return InternalClient.ListAvailableCountriesAsync(skip: null, maxPageSize: pageSizeHint, acceptLanguage: _acceptedLanguage, cancellationToken);
             }
             catch (Exception e)
             {
@@ -407,14 +410,15 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Lists the available countries from which to purchase phone numbers. </summary>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PhoneNumberCountry> GetAvailableCountries(CancellationToken cancellationToken = default)
+        public virtual Pageable<PhoneNumberCountry> GetAvailableCountries(int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableCountries)}");
             scope.Start();
             try
             {
-                return InternalClient.ListAvailableCountries(skip: null, maxPageSize: null, acceptLanguage: _acceptedLanguage, cancellationToken);
+                return InternalClient.ListAvailableCountries(skip: null, maxPageSize: pageSizeHint, acceptLanguage: _acceptedLanguage, cancellationToken);
             }
             catch (Exception e)
             {
@@ -426,15 +430,16 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers. </summary>
         /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="administrativeDivision"> The administrative division within the country within which to list localities. This is also known as the state or province. </param>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PhoneNumberLocality> GetAvailableLocalitiesAsync(string twoLetterIsoCountryName, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumberLocality> GetAvailableLocalitiesAsync(string twoLetterIsoCountryName, string administrativeDivision = null, int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
             Console.WriteLine(scope.ToString());
             scope.Start();
             try
             {
-                return InternalClient.ListAvailableLocalitiesAsync(twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
+                return InternalClient.ListAvailableLocalitiesAsync(twoLetterIsoCountryName, skip: null, maxPageSize: pageSizeHint, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
             }
             catch (Exception e)
             {
@@ -446,14 +451,15 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers. </summary>
         /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="administrativeDivision"> The administrative division within the country within which to list localities. This is also known as the state or province. </param>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PhoneNumberLocality> GetAvailableLocalities(string twoLetterIsoCountryName, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PhoneNumberLocality> GetAvailableLocalities(string twoLetterIsoCountryName, string administrativeDivision = null, int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
             scope.Start();
             try
             {
-                return InternalClient.ListAvailableLocalities(twoLetterIsoCountryName, skip: null, maxPageSize: null, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
+                return InternalClient.ListAvailableLocalities(twoLetterIsoCountryName, skip: null, maxPageSize: pageSizeHint, administrativeDivision, acceptLanguage: _acceptedLanguage, cancellationToken);
             }
             catch (Exception e)
             {
@@ -464,29 +470,20 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>
         /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PhoneNumberAreaCode> GetAvailableAreaCodesTollFreeAsync(string twoLetterIsoCountryName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumberAreaCode> GetAvailableAreaCodesTollFreeAsync(string twoLetterIsoCountryName, int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
-            return GetAvailableAreaCodesAsync(twoLetterIsoCountryName, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, null, null, cancellationToken);
+            return GetAvailableAreaCodesAsync(twoLetterIsoCountryName, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, null, null, pageSizeHint, cancellationToken);
         }
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>
         /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PhoneNumberAreaCode>GetAvailableAreaCodesTollFree(string twoLetterIsoCountryName, CancellationToken cancellationToken = default)
+        public virtual Pageable<PhoneNumberAreaCode>GetAvailableAreaCodesTollFree(string twoLetterIsoCountryName, int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
-            return GetAvailableAreaCodes(twoLetterIsoCountryName, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, null, null, cancellationToken);
-        }
-
-        /// <summary> Lists the available area codes within a given country and locality. </summary>
-        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
-        /// <param name="locality"> The locality in which to list area codes. This is also known as the state or province. </param>
-        /// <param name="administrativeDivision"> Optionally, the administrative division of the locality. This is also known as the state or province. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PhoneNumberAreaCode> GetAvailableAreaCodesGeographicAsync(string twoLetterIsoCountryName, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
-        {
-            return GetAvailableAreaCodesAsync(twoLetterIsoCountryName, PhoneNumberType.Geographic, phoneNumberAssignmentType, locality, administrativeDivision, cancellationToken);
+            return GetAvailableAreaCodes(twoLetterIsoCountryName, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, null, null, pageSizeHint, cancellationToken);
         }
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>
@@ -494,24 +491,38 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
         /// <param name="locality"> The locality in which to list area codes. This is also known as the state or province. </param>
         /// <param name="administrativeDivision"> Optionally, the administrative division of the locality. This is also known as the state or province. </param>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PhoneNumberAreaCode> GetAvailableAreaCodesGeographic(string twoLetterIsoCountryName, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumberAreaCode> GetAvailableAreaCodesGeographicAsync(string twoLetterIsoCountryName, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
-            return GetAvailableAreaCodes(twoLetterIsoCountryName, PhoneNumberType.Geographic, phoneNumberAssignmentType, locality, administrativeDivision, cancellationToken);
+            return GetAvailableAreaCodesAsync(twoLetterIsoCountryName, PhoneNumberType.Geographic, phoneNumberAssignmentType, locality, administrativeDivision, pageSizeHint, cancellationToken);
+        }
+
+        /// <summary> Lists the available area codes within a given country and locality. </summary>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
+        /// <param name="locality"> The locality in which to list area codes. This is also known as the state or province. </param>
+        /// <param name="administrativeDivision"> Optionally, the administrative division of the locality. This is also known as the state or province. </param>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<PhoneNumberAreaCode> GetAvailableAreaCodesGeographic(string twoLetterIsoCountryName, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, int? pageSizeHint = null, CancellationToken cancellationToken = default)
+        {
+            return GetAvailableAreaCodes(twoLetterIsoCountryName, PhoneNumberType.Geographic, phoneNumberAssignmentType, locality, administrativeDivision, pageSizeHint, cancellationToken);
         }
 
         /// <summary> Lists the available offerings in the given country. </summary>
         /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="phoneNumberType"> The type of phone numbers to search for. </param>
         /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PhoneNumberOffering> GetAvailableOfferingsAsync(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? phoneNumberAssignmentType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PhoneNumberOffering> GetAvailableOfferingsAsync(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? phoneNumberAssignmentType = null, int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
             scope.Start();
             try
             {
-                return InternalClient.ListOfferingsAsync(twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
+                return InternalClient.ListOfferingsAsync(twoLetterIsoCountryName, skip: null, maxPageSize: pageSizeHint, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
             }
             catch (Exception e)
             {
@@ -524,14 +535,15 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="phoneNumberType"> The type of phone numbers to search for. </param>
         /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PhoneNumberOffering> GetAvailableOfferings(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? phoneNumberAssignmentType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PhoneNumberOffering> GetAvailableOfferings(string twoLetterIsoCountryName, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? phoneNumberAssignmentType = null, int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableOfferings)}");
             scope.Start();
             try
             {
-                return InternalClient.ListOfferings(twoLetterIsoCountryName, skip: null, maxPageSize: null, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
+                return InternalClient.ListOfferings(twoLetterIsoCountryName, skip: null, maxPageSize: pageSizeHint, phoneNumberType, phoneNumberAssignmentType, acceptLanguage: _acceptedLanguage, cancellationToken);
             }
             catch (Exception e)
             {
@@ -546,8 +558,9 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
         /// <param name="locality"> The locality in which to list area codes. This is also known as the state or province. </param>
         /// <param name="administrativeDivision"> Optionally, the administrative division of the locality. This is also known as the state or province. </param>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private AsyncPageable<PhoneNumberAreaCode> GetAvailableAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        private AsyncPageable<PhoneNumberAreaCode> GetAvailableAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
             var operationName = "";
             if (phoneNumberType == "geographic")
@@ -562,7 +575,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                return InternalClient.ListAreaCodesAsync(twoLetterIsoCountryName, phoneNumberType ,null, null, phoneNumberAssignmentType, locality, administrativeDivision, _acceptedLanguage, cancellationToken);
+                return InternalClient.ListAreaCodesAsync(twoLetterIsoCountryName, phoneNumberType ,null, pageSizeHint, phoneNumberAssignmentType, locality, administrativeDivision, _acceptedLanguage, cancellationToken);
             }
             catch (Exception e)
             {
@@ -577,8 +590,9 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
         /// <param name="locality"> The locality in which to list area codes. This is also known as the state or province. </param>
         /// <param name="administrativeDivision"> Optionally, the administrative division of the locality. This is also known as the state or province. </param>
+        /// <param name="pageSizeHint">The number of elements in the page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private Pageable<PhoneNumberAreaCode> GetAvailableAreaCodes(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        private Pageable<PhoneNumberAreaCode> GetAvailableAreaCodes(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, int? pageSizeHint = null, CancellationToken cancellationToken = default)
         {
             var operationName = "";
             if (phoneNumberType == "geographic")
@@ -593,7 +607,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                return InternalClient.ListAreaCodes(twoLetterIsoCountryName, phoneNumberType, null, null, phoneNumberAssignmentType, locality, administrativeDivision, _acceptedLanguage, cancellationToken);
+                return InternalClient.ListAreaCodes(twoLetterIsoCountryName, phoneNumberType, null, pageSizeHint, phoneNumberAssignmentType, locality, administrativeDivision, _acceptedLanguage, cancellationToken);
             }
             catch (Exception e)
             {
