@@ -39,11 +39,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeServerAddress, "www.foo.bar");
             activity.SetTag(SemanticConventions.AttributeUrlPath, "/search");
             activity.SetTag(SemanticConventions.AttributeHttpResponseStatusCode, null);
-            activity.SetTag("foo", "bar");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal("GET /search", requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
@@ -52,38 +51,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
             Assert.False(requestData.Success);
             Assert.Null(requestData.Source);
-            Assert.True(requestData.Properties.Count == 1);
-            Assert.Equal("bar", requestData.Properties["foo"]);
+            Assert.True(requestData.Properties.Count == 0);
             Assert.True(requestData.Measurements.Count == 0);
         }
 
-        public static IEnumerable<object?[]> HttpStatusCodeData()
+        [Theory]
+        [InlineData("200")]
+        [InlineData(null)]
+        public void ValidateHttpRequestDataResponseCode(string httpStatusCode)
         {
-            yield return new object?[] { "200", "200" };
-            yield return new object?[] { null, "0" };
-            yield return new object?[] { "", "" };
-            yield return new object?[] { new string('a', 2000), new string('a', 1024) };
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(ValidateHttpRequestDataResponseCode)).Build();
+            using var activitySource = new ActivitySource(nameof(ValidateHttpRequestDataResponseCode));
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
+            activity.Stop();
+
+            var httpResponseCode = httpStatusCode ?? "0";
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpResponseStatusCode, httpStatusCode);
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            Assert.Equal(httpResponseCode, requestData.ResponseCode);
         }
 
         [Theory]
-        [MemberData(nameof(HttpStatusCodeData))]
-        public void ValidateHttpRequestDataResponseCode(string httpStatusCode, string expectedResult)
-        {
-            AzMonList tagObjects = AzMonList.Initialize();
-            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpResponseStatusCode, httpStatusCode));
-            Assert.Equal(expectedResult, RequestData.GetResponseCode(ref tagObjects));
-        }
-
-        [Theory]
-        [InlineData("200", OperationType.Http, true)]
-        [InlineData("400", OperationType.Http, false)]
-        [InlineData("500", OperationType.Http, false)]
-        [InlineData("0", OperationType.Http, false)]
-        [InlineData(null, OperationType.Http, true)]
-        [InlineData("", OperationType.Http, true)]
-        [InlineData("someStatusCode", OperationType.Unknown, false)] // Activity status is set to error in the test code for validation.
-        [InlineData("someStatusCode", OperationType.Messaging, true)]
-        internal void ValidateHttpRequestSuccess(string httpStatusCode, OperationType operationType, bool isSuccess)
+        [InlineData("200", true)]
+        [InlineData("400", false)]
+        [InlineData("500", false)]
+        [InlineData("0", false)]
+        public void ValidateHttpRequestSuccess(string httpStatusCode, bool isSuccess)
         {
             using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(ValidateHttpRequestSuccess)).Build();
             using var activitySource = new ActivitySource(nameof(ValidateHttpRequestSuccess));
@@ -95,12 +98,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             activity.Stop();
 
-            if (operationType == OperationType.Unknown)
-            {
-                activity.SetStatus(ActivityStatusCode.Error);
-            }
+            var httpResponseCode = httpStatusCode ?? "0";
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpResponseStatusCode, httpStatusCode);
 
-            Assert.Equal(isSuccess, RequestData.IsSuccess(activity, httpStatusCode, operationType));
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            Assert.Equal(httpResponseCode, requestData.ResponseCode);
+            Assert.Equal(isSuccess, requestData.Success);
         }
 
         [Fact]
@@ -115,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal("DemoAzureResource", activityTagsProcessor.AzureNamespace);
         }
@@ -140,7 +147,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
@@ -174,7 +181,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
@@ -205,48 +212,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
 
             Assert.False(requestData.Measurements.TryGetValue("timeSinceEnqueued", out var timeInQueue));
-        }
-
-        [Fact]
-        public void ValidateMessagingRequestData()
-        {
-            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(ValidateMessagingRequestData)).Build();
-            using var activitySource = new ActivitySource(nameof(ValidateMessagingRequestData));
-            using var activity = activitySource.StartActivity(
-                ActivityName,
-                ActivityKind.Consumer,
-                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
-                startTime: DateTime.UtcNow);
-            Assert.NotNull(activity);
-            activity.Stop();
-
-            activity.SetStatus(Status.Ok);
-            activity.SetTag(SemanticConventions.AttributeMessagingSystem, "servicebus");
-            activity.SetTag(SemanticConventions.AttributeNetworkProtocolName, "amqps");
-            activity.SetTag(SemanticConventions.AttributeServerAddress, "my.servicebus.windows.net");
-            activity.SetTag(SemanticConventions.AttributeMessagingSourceName, "queueName");
-            activity.SetTag("foo", "bar");
-
-            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
-
-            Assert.Equal("RequestDataNewActivity", requestData.Name);
-            Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
-            Assert.Equal("amqps://my.servicebus.windows.net/queueName", requestData.Url);
-            Assert.Equal("0", requestData.ResponseCode);
-            Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
-            Assert.True(requestData.Success);
-            Assert.Null(requestData.Source);
-            Assert.True(requestData.Properties.Count == 1);
-            Assert.Equal("bar", requestData.Properties["foo"]);
-            Assert.True(requestData.Measurements.Count == 0);
         }
 
         private ActivityLink AddActivityLink(long enqueuedTime)

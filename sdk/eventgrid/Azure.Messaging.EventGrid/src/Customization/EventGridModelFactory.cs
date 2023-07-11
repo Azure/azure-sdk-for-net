@@ -13,7 +13,7 @@ using Azure.Messaging.EventGrid.SystemEvents;
 namespace Azure.Messaging.EventGrid
 {
 #pragma warning disable CA1054 // URI-like parameters should not be strings
-    [CodeGenType(nameof(EventGridModelFactory))]
+    [CodeGenType("MessagingEventGridModelFactory")]
     public static partial class EventGridModelFactory
     {
         /// <summary> Initializes new instance of MediaJobError class. </summary>

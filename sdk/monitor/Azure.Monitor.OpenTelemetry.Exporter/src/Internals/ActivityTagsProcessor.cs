@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public AzMonList MappedTags;
         public AzMonList UnMappedTags;
 
-        public OperationType activityType { get; private set; }
+        public OperationType activityType { get; set; }
 
         public string? AzureNamespace { get; private set; } = null;
 
