@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
-using Xunit;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -319,10 +319,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
 
-        [Theory]
-        [InlineData("GET")]
-        [InlineData(null)]
-        public void RequestNameMatchesOperationName(string? httpMethod)
+        [Fact]
+        public void RequestNameMatchesOperationName()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -333,10 +331,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(activity);
             activity.DisplayName = "displayname";
-            if (httpMethod != null)
-            {
-                activity.SetTag(SemanticConventions.AttributeHttpMethod, httpMethod);
-            }
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
             var requestData = new RequestData(2, activity, ref activityTagsProcessor);
@@ -361,9 +356,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var testAttributes = new Dictionary<string, object>();
 
-            if (serviceName != null) testAttributes.Add("service.name", serviceName);
-            if (serviceNamespace != null) testAttributes.Add("service.namespace", serviceNamespace);
-            if (serviceInstance != null) testAttributes.Add("service.instance.id", serviceInstance);
+            if (serviceName != null)
+                testAttributes.Add("service.name", serviceName);
+            if (serviceNamespace != null)
+                testAttributes.Add("service.namespace", serviceNamespace);
+            if (serviceInstance != null)
+                testAttributes.Add("service.instance.id", serviceInstance);
 
             return ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
         }

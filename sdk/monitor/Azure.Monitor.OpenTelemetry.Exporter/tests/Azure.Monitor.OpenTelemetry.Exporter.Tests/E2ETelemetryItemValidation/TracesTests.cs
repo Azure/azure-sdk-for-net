@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
@@ -106,6 +107,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 activity.SetTag("integer", 1);
                 activity.SetTag("message", "Hello World!");
                 activity.SetTag("intArray", new int[] { 1, 2, 3 });
+                activity.SetTag(SemanticConventions.AttributeMessagingSystem, "TestSystem");
                 activity?.SetStatus(ActivityStatusCode.Ok);
             }
 

@@ -81,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
 
             var httpResponseCode = httpStatusCode ?? "0";
-            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
