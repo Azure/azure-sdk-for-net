@@ -749,14 +749,7 @@ namespace Azure.Communication.CallAutomation
                     options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    request.OperationContext = options.OperationContext;
-                }
+                request.OperationContext = options.OperationContext;
 
                 return await RestClient.MuteAsync(
                     CallConnectionId,
