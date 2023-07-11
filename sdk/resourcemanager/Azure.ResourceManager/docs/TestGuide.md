@@ -115,7 +115,7 @@ cd azure-sdk-for-net/sdk/{service}/{package}
 test-proxy push -a ./assets.json
 ```
 
-**[Note]**: Before you push to the assets repository, make sure you are added as a member of `Azure` organization.
+**[Note]**: Before you push to the assets repository, make sure you have the correct privilege. Check the guide [here.](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/785/Externalizing-Recordings-(Asset-Sync)?anchor=permissions-to-%60azure/azure-sdk-assets%60)
 
 The test-proxy push command will upload the corresponding SessionRecords files under the `/.assets` folder and update the tag in `assets.json`.
 
