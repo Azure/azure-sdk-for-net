@@ -10,7 +10,7 @@ namespace Azure.Identity.BrokeredAuthentication.Tests
         [Test]
         public void VerifyTokenCacheOptionsCtorParam()
         {
-            // verify passed in TokenCachePeristenceOptions are honored
+            // verify passed in TokenCachePersistenceOptions are honored
             var persistenceOptions = new TokenCachePersistenceOptions { Name = "mocktokencachename" };
 
             var credentialOptions = new SharedTokenCacheCredentialBrokerOptions(persistenceOptions);

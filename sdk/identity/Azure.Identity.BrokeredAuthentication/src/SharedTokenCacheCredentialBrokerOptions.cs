@@ -12,6 +12,8 @@ namespace Azure.Identity.BrokeredAuthentication
     /// </summary>
     public class SharedTokenCacheCredentialBrokerOptions : SharedTokenCacheCredentialOptions, IMsalPublicClientInitializerOptions
     {
+        private readonly bool? _enableMsaPassthrough;
+
         /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialBrokerOptions"/>.
         /// </summary>
@@ -28,11 +30,26 @@ namespace Azure.Identity.BrokeredAuthentication
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="SharedTokenCacheCredentialBrokerOptions"/>.
+        /// </summary>
+        /// <param name="tokenCacheOptions">The <see cref="TokenCachePersistenceOptions"/> that will apply to the token cache used by this credential.</param>
+        /// <param name="enableMsaPassthrough">Enables Microsoft Account (MSA) passthough.</param>
+        public SharedTokenCacheCredentialBrokerOptions(TokenCachePersistenceOptions tokenCacheOptions, bool enableMsaPassthrough)
+            : base(tokenCacheOptions)
+        {
+            _enableMsaPassthrough = enableMsaPassthrough;
+        }
+
         Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient => AddBroker;
 
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
             builder.WithBrokerPreview();
+            if (_enableMsaPassthrough.HasValue)
+            {
+                builder.WithWindowsBrokerOptions(new WindowsBrokerOptions { MsaPassthrough = _enableMsaPassthrough.Value });
+            }
         }
     }
 }
