@@ -881,7 +881,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
             try
             {
@@ -911,7 +911,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
             try
             {
@@ -945,7 +945,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
             try
             {
@@ -983,7 +983,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
             try
             {
@@ -1009,13 +1009,13 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
-        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
+        /// <param name="name"> The name of the configuration setting snapshot to recover. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationSettingsSnapshot>> RecoverSnapshotAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
             try
             {
@@ -1039,13 +1039,13 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
-        /// <param name="name"> The name of the configuration setting snapshot to delete. </param>
+        /// <param name="name"> The name of the configuration setting snapshot to recover. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationSettingsSnapshot> RecoverSnapshot(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
             try
             {
@@ -1069,7 +1069,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
-        /// <param name="snapshot"> The name of the configuration setting snapshot to delete. </param>
+        /// <param name="snapshot"> The name of the configuration setting snapshot to recover. </param>
         /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
         /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
         /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
@@ -1079,7 +1079,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
             try
             {
@@ -1105,7 +1105,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration setting snapshot to ready. </summary>
-        /// <param name="snapshot"> The name of the configuration setting snapshot to delete. </param>
+        /// <param name="snapshot"> The name of the configuration setting snapshot to recover. </param>
         /// <param name="onlyIfUnchanged">If set to true and the configuration settings snapshot exists in the configuration store, update the snapshot
         /// status if the passed-in <see cref="ConfigurationSettingsSnapshot"/> has the same status as the one in the configuration store. The status
         /// is the same if their ETag fields match.  If the two snapshots have a different status, this method will throw an exception to indicate
@@ -1115,7 +1115,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
             try
             {

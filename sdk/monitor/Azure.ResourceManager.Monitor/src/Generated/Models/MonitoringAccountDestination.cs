@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="accountResourceId"> The resource ID of the monitoring account. </param>
         /// <param name="accountId"> The immutable ID  of the account. </param>
         /// <param name="name">
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
         internal MonitoringAccountDestination(ResourceIdentifier accountResourceId, string accountId, string name)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The immutable ID  of the account. </summary>
         public string AccountId { get; }
         /// <summary>
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

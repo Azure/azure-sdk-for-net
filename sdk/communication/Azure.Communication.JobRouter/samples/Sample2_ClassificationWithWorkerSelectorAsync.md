@@ -180,7 +180,7 @@ Response<ClassificationPolicy> cp1 = await routerAdministrationClient.CreateClas
         WorkerSelectors =
         {
             new ConditionalWorkerSelectorAttachment(
-                condition: new ExpressionRule("If(job.Location = \"United States\", true, false)"),
+                condition: new ExpressionRouterRule("If(job.Location = \"United States\", true, false)"),
                 workerSelectors: new List<RouterWorkerSelector>()
                 {
                     new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us")),
@@ -188,7 +188,7 @@ Response<ClassificationPolicy> cp1 = await routerAdministrationClient.CreateClas
                     new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))
                 }),
             new ConditionalWorkerSelectorAttachment(
-                condition: new ExpressionRule("If(job.Location = \"Canada\", true, false)"),
+                condition: new ExpressionRouterRule("If(job.Location = \"Canada\", true, false)"),
                 workerSelectors: new List<RouterWorkerSelector>()
                 {
                     new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-ca")),

@@ -39,27 +39,28 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             {
                 return true;
             }
-
-            // TODO: considering add cache to improve.
-            if (_hostKeyMappings.TryGetValue(context.Origin, out var accessKey))
+            foreach (var origin in ToHeaderList(context.Origin))
             {
-                // server side disable signature checks.
-                if (string.IsNullOrEmpty(accessKey))
+                if (_hostKeyMappings.TryGetValue(origin, out var accessKey))
                 {
-                    return true;
-                }
+                    // server side disable signature checks.
+                    if (string.IsNullOrEmpty(accessKey))
+                    {
+                        return true;
+                    }
 
-                var signatures = ToHeaderList(context.Signature);
-                if (signatures == null)
-                {
-                    return false;
-                }
-                using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
-                var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(context.ConnectionId));
-                var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
-                if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
-                {
-                    return true;
+                    var signatures = ToHeaderList(context.Signature);
+                    if (signatures == null)
+                    {
+                        return false;
+                    }
+                    using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
+                    var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(context.ConnectionId));
+                    var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
+                    if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;

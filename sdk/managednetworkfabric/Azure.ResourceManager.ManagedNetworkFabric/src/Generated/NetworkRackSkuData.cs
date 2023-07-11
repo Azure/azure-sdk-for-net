@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public NetworkRackSkuData(NetworkRackRoleName roleName)
         {
             RoleName = roleName;
-            NetworkDevices = new ChangeTrackingList<NetworkRackSkuPropertiesNetworkDevicesItem>();
+            NetworkDevices = new ChangeTrackingList<NetworkDeviceRoleProperties>();
         }
 
         /// <summary> Initializes a new instance of NetworkRackSkuData. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="maximumUplinks"> Maximum number of network uplinks available for this SKU. </param>
         /// <param name="networkDevices"> List of network device properties / role for the Network Rack. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal NetworkRackSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkRackRoleName roleName, int? maximumServerCount, int? maximumStorageCount, int? maximumUplinks, IList<NetworkRackSkuPropertiesNetworkDevicesItem> networkDevices, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal NetworkRackSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkRackRoleName roleName, int? maximumServerCount, int? maximumStorageCount, int? maximumUplinks, IList<NetworkDeviceRoleProperties> networkDevices, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             RoleName = roleName;
             MaximumServerCount = maximumServerCount;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Maximum number of network uplinks available for this SKU. </summary>
         public int? MaximumUplinks { get; set; }
         /// <summary> List of network device properties / role for the Network Rack. </summary>
-        public IList<NetworkRackSkuPropertiesNetworkDevicesItem> NetworkDevices { get; }
+        public IList<NetworkDeviceRoleProperties> NetworkDevices { get; }
         /// <summary> Gets the provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

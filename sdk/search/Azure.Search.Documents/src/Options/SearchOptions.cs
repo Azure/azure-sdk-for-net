@@ -287,7 +287,14 @@ namespace Azure.Search.Documents
 
                 if (QueryCaption.HasValue)
                 {
-                    queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
+                    if (QueryCaption.Value == QueryCaptionType.Extractive)
+                    {
+                        queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
+                    }
+                    else
+                    {
+                        queryCaptionStringValue = QueryCaption.Value.ToString();
+                    }
                 }
 
                 return queryCaptionStringValue;

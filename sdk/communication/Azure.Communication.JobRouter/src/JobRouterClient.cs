@@ -122,8 +122,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -178,8 +177,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -236,8 +234,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -291,8 +288,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -348,8 +344,7 @@ using Azure.Core.Pipeline;
                     QueueId = options.QueueId,
                     Priority = options.Priority,
                     DispositionCode = options.DispositionCode,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -405,8 +400,7 @@ using Azure.Core.Pipeline;
                     QueueId = options.QueueId,
                     Priority = options.Priority,
                     DispositionCode = options.DispositionCode,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -1665,7 +1659,7 @@ using Azure.Core.Pipeline;
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<RouterWorker> DeleteWorker(string workerId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteWorker(string workerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(workerId, nameof(workerId));
 
@@ -1673,7 +1667,7 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                return RestClient.GetWorker(workerId, cancellationToken);
+                return RestClient.DeleteWorker(workerId, cancellationToken);
             }
             catch (Exception ex)
             {

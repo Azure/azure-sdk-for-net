@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.CostManagement
             Optional<NotificationProperties> notification = default;
             Optional<string> notificationEmail = default;
             Optional<ScheduleProperties> schedule = default;
-            Optional<string> scope = default;
+            Optional<ResourceIdentifier> scope = default;
             Optional<ScheduledActionStatus> status = default;
-            Optional<string> viewId = default;
+            Optional<ResourceIdentifier> viewId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -181,7 +181,11 @@ namespace Azure.ResourceManager.CostManagement
                         }
                         if (property0.NameEquals("scope"u8))
                         {
-                            scope = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scope = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -195,7 +199,11 @@ namespace Azure.ResourceManager.CostManagement
                         }
                         if (property0.NameEquals("viewId"u8))
                         {
-                            viewId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            viewId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

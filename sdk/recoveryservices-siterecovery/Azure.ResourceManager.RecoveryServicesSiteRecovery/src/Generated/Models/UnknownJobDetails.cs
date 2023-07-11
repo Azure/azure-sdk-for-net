@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownJobDetails. </summary>
-    internal partial class UnknownJobDetails : JobDetails
+    internal partial class UnknownJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of UnknownJobDetails. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>

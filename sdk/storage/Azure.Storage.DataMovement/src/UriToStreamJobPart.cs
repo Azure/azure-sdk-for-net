@@ -46,6 +46,7 @@ namespace Azure.Storage.DataMovement
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
                   singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  clientDiagnostics: job.ClientDiagnostics,
                   cancellationToken: job._cancellationToken)
         { }
 
@@ -55,8 +56,8 @@ namespace Azure.Storage.DataMovement
         private UriToStreamJobPart(
             UriToStreamTransferJob job,
             int partNumber,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             bool isFinalPart,
             StorageTransferStatus jobPartStatus = StorageTransferStatus.Queued,
             long? length = default)
@@ -77,6 +78,7 @@ namespace Azure.Storage.DataMovement
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
                   singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  clientDiagnostics: job.ClientDiagnostics,
                   cancellationToken: job._cancellationToken,
                   jobPartStatus: jobPartStatus,
                   length: length)
@@ -101,8 +103,8 @@ namespace Azure.Storage.DataMovement
         public static async Task<UriToStreamJobPart> CreateJobPartAsync(
             UriToStreamTransferJob job,
             int partNumber,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             bool isFinalPart,
             StorageTransferStatus jobPartStatus = default,
             long? length = default,
@@ -444,6 +446,7 @@ namespace Azure.Storage.DataMovement
                 expectedLength,
                 ranges,
                 GetDownloadChunkHandlerBehaviors(jobPart),
+                ClientDiagnostics,
                 _cancellationToken);
 
         internal static DownloadChunkHandler.Behaviors GetDownloadChunkHandlerBehaviors(UriToStreamJobPart job)

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="marsAgent"> The Mars agent. </param>
         /// <param name="dra"> The DRA. </param>
         /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
-        internal InMageRcmApplianceDetails(string id, string name, string fabricArmId, ProcessServerDetails processServer, RcmProxyDetails rcmProxy, PushInstallerDetails pushInstaller, ReplicationAgentDetails replicationAgent, ReprotectAgentDetails reprotectAgent, MarsAgentDetails marsAgent, DraDetails dra, IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails)
+        internal InMageRcmApplianceDetails(string id, string name, ResourceIdentifier fabricArmId, SiteRecoveryProcessServerDetails processServer, RcmProxyDetails rcmProxy, PushInstallerDetails pushInstaller, ReplicationAgentDetails replicationAgent, ReprotectAgentDetails reprotectAgent, MarsAgentDetails marsAgent, SiteRecoveryDraDetails dra, IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails)
         {
             Id = id;
             Name = name;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The appliance name. </summary>
         public string Name { get; }
         /// <summary> The fabric ARM Id. </summary>
-        public string FabricArmId { get; }
+        public ResourceIdentifier FabricArmId { get; }
         /// <summary> The process server. </summary>
-        public ProcessServerDetails ProcessServer { get; }
+        public SiteRecoveryProcessServerDetails ProcessServer { get; }
         /// <summary> The of RCM proxy. </summary>
         public RcmProxyDetails RcmProxy { get; }
         /// <summary> The push installer. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The Mars agent. </summary>
         public MarsAgentDetails MarsAgent { get; }
         /// <summary> The DRA. </summary>
-        public DraDetails Dra { get; }
+        public SiteRecoveryDraDetails Dra { get; }
         /// <summary> The switch provider blocking error information. </summary>
         public IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> SwitchProviderBlockingErrorDetails { get; }
     }

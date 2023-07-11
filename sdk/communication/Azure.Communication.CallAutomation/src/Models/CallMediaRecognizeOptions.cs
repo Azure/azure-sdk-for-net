@@ -61,5 +61,8 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
         public string SpeechLanguage { get; set; }
+
+        /// <summary> Endpoint where the speech custom model was deployed. </summary>
+        public string SpeechModelEndpointId { get; set; }
     }
 }
