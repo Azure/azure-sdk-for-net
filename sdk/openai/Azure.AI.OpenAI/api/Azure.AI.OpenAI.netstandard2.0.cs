@@ -11,6 +11,9 @@ namespace Azure.AI.OpenAI
     }
     public static partial class AzureOpenAIModelFactory
     {
+        public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason reason = default(Azure.AI.OpenAI.CompletionsFinishReason)) { throw null; }
+        public static Azure.AI.OpenAI.ChatChoice ChatChoice(int index = 0, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason)) { throw null; }
+        public static Azure.AI.OpenAI.ChatCompletions ChatCompletions(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatChoice> choices = null, Azure.AI.OpenAI.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.Choice Choice(string text = null, int index = 0, Azure.AI.OpenAI.CompletionsLogProbabilityModel logProbabilityModel = null, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason)) { throw null; }
     }
     public partial class ChatChoice

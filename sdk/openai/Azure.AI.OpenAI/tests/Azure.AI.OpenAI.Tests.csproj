@@ -3,7 +3,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <!-- We don't care about XML doc comments on test types and members -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;SA1508;SA1507;SA1505</NoWarn>
   </PropertyGroup>
 
   <!-- Reference the Client Library -->
