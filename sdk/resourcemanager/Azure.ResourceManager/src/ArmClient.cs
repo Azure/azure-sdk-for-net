@@ -297,5 +297,20 @@ namespace Azure.ResourceManager
         {
             return resourceFactory();
         }
+
+        private readonly ConcurrentDictionary<ResourceIdentifier, ArmResource> _clientCache = new ConcurrentDictionary<ResourceIdentifier, ArmResource>();
+
+        /// <summary>
+        /// Gets a cached client to use for extension methods.
+        /// </summary>
+        /// <typeparam name="T"> The type of client to get. </typeparam>
+        /// <param name="id"> The id of the client. </param>
+        /// <param name="clientFactory"> The constructor factory for the client. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual T GetCachedClient<T>(ResourceIdentifier id, Func<ResourceIdentifier, T> clientFactory)
+            where T : ArmResource
+        {
+            return _clientCache.GetOrAdd(id, (id) => { return clientFactory(id); }) as T;
+        }
     }
 }
