@@ -162,5 +162,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeUrlScheme = "url.scheme"; // replaces: "http.scheme" (AttributeHttpScheme)
         public const string AttributeUrlQuery = "url.query";
         public const string AttributeUserAgentOriginal = "user_agent.original"; // replaces: "http.user_agent" (AttributeHttpUserAgent)
+        public const string AttributeServerSocketAddress = "server.socket.address"; // replaces: "net.peer.ip" (AttributeNetPeerIp)
     }
 }

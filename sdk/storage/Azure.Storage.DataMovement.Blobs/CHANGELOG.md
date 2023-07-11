@@ -1,9 +1,10 @@
 # Release History
 
-## 12.0.0-beta.3 (Unreleased)
+## 12.0.0-beta.3 (2023-07-11)
 
 ### Features Added
 - Added `ResourceOptions` to `BlobStorageResourceContainerOptions` which allows setting resource specific options on all resources in a container transfer.
+- Added support authorization using Azure Active Directory when using Service to Service Copy.
 
 ### Breaking Changes
 - [Breaking Change] Removed several options from `BlobStorageResourceContainerOptions`.
@@ -11,8 +12,6 @@
 
 ### Bugs Fixed
 - Fixed bug where the extension methods `BlobContainerClient.StartUploadDirectoryAsync` and `StartDownloadToDirectoryAsync` throws an exception when attempting to lazy construct the `TransferManager`.
-
-### Other Changes
 
 ## 12.0.0-beta.2 (2023-04-26)
 - This release contains bug fixes to improve quality.

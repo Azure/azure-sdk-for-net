@@ -50,7 +50,6 @@ namespace Azure.Storage.DataMovement.Tests
                 DataTransfer = default;
             }
         };
-
         #region SyncCopy BlockBlob
         /// <summary>
         /// Upload the blob, then copy the contents to another blob.
@@ -452,6 +451,36 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        public async Task BlockBlobToBlockBlob_OAuth()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            var containerName = GetNewContainerName();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(
+                service,
+                containerName,
+                publicAccessType: PublicAccessType.None);
+            int size = Constants.KB;
+            int waitTimeInSec = 10;
+
+            // Act
+            // Create options bag to overwrite any existing destination.
+            TransferOptions options = new TransferOptions()
+            {
+                CreateMode = StorageResourceCreateMode.Overwrite,
+            };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
+
+            // Start transfer and await for completion.
+            await CopyBlockBlobsAndVerify(
+                container: testContainer.Container,
+                size: size,
+                waitTimeInSec: waitTimeInSec,
+                options: optionsList);
+        }
+
+        [RecordedTest]
         public async Task AppendBlobToAppendBlob_Error()
         {
             // Arrange
@@ -558,7 +587,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
         #endregion
 
-        #region Single Concurrency
+        #region Single Concurrency BlockBlob
         private async Task<DataTransfer> CreateStartTransfer(
             BlobContainerClient containerClient,
             int concurrency,
