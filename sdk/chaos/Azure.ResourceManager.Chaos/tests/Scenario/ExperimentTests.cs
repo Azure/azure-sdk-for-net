@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Chaos.Tests
 
         [TestCase, Order(1)]
         [RecordedTest]
-        [Ignore("Lack of environment configuration")]
         public async Task CreateOrUpdate()
         {
             var resourceResponse = await this.ExperimentCollection.CreateOrUpdateAsync(WaitUntil.Completed, this.ExperimentName, this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Chaos.Tests
 
         [TestCase, Order(2)]
         [RecordedTest]
-        [Ignore("Lack of environment configuration")]
         public async Task Get()
         {
             await this.ExperimentCollection.CreateOrUpdateAsync(WaitUntil.Completed, this.ExperimentName, this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
@@ -50,7 +48,6 @@ namespace Azure.ResourceManager.Chaos.Tests
 
         [TestCase, Order(3)]
         [RecordedTest]
-        [Ignore("Lack of environment configuration")]
         public async Task List()
         {
             var experimentList = await this.ExperimentCollection.GetAllAsync().ToListAsync().ConfigureAwait(false);
@@ -59,7 +56,6 @@ namespace Azure.ResourceManager.Chaos.Tests
 
         [TestCase, Order(4)]
         [RecordedTest]
-        [Ignore("Lack of environment configuration")]
         public async Task Delete()
         {
             await this.ExperimentCollection.CreateOrUpdateAsync(WaitUntil.Completed, this.ExperimentName, this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
@@ -75,7 +71,6 @@ namespace Azure.ResourceManager.Chaos.Tests
 
         [TestCase, Order(5)]
         [RecordedTest]
-        [Ignore("Lack of environment configuration")]
         public async Task StartAndCheckStatus()
         {
             var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
@@ -88,10 +83,9 @@ namespace Azure.ResourceManager.Chaos.Tests
             var statusResponse = await experimentResourceResponse.Value.GetExperimentStatusAsync(statusId).ConfigureAwait(false);
             Assert.AreEqual(200, statusResponse.GetRawResponse().Status);
         }
-
         [TestCase, Order(6)]
         [RecordedTest]
-        [Ignore("Lack of environment configuration")]
+
         public async Task Cancel()
         {
             var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
@@ -103,7 +97,6 @@ namespace Azure.ResourceManager.Chaos.Tests
 
         [TestCase, Order(7)]
         [RecordedTest]
-        [Ignore("Lack of environment configuration")]
         public async Task ListAndGetDetails()
         {
             var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
