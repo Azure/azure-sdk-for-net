@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Chaos.Tests.TestDependencies.Experiments
             IEnumerable<Models.KeyValuePair> actionParams = new List<Models.KeyValuePair>() { new Models.KeyValuePair("abruptShutdown", "true") };
             Models.Action action = new ContinuousAction(
                 "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0",
-                "2",
+                "PT2M",
                 actionParams,
                 "selector1");
             IEnumerable<Models.Action> actions = new List<Models.Action>() { action };
