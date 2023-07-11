@@ -12,7 +12,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="PurviewAccountClient"/> to client builder. </summary>
-    public static partial class PurviewAccountClientBuilderExtensions
+    public static partial class AnalyticsPurviewAccountClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="PurviewAccountClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
