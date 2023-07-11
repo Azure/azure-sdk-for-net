@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Xunit;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
-using Xunit;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -361,12 +361,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var testAttributes = new Dictionary<string, object>();
 
-            if (serviceName != null)
-                testAttributes.Add("service.name", serviceName);
-            if (serviceNamespace != null)
-                testAttributes.Add("service.namespace", serviceNamespace);
-            if (serviceInstance != null)
-                testAttributes.Add("service.instance.id", serviceInstance);
+            if (serviceName != null) testAttributes.Add("service.name", serviceName);
+            if (serviceNamespace != null) testAttributes.Add("service.namespace", serviceNamespace);
+            if (serviceInstance != null) testAttributes.Add("service.instance.id", serviceInstance);
 
             return ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
         }
