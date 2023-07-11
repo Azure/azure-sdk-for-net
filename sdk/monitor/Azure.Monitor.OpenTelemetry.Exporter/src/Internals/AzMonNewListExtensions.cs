@@ -78,9 +78,11 @@ internal static class AzMonNewListExtensions
                     sourceOrDestinationName = messagingTagObjects[1]?.ToString(); // messagingTagObjects[1] => SemanticConventions.AttributeMessagingDestinationName.
                 }
 
-                var protocolName = messagingTagObjects[0]?.ToString(); // messagingTagObjects[0] => SemanticConventions.AttributeNetworkProtocolName.
+                var protocolName = messagingTagObjects[0]?.ToString() ?? string.Empty; // messagingTagObjects[0] => SemanticConventions.AttributeNetworkProtocolName.
+                sourceOrDestinationName ??= string.Empty;
+                var delimilerLength = 1;
 
-                var length = (protocolName?.Length ?? 0) + (protocolName?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + host!.Length + (sourceOrDestinationName?.Length ?? 0) + 1;
+                var length = protocolName.Length + (protocolName?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + host!.Length + delimilerLength + sourceOrDestinationName.Length;
 
                 var messagingStringBuilder = new System.Text.StringBuilder(length)
                     .Append(protocolName)
