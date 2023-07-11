@@ -445,11 +445,7 @@ namespace Azure.Identity.Tests
                 var targetCred = credential._sources[0];
                 if (CredentialTestHelpers.TryGetConfiguredTenantIdForMsalCredential(targetCred, out string tenantId))
                 {
-                    if (availableCredential == typeof(EnvironmentCredential))
-                    {
-                        Assert.Ignore("Environment Credential only takes TenantId options from the environment.");
-                    }
-                    else if (availableCredential == typeof(ManagedIdentityCredential))
+                    if (availableCredential == typeof(ManagedIdentityCredential))
                     {
                         Assert.Ignore("ManagedIdentityCredential does not include a TenantId option.");
                     }
