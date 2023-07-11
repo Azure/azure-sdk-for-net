@@ -12,19 +12,32 @@ namespace Azure.Core
     internal class PropertyReferenceTypeAttribute : Attribute
     {
         /// <summary>
-        /// Instatiate a new reference type attribute.
+        /// Instantiate a new reference type attribute.
         /// </summary>
         /// <param name="optionalProperties"> An array of property names that are optional when comparing the type. </param>
         public PropertyReferenceTypeAttribute(string[] optionalProperties)
+            : this(optionalProperties, Array.Empty<string>())
         {
-            OptionalProperties = optionalProperties;
         }
 
         /// <summary>
         /// Instantiate a new reference type attribute.
         /// </summary>
+        /// <param name="optionalProperties"> An array of property names that are optional when comparing the type. </param>
+        /// <param name="internalPropertiesToInclude"></param>
+        public PropertyReferenceTypeAttribute(string[] optionalProperties, string[] internalPropertiesToInclude)
+        {
+            OptionalProperties = optionalProperties;
+            InternalPropertiesToInclude = internalPropertiesToInclude;
+        }
+
+        public string[] InternalPropertiesToInclude { get; }
+
+        /// <summary>
+        /// Instantiate a new reference type attribute.
+        /// </summary>
         public PropertyReferenceTypeAttribute()
-            : this(Array.Empty<string>())
+            : this(Array.Empty<string>(), Array.Empty<string>())
         {
         }
 
