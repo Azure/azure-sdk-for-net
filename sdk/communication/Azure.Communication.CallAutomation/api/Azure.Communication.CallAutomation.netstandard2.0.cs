@@ -397,8 +397,8 @@ namespace Azure.Communication.CallAutomation
     public partial class ChannelAffinity
     {
         public ChannelAffinity(Azure.Communication.CommunicationIdentifier participant) { }
-        public int? Channel { get { throw null; } }
-        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } set { } }
+        public int? Channel { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
     }
     public partial class ChoiceResult : Azure.Communication.CallAutomation.RecognizeResult
     {
