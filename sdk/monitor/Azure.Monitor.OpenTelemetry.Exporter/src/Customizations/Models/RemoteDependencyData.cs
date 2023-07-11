@@ -97,9 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 httpUrl = httpTagObjects.GetDependencyUrl();
                 dependencyName = httpTagObjects.GetHttpDependencyName(httpUrl) ?? activity.DisplayName;
                 target = httpTagObjects.GetHttpDependencyTarget();
-                resultCode = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeHttpStatusCode)
-                                        ?.ToString().Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength)
-                                        ?? "0";
+                resultCode = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeHttpStatusCode)?.ToString();
             }
 
             Type = "Http";
