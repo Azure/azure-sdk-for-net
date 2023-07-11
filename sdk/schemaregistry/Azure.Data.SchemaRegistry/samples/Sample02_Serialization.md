@@ -21,25 +21,26 @@ The following is an outline of how an implemented `SchemaValidator` may look:
 ```C# Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
 internal class SampleJsonValidator : SchemaValidator
 {
-    public override bool IsValid(object data, Type dataType, string schemaDefinition)
+    public override string GenerateSchema(Type dataType)
+    {
+        // Your implementation using the third-party library of your choice goes here.
+        return "<< SCHEMA GENERATED FROM DATATYPE PARAMETER >>";
+    }
+
+    public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
     {
         // This method throws an exception if the data argument is not valid according to the schemaDefinition.
 
         // Your implementation using the third-party library of your choice goes here.
-        List<Exception> validationErrors = SampleValidationClass.SampleValidationMethod(schemaDefinition, data, dataType);
+        List<Exception> errors = SampleValidationClass.SampleValidationMethod(schemaDefinition, data, dataType);
+        validationErrors = errors;
 
-        if (validationErrors.Count  > 0)
+        if (errors.Count > 0)
         {
             throw new AggregateException(validationErrors);
         }
 
         return true;
-    }
-
-    public override string GenerateSchema(Type dataType)
-    {
-        // Your implementation using the third-party library of your choice goes here.
-        return "<< SCHEMA GENERATED FROM DATATYPE PARAMETER >>";
     }
 }
 ```

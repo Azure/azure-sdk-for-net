@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 using Azure.Messaging;
+using Azure.Core.Experimental;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {

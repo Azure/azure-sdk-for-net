@@ -106,12 +106,26 @@ namespace Azure
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool TryGetValue<T>(out T value) { throw null; }
     }
 }
+namespace Azure.Core.Experimental
+{
+    public partial class LruCache<TKey, TValue> : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.IEnumerable where TKey : notnull
+    {
+        public LruCache(int capacity) { }
+        public int Count { get { throw null; } }
+        public int TotalLength { get { throw null; } }
+        public void AddOrUpdate(TKey key, TValue? val, int length) { }
+        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>> GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public bool TryGet(TKey key, out TValue? value) { throw null; }
+    }
+}
 namespace Azure.Core.Experimental.SchemaValidator
 {
     public abstract partial class SchemaValidator
     {
         protected SchemaValidator() { }
         public abstract string GenerateSchema(System.Type dataType);
-        public abstract bool IsValid(object data, System.Type dataType, string schemaDefinition);
+        public abstract bool TryValidate(object data, System.Type dataType, string schemaDefinition, out System.Collections.Generic.IEnumerable<System.Exception> validationErrors);
+        public virtual void Validate(object data, System.Type dataType, string schemaDefinition) { }
     }
 }
