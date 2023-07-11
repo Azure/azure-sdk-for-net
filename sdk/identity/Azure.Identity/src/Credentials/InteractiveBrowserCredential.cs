@@ -29,8 +29,6 @@ namespace Azure.Identity
 
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to interactively authenticate.";
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
-        private bool _isCaeEnabledRequestCached;
-        private bool _isCaeDisabledRequestCached;
 
         /// <summary>
         /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users.
@@ -238,14 +236,6 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
-            if (context.IsCaeEnabled)
-            {
-                _isCaeEnabledRequestCached = true;
-            }
-            else
-            {
-                _isCaeDisabledRequestCached = true;
-            }
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
     }
