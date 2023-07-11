@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/redis/Azure.ResourceManager.Redis",
+  "Tag": "net/redis/Azure.ResourceManager.Redis_40dabd49d3"
+}

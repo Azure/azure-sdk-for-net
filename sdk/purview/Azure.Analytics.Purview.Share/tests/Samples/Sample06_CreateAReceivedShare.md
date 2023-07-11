@@ -16,7 +16,7 @@ var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
 
 // Create received share
-var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync().ToEnumerableAsync();
+var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync(null, null, null, new()).ToEnumerableAsync();
 var receivedShareName = "fabrikam-received-share";
 var receivedInvitation = receivedInvitations.LastOrDefault();
 

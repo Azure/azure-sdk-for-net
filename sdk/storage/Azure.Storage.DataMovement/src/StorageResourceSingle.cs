@@ -14,8 +14,6 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public abstract class StorageResourceSingle : StorageResource
     {
-        internal TokenCredential _tokenCredential;
-
         /// <summary>
         /// For Mocking.
         /// </summary>
@@ -57,7 +55,10 @@ namespace Azure.Storage.DataMovement
         /// <param name="length">
         /// The length of the stream.
         /// </param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns></returns>
         public abstract Task<ReadStreamStorageResourceResult> ReadStreamAsync(
             long position = 0,
@@ -81,7 +82,10 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <param name="stream"></param>
         /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns></returns>
         public abstract Task WriteFromStreamAsync(
             Stream stream,
@@ -103,7 +107,10 @@ namespace Azure.Storage.DataMovement
         /// The expected complete length of the blob.
         /// </param>
         /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns></returns>
         public abstract Task CopyFromUriAsync(
             StorageResourceSingle sourceResource,
@@ -124,7 +131,10 @@ namespace Azure.Storage.DataMovement
         /// The expected complete length of the blob.
         /// </param>
         /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns></returns>
         public abstract Task CopyBlockFromUriAsync(
             StorageResourceSingle sourceResource,
@@ -143,8 +153,28 @@ namespace Azure.Storage.DataMovement
         public abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default);
 
         /// <summary>
+        /// Gets the Authorization Header for the storage resource if available.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        public abstract Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// If the operation requires any ending transfers (e.g. Committing a block list, flushing crypto streams)
         /// </summary>
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if exists.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>The Task which Commits the list of ids</returns>
         public abstract Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default);
 

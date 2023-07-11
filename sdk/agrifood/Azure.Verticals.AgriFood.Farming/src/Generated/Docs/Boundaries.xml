@@ -8,7 +8,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync with required para
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -33,7 +33,7 @@ This sample shows how to call GetCascadeDeleteJobDetails with required parameter
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -256,7 +256,7 @@ This sample shows how to call GetBoundaryAsync with required parameters and pars
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-Response response = await client.GetBoundaryAsync("<partyId>", "<boundaryId>");
+Response response = await client.GetBoundaryAsync("<partyId>", "<boundaryId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
@@ -290,7 +290,7 @@ This sample shows how to call GetBoundary with required parameters and parse the
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-Response response = client.GetBoundary("<partyId>", "<boundaryId>");
+Response response = client.GetBoundary("<partyId>", "<boundaryId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
@@ -348,7 +348,7 @@ This sample shows how to call GetOverlapAsync with required parameters and parse
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-Response response = await client.GetOverlapAsync("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>");
+Response response = await client.GetOverlapAsync("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("boundaryArea").ToString());
@@ -364,7 +364,7 @@ This sample shows how to call GetOverlap with required parameters and parse the 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-Response response = client.GetOverlap("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>");
+Response response = client.GetOverlap("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("boundaryArea").ToString());
@@ -375,23 +375,12 @@ Console.WriteLine(result.GetProperty("intersectingArea").ToString());
     </member>
     <member name="GetBoundariesAsync(string,string,IEnumerable{string},double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetBoundariesAsync and parse the result.
+This sample shows how to call GetBoundariesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-await foreach (var item in client.GetBoundariesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetBoundariesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
-
-await foreach (var item in client.GetBoundariesAsync("<parentType>", "<type>", new String[]{"<parentIds>"}, 3.14, 3.14, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetBoundariesAsync("<parentType>", "<type>", new String[]{"<parentIds>"}, 3.14, 3.14, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -417,23 +406,12 @@ await foreach (var item in client.GetBoundariesAsync("<parentType>", "<type>", n
     </member>
     <member name="GetBoundaries(string,string,IEnumerable{string},double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetBoundaries and parse the result.
+This sample shows how to call GetBoundaries with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-foreach (var item in client.GetBoundaries())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetBoundaries with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
-
-foreach (var item in client.GetBoundaries("<parentType>", "<type>", new String[]{"<parentIds>"}, 3.14, 3.14, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetBoundaries("<parentType>", "<type>", new String[]{"<parentIds>"}, 3.14, 3.14, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -632,18 +610,7 @@ This sample shows how to call GetBoundariesByPartyIdAsync with required paramete
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-await foreach (var item in client.GetBoundariesByPartyIdAsync("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetBoundariesByPartyIdAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
-
-await foreach (var item in client.GetBoundariesByPartyIdAsync("<partyId>", "<parentType>", "<type>", new String[]{"<parentIds>"}, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetBoundariesByPartyIdAsync("<partyId>", "<parentType>", "<type>", new String[]{"<parentIds>"}, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -674,18 +641,7 @@ This sample shows how to call GetBoundariesByPartyId with required parameters an
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-foreach (var item in client.GetBoundariesByPartyId("<partyId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetBoundariesByPartyId with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
-
-foreach (var item in client.GetBoundariesByPartyId("<partyId>", "<parentType>", "<type>", new String[]{"<parentIds>"}, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetBoundariesByPartyId("<partyId>", "<parentType>", "<type>", new String[]{"<parentIds>"}, 3.14, 3.14, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -884,7 +840,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync with required paramete
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -910,7 +866,7 @@ This sample shows how to call CreateCascadeDeleteJob with required parameters an
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

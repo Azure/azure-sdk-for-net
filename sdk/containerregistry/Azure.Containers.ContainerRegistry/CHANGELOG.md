@@ -1,16 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.0-beta.1 (2023-07-11)
 
 ### Bugs Fixed
 
 - Fixed an issue where content client `DownloadBlobStreaming()` method would throw for blobs greater than 2GB in size.
-
-### Other Changes
 
 ## 1.1.0 (2023-05-09)
 
