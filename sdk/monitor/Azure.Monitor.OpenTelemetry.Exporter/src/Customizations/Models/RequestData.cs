@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     SetHttpRequestPropertiesAndResponseCode(activity, ref activityTagsProcessor.MappedTags, out responseCode);
                     break;
                 case OperationType.Messaging:
-                    SetMessagingRequestPropertiesAndResponseCode(activity, ref activityTagsProcessor.MappedTags);
+                    SetMessagingRequestProperties(activity, ref activityTagsProcessor.MappedTags);
                     break;
             }
 
@@ -83,7 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                                     ?? "0";
         }
 
-        private void SetMessagingRequestPropertiesAndResponseCode(Activity activity, ref AzMonList messagingTagObjects)
+        private void SetMessagingRequestProperties(Activity activity, ref AzMonList messagingTagObjects)
         {
             Url = AzMonList.GetTagValue(ref messagingTagObjects, SemanticConventions.AttributeMessagingUrl)?.ToString().Truncate(SchemaConstants.RequestData_Url_MaxLength);
             Name = activity.DisplayName;
