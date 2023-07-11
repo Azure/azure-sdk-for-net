@@ -1103,25 +1103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object WildcardFileName { get { throw null; } set { } }
         public object WildcardFolderPath { get { throw null; } set { } }
     }
-    public partial class AppendVariableActivity : Azure.Analytics.Synapse.Artifacts.Models.ControlActivity
-    {
-        public AppendVariableActivity(string name) : base (default(string)) { }
-        public object Value { get { throw null; } set { } }
-        public string VariableName { get { throw null; } set { } }
-    }
-    public partial class AppFiguresLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
-    {
-        public AppFiguresLinkedService(object userName, Azure.Analytics.Synapse.Artifacts.Models.SecretBase password, Azure.Analytics.Synapse.Artifacts.Models.SecretBase clientKey) { }
-        public Azure.Analytics.Synapse.Artifacts.Models.SecretBase ClientKey { get { throw null; } set { } }
-        public Azure.Analytics.Synapse.Artifacts.Models.SecretBase Password { get { throw null; } set { } }
-        public object UserName { get { throw null; } set { } }
-    }
-    public partial class ArtifactRenameRequest
-    {
-        public ArtifactRenameRequest() { }
-        public string NewName { get { throw null; } set { } }
-    }
-    public static partial class ArtifactsModelFactory
+    public static partial class AnalyticsSynapseArtifactsModelFactory
     {
         public static Azure.Analytics.Synapse.Artifacts.Models.ActivityRun ActivityRun(string pipelineName = null, string pipelineRunId = null, string activityName = null, string activityType = null, string activityRunId = null, string linkedServiceName = null, string status = null, System.DateTimeOffset? activityRunStart = default(System.DateTimeOffset?), System.DateTimeOffset? activityRunEnd = default(System.DateTimeOffset?), int? durationInMs = default(int?), object input = null, object output = null, object error = null, System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
         public static Azure.Analytics.Synapse.Artifacts.Models.ActivityRunsQueryResponse ActivityRunsQueryResponse(System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.ActivityRun> value = null, string continuationToken = null) { throw null; }
@@ -1201,6 +1183,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static Azure.Analytics.Synapse.Artifacts.Models.TumblingWindowTrigger TumblingWindowTrigger(string description = null, Azure.Analytics.Synapse.Artifacts.Models.TriggerRuntimeState? runtimeState = default(Azure.Analytics.Synapse.Artifacts.Models.TriggerRuntimeState?), System.Collections.Generic.IEnumerable<object> annotations = null, System.Collections.Generic.IDictionary<string, object> additionalProperties = null, Azure.Analytics.Synapse.Artifacts.Models.TriggerPipelineReference pipeline = null, Azure.Analytics.Synapse.Artifacts.Models.TumblingWindowFrequency frequency = default(Azure.Analytics.Synapse.Artifacts.Models.TumblingWindowFrequency), int interval = 0, System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), object delay = null, int maxConcurrency = 0, Azure.Analytics.Synapse.Artifacts.Models.RetryPolicy retryPolicy = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.DependencyReference> dependsOn = null) { throw null; }
         public static Azure.Analytics.Synapse.Artifacts.Models.Workspace Workspace(string id = null, string name = null, string type = null, System.Collections.Generic.IDictionary<string, string> tags = null, string location = null, Azure.Analytics.Synapse.Artifacts.Models.ManagedIdentity identity = null, Azure.Analytics.Synapse.Artifacts.Models.DataLakeStorageAccountDetails defaultDataLakeStorage = null, string sqlAdministratorLoginPassword = null, string managedResourceGroupName = null, string provisioningState = null, string sqlAdministratorLogin = null, Azure.Analytics.Synapse.Artifacts.Models.VirtualNetworkProfile virtualNetworkProfile = null, System.Collections.Generic.IDictionary<string, string> connectivityEndpoints = null, string managedVirtualNetwork = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.PrivateEndpointConnection> privateEndpointConnections = null, Azure.Analytics.Synapse.Artifacts.Models.EncryptionDetails encryption = null, System.Guid? workspaceUID = default(System.Guid?), System.Collections.Generic.IReadOnlyDictionary<string, object> extraProperties = null, Azure.Analytics.Synapse.Artifacts.Models.ManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, Azure.Analytics.Synapse.Artifacts.Models.WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, Azure.Analytics.Synapse.Artifacts.Models.PurviewConfiguration purviewConfiguration = null, string adlaResourceId = null) { throw null; }
         public static Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentity WorkspaceIdentity(Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType type = default(Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentityType), string principalId = null, string tenantId = null) { throw null; }
+    }
+    public partial class AppendVariableActivity : Azure.Analytics.Synapse.Artifacts.Models.ControlActivity
+    {
+        public AppendVariableActivity(string name) : base (default(string)) { }
+        public object Value { get { throw null; } set { } }
+        public string VariableName { get { throw null; } set { } }
+    }
+    public partial class AppFiguresLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
+    {
+        public AppFiguresLinkedService(object userName, Azure.Analytics.Synapse.Artifacts.Models.SecretBase password, Azure.Analytics.Synapse.Artifacts.Models.SecretBase clientKey) { }
+        public Azure.Analytics.Synapse.Artifacts.Models.SecretBase ClientKey { get { throw null; } set { } }
+        public Azure.Analytics.Synapse.Artifacts.Models.SecretBase Password { get { throw null; } set { } }
+        public object UserName { get { throw null; } set { } }
+    }
+    public partial class ArtifactRenameRequest
+    {
+        public ArtifactRenameRequest() { }
+        public string NewName { get { throw null; } set { } }
     }
     public partial class AsanaLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
     {
