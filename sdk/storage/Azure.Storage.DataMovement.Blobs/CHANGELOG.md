@@ -13,8 +13,6 @@
 ### Bugs Fixed
 - Fixed bug where the extension methods `BlobContainerClient.StartUploadDirectoryAsync` and `StartDownloadToDirectoryAsync` throws an exception when attempting to lazy construct the `TransferManager`.
 
-### Other Changes
-
 ## 12.0.0-beta.2 (2023-04-26)
 - This release contains bug fixes to improve quality.
 - Added option to `BlobStorageResourceContainerOptions` to choose `BlobType` when uploading blobs.

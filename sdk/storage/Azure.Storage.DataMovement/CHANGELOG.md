@@ -26,8 +26,6 @@
 - Fixed bug where resuming a transfer where the source and destination is a `StorageResourceContainer` would throw a null reference exception. 
 - Fixed bug when downloading zero length `StorageResource`s in a `StorageResourceContainer` will throw an exception.
 
-### Other Changes
-
 ## 12.0.0-beta.2 (2023-04-26)
 - [BREAKING CHANGE] Combined `SingleTransferOptions` and `ContainerTransferOptions` into `TransferOptions`.
 - [BREAKING CHANGE] If `TransferOptions.CreateMode` is not specified, it will default to `StorageResourceCreateMode.Fail` instead of `Overwrite`.
