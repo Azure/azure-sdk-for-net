@@ -61,8 +61,16 @@ namespace Azure.Identity
 
         internal string RegionalAuthority { get; } = EnvironmentVariables.AzureRegionalAuthorityName;
 
-        protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
+        protected override ValueTask<IConfidentialClientApplication> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
+            return CreateClientCoreAsync(enableCae, async, cancellationToken);
+        }
+
+        protected virtual async ValueTask<IConfidentialClientApplication> CreateClientCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
+        {
+            string[] clientCapabilities =
+                enableCae ? cp1Capabilities : Array.Empty<string>();
+
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
                 .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
@@ -82,6 +90,11 @@ namespace Azure.Identity
                 {
                     confClientBuilder.WithInstanceDiscovery(false);
                 }
+            }
+
+            if (clientCapabilities.Length > 0)
+            {
+                confClientBuilder.WithClientCapabilities(clientCapabilities);
             }
 
             if (_clientSecret != null)
@@ -122,10 +135,11 @@ namespace Azure.Identity
         public virtual async ValueTask<AuthenticationResult> AcquireTokenForClientAsync(
             string[] scopes,
             string tenantId,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            var result = await AcquireTokenForClientCoreAsync(scopes, tenantId, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenForClientCoreAsync(scopes, tenantId, enableCae, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
@@ -133,10 +147,11 @@ namespace Azure.Identity
         public virtual async ValueTask<AuthenticationResult> AcquireTokenForClientCoreAsync(
             string[] scopes,
             string tenantId,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            IConfidentialClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
             var builder = client
                 .AcquireTokenForClient(scopes)
@@ -156,10 +171,11 @@ namespace Azure.Identity
             AuthenticationAccount account,
             string tenantId,
             string redirectUri,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            var result = await AcquireTokenSilentCoreAsync(scopes, account, tenantId, redirectUri, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenSilentCoreAsync(scopes, account, tenantId, redirectUri, enableCae, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
@@ -169,10 +185,11 @@ namespace Azure.Identity
             AuthenticationAccount account,
             string tenantId,
             string redirectUri,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            IConfidentialClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenSilent(scopes, account);
             if (!string.IsNullOrEmpty(tenantId))
@@ -189,10 +206,11 @@ namespace Azure.Identity
             string code,
             string tenantId,
             string redirectUri,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            var result = await AcquireTokenByAuthorizationCodeCoreAsync(scopes, code, tenantId, redirectUri, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenByAuthorizationCodeCoreAsync(scopes, code, tenantId, redirectUri, enableCae, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
@@ -202,10 +220,11 @@ namespace Azure.Identity
             string code,
             string tenantId,
             string redirectUri,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            IConfidentialClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenByAuthorizationCode(scopes, code);
 
@@ -222,10 +241,11 @@ namespace Azure.Identity
             string[] scopes,
             string tenantId,
             UserAssertion userAssertionValue,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            var result = await AcquireTokenOnBehalfOfCoreAsync(scopes, tenantId, userAssertionValue, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenOnBehalfOfCoreAsync(scopes, tenantId, userAssertionValue, enableCae, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
@@ -234,10 +254,11 @@ namespace Azure.Identity
             string[] scopes,
             string tenantId,
             UserAssertion userAssertionValue,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            IConfidentialClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
             var builder = client
                 .AcquireTokenOnBehalfOf(scopes, userAssertionValue)

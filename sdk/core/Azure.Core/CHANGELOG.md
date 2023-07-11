@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `IsCaeEnabled` property to `TokenRequestContext` to enabled per-request support for Continuous Access Evaluation
+
 ### Breaking Changes
 
 ### Bugs Fixed
