@@ -10,7 +10,7 @@ Create a `DevCenterClient` and issue a request to get all projects the signed-in
 var credential = new DefaultAzureCredential();
 var devCenterClient = new DevCenterClient(endpoint, credential);
 string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1))
+await foreach (BinaryData data in devCenterClient.GetProjectsAsync(filter: null, maxCount: 1, context: new()))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetProjectName = result.GetProperty("name").ToString();
@@ -24,7 +24,7 @@ Create an `EnvironmentsClient` and issue a request to get all catalog items in a
 ```C# Snippet:Azure_DevCenter_GetCatalogItems_Scenario
 var environmentsClient = new EnvironmentsClient(endpoint, projectName, credential);
 string catalogItemName = null;
-await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1))
+await foreach (BinaryData data in environmentsClient.GetCatalogItemsAsync(maxCount: 1, context: new()))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     catalogItemName = result.GetProperty("name").ToString();
@@ -37,7 +37,7 @@ Issue a request to get all environment types in a project.
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
 string environmentTypeName = null;
-await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(maxCount: 1))
+await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(maxCount: 1, context: new()))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     environmentTypeName = result.GetProperty("name").ToString();

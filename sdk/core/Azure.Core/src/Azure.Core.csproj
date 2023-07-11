@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
@@ -25,12 +25,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Numerics.Vectors" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
+  </ItemGroup>
+
+  <!-- Keep System.Diagnostics.DiagnosticSource 4.6.0 for netcoreapp2.1 support. -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="4.6.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">

@@ -74,7 +74,7 @@ namespace Azure.Identity.Tests
 
             public ManualResetEventSlim Evt { get; set; }
 
-            protected override ValueTask<IClientApplicationBase> CreateClientAsync(bool async, CancellationToken cancellationToken)
+            protected override ValueTask<IClientApplicationBase> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
                 => throw new NotImplementedException();
 
             public void Log(string message, bool isPii)
