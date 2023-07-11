@@ -444,7 +444,7 @@ namespace Azure.Communication.CallAutomation
             {
                 SpeechOptionsInternal speechConfigurations = new SpeechOptionsInternal()
                 {
-                    EndSilenceTimeoutInMs = (long)recognizeSpeechOptions.EndSilenceTimeoutInMs.TotalMilliseconds
+                    EndSilenceTimeoutInMs = (long)recognizeSpeechOptions.EndSilenceTimeout.TotalMilliseconds
                 };
 
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOptions.TargetParticipant))
@@ -476,7 +476,7 @@ namespace Azure.Communication.CallAutomation
             {
                 SpeechOptionsInternal speechConfigurations = new SpeechOptionsInternal()
                 {
-                    EndSilenceTimeoutInMs = (long)recognizeSpeechOrDtmfOptions.EndSilenceTimeoutInMs.TotalMilliseconds
+                    EndSilenceTimeoutInMs = (long)recognizeSpeechOrDtmfOptions.EndSilenceTimeout.TotalMilliseconds
                 };
 
                 DtmfOptionsInternal dtmfConfigurations = new DtmfOptionsInternal()

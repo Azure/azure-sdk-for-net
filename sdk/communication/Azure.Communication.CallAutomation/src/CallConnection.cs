@@ -662,17 +662,13 @@ namespace Azure.Communication.CallAutomation
         /// Only Acs Users are currently supported.
         /// </summary>
         /// <param name="targetParticipant">Participant to mute.</param>
-        /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         /// <returns>A Response containing MuteParticipantsResponse.</returns>
-        public virtual Response<MuteParticipantsResponse> MuteParticipants(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        public virtual Response<MuteParticipantsResponse> MuteParticipants(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
         {
-            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
-            {
-                OperationContext = operationContext
-            };
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant });
 
             return MuteParticipants(options, cancellationToken);
         }
@@ -699,14 +695,7 @@ namespace Azure.Communication.CallAutomation
                     options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    request.OperationContext = options.OperationContext;
-                }
+                request.OperationContext = options.OperationContext;
 
                 return RestClient.Mute(
                     CallConnectionId,
@@ -727,17 +716,14 @@ namespace Azure.Communication.CallAutomation
         /// Only Acs Users are currently supported.
         /// </summary>
         /// <param name="targetParticipant">Participants to mute.</param>
-        /// <param name="operationContext">The Operation Context.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
         {
-            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
-            {
-                OperationContext = operationContext
-            };
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant });
+
             return await MuteParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
         }
 

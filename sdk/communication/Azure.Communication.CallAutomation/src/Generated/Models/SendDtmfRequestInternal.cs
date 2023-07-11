@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> List of tones to be sent to target participant. </summary>
-        public IList<DtmfTone> Tones { get; }
+        public IReadOnlyList<DtmfTone> Tones { get; }
         /// <summary> Target participant of send DTMF. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> The value to identify context of the operation. </summary>
