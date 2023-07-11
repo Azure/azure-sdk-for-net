@@ -30,6 +30,8 @@
     <Compile Include="$(AutoRestSharedCodeDirectory)ChangeTrackingList.cs" LinkBase="Shared\AutoRest" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)PropertyReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)InitializationConstructorAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)SerializationConstructorAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>

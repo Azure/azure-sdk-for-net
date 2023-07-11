@@ -15,6 +15,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// <param name="referenceType"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
+        [InitializationConstructor]
         public DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType referenceType, string referenceName)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
@@ -28,6 +29,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// <param name="referenceType"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <param name="parameters"> Arguments for LinkedService. </param>
+        [SerializationConstructor]
         internal DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType referenceType, string? referenceName, IDictionary<string, BinaryData?> parameters)
         {
             ReferenceType = referenceType;

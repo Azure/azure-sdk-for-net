@@ -17,7 +17,8 @@ namespace Azure.Core.Expressions.DataFactory
         /// <param name="store"> The Azure Key Vault linked service reference. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="store"/> or <paramref name="secretName"/> is null. </exception>
-        public DataFactoryKeyVaultSecretReference(DataFactoryLinkedServiceReference store, DataFactoryElement<string> secretName)
+        [InitializationConstructor]
+        public DataFactoryKeyVaultSecretReference(DataFactoryLinkedServiceReference store, DataFactoryElement<string> secretName) : base()
         {
             Argument.AssertNotNull(store, nameof(store));
             Argument.AssertNotNull(secretName, nameof(secretName));
@@ -32,6 +33,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// <param name="store"> The Azure Key Vault linked service reference. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </param>
         /// <param name="secretVersion"> The version of the secret in Azure Key Vault. The default value is the latest version of the secret. Type: string (or Expression with resultType string). </param>
+        [SerializationConstructor]
         internal DataFactoryKeyVaultSecretReference(string secretBaseType, DataFactoryLinkedServiceReference store, DataFactoryElement<string> secretName, DataFactoryElement<string> secretVersion) : base(secretBaseType)
         {
             Store = store;

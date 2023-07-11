@@ -12,12 +12,14 @@ namespace Azure.Core.Expressions.DataFactory
     public abstract partial class DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of DataFactorySecretBaseDefinition. </summary>
+        [InitializationConstructor]
         protected DataFactorySecretBaseDefinition()
         {
         }
 
         /// <summary> Initializes a new instance of DataFactorySecretBaseDefinition. </summary>
         /// <param name="secretBaseType"> Type of the secret. </param>
+        [SerializationConstructor]
         internal DataFactorySecretBaseDefinition(string? secretBaseType)
         {
             SecretBaseType = secretBaseType;

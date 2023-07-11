@@ -12,6 +12,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// <summary> Initializes a new instance of DataFactorySecretString. </summary>
         /// <param name="value"> Value of secure string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        [InitializationConstructor]
         public DataFactorySecretString(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
@@ -23,6 +24,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// <summary> Initializes a new instance of DataFactorySecretString. </summary>
         /// <param name="secretBaseType"> Type of the secret. </param>
         /// <param name="value"> Value of secure string. </param>
+        [SerializationConstructor]
         internal DataFactorySecretString(string? secretBaseType, string? value) : base(secretBaseType)
         {
             Value = value;
