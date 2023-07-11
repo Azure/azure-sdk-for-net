@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Developer.LoadTesting.Models
+namespace AzureLoadTesting.Models
 {
     /// <summary> Metric namespace class specifies the metadata for a metric namespace. </summary>
     public partial class MetricNamespace

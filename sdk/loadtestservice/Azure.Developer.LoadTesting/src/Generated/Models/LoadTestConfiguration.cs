@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Developer.LoadTesting.Models
+namespace AzureLoadTesting.Models
 {
     /// <summary> The load test configuration. </summary>
     public partial class LoadTestConfiguration

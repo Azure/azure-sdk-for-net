@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.Developer.LoadTesting.Models
+namespace AzureLoadTesting.Models
 {
     public partial class TimeSeriesElement
     {

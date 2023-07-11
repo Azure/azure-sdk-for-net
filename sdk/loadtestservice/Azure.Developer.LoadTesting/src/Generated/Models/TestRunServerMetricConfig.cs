@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Developer.LoadTesting.Models
+namespace AzureLoadTesting.Models
 {
     /// <summary> Test run server metrics configuration. </summary>
     public partial class TestRunServerMetricConfig

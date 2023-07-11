@@ -8,45 +8,46 @@
 using System;
 using Azure.Core.Extensions;
 using Azure.Developer.LoadTesting;
+using AzureLoadTesting;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="LoadTestAdministrationClient"/>, <see cref="LoadTestRunClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="AzureLoadTesting.LoadTestAdministrationClient"/>, <see cref="AzureLoadTesting.LoadTestRunClient"/> to client builder. </summary>
     public static partial class AzureLoadTestingClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="LoadTestAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The Uri to use. </param>
-        public static IAzureClientBuilder<LoadTestAdministrationClient, LoadTestingClientOptions> AddLoadTestAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<AzureLoadTesting.LoadTestAdministrationClient, LoadTestingClientOptions> AddLoadTestAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<LoadTestAdministrationClient, LoadTestingClientOptions>((options, cred) => new LoadTestAdministrationClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<AzureLoadTesting.LoadTestAdministrationClient, LoadTestingClientOptions>((options, cred) => new AzureLoadTesting.LoadTestAdministrationClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="LoadTestRunClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The Uri to use. </param>
-        public static IAzureClientBuilder<LoadTestRunClient, LoadTestingClientOptions> AddLoadTestRunClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<AzureLoadTesting.LoadTestRunClient, LoadTestingClientOptions> AddLoadTestRunClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<LoadTestRunClient, LoadTestingClientOptions>((options, cred) => new LoadTestRunClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<AzureLoadTesting.LoadTestRunClient, LoadTestingClientOptions>((options, cred) => new AzureLoadTesting.LoadTestRunClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="LoadTestAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<LoadTestAdministrationClient, LoadTestingClientOptions> AddLoadTestAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<AzureLoadTesting.LoadTestAdministrationClient, LoadTestingClientOptions> AddLoadTestAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<LoadTestAdministrationClient, LoadTestingClientOptions>(configuration);
+            return builder.RegisterClientFactory<AzureLoadTesting.LoadTestAdministrationClient, LoadTestingClientOptions>(configuration);
         }
         /// <summary> Registers a <see cref="LoadTestRunClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<LoadTestRunClient, LoadTestingClientOptions> AddLoadTestRunClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<AzureLoadTesting.LoadTestRunClient, LoadTestingClientOptions> AddLoadTestRunClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<LoadTestRunClient, LoadTestingClientOptions>(configuration);
+            return builder.RegisterClientFactory<AzureLoadTesting.LoadTestRunClient, LoadTestingClientOptions>(configuration);
         }
     }
 }

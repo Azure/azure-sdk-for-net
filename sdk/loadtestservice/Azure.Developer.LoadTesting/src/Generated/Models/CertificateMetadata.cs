@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Developer.LoadTesting.Models
+namespace AzureLoadTesting.Models
 {
     /// <summary> Certificates metadata. </summary>
     public partial class CertificateMetadata

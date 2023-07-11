@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Developer.LoadTesting.Models
+namespace AzureLoadTesting.Models
 {
     /// <summary> The name and description. </summary>
     public partial class NameAndDesc

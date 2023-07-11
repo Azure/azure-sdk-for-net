@@ -11,9 +11,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Developer.LoadTesting.Models;
+using Azure.Developer.LoadTesting;
+using AzureLoadTesting.Models;
 
-namespace Azure.Developer.LoadTesting
+namespace AzureLoadTesting
 {
     // Data plane generated client.
     /// <summary> The LoadTestRun service client. </summary>
@@ -60,6 +61,98 @@ namespace Azure.Developer.LoadTesting
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create and start a new test run with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testRunId">
+        /// Unique name for the load test run, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="oldTestRunId">
+        /// Existing test run identifier that should be rerun, if this is provided, the
+        /// test will run with the JMX file, configuration and app components from the
+        /// existing test run. You can override the configuration values for new test run
+        /// in the request body.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateTestRunAsync(string,RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateTestRunAsync(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateTestRun");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateTestRunRequest(testRunId, content, oldTestRunId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create and start a new test run with the given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testRunId">
+        /// Unique name for the load test run, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="oldTestRunId">
+        /// Existing test run identifier that should be rerun, if this is provided, the
+        /// test will run with the JMX file, configuration and app components from the
+        /// existing test run. You can override the configuration values for new test run
+        /// in the request body.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateTestRun(string,RequestContent,string,RequestContext)']/*" />
+        public virtual Response CreateOrUpdateTestRun(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateTestRun");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateTestRunRequest(testRunId, content, oldTestRunId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -565,7 +658,7 @@ namespace Azure.Developer.LoadTesting
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTestRunAsync(testRunId, context).ConfigureAwait(false);
-            return Response.FromValue(Models.TestRun.FromResponse(response), response);
+            return Response.FromValue(TestRun.FromResponse(response), response);
         }
 
         /// <summary> Get test run details by name. </summary>
@@ -583,7 +676,7 @@ namespace Azure.Developer.LoadTesting
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTestRun(testRunId, context);
-            return Response.FromValue(Models.TestRun.FromResponse(response), response);
+            return Response.FromValue(TestRun.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1065,7 +1158,7 @@ namespace Azure.Developer.LoadTesting
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await StopTestRunAsync(testRunId, context).ConfigureAwait(false);
-            return Response.FromValue(Models.TestRun.FromResponse(response), response);
+            return Response.FromValue(TestRun.FromResponse(response), response);
         }
 
         /// <summary> Stop test run by name. </summary>
@@ -1083,7 +1176,7 @@ namespace Azure.Developer.LoadTesting
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = StopTestRun(testRunId, context);
-            return Response.FromValue(Models.TestRun.FromResponse(response), response);
+            return Response.FromValue(TestRun.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1311,28 +1404,32 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test run, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="body"> Metric dimension filter. </param>
         /// <param name="aggregation"> The aggregation. </param>
-        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan">
         /// The timespan of the query. It is a string with the following format
         /// 'startDateTime_ISO/endDateTime_ISO'.
         /// </param>
+        /// <param name="body"> Metric dimension filter. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="aggregation"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/>, <paramref name="timespan"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricsAsync(string,MetricRequestPayload,string,Interval?,string,string,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<TimeSeriesElement> GetMetricsAsync(string testRunId, MetricRequestPayload body, string aggregation = null, Interval? interval = null, string metricName = null, string metricNamespace = null, string timespan = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricsAsync(string,string,string,string,string,MetricRequestPayload,Interval?,CancellationToken)']/*" />
+        public virtual AsyncPageable<TimeSeriesElement> GetMetricsAsync(string testRunId, string aggregation, string metricName, string metricNamespace, string timespan, MetricRequestPayload body, Interval? interval = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(aggregation, nameof(aggregation));
+            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNull(timespan, nameof(timespan));
             Argument.AssertNotNull(body, nameof(body));
 
             RequestContent content = body.ToRequestContent();
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, content, aggregation, interval?.ToString(), metricName, metricNamespace, timespan, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, content, aggregation, interval?.ToString(), metricName, metricNamespace, timespan, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, aggregation, metricName, metricNamespace, timespan, content, interval?.ToString(), context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, aggregation, metricName, metricNamespace, timespan, content, interval?.ToString(), context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TimeSeriesElement.DeserializeTimeSeriesElement, ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
         }
 
@@ -1341,28 +1438,32 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test run, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="body"> Metric dimension filter. </param>
         /// <param name="aggregation"> The aggregation. </param>
-        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan">
         /// The timespan of the query. It is a string with the following format
         /// 'startDateTime_ISO/endDateTime_ISO'.
         /// </param>
+        /// <param name="body"> Metric dimension filter. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="aggregation"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/>, <paramref name="timespan"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetrics(string,MetricRequestPayload,string,Interval?,string,string,string,CancellationToken)']/*" />
-        public virtual Pageable<TimeSeriesElement> GetMetrics(string testRunId, MetricRequestPayload body, string aggregation = null, Interval? interval = null, string metricName = null, string metricNamespace = null, string timespan = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetrics(string,string,string,string,string,MetricRequestPayload,Interval?,CancellationToken)']/*" />
+        public virtual Pageable<TimeSeriesElement> GetMetrics(string testRunId, string aggregation, string metricName, string metricNamespace, string timespan, MetricRequestPayload body, Interval? interval = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(aggregation, nameof(aggregation));
+            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNull(timespan, nameof(timespan));
             Argument.AssertNotNull(body, nameof(body));
 
             RequestContent content = body.ToRequestContent();
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, content, aggregation, interval?.ToString(), metricName, metricNamespace, timespan, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, content, aggregation, interval?.ToString(), metricName, metricNamespace, timespan, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, aggregation, metricName, metricNamespace, timespan, content, interval?.ToString(), context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, aggregation, metricName, metricNamespace, timespan, content, interval?.ToString(), context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TimeSeriesElement.DeserializeTimeSeriesElement, ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
         }
 
@@ -1376,7 +1477,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetMetricsAsync(string,MetricRequestPayload,string,Interval?,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetMetricsAsync(string,string,string,string,string,MetricRequestPayload,Interval?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1385,28 +1486,32 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test run, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="aggregation"> The aggregation. </param>
-        /// <param name="interval"> The interval (i.e. timegrain) of the query. Allowed values: "PT5S" | "PT10S" | "PT1M" | "PT5M" | "PT1H". </param>
         /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan">
         /// The timespan of the query. It is a string with the following format
         /// 'startDateTime_ISO/endDateTime_ISO'.
         /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. Allowed values: "PT5S" | "PT10S" | "PT1M" | "PT5M" | "PT1H". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="aggregation"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/>, <paramref name="timespan"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricsAsync(string,RequestContent,string,string,string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetMetricsAsync(string testRunId, RequestContent content, string aggregation = null, string interval = null, string metricName = null, string metricNamespace = null, string timespan = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricsAsync(string,string,string,string,string,RequestContent,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetMetricsAsync(string testRunId, string aggregation, string metricName, string metricNamespace, string timespan, RequestContent content, string interval = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(aggregation, nameof(aggregation));
+            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNull(timespan, nameof(timespan));
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, content, aggregation, interval, metricName, metricNamespace, timespan, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, content, aggregation, interval, metricName, metricNamespace, timespan, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, aggregation, metricName, metricNamespace, timespan, content, interval, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, aggregation, metricName, metricNamespace, timespan, content, interval, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
         }
 
@@ -1420,7 +1525,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetMetrics(string,MetricRequestPayload,string,Interval?,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetMetrics(string,string,string,string,string,MetricRequestPayload,Interval?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1429,28 +1534,32 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test run, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="aggregation"> The aggregation. </param>
-        /// <param name="interval"> The interval (i.e. timegrain) of the query. Allowed values: "PT5S" | "PT10S" | "PT1M" | "PT5M" | "PT1H". </param>
         /// <param name="metricName"> Metric name. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="timespan">
         /// The timespan of the query. It is a string with the following format
         /// 'startDateTime_ISO/endDateTime_ISO'.
         /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. Allowed values: "PT5S" | "PT10S" | "PT1M" | "PT5M" | "PT1H". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="aggregation"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/>, <paramref name="timespan"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetrics(string,RequestContent,string,string,string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetMetrics(string testRunId, RequestContent content, string aggregation = null, string interval = null, string metricName = null, string metricNamespace = null, string timespan = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetrics(string,string,string,string,string,RequestContent,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetMetrics(string testRunId, string aggregation, string metricName, string metricNamespace, string timespan, RequestContent content, string interval = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(aggregation, nameof(aggregation));
+            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNull(timespan, nameof(timespan));
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, content, aggregation, interval, metricName, metricNamespace, timespan, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, content, aggregation, interval, metricName, metricNamespace, timespan, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, aggregation, metricName, metricNamespace, timespan, content, interval, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, aggregation, metricName, metricNamespace, timespan, content, interval, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
         }
 
@@ -1476,7 +1585,7 @@ namespace Azure.Developer.LoadTesting
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Models.TestRun.DeserializeTestRun, ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TestRun.DeserializeTestRun, ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
         }
 
         /// <summary> Get all test runs with given filters. </summary>
@@ -1501,98 +1610,90 @@ namespace Azure.Developer.LoadTesting
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Models.TestRun.DeserializeTestRun, ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TestRun.DeserializeTestRun, ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] Create and start a new test run with the given name.
+        /// [Protocol Method] Get all test runs with given filters
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTestRunsAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="testRunId"> Unique test run name as identifier. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="oldTestRunId">
-        /// Existing test run identifier that should be rerun, if this is provided, the
-        /// test will run with the JMX file, configuration and app components from the
-        /// existing test run. You can override the configuration values for new test run
-        /// in the request body.
+        /// <param name="orderby">
+        /// Sort on the supported fields in (field asc/desc) format. eg: executedDateTime
+        /// asc. Supported fields - executedDateTime
         /// </param>
+        /// <param name="search">
+        /// Prefix based, case sensitive search on searchable fields - description,
+        /// executedUser. For example, to search for a test run, with description 500 VUs,
+        /// the search parameter can be 500.
+        /// </param>
+        /// <param name="testId"> Unique name of an existing load test. </param>
+        /// <param name="executionFrom"> Start DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
+        /// <param name="executionTo"> End DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
+        /// <param name="status"> Comma separated list of test run status. </param>
+        /// <param name="maxpagesize"> Number of results in response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='TestRunAsync(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> TestRunAsync(WaitUntil waitUntil, string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunsAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.TestRun");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateTestRunRequest(testRunId, content, oldTestRunId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "LoadTestRunClient.TestRun", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] Create and start a new test run with the given name.
+        /// [Protocol Method] Get all test runs with given filters
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTestRuns(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="testRunId"> Unique test run name as identifier. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="oldTestRunId">
-        /// Existing test run identifier that should be rerun, if this is provided, the
-        /// test will run with the JMX file, configuration and app components from the
-        /// existing test run. You can override the configuration values for new test run
-        /// in the request body.
+        /// <param name="orderby">
+        /// Sort on the supported fields in (field asc/desc) format. eg: executedDateTime
+        /// asc. Supported fields - executedDateTime
         /// </param>
+        /// <param name="search">
+        /// Prefix based, case sensitive search on searchable fields - description,
+        /// executedUser. For example, to search for a test run, with description 500 VUs,
+        /// the search parameter can be 500.
+        /// </param>
+        /// <param name="testId"> Unique name of an existing load test. </param>
+        /// <param name="executionFrom"> Start DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
+        /// <param name="executionTo"> End DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
+        /// <param name="status"> Comma separated list of test run status. </param>
+        /// <param name="maxpagesize"> Number of results in response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='TestRun(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> TestRun(WaitUntil waitUntil, string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRuns(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTestRuns(string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.TestRun");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateTestRunRequest(testRunId, content, oldTestRunId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "LoadTestRunClient.TestRun", OperationFinalStateVia.Location, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
         }
 
-        internal HttpMessage CreateTestRunRequest(string testRunId, RequestContent content, string oldTestRunId, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateTestRunRequest(string testRunId, RequestContent content, string oldTestRunId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -1609,7 +1710,7 @@ namespace Azure.Developer.LoadTesting
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Headers.Add("content-type", "application/merge-patch+json");
             request.Content = content;
             return message;
         }
@@ -1806,7 +1907,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetMetricsRequest(string testRunId, RequestContent content, string aggregation, string interval, string metricName, string metricNamespace, string timespan, RequestContext context)
+        internal HttpMessage CreateGetMetricsRequest(string testRunId, string aggregation, string metricName, string metricNamespace, string timespan, RequestContent content, string interval, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1817,26 +1918,14 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath("/test-runs/", false);
             uri.AppendPath(testRunId, true);
             uri.AppendPath("/metrics", false);
+            uri.AppendQuery("aggregation", aggregation, true);
+            uri.AppendQuery("metricName", metricName, true);
+            uri.AppendQuery("metricNamespace", metricNamespace, true);
+            uri.AppendQuery("timespan", timespan, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (aggregation != null)
-            {
-                uri.AppendQuery("aggregation", aggregation, true);
-            }
             if (interval != null)
             {
                 uri.AppendQuery("interval", interval, true);
-            }
-            if (metricName != null)
-            {
-                uri.AppendQuery("metricName", metricName, true);
-            }
-            if (metricNamespace != null)
-            {
-                uri.AppendQuery("metricNamespace", metricNamespace, true);
-            }
-            if (timespan != null)
-            {
-                uri.AppendQuery("timespan", timespan, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1919,7 +2008,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetMetricsNextPageRequest(string nextLink, string testRunId, RequestContent content, string aggregation, string interval, string metricName, string metricNamespace, string timespan, RequestContext context)
+        internal HttpMessage CreateGetMetricsNextPageRequest(string nextLink, string testRunId, string aggregation, string metricName, string metricNamespace, string timespan, RequestContent content, string interval, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

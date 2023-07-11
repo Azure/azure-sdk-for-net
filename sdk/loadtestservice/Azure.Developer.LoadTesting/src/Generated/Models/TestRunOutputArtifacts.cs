@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Developer.LoadTesting.Models
+namespace AzureLoadTesting.Models
 {
     /// <summary> The output artifacts for the test run. </summary>
     public partial class TestRunOutputArtifacts

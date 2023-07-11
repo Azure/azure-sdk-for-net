@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Developer.LoadTesting.Models
+namespace AzureLoadTesting.Models
 {
     /// <summary>
     /// Associated metric definition for particular metrics of the azure resource (

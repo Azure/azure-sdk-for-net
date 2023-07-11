@@ -11,9 +11,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Developer.LoadTesting.Models;
+using Azure.Developer.LoadTesting;
+using AzureLoadTesting.Models;
 
-namespace Azure.Developer.LoadTesting
+namespace AzureLoadTesting
 {
     // Data plane generated client.
     /// <summary> The LoadTestAdministration service client. </summary>
@@ -1276,6 +1277,96 @@ namespace Azure.Developer.LoadTesting
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Test.DeserializeTest, ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all load tests by the fully qualified resource Id e.g
+        /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTestsAsync(string,string,DateTimeOffset?,DateTimeOffset?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="orderby">
+        /// Sort on the supported fields in (field asc/desc) format. eg:
+        /// lastModifiedDateTime asc. Supported fields - lastModifiedDateTime
+        /// </param>
+        /// <param name="search">
+        /// Prefix based, case sensitive search on searchable fields - displayName,
+        /// createdBy. For example, to search for a test, with display name is Login Test,
+        /// the search parameter can be Login.
+        /// </param>
+        /// <param name="lastModifiedStartTime">
+        /// Start DateTime(ISO 8601 literal format) of the last updated time range to
+        /// filter tests.
+        /// </param>
+        /// <param name="lastModifiedEndTime">
+        /// End DateTime(ISO 8601 literal format) of the last updated time range to filter
+        /// tests.
+        /// </param>
+        /// <param name="maxpagesize"> Number of results in response. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestsAsync(string,string,DateTimeOffset?,DateTimeOffset?,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTestsAsync(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all load tests by the fully qualified resource Id e.g
+        /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTests(string,string,DateTimeOffset?,DateTimeOffset?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="orderby">
+        /// Sort on the supported fields in (field asc/desc) format. eg:
+        /// lastModifiedDateTime asc. Supported fields - lastModifiedDateTime
+        /// </param>
+        /// <param name="search">
+        /// Prefix based, case sensitive search on searchable fields - displayName,
+        /// createdBy. For example, to search for a test, with display name is Login Test,
+        /// the search parameter can be Login.
+        /// </param>
+        /// <param name="lastModifiedStartTime">
+        /// Start DateTime(ISO 8601 literal format) of the last updated time range to
+        /// filter tests.
+        /// </param>
+        /// <param name="lastModifiedEndTime">
+        /// End DateTime(ISO 8601 literal format) of the last updated time range to filter
+        /// tests.
+        /// </param>
+        /// <param name="maxpagesize"> Number of results in response. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTests(string,string,DateTimeOffset?,DateTimeOffset?,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTests(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, maxpagesize, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateCreateOrUpdateTestRequest(string testId, RequestContent content, RequestContext context)

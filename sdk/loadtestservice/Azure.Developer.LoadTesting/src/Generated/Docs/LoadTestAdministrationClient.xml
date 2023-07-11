@@ -1088,8 +1088,156 @@ foreach (var item in client.GetTests("<orderby>", "<search>", DateTimeOffset.Utc
 </example>
     </member>
     <member name="GetTestsAsync(string,string,DateTimeOffset?,DateTimeOffset?,int?,RequestContext)">
+<example>
+This sample shows how to call GetTestsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestAdministrationClient(endpoint, credential);
+
+await foreach (var item in client.GetTestsAsync("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
+    Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result.GetProperty("testId").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("subnetId").ToString());
+    Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityType").ToString());
+    Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityId").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+}
+]]></code>
+</example>
     </member>
     <member name="GetTests(string,string,DateTimeOffset?,DateTimeOffset?,int?,RequestContext)">
+<example>
+This sample shows how to call GetTests with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestAdministrationClient(endpoint, credential);
+
+foreach (var item in client.GetTests("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
+    Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
+    Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+    Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+    Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result.GetProperty("testId").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("subnetId").ToString());
+    Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityType").ToString());
+    Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityId").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+}
+]]></code>
+</example>
     </member>
   </members>
 </doc>

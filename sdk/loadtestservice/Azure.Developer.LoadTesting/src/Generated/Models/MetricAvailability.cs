@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Developer.LoadTesting.Models
+namespace AzureLoadTesting.Models
 {
     /// <summary> Metric availability specifies the time grain (aggregation interval or frequency). </summary>
     public partial class MetricAvailability
