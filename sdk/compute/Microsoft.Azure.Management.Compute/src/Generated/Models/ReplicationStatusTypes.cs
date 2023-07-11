@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     public static class ReplicationStatusTypes
     {
         public const string ReplicationStatus = "ReplicationStatus";
+        public const string UefiSettings = "UefiSettings";
     }
 }

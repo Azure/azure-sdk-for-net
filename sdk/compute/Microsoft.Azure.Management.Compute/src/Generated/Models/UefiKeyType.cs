@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for ConfidentialVMEncryptionType.
+    /// Defines values for UefiKeyType.
     /// </summary>
-    public static class ConfidentialVMEncryptionType
+    public static class UefiKeyType
     {
-        public const string EncryptedVMGuestStateOnlyWithPmk = "EncryptedVMGuestStateOnlyWithPmk";
-        public const string EncryptedWithPmk = "EncryptedWithPmk";
-        public const string EncryptedWithCmk = "EncryptedWithCmk";
-        public const string NonPersistedVMGuestState = "NonPersistedVMGuestState";
+        public const string Sha256 = "sha256";
+        public const string X509 = "x509";
     }
 }

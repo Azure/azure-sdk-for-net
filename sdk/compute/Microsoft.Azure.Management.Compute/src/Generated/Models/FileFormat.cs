@@ -12,13 +12,19 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for ConfidentialVMEncryptionType.
+    /// Defines values for FileFormat.
     /// </summary>
-    public static class ConfidentialVMEncryptionType
+    public static class FileFormat
     {
-        public const string EncryptedVMGuestStateOnlyWithPmk = "EncryptedVMGuestStateOnlyWithPmk";
-        public const string EncryptedWithPmk = "EncryptedWithPmk";
-        public const string EncryptedWithCmk = "EncryptedWithCmk";
-        public const string NonPersistedVMGuestState = "NonPersistedVMGuestState";
+        /// <summary>
+        /// A VHD file is a disk image file in the Virtual Hard Disk file
+        /// format.
+        /// </summary>
+        public const string VHD = "VHD";
+        /// <summary>
+        /// A VHDX file is a disk image file in the Virtual Hard Disk v2 file
+        /// format.
+        /// </summary>
+        public const string VHDX = "VHDX";
     }
 }

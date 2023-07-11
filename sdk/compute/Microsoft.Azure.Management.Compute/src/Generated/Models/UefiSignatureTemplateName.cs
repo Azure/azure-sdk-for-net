@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for ConfidentialVMEncryptionType.
+    /// Defines values for UefiSignatureTemplateName.
     /// </summary>
-    public static class ConfidentialVMEncryptionType
+    public static class UefiSignatureTemplateName
     {
-        public const string EncryptedVMGuestStateOnlyWithPmk = "EncryptedVMGuestStateOnlyWithPmk";
-        public const string EncryptedWithPmk = "EncryptedWithPmk";
-        public const string EncryptedWithCmk = "EncryptedWithCmk";
-        public const string NonPersistedVMGuestState = "NonPersistedVMGuestState";
+        public const string NoSignatureTemplate = "NoSignatureTemplate";
+        public const string MicrosoftUefiCertificateAuthorityTemplate = "MicrosoftUefiCertificateAuthorityTemplate";
+        public const string MicrosoftWindowsTemplate = "MicrosoftWindowsTemplate";
     }
 }

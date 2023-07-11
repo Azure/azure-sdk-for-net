@@ -225,9 +225,12 @@ namespace Compute.Tests
             bool createWithPublicIpAddress = false,
             bool waitForCompletion = true,
             bool hasManagedDisks = false,
-            string userData = null)
+            string userData = null,
+            string securityType = null,
+            VMDiskSecurityProfile diskSecurityProfile = null)
         {
-            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks, userData: userData);
+            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks, userData: userData,
+                securityType: securityType, diskSecurityProfile: diskSecurityProfile);
         }
 
         protected VirtualMachine CreateVM(

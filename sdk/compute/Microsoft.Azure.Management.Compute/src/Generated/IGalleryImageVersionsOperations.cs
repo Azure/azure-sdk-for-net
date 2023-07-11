@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='expand'>
         /// The expand expression to apply on the operation. Possible values
-        /// include: 'ReplicationStatus'
+        /// include: 'ReplicationStatus', 'UefiSettings'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

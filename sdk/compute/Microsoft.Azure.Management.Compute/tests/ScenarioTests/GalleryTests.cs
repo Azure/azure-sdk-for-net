@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using Compute.Tests.DiskRPTests;
+using System.Xml.Linq;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
@@ -19,7 +19,6 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace Compute.Tests
@@ -31,6 +30,8 @@ namespace Compute.Tests
         protected const string GalleryImageNamePrefix = "galleryPsTestGalleryImage";
         protected const string GalleryApplicationNamePrefix = "galleryPsTestGalleryApplication";
         private string galleryHomeLocation = "eastus2";
+
+        private const string SecurityTypeFeatureName = "SecurityType";
 
         [Fact]
         public void Gallery_CRUD_Tests()
@@ -133,6 +134,61 @@ namespace Compute.Tests
         }
 
         [Fact]
+        public void GalleryImage_ConfidentialVM_CRUD_Tests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+                string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
+
+                m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = galleryHomeLocation });
+                Trace.TraceInformation("Created the resource group: " + rgName);
+                string galleryName = ComputeManagementTestUtilities.GenerateName(GalleryNamePrefix);
+                Gallery gallery = GetTestInputGallery();
+                m_CrpClient.Galleries.CreateOrUpdate(rgName, galleryName, gallery);
+                Trace.TraceInformation(string.Format("Created the gallery: {0} in resource group: {1}", galleryName, rgName));
+
+                string galleryImageName = ComputeManagementTestUtilities.GenerateName(GalleryImageNamePrefix);
+                // Create CVM compatible image
+                IList<GalleryImageFeature> features = new List<GalleryImageFeature>()
+                    {
+                        new GalleryImageFeature()
+                        {
+                            Name = SecurityTypeFeatureName,
+                            Value = "ConfidentialVM"
+                        }
+                    };
+                GalleryImage inputGalleryImage = GetTestInputGalleryImage(hyperVGeneration: "V2", features: features);
+                m_CrpClient.GalleryImages.CreateOrUpdate(rgName, galleryName, galleryImageName, inputGalleryImage);
+                Trace.TraceInformation(string.Format("Created the gallery image: {0} in gallery: {1}", galleryImageName,
+                    galleryName));
+
+                GalleryImage galleryImageFromGet = m_CrpClient.GalleryImages.Get(rgName, galleryName, galleryImageName);
+                Assert.NotNull(galleryImageFromGet);
+                ValidateGalleryImage(inputGalleryImage, galleryImageFromGet);
+
+                inputGalleryImage.Description = "Updated description.";
+                m_CrpClient.GalleryImages.CreateOrUpdate(rgName, galleryName, galleryImageName, inputGalleryImage);
+                Trace.TraceInformation(string.Format("Updated the gallery image: {0} in gallery: {1}", galleryImageName,
+                    galleryName));
+                galleryImageFromGet = m_CrpClient.GalleryImages.Get(rgName, galleryName, galleryImageName);
+                Assert.NotNull(galleryImageFromGet);
+                ValidateGalleryImage(inputGalleryImage, galleryImageFromGet);
+
+                IPage<GalleryImage> listGalleryImagesResult = m_CrpClient.GalleryImages.ListByGallery(rgName, galleryName);
+                Assert.Single(listGalleryImagesResult);
+
+                m_CrpClient.GalleryImages.Delete(rgName, galleryName, galleryImageName);
+                listGalleryImagesResult = m_CrpClient.GalleryImages.ListByGallery(rgName, galleryName);
+                Assert.Empty(listGalleryImagesResult);
+                Trace.TraceInformation(string.Format("Deleted the gallery image: {0} in gallery: {1}", galleryImageName,
+                    galleryName));
+
+                m_CrpClient.Galleries.Delete(rgName, galleryName);
+            }
+        }
+
+        [Fact]
         public void GalleryImageVersion_CRUD_Tests()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
@@ -157,13 +213,13 @@ namespace Compute.Tests
                     Trace.TraceInformation(string.Format("Created the gallery: {0} in resource group: {1}", galleryName,
                         rgName));
                     string galleryImageName = ComputeManagementTestUtilities.GenerateName(GalleryImageNamePrefix);
-                    GalleryImage inputGalleryImage = GetTestInputGalleryImage();
+                    GalleryImage inputGalleryImage = GetTestInputGalleryImage(hyperVGeneration: "V2");
                     m_CrpClient.GalleryImages.CreateOrUpdate(rgName, galleryName, galleryImageName, inputGalleryImage);
                     Trace.TraceInformation(string.Format("Created the gallery image: {0} in gallery: {1}", galleryImageName,
                         galleryName));
 
                     string galleryImageVersionName = "1.0.0";
-                    GalleryImageVersion inputImageVersion = GetTestInputGalleryImageVersion(sourceImageId);
+                    GalleryImageVersion inputImageVersion = GetTestInputGalleryImageVersionStorageProfileSource(sourceImageId);
                     m_CrpClient.GalleryImageVersions.CreateOrUpdate(rgName, galleryName, galleryImageName,
                         galleryImageVersionName, inputImageVersion);
                     Trace.TraceInformation(string.Format("Created the gallery image version: {0} in gallery image: {1}",
@@ -195,7 +251,6 @@ namespace Compute.Tests
                     IPage<GalleryImageVersion> listGalleryImageVersionsResult = m_CrpClient.GalleryImageVersions.
                         ListByGalleryImage(rgName, galleryName, galleryImageName);
                     Assert.Single(listGalleryImageVersionsResult);
-                    Assert.Equal(1, listGalleryImageVersionsResult.Count());
                     //Assert.Null(listGalleryImageVersionsResult.NextPageLink);
 
                     m_CrpClient.GalleryImageVersions.Delete(rgName, galleryName, galleryImageName, galleryImageVersionName);
@@ -204,6 +259,122 @@ namespace Compute.Tests
                     Assert.Empty(listGalleryImageVersionsResult);
                     Trace.TraceInformation(string.Format("Deleted the gallery image version: {0} in gallery image: {1}",
                         galleryImageVersionName, galleryImageName));
+
+                    ComputeManagementTestUtilities.WaitMinutes(5);
+                    m_CrpClient.Images.Delete(rgName, imageName);
+                    Trace.TraceInformation("Deleted the CRP image.");
+                    m_CrpClient.VirtualMachines.Delete(rgName, vm.Name);
+                    Trace.TraceInformation("Deleted the virtual machine.");
+                    m_CrpClient.GalleryImages.Delete(rgName, galleryName, galleryImageName);
+                    Trace.TraceInformation("Deleted the gallery image.");
+                    m_CrpClient.Galleries.Delete(rgName, galleryName);
+                    Trace.TraceInformation("Deleted the gallery.");
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    if (vm != null)
+                    {
+                        m_CrpClient.VirtualMachines.Delete(rgName, vm.Name);
+                    }
+                    m_CrpClient.Images.Delete(rgName, imageName);
+                }
+            }
+        }
+
+        [Fact]
+        public void GalleryImageVersion_TrustedLaunchSupported_CRUD_Tests()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", galleryHomeLocation);
+                EnsureClientsInitialized(context);
+                string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
+                VirtualMachine vm = null;
+                string imageName = ComputeManagementTestUtilities.GenerateName("psTestSourceImage");
+
+                try
+                {
+                    string sourceImageId = "";
+                    vm = CreateCRPImage(rgName, imageName, ref sourceImageId);
+                    Assert.False(string.IsNullOrEmpty(sourceImageId));
+                    Trace.TraceInformation(string.Format("Created the source image id: {0}", sourceImageId));
+
+                    string galleryName = ComputeManagementTestUtilities.GenerateName(GalleryNamePrefix);
+                    Gallery gallery = GetTestInputGallery();
+                    m_CrpClient.Galleries.CreateOrUpdate(rgName, galleryName, gallery);
+                    Trace.TraceInformation(string.Format("Created the gallery: {0} in resource group: {1}", galleryName,
+                        rgName));
+                    string galleryImageName = ComputeManagementTestUtilities.GenerateName(GalleryImageNamePrefix);
+                    // Create TVM-supported compatible image
+                    IList<GalleryImageFeature> features = new List<GalleryImageFeature>()
+                    {
+                        new GalleryImageFeature()
+                        {
+                            Name = SecurityTypeFeatureName,
+                            Value = "TrustedLaunchSupported"
+                        }
+                    };
+                    GalleryImage inputGalleryImage = GetTestInputGalleryImage(hyperVGeneration: "V2", features: features);
+                    m_CrpClient.GalleryImages.CreateOrUpdate(rgName, galleryName, galleryImageName, inputGalleryImage);
+                    Trace.TraceInformation(string.Format("Created the gallery image: {0} in gallery: {1}", galleryImageName,
+                        galleryName));
+
+                    // Create TVM-supported image version
+                    string galleryImageVersionName = "1.0.0";
+                    GalleryImageVersion inputImageVersion = GetTestInputGalleryImageVersionStorageProfileSource(sourceImageId);
+                    m_CrpClient.GalleryImageVersions.CreateOrUpdate(rgName, galleryName, galleryImageName,
+                        galleryImageVersionName, inputImageVersion);
+                    Trace.TraceInformation(string.Format("Created the gallery image version: {0} in gallery image: {1}",
+                        galleryImageVersionName, galleryImageName));
+                    GalleryImageVersion imageVersionFromGet = m_CrpClient.GalleryImageVersions.Get(rgName,
+                        galleryName, galleryImageName, galleryImageVersionName);
+                    Assert.NotNull(imageVersionFromGet);
+                    ValidateGalleryImageVersion(inputImageVersion, imageVersionFromGet);
+                    imageVersionFromGet = m_CrpClient.GalleryImageVersions.Get(rgName, galleryName, galleryImageName,
+                        galleryImageVersionName, ReplicationStatusTypes.ReplicationStatus);
+
+                    // Create TVM-supported image version with custom uefi keys
+                    galleryImageVersionName = "2.0.0";
+                    inputImageVersion = GetTestInputGalleryImageVersionStorageProfileSource(sourceImageId);
+                    inputImageVersion.SecurityProfile = new ImageVersionSecurityProfile()
+                    {
+                        UefiSettings = new GalleryImageVersionUefiSettings()
+                        {
+                            SignatureTemplateNames = new List<string>() { "MicrosoftWindowsTemplate" },
+                            AdditionalSignatures = new UefiKeySignatures()
+                            {
+                                Kek = new List<UefiKey>() { new UefiKey() { Type = "x509", Value = new List<string>() { "value" } } }
+                            }
+                        }
+                    };
+                    m_CrpClient.GalleryImageVersions.CreateOrUpdate(rgName, galleryName, galleryImageName,
+                        galleryImageVersionName, inputImageVersion);
+                    Trace.TraceInformation(string.Format("Created the gallery image version: {0} in gallery image: {1}",
+                        galleryImageVersionName, galleryImageName));
+                    imageVersionFromGet = m_CrpClient.GalleryImageVersions.Get(rgName,
+                        galleryName, galleryImageName, galleryImageVersionName, expand: "UefiSettings");
+                    Assert.NotNull(imageVersionFromGet);
+                    ValidateGalleryImageVersion(inputImageVersion, imageVersionFromGet);
+                    imageVersionFromGet = m_CrpClient.GalleryImageVersions.Get(rgName, galleryName, galleryImageName,
+                        galleryImageVersionName, ReplicationStatusTypes.ReplicationStatus);
+
+
+                    Trace.TraceInformation("Listing the gallery image versions");
+                    IPage<GalleryImageVersion> listGalleryImageVersionsResult = m_CrpClient.GalleryImageVersions.
+                        ListByGalleryImage(rgName, galleryName, galleryImageName);
+                    Assert.Equal(2, listGalleryImageVersionsResult.Count());
+
+                    foreach (GalleryImageVersion version in listGalleryImageVersionsResult)
+                    {
+                        m_CrpClient.GalleryImageVersions.Delete(rgName, galleryName, galleryImageName, version.Name);
+                        Trace.TraceInformation(string.Format("Deleted the gallery image version: {0} in gallery image: {1}",
+                            galleryImageVersionName, galleryImageName));
+                    }
+                    listGalleryImageVersionsResult = m_CrpClient.GalleryImageVersions.
+                        ListByGalleryImage(rgName, galleryName, galleryImageName);
+                    Assert.Empty(listGalleryImageVersionsResult);
 
                     ComputeManagementTestUtilities.WaitMinutes(5);
                     m_CrpClient.Images.Delete(rgName, imageName);
@@ -572,6 +743,14 @@ namespace Compute.Tests
                 Assert.Equal(imageIn.HyperVGeneration, imageOut.HyperVGeneration);
             }
 
+            if (imageIn.Features != null)
+            {
+                foreach (GalleryImageFeature feature in imageIn.Features)
+                {
+                    Assert.Contains(imageOut.Features, f => f.Name == feature.Name && f.Value == feature.Value);
+                }
+            }
+
             if (!string.IsNullOrEmpty(imageIn.Description))
             {
                 Assert.Equal(imageIn.Description, imageOut.Description);
@@ -597,10 +776,78 @@ namespace Compute.Tests
             Assert.NotNull(imageVersionOut.PublishingProfile.EndOfLifeDate);
             Assert.NotNull(imageVersionOut.PublishingProfile.PublishedDate);
             Assert.NotNull(imageVersionOut.StorageProfile);
-            ValidateImageVersionSecurityProfile(imageVersionIn.SafetyProfile, imageVersionOut.SafetyProfile);
+            ValidateImageVersionSafetyProfile(imageVersionIn.SafetyProfile, imageVersionOut.SafetyProfile);
+            ValidateImageVersionSecurityProfile(imageVersionIn.SecurityProfile, imageVersionOut.SecurityProfile);
+            ValidateImageVersionPublishingProfile(imageVersionIn.PublishingProfile, imageVersionOut.PublishingProfile);
+        }
+
+        private void ValidateImageVersionPublishingProfile(
+            GalleryImageVersionPublishingProfile publishingProfileIn, GalleryImageVersionPublishingProfile publishingProfileOut)
+        {
+            foreach (TargetRegion regionIn in publishingProfileIn.TargetRegions)
+            {
+                TargetRegion regionOut = publishingProfileOut.TargetRegions.FirstOrDefault(r => r.Name.ToLower().Replace(" ", "") == regionIn.Name.ToLower().Replace(" ", ""));
+                Assert.NotNull(regionOut);
+                ValidateImageVersionEncryption(regionIn.Encryption, regionOut.Encryption);
+            }
+        }
+
+        private void ValidateImageVersionEncryption(EncryptionImages encryptionIn, EncryptionImages encryptionOut)
+        {
+            if (encryptionIn == null && encryptionOut == null)
+            {
+                return;
+            }
+
+            ValidateImageVersionOSDiskSecurityProfile(encryptionIn.OsDiskImage.SecurityProfile, encryptionOut.OsDiskImage.SecurityProfile);
+        }
+
+        private void ValidateImageVersionOSDiskSecurityProfile(OSDiskImageSecurityProfile securityProfileIn, OSDiskImageSecurityProfile securityProfileOut)
+        {
+            Assert.Equal(securityProfileIn?.SecureVMDiskEncryptionSetId, securityProfileOut?.SecureVMDiskEncryptionSetId);
+            Assert.Equal(securityProfileIn?.ConfidentialVMEncryptionType, securityProfileOut?.ConfidentialVMEncryptionType);
         }
 
         private void ValidateImageVersionSecurityProfile(
+            ImageVersionSecurityProfile securityProfileIn, ImageVersionSecurityProfile securityProfileOut)
+        {
+            ValidateImageVersionUefiKeys(securityProfileIn?.UefiSettings, securityProfileOut?.UefiSettings);
+        }
+
+        private void ValidateImageVersionUefiKeys(GalleryImageVersionUefiSettings uefiSettingsIn, GalleryImageVersionUefiSettings uefiSettingsOut)
+        {
+            if (uefiSettingsIn == null & uefiSettingsOut == null)
+            {
+                return;
+            }
+
+            foreach (string templateIn in uefiSettingsIn?.SignatureTemplateNames)
+            {
+                Assert.True(uefiSettingsOut?.SignatureTemplateNames?.Contains(templateIn));
+            }
+
+            ValidateUefiKeyEqual(uefiSettingsIn?.AdditionalSignatures?.Pk, uefiSettingsOut?.AdditionalSignatures?.Pk);
+
+            var kek = uefiSettingsIn?.AdditionalSignatures?.Kek?.Zip(uefiSettingsIn.AdditionalSignatures.Kek, uefiSettingsIn.AdditionalSignatures.Kek);
+            kek?.ForEach(keys => ValidateUefiKeyEqual(keys.First, keys.Second));
+            var db = uefiSettingsIn?.AdditionalSignatures?.Db?.Zip(uefiSettingsIn.AdditionalSignatures.Db, uefiSettingsIn.AdditionalSignatures.Db);
+            db?.ForEach(keys => ValidateUefiKeyEqual(keys.First, keys.Second));
+            var dbx = uefiSettingsIn?.AdditionalSignatures?.Dbx?.Zip(uefiSettingsIn.AdditionalSignatures.Dbx, uefiSettingsIn.AdditionalSignatures.Dbx);
+            dbx?.ForEach(keys => ValidateUefiKeyEqual(keys.First, keys.Second));
+        }
+
+        private void ValidateUefiKeyEqual(UefiKey keyIn, UefiKey keyOut)
+        {
+            if (keyIn == null && keyOut == null)
+            {
+                return;
+            }
+
+            Assert.Equal(keyIn?.Type, keyOut?.Type);
+            Assert.Equal(keyIn?.Value?.Count, keyOut?.Value?.Count);
+        }
+
+        private void ValidateImageVersionSafetyProfile(
             GalleryImageVersionSafetyProfile safetyProfileIn,
             GalleryImageVersionSafetyProfile safetyProfileOut)
         {
@@ -649,7 +896,7 @@ namespace Compute.Tests
             };
         }
 
-        private GalleryImage GetTestInputGalleryImage()
+        private GalleryImage GetTestInputGalleryImage(string hyperVGeneration = null, IList<GalleryImageFeature> features = null, OperatingSystemTypes osType = OperatingSystemTypes.Windows)
         {
             return new GalleryImage
             {
@@ -661,13 +908,14 @@ namespace Compute.Tests
                 },
                 Location = galleryHomeLocation,
                 OsState = OperatingSystemStateTypes.Generalized,
-                OsType = OperatingSystemTypes.Windows,
+                OsType = osType,
                 Description = "This is the gallery image description.",
-                HyperVGeneration = null
+                HyperVGeneration = hyperVGeneration,
+                Features = features
             };
         }
 
-        private GalleryImageVersion GetTestInputGalleryImageVersion(string sourceImageId)
+        private GalleryImageVersion GetTestInputGalleryImageVersionStorageProfileSource(string sourceID)
         {
             return new GalleryImageVersion
             {
@@ -693,9 +941,9 @@ namespace Compute.Tests
                 {
                     Source = new GalleryArtifactVersionFullSource
                     {
-                        Id = sourceImageId
-                    }
-                }
+                        Id = sourceID
+                    },
+                },
             };
         }
 
@@ -725,7 +973,7 @@ namespace Compute.Tests
                     },
                     ZoneResilient = true
                 },
-                HyperVGeneration = HyperVGenerationTypes.V1
+                HyperVGeneration = HyperVGenerationTypes.V2
             };
             m_CrpClient.Images.CreateOrUpdate(rgName, imageName, imageInput);
             Image getImage = m_CrpClient.Images.Get(rgName, imageName);

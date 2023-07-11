@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='expand'>
             /// The expand expression to apply on the operation. Possible values include:
-            /// 'ReplicationStatus'
+            /// 'ReplicationStatus', 'UefiSettings'
             /// </param>
             public static GalleryApplicationVersion Get(this IGalleryApplicationVersionsOperations operations, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, string expand = default(string))
             {
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='expand'>
             /// The expand expression to apply on the operation. Possible values include:
-            /// 'ReplicationStatus'
+            /// 'ReplicationStatus', 'UefiSettings'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

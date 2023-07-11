@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='expand'>
         /// The expand expression to apply on the operation. Possible values include:
-        /// 'ReplicationStatus'
+        /// 'ReplicationStatus', 'UefiSettings'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryApplicationVersionName");
             }
-            string apiVersion = "2022-03-03";
+            string apiVersion = "2022-08-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -429,7 +429,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryApplicationName");
             }
-            string apiVersion = "2022-03-03";
+            string apiVersion = "2022-08-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -656,7 +656,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 galleryApplicationVersion.Validate();
             }
-            string apiVersion = "2022-03-03";
+            string apiVersion = "2022-08-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -923,7 +923,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryApplicationVersion");
             }
-            string apiVersion = "2022-03-03";
+            string apiVersion = "2022-08-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1141,7 +1141,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryApplicationVersionName");
             }
-            string apiVersion = "2022-03-03";
+            string apiVersion = "2022-08-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
