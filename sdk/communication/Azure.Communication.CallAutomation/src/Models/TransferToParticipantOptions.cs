@@ -60,5 +60,10 @@ namespace Azure.Communication.CallAutomation
         /// The operationContext for this transfer call.
         /// </summary>
         public string OperationContext { get; set; }
+
+        /// <summary>
+        /// The callback URI override for this transfer call request.
+        /// </summary>
+        public string CallbackUriOverride { get; set; }
     }
 }
