@@ -61,6 +61,28 @@ namespace Azure.ResourceManager.IotCentral.Models
             return new IotCentralPrivateEndpointConnectionData(id, name, resourceType, systemData, groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
+        /// <summary> Initializes a new instance of IotCentralAppPatch. </summary>
+        /// <param name="tags"> Instance tags. </param>
+        /// <param name="skuName"> A valid instance SKU. </param>
+        /// <param name="identity"> The managed identities for the IoT Central application. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="provisioningState"> The provisioning state of the application. </param>
+        /// <param name="applicationId"> The ID of the application. </param>
+        /// <param name="displayName"> The display name of the application. </param>
+        /// <param name="subdomain"> The subdomain of the application. </param>
+        /// <param name="template"> The ID of the application template, which is a blueprint that defines the characteristics and behaviors of an application. Optional; if not specified, defaults to a blank blueprint and allows the application to be defined from scratch. </param>
+        /// <param name="state"> The current state of the application. </param>
+        /// <param name="publicNetworkAccess"> Whether requests from the public network are allowed. </param>
+        /// <param name="networkRuleSets"> Network Rule Set Properties of this IoT Central application. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections created on this IoT Central application. </param>
+        /// <returns> A new <see cref="Models.IotCentralAppPatch"/> instance for mocking. </returns>
+        public static IotCentralAppPatch IotCentralAppPatch(IDictionary<string, string> tags = null, IotCentralAppSku? skuName = null, ManagedServiceIdentity identity = null, IotCentralProvisioningState? provisioningState = null, Guid? applicationId = null, string displayName = null, string subdomain = null, string template = null, IotCentralAppState? state = null, IotCentralPublicNetworkAccess? publicNetworkAccess = null, IotCentralNetworkRuleSets networkRuleSets = null, IEnumerable<IotCentralPrivateEndpointConnectionData> privateEndpointConnections = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            privateEndpointConnections ??= new List<IotCentralPrivateEndpointConnectionData>();
+
+            return new IotCentralAppPatch(tags, skuName.HasValue ? new IotCentralAppSkuInfo(skuName.Value) : null, identity, provisioningState, applicationId, displayName, subdomain, template, state, publicNetworkAccess, networkRuleSets, privateEndpointConnections?.ToList());
+        }
+
         /// <summary> Initializes a new instance of IotCentralPrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -76,6 +98,15 @@ namespace Azure.ResourceManager.IotCentral.Models
             requiredZoneNames ??= new List<string>();
 
             return new IotCentralPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of IotCentralAppNameAvailabilityContent. </summary>
+        /// <param name="name"> The name of the IoT Central application instance to check. </param>
+        /// <param name="resourceType"> The type of the IoT Central resource to query. </param>
+        /// <returns> A new <see cref="Models.IotCentralAppNameAvailabilityContent"/> instance for mocking. </returns>
+        public static IotCentralAppNameAvailabilityContent IotCentralAppNameAvailabilityContent(string name = null, string resourceType = null)
+        {
+            return new IotCentralAppNameAvailabilityContent(name, resourceType);
         }
 
         /// <summary> Initializes a new instance of IotCentralAppNameAvailabilityResponse. </summary>

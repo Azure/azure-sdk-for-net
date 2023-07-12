@@ -19,6 +19,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of L3IsolationDomainPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
+        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
+        /// <param name="aggregateRouteConfiguration"> List of Ipv4 and Ipv6 route configurations. </param>
+        /// <param name="description"> L3 Isolation Domain description. </param>
+        /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
+        internal L3IsolationDomainPatch(IDictionary<string, string> tags, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, string description, L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy connectedSubnetRoutePolicy)
+        {
+            Tags = tags;
+            RedistributeConnectedSubnets = redistributeConnectedSubnets;
+            RedistributeStaticRoutes = redistributeStaticRoutes;
+            AggregateRouteConfiguration = aggregateRouteConfiguration;
+            Description = description;
+            ConnectedSubnetRoutePolicy = connectedSubnetRoutePolicy;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>

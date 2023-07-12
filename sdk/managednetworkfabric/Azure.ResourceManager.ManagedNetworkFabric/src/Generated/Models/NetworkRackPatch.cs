@@ -20,6 +20,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of NetworkRackPatch. </summary>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal NetworkRackPatch(BinaryData properties, IDictionary<string, string> tags)
+        {
+            Properties = properties;
+            Tags = tags;
+        }
+
         /// <summary>
         /// Resource properties.
         /// <para>

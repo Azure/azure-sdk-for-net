@@ -19,6 +19,18 @@ namespace Azure.ResourceManager.HybridData.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of HybridDataManagerPatch. </summary>
+        /// <param name="sku"> The sku type. </param>
+        /// <param name="tags">
+        /// The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource
+        /// (across resource groups).
+        /// </param>
+        internal HybridDataManagerPatch(HybridDataSku sku, IDictionary<string, string> tags)
+        {
+            Sku = sku;
+            Tags = tags;
+        }
+
         /// <summary> The sku type. </summary>
         public HybridDataSku Sku { get; set; }
         /// <summary>

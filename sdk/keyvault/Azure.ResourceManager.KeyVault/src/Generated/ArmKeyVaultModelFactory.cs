@@ -18,6 +18,18 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmKeyVaultModelFactory
     {
+        /// <summary> Initializes a new instance of KeyVaultCreateOrUpdateContent. </summary>
+        /// <param name="location"> The supported Azure location where the key vault should be created. </param>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        /// <returns> A new <see cref="Models.KeyVaultCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static KeyVaultCreateOrUpdateContent KeyVaultCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = null, KeyVaultProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new KeyVaultCreateOrUpdateContent(location, tags, properties);
+        }
+
         /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="sku"> SKU details. </param>
@@ -113,6 +125,15 @@ namespace Azure.ResourceManager.KeyVault.Models
             tags ??= new Dictionary<string, string>();
 
             return new DeletedKeyVaultProperties(vaultId, location, deletedOn, scheduledPurgeOn, tags, purgeProtectionEnabled);
+        }
+
+        /// <summary> Initializes a new instance of KeyVaultNameAvailabilityContent. </summary>
+        /// <param name="name"> The vault name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.KeyVault/vaults. </param>
+        /// <returns> A new <see cref="Models.KeyVaultNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KeyVaultNameAvailabilityContent KeyVaultNameAvailabilityContent(string name = null, ResourceType resourceType = default)
+        {
+            return new KeyVaultNameAvailabilityContent(name, resourceType);
         }
 
         /// <summary> Initializes a new instance of KeyVaultNameAvailabilityResult. </summary>
@@ -314,6 +335,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static ManagedHsmNameAvailabilityResult ManagedHsmNameAvailabilityResult(bool? isNameAvailable = null, ManagedHsmNameUnavailableReason? reason = null, string message = null)
         {
             return new ManagedHsmNameAvailabilityResult(isNameAvailable, reason, message);
+        }
+
+        /// <summary> Initializes a new instance of KeyVaultSecretCreateOrUpdateContent. </summary>
+        /// <param name="tags"> The tags that will be assigned to the secret. </param>
+        /// <param name="properties"> Properties of the secret. </param>
+        /// <returns> A new <see cref="Models.KeyVaultSecretCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static KeyVaultSecretCreateOrUpdateContent KeyVaultSecretCreateOrUpdateContent(IDictionary<string, string> tags = null, SecretProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new KeyVaultSecretCreateOrUpdateContent(tags, properties);
         }
 
         /// <summary> Initializes a new instance of SecretProperties. </summary>

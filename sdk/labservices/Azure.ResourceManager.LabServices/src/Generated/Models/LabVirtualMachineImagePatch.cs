@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.LabServices.Models
         {
         }
 
+        /// <summary> Initializes a new instance of LabVirtualMachineImagePatch. </summary>
+        /// <param name="enabledState"> Is the image enabled. </param>
+        internal LabVirtualMachineImagePatch(LabServicesEnableState? enabledState)
+        {
+            EnabledState = enabledState;
+        }
+
         /// <summary> Is the image enabled. </summary>
         public LabServicesEnableState? EnabledState { get; set; }
     }

@@ -39,6 +39,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareData(id, name, resourceType, systemData, fileName, vendor, model, version, description, fileSize, status, statusMessages?.ToList(), provisioningState);
         }
 
+        /// <summary> Initializes a new instance of FirmwarePatch. </summary>
+        /// <param name="fileName"> File name for a firmware that user uploaded. </param>
+        /// <param name="vendor"> Firmware vendor. </param>
+        /// <param name="model"> Firmware model. </param>
+        /// <param name="version"> Firmware version. </param>
+        /// <param name="description"> User-specified description of the firmware. </param>
+        /// <param name="fileSize"> File size of the uploaded firmware image. </param>
+        /// <param name="status"> The status of firmware scan. </param>
+        /// <param name="statusMessages"> A list of errors or other messages generated during firmware analysis. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.FirmwarePatch"/> instance for mocking. </returns>
+        public static FirmwarePatch FirmwarePatch(string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = null, Status? status = null, IEnumerable<BinaryData> statusMessages = null, ProvisioningState? provisioningState = null)
+        {
+            statusMessages ??= new List<BinaryData>();
+
+            return new FirmwarePatch(fileName, vendor, model, version, description, fileSize, status, statusMessages?.ToList(), provisioningState);
+        }
+
         /// <summary> Initializes a new instance of UriToken. </summary>
         /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
         /// <param name="uploadUri"> SAS URL for file uploading. Kept for backwards compatibility. </param>
@@ -276,6 +294,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             tags ??= new Dictionary<string, string>();
 
             return new FirmwareWorkspaceData(id, name, resourceType, systemData, tags, location, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of FirmwareWorkspacePatch. </summary>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.FirmwareWorkspacePatch"/> instance for mocking. </returns>
+        public static FirmwareWorkspacePatch FirmwareWorkspacePatch(ProvisioningState? provisioningState = null)
+        {
+            return new FirmwareWorkspacePatch(provisioningState);
         }
     }
 }

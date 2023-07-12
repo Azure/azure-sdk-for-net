@@ -547,6 +547,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new FabricBfdConfiguration(interval, multiplier);
         }
 
+        /// <summary> Initializes a new instance of NetworkFabricPatch. </summary>
+        /// <param name="tags"> Azure resource tags that will replace the existing ones. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="terminalServerConfiguration"> Network and credentials configuration already applied to terminal server. </param>
+        /// <param name="racks"> List of NetworkRack resource IDs under the Network Fabric. The number of racks allowed depends on the Network Fabric SKU. </param>
+        /// <param name="l2IsolationDomains"> List of L2IsolationDomain resource IDs under the Network Fabric. </param>
+        /// <param name="l3IsolationDomains"> List of L3IsolationDomain resource IDs under the Network Fabric. </param>
+        /// <returns> A new <see cref="Models.NetworkFabricPatch"/> instance for mocking. </returns>
+        public static NetworkFabricPatch NetworkFabricPatch(IDictionary<string, string> tags = null, string annotation = null, TerminalServerPatchableProperties terminalServerConfiguration = null, IEnumerable<string> racks = null, IEnumerable<string> l2IsolationDomains = null, IEnumerable<string> l3IsolationDomains = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            racks ??= new List<string>();
+            l2IsolationDomains ??= new List<string>();
+            l3IsolationDomains ??= new List<string>();
+
+            return new NetworkFabricPatch(tags, annotation, terminalServerConfiguration, racks?.ToList(), l2IsolationDomains?.ToList(), l3IsolationDomains?.ToList());
+        }
+
         /// <summary> Initializes a new instance of NetworkToNetworkInterconnectData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

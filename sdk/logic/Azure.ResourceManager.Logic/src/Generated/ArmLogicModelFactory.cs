@@ -462,6 +462,15 @@ namespace Azure.ResourceManager.Logic.Models
             return new ListOperationCallbackUri(uri);
         }
 
+        /// <summary> Initializes a new instance of IntegrationAccountListKeyVaultKeyContent. </summary>
+        /// <param name="keyVault"> The key vault reference. </param>
+        /// <param name="skipToken"> The skip token. </param>
+        /// <returns> A new <see cref="Models.IntegrationAccountListKeyVaultKeyContent"/> instance for mocking. </returns>
+        public static IntegrationAccountListKeyVaultKeyContent IntegrationAccountListKeyVaultKeyContent(IntegrationAccountKeyVaultNameReference keyVault = null, string skipToken = null)
+        {
+            return new IntegrationAccountListKeyVaultKeyContent(keyVault, skipToken);
+        }
+
         /// <summary> Initializes a new instance of IntegrationAccountKeyVaultNameReference. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
@@ -481,6 +490,30 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationAccountKeyVaultKey IntegrationAccountKeyVaultKey(Uri keyId = null, bool? isEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
             return new IntegrationAccountKeyVaultKey(keyId, isEnabled, createdOn, updatedOn);
+        }
+
+        /// <summary> Initializes a new instance of IntegrationAccountTrackingEventsContent. </summary>
+        /// <param name="sourceType"> The source type. </param>
+        /// <param name="trackEventsOptions"> The track events options. </param>
+        /// <param name="events"> The events. </param>
+        /// <returns> A new <see cref="Models.IntegrationAccountTrackingEventsContent"/> instance for mocking. </returns>
+        public static IntegrationAccountTrackingEventsContent IntegrationAccountTrackingEventsContent(string sourceType = null, IntegrationAccountTrackEventOperationOption? trackEventsOptions = null, IEnumerable<IntegrationAccountTrackingEvent> events = null)
+        {
+            events ??= new List<IntegrationAccountTrackingEvent>();
+
+            return new IntegrationAccountTrackingEventsContent(sourceType, trackEventsOptions, events?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of IntegrationAccountTrackingEvent. </summary>
+        /// <param name="eventLevel"> The event level. </param>
+        /// <param name="eventOn"> The event time. </param>
+        /// <param name="recordType"> The record type. </param>
+        /// <param name="record"> The record. </param>
+        /// <param name="error"> The error. </param>
+        /// <returns> A new <see cref="Models.IntegrationAccountTrackingEvent"/> instance for mocking. </returns>
+        public static IntegrationAccountTrackingEvent IntegrationAccountTrackingEvent(IntegrationAccountEventLevel eventLevel = default, DateTimeOffset eventOn = default, IntegrationAccountTrackingRecordType recordType = default, BinaryData record = null, IntegrationAccountTrackingEventErrorInfo error = null)
+        {
+            return new IntegrationAccountTrackingEvent(eventLevel, eventOn, recordType, record, error);
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountSchemaData. </summary>

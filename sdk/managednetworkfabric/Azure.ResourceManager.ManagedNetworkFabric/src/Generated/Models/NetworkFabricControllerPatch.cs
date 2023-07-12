@@ -21,6 +21,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             WorkloadExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionInformation>();
         }
 
+        /// <summary> Initializes a new instance of NetworkFabricControllerPatch. </summary>
+        /// <param name="tags"> Azure resource tags that will replace the existing ones. </param>
+        /// <param name="infrastructureExpressRouteConnections"> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </param>
+        /// <param name="workloadExpressRouteConnections"> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </param>
+        internal NetworkFabricControllerPatch(IDictionary<string, string> tags, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections)
+        {
+            Tags = tags;
+            InfrastructureExpressRouteConnections = infrastructureExpressRouteConnections;
+            WorkloadExpressRouteConnections = workloadExpressRouteConnections;
+        }
+
         /// <summary> Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </summary>
