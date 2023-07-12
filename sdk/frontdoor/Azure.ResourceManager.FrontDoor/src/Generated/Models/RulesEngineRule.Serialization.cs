@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        matchConditions = null;
                         continue;
                     }
                     List<RulesEngineMatchCondition> array = new List<RulesEngineMatchCondition>();
