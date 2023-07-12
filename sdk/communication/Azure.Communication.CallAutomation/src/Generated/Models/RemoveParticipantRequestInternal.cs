@@ -24,6 +24,15 @@ namespace Azure.Communication.CallAutomation
             ParticipantToRemove = participantToRemove;
         }
 
+        /// <summary> Initializes a new instance of RemoveParticipantRequestInternal. </summary>
+        /// <param name="participantToRemove"> The participants to be removed from the call. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        internal RemoveParticipantRequestInternal(CommunicationIdentifierModel participantToRemove, string operationContext)
+        {
+            ParticipantToRemove = participantToRemove;
+            OperationContext = operationContext;
+        }
+
         /// <summary> The participants to be removed from the call. </summary>
         public CommunicationIdentifierModel ParticipantToRemove { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>

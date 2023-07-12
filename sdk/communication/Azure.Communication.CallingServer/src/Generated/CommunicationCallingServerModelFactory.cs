@@ -22,6 +22,18 @@ namespace Azure.Communication.CallingServer
             return new TransferCallToParticipantResult(operationContext);
         }
 
+        /// <summary> Initializes a new instance of DtmfOptionsInternal. </summary>
+        /// <param name="interToneTimeoutInSeconds"> Time to wait between DTMF inputs to stop recognizing. </param>
+        /// <param name="maxTonesToCollect"> Maximum number of DTMF tones to be collected. </param>
+        /// <param name="stopTones"> List of tones that will stop recognizing. </param>
+        /// <returns> A new <see cref="CallingServer.DtmfOptionsInternal"/> instance for mocking. </returns>
+        public static DtmfOptionsInternal DtmfOptionsInternal(int? interToneTimeoutInSeconds = null, int? maxTonesToCollect = null, IEnumerable<DtmfTone> stopTones = null)
+        {
+            stopTones ??= new List<DtmfTone>();
+
+            return new DtmfOptionsInternal(interToneTimeoutInSeconds, maxTonesToCollect, stopTones?.ToList());
+        }
+
         /// <summary> Initializes a new instance of RemoveParticipantsResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallingServer.RemoveParticipantsResult"/> instance for mocking. </returns>

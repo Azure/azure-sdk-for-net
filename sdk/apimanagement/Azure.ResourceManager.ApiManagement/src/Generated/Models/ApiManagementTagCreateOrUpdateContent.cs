@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
+        /// <summary> Initializes a new instance of ApiManagementTagCreateOrUpdateContent. </summary>
+        /// <param name="displayName"> Tag name. </param>
+        internal ApiManagementTagCreateOrUpdateContent(string displayName)
+        {
+            DisplayName = displayName;
+        }
+
         /// <summary> Tag name. </summary>
         public string DisplayName { get; set; }
     }

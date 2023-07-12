@@ -18,6 +18,26 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmBatchModelFactory
     {
+        /// <summary> Initializes a new instance of BatchAccountCreateOrUpdateContent. </summary>
+        /// <param name="location"> The region in which to create the account. </param>
+        /// <param name="tags"> The user-specified tags associated with the account. </param>
+        /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
+        /// <param name="poolAllocationMode"> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Azure Active Directory. If the mode is UserSubscription, clients must use Azure Active Directory. The default is BatchService. </param>
+        /// <param name="keyVaultReference"> A reference to the Azure key vault associated with the Batch account. </param>
+        /// <param name="publicNetworkAccess"> If not specified, the default value is 'enabled'. </param>
+        /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
+        /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
+        /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
+        /// <returns> A new <see cref="Models.BatchAccountCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static BatchAccountCreateOrUpdateContent BatchAccountCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, BatchAccountAutoStorageBaseConfiguration autoStorage = null, BatchAccountPoolAllocationMode? poolAllocationMode = null, BatchKeyVaultReference keyVaultReference = null, BatchPublicNetworkAccess? publicNetworkAccess = null, BatchNetworkProfile networkProfile = null, BatchAccountEncryptionConfiguration encryption = null, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            allowedAuthenticationModes ??= new List<BatchAuthenticationMode>();
+
+            return new BatchAccountCreateOrUpdateContent(location, tags, identity, autoStorage, poolAllocationMode, keyVaultReference, publicNetworkAccess, networkProfile, encryption, allowedAuthenticationModes?.ToList());
+        }
+
         /// <summary> Initializes a new instance of BatchIPRule. </summary>
         /// <param name="action"> Action when client IP address is matched. </param>
         /// <param name="value"> IPv4 address, or IPv4 address range in CIDR format. </param>
@@ -169,6 +189,15 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchSkuCapability BatchSkuCapability(string name = null, string value = null)
         {
             return new BatchSkuCapability(name, value);
+        }
+
+        /// <summary> Initializes a new instance of BatchNameAvailabilityContent. </summary>
+        /// <param name="name"> The name to check for availability. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.BatchNameAvailabilityContent"/> instance for mocking. </returns>
+        public static BatchNameAvailabilityContent BatchNameAvailabilityContent(string name = null, ResourceType resourceType = default)
+        {
+            return new BatchNameAvailabilityContent(name, resourceType);
         }
 
         /// <summary> Initializes a new instance of BatchNameAvailabilityResult. </summary>

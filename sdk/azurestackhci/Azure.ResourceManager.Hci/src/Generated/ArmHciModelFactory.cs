@@ -158,6 +158,25 @@ namespace Azure.ResourceManager.Hci.Models
             return new HciClusterNode(name, id, windowsServerSubscription, nodeType, ehcResourceId, manufacturer, model, osName, osVersion, osDisplayVersion, serialNumber, coreCount, memoryInGiB, lastLicensingTimestamp);
         }
 
+        /// <summary> Initializes a new instance of HciClusterPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
+        /// <param name="aadClientId"> App id of cluster AAD identity. </param>
+        /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
+        /// <param name="desiredProperties"> Desired properties of the cluster. </param>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="managedServiceIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
+        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <returns> A new <see cref="Models.HciClusterPatch"/> instance for mocking. </returns>
+        public static HciClusterPatch HciClusterPatch(IDictionary<string, string> tags = null, string cloudManagementEndpoint = null, Guid? aadClientId = null, Guid? aadTenantId = null, HciClusterDesiredProperties desiredProperties = null, Guid? principalId = null, Guid? tenantId = null, HciManagedServiceIdentityType? managedServiceIdentityType = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
+
+            return new HciClusterPatch(tags, cloudManagementEndpoint, aadClientId, aadTenantId, desiredProperties, principalId, tenantId, managedServiceIdentityType, userAssignedIdentities);
+        }
+
         /// <summary> Initializes a new instance of HciClusterIdentityResult. </summary>
         /// <param name="aadClientId"></param>
         /// <param name="aadTenantId"></param>

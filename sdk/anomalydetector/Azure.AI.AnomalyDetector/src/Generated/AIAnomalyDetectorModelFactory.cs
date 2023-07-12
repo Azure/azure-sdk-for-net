@@ -14,6 +14,15 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Model factory for models. </summary>
     public static partial class AIAnomalyDetectorModelFactory
     {
+        /// <summary> Initializes a new instance of TimeSeriesPoint. </summary>
+        /// <param name="timestamp"> Argument that indicates the time stamp of a data point (ISO8601 format). </param>
+        /// <param name="value"> Measurement of that point. </param>
+        /// <returns> A new <see cref="AnomalyDetector.TimeSeriesPoint"/> instance for mocking. </returns>
+        public static TimeSeriesPoint TimeSeriesPoint(DateTimeOffset? timestamp = null, float value = default)
+        {
+            return new TimeSeriesPoint(timestamp, value);
+        }
+
         /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
@@ -52,6 +61,38 @@ namespace Azure.AI.AnomalyDetector
         public static UnivariateLastDetectionResult UnivariateLastDetectionResult(int period = default, int suggestedWindow = default, float expectedValue = default, float upperMargin = default, float lowerMargin = default, bool isAnomaly = default, bool isNegativeAnomaly = default, bool isPositiveAnomaly = default, float? severity = null)
         {
             return new UnivariateLastDetectionResult(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, severity);
+        }
+
+        /// <summary> Initializes a new instance of UnivariateChangePointDetectionOptions. </summary>
+        /// <param name="series">
+        /// Time series data points. Points should be sorted by time stamp in ascending
+        /// order to match the change point detection result.
+        /// </param>
+        /// <param name="granularity"> Granularity is used to verify whether the input series is valid. </param>
+        /// <param name="customInterval">
+        /// A custom interval is used to set a nonstandard time interval. For example, if the
+        /// series is 5 minutes, the request can be set as {"granularity":"minutely",
+        /// "customInterval":5}.
+        /// </param>
+        /// <param name="period">
+        /// Argument that indicates the periodic value of a time series. If the value is null or
+        /// not present, the API will determine the period automatically.
+        /// </param>
+        /// <param name="stableTrendWindow">
+        /// Argument that indicates an advanced model parameter. A default stableTrendWindow value will
+        /// be used in detection.
+        /// </param>
+        /// <param name="threshold">
+        /// Argument that indicates an advanced model parameter between 0.0 and 1.0. The lower the
+        /// value is, the larger the trend error is, which means less change point will
+        /// be accepted.
+        /// </param>
+        /// <returns> A new <see cref="AnomalyDetector.UnivariateChangePointDetectionOptions"/> instance for mocking. </returns>
+        public static UnivariateChangePointDetectionOptions UnivariateChangePointDetectionOptions(IEnumerable<TimeSeriesPoint> series = null, TimeGranularity granularity = default, int? customInterval = null, int? period = null, int? stableTrendWindow = null, float? threshold = null)
+        {
+            series ??= new List<TimeSeriesPoint>();
+
+            return new UnivariateChangePointDetectionOptions(series?.ToList(), granularity, customInterval, period, stableTrendWindow, threshold);
         }
 
         /// <summary> Initializes a new instance of UnivariateChangePointDetectionResult. </summary>

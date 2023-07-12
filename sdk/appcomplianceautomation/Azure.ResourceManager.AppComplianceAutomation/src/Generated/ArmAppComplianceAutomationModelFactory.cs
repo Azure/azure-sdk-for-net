@@ -174,6 +174,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AssessmentResource(resourceId, resourceStatus, reason, statusChangeDate);
         }
 
+        /// <summary> Initializes a new instance of SnapshotDownloadContent. </summary>
+        /// <param name="reportCreatorTenantId"> Tenant id. </param>
+        /// <param name="downloadType"> Indicates the download type. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <returns> A new <see cref="Models.SnapshotDownloadContent"/> instance for mocking. </returns>
+        public static SnapshotDownloadContent SnapshotDownloadContent(string reportCreatorTenantId = null, DownloadType downloadType = default, string offerGuid = null)
+        {
+            return new SnapshotDownloadContent(reportCreatorTenantId, downloadType, offerGuid);
+        }
+
         /// <summary> Initializes a new instance of DownloadResponse. </summary>
         /// <param name="resourceList"> List of the reports. </param>
         /// <param name="complianceReport"> List of the compliance result. </param>
