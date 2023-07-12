@@ -186,6 +186,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
+        /// <summary> Initializes a new instance of PrepareDataMoveContent. </summary>
+        /// <param name="targetResourceId"> ARM Id of target vault. </param>
+        /// <param name="targetRegion"> Target Region. </param>
+        /// <param name="dataMoveLevel"> DataMove Level. </param>
+        /// <param name="sourceContainerArmIds">
+        /// Source Container ArmIds
+        /// This needs to be populated only if DataMoveLevel is set to container
+        /// </param>
+        /// <param name="ignoreMoved"> Ignore the artifacts which are already moved. </param>
+        /// <returns> A new <see cref="Models.PrepareDataMoveContent"/> instance for mocking. </returns>
+        public static PrepareDataMoveContent PrepareDataMoveContent(ResourceIdentifier targetResourceId = null, AzureLocation targetRegion = default, DataMoveLevel dataMoveLevel = default, IEnumerable<ResourceIdentifier> sourceContainerArmIds = null, bool? ignoreMoved = null)
+        {
+            sourceContainerArmIds ??= new List<ResourceIdentifier>();
+
+            return new PrepareDataMoveContent(targetResourceId, targetRegion, dataMoveLevel, sourceContainerArmIds?.ToList(), ignoreMoved);
+        }
+
+        /// <summary> Initializes a new instance of TriggerDataMoveContent. </summary>
+        /// <param name="sourceResourceId"> ARM Id of source vault. </param>
+        /// <param name="sourceRegion"> Source Region. </param>
+        /// <param name="dataMoveLevel"> DataMove Level. </param>
+        /// <param name="correlationId"> Correlation Id. </param>
+        /// <param name="sourceContainerArmIds"> Source Container ArmIds. </param>
+        /// <param name="doesPauseGC"> Pause GC. </param>
+        /// <returns> A new <see cref="Models.TriggerDataMoveContent"/> instance for mocking. </returns>
+        public static TriggerDataMoveContent TriggerDataMoveContent(ResourceIdentifier sourceResourceId = null, AzureLocation sourceRegion = default, DataMoveLevel dataMoveLevel = default, string correlationId = null, IEnumerable<ResourceIdentifier> sourceContainerArmIds = null, bool? doesPauseGC = null)
+        {
+            sourceContainerArmIds ??= new List<ResourceIdentifier>();
+
+            return new TriggerDataMoveContent(sourceResourceId, sourceRegion, dataMoveLevel, correlationId, sourceContainerArmIds?.ToList(), doesPauseGC);
+        }
+
         /// <summary> Initializes a new instance of BackupProtectedItemData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

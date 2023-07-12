@@ -18,6 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
+        /// <summary> Initializes a new instance of InMageAzureV2UnplannedFailoverContent. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="recoveryPointId"> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
+        internal InMageAzureV2UnplannedFailoverContent(string instanceType, ResourceIdentifier recoveryPointId) : base(instanceType)
+        {
+            RecoveryPointId = recoveryPointId;
+            InstanceType = instanceType ?? "InMageAzureV2";
+        }
+
         /// <summary> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
     }

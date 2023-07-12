@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Sql.Models
         {
         }
 
+        /// <summary> Initializes a new instance of NetworkIsolationSettings. </summary>
+        /// <param name="storageAccountResourceId"> The resource id for the storage account used to store BACPAC file. If set, private endpoint connection will be created for the storage account. Must match storage account used for StorageUri parameter. </param>
+        /// <param name="sqlServerResourceId"> The resource id for the SQL server which is the target of this request. If set, private endpoint connection will be created for the SQL server. Must match server which is target of the operation. </param>
+        internal NetworkIsolationSettings(ResourceIdentifier storageAccountResourceId, ResourceIdentifier sqlServerResourceId)
+        {
+            StorageAccountResourceId = storageAccountResourceId;
+            SqlServerResourceId = sqlServerResourceId;
+        }
+
         /// <summary> The resource id for the storage account used to store BACPAC file. If set, private endpoint connection will be created for the storage account. Must match storage account used for StorageUri parameter. </summary>
         public ResourceIdentifier StorageAccountResourceId { get; set; }
         /// <summary> The resource id for the SQL server which is the target of this request. If set, private endpoint connection will be created for the SQL server. Must match server which is target of the operation. </summary>

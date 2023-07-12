@@ -20,6 +20,19 @@ namespace Azure.ResourceManager.Sql.Models
             Databases = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of FailoverGroupPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
+        /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
+        /// <param name="databases"> List of databases in the failover group. </param>
+        internal FailoverGroupPatch(IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, IList<string> databases)
+        {
+            Tags = tags;
+            ReadWriteEndpoint = readWriteEndpoint;
+            ReadOnlyEndpoint = readOnlyEndpoint;
+            Databases = databases;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Read-write endpoint of the failover group instance. </summary>

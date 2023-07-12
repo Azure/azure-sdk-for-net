@@ -20,6 +20,15 @@ namespace Azure.Search.Documents.Models
             DataSourceDocumentIds = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of ResetDocumentOptions. </summary>
+        /// <param name="documentKeys"> document keys to be reset. </param>
+        /// <param name="dataSourceDocumentIds"> datasource document identifiers to be reset. </param>
+        internal ResetDocumentOptions(IList<string> documentKeys, IList<string> dataSourceDocumentIds)
+        {
+            DocumentKeys = documentKeys;
+            DataSourceDocumentIds = dataSourceDocumentIds;
+        }
+
         /// <summary> document keys to be reset. </summary>
         public IList<string> DocumentKeys { get; }
     }
