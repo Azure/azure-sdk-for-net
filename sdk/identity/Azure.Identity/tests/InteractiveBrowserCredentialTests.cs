@@ -26,8 +26,14 @@ namespace Azure.Identity.Tests
             string resolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
             var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, resolvedTenantId, "token", "refreshToken");
             var tokenCacheOptions = new MockTokenCache(
-                () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
-                args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
+                () =>
+                {
+                    return Task.FromResult<ReadOnlyMemory<byte>>(mockBytes);
+                },
+                args =>
+                {
+                    return Task.FromResult<ReadOnlyMemory<byte>>(mockBytes);
+                });
 
             var options = new InteractiveBrowserCredentialOptions
             {

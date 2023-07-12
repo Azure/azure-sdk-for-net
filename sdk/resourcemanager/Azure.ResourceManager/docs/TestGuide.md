@@ -20,7 +20,7 @@ sdk\<service name>\Azure.ResourceManager.<service>\tests\<service>ManagementTest
 sdk\<service name>\Azure.ResourceManager.<service>\tests\Scenario
 ```
 
-**Note**: 
+**Note**:
 
 1. Considering that in Git directories exist implicitly, so you might need to create the `Scenario` directories by yourself after cloning the repo.
 
@@ -93,13 +93,13 @@ If you are using system environment variables, make sure to restart Visual Studi
 
 ## Test proxy
 
-The local recording files will be stored in `azure-sdk-for-net/.assets/{10-character}/net/sdk/{service name}/{service}/tests/SessionRecords`. 
+The local recording files will be stored in `azure-sdk-for-net/.assets/{10-character}/net/sdk/{service name}/{service}/tests/SessionRecords`.
 
 1. Restore recording files
 
 If the value of the "tag" field is not empty in the `assets.json` file, it means that the service has recording files in the remote repository. You can use the following command or playback any cases to download them to your local machine.
 
-```
+```shell
 cd azure-sdk-for-net/sdk/{service}/{package}
 test-proxy restore -a ./assets.json
 ```
@@ -110,10 +110,13 @@ The recording files generated during the testing will be directly saved to the S
 
 3. Push the recording files to the assets repository.
 
-```
+```shell
 cd azure-sdk-for-net/sdk/{service}/{package}
 test-proxy push -a ./assets.json
 ```
+
+**[Note]**: Before you push to the assets repository, make sure you have the correct privilege. Check the guide [here](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/785/Externalizing-Recordings-(Asset-Sync)?anchor=permissions-to-%60azure/azure-sdk-assets%60).
+
 The test-proxy push command will upload the corresponding SessionRecords files under the `/.assets` folder and update the tag in `assets.json`.
 
 After the push is complete, you can find the corresponding tag in the `Switch branches/tags` section of the [azure-sdk-assets](https://github.com/Azure/azure-sdk-assets) repo  to verify the recording files you uploaded.
