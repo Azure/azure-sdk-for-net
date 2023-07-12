@@ -1019,27 +1019,59 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
+        // To run this test, the NamespaceTenant AAD info needs to be set to an AAD app that does not have any RBAC permissions.
         [RecordedTest]
-        //[LiveOnly]
+        [Ignore("AAD app not configured for this test")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2023_08_03)]
         public async Task DeleteAsync_Paginated()
         {
-            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
-            await using DisposingFileSystem test = await GetNewFileSystem(oauthService);
+            string fileSystemName = GetNewFileSystemName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
 
             // Arrange
-            var name = GetNewDirectoryName();
-            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(name));
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
             await directory.CreateIfNotExistsAsync();
 
-            for (int i = 0; i < 5020; i++)
+            for (int i = 0; i < 1; i++)
             {
                 DataLakeFileClient fileClient = directory.GetFileClient(GetNewFileName());
                 await fileClient.CreateIfNotExistsAsync();
             };
 
+            IList<PathAccessControlItem> accessControlList = new List<PathAccessControlItem>()
+            {
+                new PathAccessControlItem
+                {
+                    Permissions = RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute,
+                    AccessControlType = AccessControlType.User,
+                    // object ID of AAD app that has no RBAC permissions
+                    EntityId = "56ec4154-12ea-48c6-bfdb-06152ff4de07"
+                },
+                new PathAccessControlItem
+                {
+                    Permissions = RolePermissions.None,
+                    AccessControlType = AccessControlType.Group,
+                },
+                new PathAccessControlItem
+                {
+                    Permissions = RolePermissions.None,
+                    AccessControlType = AccessControlType.Other
+                }
+            };
+            Response<AccessControlChangeResult> setAclResponse = null;
+            do
+            {
+                setAclResponse = await directory.SetAccessControlRecursiveAsync(accessControlList);
+            }
+            while (setAclResponse?.Value.ContinuationToken != null);
+
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            DataLakeFileSystemClient oauthFileSystem = InstrumentClient(oauthService.GetFileSystemClient(fileSystemName));
+            DataLakeDirectoryClient oauthDirectory = InstrumentClient(oauthFileSystem.GetDirectoryClient(directoryName));
+
             // Act
-            Response response = await directory.DeleteAsync();
+            Response response = await oauthDirectory.DeleteAsync();
         }
 
         [RecordedTest]
