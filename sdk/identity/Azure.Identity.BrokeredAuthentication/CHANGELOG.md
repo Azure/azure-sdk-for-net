@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for MSA passthrough. Note this is only available for 1st party applications.
+
 ### Breaking Changes
 
 ### Bugs Fixed
