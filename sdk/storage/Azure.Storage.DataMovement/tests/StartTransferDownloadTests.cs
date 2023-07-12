@@ -170,10 +170,10 @@ namespace Azure.Storage.DataMovement.Tests
                 CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                 await downloadedBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
                 Assert.IsTrue(downloadedBlobInfo[i].DataTransfer.HasCompleted);
-                Assert.AreEqual(StorageTransferStatus.Completed, downloadedBlobInfo[i].DataTransfer.TransferStatus);
 
                 // Verify Download
                 await downloadedBlobInfo[i].EventsRaised.AssertSingleCompletedCheck();
+                Assert.AreEqual(StorageTransferStatus.Completed, downloadedBlobInfo[i].DataTransfer.TransferStatus);
                 CheckDownloadFile(downloadedBlobInfo[i].SourceLocalPath, downloadedBlobInfo[i].DestinationLocalPath);
             };
         }

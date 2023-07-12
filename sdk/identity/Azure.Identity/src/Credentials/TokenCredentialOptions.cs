@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Runtime.CompilerServices;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {

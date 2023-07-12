@@ -217,7 +217,7 @@ namespace Azure.Identity
                     try
                     {
                         AuthenticationResult result = await Client
-                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
+                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
                             .ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
@@ -243,7 +243,7 @@ namespace Azure.Identity
         private async Task<AccessToken> GetTokenViaDeviceCodeAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
         {
             AuthenticationResult result = await Client
-                .AcquireTokenWithDeviceCodeAsync(context.Scopes, context.Claims, code => DeviceCodeCallbackImpl(code, cancellationToken), async, cancellationToken)
+                .AcquireTokenWithDeviceCodeAsync(context.Scopes, context.Claims, code => DeviceCodeCallbackImpl(code, cancellationToken), context.IsCaeEnabled, async, cancellationToken)
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);

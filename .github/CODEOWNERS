@@ -605,7 +605,7 @@
 # PRLabel: %Mixed Reality
 /sdk/objectanchors/                                                @crtreasu @rgarcia @JoshLove-msft
 
-# PRLabel: %Open AI
+# PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
 
 # PRLabel: %Operational Insights

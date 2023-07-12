@@ -43,16 +43,6 @@ namespace Azure.Health.Insights.ClinicalMatching
         public double Radius { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.GeoJsonPropertiesSubType SubType { get { throw null; } }
     }
-    public static partial class AzureHealthInsightsClinicalMatchingModelFactory
-    {
-        public static Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence ClinicalNoteEvidence(string id = null, string text = null, int offset = 0, int length = 0) { throw null; }
-        public static Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement ExtendedClinicalCodedElement(string system = null, string code = null, string name = null, string value = null, string semanticType = null, string category = null) { throw null; }
-        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherInference TrialMatcherInference(Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceType type = default(Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceType), string value = null, string description = null, float? confidenceScore = default(float?), System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceEvidence> evidence = null, string id = null, Azure.Health.Insights.ClinicalMatching.ClinicalTrialSource? source = default(Azure.Health.Insights.ClinicalMatching.ClinicalTrialSource?), Azure.Health.Insights.ClinicalMatching.ClinicalTrialMetadata metadata = null) { throw null; }
-        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceEvidence TrialMatcherInferenceEvidence(string eligibilityCriteriaEvidence = null, Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence patientDataEvidence = null, Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement patientInfoEvidence = null, float? importance = default(float?)) { throw null; }
-        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult TrialMatcherPatientResult(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.TrialMatcherInference> inferences = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement> neededClinicalInfo = null) { throw null; }
-        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherResult TrialMatcherResult(System.Guid jobId = default(System.Guid), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset expirationDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.Health.Insights.ClinicalMatching.JobStatus status = default(Azure.Health.Insights.ClinicalMatching.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, Azure.Health.Insights.ClinicalMatching.TrialMatcherResults results = null) { throw null; }
-        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherResults TrialMatcherResults(System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult> patients = null, string modelVersion = null, System.DateTimeOffset? knowledgeGraphLastUpdateDate = default(System.DateTimeOffset?)) { throw null; }
-    }
     public partial class ClinicalCodedElement
     {
         public ClinicalCodedElement(string system, string code) { }
@@ -417,6 +407,16 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static bool operator !=(Azure.Health.Insights.ClinicalMatching.GeoJsonType left, Azure.Health.Insights.ClinicalMatching.GeoJsonType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class HealthInsightsClinicalMatchingModelFactory
+    {
+        public static Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence ClinicalNoteEvidence(string id = null, string text = null, int offset = 0, int length = 0) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement ExtendedClinicalCodedElement(string system = null, string code = null, string name = null, string value = null, string semanticType = null, string category = null) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherInference TrialMatcherInference(Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceType type = default(Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceType), string value = null, string description = null, float? confidenceScore = default(float?), System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceEvidence> evidence = null, string id = null, Azure.Health.Insights.ClinicalMatching.ClinicalTrialSource? source = default(Azure.Health.Insights.ClinicalMatching.ClinicalTrialSource?), Azure.Health.Insights.ClinicalMatching.ClinicalTrialMetadata metadata = null) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceEvidence TrialMatcherInferenceEvidence(string eligibilityCriteriaEvidence = null, Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence patientDataEvidence = null, Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement patientInfoEvidence = null, float? importance = default(float?)) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult TrialMatcherPatientResult(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.TrialMatcherInference> inferences = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement> neededClinicalInfo = null) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherResult TrialMatcherResult(System.Guid jobId = default(System.Guid), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset expirationDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.Health.Insights.ClinicalMatching.JobStatus status = default(Azure.Health.Insights.ClinicalMatching.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, Azure.Health.Insights.ClinicalMatching.TrialMatcherResults results = null) { throw null; }
+        public static Azure.Health.Insights.ClinicalMatching.TrialMatcherResults TrialMatcherResults(System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult> patients = null, string modelVersion = null, System.DateTimeOffset? knowledgeGraphLastUpdateDate = default(System.DateTimeOffset?)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobStatus : System.IEquatable<Azure.Health.Insights.ClinicalMatching.JobStatus>
     {
@@ -559,7 +559,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class AzureHealthInsightsClinicalMatchingClientBuilderExtensions
+    public static partial class HealthInsightsClinicalMatchingClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClient, Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClientOptions> AddClinicalMatchingClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClient, Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClientOptions> AddClinicalMatchingClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
