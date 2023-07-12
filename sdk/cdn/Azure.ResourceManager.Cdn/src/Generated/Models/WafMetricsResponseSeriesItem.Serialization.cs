@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        groups = null;
                         continue;
                     }
                     List<WafMetricsResponseSeriesPropertiesItemsItem> array = new List<WafMetricsResponseSeriesPropertiesItemsItem>();
