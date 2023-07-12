@@ -15,8 +15,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     public class ModelJsonConverterTests
     {
-        [TestCase("Data")]
-        [TestCase("Wire")]
+        [TestCase("D")]
+        [TestCase("W")]
         public void SerializeTest(string format)
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
@@ -39,8 +39,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase("Data")]
-        [TestCase("Wire")]
+        [TestCase("D")]
+        [TestCase("W")]
         public void DeserializeTest(string format)
         {
             string serviceResponse = "{\"latinName\":\"Animalia\",\"weight\":1.5,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
@@ -99,8 +99,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("", actual);
         }
 
-        [TestCase("Data")]
-        [TestCase("Wire")]
+        [TestCase("D")]
+        [TestCase("W")]
         public void CanSerializeDerivedModel(string format)
         {
             string serviceResponse = "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
@@ -128,8 +128,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase("Data")]
-        [TestCase("Wire")]
+        [TestCase("D")]
+        [TestCase("W")]
         public void CanSerializeBaseModel(string format)
         {
             string serviceResponse = "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
@@ -160,8 +160,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase("Data")]
-        [TestCase("Wire")]
+        [TestCase("D")]
+        [TestCase("W")]
         public void CanSerializeUnknown(string format)
         {
             string serviceResponse = "{\"kind\":\"Z\",\"name\":\"zmodel\",\"zProperty\":1.5,\"extra\":\"stuff\"}";

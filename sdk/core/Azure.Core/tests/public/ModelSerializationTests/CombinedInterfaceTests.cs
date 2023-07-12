@@ -13,8 +13,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class CombinedInterfaceTests
     {
-        [TestCase("Data")]
-        [TestCase("Wire")]
+        [TestCase("D")]
+        [TestCase("W")]
         public void CanRoundTripFutureVersionWithoutLossXml(string format)
         {
             ModelSerializerOptions options = new ModelSerializerOptions(format);
@@ -45,8 +45,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             VerifyModelXmlModelForCombinedInterface(model, model2, format);
         }
 
-        [TestCase("Data")]
-        [TestCase("Wire")]
+        [TestCase("D")]
+        [TestCase("W")]
         public void CanRoundTripFutureVersionWithoutLossJson(string format)
         {
             ModelSerializerOptions options = new ModelSerializerOptions(format);

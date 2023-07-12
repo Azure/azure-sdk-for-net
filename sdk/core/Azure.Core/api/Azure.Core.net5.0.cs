@@ -1131,7 +1131,7 @@ namespace Azure.Core.Serialization
     }
     public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IModelSerializable>
     {
-        public ModelJsonConverter(string format = "Data") { }
+        public ModelJsonConverter(string format = "D") { }
         public string Format { get { throw null; } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override Azure.Core.Serialization.IModelSerializable Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
@@ -1144,7 +1144,7 @@ namespace Azure.Core.Serialization
     }
     public partial class ModelSerializerOptions
     {
-        public ModelSerializerOptions(string format = "Data") { }
+        public ModelSerializerOptions(string format = "D") { }
         public string FormatType { get { throw null; } }
         public System.Collections.Generic.Dictionary<System.Type, Azure.Core.Serialization.ObjectSerializer> Serializers { get { throw null; } }
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]

@@ -12,8 +12,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class EnvelopeTests
     {
-        [TestCase("Data")]
-        [TestCase("Wire")]
+        [TestCase("D")]
+        [TestCase("W")]
         public void CanRoundTripFutureVersionWithoutLoss(string format)
         {
             string serviceResponse =

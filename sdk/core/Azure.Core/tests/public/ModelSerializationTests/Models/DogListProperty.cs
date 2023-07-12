@@ -183,7 +183,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                string format = modelConverter is not null ? modelConverter.Format : "Wire";
+                string format = modelConverter is not null ? modelConverter.Format : "W";
                 return new ModelSerializerOptions(format);
             }
         }

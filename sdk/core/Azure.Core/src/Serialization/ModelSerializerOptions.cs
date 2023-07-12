@@ -19,12 +19,12 @@ namespace Azure.Core.Serialization
             /// <summary>
             /// Specifies the data format where IgnoreReadOnly and IgnoreAdditionalProperties are false.
             /// </summary>
-            public static readonly string Data = "Data";
+            public static readonly string Data = "D";
 
             /// <summary>
             /// Specifies the wire format IgnoreReadOnly and IgnoreAdditionalProperties are true.
             /// </summary>
-            public static readonly string Wire = "Wire";
+            public static readonly string Wire = "W";
 
             /// <summary>
             /// todo
@@ -35,17 +35,17 @@ namespace Azure.Core.Serialization
         }
 
         /// <summary>
-        /// Consructor for ModelSerializerOptions. Takes in a string that determines Format of serialized model. "Data" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "Wire" = wire format which means both properties are true. Default is "Data".
+        /// Consructor for ModelSerializerOptions. Takes in a string that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".
         /// </summary>
         /// <param name="format"></param>
-        public ModelSerializerOptions(string format = "Data")
+        public ModelSerializerOptions(string format = "D")
         {
-            //throw ArgumentException if not "Data" or "Wire"
+            //throw ArgumentException if not "D" or "W"
             FormatType = ValidateFormat(format);
         }
 
         /// <summary>
-        /// String that determines Format of serialized model. "Data" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "Wire" = wire format which means both properties are true. Default is "Data".
+        /// String that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".
         /// </summary>
         public string FormatType { get; }
 
@@ -56,7 +56,7 @@ namespace Azure.Core.Serialization
 
         private string ValidateFormat(string x)
         {
-            if (x != "Data" && x != "Wire")
+            if (x != "D" && x != "W")
             {
                 throw new ArgumentException("Format must be either 'Data' or 'Wire'.");
             }

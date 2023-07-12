@@ -12,8 +12,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class ModelXmlTests
     {
-        [TestCase("Data")]
-        [TestCase("Wire")]
+        [TestCase("D")]
+        [TestCase("W")]
         public void CanRoundTripFutureVersionWithoutLoss(string format)
         {
             ModelSerializerOptions options = new ModelSerializerOptions(format);

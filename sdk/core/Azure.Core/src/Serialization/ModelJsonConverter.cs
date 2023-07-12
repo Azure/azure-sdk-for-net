@@ -17,14 +17,14 @@ namespace Azure.Core.Serialization
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
-        /// String that determines Format of serialized model. "Data" = data format which means both properties are false, "Wire" = wire format which means both properties are true Default is "Data".
+        /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
         /// </summary>
         public string Format { get; }
 
         /// <summary>
-        /// String that determines Format of serialized model. "Data" = data format which means both properties are false, "Wire" = wire format which means both properties are true Default is "Data".
+        /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
         /// </summary>
-        public ModelJsonConverter(string format = "Data")
+        public ModelJsonConverter(string format = "D")
         {
             Format = format;
         }

@@ -15,8 +15,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class NewtonSoftTests
     {
-        [TestCase("Data")]
-        [TestCase("Wire")]
+        [TestCase("D")]
+        [TestCase("W")]
         public void CanRoundTripFutureVersionWithoutLoss(string format)
         {
             Stream stream = new MemoryStream();
