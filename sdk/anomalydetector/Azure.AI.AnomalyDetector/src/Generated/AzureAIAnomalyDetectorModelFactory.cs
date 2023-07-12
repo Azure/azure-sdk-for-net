@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AIAnomalyDetectorModelFactory
+    public static partial class AzureAIAnomalyDetectorModelFactory
     {
         /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
         /// <param name="period">
