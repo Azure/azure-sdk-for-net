@@ -297,8 +297,8 @@ namespace Azure.Communication.CallAutomation
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 request.CustomContext = new CustomContextInternal(
-                   options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
-                   options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);
+                   options.CallInvite.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.SipHeaders,
+                   options.CallInvite.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.VoipHeaders);
 
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(
                     request,
@@ -346,8 +346,8 @@ namespace Azure.Communication.CallAutomation
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 request.CustomContext = new CustomContextInternal(
-                   options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
-                   options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);
+                   options.CallInvite.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.SipHeaders,
+                   options.CallInvite.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.VoipHeaders);
 
                 return AzureCommunicationServicesRestClient.RedirectCall(
                     request,
@@ -674,8 +674,8 @@ namespace Azure.Communication.CallAutomation
             };
 
             request.CustomContext = new CustomContextInternal(
-               options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
-               options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);
+               options.CallInvite.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.SipHeaders,
+               options.CallInvite.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomContext.VoipHeaders);
 
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
@@ -706,8 +706,8 @@ namespace Azure.Communication.CallAutomation
             };
 
             request.CustomContext = new CustomContextInternal(
-               options.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.SipHeaders,
-               options.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.VoipHeaders);
+               options.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.SipHeaders,
+               options.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.VoipHeaders);
 
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
