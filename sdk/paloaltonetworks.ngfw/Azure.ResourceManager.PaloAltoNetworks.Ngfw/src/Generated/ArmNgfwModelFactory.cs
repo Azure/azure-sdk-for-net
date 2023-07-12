@@ -16,7 +16,7 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ArmPaloAltoNetworksNgfwModelFactory
+    public static partial class ArmNgfwModelFactory
     {
         /// <summary> Initializes a new instance of GlobalRulestackResourceData. </summary>
         /// <param name="id"> The id. </param>

@@ -12,7 +12,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="PurviewCatalogClient"/> to client builder. </summary>
-    public static partial class AnalyticsPurviewCatalogClientBuilderExtensions
+    public static partial class PurviewCatalogClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="PurviewCatalogClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
