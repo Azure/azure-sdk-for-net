@@ -19,6 +19,13 @@ namespace Azure.AI.TextAnalytics.Models
             Errors = new ChangeTrackingList<Error>();
         }
 
+        /// <summary> Initializes a new instance of JobErrors. </summary>
+        /// <param name="errors"></param>
+        internal JobErrors(IReadOnlyList<Error> errors)
+        {
+            Errors = errors;
+        }
+
         /// <summary> Gets the errors. </summary>
         public IReadOnlyList<Error> Errors { get; }
     }

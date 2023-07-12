@@ -58,6 +58,15 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageSkuRestriction(restrictionType, values?.ToList(), reasonCode);
         }
 
+        /// <summary> Initializes a new instance of StorageAccountNameAvailabilityContent. </summary>
+        /// <param name="name"> The storage account name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Storage/storageAccounts. </param>
+        /// <returns> A new <see cref="Models.StorageAccountNameAvailabilityContent"/> instance for mocking. </returns>
+        public static StorageAccountNameAvailabilityContent StorageAccountNameAvailabilityContent(string name = null, ResourceType resourceType = default)
+        {
+            return new StorageAccountNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of StorageAccountNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> Gets the reason that a storage account name could not be used. The Reason element is only returned if NameAvailable is false. </param>
@@ -66,6 +75,44 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageAccountNameAvailabilityResult StorageAccountNameAvailabilityResult(bool? isNameAvailable = null, StorageAccountNameUnavailableReason? reason = null, string message = null)
         {
             return new StorageAccountNameAvailabilityResult(isNameAvailable, reason, message);
+        }
+
+        /// <summary> Initializes a new instance of StorageAccountCreateOrUpdateContent. </summary>
+        /// <param name="sku"> Required. Gets or sets the SKU name. </param>
+        /// <param name="kind"> Required. Indicates the type of storage account. </param>
+        /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
+        /// <param name="extendedLocation"> Optional. Set the extended location of the resource. If not set, the storage account will be created in Azure main region. Otherwise it will be created in the specified extended location. </param>
+        /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used for viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key with a length no greater than 128 characters and a value with a length no greater than 256 characters. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="allowedCopyScope"> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </param>
+        /// <param name="publicNetworkAccess"> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="sasPolicy"> SasPolicy assigned to the storage account. </param>
+        /// <param name="keyExpirationPeriodInDays"> KeyPolicy assigned to the storage account. </param>
+        /// <param name="customDomain"> User domain assigned to the storage account. Name is the CNAME source. Only one custom domain is supported per storage account at this time. To clear the existing custom domain, use an empty string for the custom domain name property. </param>
+        /// <param name="encryption"> Encryption settings to be used for server-side encryption for the storage account. </param>
+        /// <param name="networkRuleSet"> Network rule set. </param>
+        /// <param name="accessTier"> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </param>
+        /// <param name="azureFilesIdentityBasedAuthentication"> Provides the identity based authentication settings for Azure Files. </param>
+        /// <param name="enableHttpsTrafficOnly"> Allows https traffic only to storage service if sets to true. The default value is true since API version 2019-04-01. </param>
+        /// <param name="isSftpEnabled"> Enables Secure File Transfer Protocol, if set to true. </param>
+        /// <param name="isLocalUserEnabled"> Enables local users feature, if set to true. </param>
+        /// <param name="isHnsEnabled"> Account HierarchicalNamespace enabled if sets to true. </param>
+        /// <param name="largeFileSharesState"> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </param>
+        /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
+        /// <param name="allowBlobPublicAccess"> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is true for this property. </param>
+        /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </param>
+        /// <param name="allowSharedKeyAccess"> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </param>
+        /// <param name="isNfsV3Enabled"> NFS 3.0 protocol support enabled if set to true. </param>
+        /// <param name="allowCrossTenantReplication"> Allow or disallow cross AAD tenant object replication. The default interpretation is true for this property. </param>
+        /// <param name="isDefaultToOAuthAuthentication"> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </param>
+        /// <param name="immutableStorageWithVersioning"> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the new containers in the account by default. </param>
+        /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
+        /// <returns> A new <see cref="Models.StorageAccountCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku = null, StorageKind kind = default, AzureLocation location = default, ExtendedLocation extendedLocation = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, AllowedCopyScope? allowedCopyScope = null, StoragePublicNetworkAccess? publicNetworkAccess = null, StorageAccountSasPolicy sasPolicy = null, int? keyExpirationPeriodInDays = null, StorageCustomDomain customDomain = null, StorageAccountEncryption encryption = null, StorageAccountNetworkRuleSet networkRuleSet = null, StorageAccountAccessTier? accessTier = null, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = null, bool? enableHttpsTrafficOnly = null, bool? isSftpEnabled = null, bool? isLocalUserEnabled = null, bool? isHnsEnabled = null, LargeFileSharesState? largeFileSharesState = null, StorageRoutingPreference routingPreference = null, bool? allowBlobPublicAccess = null, StorageMinimumTlsVersion? minimumTlsVersion = null, bool? allowSharedKeyAccess = null, bool? isNfsV3Enabled = null, bool? allowCrossTenantReplication = null, bool? isDefaultToOAuthAuthentication = null, ImmutableStorageAccount immutableStorageWithVersioning = null, StorageDnsEndpointType? dnsEndpointType = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new StorageAccountCreateOrUpdateContent(sku, kind, location, extendedLocation, tags, identity, allowedCopyScope, publicNetworkAccess, sasPolicy, keyExpirationPeriodInDays.HasValue ? new StorageAccountKeyPolicy(keyExpirationPeriodInDays.Value) : null, customDomain, encryption, networkRuleSet, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, isSftpEnabled, isLocalUserEnabled, isHnsEnabled, largeFileSharesState, routingPreference, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, immutableStorageWithVersioning, dnsEndpointType);
         }
 
         /// <summary> Initializes a new instance of StorageSku. </summary>
@@ -299,12 +346,52 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageUsageName(value, localizedValue);
         }
 
+        /// <summary> Initializes a new instance of AccountSasContent. </summary>
+        /// <param name="services"> The signed services accessible with the account SAS. Possible values include: Blob (b), Queue (q), Table (t), File (f). </param>
+        /// <param name="resourceTypes"> The signed resource types that are accessible with the account SAS. Service (s): Access to service-level APIs; Container (c): Access to container-level APIs; Object (o): Access to object-level APIs for blobs, queue messages, table entities, and files. </param>
+        /// <param name="permissions"> The signed permissions for the account SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </param>
+        /// <param name="ipAddressOrRange"> An IP address or a range of IP addresses from which to accept requests. </param>
+        /// <param name="protocols"> The protocol permitted for a request made with the account SAS. </param>
+        /// <param name="sharedAccessStartOn"> The time at which the SAS becomes valid. </param>
+        /// <param name="sharedAccessExpireOn"> The time at which the shared access signature becomes invalid. </param>
+        /// <param name="keyToSign"> The key to sign the account SAS token with. </param>
+        /// <returns> A new <see cref="Models.AccountSasContent"/> instance for mocking. </returns>
+        public static AccountSasContent AccountSasContent(StorageAccountSasSignedService services = default, StorageAccountSasSignedResourceType resourceTypes = default, StorageAccountSasPermission permissions = default, string ipAddressOrRange = null, StorageAccountHttpProtocol? protocols = null, DateTimeOffset? sharedAccessStartOn = null, DateTimeOffset sharedAccessExpireOn = default, string keyToSign = null)
+        {
+            return new AccountSasContent(services, resourceTypes, permissions, ipAddressOrRange, protocols, sharedAccessStartOn, sharedAccessExpireOn, keyToSign);
+        }
+
         /// <summary> Initializes a new instance of GetAccountSasResult. </summary>
         /// <param name="accountSasToken"> List SAS credentials of storage account. </param>
         /// <returns> A new <see cref="Models.GetAccountSasResult"/> instance for mocking. </returns>
         public static GetAccountSasResult GetAccountSasResult(string accountSasToken = null)
         {
             return new GetAccountSasResult(accountSasToken);
+        }
+
+        /// <summary> Initializes a new instance of ServiceSasContent. </summary>
+        /// <param name="canonicalizedResource"> The canonical path to the signed resource. </param>
+        /// <param name="resource"> The signed services accessible with the service SAS. Possible values include: Blob (b), Container (c), File (f), Share (s). </param>
+        /// <param name="permissions"> The signed permissions for the service SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </param>
+        /// <param name="ipAddressOrRange"> An IP address or a range of IP addresses from which to accept requests. </param>
+        /// <param name="protocols"> The protocol permitted for a request made with the account SAS. </param>
+        /// <param name="sharedAccessStartOn"> The time at which the SAS becomes valid. </param>
+        /// <param name="sharedAccessExpiryOn"> The time at which the shared access signature becomes invalid. </param>
+        /// <param name="identifier"> A unique value up to 64 characters in length that correlates to an access policy specified for the container, queue, or table. </param>
+        /// <param name="partitionKeyStart"> The start of partition key. </param>
+        /// <param name="partitionKeyEnd"> The end of partition key. </param>
+        /// <param name="rowKeyStart"> The start of row key. </param>
+        /// <param name="rowKeyEnd"> The end of row key. </param>
+        /// <param name="keyToSign"> The key to sign the account SAS token with. </param>
+        /// <param name="cacheControl"> The response header override for cache control. </param>
+        /// <param name="contentDisposition"> The response header override for content disposition. </param>
+        /// <param name="contentEncoding"> The response header override for content encoding. </param>
+        /// <param name="contentLanguage"> The response header override for content language. </param>
+        /// <param name="contentType"> The response header override for content type. </param>
+        /// <returns> A new <see cref="Models.ServiceSasContent"/> instance for mocking. </returns>
+        public static ServiceSasContent ServiceSasContent(string canonicalizedResource = null, ServiceSasSignedResourceType? resource = null, StorageAccountSasPermission? permissions = null, string ipAddressOrRange = null, StorageAccountHttpProtocol? protocols = null, DateTimeOffset? sharedAccessStartOn = null, DateTimeOffset? sharedAccessExpiryOn = null, string identifier = null, string partitionKeyStart = null, string partitionKeyEnd = null, string rowKeyStart = null, string rowKeyEnd = null, string keyToSign = null, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null)
+        {
+            return new ServiceSasContent(canonicalizedResource, resource, permissions, ipAddressOrRange, protocols, sharedAccessStartOn, sharedAccessExpiryOn, identifier, partitionKeyStart, partitionKeyEnd, rowKeyStart, rowKeyEnd, keyToSign, cacheControl, contentDisposition, contentEncoding, contentLanguage, contentType);
         }
 
         /// <summary> Initializes a new instance of GetServiceSasResult. </summary>
@@ -626,6 +713,18 @@ namespace Azure.ResourceManager.Storage.Models
             return new ImmutabilityPolicyData(id, name, resourceType, systemData, immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, etag);
         }
 
+        /// <summary> Initializes a new instance of LeaseContainerContent. </summary>
+        /// <param name="action"> Specifies the lease action. Can be one of the available actions. </param>
+        /// <param name="leaseId"> Identifies the lease. Can be specified in any valid GUID string format. </param>
+        /// <param name="breakPeriod"> Optional. For a break action, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. </param>
+        /// <param name="leaseDuration"> Required for acquire. Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. </param>
+        /// <param name="proposedLeaseId"> Optional for acquire, required for change. Proposed lease ID, in a GUID string format. </param>
+        /// <returns> A new <see cref="Models.LeaseContainerContent"/> instance for mocking. </returns>
+        public static LeaseContainerContent LeaseContainerContent(LeaseContainerAction action = default, string leaseId = null, int? breakPeriod = null, int? leaseDuration = null, string proposedLeaseId = null)
+        {
+            return new LeaseContainerContent(action, leaseId, breakPeriod, leaseDuration, proposedLeaseId);
+        }
+
         /// <summary> Initializes a new instance of LeaseContainerResponse. </summary>
         /// <param name="leaseId"> Returned unique lease ID that must be included with any request to delete the container, or to renew, change, or release the lease. </param>
         /// <param name="leaseTimeSeconds"> Approximate time remaining in the lease period, in seconds. </param>
@@ -683,6 +782,18 @@ namespace Azure.ResourceManager.Storage.Models
             signedIdentifiers ??= new List<StorageSignedIdentifier>();
 
             return new FileShareData(id, name, resourceType, systemData, lastModifiedOn, metadata, shareQuota, enabledProtocol, rootSquash, version, isDeleted, deletedOn, remainingRetentionDays, accessTier, accessTierChangeOn, accessTierStatus, shareUsageBytes, leaseStatus, leaseState, leaseDuration, signedIdentifiers?.ToList(), snapshotOn, etag);
+        }
+
+        /// <summary> Initializes a new instance of LeaseShareContent. </summary>
+        /// <param name="action"> Specifies the lease action. Can be one of the available actions. </param>
+        /// <param name="leaseId"> Identifies the lease. Can be specified in any valid GUID string format. </param>
+        /// <param name="breakPeriod"> Optional. For a break action, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. </param>
+        /// <param name="leaseDuration"> Required for acquire. Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. </param>
+        /// <param name="proposedLeaseId"> Optional for acquire, required for change. Proposed lease ID, in a GUID string format. </param>
+        /// <returns> A new <see cref="Models.LeaseShareContent"/> instance for mocking. </returns>
+        public static LeaseShareContent LeaseShareContent(LeaseShareAction action = default, string leaseId = null, int? breakPeriod = null, int? leaseDuration = null, string proposedLeaseId = null)
+        {
+            return new LeaseShareContent(action, leaseId, breakPeriod, leaseDuration, proposedLeaseId);
         }
 
         /// <summary> Initializes a new instance of LeaseShareResponse. </summary>

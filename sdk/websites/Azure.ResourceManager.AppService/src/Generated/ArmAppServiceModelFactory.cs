@@ -2052,6 +2052,16 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceBillingMeter(id, name, resourceType, systemData, meterId, billingLocation, shortName, friendlyName, osType, multiplier, kind);
         }
 
+        /// <summary> Initializes a new instance of ResourceNameAvailabilityContent. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        /// <returns> A new <see cref="Models.ResourceNameAvailabilityContent"/> instance for mocking. </returns>
+        public static ResourceNameAvailabilityContent ResourceNameAvailabilityContent(string name = null, CheckNameResourceType resourceType = default, bool? isFqdn = null)
+        {
+            return new ResourceNameAvailabilityContent(name, resourceType, isFqdn);
+        }
+
         /// <summary> Initializes a new instance of ResourceNameAvailability. </summary>
         /// <param name="isNameAvailable"> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </param>
         /// <param name="reason"> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </param>
@@ -2210,6 +2220,30 @@ namespace Azure.ResourceManager.AppService.Models
         public static VirtualNetworkValidationTestFailure VirtualNetworkValidationTestFailure(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string testName = null, string details = null, string kind = null)
         {
             return new VirtualNetworkValidationTestFailure(id, name, resourceType, systemData, testName, details, kind);
+        }
+
+        /// <summary> Initializes a new instance of AppServiceValidateContent. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="validateResourceType"> Resource type used for verification. </param>
+        /// <param name="location"> Expected location of the resource. </param>
+        /// <param name="serverFarmId"> ARM resource ID of an App Service plan that would host the app. </param>
+        /// <param name="skuName"> Name of the target SKU for the App Service plan. </param>
+        /// <param name="needLinuxWorkers"> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isSpot"> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="capacity"> Target capacity of the App Service plan (number of VMs). </param>
+        /// <param name="hostingEnvironment"> Name of App Service Environment where app or App Service plan should be created. </param>
+        /// <param name="isXenon"> &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container. </param>
+        /// <param name="containerRegistryBaseUri"> Base URL of the container registry. </param>
+        /// <param name="containerRegistryUsername"> Username for to access the container registry. </param>
+        /// <param name="containerRegistryPassword"> Password for to access the container registry. </param>
+        /// <param name="containerImageRepository"> Repository name (image name). </param>
+        /// <param name="containerImageTag"> Image tag. </param>
+        /// <param name="containerImagePlatform"> Platform (windows or linux). </param>
+        /// <param name="appServiceEnvironment"> App Service Environment Properties. </param>
+        /// <returns> A new <see cref="Models.AppServiceValidateContent"/> instance for mocking. </returns>
+        public static AppServiceValidateContent AppServiceValidateContent(string name = null, ValidateResourceType validateResourceType = default, AzureLocation location = default, ResourceIdentifier serverFarmId = null, string skuName = null, bool? needLinuxWorkers = null, bool? isSpot = null, int? capacity = null, string hostingEnvironment = null, bool? isXenon = null, Uri containerRegistryBaseUri = null, string containerRegistryUsername = null, string containerRegistryPassword = null, string containerImageRepository = null, string containerImageTag = null, string containerImagePlatform = null, AppServiceEnvironmentProperties appServiceEnvironment = null)
+        {
+            return new AppServiceValidateContent(name, validateResourceType, location, serverFarmId, skuName, needLinuxWorkers, isSpot, capacity, hostingEnvironment, isXenon, containerRegistryBaseUri, containerRegistryUsername, containerRegistryPassword, containerImageRepository, containerImageTag, containerImagePlatform, appServiceEnvironment);
         }
 
         /// <summary> Initializes a new instance of AppServiceValidateResult. </summary>

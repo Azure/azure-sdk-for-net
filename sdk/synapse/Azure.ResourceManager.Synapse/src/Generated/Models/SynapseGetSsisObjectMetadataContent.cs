@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Synapse.Models
         {
         }
 
+        /// <summary> Initializes a new instance of SynapseGetSsisObjectMetadataContent. </summary>
+        /// <param name="metadataPath"> Metadata path. </param>
+        internal SynapseGetSsisObjectMetadataContent(string metadataPath)
+        {
+            MetadataPath = metadataPath;
+        }
+
         /// <summary> Metadata path. </summary>
         public string MetadataPath { get; set; }
     }

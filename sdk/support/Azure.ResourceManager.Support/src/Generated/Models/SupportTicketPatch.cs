@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.Support.Models
         {
         }
 
+        /// <summary> Initializes a new instance of SupportTicketPatch. </summary>
+        /// <param name="severity"> Severity level. </param>
+        /// <param name="status"> Status to be updated on the ticket. </param>
+        /// <param name="contactDetails"> Contact details to be updated on the support ticket. </param>
+        internal SupportTicketPatch(SupportSeverityLevel? severity, SupportTicketStatus? status, SupportContactProfileContent contactDetails)
+        {
+            Severity = severity;
+            Status = status;
+            ContactDetails = contactDetails;
+        }
+
         /// <summary> Severity level. </summary>
         public SupportSeverityLevel? Severity { get; set; }
         /// <summary> Status to be updated on the ticket. </summary>

@@ -303,6 +303,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AddDataFlowToDebugSessionResponse(jobVersion);
         }
 
+        /// <summary> Initializes a new instance of DataFlowDebugCommandPayload. </summary>
+        /// <param name="streamName"> The stream name which is used for preview. </param>
+        /// <param name="rowLimits"> Row limits for preview response. </param>
+        /// <param name="columns"> Array of column names. </param>
+        /// <param name="expression"> The expression which is used for preview. </param>
+        /// <returns> A new <see cref="Models.DataFlowDebugCommandPayload"/> instance for mocking. </returns>
+        public static DataFlowDebugCommandPayload DataFlowDebugCommandPayload(string streamName = null, int? rowLimits = null, IEnumerable<string> columns = null, string expression = null)
+        {
+            columns ??= new List<string>();
+
+            return new DataFlowDebugCommandPayload(streamName, rowLimits, columns?.ToList(), expression);
+        }
+
         /// <summary> Initializes a new instance of DataFlowDebugCommandResponse. </summary>
         /// <param name="status"> The run status of data preview, statistics or expression preview. </param>
         /// <param name="data"> The result data of data preview, statistics or expression preview. </param>
@@ -490,6 +503,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             return new CreateRunResponse(runId);
+        }
+
+        /// <summary> Initializes a new instance of RunFilterParameters. </summary>
+        /// <param name="continuationToken"> The continuation token for getting the next page of results. Null for first page. </param>
+        /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in 'ISO 8601' format. </param>
+        /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in 'ISO 8601' format. </param>
+        /// <param name="filters"> List of filters. </param>
+        /// <param name="orderBy"> List of OrderBy option. </param>
+        /// <returns> A new <see cref="Models.RunFilterParameters"/> instance for mocking. </returns>
+        public static RunFilterParameters RunFilterParameters(string continuationToken = null, DateTimeOffset lastUpdatedAfter = default, DateTimeOffset lastUpdatedBefore = default, IEnumerable<RunQueryFilter> filters = null, IEnumerable<RunQueryOrderBy> orderBy = null)
+        {
+            filters ??= new List<RunQueryFilter>();
+            orderBy ??= new List<RunQueryOrderBy>();
+
+            return new RunFilterParameters(continuationToken, lastUpdatedAfter, lastUpdatedBefore, filters?.ToList(), orderBy?.ToList());
         }
 
         /// <summary> Initializes a new instance of PipelineRunsQueryResponse. </summary>

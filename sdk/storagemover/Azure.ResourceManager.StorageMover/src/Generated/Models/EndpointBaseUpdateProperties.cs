@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.StorageMover.Models
         {
         }
 
+        /// <summary> Initializes a new instance of EndpointBaseUpdateProperties. </summary>
+        /// <param name="description"> A description for the Endpoint. </param>
+        internal EndpointBaseUpdateProperties(string description)
+        {
+            Description = description;
+        }
+
         /// <summary> A description for the Endpoint. </summary>
         public string Description { get; set; }
     }
