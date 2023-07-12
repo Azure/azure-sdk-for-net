@@ -21,7 +21,7 @@ namespace Azure.Communication.Chat
 
         /// <summary> Chat thread topic. </summary>
         public string Topic { get; set; }
-        /// <summary> Contextual metadata for the thread. Note: Has a size limit of 1KB. </summary>
+        /// <summary> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </summary>
         public IDictionary<string, string> Metadata { get; }
     }
 }

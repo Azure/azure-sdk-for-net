@@ -906,7 +906,7 @@ namespace Azure.Communication.Chat
         /// <summary> Updates a thread's properties. </summary>
         /// <param name="chatThreadId"> The id of the thread to update. </param>
         /// <param name="topic"> Chat thread topic. </param>
-        /// <param name="metadata"> Contextual metadata for the thread. Note: Has a size limit of 1KB. </param>
+        /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
         public async Task<Response> UpdateChatThreadPropertiesAsync(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
@@ -930,7 +930,7 @@ namespace Azure.Communication.Chat
         /// <summary> Updates a thread's properties. </summary>
         /// <param name="chatThreadId"> The id of the thread to update. </param>
         /// <param name="topic"> Chat thread topic. </param>
-        /// /// <param name="metadata"> Contextual metadata for the thread. Note: Has a size limit of 1KB. </param>
+        /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
         public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)

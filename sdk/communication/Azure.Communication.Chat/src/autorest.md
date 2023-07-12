@@ -14,6 +14,6 @@ title: Chat
 tag: package-chat-2023-07-01-preview
 model-namespace: false
 require:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/37af4ed3815bd8a4925c0f428f2760de4356c80a/specification/communication/data-plane/Chat/readme.md
+    -  https://github.com/Azure/azure-rest-api-specs/blob/b9ae686a739451d7dba63bfe3b8bcb2ef952472e/specification/communication/data-plane/Chat/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true
