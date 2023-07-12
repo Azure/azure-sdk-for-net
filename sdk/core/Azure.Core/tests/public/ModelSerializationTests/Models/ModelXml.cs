@@ -46,6 +46,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
+            writer.WriteStartElement("Tag");
             writer.WriteStartElement("Key");
             writer.WriteValue(Key);
             writer.WriteEndElement();
