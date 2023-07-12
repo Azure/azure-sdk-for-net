@@ -224,7 +224,7 @@ namespace Azure.Communication.JobRouter
         public JobMatchingMode(Azure.Communication.JobRouter.SuspendMode suspendMode) { }
         public Azure.Communication.JobRouter.JobMatchModeType? ModeType { get { throw null; } }
         public Azure.Communication.JobRouter.QueueAndMatchMode QueueAndMatchMode { get { throw null; } }
-        public Azure.Communication.JobRouter.ScheduleAndSuspendMode ScheduleAndSuspendMode { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.ScheduleAndSuspendMode ScheduleAndSuspendMode { get { throw null; } }
         public Azure.Communication.JobRouter.SuspendMode SuspendMode { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
