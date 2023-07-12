@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.TestCase
     public class LinkedStorageAccountTests : ApplicationInsightsManagementTestBase
     {
         public LinkedStorageAccountTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.TestCase
             //1.CreateOrUpdate
             var collection = await GetLinkedStorageAccountCollectionAsync();
             var input = ResourceDataHelpers.GetStorageAccountData();
+
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, StorageType.ServiceProfiler, input);
             ComponentLinkedStorageAccountResource account = lro.Value;
             Assert.AreEqual("serviceprofiler", account.Data.Name);
