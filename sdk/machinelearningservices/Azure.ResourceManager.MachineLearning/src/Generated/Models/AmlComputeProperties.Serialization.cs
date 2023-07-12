@@ -241,7 +241,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        errors = null;
                         continue;
                     }
                     List<MachineLearningError> array = new List<MachineLearningError>();

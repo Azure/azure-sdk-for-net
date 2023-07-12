@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        statusConditions = null;
                         continue;
                     }
                     List<KubernetesObjectStatusCondition> array = new List<KubernetesObjectStatusCondition>();

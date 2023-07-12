@@ -117,7 +117,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        allowedTrainingAlgorithms = null;
                         continue;
                     }
                     List<ForecastingModel> array = new List<ForecastingModel>();
@@ -132,7 +131,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blockedTrainingAlgorithms = null;
                         continue;
                     }
                     List<ForecastingModel> array = new List<ForecastingModel>();
