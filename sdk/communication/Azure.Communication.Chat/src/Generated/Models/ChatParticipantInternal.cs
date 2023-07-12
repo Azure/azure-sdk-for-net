@@ -30,7 +30,7 @@ namespace Azure.Communication.Chat
         /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="displayName"> Display name for the chat participant. </param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="metadata"> Contextual metadata for the chat participant. Note: Has a size limit of 1KB. </param>
+        /// <param name="metadata"> Contextual metadata for the chat participant. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
         internal ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier, string displayName, DateTimeOffset? shareHistoryTime, IDictionary<string, string> metadata)
         {
             CommunicationIdentifier = communicationIdentifier;
@@ -45,7 +45,7 @@ namespace Azure.Communication.Chat
         public string DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ShareHistoryTime { get; set; }
-        /// <summary> Contextual metadata for the chat participant. Note: Has a size limit of 1KB. </summary>
+        /// <summary> Contextual metadata for the chat participant. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </summary>
         public IDictionary<string, string> Metadata { get; }
     }
 }

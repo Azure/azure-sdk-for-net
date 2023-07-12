@@ -56,7 +56,7 @@ namespace Azure.Communication.Chat
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             CreateChatThreadRequest createChatThreadRequest = new CreateChatThreadRequest(topic);
-            
+
             if (participants != null)
             {
                 foreach (var value in participants)
@@ -82,7 +82,7 @@ namespace Azure.Communication.Chat
         /// <param name="topic"> The chat thread topic. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="participants"> Participants to be added to the chat thread. </param>
-        /// <param name="metadata"> Contextual metadata for the thread. Note: Has a size limit of 1KB. </param>
+        /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
         public async Task<Response<CreateChatThreadResultInternal>> CreateChatThreadAsync(string topic, string repeatabilityRequestId = null, IEnumerable<ChatParticipantInternal> participants = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
@@ -112,7 +112,7 @@ namespace Azure.Communication.Chat
         /// <param name="topic"> The chat thread topic. </param>
         /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="participants"> Participants to be added to the chat thread. </param>
-        /// <param name="metadata"> Contextual metadata for the thread. Note: Has a size limit of 1KB. </param>
+        /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
         public Response<CreateChatThreadResultInternal> CreateChatThread(string topic, string repeatabilityRequestId = null, IEnumerable<ChatParticipantInternal> participants = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
