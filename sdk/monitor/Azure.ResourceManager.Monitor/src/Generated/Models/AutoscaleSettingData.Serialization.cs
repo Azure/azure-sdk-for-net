@@ -180,7 +180,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                notifications = null;
                                 continue;
                             }
                             List<AutoscaleNotification> array = new List<AutoscaleNotification>();
