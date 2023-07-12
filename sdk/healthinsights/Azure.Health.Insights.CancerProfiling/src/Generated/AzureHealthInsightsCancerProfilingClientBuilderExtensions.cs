@@ -13,7 +13,7 @@ using Azure.Health.Insights.CancerProfiling;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="CancerProfilingClient"/> to client builder. </summary>
-    public static partial class HealthInsightsCancerProfilingClientBuilderExtensions
+    public static partial class AzureHealthInsightsCancerProfilingClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="CancerProfilingClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>

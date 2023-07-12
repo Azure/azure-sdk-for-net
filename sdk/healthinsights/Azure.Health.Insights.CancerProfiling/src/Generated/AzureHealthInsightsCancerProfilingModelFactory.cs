@@ -13,7 +13,7 @@ using Azure;
 namespace Azure.Health.Insights.CancerProfiling
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class HealthInsightsCancerProfilingModelFactory
+    public static partial class AzureHealthInsightsCancerProfilingModelFactory
     {
         /// <summary> Initializes a new instance of OncoPhenotypeResult. </summary>
         /// <param name="jobId"> A processing job identifier. </param>

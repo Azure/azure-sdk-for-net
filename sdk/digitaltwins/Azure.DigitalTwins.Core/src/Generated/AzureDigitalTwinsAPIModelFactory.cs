@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.DigitalTwins.Core;
 
-namespace Azure.DigitalTwins.Core
+namespace Azure.DigitalTwins.Core.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class DigitalTwinsModelFactory
+    public static partial class AzureDigitalTwinsAPIModelFactory
     {
         /// <summary> Initializes a new instance of DigitalTwinsModelData. </summary>
         /// <param name="languageDisplayNames"> A language map that contains the localized display names as specified in the model definition. </param>

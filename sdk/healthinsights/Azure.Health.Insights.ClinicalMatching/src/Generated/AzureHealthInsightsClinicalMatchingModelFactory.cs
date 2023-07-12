@@ -13,7 +13,7 @@ using Azure;
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class HealthInsightsClinicalMatchingModelFactory
+    public static partial class AzureHealthInsightsClinicalMatchingModelFactory
     {
         /// <summary> Initializes a new instance of TrialMatcherResult. </summary>
         /// <param name="jobId"> A processing job identifier. </param>

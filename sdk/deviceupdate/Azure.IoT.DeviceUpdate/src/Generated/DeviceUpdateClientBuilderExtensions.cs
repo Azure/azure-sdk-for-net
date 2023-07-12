@@ -12,7 +12,7 @@ using Azure.IoT.DeviceUpdate;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="DeviceUpdateClient"/>, <see cref="DeviceManagementClient"/> to client builder. </summary>
-    public static partial class IoTDeviceUpdateClientBuilderExtensions
+    public static partial class DeviceUpdateClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="DeviceUpdateClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
