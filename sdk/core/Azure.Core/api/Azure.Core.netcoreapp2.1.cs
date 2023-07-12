@@ -1146,8 +1146,6 @@ namespace Azure.Core.Serialization
     {
         public ModelSerializerOptions(string format = "Data") { }
         public string FormatType { get { throw null; } }
-        public string? NameHint { get { throw null; } set { } }
-        public bool PrettyPrint { get { throw null; } set { } }
         public System.Collections.Generic.Dictionary<System.Type, Azure.Core.Serialization.ObjectSerializer> Serializers { get { throw null; } }
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
         public readonly partial struct Format

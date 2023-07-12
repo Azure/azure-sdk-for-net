@@ -42,11 +42,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         [XmlElement("ReadOnlyProperty")]
         public string ReadOnlyProperty { get; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions() {NameHint = nameHint});
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions());
 
         private void Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
-            writer.WriteStartElement(options.NameHint ?? "Tag");
             writer.WriteStartElement("Key");
             writer.WriteValue(Key);
             writer.WriteEndElement();

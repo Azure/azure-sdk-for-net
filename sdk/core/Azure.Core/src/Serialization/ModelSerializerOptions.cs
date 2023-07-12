@@ -50,19 +50,9 @@ namespace Azure.Core.Serialization
         public string FormatType { get; }
 
         /// <summary>
-        /// Bool that determines if Json will be PrettyPrinted. Default is false.
-        /// </summary>
-        public bool PrettyPrint { get; set; }
-
-        /// <summary>
         /// Dictionary that holds all the serializers for the different model types.
         /// </summary>
         public Dictionary<Type, ObjectSerializer> Serializers { get; } = new Dictionary<Type, ObjectSerializer>();
-
-        /// <summary>
-        /// NameHint for Xml Models
-        /// </summary>
-        public string? NameHint { get; set; }
 
         private string ValidateFormat(string x)
         {
