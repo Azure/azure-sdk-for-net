@@ -288,7 +288,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// that can be submitted together via <see cref="SubmitBatch"/>.
         /// </summary>
         /// <returns>A new <see cref="BlobBatch"/>.</returns>
+#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public virtual BlobBatch CreateBatch() => new BlobBatch(this);
+#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
 
         /// <summary>
         /// Submit a <see cref="BlobBatch"/> of sub-operations.

@@ -1838,7 +1838,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual AnalyzeHealthcareEntitiesOperation AnalyzeHealthcareEntities(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        public virtual AnalyzeHealthcareEntitiesOperation AnalyzeHealthcareEntities(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
             return _serviceClient.AnalyzeHealthcareEntities(waitUntil, documents, options, cancellationToken);
@@ -1956,7 +1956,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        public virtual AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartAnalyzeHealthcareEntities(documents, options, cancellationToken);

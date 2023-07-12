@@ -167,7 +167,9 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <summary> Gets a list of all conversions.</summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public virtual Pageable<AssetConversion> GetConversions(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             Page<AssetConversion> FirstPageFunc(int? pageSizeHint)
             {
@@ -204,7 +206,9 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <summary> Gets a list of all conversions.</summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public virtual AsyncPageable<AssetConversion> GetConversionsAync(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             async Task<Page<AssetConversion>> FirstPageFunc(int? pageSizeHint)
             {

@@ -255,7 +255,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <returns> A new <see cref="ContainerRepository"/> for the desired repository. </returns>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
+#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public virtual ContainerRepository GetRepository(string repositoryName)
+#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
 
@@ -276,7 +278,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tagOrDigest"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tagOrDigest"/> is empty. </exception>
+#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public virtual RegistryArtifact GetArtifact(string repositoryName, string tagOrDigest)
+#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
             Argument.AssertNotNullOrEmpty(tagOrDigest, nameof(tagOrDigest));

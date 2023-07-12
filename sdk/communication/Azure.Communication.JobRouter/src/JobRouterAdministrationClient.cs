@@ -249,7 +249,7 @@ namespace Azure.Communication.JobRouter
         public virtual async Task<Response> UpdateClassificationPolicyAsync(
             string classificationPolicyId,
             RequestContent content,
-            RequestContext context = null)
+            RequestContext context)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
             scope.Start();
@@ -276,7 +276,7 @@ namespace Azure.Communication.JobRouter
         public virtual Response UpdateClassificationPolicy(
             string classificationPolicyId,
             RequestContent content,
-            RequestContext context = null)
+            RequestContext context)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
             scope.Start();
@@ -607,7 +607,7 @@ namespace Azure.Communication.JobRouter
         public virtual async Task<Response> UpdateDistributionPolicyAsync(
             string distributionPolicyId,
             RequestContent content,
-            RequestContext context = null)
+            RequestContext context)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
             scope.Start();
@@ -634,7 +634,7 @@ namespace Azure.Communication.JobRouter
         public virtual Response UpdateDistributionPolicy(
             string distributionPolicyId,
             RequestContent content,
-            RequestContext context = null)
+            RequestContext context)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
             scope.Start();
@@ -877,7 +877,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<ExceptionPolicy> CreateExceptionPolicy(
-            CreateExceptionPolicyOptions options = default,
+            CreateExceptionPolicyOptions options,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(CreateExceptionPolicy)}");
@@ -983,7 +983,7 @@ namespace Azure.Communication.JobRouter
         public virtual async Task<Response> UpdateExceptionPolicyAsync(
             string exceptionPolicyId,
             RequestContent content,
-            RequestContext context = null)
+            RequestContext context)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
             scope.Start();
@@ -1010,7 +1010,7 @@ namespace Azure.Communication.JobRouter
         public virtual Response UpdateExceptionPolicy(
             string exceptionPolicyId,
             RequestContent content,
-            RequestContext context = null)
+            RequestContext context)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
             scope.Start();
@@ -1360,7 +1360,7 @@ namespace Azure.Communication.JobRouter
         public virtual async Task<Response> UpdateQueueAsync(
             string queueId,
             RequestContent content,
-            RequestContext context = null)
+            RequestContext context)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
             scope.Start();
@@ -1388,7 +1388,7 @@ namespace Azure.Communication.JobRouter
         public virtual Response UpdateQueue(
             string queueId,
             RequestContent content,
-            RequestContext context = null)
+            RequestContext context)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
             scope.Start();
