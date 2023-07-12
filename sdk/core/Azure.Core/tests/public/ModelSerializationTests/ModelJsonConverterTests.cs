@@ -15,15 +15,15 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     public class ModelJsonConverterTests
     {
-        [TestCase(ModelSerializerOptions.Format.Data)]
-        [TestCase(ModelSerializerOptions.Format.Wire)]
+        [TestCase("Data")]
+        [TestCase("Wire")]
         public void SerializeTest(string format)
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.Converters.Add(new ModelJsonConverter(format));
 
             string expected = "{";
-            if (format == ModelSerializerOptions.Format.Data.ToString())
+            if (format.Equals(ModelSerializerOptions.Format.Data))
                 expected += "\"latinName\":\"Animalia\",";
             expected += "\"name\":\"Doggo\",\"isHungry\":false,";
             expected += "\"weight\":1.5,";
@@ -39,8 +39,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(ModelSerializerOptions.Format.Data)]
-        [TestCase(ModelSerializerOptions.Format.Wire)]
+        [TestCase("Data")]
+        [TestCase("Wire")]
         public void DeserializeTest(string format)
         {
             string serviceResponse = "{\"latinName\":\"Animalia\",\"weight\":1.5,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
@@ -58,17 +58,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             var additionalProperties = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(dog) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
-            Assert.AreEqual(format == ModelSerializerOptions.Format.Data.ToString(), additionalProperties.ContainsKey("numberOfLegs"));
-            if (format == ModelSerializerOptions.Format.Data.ToString())
+            Assert.AreEqual(format.Equals(ModelSerializerOptions.Format.Data), additionalProperties.ContainsKey("numberOfLegs"));
+            if (format.Equals(ModelSerializerOptions.Format.Data))
                 Assert.AreEqual("4", additionalProperties["numberOfLegs"].ToString());
 
             string expected = "{";
-            if (format == ModelSerializerOptions.Format.Data.ToString())
+            if (format.Equals(ModelSerializerOptions.Format.Data))
                 expected += "\"latinName\":\"Animalia\",";
             expected += "\"name\":\"Doggo\",\"isHungry\":false,";
             expected += "\"weight\":1.5,";
             expected += "\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"]";
-            if (format == ModelSerializerOptions.Format.Data.ToString())
+            if (format.Equals(ModelSerializerOptions.Format.Data))
             {
                 expected += ",\"numberOfLegs\":4,\"DogListPropertyConverterMarker\":true"; //validate marker exists to ensure we are using the class converter if it exists
             }
@@ -99,8 +99,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("", actual);
         }
 
-        [TestCase(ModelSerializerOptions.Format.Data)]
-        [TestCase(ModelSerializerOptions.Format.Wire)]
+        [TestCase("Data")]
+        [TestCase("Wire")]
         public void CanSerializeDerivedModel(string format)
         {
             string serviceResponse = "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
@@ -114,22 +114,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("X", modelX.Kind);
             var additionalProperties = typeof(ModelX).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(modelX) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
-            Assert.AreEqual(format == ModelSerializerOptions.Format.Data.ToString(), additionalProperties.ContainsKey("extra"));
-            if (format == ModelSerializerOptions.Format.Data.ToString())
+            Assert.AreEqual(format.Equals(ModelSerializerOptions.Format.Data), additionalProperties.ContainsKey("extra"));
+            if (format.Equals(ModelSerializerOptions.Format.Data))
                 Assert.AreEqual("\"stuff\"", additionalProperties["extra"].ToString());
 
             string expected = "{\"kind\":\"X\",\"name\":\"xmodel\"";
-            if (format == ModelSerializerOptions.Format.Data.ToString())
+            if (format.Equals(ModelSerializerOptions.Format.Data))
                 expected += ",\"xProperty\":100";
-            if (format == ModelSerializerOptions.Format.Data.ToString())
+            if (format.Equals(ModelSerializerOptions.Format.Data))
                 expected += ",\"extra\":\"stuff\"";
             expected += "}";
             var actual = JsonSerializer.Serialize(modelX, options);
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(ModelSerializerOptions.Format.Data)]
-        [TestCase(ModelSerializerOptions.Format.Wire)]
+        [TestCase("Data")]
+        [TestCase("Wire")]
         public void CanSerializeBaseModel(string format)
         {
             string serviceResponse = "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
@@ -145,12 +145,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("X", modelX.Kind);
             var additionalProperties = typeof(ModelX).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(modelX) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
-            Assert.AreEqual(format == ModelSerializerOptions.Format.Data.ToString(), additionalProperties.ContainsKey("extra"));
-            if (format == ModelSerializerOptions.Format.Data.ToString())
+            Assert.AreEqual(format.Equals(ModelSerializerOptions.Format.Data), additionalProperties.ContainsKey("extra"));
+            if (format.Equals(ModelSerializerOptions.Format.Data))
                 Assert.AreEqual("\"stuff\"", additionalProperties["extra"].ToString());
 
             string expected = "{\"kind\":\"X\",\"name\":\"xmodel\"";
-            if (format == ModelSerializerOptions.Format.Data.ToString())
+            if (format.Equals(ModelSerializerOptions.Format.Data))
             {
                 expected += ",\"xProperty\":100";
                 expected += ",\"extra\":\"stuff\"";
@@ -160,8 +160,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(ModelSerializerOptions.Format.Data)]
-        [TestCase(ModelSerializerOptions.Format.Wire)]
+        [TestCase("Data")]
+        [TestCase("Wire")]
         public void CanSerializeUnknown(string format)
         {
             string serviceResponse = "{\"kind\":\"Z\",\"name\":\"zmodel\",\"zProperty\":1.5,\"extra\":\"stuff\"}";
@@ -176,16 +176,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("Z", baseModel.Kind);
             var additionalProperties = typeof(UnknownBaseModel).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(baseModel) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
-            Assert.AreEqual(format == ModelSerializerOptions.Format.Data.ToString(), additionalProperties.ContainsKey("extra"));
-            Assert.AreEqual(format == ModelSerializerOptions.Format.Data.ToString(), additionalProperties.ContainsKey("zProperty"));
-            if (format == ModelSerializerOptions.Format.Data.ToString())
+            Assert.AreEqual(format.Equals(ModelSerializerOptions.Format.Data), additionalProperties.ContainsKey("extra"));
+            Assert.AreEqual(format.Equals(ModelSerializerOptions.Format.Data), additionalProperties.ContainsKey("zProperty"));
+            if (format.Equals(ModelSerializerOptions.Format.Data))
             {
                 Assert.AreEqual("\"stuff\"", additionalProperties["extra"].ToString());
                 Assert.AreEqual("1.5", additionalProperties["zProperty"].ToString());
             }
 
             string expected = "{\"kind\":\"Z\",\"name\":\"zmodel\"";
-            if (format == ModelSerializerOptions.Format.Data.ToString())
+            if (format.Equals(ModelSerializerOptions.Format.Data))
             {
                 expected += ",\"zProperty\":1.5";
                 expected += ",\"extra\":\"stuff\"";

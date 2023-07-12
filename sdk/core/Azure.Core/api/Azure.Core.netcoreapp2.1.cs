@@ -1149,11 +1149,12 @@ namespace Azure.Core.Serialization
         public string? NameHint { get { throw null; } set { } }
         public bool PrettyPrint { get { throw null; } set { } }
         public System.Collections.Generic.Dictionary<System.Type, Azure.Core.Serialization.ObjectSerializer> Serializers { get { throw null; } }
-        [System.FlagsAttribute]
-        public enum Format
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
+        public readonly partial struct Format
         {
-            Data = 1,
-            Wire = 2,
+            public static readonly string Data;
+            public static readonly string Wire;
+            public Format() { throw null; }
         }
     }
     public abstract partial class ObjectSerializer

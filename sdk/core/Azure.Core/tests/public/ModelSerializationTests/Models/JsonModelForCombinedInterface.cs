@@ -79,7 +79,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     readOnlyProperty = property.Value.GetString();
                     continue;
                 }
-                if (options.FormatType == ModelSerializerOptions.Format.Data.ToString())
+                if (options.FormatType == ModelSerializerOptions.Format.Data)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -97,12 +97,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (options.FormatType == ModelSerializerOptions.Format.Data.ToString())
+            if (options.FormatType == ModelSerializerOptions.Format.Data)
             {
                 writer.WritePropertyName("readOnlyProperty"u8);
                 writer.WriteStringValue(ReadOnlyProperty);
             }
-            if (options.FormatType == ModelSerializerOptions.Format.Data.ToString())
+            if (options.FormatType == ModelSerializerOptions.Format.Data)
             {
                 //write out the raw data
                 foreach (var property in RawData)

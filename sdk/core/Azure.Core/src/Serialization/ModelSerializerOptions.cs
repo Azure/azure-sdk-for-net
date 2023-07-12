@@ -14,17 +14,24 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// Enumerator representing format of the serialized model.
         /// </summary>
-        [Flags]
-        public enum Format
+        public readonly partial struct Format
         {
             /// <summary>
             /// Specifies the data format where IgnoreReadOnly and IgnoreAdditionalProperties are false.
             /// </summary>
-            Data = 1,
+            public static readonly string Data = "Data";
+
             /// <summary>
             /// Specifies the wire format IgnoreReadOnly and IgnoreAdditionalProperties are true.
             /// </summary>
-            Wire = 2
+            public static readonly string Wire = "Wire";
+
+            /// <summary>
+            /// todo
+            /// </summary>
+            public Format()
+            {
+            }
         }
 
         /// <summary>
