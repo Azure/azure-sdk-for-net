@@ -4,13 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
-using Xunit;
-using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry.Resources;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using OpenTelemetry;
 using System.Linq;
+using System.Net;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry;
+using OpenTelemetry.Resources;
+using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -184,6 +184,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(activity);
             activity.DisplayName = "displayname";
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
@@ -204,6 +205,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(activity);
             activity.SetTag(SemanticConventions.AttributeHttpClientIP, "127.0.0.1");
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
@@ -224,6 +226,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(activity);
             activity.SetTag(SemanticConventions.AttributeNetPeerIp, "127.0.0.1");
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
@@ -262,6 +265,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Server,
                 null,
                 startTime: DateTime.UtcNow);
+            activity?.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
 
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
@@ -328,10 +332,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
 
-        [Theory]
-        [InlineData("GET")]
-        [InlineData(null)]
-        public void RequestNameMatchesOperationName(string? httpMethod)
+        [Fact]
+        public void RequestNameMatchesOperationName()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -342,10 +344,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(activity);
             activity.DisplayName = "displayname";
-            if (httpMethod != null)
-            {
-                activity.SetTag(SemanticConventions.AttributeHttpMethod, httpMethod);
-            }
+
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
@@ -372,9 +372,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var testAttributes = new Dictionary<string, object>();
 
-            if (serviceName != null) testAttributes.Add("service.name", serviceName);
-            if (serviceNamespace != null) testAttributes.Add("service.namespace", serviceNamespace);
-            if (serviceInstance != null) testAttributes.Add("service.instance.id", serviceInstance);
+            if (serviceName != null)
+                testAttributes.Add("service.name", serviceName);
+            if (serviceNamespace != null)
+                testAttributes.Add("service.namespace", serviceNamespace);
+            if (serviceInstance != null)
+                testAttributes.Add("service.instance.id", serviceInstance);
 
             return ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
         }
