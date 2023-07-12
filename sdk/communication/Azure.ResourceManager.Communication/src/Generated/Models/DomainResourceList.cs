@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of DomainResourceList. </summary>
         internal DomainResourceList()
         {
-            Value = new ChangeTrackingList<CommunicationDomainResourceData>();
+            Value = new ChangeTrackingList<CommunicationDomainResource>();
         }
 
         /// <summary> Initializes a new instance of DomainResourceList. </summary>
@@ -26,14 +25,14 @@ namespace Azure.ResourceManager.Communication.Models
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal DomainResourceList(IReadOnlyList<CommunicationDomainResourceData> value, string nextLink)
+        internal DomainResourceList(IReadOnlyList<CommunicationDomainResource> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Domains resource. </summary>
-        public IReadOnlyList<CommunicationDomainResourceData> Value { get; }
+        public IReadOnlyList<CommunicationDomainResource> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.

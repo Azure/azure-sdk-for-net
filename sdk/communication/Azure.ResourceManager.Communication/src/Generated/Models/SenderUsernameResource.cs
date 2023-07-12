@@ -6,23 +6,19 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Communication
+namespace Azure.ResourceManager.Communication.Models
 {
-    /// <summary>
-    /// A class representing the SenderUsernameResource data model.
-    /// A class representing a SenderUsername resource.
-    /// </summary>
-    public partial class SenderUsernameResourceData : ResourceData
+    /// <summary> A class representing a SenderUsername resource. </summary>
+    public partial class SenderUsernameResource : ResourceData
     {
-        /// <summary> Initializes a new instance of SenderUsernameResourceData. </summary>
-        public SenderUsernameResourceData()
+        /// <summary> Initializes a new instance of SenderUsernameResource. </summary>
+        public SenderUsernameResource()
         {
         }
 
-        /// <summary> Initializes a new instance of SenderUsernameResourceData. </summary>
+        /// <summary> Initializes a new instance of SenderUsernameResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +27,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="username"> A sender senderUsername to be used when sending emails. </param>
         /// <param name="displayName"> The display name for the senderUsername. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. Unknown is the default state for Communication Services. </param>
-        internal SenderUsernameResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string dataLocation, string username, string displayName, CommunicationServiceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal SenderUsernameResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string dataLocation, string username, string displayName, CommunicationServiceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             DataLocation = dataLocation;
             Username = username;

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EmailServiceResourceData>> value = default;
+            Optional<IReadOnlyList<EmailServiceResource>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    List<EmailServiceResourceData> array = new List<EmailServiceResourceData>();
+                    List<EmailServiceResource> array = new List<EmailServiceResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmailServiceResourceData.DeserializeEmailServiceResourceData(item));
+                        array.Add(EmailServiceResource.DeserializeEmailServiceResource(item));
                     }
                     value = array;
                     continue;

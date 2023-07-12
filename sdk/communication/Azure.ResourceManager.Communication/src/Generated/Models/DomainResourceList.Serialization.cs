@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CommunicationDomainResourceData>> value = default;
+            Optional<IReadOnlyList<CommunicationDomainResource>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    List<CommunicationDomainResourceData> array = new List<CommunicationDomainResourceData>();
+                    List<CommunicationDomainResource> array = new List<CommunicationDomainResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(item));
+                        array.Add(CommunicationDomainResource.DeserializeCommunicationDomainResource(item));
                     }
                     value = array;
                     continue;

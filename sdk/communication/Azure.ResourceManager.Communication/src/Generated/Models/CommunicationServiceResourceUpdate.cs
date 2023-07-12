@@ -7,18 +7,21 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class representing update parameters for CommunicationService resource. </summary>
-    public partial class CommunicationServiceResourcePatch : CommunicationAcceptTags
+    public partial class CommunicationServiceResourceUpdate : CommunicationAcceptTags
     {
-        /// <summary> Initializes a new instance of CommunicationServiceResourcePatch. </summary>
-        public CommunicationServiceResourcePatch()
+        /// <summary> Initializes a new instance of CommunicationServiceResourceUpdate. </summary>
+        public CommunicationServiceResourceUpdate()
         {
             LinkedDomains = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> List of email Domain resource Ids. </summary>
         public IList<string> LinkedDomains { get; }
     }

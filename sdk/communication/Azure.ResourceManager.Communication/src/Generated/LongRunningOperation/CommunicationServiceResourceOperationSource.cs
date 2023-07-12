@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Communication.Models;
 
 namespace Azure.ResourceManager.Communication
 {
     internal class CommunicationServiceResourceOperationSource : IOperationSource<CommunicationServiceResource>
     {
-        private readonly ArmClient _client;
-
-        internal CommunicationServiceResourceOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
         CommunicationServiceResource IOperationSource<CommunicationServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(document.RootElement);
-            return new CommunicationServiceResource(_client, data);
+            return CommunicationServiceResource.DeserializeCommunicationServiceResource(document.RootElement);
         }
 
         async ValueTask<CommunicationServiceResource> IOperationSource<CommunicationServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(document.RootElement);
-            return new CommunicationServiceResource(_client, data);
+            return CommunicationServiceResource.DeserializeCommunicationServiceResource(document.RootElement);
         }
     }
 }

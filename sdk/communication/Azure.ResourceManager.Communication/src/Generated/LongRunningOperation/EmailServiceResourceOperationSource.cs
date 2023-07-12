@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Communication.Models;
 
 namespace Azure.ResourceManager.Communication
 {
     internal class EmailServiceResourceOperationSource : IOperationSource<EmailServiceResource>
     {
-        private readonly ArmClient _client;
-
-        internal EmailServiceResourceOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
         EmailServiceResource IOperationSource<EmailServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = EmailServiceResourceData.DeserializeEmailServiceResourceData(document.RootElement);
-            return new EmailServiceResource(_client, data);
+            return EmailServiceResource.DeserializeEmailServiceResource(document.RootElement);
         }
 
         async ValueTask<EmailServiceResource> IOperationSource<EmailServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = EmailServiceResourceData.DeserializeEmailServiceResourceData(document.RootElement);
-            return new EmailServiceResource(_client, data);
+            return EmailServiceResource.DeserializeEmailServiceResource(document.RootElement);
         }
     }
 }

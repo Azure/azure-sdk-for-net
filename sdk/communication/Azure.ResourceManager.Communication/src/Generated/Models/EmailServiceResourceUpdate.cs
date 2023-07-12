@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class representing update parameters for EmailService resource. </summary>
-    public partial class EmailServiceResourcePatch : CommunicationAcceptTags
+    public partial class EmailServiceResourceUpdate : CommunicationAcceptTags
     {
-        /// <summary> Initializes a new instance of EmailServiceResourcePatch. </summary>
-        public EmailServiceResourcePatch()
+        /// <summary> Initializes a new instance of EmailServiceResourceUpdate. </summary>
+        public EmailServiceResourceUpdate()
         {
         }
     }

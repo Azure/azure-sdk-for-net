@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Communication;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication.Models
@@ -35,13 +34,14 @@ namespace Azure.ResourceManager.Communication.Models
             return new LinkedNotificationHub(resourceId);
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of CommunicationServiceResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
         /// <param name="dataLocation"> The location where the communication service stores its data at rest. </param>
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
-        /// <returns> A new <see cref="Communication.CommunicationServiceResourceData"/> instance for mocking. </returns>
-        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CommunicationServicesProvisioningState? provisioningState = null, string hostName = null, string dataLocation = null, ResourceIdentifier notificationHubId = null, string version = null, Guid? immutableResourceId = null, IEnumerable<string> linkedDomains = null)
+        /// <returns> A new <see cref="Models.CommunicationServiceResource"/> instance for mocking. </returns>
+        public static CommunicationServiceResource CommunicationServiceResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, CommunicationServicesProvisioningState? provisioningState = null, string hostName = null, string dataLocation = null, ResourceIdentifier notificationHubId = null, string version = null, Guid? immutableResourceId = null, IEnumerable<string> linkedDomains = null)
         {
             tags ??= new Dictionary<string, string>();
             linkedDomains ??= new List<string>();
 
-            return new CommunicationServiceResourceData(id, name, resourceType, systemData, tags, location, provisioningState, hostName, dataLocation, notificationHubId, version, immutableResourceId, linkedDomains?.ToList());
+            return new CommunicationServiceResource(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, dataLocation, notificationHubId, version, immutableResourceId, linkedDomains?.ToList());
         }
 
         /// <summary> Initializes a new instance of CommunicationServiceKeys. </summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationServiceKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString);
         }
 
-        /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of CommunicationDomainResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="verificationStates"> List of VerificationStatusRecord. </param>
         /// <param name="verificationRecords"> List of DnsRecord. </param>
         /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
-        /// <returns> A new <see cref="Communication.CommunicationDomainResourceData"/> instance for mocking. </returns>
-        public static CommunicationDomainResourceData CommunicationDomainResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DomainProvisioningState? provisioningState = null, string dataLocation = null, string fromSenderDomain = null, string mailFromSenderDomain = null, DomainManagement? domainManagement = null, DomainPropertiesVerificationStates verificationStates = null, DomainPropertiesVerificationRecords verificationRecords = null, UserEngagementTracking? userEngagementTracking = null)
+        /// <returns> A new <see cref="Models.CommunicationDomainResource"/> instance for mocking. </returns>
+        public static CommunicationDomainResource CommunicationDomainResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DomainProvisioningState? provisioningState = null, string dataLocation = null, string fromSenderDomain = null, string mailFromSenderDomain = null, DomainManagement? domainManagement = null, DomainPropertiesVerificationStates verificationStates = null, DomainPropertiesVerificationRecords verificationRecords = null, UserEngagementTracking? userEngagementTracking = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CommunicationDomainResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, fromSenderDomain, mailFromSenderDomain, domainManagement, verificationStates, verificationRecords, userEngagementTracking);
+            return new CommunicationDomainResource(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, fromSenderDomain, mailFromSenderDomain, domainManagement, verificationStates, verificationRecords, userEngagementTracking);
         }
 
         /// <summary> Initializes a new instance of DomainPropertiesVerificationStates. </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new VerificationDnsRecord(dnsRecordType, name, value, timeToLiveInSeconds);
         }
 
-        /// <summary> Initializes a new instance of EmailServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of EmailServiceResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -145,15 +145,15 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="dataLocation"> The location where the email service stores its data at rest. </param>
-        /// <returns> A new <see cref="Communication.EmailServiceResourceData"/> instance for mocking. </returns>
-        public static EmailServiceResourceData EmailServiceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EmailServicesProvisioningState? provisioningState = null, string dataLocation = null)
+        /// <returns> A new <see cref="Models.EmailServiceResource"/> instance for mocking. </returns>
+        public static EmailServiceResource EmailServiceResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EmailServicesProvisioningState? provisioningState = null, string dataLocation = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EmailServiceResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation);
+            return new EmailServiceResource(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation);
         }
 
-        /// <summary> Initializes a new instance of SenderUsernameResourceData. </summary>
+        /// <summary> Initializes a new instance of SenderUsernameResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="username"> A sender senderUsername to be used when sending emails. </param>
         /// <param name="displayName"> The display name for the senderUsername. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. Unknown is the default state for Communication Services. </param>
-        /// <returns> A new <see cref="Communication.SenderUsernameResourceData"/> instance for mocking. </returns>
-        public static SenderUsernameResourceData SenderUsernameResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string dataLocation = null, string username = null, string displayName = null, CommunicationServiceProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.SenderUsernameResource"/> instance for mocking. </returns>
+        public static SenderUsernameResource SenderUsernameResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string dataLocation = null, string username = null, string displayName = null, CommunicationServiceProvisioningState? provisioningState = null)
         {
-            return new SenderUsernameResourceData(id, name, resourceType, systemData, dataLocation, username, displayName, provisioningState);
+            return new SenderUsernameResource(id, name, resourceType, systemData, dataLocation, username, displayName, provisioningState);
         }
     }
 }

@@ -7,24 +7,20 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Communication
+namespace Azure.ResourceManager.Communication.Models
 {
-    /// <summary>
-    /// A class representing the CommunicationDomainResource data model.
-    /// A class representing a Domains resource.
-    /// </summary>
-    public partial class CommunicationDomainResourceData : TrackedResourceData
+    /// <summary> A class representing a Domains resource. </summary>
+    public partial class CommunicationDomainResource : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of CommunicationDomainResource. </summary>
         /// <param name="location"> The location. </param>
-        public CommunicationDomainResourceData(AzureLocation location) : base(location)
+        public CommunicationDomainResource(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of CommunicationDomainResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +35,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="verificationStates"> List of VerificationStatusRecord. </param>
         /// <param name="verificationRecords"> List of DnsRecord. </param>
         /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
-        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProvisioningState? provisioningState, string dataLocation, string fromSenderDomain, string mailFromSenderDomain, DomainManagement? domainManagement, DomainPropertiesVerificationStates verificationStates, DomainPropertiesVerificationRecords verificationRecords, UserEngagementTracking? userEngagementTracking) : base(id, name, resourceType, systemData, tags, location)
+        internal CommunicationDomainResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProvisioningState? provisioningState, string dataLocation, string fromSenderDomain, string mailFromSenderDomain, DomainManagement? domainManagement, DomainPropertiesVerificationStates verificationStates, DomainPropertiesVerificationRecords verificationRecords, UserEngagementTracking? userEngagementTracking) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             DataLocation = dataLocation;

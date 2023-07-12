@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class EmailServiceResourcePatch : IUtf8JsonSerializable
+    public partial class EmailServiceResourceUpdate : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -50,88 +50,153 @@ namespace Azure.ResourceManager.Communication
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region CommunicationServiceResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CommunicationServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CommunicationServiceResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CommunicationServiceResource" /> object. </returns>
-        public static CommunicationServiceResource GetCommunicationServiceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CommunicationServiceResource.ValidateResourceId(id);
-                return new CommunicationServiceResource(client, id);
-            }
-            );
-        }
-        #endregion
 
-        #region CommunicationDomainResource
         /// <summary>
-        /// Gets an object representing a <see cref="CommunicationDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CommunicationDomainResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Links an Azure Notification Hub to this communication service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_LinkNotificationHub</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CommunicationDomainResource" /> object. </returns>
-        public static CommunicationDomainResource GetCommunicationDomainResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CommunicationDomainResource.ValidateResourceId(id);
-                return new CommunicationDomainResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region EmailServiceResource
-        /// <summary>
-        /// Gets an object representing an <see cref="EmailServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EmailServiceResource.CreateResourceIdentifier" /> to create an <see cref="EmailServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EmailServiceResource" /> object. </returns>
-        public static EmailServiceResource GetEmailServiceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                EmailServiceResource.ValidateResourceId(id);
-                return new EmailServiceResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SenderUsernameResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SenderUsernameResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SenderUsernameResource.CreateResourceIdentifier" /> to create a <see cref="SenderUsernameResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SenderUsernameResource" /> object. </returns>
-        public static SenderUsernameResource GetSenderUsernameResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SenderUsernameResource.ValidateResourceId(id);
-                return new SenderUsernameResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of CommunicationServiceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
-        public static CommunicationServiceResourceCollection GetCommunicationServiceResources(this ResourceGroupResource resourceGroupResource)
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        public static async Task<Response<LinkedNotificationHub>> LinkNotificationHubCommunicationServiceAsync(this ResourceGroupResource resourceGroupResource, string communicationServiceName, LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCommunicationServiceResources();
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).LinkNotificationHubCommunicationServiceAsync(communicationServiceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Links an Azure Notification Hub to this communication service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_LinkNotificationHub</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        public static Response<LinkedNotificationHub> LinkNotificationHubCommunicationService(this ResourceGroupResource resourceGroupResource, string communicationServiceName, LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).LinkNotificationHubCommunicationService(communicationServiceName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Handles requests to list all resources in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CommunicationServiceResource> GetCommunicationServicesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCommunicationServicesByResourceGroupAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Handles requests to list all resources in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CommunicationServiceResource> GetCommunicationServicesByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCommunicationServicesByResourceGroup(cancellationToken);
+        }
+
+        /// <summary>
+        /// Operation to update an existing CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="communicationServiceResourceUpdate"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> or <paramref name="communicationServiceResourceUpdate"/> is null. </exception>
+        public static async Task<Response<CommunicationServiceResource>> UpdateCommunicationServiceAsync(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CommunicationServiceResourceUpdate communicationServiceResourceUpdate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+            Argument.AssertNotNull(communicationServiceResourceUpdate, nameof(communicationServiceResourceUpdate));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateCommunicationServiceAsync(communicationServiceName, communicationServiceResourceUpdate, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Operation to update an existing CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="communicationServiceResourceUpdate"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> or <paramref name="communicationServiceResourceUpdate"/> is null. </exception>
+        public static Response<CommunicationServiceResource> UpdateCommunicationService(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CommunicationServiceResourceUpdate communicationServiceResourceUpdate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+            Argument.AssertNotNull(communicationServiceResourceUpdate, nameof(communicationServiceResourceUpdate));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateCommunicationService(communicationServiceName, communicationServiceResourceUpdate, cancellationToken);
         }
 
         /// <summary>
@@ -152,10 +217,11 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<CommunicationServiceResource>> GetCommunicationServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CommunicationServiceResource>> GetCommunicationServiceAsync(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCommunicationServiceResources().GetAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCommunicationServiceAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -176,18 +242,625 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<CommunicationServiceResource> GetCommunicationServiceResource(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
+        public static Response<CommunicationServiceResource> GetCommunicationService(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCommunicationServiceResources().Get(communicationServiceName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCommunicationService(communicationServiceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EmailServiceResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Create a new CommunicationService or update an existing CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of EmailServiceResources and their operations over a EmailServiceResource. </returns>
-        public static EmailServiceResourceCollection GetEmailServiceResources(this ResourceGroupResource resourceGroupResource)
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="communicationServiceResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> or <paramref name="communicationServiceResource"/> is null. </exception>
+        public static async Task<ArmOperation<CommunicationServiceResource>> CreateOrUpdateCommunicationServiceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string communicationServiceName, CommunicationServiceResource communicationServiceResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEmailServiceResources();
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+            Argument.AssertNotNull(communicationServiceResource, nameof(communicationServiceResource));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateCommunicationServiceAsync(waitUntil, communicationServiceName, communicationServiceResource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a new CommunicationService or update an existing CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="communicationServiceResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> or <paramref name="communicationServiceResource"/> is null. </exception>
+        public static ArmOperation<CommunicationServiceResource> CreateOrUpdateCommunicationService(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string communicationServiceName, CommunicationServiceResource communicationServiceResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+            Argument.AssertNotNull(communicationServiceResource, nameof(communicationServiceResource));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateCommunicationService(waitUntil, communicationServiceName, communicationServiceResource, cancellationToken);
+        }
+
+        /// <summary>
+        /// Operation to delete a CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteCommunicationServiceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteCommunicationServiceAsync(waitUntil, communicationServiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Operation to delete a CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        public static ArmOperation DeleteCommunicationService(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteCommunicationService(waitUntil, communicationServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the access keys of the CommunicationService resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_ListKeys</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        public static async Task<Response<CommunicationServiceKeys>> GetKeysCommunicationServiceAsync(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKeysCommunicationServiceAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the access keys of the CommunicationService resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_ListKeys</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        public static Response<CommunicationServiceKeys> GetKeysCommunicationService(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKeysCommunicationService(communicationServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_RegenerateKey</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CommunicationServiceKeys>> RegenerateKeyCommunicationServiceAsync(this ResourceGroupResource resourceGroupResource, string communicationServiceName, RegenerateCommunicationServiceKeyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).RegenerateKeyCommunicationServiceAsync(communicationServiceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_RegenerateKey</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> or <paramref name="content"/> is null. </exception>
+        public static Response<CommunicationServiceKeys> RegenerateKeyCommunicationService(this ResourceGroupResource resourceGroupResource, string communicationServiceName, RegenerateCommunicationServiceKeyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).RegenerateKeyCommunicationService(communicationServiceName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Domains resource and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
+        public static async Task<Response<CommunicationDomainResource>> GetDomainAsync(this ResourceGroupResource resourceGroupResource, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDomainAsync(emailServiceName, domainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the Domains resource and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
+        public static Response<CommunicationDomainResource> GetDomain(this ResourceGroupResource resourceGroupResource, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDomain(emailServiceName, domainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Add a new Domains resource under the parent EmailService resource or update an existing Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="communicationDomainResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="communicationDomainResource"/> is null. </exception>
+        public static async Task<ArmOperation<CommunicationDomainResource>> CreateOrUpdateDomainAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, string domainName, CommunicationDomainResource communicationDomainResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(communicationDomainResource, nameof(communicationDomainResource));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateDomainAsync(waitUntil, emailServiceName, domainName, communicationDomainResource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Add a new Domains resource under the parent EmailService resource or update an existing Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="communicationDomainResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="communicationDomainResource"/> is null. </exception>
+        public static ArmOperation<CommunicationDomainResource> CreateOrUpdateDomain(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, string domainName, CommunicationDomainResource communicationDomainResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(communicationDomainResource, nameof(communicationDomainResource));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateDomain(waitUntil, emailServiceName, domainName, communicationDomainResource, cancellationToken);
+        }
+
+        /// <summary>
+        /// Operation to delete a Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteDomainAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteDomainAsync(waitUntil, emailServiceName, domainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Operation to delete a Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
+        public static ArmOperation DeleteDomain(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteDomain(waitUntil, emailServiceName, domainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Operation to update an existing Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<CommunicationDomainResource>> UpdateDomainAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, string domainName, UpdateDomainRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateDomainAsync(waitUntil, emailServiceName, domainName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Operation to update an existing Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="content"/> is null. </exception>
+        public static ArmOperation<CommunicationDomainResource> UpdateDomain(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, string domainName, UpdateDomainRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateDomain(waitUntil, emailServiceName, domainName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Handles requests to list all Domains resources under the parent EmailServices resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_ListByEmailServiceResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CommunicationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CommunicationDomainResource> GetDomainsByEmailServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDomainsByEmailServiceResourceAsync(emailServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Handles requests to list all Domains resources under the parent EmailServices resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_ListByEmailServiceResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="CommunicationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CommunicationDomainResource> GetDomainsByEmailServiceResource(this ResourceGroupResource resourceGroupResource, string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDomainsByEmailServiceResource(emailServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Initiate verification of DNS record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/initiateVerification</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_InitiateVerification</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Type of verification to be initiated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation> InitiateVerificationDomainAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, string domainName, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).InitiateVerificationDomainAsync(waitUntil, emailServiceName, domainName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Initiate verification of DNS record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/initiateVerification</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_InitiateVerification</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Type of verification to be initiated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="content"/> is null. </exception>
+        public static ArmOperation InitiateVerificationDomain(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, string domainName, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).InitiateVerificationDomain(waitUntil, emailServiceName, domainName, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Cancel verification of DNS record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/cancelVerification</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CancelVerification</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Type of verification to be canceled. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation> CancelVerificationDomainAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, string domainName, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CancelVerificationDomainAsync(waitUntil, emailServiceName, domainName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Cancel verification of DNS record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/cancelVerification</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CancelVerification</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Type of verification to be canceled. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="content"/> is null. </exception>
+        public static ArmOperation CancelVerificationDomain(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, string domainName, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CancelVerificationDomain(waitUntil, emailServiceName, domainName, content, cancellationToken);
         }
 
         /// <summary>
@@ -208,10 +881,11 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<EmailServiceResource>> GetEmailServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string emailServiceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EmailServiceResource>> GetEmailServiceAsync(this ResourceGroupResource resourceGroupResource, string emailServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEmailServiceResources().GetAsync(emailServiceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEmailServiceAsync(emailServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -232,10 +906,451 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<EmailServiceResource> GetEmailServiceResource(this ResourceGroupResource resourceGroupResource, string emailServiceName, CancellationToken cancellationToken = default)
+        public static Response<EmailServiceResource> GetEmailService(this ResourceGroupResource resourceGroupResource, string emailServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEmailServiceResources().Get(emailServiceName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEmailService(emailServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a new EmailService or update an existing EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="emailServiceResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="emailServiceResource"/> is null. </exception>
+        public static async Task<ArmOperation<EmailServiceResource>> CreateOrUpdateEmailServiceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, EmailServiceResource emailServiceResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNull(emailServiceResource, nameof(emailServiceResource));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateEmailServiceAsync(waitUntil, emailServiceName, emailServiceResource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a new EmailService or update an existing EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="emailServiceResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="emailServiceResource"/> is null. </exception>
+        public static ArmOperation<EmailServiceResource> CreateOrUpdateEmailService(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, EmailServiceResource emailServiceResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNull(emailServiceResource, nameof(emailServiceResource));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateEmailService(waitUntil, emailServiceName, emailServiceResource, cancellationToken);
+        }
+
+        /// <summary>
+        /// Operation to delete a EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteEmailServiceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteEmailServiceAsync(waitUntil, emailServiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Operation to delete a EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> is null. </exception>
+        public static ArmOperation DeleteEmailService(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteEmailService(waitUntil, emailServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Operation to update an existing EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="emailServiceResourceUpdate"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="emailServiceResourceUpdate"/> is null. </exception>
+        public static async Task<ArmOperation<EmailServiceResource>> UpdateEmailServiceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, EmailServiceResourceUpdate emailServiceResourceUpdate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNull(emailServiceResourceUpdate, nameof(emailServiceResourceUpdate));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateEmailServiceAsync(waitUntil, emailServiceName, emailServiceResourceUpdate, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Operation to update an existing EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="emailServiceResourceUpdate"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="emailServiceResourceUpdate"/> is null. </exception>
+        public static ArmOperation<EmailServiceResource> UpdateEmailService(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string emailServiceName, EmailServiceResourceUpdate emailServiceResourceUpdate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNull(emailServiceResourceUpdate, nameof(emailServiceResourceUpdate));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateEmailService(waitUntil, emailServiceName, emailServiceResourceUpdate, cancellationToken);
+        }
+
+        /// <summary>
+        /// Handles requests to list all resources in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EmailServiceResource> GetEmailServicesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEmailServicesByResourceGroupAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Handles requests to list all resources in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EmailServiceResource> GetEmailServicesByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEmailServicesByResourceGroup(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all valid sender usernames for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_ListByDomains</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SenderUsernameResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SenderUsernameResource> GetSenderUsernamesByDomainsAsync(this ResourceGroupResource resourceGroupResource, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSenderUsernamesByDomainsAsync(emailServiceName, domainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all valid sender usernames for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_ListByDomains</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/> or <paramref name="domainName"/> is null. </exception>
+        /// <returns> A collection of <see cref="SenderUsernameResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SenderUsernameResource> GetSenderUsernamesByDomains(this ResourceGroupResource resourceGroupResource, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSenderUsernamesByDomains(emailServiceName, domainName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a valid sender username for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
+        public static async Task<Response<SenderUsernameResource>> GetSenderUsernameAsync(this ResourceGroupResource resourceGroupResource, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSenderUsernameAsync(emailServiceName, domainName, senderUsername, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a valid sender username for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
+        public static Response<SenderUsernameResource> GetSenderUsername(this ResourceGroupResource resourceGroupResource, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSenderUsername(emailServiceName, domainName, senderUsername, cancellationToken);
+        }
+
+        /// <summary>
+        /// Add a new SenderUsername resource under the parent Domains resource or update an existing SenderUsername resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="senderUsernameResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/>, <paramref name="senderUsername"/> or <paramref name="senderUsernameResource"/> is null. </exception>
+        public static async Task<Response<SenderUsernameResource>> CreateOrUpdateSenderUsernameAsync(this ResourceGroupResource resourceGroupResource, string emailServiceName, string domainName, string senderUsername, SenderUsernameResource senderUsernameResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
+            Argument.AssertNotNull(senderUsernameResource, nameof(senderUsernameResource));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateSenderUsernameAsync(emailServiceName, domainName, senderUsername, senderUsernameResource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Add a new SenderUsername resource under the parent Domains resource or update an existing SenderUsername resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="senderUsernameResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/>, <paramref name="senderUsername"/> or <paramref name="senderUsernameResource"/> is null. </exception>
+        public static Response<SenderUsernameResource> CreateOrUpdateSenderUsername(this ResourceGroupResource resourceGroupResource, string emailServiceName, string domainName, string senderUsername, SenderUsernameResource senderUsernameResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
+            Argument.AssertNotNull(senderUsernameResource, nameof(senderUsernameResource));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateSenderUsername(emailServiceName, domainName, senderUsername, senderUsernameResource, cancellationToken);
+        }
+
+        /// <summary>
+        /// Operation to delete a SenderUsernames resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
+        public static async Task<Response> DeleteSenderUsernameAsync(this ResourceGroupResource resourceGroupResource, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteSenderUsernameAsync(emailServiceName, domainName, senderUsername, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Operation to delete a SenderUsernames resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailServiceName"/>, <paramref name="domainName"/> or <paramref name="senderUsername"/> is null. </exception>
+        public static Response DeleteSenderUsername(this ResourceGroupResource resourceGroupResource, string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailServiceName, nameof(emailServiceName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteSenderUsername(emailServiceName, domainName, senderUsername, cancellationToken);
         }
 
         /// <summary>
@@ -302,9 +1417,9 @@ namespace Azure.ResourceManager.Communication
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CommunicationServiceResource> GetCommunicationServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CommunicationServiceResource> GetCommunicationServicesBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCommunicationServiceResourcesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCommunicationServicesBySubscriptionAsync(cancellationToken);
         }
 
         /// <summary>
@@ -323,9 +1438,9 @@ namespace Azure.ResourceManager.Communication
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CommunicationServiceResource> GetCommunicationServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<CommunicationServiceResource> GetCommunicationServicesBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCommunicationServiceResources(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCommunicationServicesBySubscription(cancellationToken);
         }
 
         /// <summary>
@@ -344,9 +1459,9 @@ namespace Azure.ResourceManager.Communication
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EmailServiceResource> GetEmailServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EmailServiceResource> GetEmailServicesBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEmailServiceResourcesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEmailServicesBySubscriptionAsync(cancellationToken);
         }
 
         /// <summary>
@@ -365,9 +1480,9 @@ namespace Azure.ResourceManager.Communication
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EmailServiceResource> GetEmailServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<EmailServiceResource> GetEmailServicesBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEmailServiceResources(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEmailServicesBySubscription(cancellationToken);
         }
 
         /// <summary>

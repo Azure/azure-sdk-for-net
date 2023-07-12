@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Communication.Models;
 
 namespace Azure.ResourceManager.Communication
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _communicationServicesClientDiagnostics;
+        private CommunicationServicesRestOperations _communicationServicesRestClient;
+        private ClientDiagnostics _domainsClientDiagnostics;
+        private DomainsRestOperations _domainsRestClient;
+        private ClientDiagnostics _emailServicesClientDiagnostics;
+        private EmailServicesRestOperations _emailServicesRestClient;
+        private ClientDiagnostics _senderUsernamesClientDiagnostics;
+        private SenderUsernamesRestOperations _senderUsernamesRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
         {
@@ -25,24 +40,1567 @@ namespace Azure.ResourceManager.Communication
         {
         }
 
+        private ClientDiagnostics CommunicationServicesClientDiagnostics => _communicationServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CommunicationServicesRestOperations CommunicationServicesRestClient => _communicationServicesRestClient ??= new CommunicationServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DomainsClientDiagnostics => _domainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DomainsRestOperations DomainsRestClient => _domainsRestClient ??= new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics EmailServicesClientDiagnostics => _emailServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private EmailServicesRestOperations EmailServicesRestClient => _emailServicesRestClient ??= new EmailServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SenderUsernamesClientDiagnostics => _senderUsernamesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SenderUsernamesRestOperations SenderUsernamesRestClient => _senderUsernamesRestClient ??= new SenderUsernamesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of CommunicationServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
-        public virtual CommunicationServiceResourceCollection GetCommunicationServiceResources()
+        /// <summary>
+        /// Links an Azure Notification Hub to this communication service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_LinkNotificationHub</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LinkedNotificationHub>> LinkNotificationHubCommunicationServiceAsync(string communicationServiceName, LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new CommunicationServiceResourceCollection(Client, Id));
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.LinkNotificationHubCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = await CommunicationServicesRestClient.LinkNotificationHubAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Gets a collection of EmailServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EmailServiceResources and their operations over a EmailServiceResource. </returns>
-        public virtual EmailServiceResourceCollection GetEmailServiceResources()
+        /// <summary>
+        /// Links an Azure Notification Hub to this communication service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_LinkNotificationHub</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<LinkedNotificationHub> LinkNotificationHubCommunicationService(string communicationServiceName, LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new EmailServiceResourceCollection(Client, Id));
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.LinkNotificationHubCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = CommunicationServicesRestClient.LinkNotificationHub(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Handles requests to list all resources in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommunicationServiceResource> GetCommunicationServicesByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CommunicationServiceResource.DeserializeCommunicationServiceResource, CommunicationServicesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetCommunicationServicesByResourceGroup", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Handles requests to list all resources in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommunicationServiceResource> GetCommunicationServicesByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CommunicationServiceResource.DeserializeCommunicationServiceResource, CommunicationServicesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetCommunicationServicesByResourceGroup", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Operation to update an existing CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="communicationServiceResourceUpdate"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CommunicationServiceResource>> UpdateCommunicationServiceAsync(string communicationServiceName, CommunicationServiceResourceUpdate communicationServiceResourceUpdate, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.UpdateCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = await CommunicationServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, communicationServiceResourceUpdate, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to update an existing CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="communicationServiceResourceUpdate"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CommunicationServiceResource> UpdateCommunicationService(string communicationServiceName, CommunicationServiceResourceUpdate communicationServiceResourceUpdate, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.UpdateCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = CommunicationServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, communicationServiceResourceUpdate, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the CommunicationService and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CommunicationServiceResource>> GetCommunicationServiceAsync(string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = await CommunicationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the CommunicationService and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CommunicationServiceResource> GetCommunicationService(string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = CommunicationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a new CommunicationService or update an existing CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="communicationServiceResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<CommunicationServiceResource>> CreateOrUpdateCommunicationServiceAsync(WaitUntil waitUntil, string communicationServiceName, CommunicationServiceResource communicationServiceResource, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = await CommunicationServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, communicationServiceResource, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation<CommunicationServiceResource>(new CommunicationServiceResourceOperationSource(), CommunicationServicesClientDiagnostics, Pipeline, CommunicationServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, communicationServiceResource).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a new CommunicationService or update an existing CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="communicationServiceResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<CommunicationServiceResource> CreateOrUpdateCommunicationService(WaitUntil waitUntil, string communicationServiceName, CommunicationServiceResource communicationServiceResource, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = CommunicationServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, communicationServiceResource, cancellationToken);
+                var operation = new CommunicationArmOperation<CommunicationServiceResource>(new CommunicationServiceResourceOperationSource(), CommunicationServicesClientDiagnostics, Pipeline, CommunicationServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, communicationServiceResource).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to delete a CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteCommunicationServiceAsync(WaitUntil waitUntil, string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = await CommunicationServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation(CommunicationServicesClientDiagnostics, Pipeline, CommunicationServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to delete a CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation DeleteCommunicationService(WaitUntil waitUntil, string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = CommunicationServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken);
+                var operation = new CommunicationArmOperation(CommunicationServicesClientDiagnostics, Pipeline, CommunicationServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the access keys of the CommunicationService resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_ListKeys</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CommunicationServiceKeys>> GetKeysCommunicationServiceAsync(string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetKeysCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = await CommunicationServicesRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the access keys of the CommunicationService resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_ListKeys</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CommunicationServiceKeys> GetKeysCommunicationService(string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetKeysCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = CommunicationServicesRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_RegenerateKey</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CommunicationServiceKeys>> RegenerateKeyCommunicationServiceAsync(string communicationServiceName, RegenerateCommunicationServiceKeyContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RegenerateKeyCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = await CommunicationServicesRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_RegenerateKey</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CommunicationServiceKeys> RegenerateKeyCommunicationService(string communicationServiceName, RegenerateCommunicationServiceKeyContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RegenerateKeyCommunicationService");
+            scope.Start();
+            try
+            {
+                var response = CommunicationServicesRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the Domains resource and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CommunicationDomainResource>> GetDomainAsync(string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDomain");
+            scope.Start();
+            try
+            {
+                var response = await DomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the Domains resource and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CommunicationDomainResource> GetDomain(string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetDomain");
+            scope.Start();
+            try
+            {
+                var response = DomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add a new Domains resource under the parent EmailService resource or update an existing Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="communicationDomainResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<CommunicationDomainResource>> CreateOrUpdateDomainAsync(WaitUntil waitUntil, string emailServiceName, string domainName, CommunicationDomainResource communicationDomainResource, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateDomain");
+            scope.Start();
+            try
+            {
+                var response = await DomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, communicationDomainResource, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation<CommunicationDomainResource>(new CommunicationDomainResourceOperationSource(), DomainsClientDiagnostics, Pipeline, DomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, communicationDomainResource).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add a new Domains resource under the parent EmailService resource or update an existing Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="communicationDomainResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<CommunicationDomainResource> CreateOrUpdateDomain(WaitUntil waitUntil, string emailServiceName, string domainName, CommunicationDomainResource communicationDomainResource, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateDomain");
+            scope.Start();
+            try
+            {
+                var response = DomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, communicationDomainResource, cancellationToken);
+                var operation = new CommunicationArmOperation<CommunicationDomainResource>(new CommunicationDomainResourceOperationSource(), DomainsClientDiagnostics, Pipeline, DomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, communicationDomainResource).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to delete a Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteDomainAsync(WaitUntil waitUntil, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteDomain");
+            scope.Start();
+            try
+            {
+                var response = await DomainsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation(DomainsClientDiagnostics, Pipeline, DomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to delete a Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation DeleteDomain(WaitUntil waitUntil, string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteDomain");
+            scope.Start();
+            try
+            {
+                var response = DomainsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, cancellationToken);
+                var operation = new CommunicationArmOperation(DomainsClientDiagnostics, Pipeline, DomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to update an existing Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<CommunicationDomainResource>> UpdateDomainAsync(WaitUntil waitUntil, string emailServiceName, string domainName, UpdateDomainRequestContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.UpdateDomain");
+            scope.Start();
+            try
+            {
+                var response = await DomainsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation<CommunicationDomainResource>(new CommunicationDomainResourceOperationSource(), DomainsClientDiagnostics, Pipeline, DomainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to update an existing Domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<CommunicationDomainResource> UpdateDomain(WaitUntil waitUntil, string emailServiceName, string domainName, UpdateDomainRequestContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.UpdateDomain");
+            scope.Start();
+            try
+            {
+                var response = DomainsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content, cancellationToken);
+                var operation = new CommunicationArmOperation<CommunicationDomainResource>(new CommunicationDomainResourceOperationSource(), DomainsClientDiagnostics, Pipeline, DomainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Handles requests to list all Domains resources under the parent EmailServices resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_ListByEmailServiceResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CommunicationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommunicationDomainResource> GetDomainsByEmailServiceResourceAsync(string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DomainsRestClient.CreateListByEmailServiceResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainsRestClient.CreateListByEmailServiceResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, emailServiceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CommunicationDomainResource.DeserializeCommunicationDomainResource, DomainsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDomainsByEmailServiceResource", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Handles requests to list all Domains resources under the parent EmailServices resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_ListByEmailServiceResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CommunicationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommunicationDomainResource> GetDomainsByEmailServiceResource(string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DomainsRestClient.CreateListByEmailServiceResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainsRestClient.CreateListByEmailServiceResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, emailServiceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CommunicationDomainResource.DeserializeCommunicationDomainResource, DomainsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDomainsByEmailServiceResource", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Initiate verification of DNS record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/initiateVerification</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_InitiateVerification</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Type of verification to be initiated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> InitiateVerificationDomainAsync(WaitUntil waitUntil, string emailServiceName, string domainName, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.InitiateVerificationDomain");
+            scope.Start();
+            try
+            {
+                var response = await DomainsRestClient.InitiateVerificationAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation(DomainsClientDiagnostics, Pipeline, DomainsRestClient.CreateInitiateVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiate verification of DNS record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/initiateVerification</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_InitiateVerification</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Type of verification to be initiated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation InitiateVerificationDomain(WaitUntil waitUntil, string emailServiceName, string domainName, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.InitiateVerificationDomain");
+            scope.Start();
+            try
+            {
+                var response = DomainsRestClient.InitiateVerification(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content, cancellationToken);
+                var operation = new CommunicationArmOperation(DomainsClientDiagnostics, Pipeline, DomainsRestClient.CreateInitiateVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel verification of DNS record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/cancelVerification</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CancelVerification</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Type of verification to be canceled. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> CancelVerificationDomainAsync(WaitUntil waitUntil, string emailServiceName, string domainName, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CancelVerificationDomain");
+            scope.Start();
+            try
+            {
+                var response = await DomainsRestClient.CancelVerificationAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation(DomainsClientDiagnostics, Pipeline, DomainsRestClient.CreateCancelVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel verification of DNS record.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/cancelVerification</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CancelVerification</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="content"> Type of verification to be canceled. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation CancelVerificationDomain(WaitUntil waitUntil, string emailServiceName, string domainName, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = DomainsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CancelVerificationDomain");
+            scope.Start();
+            try
+            {
+                var response = DomainsRestClient.CancelVerification(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content, cancellationToken);
+                var operation = new CommunicationArmOperation(DomainsClientDiagnostics, Pipeline, DomainsRestClient.CreateCancelVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the EmailService and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<EmailServiceResource>> GetEmailServiceAsync(string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = EmailServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetEmailService");
+            scope.Start();
+            try
+            {
+                var response = await EmailServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the EmailService and its properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<EmailServiceResource> GetEmailService(string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = EmailServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetEmailService");
+            scope.Start();
+            try
+            {
+                var response = EmailServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a new EmailService or update an existing EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="emailServiceResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<EmailServiceResource>> CreateOrUpdateEmailServiceAsync(WaitUntil waitUntil, string emailServiceName, EmailServiceResource emailServiceResource, CancellationToken cancellationToken = default)
+        {
+            using var scope = EmailServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateEmailService");
+            scope.Start();
+            try
+            {
+                var response = await EmailServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, emailServiceResource, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(), EmailServicesClientDiagnostics, Pipeline, EmailServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, emailServiceResource).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a new EmailService or update an existing EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="emailServiceResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<EmailServiceResource> CreateOrUpdateEmailService(WaitUntil waitUntil, string emailServiceName, EmailServiceResource emailServiceResource, CancellationToken cancellationToken = default)
+        {
+            using var scope = EmailServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateEmailService");
+            scope.Start();
+            try
+            {
+                var response = EmailServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, emailServiceResource, cancellationToken);
+                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(), EmailServicesClientDiagnostics, Pipeline, EmailServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, emailServiceResource).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to delete a EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteEmailServiceAsync(WaitUntil waitUntil, string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = EmailServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteEmailService");
+            scope.Start();
+            try
+            {
+                var response = await EmailServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation(EmailServicesClientDiagnostics, Pipeline, EmailServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to delete a EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation DeleteEmailService(WaitUntil waitUntil, string emailServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = EmailServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteEmailService");
+            scope.Start();
+            try
+            {
+                var response = EmailServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, cancellationToken);
+                var operation = new CommunicationArmOperation(EmailServicesClientDiagnostics, Pipeline, EmailServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to update an existing EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="emailServiceResourceUpdate"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<EmailServiceResource>> UpdateEmailServiceAsync(WaitUntil waitUntil, string emailServiceName, EmailServiceResourceUpdate emailServiceResourceUpdate, CancellationToken cancellationToken = default)
+        {
+            using var scope = EmailServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.UpdateEmailService");
+            scope.Start();
+            try
+            {
+                var response = await EmailServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, emailServiceResourceUpdate, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(), EmailServicesClientDiagnostics, Pipeline, EmailServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, emailServiceResourceUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to update an existing EmailService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="emailServiceResourceUpdate"> Parameters for the update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<EmailServiceResource> UpdateEmailService(WaitUntil waitUntil, string emailServiceName, EmailServiceResourceUpdate emailServiceResourceUpdate, CancellationToken cancellationToken = default)
+        {
+            using var scope = EmailServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.UpdateEmailService");
+            scope.Start();
+            try
+            {
+                var response = EmailServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, emailServiceResourceUpdate, cancellationToken);
+                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(), EmailServicesClientDiagnostics, Pipeline, EmailServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, emailServiceResourceUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Handles requests to list all resources in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EmailServiceResource> GetEmailServicesByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EmailServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EmailServiceResource.DeserializeEmailServiceResource, EmailServicesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEmailServicesByResourceGroup", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Handles requests to list all resources in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailServices_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EmailServiceResource> GetEmailServicesByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EmailServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EmailServiceResource.DeserializeEmailServiceResource, EmailServicesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEmailServicesByResourceGroup", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all valid sender usernames for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_ListByDomains</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SenderUsernameResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SenderUsernameResource> GetSenderUsernamesByDomainsAsync(string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SenderUsernamesRestClient.CreateListByDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SenderUsernamesRestClient.CreateListByDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SenderUsernameResource.DeserializeSenderUsernameResource, SenderUsernamesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSenderUsernamesByDomains", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all valid sender usernames for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_ListByDomains</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SenderUsernameResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SenderUsernameResource> GetSenderUsernamesByDomains(string emailServiceName, string domainName, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SenderUsernamesRestClient.CreateListByDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SenderUsernamesRestClient.CreateListByDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SenderUsernameResource.DeserializeSenderUsernameResource, SenderUsernamesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSenderUsernamesByDomains", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a valid sender username for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SenderUsernameResource>> GetSenderUsernameAsync(string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        {
+            using var scope = SenderUsernamesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSenderUsername");
+            scope.Start();
+            try
+            {
+                var response = await SenderUsernamesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, senderUsername, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a valid sender username for a domains resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SenderUsernameResource> GetSenderUsername(string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        {
+            using var scope = SenderUsernamesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSenderUsername");
+            scope.Start();
+            try
+            {
+                var response = SenderUsernamesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, senderUsername, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add a new SenderUsername resource under the parent Domains resource or update an existing SenderUsername resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="senderUsernameResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SenderUsernameResource>> CreateOrUpdateSenderUsernameAsync(string emailServiceName, string domainName, string senderUsername, SenderUsernameResource senderUsernameResource, CancellationToken cancellationToken = default)
+        {
+            using var scope = SenderUsernamesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateSenderUsername");
+            scope.Start();
+            try
+            {
+                var response = await SenderUsernamesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, senderUsername, senderUsernameResource, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add a new SenderUsername resource under the parent Domains resource or update an existing SenderUsername resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="senderUsernameResource"> Parameters for the create or update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SenderUsernameResource> CreateOrUpdateSenderUsername(string emailServiceName, string domainName, string senderUsername, SenderUsernameResource senderUsernameResource, CancellationToken cancellationToken = default)
+        {
+            using var scope = SenderUsernamesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateSenderUsername");
+            scope.Start();
+            try
+            {
+                var response = SenderUsernamesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, senderUsername, senderUsernameResource, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to delete a SenderUsernames resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteSenderUsernameAsync(string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        {
+            using var scope = SenderUsernamesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteSenderUsername");
+            scope.Start();
+            try
+            {
+                var response = await SenderUsernamesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, senderUsername, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to delete a SenderUsernames resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/senderUsernames/{senderUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SenderUsernames_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailServiceName"> The name of the EmailService resource. </param>
+        /// <param name="domainName"> The name of the Domains resource. </param>
+        /// <param name="senderUsername"> The valid sender Username. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteSenderUsername(string emailServiceName, string domainName, string senderUsername, CancellationToken cancellationToken = default)
+        {
+            using var scope = SenderUsernamesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteSenderUsername");
+            scope.Start();
+            try
+            {
+                var response = SenderUsernamesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, domainName, senderUsername, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

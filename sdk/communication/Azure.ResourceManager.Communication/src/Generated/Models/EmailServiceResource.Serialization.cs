@@ -5,16 +5,14 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Communication
+namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class CommunicationServiceResourceData : IUtf8JsonSerializable
+    public partial class EmailServiceResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,21 +37,11 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation);
             }
-            if (Optional.IsCollectionDefined(LinkedDomains))
-            {
-                writer.WritePropertyName("linkedDomains"u8);
-                writer.WriteStartArray();
-                foreach (var item in LinkedDomains)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static CommunicationServiceResourceData DeserializeCommunicationServiceResourceData(JsonElement element)
+        internal static EmailServiceResource DeserializeEmailServiceResource(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -65,13 +53,8 @@ namespace Azure.ResourceManager.Communication
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CommunicationServicesProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
+            Optional<EmailServicesProvisioningState> provisioningState = default;
             Optional<string> dataLocation = default;
-            Optional<ResourceIdentifier> notificationHubId = default;
-            Optional<string> version = default;
-            Optional<Guid> immutableResourceId = default;
-            Optional<IList<string>> linkedDomains = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -132,12 +115,7 @@ namespace Azure.ResourceManager.Communication
                             {
                                 continue;
                             }
-                            provisioningState = new CommunicationServicesProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("hostName"u8))
-                        {
-                            hostName = property0.Value.GetString();
+                            provisioningState = new EmailServicesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dataLocation"u8))
@@ -145,48 +123,11 @@ namespace Azure.ResourceManager.Communication
                             dataLocation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("notificationHubId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            notificationHubId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            version = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("immutableResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            immutableResourceId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("linkedDomains"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            linkedDomains = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new CommunicationServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, Optional.ToNullable(immutableResourceId), Optional.ToList(linkedDomains));
+            return new EmailServiceResource(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value);
         }
     }
 }

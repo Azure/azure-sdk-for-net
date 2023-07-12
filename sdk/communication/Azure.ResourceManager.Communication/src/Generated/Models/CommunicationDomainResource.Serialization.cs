@@ -8,12 +8,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Communication
+namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class EmailServiceResourceData : IUtf8JsonSerializable
+    public partial class CommunicationDomainResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,16 +32,21 @@ namespace Azure.ResourceManager.Communication
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataLocation))
+            if (Optional.IsDefined(DomainManagement))
             {
-                writer.WritePropertyName("dataLocation"u8);
-                writer.WriteStringValue(DataLocation);
+                writer.WritePropertyName("domainManagement"u8);
+                writer.WriteStringValue(DomainManagement.Value.ToString());
+            }
+            if (Optional.IsDefined(UserEngagementTracking))
+            {
+                writer.WritePropertyName("userEngagementTracking"u8);
+                writer.WriteStringValue(UserEngagementTracking.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static EmailServiceResourceData DeserializeEmailServiceResourceData(JsonElement element)
+        internal static CommunicationDomainResource DeserializeCommunicationDomainResource(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,8 +58,14 @@ namespace Azure.ResourceManager.Communication
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<EmailServicesProvisioningState> provisioningState = default;
+            Optional<DomainProvisioningState> provisioningState = default;
             Optional<string> dataLocation = default;
+            Optional<string> fromSenderDomain = default;
+            Optional<string> mailFromSenderDomain = default;
+            Optional<DomainManagement> domainManagement = default;
+            Optional<DomainPropertiesVerificationStates> verificationStates = default;
+            Optional<DomainPropertiesVerificationRecords> verificationRecords = default;
+            Optional<UserEngagementTracking> userEngagementTracking = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -116,7 +126,7 @@ namespace Azure.ResourceManager.Communication
                             {
                                 continue;
                             }
-                            provisioningState = new EmailServicesProvisioningState(property0.Value.GetString());
+                            provisioningState = new DomainProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dataLocation"u8))
@@ -124,11 +134,57 @@ namespace Azure.ResourceManager.Communication
                             dataLocation = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("fromSenderDomain"u8))
+                        {
+                            fromSenderDomain = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("mailFromSenderDomain"u8))
+                        {
+                            mailFromSenderDomain = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("domainManagement"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            domainManagement = new DomainManagement(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("verificationStates"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            verificationStates = DomainPropertiesVerificationStates.DeserializeDomainPropertiesVerificationStates(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("verificationRecords"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            verificationRecords = DomainPropertiesVerificationRecords.DeserializeDomainPropertiesVerificationRecords(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("userEngagementTracking"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            userEngagementTracking = new UserEngagementTracking(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new EmailServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value);
+            return new CommunicationDomainResource(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Optional.ToNullable(domainManagement), verificationStates.Value, verificationRecords.Value, Optional.ToNullable(userEngagementTracking));
         }
     }
 }

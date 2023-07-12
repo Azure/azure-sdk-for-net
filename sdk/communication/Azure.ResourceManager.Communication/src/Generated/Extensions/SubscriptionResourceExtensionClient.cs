@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Communication
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _communicationServiceResourceCommunicationServicesClientDiagnostics;
-        private CommunicationServicesRestOperations _communicationServiceResourceCommunicationServicesRestClient;
-        private ClientDiagnostics _emailServiceResourceEmailServicesClientDiagnostics;
-        private EmailServicesRestOperations _emailServiceResourceEmailServicesRestClient;
+        private ClientDiagnostics _communicationServicesClientDiagnostics;
+        private CommunicationServicesRestOperations _communicationServicesRestClient;
+        private ClientDiagnostics _emailServicesClientDiagnostics;
+        private EmailServicesRestOperations _emailServicesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Communication
         {
         }
 
-        private ClientDiagnostics CommunicationServiceResourceCommunicationServicesClientDiagnostics => _communicationServiceResourceCommunicationServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationServiceResource.ResourceType.Namespace, Diagnostics);
-        private CommunicationServicesRestOperations CommunicationServiceResourceCommunicationServicesRestClient => _communicationServiceResourceCommunicationServicesRestClient ??= new CommunicationServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CommunicationServiceResource.ResourceType));
-        private ClientDiagnostics EmailServiceResourceEmailServicesClientDiagnostics => _emailServiceResourceEmailServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", EmailServiceResource.ResourceType.Namespace, Diagnostics);
-        private EmailServicesRestOperations EmailServiceResourceEmailServicesRestClient => _emailServiceResourceEmailServicesRestClient ??= new EmailServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EmailServiceResource.ResourceType));
+        private ClientDiagnostics CommunicationServicesClientDiagnostics => _communicationServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CommunicationServicesRestOperations CommunicationServicesRestClient => _communicationServicesRestClient ??= new CommunicationServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics EmailServicesClientDiagnostics => _emailServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private EmailServicesRestOperations EmailServicesRestClient => _emailServicesRestClient ??= new EmailServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CommunicationNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
             scope.Start();
             try
             {
-                var response = await CommunicationServiceResourceCommunicationServicesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await CommunicationServicesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CommunicationNameAvailabilityResult> CheckCommunicationNameAvailability(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
+            using var scope = CommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
             scope.Start();
             try
             {
-                var response = CommunicationServiceResourceCommunicationServicesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = CommunicationServicesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CommunicationServiceResource> GetCommunicationServiceResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CommunicationServiceResource> GetCommunicationServicesBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunicationServiceResource(Client, CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e)), CommunicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationServiceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CommunicationServiceResource.DeserializeCommunicationServiceResource, CommunicationServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationServicesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CommunicationServiceResource> GetCommunicationServiceResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<CommunicationServiceResource> GetCommunicationServicesBySubscription(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunicationServiceResource(Client, CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e)), CommunicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationServiceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CommunicationServiceResource.DeserializeCommunicationServiceResource, CommunicationServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationServicesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EmailServiceResource> GetEmailServiceResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EmailServiceResource> GetEmailServicesBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEmailServiceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EmailServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EmailServiceResource.DeserializeEmailServiceResource, EmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEmailServicesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EmailServiceResource> GetEmailServiceResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<EmailServiceResource> GetEmailServicesBySubscription(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEmailServiceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EmailServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EmailServiceResource.DeserializeEmailServiceResource, EmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEmailServicesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -214,8 +214,8 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListVerifiedExchangeOnlineDomainsRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVerifiedExchangeOnlineDomainsEmailServices", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServicesRestClient.CreateListVerifiedExchangeOnlineDomainsRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), EmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVerifiedExchangeOnlineDomainsEmailServices", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListVerifiedExchangeOnlineDomainsRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVerifiedExchangeOnlineDomainsEmailServices", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServicesRestClient.CreateListVerifiedExchangeOnlineDomainsRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), EmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVerifiedExchangeOnlineDomainsEmailServices", "", null, cancellationToken);
         }
     }
 }

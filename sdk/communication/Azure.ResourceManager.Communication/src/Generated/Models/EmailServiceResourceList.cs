@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of EmailServiceResourceList. </summary>
         internal EmailServiceResourceList()
         {
-            Value = new ChangeTrackingList<EmailServiceResourceData>();
+            Value = new ChangeTrackingList<EmailServiceResource>();
         }
 
         /// <summary> Initializes a new instance of EmailServiceResourceList. </summary>
@@ -26,14 +25,14 @@ namespace Azure.ResourceManager.Communication.Models
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal EmailServiceResourceList(IReadOnlyList<EmailServiceResourceData> value, string nextLink)
+        internal EmailServiceResourceList(IReadOnlyList<EmailServiceResource> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of EmailService. </summary>
-        public IReadOnlyList<EmailServiceResourceData> Value { get; }
+        public IReadOnlyList<EmailServiceResource> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
