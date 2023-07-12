@@ -635,11 +635,6 @@ namespace Azure.Communication.JobRouter
         public string AssignmentId { get { throw null; } }
         public string JobId { get { throw null; } }
     }
-    public partial class UnassignJobRequest
-    {
-        public UnassignJobRequest() { }
-        public bool? SuspendMatching { get { throw null; } set { } }
-    }
     public partial class UpdateClassificationPolicyOptions
     {
         public UpdateClassificationPolicyOptions(string classificationPolicyId) { }
