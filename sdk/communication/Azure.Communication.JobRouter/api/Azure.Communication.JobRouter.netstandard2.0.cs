@@ -746,10 +746,10 @@ namespace Azure.Communication.JobRouter.Models
     public partial class ClassificationPolicy
     {
         internal ClassificationPolicy() { }
-        public string FallbackQueueId { get { throw null; } set { } }
+        public string FallbackQueueId { get { throw null; } }
         public string Id { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.Communication.JobRouter.RouterRule PrioritizationRule { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public Azure.Communication.JobRouter.RouterRule PrioritizationRule { get { throw null; } }
         public System.Collections.Generic.List<Azure.Communication.JobRouter.QueueSelectorAttachment> QueueSelectors { get { throw null; } }
         public System.Collections.Generic.List<Azure.Communication.JobRouter.WorkerSelectorAttachment> WorkerSelectors { get { throw null; } }
     }
@@ -785,8 +785,8 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal DistributionPolicy() { }
         public string Id { get { throw null; } }
-        public Azure.Communication.JobRouter.DistributionMode Mode { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.DistributionMode Mode { get { throw null; } }
+        public string Name { get { throw null; } }
         public System.TimeSpan? OfferExpiresAfter { get { throw null; } set { } }
     }
     public partial class DistributionPolicyItem
@@ -800,7 +800,7 @@ namespace Azure.Communication.JobRouter.Models
         internal ExceptionPolicy() { }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.ExceptionRule> ExceptionRules { get { throw null; } }
         public string Id { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public string Name { get { throw null; } }
     }
     public partial class ExceptionPolicyItem
     {
@@ -817,17 +817,17 @@ namespace Azure.Communication.JobRouter.Models
         internal RouterJob() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.Communication.JobRouter.Models.RouterJobAssignment> Assignments { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.JobRouter.RouterWorkerSelector> AttachedWorkerSelectors { get { throw null; } }
-        public string ChannelId { get { throw null; } set { } }
-        public string ChannelReference { get { throw null; } set { } }
-        public string ClassificationPolicyId { get { throw null; } set { } }
-        public string DispositionCode { get { throw null; } set { } }
+        public string ChannelId { get { throw null; } }
+        public string ChannelReference { get { throw null; } }
+        public string ClassificationPolicyId { get { throw null; } }
+        public string DispositionCode { get { throw null; } }
         public System.DateTimeOffset? EnqueuedAt { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.Dictionary<string, Azure.Communication.JobRouter.LabelValue> Labels { get { throw null; } }
-        public Azure.Communication.JobRouter.JobMatchingMode MatchingMode { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.JobMatchingMode MatchingMode { get { throw null; } }
         public System.Collections.Generic.List<Azure.Communication.JobRouter.Models.RouterJobNote> Notes { get { throw null; } }
-        public int? Priority { get { throw null; } set { } }
-        public string QueueId { get { throw null; } set { } }
+        public int? Priority { get { throw null; } }
+        public string QueueId { get { throw null; } }
         public System.Collections.Generic.List<Azure.Communication.JobRouter.RouterWorkerSelector> RequestedWorkerSelectors { get { throw null; } }
         public System.DateTimeOffset? ScheduledAt { get { throw null; } }
         public Azure.Communication.JobRouter.Models.RouterJobStatus? Status { get { throw null; } }
@@ -903,11 +903,11 @@ namespace Azure.Communication.JobRouter.Models
     public partial class RouterQueue
     {
         internal RouterQueue() { }
-        public string DistributionPolicyId { get { throw null; } set { } }
-        public string ExceptionPolicyId { get { throw null; } set { } }
+        public string DistributionPolicyId { get { throw null; } }
+        public string ExceptionPolicyId { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.LabelValue> Labels { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public string Name { get { throw null; } }
     }
     public partial class RouterQueueItem
     {
@@ -927,7 +927,7 @@ namespace Azure.Communication.JobRouter.Models
     {
         public RouterWorker() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.JobRouter.Models.RouterWorkerAssignment> AssignedJobs { get { throw null; } }
-        public bool? AvailableForOffers { get { throw null; } set { } }
+        public bool? AvailableForOffers { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.ChannelConfiguration> ChannelConfigurations { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.LabelValue> Labels { get { throw null; } }
@@ -936,7 +936,7 @@ namespace Azure.Communication.JobRouter.Models
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.RouterQueueAssignment> QueueAssignments { get { throw null; } }
         public Azure.Communication.JobRouter.RouterWorkerState? State { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.LabelValue> Tags { get { throw null; } }
-        public int? TotalCapacity { get { throw null; } set { } }
+        public int? TotalCapacity { get { throw null; } }
     }
     public partial class RouterWorkerAssignment
     {

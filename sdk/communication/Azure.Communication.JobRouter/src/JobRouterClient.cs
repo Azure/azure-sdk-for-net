@@ -337,7 +337,8 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var request = new RouterJob                {
+                var request = new RouterJob
+                {
                     ChannelId = options.ChannelId,
                     ClassificationPolicyId = options.ClassificationPolicyId,
                     ChannelReference = options.ChannelReference,
