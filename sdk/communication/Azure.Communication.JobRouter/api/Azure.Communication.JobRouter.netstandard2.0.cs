@@ -768,7 +768,6 @@ namespace Azure.Communication.JobRouter.Models
         public static Azure.Communication.JobRouter.Models.AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null) { throw null; }
         public static Azure.Communication.JobRouter.Models.RouterJobAssignment RouterJobAssignment(string assignmentId = null, string workerId = null, System.DateTimeOffset assignedAt = default(System.DateTimeOffset), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? closedAt = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Communication.JobRouter.Models.RouterJobOffer RouterJobOffer(string offerId = null, string jobId = null, int capacityCost = 0, System.DateTimeOffset? offeredAt = default(System.DateTimeOffset?), System.DateTimeOffset? expiresAt = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.Communication.JobRouter.Models.RouterQueueItem RouterQueueItem(Azure.Communication.JobRouter.Models.RouterQueue queue = null, string etag = null) { throw null; }
         public static Azure.Communication.JobRouter.Models.RouterQueueStatistics RouterQueueStatistics(string queueId = null, int length = 0, System.Collections.Generic.IReadOnlyDictionary<string, double> estimatedWaitTimeMinutes = null, double? longestJobWaitTimeMinutes = default(double?)) { throw null; }
         public static Azure.Communication.JobRouter.Models.RouterWorkerAssignment RouterWorkerAssignment(string assignmentId = null, string jobId = null, int capacityCost = 0, System.DateTimeOffset assignedAt = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Communication.JobRouter.Models.UnassignJobResult UnassignJobResult(string jobId = null, int unassignmentCount = 0) { throw null; }
@@ -912,7 +911,7 @@ namespace Azure.Communication.JobRouter.Models
     public partial class RouterQueueItem
     {
         internal RouterQueueItem() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
         public Azure.Communication.JobRouter.Models.RouterQueue Queue { get { throw null; } }
     }
     public partial class RouterQueueStatistics
