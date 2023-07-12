@@ -36,10 +36,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     var activityTagsProcessor = EnumerateActivityTags(activity);
                     telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey);
 
+                    // Check for Exceptions events
+                    if (activity.Events.Any())
+                    {
+                        AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems);
+                    }
+
                     switch (activity.GetTelemetryType())
                     {
                         case TelemetryType.Request:
-                            if (activity.Kind == ActivityKind.Server)
+                            if (activity.Kind == ActivityKind.Server && activityTagsProcessor.activityType.HasFlag(OperationType.Http))
                             {
                                 var (requestUrl, operationName) = GetHttpOperationNameAndUrl(activity.DisplayName, activityTagsProcessor.activityType, ref activityTagsProcessor.MappedTags);
                                 telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()] = operationName;
@@ -67,12 +73,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor),
                             };
                             break;
-                    }
-
-                    // Check for Exceptions events
-                    if (activity.Events.Any())
-                    {
-                        AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems);
                     }
 
                     activityTagsProcessor.Return();
@@ -267,7 +267,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         var messageData = GetTraceTelemetryData(@event);
                         if (messageData != null)
                         {
-                            var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
+                            var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp, operationType);
                             traceTelemetryItem.Data = messageData;
                             telemetryItems.Add(traceTelemetryItem);
                         }

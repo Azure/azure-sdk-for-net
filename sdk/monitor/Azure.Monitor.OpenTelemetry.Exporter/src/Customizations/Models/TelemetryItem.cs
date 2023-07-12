@@ -51,14 +51,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags["ai.user.userAgent"] = userAgent;
             }
 
-            // we only have mapping for server spans
-            // todo: non-server spans
-            if (kind == ActivityKind.Server)
-            {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()];
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()];
-            }
-
             Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()];
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()];
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
