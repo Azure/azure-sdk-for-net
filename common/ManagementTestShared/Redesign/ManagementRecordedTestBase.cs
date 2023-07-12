@@ -87,6 +87,12 @@ namespace Azure.ResourceManager.TestFramework
             {
                 GroupForReplace = "group"
             });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/subscriptions/([^/]+)/locations\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
             // Ignore the api-version of resource group operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
                 @"/resourcegroups/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
