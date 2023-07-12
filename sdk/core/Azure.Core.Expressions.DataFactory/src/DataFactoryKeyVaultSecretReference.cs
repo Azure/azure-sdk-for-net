@@ -10,7 +10,7 @@ using System;
 namespace Azure.Core.Expressions.DataFactory
 {
     /// <summary> Azure Key Vault secret reference. </summary>
-    [PropertyReferenceType]
+    [ReferenceType]
     public partial class DataFactoryKeyVaultSecretReference : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of AzureKeyVaultSecretReference. </summary>

@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Core.Expressions.DataFactory
 {
     /// <summary> Linked service reference type. </summary>
-    [PropertyReferenceType]
+    [ReferenceType]
     public partial class DataFactoryLinkedServiceReference
     {
         /// <summary> Initializes a new instance of DataFactoryLinkedServiceReference. </summary>
