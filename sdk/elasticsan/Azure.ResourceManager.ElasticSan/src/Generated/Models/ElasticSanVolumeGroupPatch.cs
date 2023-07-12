@@ -19,6 +19,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of ElasticSanVolumeGroupPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="protocolType"> Type of storage target. </param>
+        /// <param name="encryption"> Type of encryption. </param>
+        /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
+        internal ElasticSanVolumeGroupPatch(IDictionary<string, string> tags, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, NetworkRuleSet networkAcls)
+        {
+            Tags = tags;
+            ProtocolType = protocolType;
+            Encryption = encryption;
+            NetworkAcls = networkAcls;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Type of storage target. </summary>

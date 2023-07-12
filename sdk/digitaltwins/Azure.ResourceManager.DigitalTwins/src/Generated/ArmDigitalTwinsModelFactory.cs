@@ -95,6 +95,15 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity);
         }
 
+        /// <summary> Initializes a new instance of DigitalTwinsNameContent. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.DigitalTwins/digitalTwinsInstances. </param>
+        /// <returns> A new <see cref="Models.DigitalTwinsNameContent"/> instance for mocking. </returns>
+        public static DigitalTwinsNameContent DigitalTwinsNameContent(string name = null, DigitalTwinsResourceType resourceType = default)
+        {
+            return new DigitalTwinsNameContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of DigitalTwinsNameResult. </summary>
         /// <param name="isNameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
         /// <param name="message"> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </param>

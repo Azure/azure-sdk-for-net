@@ -17,6 +17,21 @@ namespace Azure.ResourceManager.Grafana.Models
         {
         }
 
+        /// <summary> Initializes a new instance of ManagedGrafanaPatchProperties. </summary>
+        /// <param name="zoneRedundancy"> The zone redundancy setting of the Grafana instance. </param>
+        /// <param name="apiKey"> The api key setting of the Grafana instance. </param>
+        /// <param name="deterministicOutboundIP"> Whether a Grafana instance uses deterministic outbound IPs. </param>
+        /// <param name="publicNetworkAccess"> Indicate the state for enable or disable traffic over the public interface. </param>
+        /// <param name="grafanaIntegrations"> GrafanaIntegrations is a bundled observability experience (e.g. pre-configured data source, tailored Grafana dashboards, alerting defaults) for common monitoring scenarios. </param>
+        internal ManagedGrafanaPatchProperties(GrafanaZoneRedundancy? zoneRedundancy, GrafanaApiKey? apiKey, DeterministicOutboundIP? deterministicOutboundIP, GrafanaPublicNetworkAccess? publicNetworkAccess, GrafanaIntegrations grafanaIntegrations)
+        {
+            ZoneRedundancy = zoneRedundancy;
+            ApiKey = apiKey;
+            DeterministicOutboundIP = deterministicOutboundIP;
+            PublicNetworkAccess = publicNetworkAccess;
+            GrafanaIntegrations = grafanaIntegrations;
+        }
+
         /// <summary> The zone redundancy setting of the Grafana instance. </summary>
         public GrafanaZoneRedundancy? ZoneRedundancy { get; set; }
         /// <summary> The api key setting of the Grafana instance. </summary>

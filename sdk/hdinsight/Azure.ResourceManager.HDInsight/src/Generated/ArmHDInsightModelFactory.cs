@@ -493,6 +493,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new HDInsightPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
+        /// <summary> Initializes a new instance of ExecuteScriptActionContent. </summary>
+        /// <param name="scriptActions"> The list of run time script actions. </param>
+        /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
+        /// <returns> A new <see cref="Models.ExecuteScriptActionContent"/> instance for mocking. </returns>
+        public static ExecuteScriptActionContent ExecuteScriptActionContent(IEnumerable<RuntimeScriptAction> scriptActions = null, bool persistOnSuccess = default)
+        {
+            scriptActions ??= new List<RuntimeScriptAction>();
+
+            return new ExecuteScriptActionContent(scriptActions?.ToList(), persistOnSuccess);
+        }
+
         /// <summary> Initializes a new instance of RuntimeScriptActionDetail. </summary>
         /// <param name="name"> The name of the script action. </param>
         /// <param name="uri"> The URI to the script. </param>
