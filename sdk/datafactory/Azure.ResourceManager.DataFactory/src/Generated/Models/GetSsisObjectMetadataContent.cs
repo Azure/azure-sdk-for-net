@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
+        /// <summary> Initializes a new instance of GetSsisObjectMetadataContent. </summary>
+        /// <param name="metadataPath"> Metadata path. </param>
+        internal GetSsisObjectMetadataContent(string metadataPath)
+        {
+            MetadataPath = metadataPath;
+        }
+
         /// <summary> Metadata path. </summary>
         public string MetadataPath { get; set; }
     }

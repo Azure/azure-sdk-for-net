@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.Compute.Models
             DurationInSeconds = durationInSeconds;
         }
 
+        /// <summary> Initializes a new instance of GrantAccessData. </summary>
+        /// <param name="access"> The Access Level, accepted values include None, Read, Write. </param>
+        /// <param name="durationInSeconds"> Time duration in seconds until the SAS access expires. </param>
+        /// <param name="getSecureVmGuestStateSas"> Set this flag to true to get additional SAS for VM guest state. </param>
+        internal GrantAccessData(AccessLevel access, int durationInSeconds, bool? getSecureVmGuestStateSas)
+        {
+            Access = access;
+            DurationInSeconds = durationInSeconds;
+            GetSecureVmGuestStateSas = getSecureVmGuestStateSas;
+        }
+
         /// <summary> The Access Level, accepted values include None, Read, Write. </summary>
         public AccessLevel Access { get; }
         /// <summary> Time duration in seconds until the SAS access expires. </summary>

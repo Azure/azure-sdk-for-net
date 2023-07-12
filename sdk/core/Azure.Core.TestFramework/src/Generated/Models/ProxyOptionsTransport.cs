@@ -19,6 +19,17 @@ namespace Azure.Core.TestFramework.Models
             Certificates = new ChangeTrackingList<ProxyOptionsTransportCertificatesItem>();
         }
 
+        /// <summary> Initializes a new instance of ProxyOptionsTransport. </summary>
+        /// <param name="allowAutoRedirect"></param>
+        /// <param name="tlsValidationCert"></param>
+        /// <param name="certificates"></param>
+        internal ProxyOptionsTransport(bool? allowAutoRedirect, string tlsValidationCert, IList<ProxyOptionsTransportCertificatesItem> certificates)
+        {
+            AllowAutoRedirect = allowAutoRedirect;
+            TLSValidationCert = tlsValidationCert;
+            Certificates = certificates;
+        }
+
         /// <summary> Gets or sets the allow auto redirect. </summary>
         public bool? AllowAutoRedirect { get; set; }
         /// <summary> Gets or sets the tls validation cert. </summary>

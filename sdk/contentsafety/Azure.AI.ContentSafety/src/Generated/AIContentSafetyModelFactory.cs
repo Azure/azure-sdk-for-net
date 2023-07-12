@@ -14,6 +14,20 @@ namespace Azure.AI.ContentSafety
     /// <summary> Model factory for models. </summary>
     public static partial class AIContentSafetyModelFactory
     {
+        /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
+        /// <param name="text"> The text needs to be scanned. We support at most 1000 characters (unicode code points) in text of one request. </param>
+        /// <param name="categories"> The categories will be analyzed. If not assigned, a default set of the categories' analysis results will be returned. </param>
+        /// <param name="blocklistNames"> The names of blocklists. </param>
+        /// <param name="breakByBlocklists"> When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit. </param>
+        /// <returns> A new <see cref="ContentSafety.AnalyzeTextOptions"/> instance for mocking. </returns>
+        public static AnalyzeTextOptions AnalyzeTextOptions(string text = null, IEnumerable<TextCategory> categories = null, IEnumerable<string> blocklistNames = null, bool? breakByBlocklists = null)
+        {
+            categories ??= new List<TextCategory>();
+            blocklistNames ??= new List<string>();
+
+            return new AnalyzeTextOptions(text, categories?.ToList(), blocklistNames?.ToList(), breakByBlocklists);
+        }
+
         /// <summary> Initializes a new instance of AnalyzeTextResult. </summary>
         /// <param name="blocklistsMatchResults"> The details of blocklist match. </param>
         /// <param name="hateResult"> Analysis result for Hate category. </param>
@@ -63,6 +77,17 @@ namespace Azure.AI.ContentSafety
             return new TextAnalyzeSeverityResult(category, severity);
         }
 
+        /// <summary> Initializes a new instance of AnalyzeImageOptions. </summary>
+        /// <param name="image"> The image needs to be analyzed. </param>
+        /// <param name="categories"> The categories will be analyzed. If not assigned, a default set of the categories' analysis results will be returned. </param>
+        /// <returns> A new <see cref="ContentSafety.AnalyzeImageOptions"/> instance for mocking. </returns>
+        public static AnalyzeImageOptions AnalyzeImageOptions(ImageData image = null, IEnumerable<ImageCategory> categories = null)
+        {
+            categories ??= new List<ImageCategory>();
+
+            return new AnalyzeImageOptions(image, categories?.ToList());
+        }
+
         /// <summary> Initializes a new instance of AnalyzeImageResult. </summary>
         /// <param name="hateResult"> Analysis result for Hate category. </param>
         /// <param name="selfHarmResult"> Analysis result for SelfHarm category. </param>
@@ -90,6 +115,15 @@ namespace Azure.AI.ContentSafety
         public static TextBlocklist TextBlocklist(string blocklistName = null, string description = null)
         {
             return new TextBlocklist(blocklistName, description);
+        }
+
+        /// <summary> Initializes a new instance of TextBlockItemInfo. </summary>
+        /// <param name="description"> Block item description. </param>
+        /// <param name="text"> Block item content. </param>
+        /// <returns> A new <see cref="ContentSafety.TextBlockItemInfo"/> instance for mocking. </returns>
+        public static TextBlockItemInfo TextBlockItemInfo(string description = null, string text = null)
+        {
+            return new TextBlockItemInfo(description, text);
         }
 
         /// <summary> Initializes a new instance of AddBlockItemsResult. </summary>

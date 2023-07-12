@@ -15,6 +15,13 @@ namespace Azure.Communication.JobRouter
         {
         }
 
+        /// <summary> Initializes a new instance of UnassignJobRequest. </summary>
+        /// <param name="suspendMatching"> If WaitForActivation is true, then the job is not queued for re-matching with a worker. </param>
+        internal UnassignJobRequest(bool? suspendMatching)
+        {
+            SuspendMatching = suspendMatching;
+        }
+
         /// <summary> If WaitForActivation is true, then the job is not queued for re-matching with a worker. </summary>
         public bool? SuspendMatching { get; set; }
     }

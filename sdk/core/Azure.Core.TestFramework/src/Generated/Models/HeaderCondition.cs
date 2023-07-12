@@ -15,6 +15,15 @@ namespace Azure.Core.TestFramework.Models
         {
         }
 
+        /// <summary> Initializes a new instance of HeaderCondition. </summary>
+        /// <param name="key"></param>
+        /// <param name="valueRegex"></param>
+        internal HeaderCondition(string key, string valueRegex)
+        {
+            Key = key;
+            ValueRegex = valueRegex;
+        }
+
         /// <summary> Gets or sets the key. </summary>
         public string Key { get; set; }
         /// <summary> Gets or sets the value regex. </summary>

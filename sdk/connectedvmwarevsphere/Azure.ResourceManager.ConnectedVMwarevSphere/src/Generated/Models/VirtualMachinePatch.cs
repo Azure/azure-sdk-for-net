@@ -20,6 +20,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of VirtualMachinePatch. </summary>
+        /// <param name="tags"> Gets or sets the Resource tags. </param>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="hardwareProfile"> Defines the resource properties. </param>
+        /// <param name="storageProfile"> Defines the resource update properties. </param>
+        /// <param name="networkProfile"> Defines the update resource properties. </param>
+        internal VirtualMachinePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, HardwareProfile hardwareProfile, StorageProfileUpdate storageProfile, NetworkProfileUpdate networkProfile)
+        {
+            Tags = tags;
+            Identity = identity;
+            HardwareProfile = hardwareProfile;
+            StorageProfile = storageProfile;
+            NetworkProfile = networkProfile;
+        }
+
         /// <summary> Gets or sets the Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned. </summary>

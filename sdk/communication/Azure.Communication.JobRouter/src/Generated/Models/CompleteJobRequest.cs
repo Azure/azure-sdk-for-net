@@ -23,6 +23,15 @@ namespace Azure.Communication.JobRouter
             AssignmentId = assignmentId;
         }
 
+        /// <summary> Initializes a new instance of CompleteJobRequest. </summary>
+        /// <param name="assignmentId"> The assignment within the job to complete. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
+        internal CompleteJobRequest(string assignmentId, string note)
+        {
+            AssignmentId = assignmentId;
+            Note = note;
+        }
+
         /// <summary> The assignment within the job to complete. </summary>
         public string AssignmentId { get; }
         /// <summary> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </summary>

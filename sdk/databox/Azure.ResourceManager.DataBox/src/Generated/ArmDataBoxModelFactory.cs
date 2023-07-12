@@ -171,6 +171,30 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownDataCenterAddressResponse(default, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation);
         }
 
+        /// <summary> Initializes a new instance of MitigateJobContent. </summary>
+        /// <param name="customerResolutionCode"> Resolution code for the job. </param>
+        /// <param name="serialNumberCustomerResolutionMap"> Serial number and the customer resolution code corresponding to each serial number. </param>
+        /// <returns> A new <see cref="Models.MitigateJobContent"/> instance for mocking. </returns>
+        public static MitigateJobContent MitigateJobContent(CustomerResolutionCode customerResolutionCode = default, IDictionary<string, CustomerResolutionCode> serialNumberCustomerResolutionMap = null)
+        {
+            serialNumberCustomerResolutionMap ??= new Dictionary<string, CustomerResolutionCode>();
+
+            return new MitigateJobContent(customerResolutionCode, serialNumberCustomerResolutionMap);
+        }
+
+        /// <summary> Initializes a new instance of AvailableSkusContent. </summary>
+        /// <param name="transferType"> Type of the transfer. </param>
+        /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
+        /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="skuNames"> Sku Names to filter for available skus. </param>
+        /// <returns> A new <see cref="Models.AvailableSkusContent"/> instance for mocking. </returns>
+        public static AvailableSkusContent AvailableSkusContent(DataBoxJobTransferType transferType = default, string country = null, AzureLocation location = default, IEnumerable<DataBoxSkuName> skuNames = null)
+        {
+            skuNames ??= new List<DataBoxSkuName>();
+
+            return new AvailableSkusContent(transferType, country, location, skuNames?.ToList());
+        }
+
         /// <summary> Initializes a new instance of DataBoxSkuInformation. </summary>
         /// <param name="sku"> The Sku. </param>
         /// <param name="isEnabled"> The sku is enabled or not. </param>
@@ -219,6 +243,16 @@ namespace Azure.ResourceManager.DataBox.Models
         public static DataBoxSkuCost DataBoxSkuCost(Guid? meterId = null, string meterType = null, double? multiplier = null)
         {
             return new DataBoxSkuCost(meterId, meterType, multiplier);
+        }
+
+        /// <summary> Initializes a new instance of DataBoxValidateAddressContent. </summary>
+        /// <param name="shippingAddress"> Shipping address of the customer. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
+        /// <returns> A new <see cref="Models.DataBoxValidateAddressContent"/> instance for mocking. </returns>
+        public static DataBoxValidateAddressContent DataBoxValidateAddressContent(DataBoxShippingAddress shippingAddress = null, DataBoxSkuName deviceType = default, TransportPreferences transportPreferences = null)
+        {
+            return new DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator.ValidateAddress, shippingAddress, deviceType, transportPreferences);
         }
 
         /// <summary> Initializes a new instance of AddressValidationResult. </summary>
@@ -294,6 +328,15 @@ namespace Azure.ResourceManager.DataBox.Models
         public static DataCenterAccessSecurityCode DataCenterAccessSecurityCode(string reverseDataCenterAccessCode = null, string forwardDataCenterAccessCode = null)
         {
             return new DataCenterAccessSecurityCode(reverseDataCenterAccessCode, forwardDataCenterAccessCode);
+        }
+
+        /// <summary> Initializes a new instance of ScheduleAvailabilityContent. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <returns> A new <see cref="Models.ScheduleAvailabilityContent"/> instance for mocking. </returns>
+        public static ScheduleAvailabilityContent ScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null)
+        {
+            return new UnknownScheduleAvailabilityRequest(storageLocation, default, country);
         }
 
         /// <summary> Initializes a new instance of RegionConfigurationResult. </summary>
@@ -444,6 +487,14 @@ namespace Azure.ResourceManager.DataBox.Models
             actions ??= new List<CustomerResolutionCode>();
 
             return new GranularCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationContent. </summary>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/> instance for mocking. </returns>
+        public static CreateOrderLimitForSubscriptionValidationContent CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName deviceType = default)
+        {
+            return new CreateOrderLimitForSubscriptionValidationContent(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit, deviceType);
         }
 
         /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationResult. </summary>
@@ -888,6 +939,29 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxSecret(deviceSerialNumber, devicePassword, networkConfigurations?.ToList(), encodedValidationCertPubKey, accountCredentialDetails?.ToList());
         }
 
+        /// <summary> Initializes a new instance of DataBoxScheduleAvailabilityContent. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <returns> A new <see cref="Models.DataBoxScheduleAvailabilityContent"/> instance for mocking. </returns>
+        public static DataBoxScheduleAvailabilityContent DataBoxScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null)
+        {
+            return new DataBoxScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBox, country);
+        }
+
+        /// <summary> Initializes a new instance of DataTransferDetailsValidationContent. </summary>
+        /// <param name="dataExportDetails"> List of DataTransfer details to be used to export data from azure. </param>
+        /// <param name="dataImportDetails"> List of DataTransfer details to be used to import data to azure. </param>
+        /// <param name="deviceType"> Device type. </param>
+        /// <param name="transferType"> Type of the transfer. </param>
+        /// <returns> A new <see cref="Models.DataTransferDetailsValidationContent"/> instance for mocking. </returns>
+        public static DataTransferDetailsValidationContent DataTransferDetailsValidationContent(IEnumerable<DataExportDetails> dataExportDetails = null, IEnumerable<DataImportDetails> dataImportDetails = null, DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default)
+        {
+            dataExportDetails ??= new List<DataExportDetails>();
+            dataImportDetails ??= new List<DataImportDetails>();
+
+            return new DataTransferDetailsValidationContent(DataBoxValidationInputDiscriminator.ValidateDataTransferDetails, dataExportDetails?.ToList(), dataImportDetails?.ToList(), deviceType, transferType);
+        }
+
         /// <summary> Initializes a new instance of DataTransferDetailsValidationResult. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Data transfer details validation status. </param>
@@ -897,6 +971,34 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataTransferDetailsValidationResult(DataBoxValidationInputDiscriminator.ValidateDataTransferDetails, error, status);
         }
 
+        /// <summary> Initializes a new instance of DiskScheduleAvailabilityContent. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
+        /// <returns> A new <see cref="Models.DiskScheduleAvailabilityContent"/> instance for mocking. </returns>
+        public static DiskScheduleAvailabilityContent DiskScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null, int expectedDataSizeInTerabytes = default)
+        {
+            return new DiskScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBoxDisk, country, expectedDataSizeInTerabytes);
+        }
+
+        /// <summary> Initializes a new instance of HeavyScheduleAvailabilityContent. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <returns> A new <see cref="Models.HeavyScheduleAvailabilityContent"/> instance for mocking. </returns>
+        public static HeavyScheduleAvailabilityContent HeavyScheduleAvailabilityContent(AzureLocation storageLocation = default, string country = null)
+        {
+            return new HeavyScheduleAvailabilityContent(storageLocation, DataBoxSkuName.DataBoxHeavy, country);
+        }
+
+        /// <summary> Initializes a new instance of PreferencesValidationContent. </summary>
+        /// <param name="preference"> Preference of transport and data center. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <returns> A new <see cref="Models.PreferencesValidationContent"/> instance for mocking. </returns>
+        public static PreferencesValidationContent PreferencesValidationContent(DataBoxOrderPreferences preference = null, DataBoxSkuName deviceType = default)
+        {
+            return new PreferencesValidationContent(DataBoxValidationInputDiscriminator.ValidatePreferences, preference, deviceType);
+        }
+
         /// <summary> Initializes a new instance of PreferencesValidationResult. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Validation status of requested data center and transport. </param>
@@ -904,6 +1006,17 @@ namespace Azure.ResourceManager.DataBox.Models
         public static PreferencesValidationResult PreferencesValidationResult(ResponseError error = null, DataBoxValidationStatus? status = null)
         {
             return new PreferencesValidationResult(DataBoxValidationInputDiscriminator.ValidatePreferences, error, status);
+        }
+
+        /// <summary> Initializes a new instance of SkuAvailabilityValidationContent. </summary>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        /// <param name="transferType"> Type of the transfer. </param>
+        /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
+        /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <returns> A new <see cref="Models.SkuAvailabilityValidationContent"/> instance for mocking. </returns>
+        public static SkuAvailabilityValidationContent SkuAvailabilityValidationContent(DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, string country = null, AzureLocation location = default)
+        {
+            return new SkuAvailabilityValidationContent(DataBoxValidationInputDiscriminator.ValidateSkuAvailability, deviceType, transferType, country, location);
         }
 
         /// <summary> Initializes a new instance of SkuAvailabilityValidationResult. </summary>
