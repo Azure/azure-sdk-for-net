@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Ignore Spelling: Retriable
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,10 +12,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -123,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var groups = consumerGroups ?? new List<string>();
             var consumerGroupCollection = eventHub.Value.GetEventHubsConsumerGroups();
 
-            if ((groups != default) && (groups.Count > 0))
+            if (groups?.Count > 0)
             {
                 var groupData = new EventHubsConsumerGroupData();
 
@@ -184,17 +180,8 @@ namespace Azure.Messaging.EventHubs.Tests
             ///
             protected override bool ShouldRetry(HttpMessage message, Exception exception)
             {
-                var originalClassifier = message.ResponseClassifier;
-
-                try
-                {
-                    message.ResponseClassifier = Classifier;
-                    return base.ShouldRetry(message, exception);
-                }
-                finally
-                {
-                    message.ResponseClassifier = originalClassifier;
-                }
+                message.ResponseClassifier = Classifier;
+                return base.ShouldRetry(message, exception);
             }
 
             /// <summary>
@@ -208,17 +195,8 @@ namespace Azure.Messaging.EventHubs.Tests
             ///
             protected override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
             {
-                var originalClassifier = message.ResponseClassifier;
-
-                try
-                {
-                    message.ResponseClassifier = Classifier;
-                    return base.ShouldRetryAsync(message, exception);
-                }
-                finally
-                {
-                    message.ResponseClassifier = originalClassifier;
-                }
+                message.ResponseClassifier = Classifier;
+                return base.ShouldRetryAsync(message, exception);
             }
 
             /// <summary>

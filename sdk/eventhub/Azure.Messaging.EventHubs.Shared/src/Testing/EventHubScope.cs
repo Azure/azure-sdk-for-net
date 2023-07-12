@@ -49,7 +49,6 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Initializes a new instance of the <see cref="EventHubScope"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubResourceId">The ARM resource identifier of the Event Hub that was created.</param>
         /// <param name="eventHubHame">The name of the Event Hub that was created.</param>
         /// <param name="consumerGroups">The set of consumer groups associated with the Event Hub; the default consumer group is not included, as it is implicitly created.</param>
         /// <param name="shouldRemoveEventHubAtScopeCompletion">Indicates whether the Event Hub should be removed when the current scope is completed.</param>
