@@ -137,7 +137,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeMessagingSystem, "servicebus");
-            activity.SetTag(SemanticConventions.AttributeNetworkProtocolName, "amqps");
             activity.SetTag(SemanticConventions.AttributeServerAddress, "my.servicebus.windows.net");
             activity.SetTag(SemanticConventions.AttributeMessagingDestinationName, "queueName");
 
@@ -147,9 +146,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal("RemoteDependencyDataNewActivity", remoteDependencyData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), remoteDependencyData.Id);
-            Assert.Equal("amqps://my.servicebus.windows.net/queueName", remoteDependencyData.Data);
+            Assert.Equal("my.servicebus.windows.net/queueName", remoteDependencyData.Data);
             Assert.Null(remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
+            Assert.Equal("my.servicebus.windows.net/queueName", remoteDependencyData.Target);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
             Assert.True(remoteDependencyData.Properties.Count == 0);
             Assert.True(remoteDependencyData.Measurements.Count == 0);

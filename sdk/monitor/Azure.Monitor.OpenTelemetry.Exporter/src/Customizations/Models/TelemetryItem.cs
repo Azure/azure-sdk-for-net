@@ -32,17 +32,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             SetAuthenticatedUserId(ref activityTagsProcessor);
-
-            // we only have mapping for server spans
-            // todo: non-server spans
-            if (activity.Kind == ActivityKind.Server)
-            {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = activityTagsProcessor.activityType.HasFlag(OperationType.V2)
-                                                                    ? TraceHelper.GetNewSchemaOperationName(activity, null, ref activityTagsProcessor.MappedTags)
-                                                                    : TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
-            }
-
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
             if (AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, "sampleRate") is float sampleRate)
             {

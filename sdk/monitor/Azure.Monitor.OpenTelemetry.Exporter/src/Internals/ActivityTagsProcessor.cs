@@ -61,10 +61,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeEndpointAddress,
             // required - Messaging
             SemanticConventions.AttributeMessagingSystem,
-            SemanticConventions.AttributeMessagingUrl,
-            SemanticConventions.AttributeNetworkProtocolName,
             SemanticConventions.AttributeMessagingDestinationName,
-            SemanticConventions.AttributeMessagingSourceName,
+            SemanticConventions.AttributeNetworkProtocolName,
 
             // Others
             SemanticConventions.AttributeEnduserId

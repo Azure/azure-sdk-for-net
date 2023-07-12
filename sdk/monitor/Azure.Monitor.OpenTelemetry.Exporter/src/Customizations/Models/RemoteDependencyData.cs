@@ -132,10 +132,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         private void SetMessagingDependencyProperties(Activity activity, ref AzMonList messagingTagObjects)
         {
-            var messagingAttributeTagObjects = AzMonList.GetTagValues(ref messagingTagObjects, SemanticConventions.AttributeMessagingUrl, SemanticConventions.AttributeMessagingSystem);
-            var messagingUrl = messagingAttributeTagObjects[0]?.ToString();
+            var messagingSystem = AzMonList.GetTagValue(ref messagingTagObjects, SemanticConventions.AttributeMessagingSystem);
+            var (messagingUrl, target) = messagingTagObjects.GetMessagingUrlAndSourceOrTarget(activity.Kind);
             Data = messagingUrl?.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-            Type = messagingAttributeTagObjects[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
+            Target = target.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+            Type = messagingSystem?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
         }
     }
 }

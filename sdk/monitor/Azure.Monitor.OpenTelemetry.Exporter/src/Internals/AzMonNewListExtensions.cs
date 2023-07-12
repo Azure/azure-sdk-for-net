@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Primitives;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
@@ -49,11 +48,11 @@ internal static class AzMonNewListExtensions
     ///<summary>
     /// Gets messaging url from activity tag objects.
     ///</summary>
-    ///<example>
-    /// amqps://my.servicebus.windows.net/queueName.
-    ///</example>
-    internal static string? GetNewSchemaMessagingUrl(this AzMonList tagObjects, ActivityKind activityKind)
+    internal static (string? MessagingUrl, string? SourceOrTarget) GetMessagingUrlAndSourceOrTarget(this AzMonList tagObjects, ActivityKind activityKind)
     {
+        string? messagingUrl = null;
+        string? sourceOrTarget = null;
+
         try
         {
             var host = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeServerAddress)?.ToString()
@@ -61,36 +60,27 @@ internal static class AzMonNewListExtensions
             if (!string.IsNullOrEmpty(host))
             {
                 object?[] messagingTagObjects;
-                string? sourceOrDestinationName = null;
 
-                if (activityKind == ActivityKind.Consumer)
-                {
-                    messagingTagObjects = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeNetworkProtocolName, SemanticConventions.AttributeMessagingSourceName);
-                    sourceOrDestinationName = messagingTagObjects[1]?.ToString(); // messagingTagObjects[1] => SemanticConventions.AttributeMessagingSourceName.
-                    if (sourceOrDestinationName == null)
-                    {
-                        sourceOrDestinationName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeMessagingDestinationName)?.ToString();
-                    }
-                }
-                else
-                {
-                    messagingTagObjects = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeNetworkProtocolName, SemanticConventions.AttributeMessagingDestinationName);
-                    sourceOrDestinationName = messagingTagObjects[1]?.ToString(); // messagingTagObjects[1] => SemanticConventions.AttributeMessagingDestinationName.
-                }
-
+                messagingTagObjects = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeNetworkProtocolName, SemanticConventions.AttributeMessagingDestinationName);
                 var protocolName = messagingTagObjects[0]?.ToString() ?? string.Empty; // messagingTagObjects[0] => SemanticConventions.AttributeNetworkProtocolName.
-                sourceOrDestinationName ??= string.Empty;
-                var delimilerLength = 1;
+                var destinationName = messagingTagObjects[1]?.ToString() ?? string.Empty; // messagingTagObjects[1] => SemanticConventions.AttributeMessagingDestinationName.
 
-                var length = protocolName.Length + (protocolName?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + host!.Length + delimilerLength + sourceOrDestinationName.Length;
+                if (destinationName.Length > 0)
+                {
+                    destinationName = $"/{destinationName}";
+                }
+
+                sourceOrTarget = $"{host}{destinationName}";
+
+                var length = protocolName.Length + (protocolName?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + host!.Length + destinationName.Length;
 
                 var messagingStringBuilder = new System.Text.StringBuilder(length)
                     .Append(protocolName)
                     .Append(string.IsNullOrEmpty(protocolName) ? null : Uri.SchemeDelimiter)
                     .Append(host)
-                    .Append(string.IsNullOrEmpty(sourceOrDestinationName) ? "/" : $"/{sourceOrDestinationName}");
+                    .Append(destinationName);
 
-                return messagingStringBuilder.ToString();
+                messagingUrl = messagingStringBuilder.ToString();
             }
         }
         catch
@@ -98,7 +88,7 @@ internal static class AzMonNewListExtensions
             // If Messaging Url building fails, there is no need to throw an exception. Instead, we can simply return null.
         }
 
-        return null;
+        return (MessagingUrl: messagingUrl, SourceOrTarget: sourceOrTarget);
     }
 
     ///<summary>
