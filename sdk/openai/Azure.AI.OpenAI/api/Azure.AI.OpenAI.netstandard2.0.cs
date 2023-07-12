@@ -16,6 +16,8 @@ namespace Azure.AI.OpenAI
     public static partial class AzureOpenAIModelFactory
     {
         public static Azure.AI.OpenAI.Choice Choice(string text = null, int index = 0, Azure.AI.OpenAI.CompletionsLogProbabilityModel logProbabilityModel = null, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason)) { throw null; }
+        public static Azure.AI.OpenAI.ImageGenerations ImageGenerations(System.DateTimeOffset created, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ImageLocation> data) { throw null; }
+        public static Azure.AI.OpenAI.ImageLocation ImageLocation(System.Uri url, Azure.Core.Pipeline.HttpPipeline pipeline = null) { throw null; }
     }
     public partial class ChatChoice
     {

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.OpenAI
 {
@@ -30,6 +30,42 @@ namespace Azure.AI.OpenAI
             // Custom code: remove inappropriate null check of nullable CompletionsLogProbabilityModel
 
             return new Choice(text, index, logProbabilityModel, finishReason);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of ImageLocation for testing and mocking.
+        /// </summary>
+        /// <param name="url">The URL to represent as a download source for an image</param>
+        /// <param name="pipeline">
+        ///     An optional HttpPipeline to associate with the ImageLocation, needed for the
+        ///     GetStream() convenience method to function.
+        /// </param>
+        /// <returns>A new instance of ImageLocation</returns>
+        /// <exception cref="ArgumentNullException">Thrown if url is null</exception>
+        public static ImageLocation ImageLocation(Uri url, HttpPipeline pipeline = default)
+        {
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+
+            return new ImageLocation(url)
+            {
+                ClientPipeline = pipeline,
+            };
+        }
+
+        /// <summary>
+        /// Initializes a new instance of ImageGenerations for tests and mocking.
+        /// </summary>
+        /// <param name="created">The timestamp to use for image generation origination</param>
+        /// <param name="data">The collection of ImageLocations to associate with the result</param>
+        /// <returns>A new instance of ImageGenerations</returns>
+        public static ImageGenerations ImageGenerations(
+            DateTimeOffset created,
+            IEnumerable<ImageLocation> data)
+        {
+            return new ImageGenerations(created.ToUnixTimeSeconds(), data);
         }
     }
 }
