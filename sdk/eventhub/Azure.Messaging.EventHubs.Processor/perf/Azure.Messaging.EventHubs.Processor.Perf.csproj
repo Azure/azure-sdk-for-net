@@ -18,7 +18,6 @@
    <ItemGroup>
      <PackageReference Include="Azure.ResourceManager.EventHubs" />
      <PackageReference Include="CommandLineParser" />
-     <PackageReference Include="Polly" />
   </ItemGroup>
 
   <ItemGroup>
