@@ -35,7 +35,7 @@ namespace Azure.Identity.BrokeredAuthentication
         /// </summary>
         /// <param name="tokenCacheOptions">The <see cref="TokenCachePersistenceOptions"/> that will apply to the token cache used by this credential.</param>
         /// <param name="enableMsaPassthrough">Enables Microsoft Account (MSA) passthough.</param>
-        public SharedTokenCacheCredentialBrokerOptions(TokenCachePersistenceOptions tokenCacheOptions, bool enableMsaPassthrough)
+        public SharedTokenCacheCredentialBrokerOptions(TokenCachePersistenceOptions tokenCacheOptions = null, bool enableMsaPassthrough = false)
             : base(tokenCacheOptions)
         {
             _enableMsaPassthrough = enableMsaPassthrough;
