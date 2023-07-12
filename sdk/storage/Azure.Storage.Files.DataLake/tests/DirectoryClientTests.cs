@@ -1021,7 +1021,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         // To run this test, the NamespaceTenant AAD info needs to be set to an AAD app that does not have any RBAC permissions.
         [RecordedTest]
-        [Ignore("AAD app not configured for this test")]
+        //[Ignore("AAD app not configured for this test")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2023_08_03)]
         public async Task DeleteAsync_Paginated()
         {
@@ -1039,26 +1039,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await fileClient.CreateIfNotExistsAsync();
             };
 
-            IList<PathAccessControlItem> accessControlList = new List<PathAccessControlItem>()
-            {
+            Response<PathAccessControl> aclResponse = await directory.GetAccessControlAsync();
+
+            IList<PathAccessControlItem> accessControlList = aclResponse.Value.AccessControlList.ToList();
+            accessControlList.Add(
                 new PathAccessControlItem
                 {
                     Permissions = RolePermissions.Read | RolePermissions.Write | RolePermissions.Execute,
                     AccessControlType = AccessControlType.User,
                     // object ID of AAD app that has no RBAC permissions
-                    EntityId = "56ec4154-12ea-48c6-bfdb-06152ff4de07"
-                },
-                new PathAccessControlItem
-                {
-                    Permissions = RolePermissions.None,
-                    AccessControlType = AccessControlType.Group,
-                },
-                new PathAccessControlItem
-                {
-                    Permissions = RolePermissions.None,
-                    AccessControlType = AccessControlType.Other
-                }
-            };
+                    EntityId = "a251dfc9-65c7-4ec3-84d8-f3f3bec0a96f"
+                });
+
             Response<AccessControlChangeResult> setAclResponse = null;
             do
             {
