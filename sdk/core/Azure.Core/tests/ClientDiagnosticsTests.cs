@@ -305,11 +305,11 @@ namespace Azure.Core.Tests
             Assert.AreEqual(2, testListener.Sources.Count);
         }
 
-        [TestCase(DiagnosticScope.ActivityKind.Internal)]
-        [TestCase(DiagnosticScope.ActivityKind.Server)]
-        [TestCase(DiagnosticScope.ActivityKind.Client)]
-        [TestCase(DiagnosticScope.ActivityKind.Producer)]
-        [TestCase(DiagnosticScope.ActivityKind.Consumer)]
+        [TestCase(ActivityKind.Internal)]
+        [TestCase(ActivityKind.Server)]
+        [TestCase(ActivityKind.Client)]
+        [TestCase(ActivityKind.Producer)]
+        [TestCase(ActivityKind.Consumer)]
         [NonParallelizable]
         public void NestedClientActivitiesNotSuppressed(int kind)
         {

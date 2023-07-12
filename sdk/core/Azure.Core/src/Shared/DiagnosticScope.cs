@@ -144,9 +144,9 @@ namespace Azure.Core.Pipeline
 
 #if NETCOREAPP2_1
 
-            /// <summary>
-            /// Kind describes the relationship between the Activity, its parents, and its children in a Trace.
-            /// </summary>
+        /// <summary>
+        /// Kind describes the relationship between the Activity, its parents, and its children in a Trace.
+        /// </summary>
         public enum ActivityKind
         {
             /// <summary>
