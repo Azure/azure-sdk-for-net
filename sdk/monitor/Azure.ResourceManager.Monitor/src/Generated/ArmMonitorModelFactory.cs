@@ -126,6 +126,37 @@ namespace Azure.ResourceManager.Monitor.Models
             return new AlertRuleData(id, name, resourceType, systemData, tags, location, alertRuleName, description, provisioningState, isEnabled, condition, action, actions?.ToList(), lastUpdatedOn);
         }
 
+        /// <summary> Initializes a new instance of AlertRulePatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="name"> the name of the alert rule. </param>
+        /// <param name="description"> the description of the alert rule that will be included in the alert email. </param>
+        /// <param name="provisioningState"> the provisioning state. </param>
+        /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
+        /// <param name="condition">
+        /// the condition that results in the alert rule being activated.
+        /// Please note <see cref="AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
+        /// </param>
+        /// <param name="action">
+        /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
+        /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
+        /// </param>
+        /// <param name="actions">
+        /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
+        /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
+        /// </param>
+        /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
+        /// <returns> A new <see cref="Models.AlertRulePatch"/> instance for mocking. </returns>
+        public static AlertRulePatch AlertRulePatch(IDictionary<string, string> tags = null, string name = null, string description = null, string provisioningState = null, bool? isEnabled = null, AlertRuleCondition condition = null, AlertRuleAction action = null, IEnumerable<AlertRuleAction> actions = null, DateTimeOffset? lastUpdatedOn = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            actions ??= new List<AlertRuleAction>();
+
+            return new AlertRulePatch(tags, name, description, provisioningState, isEnabled, condition, action, actions?.ToList(), lastUpdatedOn);
+        }
+
         /// <summary> Initializes a new instance of LogProfileData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -245,6 +276,37 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorSmsReceiver MonitorSmsReceiver(string name = null, string countryCode = null, string phoneNumber = null, MonitorReceiverStatus? status = null)
         {
             return new MonitorSmsReceiver(name, countryCode, phoneNumber, status);
+        }
+
+        /// <summary> Initializes a new instance of NotificationContent. </summary>
+        /// <param name="alertType"> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </param>
+        /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
+        /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
+        /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
+        /// <param name="itsmReceivers"> The list of ITSM receivers that are part of this action group. </param>
+        /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this action group. </param>
+        /// <param name="automationRunbookReceivers"> The list of AutomationRunbook receivers that are part of this action group. </param>
+        /// <param name="voiceReceivers"> The list of voice receivers that are part of this action group. </param>
+        /// <param name="logicAppReceivers"> The list of logic app receivers that are part of this action group. </param>
+        /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
+        /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
+        /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        /// <returns> A new <see cref="Models.NotificationContent"/> instance for mocking. </returns>
+        public static NotificationContent NotificationContent(string alertType = null, IEnumerable<MonitorEmailReceiver> emailReceivers = null, IEnumerable<MonitorSmsReceiver> smsReceivers = null, IEnumerable<MonitorWebhookReceiver> webhookReceivers = null, IEnumerable<MonitorItsmReceiver> itsmReceivers = null, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = null, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, IEnumerable<MonitorVoiceReceiver> voiceReceivers = null, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = null, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = null, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = null, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = null)
+        {
+            emailReceivers ??= new List<MonitorEmailReceiver>();
+            smsReceivers ??= new List<MonitorSmsReceiver>();
+            webhookReceivers ??= new List<MonitorWebhookReceiver>();
+            itsmReceivers ??= new List<MonitorItsmReceiver>();
+            azureAppPushReceivers ??= new List<MonitorAzureAppPushReceiver>();
+            automationRunbookReceivers ??= new List<MonitorAutomationRunbookReceiver>();
+            voiceReceivers ??= new List<MonitorVoiceReceiver>();
+            logicAppReceivers ??= new List<MonitorLogicAppReceiver>();
+            azureFunctionReceivers ??= new List<MonitorAzureFunctionReceiver>();
+            armRoleReceivers ??= new List<MonitorArmRoleReceiver>();
+            eventHubReceivers ??= new List<MonitorEventHubReceiver>();
+
+            return new NotificationContent(alertType, emailReceivers?.ToList(), smsReceivers?.ToList(), webhookReceivers?.ToList(), itsmReceivers?.ToList(), azureAppPushReceivers?.ToList(), automationRunbookReceivers?.ToList(), voiceReceivers?.ToList(), logicAppReceivers?.ToList(), azureFunctionReceivers?.ToList(), armRoleReceivers?.ToList(), eventHubReceivers?.ToList());
         }
 
         /// <summary> Initializes a new instance of NotificationStatus. </summary>
@@ -567,6 +629,35 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MetricAlertData(id, name, resourceType, systemData, tags, location, description, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, targetResourceType, targetResourceRegion, criteria, isAutoMitigateEnabled, actions?.ToList(), lastUpdatedOn, isMigrated);
         }
 
+        /// <summary> Initializes a new instance of MetricAlertPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="description"> the description of the metric alert that will be included in the alert email. </param>
+        /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
+        /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
+        /// <param name="scopes"> the list of resource id's that this metric alert is scoped to. </param>
+        /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
+        /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
+        /// <param name="targetResourceType"> the resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
+        /// <param name="targetResourceRegion"> the region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
+        /// <param name="criteria">
+        /// defines the specific alert criteria information.
+        /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// </param>
+        /// <param name="isAutoMitigateEnabled"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
+        /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
+        /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
+        /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
+        /// <returns> A new <see cref="Models.MetricAlertPatch"/> instance for mocking. </returns>
+        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags = null, string description = null, int? severity = null, bool? isEnabled = null, IEnumerable<string> scopes = null, TimeSpan? evaluationFrequency = null, TimeSpan? windowSize = null, ResourceType? targetResourceType = null, AzureLocation? targetResourceRegion = null, MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = null, IEnumerable<MetricAlertAction> actions = null, DateTimeOffset? lastUpdatedOn = null, bool? isMigrated = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            scopes ??= new List<string>();
+            actions ??= new List<MetricAlertAction>();
+
+            return new MetricAlertPatch(tags, description, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, targetResourceType, targetResourceRegion, criteria, isAutoMitigateEnabled, actions?.ToList(), lastUpdatedOn, isMigrated);
+        }
+
         /// <summary> Initializes a new instance of MetricAlertStatus. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -627,6 +718,37 @@ namespace Azure.ResourceManager.Monitor.Models
             criteriaAllOf ??= new List<ScheduledQueryRuleCondition>();
 
             return new ScheduledQueryRuleData(id, name, resourceType, systemData, tags, location, kind, etag, createdWithApiVersion, isLegacyLogAnalyticsRule, description, displayName, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, overrideQueryTimeRange, targetResourceTypes?.ToList(), criteriaAllOf != null ? new ScheduledQueryRuleCriteria(criteriaAllOf?.ToList()) : null, muteActionsDuration, actions, isWorkspaceAlertsStorageConfigured, checkWorkspaceAlertsStorageConfigured, skipQueryValidation, autoMitigate);
+        }
+
+        /// <summary> Initializes a new instance of ScheduledQueryRulePatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="createdWithApiVersion"> The api-version used when creating this alert rule. </param>
+        /// <param name="isLegacyLogAnalyticsRule"> True if alert rule is legacy Log Analytic rule. </param>
+        /// <param name="description"> The description of the scheduled query rule. </param>
+        /// <param name="displayName"> The display name of the alert rule. </param>
+        /// <param name="severity"> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </param>
+        /// <param name="isEnabled"> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </param>
+        /// <param name="scopes"> The list of resource id's that this scheduled query rule is scoped to. </param>
+        /// <param name="evaluationFrequency"> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </param>
+        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert. </param>
+        /// <param name="overrideQueryTimeRange"> If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="targetResourceTypes"> List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="criteriaAllOf"> The rule criteria that defines the conditions of the scheduled query rule. </param>
+        /// <param name="muteActionsDuration"> Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="actions"> Actions to invoke when the alert fires. </param>
+        /// <param name="isWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer's storage. The default is false. </param>
+        /// <param name="checkWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule should be stored in the customer's storage. The default is false. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="skipQueryValidation"> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </param>
+        /// <returns> A new <see cref="Models.ScheduledQueryRulePatch"/> instance for mocking. </returns>
+        public static ScheduledQueryRulePatch ScheduledQueryRulePatch(IDictionary<string, string> tags = null, string createdWithApiVersion = null, bool? isLegacyLogAnalyticsRule = null, string description = null, string displayName = null, AlertSeverity? severity = null, bool? isEnabled = null, IEnumerable<string> scopes = null, TimeSpan? evaluationFrequency = null, TimeSpan? windowSize = null, TimeSpan? overrideQueryTimeRange = null, IEnumerable<string> targetResourceTypes = null, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf = null, TimeSpan? muteActionsDuration = null, ScheduledQueryRuleActions actions = null, bool? isWorkspaceAlertsStorageConfigured = null, bool? checkWorkspaceAlertsStorageConfigured = null, bool? skipQueryValidation = null, bool? autoMitigate = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            scopes ??= new List<string>();
+            targetResourceTypes ??= new List<string>();
+            criteriaAllOf ??= new List<ScheduledQueryRuleCondition>();
+
+            return new ScheduledQueryRulePatch(tags, createdWithApiVersion, isLegacyLogAnalyticsRule, description, displayName, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, overrideQueryTimeRange, targetResourceTypes?.ToList(), criteriaAllOf != null ? new ScheduledQueryRuleCriteria(criteriaAllOf?.ToList()) : null, muteActionsDuration, actions, isWorkspaceAlertsStorageConfigured, checkWorkspaceAlertsStorageConfigured, skipQueryValidation, autoMitigate);
         }
 
         /// <summary> Initializes a new instance of MonitorMetricNamespace. </summary>

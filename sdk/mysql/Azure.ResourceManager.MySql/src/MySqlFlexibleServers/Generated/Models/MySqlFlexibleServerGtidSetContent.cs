@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
         }
 
+        /// <summary> Initializes a new instance of MySqlFlexibleServerGtidSetContent. </summary>
+        /// <param name="gtidSet"> The gtid set of server. </param>
+        internal MySqlFlexibleServerGtidSetContent(string gtidSet)
+        {
+            GtidSet = gtidSet;
+        }
+
         /// <summary> The gtid set of server. </summary>
         public string GtidSet { get; set; }
     }

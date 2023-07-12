@@ -19,6 +19,29 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             FrontEndSettings = new ChangeTrackingList<FrontendSetting>();
         }
 
+        /// <summary> Initializes a new instance of FirewallResourceUpdateProperties. </summary>
+        /// <param name="panETag"> panEtag info. </param>
+        /// <param name="networkProfile"> Network settings. </param>
+        /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
+        /// <param name="panoramaConfig"> Panorama Configuration. </param>
+        /// <param name="associatedRulestack"> Associated Rulestack. </param>
+        /// <param name="dnsSettings"> DNS settings for Firewall. </param>
+        /// <param name="frontEndSettings"> Frontend settings for Firewall. </param>
+        /// <param name="planData"> Billing plan information. </param>
+        /// <param name="marketplaceDetails"> Marketplace details. </param>
+        internal FirewallResourceUpdateProperties(string panETag, NetworkProfile networkProfile, BooleanEnum? isPanoramaManaged, PanoramaConfig panoramaConfig, RulestackDetails associatedRulestack, DnsSettings dnsSettings, IList<FrontendSetting> frontEndSettings, PlanData planData, MarketplaceDetails marketplaceDetails)
+        {
+            PanETag = panETag;
+            NetworkProfile = networkProfile;
+            IsPanoramaManaged = isPanoramaManaged;
+            PanoramaConfig = panoramaConfig;
+            AssociatedRulestack = associatedRulestack;
+            DnsSettings = dnsSettings;
+            FrontEndSettings = frontEndSettings;
+            PlanData = planData;
+            MarketplaceDetails = marketplaceDetails;
+        }
+
         /// <summary> panEtag info. </summary>
         public string PanETag { get; set; }
         /// <summary> Network settings. </summary>

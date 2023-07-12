@@ -714,6 +714,32 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new VolumeData(id, name, resourceType, systemData, tags, location, extendedLocation, attachedTo?.ToList(), detailedStatus, detailedStatusMessage, provisioningState, serialNumber, sizeMiB);
         }
 
+        /// <summary> Initializes a new instance of BareMetalMachineRunCommandContent. </summary>
+        /// <param name="arguments"> The list of string arguments that will be passed to the script in order as separate arguments. </param>
+        /// <param name="limitTimeSeconds">
+        /// The maximum time the script is allowed to run.
+        /// If the execution time exceeds the maximum, the script will be stopped, any output produced until then will be captured, and the exit code matching a timeout will be returned (252).
+        /// </param>
+        /// <param name="script"> The base64 encoded script to execute on the bare metal machine. </param>
+        /// <returns> A new <see cref="Models.BareMetalMachineRunCommandContent"/> instance for mocking. </returns>
+        public static BareMetalMachineRunCommandContent BareMetalMachineRunCommandContent(IEnumerable<string> arguments = null, long limitTimeSeconds = default, string script = null)
+        {
+            arguments ??= new List<string>();
+
+            return new BareMetalMachineRunCommandContent(arguments?.ToList(), limitTimeSeconds, script);
+        }
+
+        /// <summary> Initializes a new instance of BareMetalMachineCommandSpecification. </summary>
+        /// <param name="arguments"> The list of string arguments that will be passed to the script in order as separate arguments. </param>
+        /// <param name="command"> The command to execute against the bare metal machine. </param>
+        /// <returns> A new <see cref="Models.BareMetalMachineCommandSpecification"/> instance for mocking. </returns>
+        public static BareMetalMachineCommandSpecification BareMetalMachineCommandSpecification(IEnumerable<string> arguments = null, string command = null)
+        {
+            arguments ??= new List<string>();
+
+            return new BareMetalMachineCommandSpecification(arguments?.ToList(), command);
+        }
+
         /// <summary> Initializes a new instance of BareMetalMachineKeySetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -836,6 +862,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             taints ??= new List<KubernetesLabel>();
 
             return new AgentPoolData(id, name, resourceType, systemData, tags, location, extendedLocation, administratorConfiguration, agentOptions, attachedNetworkConfiguration, availabilityZones?.ToList(), count, detailedStatus, detailedStatusMessage, kubernetesVersion, labels?.ToList(), mode, provisioningState, taints?.ToList(), upgradeMaxSurge != null ? new AgentPoolUpgradeSettings(upgradeMaxSurge) : null, vmSkuName);
+        }
+
+        /// <summary> Initializes a new instance of StorageApplianceCommandSpecification. </summary>
+        /// <param name="arguments"> The list of string arguments that will be passed to the script in order as separate arguments. </param>
+        /// <param name="command"> The read-only command to execute against the storage appliance. </param>
+        /// <returns> A new <see cref="Models.StorageApplianceCommandSpecification"/> instance for mocking. </returns>
+        public static StorageApplianceCommandSpecification StorageApplianceCommandSpecification(IEnumerable<string> arguments = null, string command = null)
+        {
+            arguments ??= new List<string>();
+
+            return new StorageApplianceCommandSpecification(arguments?.ToList(), command);
         }
 
         /// <summary> Initializes a new instance of ConsoleData. </summary>

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
+        /// <summary> Initializes a new instance of RelocateVolumeContent. </summary>
+        /// <param name="creationToken"> New creation token for the volume that controls the mount point name. </param>
+        internal RelocateVolumeContent(string creationToken)
+        {
+            CreationToken = creationToken;
+        }
+
         /// <summary> New creation token for the volume that controls the mount point name. </summary>
         public string CreationToken { get; set; }
     }

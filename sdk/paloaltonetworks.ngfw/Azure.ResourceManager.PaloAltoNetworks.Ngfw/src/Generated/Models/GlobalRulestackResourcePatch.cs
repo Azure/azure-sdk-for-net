@@ -17,6 +17,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         {
         }
 
+        /// <summary> Initializes a new instance of GlobalRulestackResourcePatch. </summary>
+        /// <param name="location"> Global Location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="properties"> The updatable properties of the GlobalRulestackResource. </param>
+        internal GlobalRulestackResourcePatch(AzureLocation? location, AzureResourceManagerManagedIdentityProperties identity, GlobalRulestackResourceUpdateProperties properties)
+        {
+            Location = location;
+            Identity = identity;
+            Properties = properties;
+        }
+
         /// <summary> Global Location. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> The managed service identities assigned to this resource. </summary>

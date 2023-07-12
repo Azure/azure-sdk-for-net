@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of VirtualMachinePatch. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
+        internal VirtualMachinePatch(IDictionary<string, string> tags, ImageRepositoryCredentials vmImageRepositoryCredentials)
+        {
+            Tags = tags;
+            VmImageRepositoryCredentials = vmImageRepositoryCredentials;
+        }
+
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>

@@ -3172,6 +3172,21 @@ namespace Azure.ResourceManager.Network.Models
             return new TopologyAssociation(name, resourceId, associationType);
         }
 
+        /// <summary> Initializes a new instance of VerificationIPFlowContent. </summary>
+        /// <param name="targetResourceId"> The ID of the target resource to perform next-hop on. </param>
+        /// <param name="direction"> The direction of the packet represented as a 5-tuple. </param>
+        /// <param name="protocol"> Protocol to be verified on. </param>
+        /// <param name="localPort"> The local port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </param>
+        /// <param name="remotePort"> The remote port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </param>
+        /// <param name="localIPAddress"> The local IP address. Acceptable values are valid IPv4 addresses. </param>
+        /// <param name="remoteIPAddress"> The remote IP address. Acceptable values are valid IPv4 addresses. </param>
+        /// <param name="targetNicResourceId"> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of them, then this parameter must be specified. Otherwise optional). </param>
+        /// <returns> A new <see cref="Models.VerificationIPFlowContent"/> instance for mocking. </returns>
+        public static VerificationIPFlowContent VerificationIPFlowContent(ResourceIdentifier targetResourceId = null, NetworkTrafficDirection direction = default, IPFlowProtocol protocol = default, string localPort = null, string remotePort = null, string localIPAddress = null, string remoteIPAddress = null, ResourceIdentifier targetNicResourceId = null)
+        {
+            return new VerificationIPFlowContent(targetResourceId, direction, protocol, localPort, remotePort, localIPAddress, remoteIPAddress, targetNicResourceId);
+        }
+
         /// <summary> Initializes a new instance of VerificationIPFlowResult. </summary>
         /// <param name="access"> Indicates whether the traffic is allowed or denied. </param>
         /// <param name="ruleName"> Name of the rule. If input is not matched against any security rule, it is not displayed. </param>
@@ -3179,6 +3194,17 @@ namespace Azure.ResourceManager.Network.Models
         public static VerificationIPFlowResult VerificationIPFlowResult(NetworkAccess? access = null, string ruleName = null)
         {
             return new VerificationIPFlowResult(access, ruleName);
+        }
+
+        /// <summary> Initializes a new instance of NextHopContent. </summary>
+        /// <param name="targetResourceId"> The resource identifier of the target resource against which the action is to be performed. </param>
+        /// <param name="sourceIPAddress"> The source IP address. </param>
+        /// <param name="destinationIPAddress"> The destination IP address. </param>
+        /// <param name="targetNicResourceId"> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of the nics, then this parameter must be specified. Otherwise optional). </param>
+        /// <returns> A new <see cref="Models.NextHopContent"/> instance for mocking. </returns>
+        public static NextHopContent NextHopContent(ResourceIdentifier targetResourceId = null, string sourceIPAddress = null, string destinationIPAddress = null, ResourceIdentifier targetNicResourceId = null)
+        {
+            return new NextHopContent(targetResourceId, sourceIPAddress, destinationIPAddress, targetNicResourceId);
         }
 
         /// <summary> Initializes a new instance of NextHopResult. </summary>
@@ -3244,6 +3270,23 @@ namespace Azure.ResourceManager.Network.Models
             securityRules ??= new List<SecurityRuleData>();
 
             return new SubnetAssociation(id, securityRules?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PacketCaptureCreateOrUpdateContent. </summary>
+        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
+        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
+        /// <param name="targetType"> Target type of the resource provided. </param>
+        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
+        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
+        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
+        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
+        /// <param name="filters"> A list of packet capture filters. </param>
+        /// <returns> A new <see cref="Models.PacketCaptureCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static PacketCaptureCreateOrUpdateContent PacketCaptureCreateOrUpdateContent(string target = null, PacketCaptureMachineScope scope = null, PacketCaptureTargetType? targetType = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null, PacketCaptureStorageLocation storageLocation = null, IEnumerable<PacketCaptureFilter> filters = null)
+        {
+            filters ??= new List<PacketCaptureFilter>();
+
+            return new PacketCaptureCreateOrUpdateContent(target, scope, targetType, bytesToCapturePerPacket, totalBytesPerSession, timeLimitInSeconds, storageLocation, filters?.ToList());
         }
 
         /// <summary> Initializes a new instance of PacketCaptureData. </summary>
@@ -3322,6 +3365,27 @@ namespace Azure.ResourceManager.Network.Models
             return new TroubleshootingRecommendedActions(actionId, actionText, actionUri, actionUriText);
         }
 
+        /// <summary> Initializes a new instance of ConnectivityContent. </summary>
+        /// <param name="source"> The source of the connection. </param>
+        /// <param name="destination"> The destination of connection. </param>
+        /// <param name="protocol"> Network protocol. </param>
+        /// <param name="httpProtocolConfiguration"> Configuration of the protocol. </param>
+        /// <param name="preferredIPVersion"> Preferred IP version of the connection. </param>
+        /// <returns> A new <see cref="Models.ConnectivityContent"/> instance for mocking. </returns>
+        public static ConnectivityContent ConnectivityContent(ConnectivitySource source = null, ConnectivityDestination destination = null, NetworkWatcherProtocol? protocol = null, NetworkHttpConfiguration httpProtocolConfiguration = null, NetworkIPVersion? preferredIPVersion = null)
+        {
+            return new ConnectivityContent(source, destination, protocol, httpProtocolConfiguration != null ? new ProtocolConfiguration(httpProtocolConfiguration) : null, preferredIPVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConnectivitySource. </summary>
+        /// <param name="resourceId"> The ID of the resource from which a connectivity check will be initiated. </param>
+        /// <param name="port"> The source port from which a connectivity check will be performed. </param>
+        /// <returns> A new <see cref="Models.ConnectivitySource"/> instance for mocking. </returns>
+        public static ConnectivitySource ConnectivitySource(ResourceIdentifier resourceId = null, int? port = null)
+        {
+            return new ConnectivitySource(resourceId, port);
+        }
+
         /// <summary> Initializes a new instance of ConnectivityInformation. </summary>
         /// <param name="hops"> List of hops between the source and the destination. </param>
         /// <param name="networkConnectionStatus"> The connection status. </param>
@@ -3389,6 +3453,21 @@ namespace Azure.ResourceManager.Network.Models
             contexts ??= new List<IDictionary<string, string>>();
 
             return new ConnectivityIssueInfo(origin, severity, connectivityIssueType, contexts?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of AzureReachabilityReportContent. </summary>
+        /// <param name="providerLocation"> Parameters that define a geographic location. </param>
+        /// <param name="providers"> List of Internet service providers. </param>
+        /// <param name="azureLocations"> Optional Azure regions to scope the query to. </param>
+        /// <param name="startOn"> The start time for the Azure reachability report. </param>
+        /// <param name="endOn"> The end time for the Azure reachability report. </param>
+        /// <returns> A new <see cref="Models.AzureReachabilityReportContent"/> instance for mocking. </returns>
+        public static AzureReachabilityReportContent AzureReachabilityReportContent(AzureReachabilityReportLocation providerLocation = null, IEnumerable<string> providers = null, IEnumerable<AzureLocation> azureLocations = null, DateTimeOffset startOn = default, DateTimeOffset endOn = default)
+        {
+            providers ??= new List<string>();
+            azureLocations ??= new List<AzureLocation>();
+
+            return new AzureReachabilityReportContent(providerLocation, providers?.ToList(), azureLocations?.ToList(), startOn, endOn);
         }
 
         /// <summary> Initializes a new instance of AzureReachabilityReport. </summary>
@@ -3469,6 +3548,18 @@ namespace Azure.ResourceManager.Network.Models
             providers ??= new List<string>();
 
             return new AvailableProvidersListCity(cityName, providers?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticContent. </summary>
+        /// <param name="targetResourceId"> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </param>
+        /// <param name="verbosityLevel"> Verbosity level. </param>
+        /// <param name="profiles"> List of network configuration diagnostic profiles. </param>
+        /// <returns> A new <see cref="Models.NetworkConfigurationDiagnosticContent"/> instance for mocking. </returns>
+        public static NetworkConfigurationDiagnosticContent NetworkConfigurationDiagnosticContent(ResourceIdentifier targetResourceId = null, VerbosityLevel? verbosityLevel = null, IEnumerable<NetworkConfigurationDiagnosticProfile> profiles = null)
+        {
+            profiles ??= new List<NetworkConfigurationDiagnosticProfile>();
+
+            return new NetworkConfigurationDiagnosticContent(targetResourceId, verbosityLevel, profiles?.ToList());
         }
 
         /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticResponse. </summary>
@@ -4444,6 +4535,17 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnSiteLinkData VpnSiteLinkData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, VpnLinkProviderProperties linkProperties = null, string ipAddress = null, string fqdn = null, VpnLinkBgpSettings bgpProperties = null, NetworkProvisioningState? provisioningState = null)
         {
             return new VpnSiteLinkData(id, name, resourceType, etag, linkProperties, ipAddress, fqdn, bgpProperties, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of GetVpnSitesConfigurationContent. </summary>
+        /// <param name="vpnSites"> List of resource-ids of the vpn-sites for which config is to be downloaded. </param>
+        /// <param name="outputBlobSasUri"> The sas-url to download the configurations for vpn-sites. </param>
+        /// <returns> A new <see cref="Models.GetVpnSitesConfigurationContent"/> instance for mocking. </returns>
+        public static GetVpnSitesConfigurationContent GetVpnSitesConfigurationContent(IEnumerable<string> vpnSites = null, Uri outputBlobSasUri = null)
+        {
+            vpnSites ??= new List<string>();
+
+            return new GetVpnSitesConfigurationContent(vpnSites?.ToList(), outputBlobSasUri);
         }
 
         /// <summary> Initializes a new instance of VirtualWanSecurityProviders. </summary>

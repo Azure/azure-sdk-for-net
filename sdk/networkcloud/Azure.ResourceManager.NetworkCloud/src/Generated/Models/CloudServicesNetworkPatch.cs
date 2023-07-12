@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             AdditionalEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();
         }
 
+        /// <summary> Initializes a new instance of CloudServicesNetworkPatch. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="additionalEgressEndpoints"> The list of egress endpoints. This allows for connection from a Hybrid AKS cluster to the specified endpoint. </param>
+        /// <param name="enableDefaultEgressEndpoints"> The indicator of whether the platform default endpoints are allowed for the egress traffic. </param>
+        internal CloudServicesNetworkPatch(IDictionary<string, string> tags, IList<EgressEndpoint> additionalEgressEndpoints, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints)
+        {
+            Tags = tags;
+            AdditionalEgressEndpoints = additionalEgressEndpoints;
+            EnableDefaultEgressEndpoints = enableDefaultEgressEndpoints;
+        }
+
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The list of egress endpoints. This allows for connection from a Hybrid AKS cluster to the specified endpoint. </summary>

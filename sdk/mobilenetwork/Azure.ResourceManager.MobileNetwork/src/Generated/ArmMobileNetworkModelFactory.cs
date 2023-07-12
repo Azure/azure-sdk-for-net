@@ -254,6 +254,51 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new SimData(id, name, resourceType, systemData, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, authenticationKey, operatorKeyCode);
         }
 
+        /// <summary> Initializes a new instance of SimNameAndProperties. </summary>
+        /// <param name="name"> The name of the SIM. </param>
+        /// <param name="provisioningState"> The provisioning state of the SIM resource. </param>
+        /// <param name="simState"> The state of the SIM resource. </param>
+        /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM on that site. </param>
+        /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
+        /// <param name="integratedCircuitCardIdentifier"> The integrated circuit card ID (ICCID) for the SIM. </param>
+        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
+        /// <param name="simPolicyId"> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </param>
+        /// <param name="staticIPConfiguration"> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </param>
+        /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="authenticationKey"> The Ki value for the SIM. </param>
+        /// <param name="operatorKeyCode"> The Opc value for the SIM. </param>
+        /// <returns> A new <see cref="Models.SimNameAndProperties"/> instance for mocking. </returns>
+        public static SimNameAndProperties SimNameAndProperties(string name = null, ProvisioningState? provisioningState = null, SimState? simState = null, IReadOnlyDictionary<string, SiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, ResourceIdentifier simPolicyId = null, IEnumerable<SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string authenticationKey = null, string operatorKeyCode = null)
+        {
+            siteProvisioningState ??= new Dictionary<string, SiteProvisioningState>();
+            staticIPConfiguration ??= new List<SimStaticIPProperties>();
+
+            return new SimNameAndProperties(name, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, authenticationKey, operatorKeyCode);
+        }
+
+        /// <summary> Initializes a new instance of SimNameAndEncryptedProperties. </summary>
+        /// <param name="name"> The name of the SIM. </param>
+        /// <param name="provisioningState"> The provisioning state of the SIM resource. </param>
+        /// <param name="simState"> The state of the SIM resource. </param>
+        /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM on that site. </param>
+        /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
+        /// <param name="integratedCircuitCardIdentifier"> The integrated circuit card ID (ICCID) for the SIM. </param>
+        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
+        /// <param name="simPolicyId"> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </param>
+        /// <param name="staticIPConfiguration"> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </param>
+        /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="encryptedCredentials"> The encrypted SIM credentials. </param>
+        /// <returns> A new <see cref="Models.SimNameAndEncryptedProperties"/> instance for mocking. </returns>
+        public static SimNameAndEncryptedProperties SimNameAndEncryptedProperties(string name = null, ProvisioningState? provisioningState = null, SimState? simState = null, IReadOnlyDictionary<string, SiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, ResourceIdentifier simPolicyId = null, IEnumerable<SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string encryptedCredentials = null)
+        {
+            siteProvisioningState ??= new Dictionary<string, SiteProvisioningState>();
+            staticIPConfiguration ??= new List<SimStaticIPProperties>();
+
+            return new SimNameAndEncryptedProperties(name, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, encryptedCredentials);
+        }
+
         /// <summary> Initializes a new instance of SimGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
