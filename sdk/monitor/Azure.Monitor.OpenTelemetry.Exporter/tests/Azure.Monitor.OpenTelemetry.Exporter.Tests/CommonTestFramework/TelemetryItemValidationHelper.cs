@@ -143,14 +143,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             var expectedTagsCount = 5;
 
-            if (activityKind == ActivityKind.Server)
-            {
-                expectedTagsCount = 7;
-
-                Assert.Contains("ai.operation.name", telemetryItem.Tags.Keys);
-                Assert.Contains("ai.location.ip", telemetryItem.Tags.Keys);
-            }
-
             Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
             Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
             Assert.Equal(expectedAuthUserId, telemetryItem.Tags["ai.user.authUserId"]);
