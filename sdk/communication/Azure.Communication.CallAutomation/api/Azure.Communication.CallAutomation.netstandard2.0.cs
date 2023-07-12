@@ -236,14 +236,13 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class CallInvite
     {
-        public CallInvite(Azure.Communication.CommunicationUserIdentifier targetIdentity, System.Collections.Generic.IDictionary<string, string> voipHeaders = null) { }
-        public CallInvite(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity, System.Collections.Generic.IDictionary<string, string> voipHeaders = null) { }
-        public CallInvite(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity, Azure.Communication.PhoneNumberIdentifier callerIdNumber, System.Collections.Generic.IDictionary<string, string> sipHeaders = null) { }
-        public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
+        public CallInvite(Azure.Communication.CommunicationUserIdentifier targetIdentity) { }
+        public CallInvite(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity) { }
+        public CallInvite(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity, Azure.Communication.PhoneNumberIdentifier callerIdNumber) { }
+        public Azure.Communication.CallAutomation.Models.CustomContext CustomContext { get { throw null; } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } }
         public string SourceDisplayName { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Target { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
     }
     public abstract partial class CallLocator : System.IEquatable<Azure.Communication.CallAutomation.CallLocator>
     {
@@ -526,13 +525,12 @@ namespace Azure.Communication.CallAutomation
         public CreateGroupCallOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri) { }
         public System.Uri AzureCognitiveServicesEndpointUrl { get { throw null; } set { } }
         public System.Uri CallbackUri { get { throw null; } }
+        public Azure.Communication.CallAutomation.Models.CustomContext CustomContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } set { } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public string SourceDisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } set { } }
     }
     public partial class DialogCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -1253,13 +1251,12 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TransferToParticipantOptions
     {
-        public TransferToParticipantOptions(Azure.Communication.CommunicationUserIdentifier targetIdentity, System.Collections.Generic.IDictionary<string, string> voipHeaders = null) { }
-        public TransferToParticipantOptions(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity, System.Collections.Generic.IDictionary<string, string> voipHeaders = null) { }
-        public TransferToParticipantOptions(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity, System.Collections.Generic.IDictionary<string, string> sipHeaders = null) { }
+        public TransferToParticipantOptions(Azure.Communication.CommunicationUserIdentifier targetIdentity) { }
+        public TransferToParticipantOptions(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity) { }
+        public TransferToParticipantOptions(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity) { }
+        public Azure.Communication.CallAutomation.Models.CustomContext CustomContext { get { throw null; } }
         public string OperationContext { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Target { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
     }
     public partial class UnmuteParticipantsOptions
     {
@@ -1276,5 +1273,33 @@ namespace Azure.Communication.CallAutomation
     {
         internal UserConsent() { }
         public int? Recording { get { throw null; } }
+    }
+}
+namespace Azure.Communication.CallAutomation.Models
+{
+    public partial class CustomContext
+    {
+        public CustomContext(System.Collections.Generic.IDictionary<string, string> sipHeaders, System.Collections.Generic.IDictionary<string, string> voipHeaders) { }
+        public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
+        public void Add(Azure.Communication.CallAutomation.Models.CustomContextHeader header) { }
+    }
+    public abstract partial class CustomContextHeader
+    {
+        protected CustomContextHeader(string key, string value) { }
+        public string Key { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    public partial class SIPCustomHeader : Azure.Communication.CallAutomation.Models.CustomContextHeader
+    {
+        public SIPCustomHeader(string key, string value) : base (default(string), default(string)) { }
+    }
+    public partial class SIPUUIHeader : Azure.Communication.CallAutomation.Models.CustomContextHeader
+    {
+        public SIPUUIHeader(string value) : base (default(string), default(string)) { }
+    }
+    public partial class VoipHeader : Azure.Communication.CallAutomation.Models.CustomContextHeader
+    {
+        public VoipHeader(string key, string value) : base (default(string), default(string)) { }
     }
 }
