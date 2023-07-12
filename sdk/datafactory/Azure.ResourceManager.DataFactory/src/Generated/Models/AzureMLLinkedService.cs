@@ -17,11 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Initializes a new instance of AzureMLLinkedService. </summary>
         /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
-        /// <param name="apiKey">
-        /// The API key for accessing the Azure ML model endpoint.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="apiKey"> The API key for accessing the Azure ML model endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mlEndpoint"/> or <paramref name="apiKey"/> is null. </exception>
         public AzureMLLinkedService(DataFactoryElement<string> mlEndpoint, DataFactorySecretBaseDefinition apiKey)
         {
@@ -41,18 +37,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
-        /// <param name="apiKey">
-        /// The API key for accessing the Azure ML model endpoint.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="apiKey"> The API key for accessing the Azure ML model endpoint. </param>
         /// <param name="updateResourceEndpoint"> The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey">
-        /// The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </param>
@@ -71,21 +59,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> MlEndpoint { get; set; }
-        /// <summary>
-        /// The API key for accessing the Azure ML model endpoint.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The API key for accessing the Azure ML model endpoint. </summary>
         public DataFactorySecretBaseDefinition ApiKey { get; set; }
         /// <summary> The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UpdateResourceEndpoint { get; set; }
         /// <summary> The ID of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
-        /// <summary>
-        /// The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. </summary>
         public DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }

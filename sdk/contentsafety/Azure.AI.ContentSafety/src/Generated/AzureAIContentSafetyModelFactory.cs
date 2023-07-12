@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.ContentSafety
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AIContentSafetyModelFactory
+    public static partial class AzureAIContentSafetyModelFactory
     {
         /// <summary> Initializes a new instance of AnalyzeTextResult. </summary>
         /// <param name="blocklistsMatchResults"> The details of blocklist match. </param>

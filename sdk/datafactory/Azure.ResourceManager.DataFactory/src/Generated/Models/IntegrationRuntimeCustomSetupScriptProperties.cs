@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,6 +30,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The URI of the Azure blob container that contains the custom setup script. </summary>
         public Uri BlobContainerUri { get; set; }
         /// <summary> The SAS token of the Azure blob container. </summary>
-        public DataFactorySecretString SasToken { get; set; }
+        internal DataFactorySecretString SasToken { get; set; }
+        /// <summary> Gets or sets Value. </summary>
+        public string SasTokenValue
+        {
+            get => SasToken is null ? default : SasToken.Value;
+            set => SasToken = new DataFactorySecretString(value);
+        }
     }
 }

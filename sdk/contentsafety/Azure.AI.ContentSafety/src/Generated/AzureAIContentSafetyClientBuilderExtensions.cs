@@ -13,7 +13,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="ContentSafetyClient"/> to client builder. </summary>
-    public static partial class AIContentSafetyClientBuilderExtensions
+    public static partial class AzureAIContentSafetyClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="ContentSafetyClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>

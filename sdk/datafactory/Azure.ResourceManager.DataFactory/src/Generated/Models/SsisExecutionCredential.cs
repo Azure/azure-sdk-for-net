@@ -35,6 +35,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> UseName for windows authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password for windows authentication. </summary>
-        public DataFactorySecretString Password { get; set; }
+        internal DataFactorySecretString Password { get; set; }
+        /// <summary> Gets or sets Value. </summary>
+        public string PasswordValue
+        {
+            get => Password is null ? default : Password.Value;
+            set => Password = new DataFactorySecretString(value);
+        }
     }
 }

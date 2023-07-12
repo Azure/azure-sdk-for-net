@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -34,6 +35,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The key used for authorization. </summary>
-        public DataFactorySecretString Key { get; set; }
+        internal DataFactorySecretString Key { get; set; }
+        /// <summary> Gets or sets Value. </summary>
+        public string KeyValue
+        {
+            get => Key is null ? default : Key.Value;
+            set => Key = new DataFactorySecretString(value);
+        }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -42,7 +43,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The administrator user name of catalog database. </summary>
         public string CatalogAdminUserName { get; set; }
         /// <summary> The password of the administrator user account of the catalog database. </summary>
-        public DataFactorySecretString CatalogAdminPassword { get; set; }
+        internal DataFactorySecretString CatalogAdminPassword { get; set; }
+        /// <summary> Gets or sets Value. </summary>
+        public string CatalogAdminPasswordValue
+        {
+            get => CatalogAdminPassword is null ? default : CatalogAdminPassword.Value;
+            set => CatalogAdminPassword = new DataFactorySecretString(value);
+        }
+
         /// <summary> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </summary>
         public IntegrationRuntimeSsisCatalogPricingTier? CatalogPricingTier { get; set; }
         /// <summary> The dual standby pair name of Azure-SSIS Integration Runtimes to support SSISDB failover. </summary>

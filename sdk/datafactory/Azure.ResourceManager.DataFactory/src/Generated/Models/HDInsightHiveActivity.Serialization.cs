@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                JsonSerializer.Serialize(writer, LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageLinkedServices)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ScriptLinkedService))
             {
                 writer.WritePropertyName("scriptLinkedService"u8);
-                writer.WriteObjectValue(ScriptLinkedService);
+                JsonSerializer.Serialize(writer, ScriptLinkedService);
             }
             if (Optional.IsCollectionDefined(Defines))
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(item));
+                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
                             }
                             storageLinkedServices = array;
                             continue;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            scriptLinkedService = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
+                            scriptLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("defines"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightHiveActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService.Value, Optional.ToDictionary(defines), Optional.ToDictionary(variables), Optional.ToNullable(queryTimeout));
+            return new HDInsightHiveActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService, Optional.ToDictionary(defines), Optional.ToDictionary(variables), Optional.ToNullable(queryTimeout));
         }
     }
 }
