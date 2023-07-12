@@ -50,7 +50,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpRoute, "/search");
             activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in AzMonListExtensionsTests.
-            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
+            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, "200");
+            activity.SetTag("foo", "bar");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
@@ -59,11 +60,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("GET /search", requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
             Assert.Equal(httpUrl, requestData.Url);
-            Assert.Equal("0", requestData.ResponseCode);
+            Assert.Equal("200", requestData.ResponseCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
-            Assert.False(requestData.Success);
+            Assert.True(requestData.Success);
             Assert.Null(requestData.Source);
-            Assert.True(requestData.Properties.Count == 0);
+            Assert.True(requestData.Properties.Count == 1);
+            Assert.Equal("bar", requestData.Properties["foo"]);
             Assert.True(requestData.Measurements.Count == 0);
         }
 
@@ -81,8 +83,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
 
             var httpResponseCode = httpStatusCode ?? "0";
-            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 

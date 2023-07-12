@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Scanning
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class PurviewScanningServiceClientBuilderExtensions
+    public static partial class AnalyticsPurviewScanningClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewClassificationRuleClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string classificationRuleName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions> AddPurviewClassificationRuleClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

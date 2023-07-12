@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -90,8 +91,23 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
 
             builder.WithTracing(b => b
+                            .AddSource("Azure.*")
                             .AddAspNetCoreInstrumentation()
-                            .AddHttpClientInstrumentation()
+                            .AddHttpClientInstrumentation(o => o.FilterHttpRequestMessage = (_) =>
+                            {
+                                // Azure SDKs create their own client span before calling the service using HttpClient
+                                // In this case, we would see two spans corresponding to the same operation
+                                // 1) created by Azure SDK 2) created by HttpClient
+                                // To prevent this duplication we are filtering the span from HttpClient
+                                // as span from Azure SDK contains all relevant information needed.
+                                var parentActivity = Activity.Current?.Parent;
+                                if (parentActivity != null && parentActivity.Source.Name.Equals("Azure.Core.Http"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            })
                             .AddSqlClientInstrumentation()
                             .AddAzureMonitorTraceExporter());
 
