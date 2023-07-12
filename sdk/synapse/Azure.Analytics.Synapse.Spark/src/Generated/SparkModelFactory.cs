@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Spark.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AnalyticsSynapseSparkModelFactory
+    public static partial class SparkModelFactory
     {
         /// <summary> Initializes a new instance of SparkBatchJobCollection. </summary>
         /// <param name="from"> The start index of fetched sessions. </param>

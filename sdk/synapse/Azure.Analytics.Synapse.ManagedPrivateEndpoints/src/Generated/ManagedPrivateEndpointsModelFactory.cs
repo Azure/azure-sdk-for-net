@@ -11,7 +11,7 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AnalyticsSynapseManagedPrivateEndpointsModelFactory
+    public static partial class ManagedPrivateEndpointsModelFactory
     {
         /// <summary> Initializes a new instance of ManagedPrivateEndpoint. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -11,7 +11,7 @@ using System.Linq;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class IoTTimeSeriesInsightsModelFactory
+    public static partial class TimeSeriesInsightsModelFactory
     {
         /// <summary> Initializes a new instance of TimeSeriesOperationError. </summary>
         /// <param name="code"> Language-independent, human-readable string that defines a service-specific error code. This code serves as a more specific indicator for the HTTP error code specified in the response. Can be used to programmatically handle specific error cases. </param>
