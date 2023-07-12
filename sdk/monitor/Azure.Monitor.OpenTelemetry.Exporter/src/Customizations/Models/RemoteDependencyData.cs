@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             dependencyName ??= activity.DisplayName;
-            Name = dependencyName.Truncate(SchemaConstants.RemoteDependencyData_Name_MaxLength);
+            Name = dependencyName?.Truncate(SchemaConstants.RemoteDependencyData_Name_MaxLength);
             Id = activity.Context.SpanId.ToHexString();
             Duration = activity.Duration < SchemaConstants.RemoteDependencyData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
@@ -101,8 +101,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             Type = "Http";
-            Data = httpUrl.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-            Target = target.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+            Data = httpUrl?.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
+            Target = target?.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
             ResultCode = resultCode?.Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength) ?? "0";
         }
 
@@ -111,11 +111,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             var dbAttributeTagObjects = AzMonList.GetTagValues(ref dbTagObjects, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
             Data = dbAttributeTagObjects[0]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
             var (DbName, DbTarget) = dbTagObjects.GetDbDependencyTargetAndName();
-            Target = DbTarget.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+            Target = DbTarget?.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
             Type = s_sqlDbs.Contains(dbAttributeTagObjects[1]?.ToString()) ? "SQL" : dbAttributeTagObjects[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
 
             // special case for db.name
-            var sanitizedDbName = DbName.Truncate(SchemaConstants.KVP_MaxValueLength);
+            var sanitizedDbName = DbName?.Truncate(SchemaConstants.KVP_MaxValueLength);
             if (sanitizedDbName != null)
             {
                 Properties.Add(SemanticConventions.AttributeDbName, sanitizedDbName);
@@ -132,10 +132,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         private void SetMessagingDependencyProperties(Activity activity, ref AzMonList messagingTagObjects)
         {
-            var messagingAttributeTagObjects = AzMonList.GetTagValues(ref messagingTagObjects, SemanticConventions.AttributeMessagingUrl, SemanticConventions.AttributeMessagingSystem);
-            var messagingUrl = messagingAttributeTagObjects[0]?.ToString();
+            var (messagingUrl, target) = messagingTagObjects.GetMessagingUrlAndSourceOrTarget(activity.Kind);
             Data = messagingUrl?.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-            Type = messagingAttributeTagObjects[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
+            Target = target?.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+            Type = AzMonList.GetTagValue(ref messagingTagObjects, SemanticConventions.AttributeMessagingSystem)?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
         }
     }
 }
