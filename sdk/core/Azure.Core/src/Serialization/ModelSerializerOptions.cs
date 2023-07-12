@@ -25,10 +25,5 @@ namespace Azure.Core.Serialization
         /// Dictionary that holds all the serializers for the different model types.
         /// </summary>
         public Dictionary<Type, ObjectSerializer> Serializers { get; } = new Dictionary<Type, ObjectSerializer>();
-
-        /// <summary>
-        /// NameHint for Xml Models
-        /// </summary>
-        public string? NameHint { get; set; }
     }
 }
