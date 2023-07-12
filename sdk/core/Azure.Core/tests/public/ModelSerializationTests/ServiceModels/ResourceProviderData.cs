@@ -23,11 +23,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
     {
         public static implicit operator RequestContent(ResourceProviderData resourceProviderData)
         {
-            var content = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(content);
-            ((IJsonModelSerializable)resourceProviderData).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
-            writer.Flush();
-            return content;
+            return new Utf8JsonDelayedRequestContent(resourceProviderData);
         }
 
         public static explicit operator ResourceProviderData(Response response)

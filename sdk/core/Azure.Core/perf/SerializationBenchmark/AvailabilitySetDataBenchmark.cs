@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 using Azure.Core.Tests.Public.ResourceManager.Compute;
 
@@ -18,9 +19,9 @@ namespace Azure.Core.Perf
             _model.Serialize(writer);
         }
 
-        protected override void CastToRequestContent()
+        protected override RequestContent CastToRequestContent()
         {
-            using RequestContent content = _model;
+            return _model;
         }
 
         protected override void CastFromResponse()

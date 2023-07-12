@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 using Azure.Core.Tests.Public.ResourceManager.Resources;
 
@@ -15,9 +16,9 @@ namespace Azure.Core.Perf
             var resourceProviderData = (ResourceProviderData)_response;
         }
 
-        protected override void CastToRequestContent()
+        protected override RequestContent CastToRequestContent()
         {
-            RequestContent content = _model;
+            return _model;
         }
 
         protected override void Deserialize(JsonElement jsonElement)

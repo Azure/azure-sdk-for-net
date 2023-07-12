@@ -15,6 +15,7 @@ namespace Azure.Core.Perf
 {
     [MemoryDiagnoser]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
+    [Config(typeof(SerializationBenchmarkConfig))]
     public abstract class SerializationBenchmark<T> where T : class, IJsonModelSerializable
     {
         private string _json;
@@ -27,7 +28,7 @@ namespace Azure.Core.Perf
 
         protected abstract void Serialize(Utf8JsonWriter writer);
 
-        protected abstract void CastToRequestContent();
+        protected abstract RequestContent CastToRequestContent();
 
         protected abstract void CastFromResponse();
 
@@ -46,7 +47,7 @@ namespace Azure.Core.Perf
 
         [Benchmark]
         [BenchmarkCategory("Internal")]
-        public void Serialize_InternalWithWriter()
+        public void Serialize_Internal()
         {
             using var stream = new MemoryStream();
             using var writer = new Utf8JsonWriter(stream);
@@ -55,20 +56,28 @@ namespace Azure.Core.Perf
         }
 
         [Benchmark]
-        [BenchmarkCategory("Internal")]
-        public void Serialize_InternalWithBuffer()
+        [BenchmarkCategory("Cast")]
+        public void Serialize_ImplicitCast()
         {
-            using var content = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(content);
-            Serialize(writer);
-            writer.Flush();
+            using var x = CastToRequestContent();
         }
 
         [Benchmark]
         [BenchmarkCategory("Cast")]
-        public void Serialize_ImplicitCast()
+        public void Serialize_ImplicitCastWithSerialize()
         {
-            CastToRequestContent();
+            using var x = CastToRequestContent();
+            x.TryComputeLength(out var length);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Cast")]
+        public void Serialize_ImplicitCastWithUsage()
+        {
+            using var x = CastToRequestContent();
+            x.TryComputeLength(out var length);
+            using var stream = new MemoryStream((int)length);
+            x.WriteTo(stream, default);
         }
 
         [Benchmark]
@@ -90,17 +99,7 @@ namespace Azure.Core.Perf
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public void Serialize_PublicInterfaceWithWriter()
-        {
-            using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-            _model.Serialize(writer, _options);
-            writer.Flush();
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("PublicInterface")]
-        public void Serialize_PublicInterfaceWithBuffer()
+        public void Serialize_PublicInterface()
         {
             using var content = new MultiBufferRequestContent();
             using var writer = new Utf8JsonWriter(content);

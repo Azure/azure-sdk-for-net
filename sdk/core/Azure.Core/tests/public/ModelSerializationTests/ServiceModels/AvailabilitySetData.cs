@@ -25,11 +25,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 
         public static implicit operator RequestContent(AvailabilitySetData availabilitySetData)
         {
-            var content = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(content);
-            ((IJsonModelSerializable)availabilitySetData).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
-            writer.Flush();
-            return content;
+            return new Utf8JsonDelayedRequestContent(availabilitySetData);
         }
 
         public static explicit operator AvailabilitySetData(Response response)

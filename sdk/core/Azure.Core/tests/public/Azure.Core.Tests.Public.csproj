@@ -20,6 +20,7 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)Utf8JsonDelayedRequestContent.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <!-- Test classes to share in public space-->
