@@ -70,7 +70,7 @@ namespace Azure.AI.OpenAI.Tests
                 // For playback, setup details are populated directly from the test recordings
                 _endpoint = new Uri(Recording.GetVariable(Constants.EndpointVariable, null));
                 _completionsDeploymentId
-                    = Recording.GetVariable(ModelDeploymentEntry.Completions.EnvironmentVariableName, null);
+                    = Recording.GetVariable(ModelDeploymentEntry.LegacyCompletions.EnvironmentVariableName, null);
                 _embeddingsDeploymentId
                     = Recording.GetVariable(ModelDeploymentEntry.ChatCompletions.EnvironmentVariableName, null);
                 _chatCompletionsDeploymentId
@@ -119,7 +119,7 @@ namespace Azure.AI.OpenAI.Tests
                             }
                         }).Invoke();
 
-                        CognitiveServicesAccountDeploymentResource completionsModelResource = GetEnsureDeployedModelResource(openAIResource, ModelDeploymentEntry.Completions);
+                        CognitiveServicesAccountDeploymentResource completionsModelResource = GetEnsureDeployedModelResource(openAIResource, ModelDeploymentEntry.LegacyCompletions);
                         CognitiveServicesAccountDeploymentResource chatCompletionsModelResource = GetEnsureDeployedModelResource(openAIResource, ModelDeploymentEntry.ChatCompletions);
                         CognitiveServicesAccountDeploymentResource embeddingsModelResource = GetEnsureDeployedModelResource(openAIResource, ModelDeploymentEntry.Embeddings);
 
@@ -139,7 +139,7 @@ namespace Azure.AI.OpenAI.Tests
             {
                 Recording.SetVariable(Constants.EndpointVariable, _endpoint.ToString());
                 Recording.SetVariable(
-                    ModelDeploymentEntry.Completions.EnvironmentVariableName,
+                    ModelDeploymentEntry.LegacyCompletions.EnvironmentVariableName,
                     _completionsDeploymentId);
                 Recording.SetVariable(
                     ModelDeploymentEntry.ChatCompletions.EnvironmentVariableName,
@@ -235,13 +235,29 @@ namespace Azure.AI.OpenAI.Tests
 
         public class ModelDeploymentEntry
         {
-            public static readonly ModelDeploymentEntry Completions = new()
+            /// <summary>
+            /// Model/deployment information to use for /completions that include old features like echo
+            /// and logprobs. Azure OpenAI added new Completions support for gpt-35-turbo but did not carry
+            /// these forward.
+            /// </summary>
+            public static readonly ModelDeploymentEntry LegacyCompletions = new()
             {
                 AzureDeploymentName = "text-davinci-002",
                 AzureModelName = "text-davinci-002",
                 NonAzureModelName = "text-davinci-002",
                 EnvironmentVariableName = "COMPLETIONS_DEPLOYMENT_NAME",
                 IsLegacyAzureModel = true,
+            };
+
+            /// <summary>
+            /// Model/deployment information to use for latest /completions features. Azure OpenAI has a different
+            /// capability set exposed via gpt-35-turbo than legacy models like text-davinci-002.
+            /// </summary>
+            public static readonly ModelDeploymentEntry Completions = new()
+            {
+                AzureDeploymentName = "gpt-35-turbo",
+                AzureModelName = "gpt-35-turbo",
+                NonAzureModelName = "text-davinci-002",
             };
 
             public static readonly ModelDeploymentEntry ChatCompletions = new()
@@ -303,6 +319,7 @@ namespace Azure.AI.OpenAI.Tests
         public enum OpenAIClientScenario
         {
             None,
+            LegacyCompletions,
             Completions,
             ChatCompletions,
             Embeddings,
@@ -314,12 +331,16 @@ namespace Azure.AI.OpenAI.Tests
         {
             return (serviceTarget, defaultScenario) switch
             {
-                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.Completions)
-                    => ModelDeploymentEntry.Completions.AzureDeploymentName,
+                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.LegacyCompletions)
+                    => ModelDeploymentEntry.LegacyCompletions.AzureDeploymentName,
                 (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.ChatCompletions)
                     => ModelDeploymentEntry.ChatCompletions.AzureDeploymentName,
+                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.Completions)
+                    => ModelDeploymentEntry.Completions.AzureDeploymentName,
                 (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.Embeddings)
                     => ModelDeploymentEntry.Embeddings.AzureDeploymentName,
+                (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.LegacyCompletions)
+                    => ModelDeploymentEntry.LegacyCompletions.NonAzureModelName,
                 (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.Completions)
                     => ModelDeploymentEntry.Completions.NonAzureModelName,
                 (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.ChatCompletions)
