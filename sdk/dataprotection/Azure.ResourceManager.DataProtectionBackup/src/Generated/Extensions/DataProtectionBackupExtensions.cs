@@ -183,6 +183,25 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
         #endregion
 
+        #region ResourceGuardProxyBaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGuardProxyBaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGuardProxyBaseResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardProxyBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceGuardProxyBaseResource" /> object. </returns>
+        public static ResourceGuardProxyBaseResource GetResourceGuardProxyBaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ResourceGuardProxyBaseResource.ValidateResourceId(id);
+                return new ResourceGuardProxyBaseResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         /// <summary> Gets a collection of DataProtectionBackupVaultResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataProtectionBackupVaultResources and their operations over a DataProtectionBackupVaultResource. </returns>

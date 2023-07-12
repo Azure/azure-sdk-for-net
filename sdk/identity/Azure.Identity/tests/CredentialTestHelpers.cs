@@ -534,11 +534,22 @@ namespace Azure.Identity.Tests
             return tenantID != null;
         }
 
+        public static bool IsMsalCredential(TokenCredential cred)
+        {
+            var clientType = GetMsalClientType(cred);
+            return GetMsalClientType(cred) == typeof(MsalPublicClient) || clientType == typeof(MsalConfidentialClient);
+        }
+
         public static bool IsCredentialTypePubClient(TokenCredential cred)
         {
-            var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
-            Type clientType = targetCred.GetType().GetProperty("Client", BindingFlags.Instance | BindingFlags.NonPublic)?.PropertyType;
+            var clientType = GetMsalClientType(cred);
             return clientType == typeof(MsalPublicClient);
+        }
+
+        private static Type GetMsalClientType(TokenCredential cred)
+        {
+            var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
+            return targetCred.GetType().GetProperty("Client", BindingFlags.Instance | BindingFlags.NonPublic)?.PropertyType;
         }
 
         public static string CreateClientAssertionJWT(Uri authorityHost, string clientId, string tenantId, X509Certificate2 clientCertificate)

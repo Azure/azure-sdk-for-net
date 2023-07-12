@@ -79,13 +79,11 @@ namespace Azure.Storage.DataMovement.Tests
 
         private static void AssertProgressUpdates(IEnumerable<StorageTransferProgress> updates, long fileCount)
         {
-            Console.WriteLine("Asserting...");
             long completed = 0;
             long skipped = 0;
             long failed = 0;
             foreach (StorageTransferProgress update in updates)
             {
-                Console.WriteLine($"Queued - {update.QueuedCount}, InProgress - {update.InProgressCount}, Completed - {update.CompletedCount}");
                 // Queued/InProgress should never be below zero or above total
                 Assert.GreaterOrEqual(update.QueuedCount, 0);
                 Assert.LessOrEqual(update.QueuedCount, fileCount);

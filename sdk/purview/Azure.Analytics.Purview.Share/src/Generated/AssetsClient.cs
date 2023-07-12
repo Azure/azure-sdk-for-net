@@ -78,7 +78,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAssetAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAssetAsync(string sentShareName, string assetName, RequestContext context = null)
+        public virtual async Task<Response> GetAssetAsync(string sentShareName, string assetName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAsset(string,string,RequestContext)']/*" />
-        public virtual Response GetAsset(string sentShareName, string assetName, RequestContext context = null)
+        public virtual Response GetAsset(string sentShareName, string assetName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
@@ -154,7 +154,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAssetsAsync(string,string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAssetsAsync(string sentShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAssetsAsync(string sentShareName, string skipToken, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/AssetsClient.xml" path="doc/members/member[@name='GetAssets(string,string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAssets(string sentShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAssets(string sentShareName, string skipToken, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
