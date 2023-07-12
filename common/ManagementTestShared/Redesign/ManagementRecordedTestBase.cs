@@ -73,6 +73,13 @@ namespace Azure.ResourceManager.TestFramework
 
         private void IgnoreArmCoreDependencyVersions()
         {
+            // Ignore the api-version of tenant operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/tenants\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
             // Ignore the api-version of subscription operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
                 @"/subscriptions/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
@@ -80,7 +87,6 @@ namespace Azure.ResourceManager.TestFramework
             {
                 GroupForReplace = "group"
             });
-
             // Ignore the api-version of resource group operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
                 @"/resourcegroups/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
