@@ -13,7 +13,9 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The protected constructor for the abstract StorageResource class (to allow for mocking).
         /// </summary>
-        protected StorageResource() { }
+        protected StorageResource()
+        {
+        }
 
         /// <summary>
         /// Defines whether the storage resource type can produce a web URL.

@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal("GET /search", requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal(httpResponseCode, requestData.ResponseCode);
         }
@@ -104,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal(httpResponseCode, requestData.ResponseCode);
             Assert.Equal(isSuccess, requestData.Success);
@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             Assert.Equal("DemoAzureResource", activityTagsProcessor.AzureNamespace);
         }
@@ -147,7 +147,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
@@ -181,7 +181,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
@@ -212,7 +212,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
