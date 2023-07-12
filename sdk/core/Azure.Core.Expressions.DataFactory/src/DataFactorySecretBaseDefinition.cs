@@ -26,6 +26,6 @@ namespace Azure.Core.Expressions.DataFactory
         }
 
         /// <summary> Type of the secret. </summary>
-        internal string? SecretBaseType { get; set; }
+        public string? SecretBaseType { get; set; }
     }
 }

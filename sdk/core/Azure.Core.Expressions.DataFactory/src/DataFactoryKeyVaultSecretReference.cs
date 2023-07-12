@@ -18,7 +18,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// <param name="secretName"> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="store"/> or <paramref name="secretName"/> is null. </exception>
         [InitializationConstructor]
-        public DataFactoryKeyVaultSecretReference(DataFactoryLinkedServiceReference store, DataFactoryElement<string> secretName) : base()
+        public DataFactoryKeyVaultSecretReference(DataFactoryLinkedServiceReference store, DataFactoryElement<string> secretName)
         {
             Argument.AssertNotNull(store, nameof(store));
             Argument.AssertNotNull(secretName, nameof(secretName));

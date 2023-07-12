@@ -67,6 +67,7 @@ namespace Azure.Core.Expressions.DataFactory
     public abstract partial class DataFactorySecretBaseDefinition
     {
         protected DataFactorySecretBaseDefinition() { }
+        public string? SecretBaseType { get { throw null; } set { } }
     }
     public partial class DataFactorySecretString : Azure.Core.Expressions.DataFactory.DataFactorySecretBaseDefinition
     {
