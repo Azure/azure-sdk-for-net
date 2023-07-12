@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
     public class HealthBotTests : HealthBotManagementTestBase
     {
         public HealthBotTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -80,14 +80,16 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
 
             AssertData(healthBot1.Data, healthBot3.Data);
             //6.Update
+            HealthBotResource healthBot5 = Client.GetHealthBotResource(new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0712/providers/Microsoft.HealthBot/healthBots/bottest"));
             HealthBotPatch patch = new HealthBotPatch()
             {
                 Tags =
                 {
-                    {"updateKey", "updateValue"}
-                }
+                    { "updateKey", "updateValue" }
+                },
+                //Sku = new HealthBotSku(HealthBotSkuName.S1)
             };
-            HealthBotResource result = await healthBot1.UpdateAsync(patch);
+            HealthBotResource result = await healthBot5.UpdateAsync(patch);
             //7.Delete
             await healthBot1.DeleteAsync(WaitUntil.Completed);
         }
