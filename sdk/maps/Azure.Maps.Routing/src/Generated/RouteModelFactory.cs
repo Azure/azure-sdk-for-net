@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class MapsRoutingModelFactory
+    public static partial class RouteModelFactory
     {
         /// <summary> Initializes a new instance of RouteMatrixResult. </summary>
         /// <param name="formatVersion"> Format Version property. </param>
