@@ -4,7 +4,6 @@
 
 ### Features Added
 
-
 * Added `ApplicationInsightsSampler` to the exporter, enabling users to customize the sampling rate using the `SamplingRatio` property.
   ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
 
