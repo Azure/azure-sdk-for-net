@@ -115,7 +115,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const int TelemetryEnvelope_Name_MaxLength = 1024;
         public const int TelemetryEnvelope_Time_MaxLength = 64;
         public const int TelemetryEnvelope_InstrumentationKey_MaxLength = 40;
-
-        public const string DefaultSchemaVersion = "1.21.0";
     }
 }

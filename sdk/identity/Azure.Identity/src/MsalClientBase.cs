@@ -12,11 +12,17 @@ namespace Azure.Identity
     internal abstract class MsalClientBase<TClient>
         where TClient : IClientApplicationBase
     {
-        private readonly AsyncLockWithValue<TClient> _clientAsyncLock;
-        private bool _logAccountDetails;
-
+        private readonly AsyncLockWithValue<(TClient Client, TokenCache Cache)> _clientAsyncLock;
+        private readonly AsyncLockWithValue<(TClient Client, TokenCache Cache)> _clientWithCaeAsyncLock;
+        private readonly bool _logAccountDetails;
+        private readonly TokenCachePersistenceOptions _tokenCachePersistenceOptions;
         protected internal bool IsPiiLoggingEnabled { get; }
         protected internal bool DisableInstanceDiscovery { get; }
+        protected string[] cp1Capabilities = new[] { "CP1" };
+        protected internal CredentialPipeline Pipeline { get; }
+        internal string TenantId { get; }
+        internal string ClientId { get; }
+        internal Uri AuthorityHost { get; }
 
         /// <summary>
         /// For mocking purposes only.
@@ -37,47 +43,43 @@ namespace Azure.Identity
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             DisableInstanceDiscovery = options is ISupportsDisableInstanceDiscovery supportsDisableInstanceDiscovery && supportsDisableInstanceDiscovery.DisableInstanceDiscovery;
             ISupportsTokenCachePersistenceOptions cacheOptions = options as ISupportsTokenCachePersistenceOptions;
+            _tokenCachePersistenceOptions = cacheOptions?.TokenCachePersistenceOptions;
             IsPiiLoggingEnabled = options?.IsLoggingPIIEnabled ?? false;
             Pipeline = pipeline;
             TenantId = tenantId;
             ClientId = clientId;
-            TokenCache = cacheOptions?.TokenCachePersistenceOptions == null ? null : new TokenCache(cacheOptions?.TokenCachePersistenceOptions);
-            _clientAsyncLock = new AsyncLockWithValue<TClient>();
+            _clientAsyncLock = new AsyncLockWithValue<(TClient Client, TokenCache Cache)>();
+            _clientWithCaeAsyncLock = new AsyncLockWithValue<(TClient Client, TokenCache Cache)>();
         }
 
-        internal string TenantId { get; }
+        protected abstract ValueTask<TClient> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken);
 
-        internal string ClientId { get; }
-
-        internal TokenCache TokenCache { get; }
-
-        internal Uri AuthorityHost { get; }
-
-        protected internal CredentialPipeline Pipeline { get; }
-
-        protected abstract ValueTask<TClient> CreateClientAsync(bool async, CancellationToken cancellationToken);
-
-        protected async ValueTask<TClient> GetClientAsync(bool async, CancellationToken cancellationToken)
+        protected async ValueTask<TClient> GetClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
-            using var asyncLock = await _clientAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            using var asyncLock = enableCae ?
+                await _clientWithCaeAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false) :
+                await _clientAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+
             if (asyncLock.HasValue)
             {
-                return asyncLock.Value;
+                return asyncLock.Value.Client;
             }
 
-            var client = await CreateClientAsync(async, cancellationToken).ConfigureAwait(false);
+            var client = await CreateClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
-            if (TokenCache != null)
+            TokenCache tokenCache = null;
+            if (_tokenCachePersistenceOptions != null)
             {
-                await TokenCache.RegisterCache(async, client.UserTokenCache, cancellationToken).ConfigureAwait(false);
+                tokenCache = new TokenCache(_tokenCachePersistenceOptions, enableCae);
+                await tokenCache.RegisterCache(async, client.UserTokenCache, cancellationToken).ConfigureAwait(false);
 
                 if (client is IConfidentialClientApplication cca)
                 {
-                    await TokenCache.RegisterCache(async, cca.AppTokenCache, cancellationToken).ConfigureAwait(false);
+                    await tokenCache.RegisterCache(async, cca.AppTokenCache, cancellationToken).ConfigureAwait(false);
                 }
             }
 
-            asyncLock.SetValue(client);
+            asyncLock.SetValue((Client: client, Cache: tokenCache));
             return client;
         }
 
@@ -96,6 +98,15 @@ namespace Azure.Identity
                 var accountDetails = TokenHelper.ParseAccountInfoFromToken(result.AccessToken);
                 AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? result.TenantId, accountDetails.Upn ?? result.Account?.Username, accountDetails.ObjectId ?? result.UniqueId);
             }
+        }
+
+        internal async ValueTask<TokenCache> GetTokenCache(bool enableCae)
+        {
+            using var asyncLock = enableCae ?
+                await _clientWithCaeAsyncLock.GetLockOrValueAsync(true, default).ConfigureAwait(false) :
+                await _clientAsyncLock.GetLockOrValueAsync(true, default).ConfigureAwait(false);
+
+            return asyncLock.HasValue ? asyncLock.Value.Cache : null;
         }
     }
 }

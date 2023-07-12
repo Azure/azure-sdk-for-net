@@ -1,6 +1,16 @@
 # Release History
 
-## 12.0.0-beta.3 (Unreleased)
+## 12.0.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.0.0-beta.3 (2023-07-11)
 
 ### Features Added
 - `TransferManager` new API `PauseAllRunningTransfersAsync`.
@@ -25,8 +35,6 @@
 - Fixed `ErrorHandlingOptions.ContinueOnFailure` not be respected.
 - Fixed bug where resuming a transfer where the source and destination is a `StorageResourceContainer` would throw a null reference exception. 
 - Fixed bug when downloading zero length `StorageResource`s in a `StorageResourceContainer` will throw an exception.
-
-### Other Changes
 
 ## 12.0.0-beta.2 (2023-04-26)
 - [BREAKING CHANGE] Combined `SingleTransferOptions` and `ContainerTransferOptions` into `TransferOptions`.

@@ -1,14 +1,12 @@
 # Release History
 
-## 1.34.0-beta.1 (Unreleased)
+## 1.34.0 (2023-07-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `IsCaeEnabled` property to `TokenRequestContext` to enabled per-request support for Continuous Access Evaluation
+- Updated dependency on System.Diagnostics.DiagnosticSource
+- Added `ContentLengthLong` property to `ResponseHeaders`
 
 ## 1.33.0 (2023-06-16)
 
