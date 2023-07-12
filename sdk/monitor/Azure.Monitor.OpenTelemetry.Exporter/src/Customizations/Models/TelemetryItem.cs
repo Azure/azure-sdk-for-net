@@ -32,17 +32,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             SetAuthenticatedUserId(ref activityTagsProcessor);
-
-            // we only have mapping for server spans
-            // todo: non-server spans
-            if (activity.Kind == ActivityKind.Server)
-            {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = activityTagsProcessor.activityType.HasFlag(OperationType.V2)
-                                                                    ? TraceHelper.GetNewSchemaOperationName(activity, null, ref activityTagsProcessor.MappedTags)
-                                                                    : TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
-            }
-
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
             if (AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, "sampleRate") is float sampleRate)
             {
@@ -60,14 +49,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 // todo: update swagger to include this key.
                 Tags["ai.user.userAgent"] = userAgent;
-            }
-
-            // we only have mapping for server spans
-            // todo: non-server spans
-            if (kind == ActivityKind.Server)
-            {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()];
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()];
             }
 
             Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()];
