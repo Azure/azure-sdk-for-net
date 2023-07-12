@@ -4,6 +4,10 @@
 
 ### Features Added
 
+* Added Azure.* activity sources.
+  Users will need to enable the collection by turning on the feature by following one of the ways listed in
+  [Introducing experimental OpenTelemetry support in the Azure SDK for .NET](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/).
+  ([#37505](https://github.com/Azure/azure-sdk-for-net/pull/37505))
 * Added `ApplicationInsightsSampler` to the exporter, enabling users to customize the sampling rate using the `SamplingRatio` property.
   ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
 
