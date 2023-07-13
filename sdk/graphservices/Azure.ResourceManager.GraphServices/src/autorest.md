@@ -8,7 +8,6 @@ csharp: true
 library-name: GraphServices
 namespace: Azure.ResourceManager.GraphServices
 require: https://github.com/Azure/azure-rest-api-specs/blob/fe056966cf070be84e92dd2dc1b566bae35002cf/specification/graphservicesprod/resource-manager/readme.md
-# tag: package-2023-04-13
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
