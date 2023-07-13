@@ -265,6 +265,10 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
@@ -275,8 +279,32 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
+        /// Gets the Authorization Header for the storage resource if available.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        public override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        {
+            return await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Commits the block list given.
         /// </summary>
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if exists.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>The Task which Commits the list of ids</returns>
         public override async Task CompleteTransferAsync(
             bool overwrite,
             CancellationToken cancellationToken = default)

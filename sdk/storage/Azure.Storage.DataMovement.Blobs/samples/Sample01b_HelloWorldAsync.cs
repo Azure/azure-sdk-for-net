@@ -510,15 +510,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 TransferOptions downloadOptions = new TransferOptions();
                 downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
                 {
-                    // TODO: change the Exception if it's a RequestFailedException and then look at the exception.StatusCode
-                    if (args.Exception.Message.Contains("500"))
-                    {
-                        Console.WriteLine("We're getting throttled stop trying and lets try later");
-                    }
-                    else if (args.Exception.Message == "403")
-                    {
-                        Console.WriteLine("We're getting auth errors. Might be the entire container, consider stopping");
-                    }
+                    // Log Exception Message
+                    Console.WriteLine(args.Exception.Message);
                     // Remove stub
                     await Task.CompletedTask;
                 };
@@ -568,16 +561,23 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Make a service request to verify we've successfully authenticated
             await container.CreateIfNotExistsAsync();
+            await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
             // Prepare to copy
             try
             {
                 // Get a reference to a destination blobs
                 BlockBlobClient sourceBlob = container.GetBlockBlobClient("sample-blob");
+
+                using (FileStream stream = File.Open(originalPath, FileMode.Open))
+                {
+                    await sourceBlob.UploadAsync(stream);
+                    stream.Position = 0;
+                }
                 StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
 
                 BlockBlobClient destinationBlob = container.GetBlockBlobClient("sample-blob2");
-                StorageResource destinationResource = new BlockBlobStorageResource(sourceBlob);
+                StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
 
                 // Upload file data
                 TransferManager transferManager = new TransferManager(default);
@@ -589,6 +589,9 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Generous 10 second wait for our transfer to finish
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(10000);
                 await transfer.AwaitCompletion(cancellationTokenSource.Token);
+
+                Assert.IsTrue(await destinationBlob.ExistsAsync());
+                Assert.AreEqual(transfer.TransferStatus, StorageTransferStatus.Completed);
             }
             finally
             {

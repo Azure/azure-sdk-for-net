@@ -793,7 +793,6 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyClientAuthenticateReturnsInvalidJsonOnFailure([Values(404, 403, 429)] int status)
         {
-            using var logger = AzureEventSourceListener.CreateConsoleLogger();
             using var environment = new TestEnvVar(
                 new()
                 {

@@ -105,7 +105,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob
 
-            Response<CompleteJobResult> completeJob = routerClient.CompleteJob(
+            Response completeJob = routerClient.CompleteJob(
                 options: new CompleteJobOptions(
                         jobId: job.Value.Id,
                         assignmentId: acceptJobOfferResult.Value.AssignmentId)
@@ -113,20 +113,20 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
                 });
 
-            Console.WriteLine($"Job has been successfully completed: {completeJob.GetRawResponse().Status == 200}");
+            Console.WriteLine($"Job has been successfully completed: {completeJob.Status == 200}");
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob
 
-            Response<CloseJobResult> closeJob = routerClient.CloseJob(
+            Response closeJob = routerClient.CloseJob(
                 options: new CloseJobOptions(
                         jobId: job.Value.Id,
                         assignmentId: acceptJobOfferResult.Value.AssignmentId)
                 {
                     Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
                 });
-            Console.WriteLine($"Job has been successfully closed: {closeJob.GetRawResponse().Status == 200}");
+            Console.WriteLine($"Job has been successfully closed: {closeJob.Status == 200}");
 
             updatedJob = routerClient.GetJob(job.Value.Id);
             Console.WriteLine($"Updated job status: {updatedJob.Value.Status == RouterJobStatus.Closed}");
@@ -142,7 +142,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     CloseAt = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
                     Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
                 });
-            Console.WriteLine($"Job has been marked to close: {closeJob.GetRawResponse().Status == 202}"); // You'll received a 202 in that case
+            Console.WriteLine($"Job has been marked to close: {closeJob.Status == 202}"); // You'll received a 202 in that case
 
             Thread.Sleep(TimeSpan.FromSeconds(2));
 
