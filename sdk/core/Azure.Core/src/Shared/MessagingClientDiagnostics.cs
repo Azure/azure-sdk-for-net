@@ -167,7 +167,7 @@ namespace Azure.Core.Shared
             {
                 using DiagnosticScope messageScope = CreateScope(
                     activityName,
-                    DiagnosticScope.ActivityKind.Producer);
+                    ActivityKind.Producer);
                 messageScope.Start();
 
                 Activity? activity = Activity.Current;
