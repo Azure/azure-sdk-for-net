@@ -3,13 +3,13 @@
   <members>
     <member name="GetFilterAsync(RequestContext)">
 <example>
-This sample shows how to call GetFilterAsync and parse the result.
+This sample shows how to call GetFilterAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = await client.GetFilterAsync();
+Response response = await client.GetFilterAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -21,13 +21,13 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="GetFilter(RequestContext)">
 <example>
-This sample shows how to call GetFilter and parse the result.
+This sample shows how to call GetFilter with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = client.GetFilter();
+Response response = client.GetFilter(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -39,7 +39,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="CreateOrUpdateFilterAsync(RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrUpdateFilterAsync and parse the result.
+This sample shows how to call CreateOrUpdateFilterAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -47,12 +47,12 @@ var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", c
 
 var data = new {};
 
-Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
+Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateFilterAsync with all request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateFilterAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -69,7 +69,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
+Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -81,7 +81,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="CreateOrUpdateFilter(RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrUpdateFilter and parse the result.
+This sample shows how to call CreateOrUpdateFilter with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -89,12 +89,12 @@ var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", c
 
 var data = new {};
 
-Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
+Response response = client.CreateOrUpdateFilter(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateFilter with all request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateFilter with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -111,7 +111,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
+Response response = client.CreateOrUpdateFilter(RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -519,13 +519,13 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="GetPropertiesAsync(RequestContext)">
 <example>
-This sample shows how to call GetPropertiesAsync and parse the result.
+This sample shows how to call GetPropertiesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = await client.GetPropertiesAsync();
+Response response = await client.GetPropertiesAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -561,13 +561,13 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="GetProperties(RequestContext)">
 <example>
-This sample shows how to call GetProperties and parse the result.
+This sample shows how to call GetProperties with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = client.GetProperties();
+Response response = client.GetProperties(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -603,13 +603,13 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="DeleteAsync(RequestContext)">
 <example>
-This sample shows how to call DeleteAsync and parse the result.
+This sample shows how to call DeleteAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = await client.DeleteAsync();
+Response response = await client.DeleteAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -645,13 +645,13 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="Delete(RequestContext)">
 <example>
-This sample shows how to call Delete and parse the result.
+This sample shows how to call Delete with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = client.Delete();
+Response response = client.Delete(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -693,18 +693,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = await client.RunScanAsync("<runId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call RunScanAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-Response response = await client.RunScanAsync("<runId>", "<scanLevel>");
+Response response = await client.RunScanAsync("<runId>", "<scanLevel>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -728,18 +717,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = client.RunScan("<runId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call RunScan with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-Response response = client.RunScan("<runId>", "<scanLevel>");
+Response response = client.RunScan("<runId>", "<scanLevel>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -763,7 +741,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = await client.CancelScanAsync("<runId>");
+Response response = await client.CancelScanAsync("<runId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -787,7 +765,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = client.CancelScan("<runId>");
+Response response = client.CancelScan("<runId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -805,13 +783,13 @@ Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetPrope
     </member>
     <member name="GetTriggerAsync(RequestContext)">
 <example>
-This sample shows how to call GetTriggerAsync and parse the result.
+This sample shows how to call GetTriggerAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = await client.GetTriggerAsync();
+Response response = await client.GetTriggerAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -840,13 +818,13 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="GetTrigger(RequestContext)">
 <example>
-This sample shows how to call GetTrigger and parse the result.
+This sample shows how to call GetTrigger with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = client.GetTrigger();
+Response response = client.GetTrigger(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1053,13 +1031,13 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="DeleteTriggerAsync(RequestContext)">
 <example>
-This sample shows how to call DeleteTriggerAsync and parse the result.
+This sample shows how to call DeleteTriggerAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = await client.DeleteTriggerAsync();
+Response response = await client.DeleteTriggerAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1088,13 +1066,13 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="DeleteTrigger(RequestContext)">
 <example>
-This sample shows how to call DeleteTrigger and parse the result.
+This sample shows how to call DeleteTrigger with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-Response response = client.DeleteTrigger();
+Response response = client.DeleteTrigger(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1123,13 +1101,13 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="GetRunsAsync(RequestContext)">
 <example>
-This sample shows how to call GetRunsAsync and parse the result.
+This sample shows how to call GetRunsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-await foreach (var item in client.GetRunsAsync())
+await foreach (var item in client.GetRunsAsync(new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("parentId").ToString());
@@ -1163,13 +1141,13 @@ await foreach (var item in client.GetRunsAsync())
     </member>
     <member name="GetRuns(RequestContext)">
 <example>
-This sample shows how to call GetRuns and parse the result.
+This sample shows how to call GetRuns with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-foreach (var item in client.GetRuns())
+foreach (var item in client.GetRuns(new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("parentId").ToString());

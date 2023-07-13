@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
 
             destinationPrefix ??= "foo";
@@ -161,7 +161,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task LocalToBlockBlobDirectory_SmallChunks()
         {
             long blobSize = Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
             TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 100,
@@ -195,10 +195,10 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             long blobSize = 2 * Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
             TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.StopOnAllFailures,
+                ErrorHandling = ErrorHandlingBehavior.StopOnAllFailures,
                 MaximumConcurrency = 3,
             };
             TransferOptions options = new TransferOptions()
@@ -254,7 +254,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             TransferManager transferManager = new TransferManager(managerOptions);
@@ -594,9 +594,9 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        [TestCase(ErrorHandlingOptions.ContinueOnFailure)]
-        [TestCase(ErrorHandlingOptions.StopOnAllFailures)]
-        public async Task DirectoryUpload_ErrorHandling(ErrorHandlingOptions errorHandling)
+        [TestCase(ErrorHandlingBehavior.ContinueOnFailure)]
+        [TestCase(ErrorHandlingBehavior.StopOnAllFailures)]
+        public async Task DirectoryUpload_ErrorHandling(ErrorHandlingBehavior errorHandling)
         {
             // Arrange
             using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
@@ -635,7 +635,7 @@ namespace Azure.Storage.DataMovement.Tests
             IEnumerable<string> destinationFiles =
                 (await destination.Container.GetBlobsAsync().ToEnumerableAsync()).Select(b => b.Name);
 
-            if (errorHandling == ErrorHandlingOptions.ContinueOnFailure)
+            if (errorHandling == ErrorHandlingBehavior.ContinueOnFailure)
             {
                 await testEventsRaised.AssertContainerCompletedWithFailedCheckContinue(1);
 
@@ -645,7 +645,7 @@ namespace Azure.Storage.DataMovement.Tests
                     .OrderBy(f => f)
                     .SequenceEqual(destinationFiles.OrderBy(f => f)));
             }
-            else if (errorHandling == ErrorHandlingOptions.StopOnAllFailures)
+            else if (errorHandling == ErrorHandlingBehavior.StopOnAllFailures)
             {
                 await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
 

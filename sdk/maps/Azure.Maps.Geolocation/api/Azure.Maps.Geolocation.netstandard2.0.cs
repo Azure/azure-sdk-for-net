@@ -11,6 +11,8 @@ namespace Azure.Maps.Geolocation
         protected MapsGeolocationClient() { }
         public MapsGeolocationClient(Azure.AzureKeyCredential credential) { }
         public MapsGeolocationClient(Azure.AzureKeyCredential credential, Azure.Maps.Geolocation.MapsGeolocationClientOptions options) { }
+        public MapsGeolocationClient(Azure.AzureSasCredential credential) { }
+        public MapsGeolocationClient(Azure.AzureSasCredential credential, Azure.Maps.Geolocation.MapsGeolocationClientOptions options) { }
         public MapsGeolocationClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsGeolocationClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Geolocation.MapsGeolocationClientOptions options) { }
         public virtual Azure.Response<Azure.Maps.Geolocation.CountryRegionResult> GetCountryCode(System.Net.IPAddress ipAddress, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

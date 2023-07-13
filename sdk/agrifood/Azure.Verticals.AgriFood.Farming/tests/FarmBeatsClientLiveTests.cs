@@ -29,7 +29,7 @@ namespace Azure.Verticals.AgriFood.Farming.Tests
             Assert.IsTrue(HasProperty(createdBodyJson, "createdDateTime"));
             Assert.IsTrue(HasProperty(createdBodyJson, "modifiedDateTime"));
 
-            Response fetchResponse = await partiesClient.GetPartyAsync(partyId);
+            Response fetchResponse = await partiesClient.GetPartyAsync(partyId, new());
             JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
 
             Assert.AreEqual(createdBodyJson.GetProperty("id").GetString(), fetchBodyJson.GetProperty("id").GetString());
