@@ -6,23 +6,30 @@
 #nullable disable
 
 using System;
+using System.Globalization;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Models
 {
     [JsonConverter(typeof(SystemDataConverter))]
-    public partial class SystemData : IUtf8JsonSerializable
+    public partial class SystemData : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
         }
 
-        internal static SystemData DeserializeSystemData(JsonElement element)
+        internal static SystemData DeserializeSystemData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.AzureSerivceDefault;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,6 +90,101 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
                 }
             }
             return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+        }
+
+        private struct SystemDataProperties
+        {
+            public Optional<string> CreatedBy { get; set; }
+            public Optional<CreatedByType> CreatedByType { get; set; }
+            public Optional<DateTimeOffset> CreatedAt { get; set; }
+            public Optional<string> LastModifiedBy { get; set; }
+            public Optional<CreatedByType> LastModifiedByType { get; set; }
+            public Optional<DateTimeOffset> LastModifiedAt { get; set; }
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            SystemDataProperties properties = new SystemDataProperties();
+
+            reader.Read();
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+                throw new FormatException("Expected StartObject token");
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                    break;
+
+                if (reader.TokenType != JsonTokenType.PropertyName)
+                    throw new FormatException("Expected PropertyName token");
+
+                var propertyName = reader.ValueSpan;
+                SetProperty(propertyName, ref properties, ref reader, options);
+            }
+
+            return new SystemData(
+                properties.CreatedBy.Value,
+                Optional.ToNullable(properties.CreatedByType),
+                Optional.ToNullable(properties.CreatedAt),
+                properties.LastModifiedBy.Value,
+                Optional.ToNullable(properties.LastModifiedByType),
+                Optional.ToNullable(properties.LastModifiedAt));
+        }
+
+        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref SystemDataProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (propertyName.SequenceEqual("createdBy"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.CreatedBy = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("createdByType"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.CreatedByType = new CreatedByType(reader.GetString());
+                return;
+            }
+            if (propertyName.SequenceEqual("createdAt"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.CreatedAt = DateTimeOffset.Parse(reader.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+                return;
+            }
+            if (propertyName.SequenceEqual("lastModifiedBy"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.LastModifiedBy = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("lastModifiedByType"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.LastModifiedByType = new CreatedByType(reader.GetString());
+                return;
+            }
+            if (propertyName.SequenceEqual("lastModifiedAt"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.LastModifiedAt = DateTimeOffset.Parse(reader.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+                return;
+            }
+            reader.Skip();
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSystemData(doc.RootElement, options);
         }
 
         internal partial class SystemDataConverter : JsonConverter<SystemData>

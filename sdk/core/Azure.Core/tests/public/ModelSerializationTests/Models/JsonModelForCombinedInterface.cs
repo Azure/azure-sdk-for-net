@@ -112,5 +112,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         {
             return DeserializeJsonModelForCombinedInterface(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,5 +18,15 @@ namespace Azure.Core.Serialization
 #pragma warning disable AZC0014 // Avoid using banned types in public API
         void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options);
 #pragma warning restore AZC0014 // Avoid using banned types in public API
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        object Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options);
+#pragma warning restore AZC0014 // Avoid using banned types in public API
     }
 }

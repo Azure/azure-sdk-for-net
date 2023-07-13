@@ -71,5 +71,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
             => DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

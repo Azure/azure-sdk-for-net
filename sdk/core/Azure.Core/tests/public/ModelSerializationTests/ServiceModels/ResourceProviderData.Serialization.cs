@@ -136,5 +136,10 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             }
             writer.WriteEndObject();
         }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

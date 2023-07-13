@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
-    public partial class ComputeSku : IUtf8JsonSerializable
+    public partial class ComputeSku : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -33,8 +38,10 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static ComputeSku DeserializeComputeSku(JsonElement element)
+        internal static ComputeSku DeserializeComputeSku(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.AzureSerivceDefault;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +72,71 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
                 }
             }
             return new ComputeSku(name.Value, tier.Value, Optional.ToNullable(capacity));
+        }
+
+        private struct ComputeSkuProperties
+        {
+            public Optional<string> Name { get; set; }
+            public Optional<string> Tier { get; set; }
+            public Optional<long> Capacity { get; set; }
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ComputeSkuProperties properties = new ComputeSkuProperties();
+
+            reader.Read();
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+                throw new FormatException("Expected StartObject token");
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                    break;
+
+                if (reader.TokenType != JsonTokenType.PropertyName)
+                    throw new FormatException("Expected PropertyName token");
+
+                var propertyName = reader.ValueSpan;
+                SetProperty(propertyName, ref properties, ref reader, options);
+            }
+
+            return new ComputeSku(properties.Name.Value, properties.Tier.Value, Optional.ToNullable(properties.Capacity));
+        }
+
+        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ComputeSkuProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (propertyName.SequenceEqual("name"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Name = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("tier"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Tier = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("capacity"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Capacity = reader.GetInt64();
+                return;
+            }
+            reader.Skip();
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeComputeSku(doc.RootElement, options);
         }
     }
 }

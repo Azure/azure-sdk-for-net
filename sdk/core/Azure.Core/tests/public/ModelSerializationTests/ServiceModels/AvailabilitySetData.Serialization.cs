@@ -7,13 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ResourceManager.Compute.Models;
 using Azure.Core.Tests.Public.ResourceManager.Models;
 using Azure.Core.Tests.Public.ResourceManager.Resources.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Compute
 {
@@ -241,5 +244,229 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 
         // only used for public access to internal serialize
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            return DeserializeAvailabilitySetData(ref reader, options);
+        }
+
+        private struct AvailabilitySetDataProperties
+        {
+            public Optional<ComputeSku> Sku { get; set; }
+            public Optional<IDictionary<string, string>> Tags { get; set; }
+            public AzureLocation Location { get; set; }
+            public ResourceIdentifier Id { get; set; }
+            public string Name { get; set; }
+            public ResourceType Type { get; set; }
+            public Optional<SystemData> SystemData { get; set; }
+            public Optional<int> PlatformUpdateDomainCount { get; set; }
+            public Optional<int> PlatformFaultDomainCount { get; set; }
+            public Optional<IList<WritableSubResource>> VirtualMachines { get; set; }
+            public Optional<WritableSubResource> ProximityPlacementGroup { get; set; }
+            public Optional<IReadOnlyList<InstanceViewStatus>> Statuses { get; set; }
+        }
+
+        public static AvailabilitySetData DeserializeAvailabilitySetData(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            AvailabilitySetDataProperties properties = new AvailabilitySetDataProperties();
+
+            reader.Read();
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+                throw new FormatException("Expected StartObject token");
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                    break;
+
+                if (reader.TokenType != JsonTokenType.PropertyName)
+                    throw new FormatException("Expected PropertyName token");
+
+                var propertyName = reader.ValueSpan;
+                SetProperty(propertyName, ref properties, ref reader, options);
+            }
+
+            return new AvailabilitySetData(
+                properties.Id,
+                properties.Name,
+                properties.Type,
+                properties.SystemData.Value,
+                Optional.ToDictionary(properties.Tags),
+                properties.Location,
+                properties.Sku.Value,
+                Optional.ToNullable(properties.PlatformUpdateDomainCount),
+                Optional.ToNullable(properties.PlatformFaultDomainCount),
+                Optional.ToList(properties.VirtualMachines),
+                properties.ProximityPlacementGroup,
+                Optional.ToList(properties.Statuses));
+        }
+
+        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref AvailabilitySetDataProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (propertyName.SequenceEqual("tags"u8))
+            {
+                properties.Tags = GetDictionary<string, string>(ref reader, StringKeyConverter, StringValueConverter, options);
+                return;
+            }
+            if (propertyName.SequenceEqual("sku"u8))
+            {
+                properties.Sku = (ComputeSku)ConvertValueToObject(typeof(ComputeSku), ref reader, options);
+                return;
+            }
+            if (propertyName.SequenceEqual("location"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Location = new AzureLocation(reader.GetString());
+                return;
+            }
+            if (propertyName.SequenceEqual("id"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Id = new ResourceIdentifier(reader.GetString());
+                return;
+            }
+            if (propertyName.SequenceEqual("name"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Name = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("type"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Type = new ResourceType(reader.GetString());
+                return;
+            }
+            if (propertyName.SequenceEqual("systemData"u8))
+            {
+                properties.SystemData = (SystemData)ConvertValueToObject(typeof(SystemData), ref reader, options);
+                return;
+            }
+            if (propertyName.SequenceEqual("properties"u8))
+            {
+                //this is an inline object (from flatten?)
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.StartObject)
+                    throw new FormatException("Expected StartObject token");
+                while (reader.Read())
+                {
+                    if (reader.TokenType == JsonTokenType.EndObject)
+                        break;
+
+                    if (reader.TokenType != JsonTokenType.PropertyName)
+                        throw new FormatException("Expected PropertyName token");
+
+                    var innerPropertyName = reader.ValueSpan;
+                    SetProperty(innerPropertyName, ref properties, ref reader, options);
+                }
+                return;
+            }
+            if (propertyName.SequenceEqual("platformUpdateDomainCount"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.PlatformUpdateDomainCount = reader.GetInt32();
+                return;
+            }
+            if (propertyName.SequenceEqual("platformFaultDomainCount"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.PlatformFaultDomainCount = reader.GetInt32();
+                return;
+            }
+            if (propertyName.SequenceEqual("virtualMachines"u8))
+            {
+                properties.VirtualMachines = GetList<WritableSubResource>(ref reader, ObjectValueConverter, options);
+                return;
+            }
+            if (propertyName.SequenceEqual("proximityPlacementGroup"u8))
+            {
+                properties.ProximityPlacementGroup = (WritableSubResource)ConvertValueToObject(typeof(WritableSubResource), ref reader, options);
+                return;
+            }
+            if (propertyName.SequenceEqual("statuses"u8))
+            {
+                properties.Statuses = GetList<InstanceViewStatus>(ref reader, ObjectValueConverter, options);
+                return;
+            }
+            reader.Skip();
+        }
+
+        private static List<T> GetList<T>(ref Utf8JsonReader reader, ValueConverter valueConverter, ModelSerializerOptions options)
+        {
+            List<T> list = new List<T>();
+
+            reader.Read();
+
+            if (reader.TokenType != JsonTokenType.StartArray)
+                throw new InvalidOperationException("Expected StartObject token");
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndArray)
+                    break;
+
+                list.Add((T)valueConverter(typeof(T), ref reader, options));
+            }
+
+            return list;
+        }
+
+        private delegate object ValueConverter(Type typeToConvert, ref Utf8JsonReader reader, ModelSerializerOptions options);
+        private delegate object KeyConverter(Type typeToConvert, string key);
+
+        private static readonly ValueConverter StringValueConverter = ConvertValueToString;
+        private static readonly KeyConverter StringKeyConverter = ConvertKeyToString;
+        private static readonly ValueConverter ObjectValueConverter = ConvertValueToObject;
+
+        private static object ConvertValueToObject(Type typeToConvert, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            var model = Activator.CreateInstance(typeToConvert, true) as IJsonModelSerializable;
+            if (model is null)
+                throw new InvalidOperationException($"{typeToConvert.Name} does not implement {nameof(IJsonModelSerializable)}");
+
+            return model.Deserialize(ref reader, options);
+        }
+
+        private static string ConvertValueToString(Type typeToConvert, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            reader.Read();
+            return reader.GetString();
+        }
+
+        private static string ConvertKeyToString(Type typeToConvert, string key) => key;
+
+
+        private static Dictionary<TKey, TValue> GetDictionary<TKey, TValue>(ref Utf8JsonReader reader, KeyConverter keyConverter, ValueConverter valueConverter, ModelSerializerOptions options)
+        {
+            Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
+
+            reader.Read();
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+                throw new InvalidOperationException("Expected StartObject token");
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                    break;
+
+                if (reader.TokenType != JsonTokenType.PropertyName)
+                    throw new InvalidOperationException("Expected StartObject token");
+
+                var propertyName = reader.GetString();
+                dictionary.Add((TKey)keyConverter(typeof(TKey), propertyName), (TValue)valueConverter(typeof(TValue), ref reader, options));
+            }
+
+            return dictionary;
+        }
     }
 }

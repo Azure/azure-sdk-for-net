@@ -143,6 +143,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             return DeserializeEnvelope(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

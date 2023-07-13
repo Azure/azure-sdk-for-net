@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
@@ -12,13 +14,15 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
     /// A class representing a sub-resource that contains only the ID.
     /// </summary>
     [JsonConverter(typeof(WritableSubResourceConverter))]
-    public partial class WritableSubResource : IUtf8JsonSerializable
+    public partial class WritableSubResource : IUtf8JsonSerializable, IJsonModelSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+
         /// <summary>
         /// Serialize the input WritableSubResource object.
         /// </summary>
         /// <param name="writer"> Input Json writer. </param>
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             if (writer is null)
             {
@@ -39,8 +43,10 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
         /// </summary>
         /// <param name="element">The JSON element to be deserialized.</param>
         /// <returns>Deserialized WritableSubResource object.</returns>
-        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element)
+        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.AzureSerivceDefault;
+
             ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,6 +61,55 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                 }
             }
             return new WritableSubResource(id);
+        }
+
+        private struct WritableSubResourceProperties
+        {
+            public ResourceIdentifier Id { get; set; }
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            WritableSubResourceProperties properties = new WritableSubResourceProperties();
+
+            reader.Read();
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+                throw new FormatException("Expected StartObject token");
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                    break;
+
+                if (reader.TokenType != JsonTokenType.PropertyName)
+                    throw new FormatException("Expected PropertyName token");
+
+                var propertyName = reader.ValueSpan;
+                SetProperty(propertyName, ref properties, ref reader, options);
+            }
+
+            return new WritableSubResource(properties.Id);
+        }
+
+        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref WritableSubResourceProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (propertyName.SequenceEqual("id"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Id = new ResourceIdentifier(reader.GetString());
+                return;
+            }
+            reader.Skip();
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWritableSubResource(doc.RootElement, options);
         }
 
         internal partial class WritableSubResourceConverter : JsonConverter<WritableSubResource>

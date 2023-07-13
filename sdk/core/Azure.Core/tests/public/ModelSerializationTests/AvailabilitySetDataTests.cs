@@ -34,7 +34,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void ImplicitCastTest() =>
             RoundTripTest(true, true, SerializeWithImplicitCast);
 
-        private void RoundTripTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize)
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public void JsonReaderTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties) =>
+            RoundTripTest(ignoreReadOnlyProperties, ignoreAdditionalProperties, SerializeWithModelSerializer, DeserializeWithJsonReader);
+
+        private void RoundTripTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize, Func<string, ModelSerializerOptions, AvailabilitySetData> deserialize = default)
         {
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.IgnoreAdditionalProperties = ignoreAdditionalProperties;
@@ -51,15 +58,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             //    expectedSerializedString += ",\"extraRoot\":\"extraRoot\"";
             expectedSerializedString += "}";
 
-            AvailabilitySetData model = ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(_serviceResponse)), options);
+            AvailabilitySetData model = deserialize is null ? ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(_serviceResponse)), options) : deserialize(_serviceResponse, options);
 
             ValidateModel(model);
             string roundTrip = serialize(model, options);
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            AvailabilitySetData model2 = ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options);
+            AvailabilitySetData model2 = deserialize is null ? ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options) : deserialize(roundTrip, options);
             CompareModels(model, model2, ignoreReadOnlyProperties);
+        }
+
+        private AvailabilitySetData DeserializeWithJsonReader(string json, ModelSerializerOptions options)
+        {
+            Utf8JsonReader reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(json));
+            var model = Activator.CreateInstance(typeof(AvailabilitySetData), true) as IJsonModelSerializable;
+            return (AvailabilitySetData)model.Deserialize(ref reader, options);
         }
 
         private string SerializeWithImplicitCast(AvailabilitySetData model, ModelSerializerOptions options)

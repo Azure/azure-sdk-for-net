@@ -160,5 +160,13 @@ namespace Azure.Core.Perf
         {
             _model.Deserialize(_data, _options);
         }
+
+        [Benchmark]
+        [BenchmarkCategory("PublicInterface")]
+        public void Deserialize_Utf8JsonReader()
+        {
+            Utf8JsonReader reader = new Utf8JsonReader(_data);
+            _model.Deserialize(ref reader, _options);
+        }
     }
 }

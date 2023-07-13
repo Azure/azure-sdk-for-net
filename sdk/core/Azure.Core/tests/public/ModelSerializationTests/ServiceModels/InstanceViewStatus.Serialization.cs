@@ -6,14 +6,18 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
-    public partial class InstanceViewStatus : IUtf8JsonSerializable
+    public partial class InstanceViewStatus : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
@@ -44,8 +48,10 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element)
+        internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.AzureSerivceDefault;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +98,86 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
                 }
             }
             return new InstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time));
+        }
+
+        private struct InstanceViewStatusProperties
+        {
+            public Optional<string> Code { get; set; }
+            public Optional<ComputeStatusLevelType> Level { get; set; }
+            public Optional<string> DisplayStatus { get; set; }
+            public Optional<string> Message { get; set; }
+            public Optional<DateTimeOffset> Time { get; set; }
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            InstanceViewStatusProperties properties = new InstanceViewStatusProperties();
+
+            reader.Read();
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+                throw new FormatException("Expected StartObject token");
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                    break;
+
+                if (reader.TokenType != JsonTokenType.PropertyName)
+                    throw new FormatException("Expected PropertyName token");
+
+                var propertyName = reader.ValueSpan;
+                SetProperty(propertyName, ref properties, ref reader, options);
+            }
+            return new InstanceViewStatus(properties.Code.Value, Optional.ToNullable(properties.Level), properties.DisplayStatus.Value, properties.Message.Value, Optional.ToNullable(properties.Time));
+        }
+
+        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref InstanceViewStatusProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (propertyName.SequenceEqual("code"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Code = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("level"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Level = reader.GetString().ToComputeStatusLevelType();
+                return;
+            }
+            if (propertyName.SequenceEqual("displayStatus"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.DisplayStatus = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("message"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Message = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("time"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Time = DateTimeOffset.Parse(reader.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+                return;
+            }
+            reader.Skip();
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInstanceViewStatus(doc.RootElement, options);
         }
     }
 }
