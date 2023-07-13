@@ -6,7 +6,7 @@ All samples are using `client` created in [Create a `TextTranslationClient`][cre
 
 Returns grammatical structure and context examples for the source term and target term pair.
 
-```C#
+```C# Snippet:GetGrammaticalStructureAsync
 try
 {
     string sourceLanguage = "en";
@@ -23,7 +23,6 @@ try
     Console.WriteLine($"For the given input {dictionaryEntry?.Examples?.Count} examples were found in the dictionary.");
     DictionaryExample firstExample = dictionaryEntry?.Examples?.FirstOrDefault();
     Console.WriteLine($"Example: '{string.Concat(firstExample.TargetPrefix, firstExample.TargetTerm, firstExample.TargetSuffix)}'.");
-
 }
 catch (RequestFailedException exception)
 {

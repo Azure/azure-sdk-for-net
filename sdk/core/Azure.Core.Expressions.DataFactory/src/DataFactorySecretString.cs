@@ -6,7 +6,7 @@ using System;
 namespace Azure.Core.Expressions.DataFactory
 {
     /// <summary> Azure Data Factory secure string definition. The string value will be masked with asterisks '*' during Get or List API calls. </summary>
-    [TypeReferenceType]
+    [TypeReferenceType(false, new[]{ nameof(SecretBaseType)})]
     public partial class DataFactorySecretString : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of DataFactorySecretString. </summary>

@@ -27,6 +27,12 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> The queue(s) that this worker can receive work from. </summary>
         public IDictionary<string, RouterQueueAssignment> QueueAssignments { get; } = new Dictionary<string, RouterQueueAssignment>();
 
+        /// <summary> The total capacity score this worker has to manage multiple concurrent jobs. </summary>
+        public int? TotalCapacity { get; internal set; }
+
+        /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
+        public bool? AvailableForOffers { get; internal set; }
+
         [CodeGenMember("Labels")]
         internal IDictionary<string, object> _labels
         {

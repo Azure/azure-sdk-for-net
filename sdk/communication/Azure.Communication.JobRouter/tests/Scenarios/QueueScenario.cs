@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
 {
     [NonParallelizable]
-    [Ignore("enable after deployment with matching changes")]
     public class QueueScenario : RouterLiveTestBase
     {
         private static string ScenarioPrefix = nameof(QueueScenario);
@@ -26,7 +26,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             JobRouterClient client = CreateRouterClientWithConnectionString();
             JobRouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
-            var channelResponse = GenerateUniqueId($"Channel-SQ-{IdPrefix}-{nameof(QueueScenario)}");
+            var channelResponse = GenerateUniqueId($"Channel-SQ-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
                     new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
@@ -36,7 +36,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 {
                     Name = "test",
                 });
-            var jobId = GenerateUniqueId($"JobId-SQ-{nameof(QueueScenario)}");
+            var jobId = GenerateUniqueId($"JobId-SQ-{ScenarioPrefix}");
             var createJob = await client.CreateJobAsync(
                 new CreateJobOptions(jobId, channelResponse, queueResponse.Value.Id)
                 {
@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             JobRouterClient client = CreateRouterClientWithConnectionString();
             JobRouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
-            var channelResponse = GenerateUniqueId($"Channel-StaticLabel-{IdPrefix}-{nameof(QueueScenario)}");
+            var channelResponse = GenerateUniqueId($"Channel-StaticLabel-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
                     new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
@@ -74,7 +74,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     }
                 });
 
-            var jobId = GenerateUniqueId($"JobId-StaticLabel-{nameof(QueueScenario)}");
+            var jobId = GenerateUniqueId($"JobId-StaticLabel-{ScenarioPrefix}");
             var createJob = await client.CreateJobWithClassificationPolicyAsync(
                 new CreateJobWithClassificationPolicyOptions(jobId, channelResponse, classificationPolicyResponse.Value.Id));
 
@@ -91,7 +91,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             JobRouterClient client = CreateRouterClientWithConnectionString();
             JobRouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
-            var channelResponse = GenerateUniqueId($"Channel-FQ-{IdPrefix}-{nameof(QueueScenario)}");
+            var channelResponse = GenerateUniqueId($"Channel-FQ-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
                     new LongestIdleMode()) { Name = "Simple-Queue-Distribution", });
@@ -111,7 +111,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     FallbackQueueId = fallbackQueueResponse.Value.Id,
                 });
 
-            var jobId = GenerateUniqueId($"JobId-default_Q-{nameof(QueueScenario)}");
+            var jobId = GenerateUniqueId($"JobId-default_Q-{ScenarioPrefix}");
             var createJob = await client.CreateJobWithClassificationPolicyAsync(new CreateJobWithClassificationPolicyOptions(jobId, channelResponse, classificationPolicyResponse.Value.Id));
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
@@ -127,7 +127,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             JobRouterClient client = CreateRouterClientWithConnectionString();
             JobRouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
-            var channelResponse = GenerateUniqueId($"Channel-CPWithConditionalLabels-{IdPrefix}-{nameof(QueueScenario)}");
+            var channelResponse = GenerateUniqueId($"Channel-CPWithConditionalLabels-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
                     new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
@@ -149,7 +149,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 {
                     QueueSelectors = {
                         new ConditionalQueueSelectorAttachment(
-                            condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
+                            condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
                                 new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queueResponse.Value.Id))
@@ -285,13 +285,13 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                         new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
                         new PassThroughQueueSelectorAttachment("Product", LabelOperator.Equal),
                         new ConditionalQueueSelectorAttachment(
-                            condition: new ExpressionRule($"If(job.Lang = \"{uniquePrefix}EN\", true, false)"),
+                            condition: new ExpressionRouterRule($"If(job.Lang = \"{uniquePrefix}EN\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
                                 new RouterQueueSelector("Language", LabelOperator.Equal, new LabelValue($"{uniquePrefix}en"))
                             }),
                         new ConditionalQueueSelectorAttachment(
-                            condition: new ExpressionRule($"If(job.Lang = \"{uniquePrefix}FR\", true, false)"),
+                            condition: new ExpressionRouterRule($"If(job.Lang = \"{uniquePrefix}FR\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
                                 new RouterQueueSelector("Language", LabelOperator.Equal, new LabelValue($"{uniquePrefix}fr"))

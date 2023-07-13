@@ -33,9 +33,9 @@ namespace Azure.Storage.DataMovement
         public override string Path => _path;
 
         /// <summary>
-        /// Cannot return a Url because this is a local path.
+        /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
+        public override bool CanProduceUri => false;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the resource
@@ -219,6 +219,22 @@ namespace Azure.Storage.DataMovement
                 return Task.FromResult(fileInfo.ToStorageResourceProperties());
             }
             throw new FileNotFoundException();
+        }
+
+        /// <summary>
+        /// Gets the Authorization Header for the storage resource if available.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        public override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException();
         }
 
         /// <summary>

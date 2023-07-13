@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0-beta.4 (2023-07-10)
 
 ### Other Changes
+
+- Added `TypeReferenceTypeAttribute` to Data Factory types to support code generation.
 
 ## 1.0.0-beta.3 (2023-06-27)
 
