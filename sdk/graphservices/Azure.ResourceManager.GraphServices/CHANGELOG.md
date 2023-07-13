@@ -2,15 +2,9 @@
 
 ## 1.0.0 (2023-04-13)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Updated swagger spec operation ids
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2023-04-07)
 
