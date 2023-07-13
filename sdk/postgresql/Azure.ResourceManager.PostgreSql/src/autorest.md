@@ -270,9 +270,32 @@ rename-mapping:
   OnlineResizeSupportedEnum: PostgreSqlFlexibleServerOnlineResizeSupported
   RestrictedEnum: PostgreSqlFlexibleServerZoneRedundantRestricted
   ServerSkuCapability: PostgreSqlFlexibleServerSkuCapability
+  CapabilityBase.status: CapabilityStatus
+  CapabilityBase: PostgreSqlBaseCapability
+  ExecutionStatus: PostgreSqlExecutionStatus
+  KeyStatusEnum: PostgreSqlKeyStatus
+  LtrBackupContent: PostgreSqlFlexibleServerLtrBackupContent
+  LtrBackupResponse: PostgreSqlFlexibleServerLtrBackupResult
+  LtrPreBackupContent: PostgreSqlFlexibleServerLtrPreBackupContent
+  LtrPreBackupResponse: PostgreSqlFlexibleServerLtrPreBackupResult
+  LtrServerBackupOperationData: PostgreSqlLtrServerBackupOperationData
+  LtrServerBackupOperationList: PostgreSqlLtrServerBackupOperationList
+  MigrationListFilter: PostgreqlMigrationListFilter
+  MigrationMode: PostgreSqlMigrationMode
+  MigrationNameAvailabilityReason: PostgreSqlMigrationNameUnavailableReason
+  MigrationResourceListResult: PostgreSqlMigrationResourceListResult
+  MigrationNameAvailabilityResource: PostgreSqlCheckMigrationNameAvailabilityContent
+  MigrationResourcePatch: PostgreSqlMigrationPatch
+  MigrationSecretParameters: PostgreSqlMigrationSecretParameters
+  MigrationState: PostgreSqlMigrationState
+  MigrationStatus: PostgreSqlMigrationStatus
+  MigrationSubState: PostgreSqlMigrationSubState
+  BackupRequestBase: PostgreSqlBackupContent
+  AzureManagedDiskPerformanceTier: PostgreSqlManagedDiskPerformanceTier
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
   CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation
+  PostgreSQLManagement_CheckMigrationNameAvailability: CheckPostgreSqlMigrationNameAvailability
 directive:
   - from: Administrators.json
     where: $.definitions

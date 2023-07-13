@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases send triggerCutover flag as True and database names in this array. </param>
         /// <param name="cancel"> To trigger cancel for entire migration we need to send this flag as True. </param>
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </param>
-        internal MigrationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, MigrationStatus currentStatus, MigrationMode? migrationMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, MigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn) : base(id, name, resourceType, systemData, tags, location)
+        internal MigrationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, PostgreSqlMigrationStatus currentStatus, PostgreSqlMigrationMode? migrationMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn) : base(id, name, resourceType, systemData, tags, location)
         {
             MigrationId = migrationId;
             CurrentStatus = currentStatus;
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> ID for migration, a GUID. </summary>
         public string MigrationId { get; }
         /// <summary> Current status of migration. </summary>
-        public MigrationStatus CurrentStatus { get; }
+        public PostgreSqlMigrationStatus CurrentStatus { get; }
         /// <summary> There are two types of migration modes Online and Offline. </summary>
-        public MigrationMode? MigrationMode { get; set; }
+        public PostgreSqlMigrationMode? MigrationMode { get; set; }
         /// <summary> Metadata of the source database server. </summary>
         public PostgreSqlServerMetadata SourceDbServerMetadata { get; }
         /// <summary> Metadata of the target database server. </summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> Target server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </summary>
         public string TargetDbServerFullyQualifiedDomainName { get; set; }
         /// <summary> Migration secret parameters. </summary>
-        public MigrationSecretParameters SecretParameters { get; set; }
+        public PostgreSqlMigrationSecretParameters SecretParameters { get; set; }
         /// <summary> Number of databases to migrate. </summary>
         public IList<string> DbsToMigrate { get; }
         /// <summary> Indicates whether to setup LogicalReplicationOnSourceDb, if needed. </summary>

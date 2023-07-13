@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckMigrationNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, MigrationNameAvailabilityResource migrationNameAvailabilityResource)
+        internal HttpMessage CreateCheckMigrationNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlCheckMigrationNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(migrationNameAvailabilityResource);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -66,26 +66,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
         /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
         /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationNameAvailabilityResource"> The required parameters for checking if a migration name is available. </param>
+        /// <param name="content"> The required parameters for checking if a migration name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationNameAvailabilityResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MigrationNameAvailabilityResource>> CheckMigrationNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, MigrationNameAvailabilityResource migrationNameAvailabilityResource, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlCheckMigrationNameAvailabilityContent>> CheckMigrationNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
-            Argument.AssertNotNull(migrationNameAvailabilityResource, nameof(migrationNameAvailabilityResource));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckMigrationNameAvailabilityRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationNameAvailabilityResource);
+            using var message = CreateCheckMigrationNameAvailabilityRequest(subscriptionId, resourceGroupName, targetDbServerName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MigrationNameAvailabilityResource value = default;
+                        PostgreSqlCheckMigrationNameAvailabilityContent value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MigrationNameAvailabilityResource.DeserializeMigrationNameAvailabilityResource(document.RootElement);
+                        value = PostgreSqlCheckMigrationNameAvailabilityContent.DeserializePostgreSqlCheckMigrationNameAvailabilityContent(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,26 +97,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="subscriptionId"> The subscription ID of the target database server. </param>
         /// <param name="resourceGroupName"> The resource group name of the target database server. </param>
         /// <param name="targetDbServerName"> The name of the target database server. </param>
-        /// <param name="migrationNameAvailabilityResource"> The required parameters for checking if a migration name is available. </param>
+        /// <param name="content"> The required parameters for checking if a migration name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationNameAvailabilityResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MigrationNameAvailabilityResource> CheckMigrationNameAvailability(string subscriptionId, string resourceGroupName, string targetDbServerName, MigrationNameAvailabilityResource migrationNameAvailabilityResource, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlCheckMigrationNameAvailabilityContent> CheckMigrationNameAvailability(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
-            Argument.AssertNotNull(migrationNameAvailabilityResource, nameof(migrationNameAvailabilityResource));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckMigrationNameAvailabilityRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationNameAvailabilityResource);
+            using var message = CreateCheckMigrationNameAvailabilityRequest(subscriptionId, resourceGroupName, targetDbServerName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MigrationNameAvailabilityResource value = default;
+                        PostgreSqlCheckMigrationNameAvailabilityContent value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MigrationNameAvailabilityResource.DeserializeMigrationNameAvailabilityResource(document.RootElement);
+                        value = PostgreSqlCheckMigrationNameAvailabilityContent.DeserializePostgreSqlCheckMigrationNameAvailabilityContent(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

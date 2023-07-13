@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             Optional<long> dataTransferredInBytes = default;
             Optional<string> backupName = default;
             Optional<string> backupMetadata = default;
-            Optional<ExecutionStatus> status = default;
+            Optional<PostgreSqlExecutionStatus> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<double> percentComplete = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            status = new ExecutionStatus(property0.Value.GetString());
+                            status = new PostgreSqlExecutionStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"u8))

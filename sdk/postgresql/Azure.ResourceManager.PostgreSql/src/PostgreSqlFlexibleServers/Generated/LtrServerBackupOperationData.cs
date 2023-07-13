@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="percentComplete"> PercentageCompleted. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
-        internal LtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, ExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage) : base(id, name, resourceType, systemData)
+        internal LtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage) : base(id, name, resourceType, systemData)
         {
             DatasourceSizeInBytes = datasourceSizeInBytes;
             DataTransferredInBytes = dataTransferredInBytes;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc. </summary>
         public string BackupMetadata { get; set; }
         /// <summary> Service-set extensible enum indicating the status of operation. </summary>
-        public ExecutionStatus? Status { get; set; }
+        public PostgreSqlExecutionStatus? Status { get; set; }
         /// <summary> Start time of the operation. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time of the operation. </summary>

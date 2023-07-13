@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Represents capability of a storage tier. </summary>
-    public partial class PostgreSqlFlexibleServerStorageTierCapability : CapabilityBase
+    public partial class PostgreSqlFlexibleServerStorageTierCapability : PostgreSqlBaseCapability
     {
         /// <summary> Storage tier name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

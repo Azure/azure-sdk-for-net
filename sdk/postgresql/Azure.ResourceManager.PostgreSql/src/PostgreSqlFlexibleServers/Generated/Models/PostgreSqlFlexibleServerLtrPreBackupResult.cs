@@ -8,11 +8,11 @@
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Response for the LTR pre-backup API call. </summary>
-    public partial class LtrPreBackupResponse
+    public partial class PostgreSqlFlexibleServerLtrPreBackupResult
     {
-        /// <summary> Initializes a new instance of LtrPreBackupResponse. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrPreBackupResult. </summary>
         /// <param name="numberOfContainers"> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </param>
-        internal LtrPreBackupResponse(int numberOfContainers)
+        internal PostgreSqlFlexibleServerLtrPreBackupResult(int numberOfContainers)
         {
             NumberOfContainers = numberOfContainers;
         }

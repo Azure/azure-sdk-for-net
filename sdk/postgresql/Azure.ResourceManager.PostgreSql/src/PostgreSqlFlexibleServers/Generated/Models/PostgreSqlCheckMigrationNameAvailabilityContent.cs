@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Represents a migration name's availability. </summary>
-    public partial class MigrationNameAvailabilityResource
+    public partial class PostgreSqlCheckMigrationNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of MigrationNameAvailabilityResource. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlCheckMigrationNameAvailabilityContent. </summary>
         /// <param name="name"> The resource name to verify. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public MigrationNameAvailabilityResource(string name, ResourceType resourceType)
+        public PostgreSqlCheckMigrationNameAvailabilityContent(string name, ResourceType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             ResourceType = resourceType;
         }
 
-        /// <summary> Initializes a new instance of MigrationNameAvailabilityResource. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlCheckMigrationNameAvailabilityContent. </summary>
         /// <param name="name"> The resource name to verify. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="nameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="reason"> Migration name availability reason. </param>
         /// <param name="message"> Migration name availability message. </param>
-        internal MigrationNameAvailabilityResource(string name, ResourceType resourceType, bool? nameAvailable, MigrationNameAvailabilityReason? reason, string message)
+        internal PostgreSqlCheckMigrationNameAvailabilityContent(string name, ResourceType resourceType, bool? nameAvailable, PostgreSqlMigrationNameUnavailableReason? reason, string message)
         {
             Name = name;
             ResourceType = resourceType;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Indicates whether the resource name is available. </summary>
         public bool? NameAvailable { get; }
         /// <summary> Migration name availability reason. </summary>
-        public MigrationNameAvailabilityReason? Reason { get; }
+        public PostgreSqlMigrationNameUnavailableReason? Reason { get; }
         /// <summary> Migration name availability message. </summary>
         public string Message { get; }
     }

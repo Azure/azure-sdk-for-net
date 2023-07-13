@@ -9,7 +9,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Server version capabilities. </summary>
-    public partial class PostgreSqlFlexibleServerServerVersionCapability : CapabilityBase
+    public partial class PostgreSqlFlexibleServerServerVersionCapability : PostgreSqlBaseCapability
     {
         /// <summary> Gets the supported v cores. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> storage size in MB capability. </summary>
-    public partial class PostgreSqlFlexibleServerStorageCapability : CapabilityBase
+    public partial class PostgreSqlFlexibleServerStorageCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageCapability. </summary>
         internal PostgreSqlFlexibleServerStorageCapability()
@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageCapability. </summary>
-        /// <param name="status"> The status of the capability. </param>
+        /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="supportedIops"> Supported IOPS. </param>
         /// <param name="storageSizeInMB"> Storage size in MB. </param>
         /// <param name="defaultIopsTier"> Default tier for IOPS. </param>
         /// <param name="supportedIopsTiers"> List of available options to upgrade the storage performance. </param>
-        internal PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? status, string reason, int? supportedIops, long? storageSizeInMB, string defaultIopsTier, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers) : base(status, reason)
+        internal PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, int? supportedIops, long? storageSizeInMB, string defaultIopsTier, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers) : base(capabilityStatus, reason)
         {
             SupportedIops = supportedIops;
             StorageSizeInMB = storageSizeInMB;

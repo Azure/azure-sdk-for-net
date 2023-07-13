@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Sku capability. </summary>
-    public partial class PostgreSqlFlexibleServerSkuCapability : CapabilityBase
+    public partial class PostgreSqlFlexibleServerSkuCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerSkuCapability. </summary>
         internal PostgreSqlFlexibleServerSkuCapability()
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerSkuCapability. </summary>
-        /// <param name="status"> The status of the capability. </param>
+        /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Sku name. </param>
         /// <param name="vCores"> Supported vCores. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedMemoryPerVcoreMb"> Supported memory per vCore in MB. </param>
         /// <param name="supportedZones"> List of supported Availability Zones. E.g. "1", "2", "3". </param>
         /// <param name="supportedHaMode"> Supported high availability mode. </param>
-        internal PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? status, string reason, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IReadOnlyList<string> supportedZones, IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode) : base(status, reason)
+        internal PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IReadOnlyList<string> supportedZones, IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode) : base(capabilityStatus, reason)
         {
             Name = name;
             VCores = vCores;

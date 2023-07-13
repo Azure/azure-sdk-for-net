@@ -141,15 +141,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> migrationId = default;
-            Optional<MigrationStatus> currentStatus = default;
-            Optional<MigrationMode> migrationMode = default;
+            Optional<PostgreSqlMigrationStatus> currentStatus = default;
+            Optional<PostgreSqlMigrationMode> migrationMode = default;
             Optional<PostgreSqlServerMetadata> sourceDbServerMetadata = default;
             Optional<PostgreSqlServerMetadata> targetDbServerMetadata = default;
             Optional<ResourceIdentifier> sourceDbServerResourceId = default;
             Optional<string> sourceDbServerFullyQualifiedDomainName = default;
             Optional<ResourceIdentifier> targetDbServerResourceId = default;
             Optional<string> targetDbServerFullyQualifiedDomainName = default;
-            Optional<MigrationSecretParameters> secretParameters = default;
+            Optional<PostgreSqlMigrationSecretParameters> secretParameters = default;
             Optional<IList<string>> dbsToMigrate = default;
             Optional<PostgreSqlMigrationLogicalReplicationOnSourceDb> setupLogicalReplicationOnSourceDbIfNeeded = default;
             Optional<PostgreSqlMigrationOverwriteDbsInTarget> overwriteDbsInTarget = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            currentStatus = MigrationStatus.DeserializeMigrationStatus(property0.Value);
+                            currentStatus = PostgreSqlMigrationStatus.DeserializePostgreSqlMigrationStatus(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("migrationMode"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            migrationMode = new MigrationMode(property0.Value.GetString());
+                            migrationMode = new PostgreSqlMigrationMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceDbServerMetadata"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            secretParameters = MigrationSecretParameters.DeserializeMigrationSecretParameters(property0.Value);
+                            secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dbsToMigrate"u8))

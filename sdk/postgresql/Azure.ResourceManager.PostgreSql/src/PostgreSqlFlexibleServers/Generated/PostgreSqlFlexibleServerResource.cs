@@ -947,18 +947,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="migrationNameAvailabilityResource"> The required parameters for checking if a migration name is available. </param>
+        /// <param name="content"> The required parameters for checking if a migration name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="migrationNameAvailabilityResource"/> is null. </exception>
-        public virtual async Task<Response<MigrationNameAvailabilityResource>> CheckMigrationNameAvailabilityAsync(MigrationNameAvailabilityResource migrationNameAvailabilityResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<PostgreSqlCheckMigrationNameAvailabilityContent>> CheckMigrationNameAvailabilityAsync(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(migrationNameAvailabilityResource, nameof(migrationNameAvailabilityResource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckMigrationNameAvailability");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.CheckMigrationNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationNameAvailabilityResource, cancellationToken).ConfigureAwait(false);
+                var response = await _defaultRestClient.CheckMigrationNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -981,18 +981,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="migrationNameAvailabilityResource"> The required parameters for checking if a migration name is available. </param>
+        /// <param name="content"> The required parameters for checking if a migration name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="migrationNameAvailabilityResource"/> is null. </exception>
-        public virtual Response<MigrationNameAvailabilityResource> CheckMigrationNameAvailability(MigrationNameAvailabilityResource migrationNameAvailabilityResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<PostgreSqlCheckMigrationNameAvailabilityContent> CheckMigrationNameAvailability(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(migrationNameAvailabilityResource, nameof(migrationNameAvailabilityResource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckMigrationNameAvailability");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.CheckMigrationNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationNameAvailabilityResource, cancellationToken);
+                var response = _defaultRestClient.CheckMigrationNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<LtrPreBackupResponse>> TriggerLtrPreBackupFlexibleServerAsync(LtrPreBackupContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerLtrPreBackupResult>> TriggerLtrPreBackupFlexibleServerAsync(LtrPreBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1096,7 +1096,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<LtrPreBackupResponse> TriggerLtrPreBackupFlexibleServer(LtrPreBackupContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerLtrPreBackupResult> TriggerLtrPreBackupFlexibleServer(LtrPreBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<LtrBackupResponse>> StartLtrBackupFlexibleServerAsync(WaitUntil waitUntil, LtrBackupContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerLtrBackupResult>> StartLtrBackupFlexibleServerAsync(WaitUntil waitUntil, LtrBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1140,7 +1140,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _flexibleServerRestClient.StartLtrBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<LtrBackupResponse>(new LtrBackupResponseOperationSource(), _flexibleServerClientDiagnostics, Pipeline, _flexibleServerRestClient.CreateStartLtrBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult>(new PostgreSqlFlexibleServerLtrBackupResultOperationSource(), _flexibleServerClientDiagnostics, Pipeline, _flexibleServerRestClient.CreateStartLtrBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1169,7 +1169,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<LtrBackupResponse> StartLtrBackupFlexibleServer(WaitUntil waitUntil, LtrBackupContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> StartLtrBackupFlexibleServer(WaitUntil waitUntil, LtrBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _flexibleServerRestClient.StartLtrBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new FlexibleServersArmOperation<LtrBackupResponse>(new LtrBackupResponseOperationSource(), _flexibleServerClientDiagnostics, Pipeline, _flexibleServerRestClient.CreateStartLtrBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult>(new PostgreSqlFlexibleServerLtrBackupResultOperationSource(), _flexibleServerClientDiagnostics, Pipeline, _flexibleServerRestClient.CreateStartLtrBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

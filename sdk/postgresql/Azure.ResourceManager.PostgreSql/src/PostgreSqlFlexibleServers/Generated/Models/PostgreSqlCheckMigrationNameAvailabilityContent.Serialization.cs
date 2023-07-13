@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class MigrationNameAvailabilityResource : IUtf8JsonSerializable
+    public partial class PostgreSqlCheckMigrationNameAvailabilityContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteEndObject();
         }
 
-        internal static MigrationNameAvailabilityResource DeserializeMigrationNameAvailabilityResource(JsonElement element)
+        internal static PostgreSqlCheckMigrationNameAvailabilityContent DeserializePostgreSqlCheckMigrationNameAvailabilityContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string name = default;
             ResourceType type = default;
             Optional<bool> nameAvailable = default;
-            Optional<MigrationNameAvailabilityReason> reason = default;
+            Optional<PostgreSqlMigrationNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    reason = new MigrationNameAvailabilityReason(property.Value.GetString());
+                    reason = new PostgreSqlMigrationNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MigrationNameAvailabilityResource(name, type, Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new PostgreSqlCheckMigrationNameAvailabilityContent(name, type, Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }

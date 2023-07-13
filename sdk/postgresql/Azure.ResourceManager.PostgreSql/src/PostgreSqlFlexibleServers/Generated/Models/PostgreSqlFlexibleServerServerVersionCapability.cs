@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Server version capabilities. </summary>
-    public partial class PostgreSqlFlexibleServerServerVersionCapability : CapabilityBase
+    public partial class PostgreSqlFlexibleServerServerVersionCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerServerVersionCapability. </summary>
         internal PostgreSqlFlexibleServerServerVersionCapability()
@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerServerVersionCapability. </summary>
-        /// <param name="status"> The status of the capability. </param>
+        /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Server version. </param>
         /// <param name="supportedVersionsToUpgrade"> Supported servers versions to upgrade. </param>
-        internal PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? status, string reason, string name, IReadOnlyList<string> supportedVersionsToUpgrade) : base(status, reason)
+        internal PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, IReadOnlyList<string> supportedVersionsToUpgrade) : base(capabilityStatus, reason)
         {
             Name = name;
             SupportedVersionsToUpgrade = supportedVersionsToUpgrade;

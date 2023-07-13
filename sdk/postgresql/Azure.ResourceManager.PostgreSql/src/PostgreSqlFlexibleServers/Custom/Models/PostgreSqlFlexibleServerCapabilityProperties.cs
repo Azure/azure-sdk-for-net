@@ -9,7 +9,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Capability for the PostgreSQL server. </summary>
-    public partial class PostgreSqlFlexibleServerCapabilityProperties : CapabilityBase
+    public partial class PostgreSqlFlexibleServerCapabilityProperties : PostgreSqlBaseCapability
     {
         /// <summary> List of supported flexible server editions. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Storage edition capability. </summary>
-    public partial class PostgreSqlFlexibleServerStorageEditionCapability : CapabilityBase
+    public partial class PostgreSqlFlexibleServerStorageEditionCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageEditionCapability. </summary>
         internal PostgreSqlFlexibleServerStorageEditionCapability()
@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageEditionCapability. </summary>
-        /// <param name="status"> The status of the capability. </param>
+        /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Storage edition name. </param>
         /// <param name="defaultStorageSizeMb"> Default storage size in MB for storage edition. </param>
         /// <param name="supportedStorageCapabilities"> Flexible server supported storage range in MB. </param>
-        internal PostgreSqlFlexibleServerStorageEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? status, string reason, string name, long? defaultStorageSizeMb, IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities) : base(status, reason)
+        internal PostgreSqlFlexibleServerStorageEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, long? defaultStorageSizeMb, IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities) : base(capabilityStatus, reason)
         {
             Name = name;
             DefaultStorageSizeMb = defaultStorageSizeMb;

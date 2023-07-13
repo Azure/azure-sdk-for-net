@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="keyType"> Data encryption type to depict if it is System Managed vs Azure Key vault. </param>
         /// <param name="primaryEncryptionKeyStatus"> Primary encryption key status for Data encryption enabled server. </param>
         /// <param name="geoBackupEncryptionKeyStatus"> Geo-backup encryption key status for Data encryption enabled server. </param>
-        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, ResourceIdentifier primaryUserAssignedIdentityId, Uri geoBackupKeyUri, string geoBackupUserAssignedIdentityId, PostgreSqlFlexibleServerKeyType? keyType, KeyStatusEnum? primaryEncryptionKeyStatus, KeyStatusEnum? geoBackupEncryptionKeyStatus)
+        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, ResourceIdentifier primaryUserAssignedIdentityId, Uri geoBackupKeyUri, string geoBackupUserAssignedIdentityId, PostgreSqlFlexibleServerKeyType? keyType, PostgreSqlKeyStatus? primaryEncryptionKeyStatus, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus)
         {
             PrimaryKeyUri = primaryKeyUri;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Data encryption type to depict if it is System Managed vs Azure Key vault. </summary>
         public PostgreSqlFlexibleServerKeyType? KeyType { get; set; }
         /// <summary> Primary encryption key status for Data encryption enabled server. </summary>
-        public KeyStatusEnum? PrimaryEncryptionKeyStatus { get; set; }
+        public PostgreSqlKeyStatus? PrimaryEncryptionKeyStatus { get; set; }
         /// <summary> Geo-backup encryption key status for Data encryption enabled server. </summary>
-        public KeyStatusEnum? GeoBackupEncryptionKeyStatus { get; set; }
+        public PostgreSqlKeyStatus? GeoBackupEncryptionKeyStatus { get; set; }
     }
 }

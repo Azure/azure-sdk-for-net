@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> The request that is made for a long term retention backup. </summary>
-    public partial class LtrBackupContent : BackupRequestBase
+    public partial class LtrBackupContent : PostgreSqlBackupContent
     {
         /// <summary> Initializes a new instance of LtrBackupContent. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>

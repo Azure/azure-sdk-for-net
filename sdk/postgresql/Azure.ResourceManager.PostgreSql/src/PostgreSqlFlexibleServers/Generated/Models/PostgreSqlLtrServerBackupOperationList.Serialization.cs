@@ -12,15 +12,15 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    internal partial class MigrationResourceListResult
+    internal partial class PostgreSqlLtrServerBackupOperationList
     {
-        internal static MigrationResourceListResult DeserializeMigrationResourceListResult(JsonElement element)
+        internal static PostgreSqlLtrServerBackupOperationList DeserializePostgreSqlLtrServerBackupOperationList(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<MigrationResourceData>> value = default;
+            Optional<IReadOnlyList<LtrServerBackupOperationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<MigrationResourceData> array = new List<MigrationResourceData>();
+                    List<LtrServerBackupOperationData> array = new List<LtrServerBackupOperationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrationResourceData.DeserializeMigrationResourceData(item));
+                        array.Add(LtrServerBackupOperationData.DeserializeLtrServerBackupOperationData(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MigrationResourceListResult(Optional.ToList(value), nextLink.Value);
+            return new PostgreSqlLtrServerBackupOperationList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

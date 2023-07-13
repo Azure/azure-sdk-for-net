@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class MigrationSecretParameters : IUtf8JsonSerializable
+    public partial class PostgreSqlMigrationSecretParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteEndObject();
         }
 
-        internal static MigrationSecretParameters DeserializeMigrationSecretParameters(JsonElement element)
+        internal static PostgreSqlMigrationSecretParameters DeserializePostgreSqlMigrationSecretParameters(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MigrationSecretParameters(adminCredentials, sourceServerUsername.Value, targetServerUsername.Value);
+            return new PostgreSqlMigrationSecretParameters(adminCredentials, sourceServerUsername.Value, targetServerUsername.Value);
         }
     }
 }

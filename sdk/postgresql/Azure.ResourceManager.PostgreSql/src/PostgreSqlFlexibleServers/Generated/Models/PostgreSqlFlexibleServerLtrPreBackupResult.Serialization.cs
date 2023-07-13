@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class LtrPreBackupResponse
+    public partial class PostgreSqlFlexibleServerLtrPreBackupResult
     {
-        internal static LtrPreBackupResponse DeserializeLtrPreBackupResponse(JsonElement element)
+        internal static PostgreSqlFlexibleServerLtrPreBackupResult DeserializePostgreSqlFlexibleServerLtrPreBackupResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new LtrPreBackupResponse(numberOfContainers);
+            return new PostgreSqlFlexibleServerLtrPreBackupResult(numberOfContainers);
         }
     }
 }

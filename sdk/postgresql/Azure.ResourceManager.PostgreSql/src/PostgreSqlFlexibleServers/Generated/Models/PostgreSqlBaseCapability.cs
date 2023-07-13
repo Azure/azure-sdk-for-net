@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Base object for representing capability. </summary>
-    public partial class CapabilityBase
+    public partial class PostgreSqlBaseCapability
     {
-        /// <summary> Initializes a new instance of CapabilityBase. </summary>
-        internal CapabilityBase()
+        /// <summary> Initializes a new instance of PostgreSqlBaseCapability. </summary>
+        internal PostgreSqlBaseCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of CapabilityBase. </summary>
-        /// <param name="status"> The status of the capability. </param>
+        /// <summary> Initializes a new instance of PostgreSqlBaseCapability. </summary>
+        /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal CapabilityBase(PostgreSqlFlexbileServerCapabilityStatus? status, string reason)
+        internal PostgreSqlBaseCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason)
         {
-            Status = status;
+            CapabilityStatus = capabilityStatus;
             Reason = reason;
         }
 
         /// <summary> The status of the capability. </summary>
-        public PostgreSqlFlexbileServerCapabilityStatus? Status { get; }
+        public PostgreSqlFlexbileServerCapabilityStatus? CapabilityStatus { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

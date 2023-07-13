@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> A request that is made for pre-backup. </summary>
-    public partial class LtrPreBackupContent : BackupRequestBase
+    public partial class LtrPreBackupContent : PostgreSqlBackupContent
     {
         /// <summary> Initializes a new instance of LtrPreBackupContent. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>

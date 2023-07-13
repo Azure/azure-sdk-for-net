@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class CapabilityBase
+    public partial class PostgreSqlBaseCapability
     {
-        internal static CapabilityBase DeserializeCapabilityBase(JsonElement element)
+        internal static PostgreSqlBaseCapability DeserializePostgreSqlBaseCapability(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new CapabilityBase(Optional.ToNullable(status), reason.Value);
+            return new PostgreSqlBaseCapability(Optional.ToNullable(status), reason.Value);
         }
     }
 }

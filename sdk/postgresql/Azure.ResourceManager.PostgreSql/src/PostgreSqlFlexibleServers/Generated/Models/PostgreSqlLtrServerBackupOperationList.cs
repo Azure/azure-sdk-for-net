@@ -12,18 +12,18 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> A list of long term retention backup operations for server. </summary>
-    internal partial class LtrServerBackupOperationList
+    internal partial class PostgreSqlLtrServerBackupOperationList
     {
-        /// <summary> Initializes a new instance of LtrServerBackupOperationList. </summary>
-        internal LtrServerBackupOperationList()
+        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationList. </summary>
+        internal PostgreSqlLtrServerBackupOperationList()
         {
             Value = new ChangeTrackingList<LtrServerBackupOperationData>();
         }
 
-        /// <summary> Initializes a new instance of LtrServerBackupOperationList. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationList. </summary>
         /// <param name="value"> The list of long term retention server backup operations. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        internal LtrServerBackupOperationList(IReadOnlyList<LtrServerBackupOperationData> value, string nextLink)
+        internal PostgreSqlLtrServerBackupOperationList(IReadOnlyList<LtrServerBackupOperationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

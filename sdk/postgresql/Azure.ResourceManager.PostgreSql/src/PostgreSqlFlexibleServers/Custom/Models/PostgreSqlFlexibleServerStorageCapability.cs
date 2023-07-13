@@ -9,7 +9,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> storage size in MB capability. </summary>
-    public partial class PostgreSqlFlexibleServerStorageCapability : CapabilityBase
+    public partial class PostgreSqlFlexibleServerStorageCapability : PostgreSqlBaseCapability
     {
         /// <summary> storage MB name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

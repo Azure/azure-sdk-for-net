@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Migration status. </summary>
-    public partial class MigrationStatus
+    public partial class PostgreSqlMigrationStatus
     {
-        /// <summary> Initializes a new instance of MigrationStatus. </summary>
-        internal MigrationStatus()
+        /// <summary> Initializes a new instance of PostgreSqlMigrationStatus. </summary>
+        internal PostgreSqlMigrationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationStatus. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlMigrationStatus. </summary>
         /// <param name="state"> State of migration. </param>
         /// <param name="error"> Error message, if any, for the migration state. </param>
         /// <param name="currentSubStateDetails"> Current Migration sub state details. </param>
-        internal MigrationStatus(MigrationState? state, string error, MigrationSubStateDetails currentSubStateDetails)
+        internal PostgreSqlMigrationStatus(PostgreSqlMigrationState? state, string error, MigrationSubStateDetails currentSubStateDetails)
         {
             State = state;
             Error = error;
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> State of migration. </summary>
-        public MigrationState? State { get; }
+        public PostgreSqlMigrationState? State { get; }
         /// <summary> Error message, if any, for the migration state. </summary>
         public string Error { get; }
         /// <summary> Current Migration sub state details. </summary>
         internal MigrationSubStateDetails CurrentSubStateDetails { get; }
         /// <summary> Migration sub state. </summary>
-        public MigrationSubState? CurrentSubState
+        public PostgreSqlMigrationSubState? CurrentSubState
         {
             get => CurrentSubStateDetails?.CurrentSubState;
         }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<MigrationSubState> currentSubState = default;
+            Optional<PostgreSqlMigrationSubState> currentSubState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentSubState"u8))
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    currentSubState = new MigrationSubState(property.Value.GetString());
+                    currentSubState = new PostgreSqlMigrationSubState(property.Value.GetString());
                     continue;
                 }
             }

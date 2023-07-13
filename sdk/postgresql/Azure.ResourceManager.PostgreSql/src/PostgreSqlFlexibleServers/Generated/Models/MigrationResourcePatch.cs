@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Target server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </summary>
         public string TargetDbServerFullyQualifiedDomainName { get; set; }
         /// <summary> Migration secret parameters. </summary>
-        public MigrationSecretParameters SecretParameters { get; set; }
+        public PostgreSqlMigrationSecretParameters SecretParameters { get; set; }
         /// <summary> Number of databases to migrate. </summary>
         public IList<string> DbsToMigrate { get; }
         /// <summary> Indicates whether to setup LogicalReplicationOnSourceDb, if needed. </summary>
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </summary>
         public IList<string> DbsToCancelMigrationOn { get; }
         /// <summary> There are two types of migration modes Online and Offline. </summary>
-        public MigrationMode? MigrationMode { get; set; }
+        public PostgreSqlMigrationMode? MigrationMode { get; set; }
     }
 }

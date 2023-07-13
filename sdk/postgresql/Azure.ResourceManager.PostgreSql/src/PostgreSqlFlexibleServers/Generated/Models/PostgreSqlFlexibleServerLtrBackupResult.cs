@@ -10,14 +10,14 @@ using System;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Response for the LTR backup API call. </summary>
-    public partial class LtrBackupResponse
+    public partial class PostgreSqlFlexibleServerLtrBackupResult
     {
-        /// <summary> Initializes a new instance of LtrBackupResponse. </summary>
-        internal LtrBackupResponse()
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrBackupResult. </summary>
+        internal PostgreSqlFlexibleServerLtrBackupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of LtrBackupResponse. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrBackupResult. </summary>
         /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
         /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
         /// <param name="backupName"> Name of Backup operation. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="percentComplete"> PercentageCompleted. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
-        internal LtrBackupResponse(long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, ExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage)
+        internal PostgreSqlFlexibleServerLtrBackupResult(long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage)
         {
             DatasourceSizeInBytes = datasourceSizeInBytes;
             DataTransferredInBytes = dataTransferredInBytes;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc. </summary>
         public string BackupMetadata { get; }
         /// <summary> Service-set extensible enum indicating the status of operation. </summary>
-        public ExecutionStatus? Status { get; }
+        public PostgreSqlExecutionStatus? Status { get; }
         /// <summary> Start time of the operation. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> End time of the operation. </summary>

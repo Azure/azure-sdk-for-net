@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class MigrationStatus
+    public partial class PostgreSqlMigrationStatus
     {
-        internal static MigrationStatus DeserializeMigrationStatus(JsonElement element)
+        internal static PostgreSqlMigrationStatus DeserializePostgreSqlMigrationStatus(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MigrationState> state = default;
+            Optional<PostgreSqlMigrationState> state = default;
             Optional<string> error = default;
             Optional<MigrationSubStateDetails> currentSubStateDetails = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    state = new MigrationState(property.Value.GetString());
+                    state = new PostgreSqlMigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MigrationStatus(Optional.ToNullable(state), error.Value, currentSubStateDetails.Value);
+            return new PostgreSqlMigrationStatus(Optional.ToNullable(state), error.Value, currentSubStateDetails.Value);
         }
     }
 }

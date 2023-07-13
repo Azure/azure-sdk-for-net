@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of MigrationSubStateDetails. </summary>
         /// <param name="currentSubState"> Migration sub state. </param>
-        internal MigrationSubStateDetails(MigrationSubState? currentSubState)
+        internal MigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState)
         {
             CurrentSubState = currentSubState;
         }
 
         /// <summary> Migration sub state. </summary>
-        public MigrationSubState? CurrentSubState { get; }
+        public PostgreSqlMigrationSubState? CurrentSubState { get; }
     }
 }

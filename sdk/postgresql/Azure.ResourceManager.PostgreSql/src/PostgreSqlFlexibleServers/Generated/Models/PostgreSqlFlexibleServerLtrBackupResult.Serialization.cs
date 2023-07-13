@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class LtrBackupResponse
+    public partial class PostgreSqlFlexibleServerLtrBackupResult
     {
-        internal static LtrBackupResponse DeserializeLtrBackupResponse(JsonElement element)
+        internal static PostgreSqlFlexibleServerLtrBackupResult DeserializePostgreSqlFlexibleServerLtrBackupResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<long> dataTransferredInBytes = default;
             Optional<string> backupName = default;
             Optional<string> backupMetadata = default;
-            Optional<ExecutionStatus> status = default;
+            Optional<PostgreSqlExecutionStatus> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<double> percentComplete = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            status = new ExecutionStatus(property0.Value.GetString());
+                            status = new PostgreSqlExecutionStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new LtrBackupResponse(Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupName.Value, backupMetadata.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value);
+            return new PostgreSqlFlexibleServerLtrBackupResult(Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupName.Value, backupMetadata.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value);
         }
     }
 }

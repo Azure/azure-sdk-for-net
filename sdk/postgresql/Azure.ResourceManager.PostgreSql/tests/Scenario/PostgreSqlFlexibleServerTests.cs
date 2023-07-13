@@ -1089,8 +1089,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             Assert.AreEqual(geoKey.Id, targetPublicServer.Data.DataEncryption.PrimaryKeyUri);
             Assert.AreEqual(geoIdentity.Id, targetPublicServer.Data.DataEncryption.PrimaryUserAssignedIdentityId);
             Assert.IsTrue(targetPublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(geoIdentity.Id));
-            Assert.AreEqual(targetPublicServer.Data.DataEncryption.PrimaryEncryptionKeyStatus.Value, KeyStatusEnum.Valid);
-            Assert.AreEqual(targetPublicServer.Data.DataEncryption.GeoBackupEncryptionKeyStatus.Value, KeyStatusEnum.Valid);
+            Assert.AreEqual(targetPublicServer.Data.DataEncryption.PrimaryEncryptionKeyStatus.Value, PostgreSqlKeyStatus.Valid);
+            Assert.AreEqual(targetPublicServer.Data.DataEncryption.GeoBackupEncryptionKeyStatus.Value, PostgreSqlKeyStatus.Valid);
 
             Assert.AreEqual(PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled, sourcePublicServer.Data.AuthConfig.ActiveDirectoryAuth);
             Assert.AreEqual(PostgreSqlFlexibleServerPasswordAuthEnum.Disabled, sourcePublicServer.Data.AuthConfig.PasswordAuth);

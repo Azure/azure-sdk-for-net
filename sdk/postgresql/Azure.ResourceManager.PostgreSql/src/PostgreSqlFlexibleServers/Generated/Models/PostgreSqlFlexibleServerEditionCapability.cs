@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Flexible server edition capabilities. </summary>
-    public partial class PostgreSqlFlexibleServerEditionCapability : CapabilityBase
+    public partial class PostgreSqlFlexibleServerEditionCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerEditionCapability. </summary>
         internal PostgreSqlFlexibleServerEditionCapability()
@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerEditionCapability. </summary>
-        /// <param name="status"> The status of the capability. </param>
+        /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Server edition name. </param>
         /// <param name="defaultSkuName"> Default sku name for the server edition. </param>
         /// <param name="supportedStorageEditions"> The list of editions supported by this server edition. </param>
         /// <param name="supportedServerSkus"> List of supported server SKUs. </param>
-        internal PostgreSqlFlexibleServerEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? status, string reason, string name, string defaultSkuName, IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> supportedServerSkus) : base(status, reason)
+        internal PostgreSqlFlexibleServerEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, string defaultSkuName, IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> supportedServerSkus) : base(capabilityStatus, reason)
         {
             Name = name;
             DefaultSkuName = defaultSkuName;

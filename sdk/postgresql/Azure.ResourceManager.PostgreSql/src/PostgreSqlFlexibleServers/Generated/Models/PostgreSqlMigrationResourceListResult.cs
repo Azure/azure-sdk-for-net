@@ -12,18 +12,18 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> A list of migration resources. </summary>
-    internal partial class MigrationResourceListResult
+    internal partial class PostgreSqlMigrationResourceListResult
     {
-        /// <summary> Initializes a new instance of MigrationResourceListResult. </summary>
-        internal MigrationResourceListResult()
+        /// <summary> Initializes a new instance of PostgreSqlMigrationResourceListResult. </summary>
+        internal PostgreSqlMigrationResourceListResult()
         {
             Value = new ChangeTrackingList<MigrationResourceData>();
         }
 
-        /// <summary> Initializes a new instance of MigrationResourceListResult. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlMigrationResourceListResult. </summary>
         /// <param name="value"> A list of migration resources. </param>
         /// <param name="nextLink"> The link used to get the next page of migrations. </param>
-        internal MigrationResourceListResult(IReadOnlyList<MigrationResourceData> value, string nextLink)
+        internal PostgreSqlMigrationResourceListResult(IReadOnlyList<MigrationResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

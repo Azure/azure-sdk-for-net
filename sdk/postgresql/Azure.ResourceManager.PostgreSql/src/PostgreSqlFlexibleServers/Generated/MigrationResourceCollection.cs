@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="migrationListFilter"> Migration list filter. Retrieves either active migrations or all migrations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MigrationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MigrationResource> GetAllAsync(MigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MigrationResource> GetAllAsync(PostgreqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationResourceMigrationsRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationResourceMigrationsRestClient.CreateListByTargetServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="migrationListFilter"> Migration list filter. Retrieves either active migrations or all migrations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MigrationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MigrationResource> GetAll(MigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MigrationResource> GetAll(PostgreqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationResourceMigrationsRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationResourceMigrationsRestClient.CreateListByTargetServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
