@@ -3208,7 +3208,7 @@ namespace Azure.Storage.Files.DataLake
                             }
                             batchesCount++;
                         } while (!string.IsNullOrEmpty(continuationToken)
-                            && (!options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
+                            && (options == null || !options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
 
                         return Response.FromValue(
                             new AccessControlChangeResult()
