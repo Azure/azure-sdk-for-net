@@ -45,7 +45,11 @@ namespace Azure.Core.Pipeline
 
         public bool IsActivityEnabled { get; }
 
+#if NETCOREAPP2_1
         public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Internal)
+#else
+        public DiagnosticScope CreateScope(string name, System.Diagnostics.ActivityKind kind = ActivityKind.Internal)
+#endif
         {
             if (_source == null)
             {

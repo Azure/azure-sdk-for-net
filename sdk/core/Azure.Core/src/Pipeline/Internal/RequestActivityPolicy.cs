@@ -54,7 +54,11 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
+#if NETCOREAPP2_1
             using var scope = new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, DiagnosticScope.ActivityKind.Client, false);
+#else
+            using var scope = new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, System.Diagnostics.ActivityKind.Client, false);
+#endif
 
             bool isActivitySourceEnabled = IsActivitySourceEnabled;
 

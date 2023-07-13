@@ -163,7 +163,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Config
 
         private async Task<FunctionResult> ExecuteWithTracingAsync(string functionName, TriggeredFunctionData triggerData)
         {
-            using DiagnosticScope scope = _diagnosticScopeFactory.CreateScope(DiagnosticScopeName, DiagnosticScope.ActivityKind.Consumer);
+            using DiagnosticScope scope = _diagnosticScopeFactory.CreateScope(DiagnosticScopeName, ActivityKind.Consumer);
             if (scope.IsEnabled)
             {
                 if (triggerData.TriggerValue is JArray evntArray)
