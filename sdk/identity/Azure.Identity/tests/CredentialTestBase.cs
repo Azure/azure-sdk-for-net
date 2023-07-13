@@ -268,25 +268,25 @@ namespace Azure.Identity.Tests
             // First call with EnableCae = false
             using (HttpPipeline.CreateClientRequestIdScope("disableCae"))
             {
-                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, enableCae: false), default);
+                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isCaeEnabled: false), default);
                 Assert.AreEqual(token, actualToken.Token);
             }
             // First call with EnableCae = true
             using (HttpPipeline.CreateClientRequestIdScope("enableCae"))
             {
-                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, enableCae: true), default);
+                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isCaeEnabled: true), default);
                 Assert.AreEqual(token, actualToken.Token);
             }
             // Second call with EnableCae = false
             using (HttpPipeline.CreateClientRequestIdScope("disableCae"))
             {
-                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, enableCae: false), default);
+                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isCaeEnabled: false), default);
                 Assert.AreEqual(token, actualToken.Token);
             }
             // Second call with EnableCae = true
             using (HttpPipeline.CreateClientRequestIdScope("enableCae"))
             {
-                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, enableCae: true), default);
+                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isCaeEnabled: true), default);
                 Assert.AreEqual(token, actualToken.Token);
             }
             Assert.True(observedCae);

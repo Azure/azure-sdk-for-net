@@ -163,5 +163,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeUrlQuery = "url.query";
         public const string AttributeUserAgentOriginal = "user_agent.original"; // replaces: "http.user_agent" (AttributeHttpUserAgent)
         public const string AttributeServerSocketAddress = "server.socket.address"; // replaces: "net.peer.ip" (AttributeNetPeerIp)
+
+        // Messaging v1.21.0 https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/messaging.md
+        public const string AttributeMessagingDestinationName = "messaging.destination.name";
+        public const string AttributeNetworkProtocolName = "network.protocol.name";
     }
 }
