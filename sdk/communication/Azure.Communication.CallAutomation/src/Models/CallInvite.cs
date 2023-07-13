@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Communication.CallAutomation.Models;
 
 namespace Azure.Communication.CallAutomation
 {

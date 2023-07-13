@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// CustomContext details.
@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation.Models
         /// <summary>
         /// Creates a new CustomContext.
         /// </summary>
-        public CustomContext(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders)
+        internal CustomContext(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders)
         {
             SipHeaders = sipHeaders;
             VoipHeaders = voipHeaders;

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication.CallAutomation.Models;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -59,8 +58,8 @@ namespace Azure.Communication.CallAutomation
         public Uri AzureCognitiveServicesEndpointUrl { get; set; }
 
         /// <summary>
-        /// The Custom Context which contains SIP and voip headers
+        /// The Custom Context which contains SIP and voip headers.
         /// </summary>
-        public CustomContext CustomContext { get; set; }
+        public CustomContext CustomContext { get; }
     }
 }
