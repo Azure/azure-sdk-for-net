@@ -297,6 +297,7 @@ override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
   CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation
   CheckMigrationNameAvailability: CheckPostgreSqlMigrationNameAvailability
+  LogFiles_ListByServer: GetPostgreSqlFlexibleServerLogFiles
 directive:
   - from: Administrators.json
     where: $.definitions
