@@ -71,7 +71,7 @@ foreach (var item in client.GetAcceptedSentShares("<sentShareName>", "<skipToken
 ]]></code>
 </example>
     </member>
-    <member name="ReinstateAsync(WaitUntil,string,string,RequestContent,string,RequestContext)">
+    <member name="ReinstateAsync(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call ReinstateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -102,7 +102,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -113,7 +113,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="Reinstate(WaitUntil,string,string,RequestContent,string,RequestContext)">
+    <member name="Reinstate(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call Reinstate with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -144,7 +144,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -155,14 +155,14 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="RevokeAsync(WaitUntil,string,string,string,RequestContext)">
+    <member name="RevokeAsync(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call RevokeAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>", new RequestContext());
+var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -173,14 +173,14 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="Revoke(WaitUntil,string,string,string,RequestContext)">
+    <member name="Revoke(WaitUntil,string,string,RequestContext)">
 <example>
 This sample shows how to call Revoke with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>", new RequestContext());
+var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", new RequestContext());
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -191,7 +191,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="UpdateExpirationAsync(WaitUntil,string,string,RequestContent,string,RequestContext)">
+    <member name="UpdateExpirationAsync(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateExpirationAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -222,7 +222,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -233,7 +233,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="UpdateExpiration(WaitUntil,string,string,RequestContent,string,RequestContext)">
+    <member name="UpdateExpiration(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateExpiration with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -264,7 +264,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

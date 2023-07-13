@@ -35,7 +35,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="RejectAsync(string,RequestContent,string,RequestContext)">
+    <member name="RejectAsync(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call RejectAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -70,7 +70,7 @@ var data = new {
     invitationKind = "Application",
 };
 
-Response response = await client.RejectAsync("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+Response response = await client.RejectAsync("<receivedInvitationName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -80,7 +80,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="Reject(string,RequestContent,string,RequestContext)">
+    <member name="Reject(string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call Reject with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -115,7 +115,7 @@ var data = new {
     invitationKind = "Application",
 };
 
-Response response = client.Reject("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+Response response = client.Reject("<receivedInvitationName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());

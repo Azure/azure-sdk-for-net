@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="ActivateAsync(RequestContent,string,RequestContext)">
+    <member name="ActivateAsync(RequestContent,RequestContext)">
 <example>
-This sample shows how to call ActivateAsync with required parameters and parse the result.
+This sample shows how to call ActivateAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
@@ -15,7 +15,7 @@ Response response = await client.ActivateAsync(RequestContent.Create(data));
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call ActivateAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call ActivateAsync with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
@@ -26,7 +26,7 @@ var data = new {
     },
 };
 
-Response response = await client.ActivateAsync(RequestContent.Create(data), "<repeatabilityRequestId>");
+Response response = await client.ActivateAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -40,9 +40,9 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="Activate(RequestContent,string,RequestContext)">
+    <member name="Activate(RequestContent,RequestContext)">
 <example>
-This sample shows how to call Activate with required parameters and parse the result.
+This sample shows how to call Activate and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
@@ -54,7 +54,7 @@ Response response = client.Activate(RequestContent.Create(data));
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call Activate with all parameters and request content, and how to parse the result.
+This sample shows how to call Activate with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
@@ -65,7 +65,7 @@ var data = new {
     },
 };
 
-Response response = client.Activate(RequestContent.Create(data), "<repeatabilityRequestId>");
+Response response = client.Activate(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -79,14 +79,14 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="RegisterAsync(string,RequestContext)">
+    <member name="RegisterAsync(RequestContext)">
 <example>
 This sample shows how to call RegisterAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.RegisterAsync("<repeatabilityRequestId>", new RequestContext());
+Response response = await client.RegisterAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -100,14 +100,14 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="Register(string,RequestContext)">
+    <member name="Register(RequestContext)">
 <example>
 This sample shows how to call Register with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
 
-Response response = client.Register("<repeatabilityRequestId>", new RequestContext());
+Response response = client.Register(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
