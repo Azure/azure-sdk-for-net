@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
 
             TransferManager transferManager = new TransferManager(transferManagerOptions);
@@ -285,7 +285,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.StopOnAllFailures,
+                ErrorHandling = ErrorHandlingBehavior.StopOnAllFailures,
                 MaximumConcurrency = 3
             };
             TransferOptions transferOptions = new TransferOptions()
@@ -351,8 +351,11 @@ namespace Azure.Storage.DataMovement.Tests
             int pause = progressHandler.Updates.Count;
 
             // Resume transfer
-            transferOptions.ResumeFromCheckpointId = transfer.Id;
-            DataTransfer resumeTransfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
+            DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
+                transfer.Id,
+                sourceResource,
+                destinationResource,
+                transferOptions);
 
             tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await resumeTransfer.AwaitCompletion(tokenSource.Token);

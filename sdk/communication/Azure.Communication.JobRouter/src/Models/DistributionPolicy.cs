@@ -39,5 +39,15 @@ namespace Azure.Communication.JobRouter.Models
                 OfferExpiresAfter = value != null ? TimeSpan.FromSeconds(value.Value) : null;
             }
         }
+
+        /// <summary> (Optional) The name of the distribution policy. </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// Abstract base class for defining a distribution mode
+        /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
+        /// </summary>
+        public DistributionMode Mode { get; internal set; }
     }
 }

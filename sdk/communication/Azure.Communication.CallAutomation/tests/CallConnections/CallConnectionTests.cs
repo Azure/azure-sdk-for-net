@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Communication.CallAutomation.Models;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using System;
 
@@ -561,12 +562,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
         private static IEnumerable<object?[]> TestData_TransferCallToParticipant()
         {
+            var callInvite = new CallInvite(new CommunicationUserIdentifier("userId"));
+            callInvite.CustomContext.Add(new VoipHeader("key1", "value1"));
             return new[]
             {
                 new object?[]
                 {
-                    new CallInvite(new CommunicationUserIdentifier("userId")){
-                        VoipHeaders = {{ "key1", "value1" }}}
+                    callInvite
                 },
             };
         }

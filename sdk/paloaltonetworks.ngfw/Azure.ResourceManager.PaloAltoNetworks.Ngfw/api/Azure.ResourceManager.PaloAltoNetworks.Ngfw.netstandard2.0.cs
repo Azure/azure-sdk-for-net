@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string Technology { get { throw null; } }
         public string Title { get { throw null; } }
     }
-    public static partial class ArmNgfwModelFactory
+    public static partial class ArmPaloAltoNetworksNgfwModelFactory
     {
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvSecurityObjectListResponse AdvSecurityObjectListResponse(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvSecurityObjectModel value = null, string nextLink = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvSecurityObjectModel AdvSecurityObjectModel(string advSecurityObjectModelType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject> entry = null) { throw null; }

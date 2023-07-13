@@ -632,7 +632,9 @@
         "Dpdk",
         "Sriov",
         "Sata",
-        "Uefi"
+        "Uefi",
+        "Ipvlan",
+        "Macvlan"
       ]
     },
     {
@@ -926,6 +928,12 @@
         "Stix",
         "Whois",
         "Nlstext"
+      ]
+    },
+    {
+      "filename": "**/sdk/sphere/**/*.cs",
+      "words": [
+        "Nwfs"
       ]
     },
     {

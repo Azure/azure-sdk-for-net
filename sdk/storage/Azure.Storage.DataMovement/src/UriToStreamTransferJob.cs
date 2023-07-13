@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Azure.Storage.DataMovement.Models;
 using System.Threading.Tasks;
 using System;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement
 {
@@ -21,8 +22,9 @@ namespace Azure.Storage.DataMovement
             TransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
-            ErrorHandlingOptions errorHandling,
-            ArrayPool<byte> arrayPool)
+            ErrorHandlingBehavior errorHandling,
+            ArrayPool<byte> arrayPool,
+            ClientDiagnostics clientDiagnostics)
             : base(dataTransfer,
                   sourceResource,
                   destinationResource,
@@ -30,7 +32,8 @@ namespace Azure.Storage.DataMovement
                   queueChunkTask,
                   checkpointer,
                   errorHandling,
-                  arrayPool)
+                  arrayPool,
+                  clientDiagnostics)
         {
         }
 
@@ -44,8 +47,9 @@ namespace Azure.Storage.DataMovement
             TransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
-            ErrorHandlingOptions errorHandling,
-            ArrayPool<byte> arrayPool)
+            ErrorHandlingBehavior errorHandling,
+            ArrayPool<byte> arrayPool,
+            ClientDiagnostics clientDiagnostics)
             : base(dataTransfer,
                   sourceResource,
                   destinationResource,
@@ -53,7 +57,8 @@ namespace Azure.Storage.DataMovement
                   queueChunkTask,
                   checkpointer,
                   errorHandling,
-                  arrayPool)
+                  arrayPool,
+                  clientDiagnostics)
         {
         }
 

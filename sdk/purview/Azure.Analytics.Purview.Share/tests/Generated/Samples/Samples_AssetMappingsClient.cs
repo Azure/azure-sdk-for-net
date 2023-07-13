@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.GetAssetMapping("<receivedShareName>", "<assetMappingName>");
+            Response response = client.GetAssetMapping("<receivedShareName>", "<assetMappingName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.GetAssetMapping("<receivedShareName>", "<assetMappingName>");
+            Response response = client.GetAssetMapping("<receivedShareName>", "<assetMappingName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.GetAssetMappingAsync("<receivedShareName>", "<assetMappingName>");
+            Response response = await client.GetAssetMappingAsync("<receivedShareName>", "<assetMappingName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.GetAssetMappingAsync("<receivedShareName>", "<assetMappingName>");
+            Response response = await client.GetAssetMappingAsync("<receivedShareName>", "<assetMappingName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-            foreach (var item in client.GetAssetMappings("<receivedShareName>"))
+            foreach (var item in client.GetAssetMappings("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-            foreach (var item in client.GetAssetMappings("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>"))
+            foreach (var item in client.GetAssetMappings("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-            await foreach (var item in client.GetAssetMappingsAsync("<receivedShareName>"))
+            await foreach (var item in client.GetAssetMappingsAsync("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -133,7 +133,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-            await foreach (var item in client.GetAssetMappingsAsync("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>"))
+            await foreach (var item in client.GetAssetMappingsAsync("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
