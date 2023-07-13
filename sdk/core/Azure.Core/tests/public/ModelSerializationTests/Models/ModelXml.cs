@@ -46,13 +46,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         private void Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
+            writer.WriteStartElement("Tag");
             writer.WriteStartElement("Key");
             writer.WriteValue(Key);
             writer.WriteEndElement();
             writer.WriteStartElement("Value");
             writer.WriteValue(Value);
             writer.WriteEndElement();
-            if (options.FormatType == ModelSerializerOptions.Format.Data)
+            if (options.ModelSerializerFormatKind == ModelSerializerFormat.Data)
             {
                 writer.WriteStartElement("ReadOnlyProperty");
                 writer.WriteValue(ReadOnlyProperty);

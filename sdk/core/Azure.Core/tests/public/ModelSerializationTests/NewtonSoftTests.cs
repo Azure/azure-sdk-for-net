@@ -26,7 +26,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             StringBuilder expectedSerialized = new StringBuilder("{");
             expectedSerialized.Append("\"IsHungry\":false,");
             expectedSerialized.Append("\"Weight\":2.5,");
-            if (format.Equals(ModelSerializerOptions.Format.Data))
+            if (format.Equals(ModelSerializerFormat.Data))
             {
                 expectedSerialized.Append("\"LatinName\":\"Animalia\",");
             }
@@ -36,7 +36,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             ModelSerializerOptions options = new ModelSerializerOptions(format);
 
-            if (format == ModelSerializerOptions.Format.Wire.ToString())
+            if (format == ModelSerializerFormat.Wire)
             {
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             var model = ModelSerializer.Deserialize<Animal>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
-            if (format.Equals(ModelSerializerOptions.Format.Data))
+            if (format.Equals(ModelSerializerFormat.Data))
             {
                 Assert.That(model.LatinName, Is.EqualTo("Animalia"));
             }

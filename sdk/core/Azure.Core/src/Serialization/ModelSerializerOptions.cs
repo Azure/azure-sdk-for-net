@@ -12,42 +12,19 @@ namespace Azure.Core.Serialization
     public class ModelSerializerOptions
     {
         /// <summary>
-        /// Enumerator representing format of the serialized model.
-        /// </summary>
-        public readonly partial struct Format
-        {
-            /// <summary>
-            /// Specifies the data format where IgnoreReadOnly and IgnoreAdditionalProperties are false.
-            /// </summary>
-            public static readonly string Data = "D";
-
-            /// <summary>
-            /// Specifies the wire format IgnoreReadOnly and IgnoreAdditionalProperties are true.
-            /// </summary>
-            public static readonly string Wire = "W";
-
-            /// <summary>
-            /// todo
-            /// </summary>
-            public Format()
-            {
-            }
-        }
-
-        /// <summary>
         /// Consructor for ModelSerializerOptions. Takes in a string that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".
         /// </summary>
         /// <param name="format"></param>
         public ModelSerializerOptions(string format = "D")
         {
             //throw ArgumentException if not "D" or "W"
-            FormatType = ValidateFormat(format);
+            ModelSerializerFormatKind = ValidateFormat(format);
         }
 
         /// <summary>
         /// String that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".
         /// </summary>
-        public string FormatType { get; }
+        public string ModelSerializerFormatKind { get; }
 
         /// <summary>
         /// Dictionary that holds all the serializers for the different model types.

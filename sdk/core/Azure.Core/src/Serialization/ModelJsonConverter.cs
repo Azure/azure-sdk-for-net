@@ -10,7 +10,7 @@ using System.Text.Json.Serialization;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// .
+    /// Add
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
     public class ModelJsonConverter : JsonConverter<IModelSerializable>
@@ -30,7 +30,7 @@ namespace Azure.Core.Serialization
         }
 
         /// <summary>
-        /// todo
+        /// Check if a certain type can be converted to IModelSerializable
         /// </summary>
         /// <param name="typeToConvert"></param>
         /// <returns></returns>

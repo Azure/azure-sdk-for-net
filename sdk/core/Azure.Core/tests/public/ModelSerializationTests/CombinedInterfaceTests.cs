@@ -27,7 +27,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 "</Tag>";
 
             var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
-            if (format.Equals(ModelSerializerOptions.Format.Data))
+            if (format.Equals(ModelSerializerFormat.Data))
                 expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
             expectedSerializedString += "</Tag>";
 
@@ -54,7 +54,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             string serviceResponse = "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"x\":\"extra\"}";
 
             var expectedSerializedString = "{\"key\":\"Color\",\"value\":\"Red\"";
-            if (format.Equals(ModelSerializerOptions.Format.Data))
+            if (format.Equals(ModelSerializerFormat.Data))
             {
                 expectedSerializedString += ",\"readOnlyProperty\":\"ReadOnly\"";
                 expectedSerializedString += ",\"x\":\"extra\"";
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("ReadOnly", model.ReadOnlyProperty);
             var additionalProperties = typeof(JsonModelForCombinedInterface).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
-            Assert.AreEqual(format.Equals(ModelSerializerOptions.Format.Data), additionalProperties.ContainsKey("x"));
+            Assert.AreEqual(format.Equals(ModelSerializerFormat.Data), additionalProperties.ContainsKey("x"));
             var data = ModelSerializer.Serialize(model, options);
             string roundTrip = data.ToString();
 
@@ -82,7 +82,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             Assert.AreEqual(expected.Key, actual.Key);
             Assert.AreEqual(expected.Value, actual.Value);
-            if (format.Equals(ModelSerializerOptions.Format.Data))
+            if (format.Equals(ModelSerializerFormat.Data))
                 Assert.AreEqual(expected.ReadOnlyProperty, actual.ReadOnlyProperty);
         }
 
@@ -90,13 +90,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             Assert.AreEqual(expected.Key, actual.Key);
             Assert.AreEqual(expected.Value, actual.Value);
-            if (format.Equals(ModelSerializerOptions.Format.Data))
+            if (format.Equals(ModelSerializerFormat.Data))
                 Assert.AreEqual(expected.ReadOnlyProperty, actual.ReadOnlyProperty);
             var rawDataProperty = typeof(JsonModelForCombinedInterface).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             var expectedRawData = rawDataProperty.GetValue(expected) as Dictionary<string, BinaryData>;
             var actualRawData = rawDataProperty.GetValue(actual) as Dictionary<string, BinaryData>;
             Assert.AreEqual(expectedRawData.Count, actualRawData.Count);
-            if (format.Equals(ModelSerializerOptions.Format.Data))
+            if (format.Equals(ModelSerializerFormat.Data))
                 Assert.AreEqual(expectedRawData["x"].ToString(), actualRawData["x"].ToString());
         }
     }

@@ -41,7 +41,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.FormatType == ModelSerializerOptions.Format.Data)
+            if (options.ModelSerializerFormatKind == ModelSerializerFormat.Data)
             {
                 //write out the raw data
                 foreach (var property in RawData)

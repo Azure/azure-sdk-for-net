@@ -28,7 +28,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 "</Tag>";
 
             var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
-            if (format.Equals(ModelSerializerOptions.Format.Data))
+            if (format.Equals(ModelSerializerFormat.Data))
                 expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
             expectedSerializedString += "</Tag>";
 
@@ -50,7 +50,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             Assert.AreEqual(correctModelXml.Key, model2.Key);
             Assert.AreEqual(correctModelXml.Value, model2.Value);
-            if (format.Equals(ModelSerializerOptions.Format.Data))
+            if (format.Equals(ModelSerializerFormat.Data))
                 Assert.AreEqual(correctModelXml.ReadOnlyProperty, model2.ReadOnlyProperty);
         }
     }
