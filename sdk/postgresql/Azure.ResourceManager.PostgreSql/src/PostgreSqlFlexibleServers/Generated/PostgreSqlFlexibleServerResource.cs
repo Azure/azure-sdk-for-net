@@ -950,11 +950,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> The required parameters for checking if a migration name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PostgreSqlCheckMigrationNameAvailabilityContent>> CheckMigrationNameAvailabilityAsync(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlCheckMigrationNameAvailabilityContent>> CheckPostgreSqlMigrationNameAvailabilityAsync(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckMigrationNameAvailability");
+            using var scope = _defaultClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckPostgreSqlMigrationNameAvailability");
             scope.Start();
             try
             {
@@ -984,11 +984,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> The required parameters for checking if a migration name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PostgreSqlCheckMigrationNameAvailabilityContent> CheckMigrationNameAvailability(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlCheckMigrationNameAvailabilityContent> CheckPostgreSqlMigrationNameAvailability(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckMigrationNameAvailability");
+            using var scope = _defaultClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckPostgreSqlMigrationNameAvailability");
             scope.Start();
             try
             {

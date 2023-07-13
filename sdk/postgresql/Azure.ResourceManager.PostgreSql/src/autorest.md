@@ -296,7 +296,7 @@ rename-mapping:
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
   CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation
-  PostgreSQLManagement_CheckMigrationNameAvailability: CheckPostgreSqlMigrationNameAvailability
+  CheckMigrationNameAvailability: CheckPostgreSqlMigrationNameAvailability
 directive:
   - from: Administrators.json
     where: $.definitions
