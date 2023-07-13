@@ -103,15 +103,27 @@ await dataTransfer.AwaitCompletion(cancellationToken);
 
 #### With Events via `TransferOptions`
 
-When starting a transfer, `TransferOptions` contains multiple events that can be listened to for observation. Below demonstrates listening to the event for a change in transfer status.
+When starting a transfer, `TransferOptions` contains multiple events that can be listened to for observation. Below demonstrates listening to the event for individual file completion and logging the result.
 
 ```csharp
-TransferOptions transferOption;
+TransferManager transferManager;
+StorageResource sourceResource;
+StorageResource destinationResource;
 
-transferOptions.TransferStatus += (TransferStatusEventArgs args) =>
+TransferOptions transferOptions = new();
+transferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
 {
-    // handle status change on the whole transfer
+    using (StreamWriter logStream = File.AppendText(logFile))
+    {
+        logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Path}");
+    }
+    return Task.CompletedTask;
 }
+DataTransfer transfer = transferManager.StartTransferAsync(
+    sourceResource,
+    destinationResource,
+    transferOptions,
+    cancellationToken);
 ```
 
 #### With IProgress via `TransferOptions`
@@ -195,6 +207,43 @@ async Task<(StorageResource Source, StorageResource Destination)> MakeResourcesA
     }
     return (sourceResource, destinationResource);
 }
+```
+
+### Handling Failed Transfers
+
+Transfer failure can be observed by checking the `DataTransfer` status upon completion, or by listening to failure events on the transfer. While checking the `DataTransfer` may be sufficient for handling single-file transfer failures, event listening is recommended for container transfers.
+
+Below logs failure for a single transnfer.
+
+```csharp
+DataTransfer transfer;
+
+await transfer.AwaitCompletion();
+if (transfer.TransferStatus == StorageTransferStatus.CompletedWithFailedTransfers)
+{
+    using (StreamWriter logStream = File.AppendText(logFile))
+    {
+        logStream.WriteLine($"Failure for TransferId: {args.TransferId}");
+    }
+}
+```
+
+Below logs individual failures in a container transfer.
+
+```csharp
+transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
+{
+    using (StreamWriter logStream = File.AppendText(logFile))
+    {
+        // Specifying specific resources that failed, since its a directory transfer
+        // maybe only one file failed out of many
+        logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
+            $"Source Resource: {args.SourceResource.Path}, +" +
+            $"Destination Resource: {args.DestinationResource.Path}," +
+            $"Exception Message: {args.Exception.Message}");
+    }
+    return Task.CompletedTask;
+};
 ```
 
 ### Initializing Local File `StorageResource`
