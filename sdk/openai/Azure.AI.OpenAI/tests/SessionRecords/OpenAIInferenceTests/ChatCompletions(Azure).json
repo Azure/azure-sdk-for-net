@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/gpt-35-turbo-0613/chat/completions?api-version=2023-07-01-preview",
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/gpt-4-0613/chat/completions?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "259",
         "Content-Type": "application/json",
-        "traceparent": "00-bfe5b656082325f606374d2c10f23a4f-8854d8696088da20-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230710.1 (.NET 6.0.18; Microsoft Windows 10.0.25393)",
-        "x-ms-client-request-id": "697c922912033d8343b65779193c489d",
+        "traceparent": "00-188459f1cf3b46fc6611df55382db7a4-3adc1182a1c2d50d-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230713.1 (.NET 6.0.20; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "14a31301e810e877f46a8135e1ee63f2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -36,52 +36,93 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "12255b1b-bb03-4bfa-b996-38757917f405",
+        "apim-request-id": "02769465-8b3f-4cab-a03b-6ccf4fb195a9",
         "azureml-model-group": "online",
-        "azureml-model-session": "aoai-gpt35-05242023",
+        "azureml-model-session": "dep-2",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "596",
+        "Content-Length": "978",
         "Content-Type": "application/json",
-        "Date": "Tue, 11 Jul 2023 16:01:28 GMT",
-        "openai-model": "gpt-35-turbo",
-        "openai-processing-ms": "2222.2107",
+        "Date": "Thu, 13 Jul 2023 17:11:13 GMT",
+        "openai-model": "gpt-4",
+        "openai-processing-ms": "2587.8289",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "697c922912033d8343b65779193c489d",
+        "x-ms-client-request-id": "14a31301e810e877f46a8135e1ee63f2",
         "x-ms-region": "East US",
-        "X-Request-ID": "4d4d851e-d0ee-42c8-9a59-18185a914104"
+        "X-Request-ID": "6f881fd6-b6dc-4b41-b8a4-f90a41e98886"
       },
       "ResponseBody": {
-        "id": "chatcmpl-7bA5mevkfJK6wwOXSHFnwT1E82CVj",
+        "id": "chatcmpl-7bu8M7jxaf2ajpTpkwwRbNhKkqzyL",
         "object": "chat.completion",
-        "created": 1689091286,
-        "model": "gpt-35-turbo",
+        "created": 1689268270,
+        "model": "gpt-4",
+        "prompt_annotations": [
+          {
+            "prompt_index": 0,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
         "choices": [
           {
             "index": 0,
             "finish_reason": "stop",
             "message": {
               "role": "assistant",
-              "content": "The ideal temperature for baking pizza is usually between 425 to 450 degrees Fahrenheit (218 to 232 degrees Celsius). However, the exact temperature may vary depending on the type of pizza you are making and the thickness of your crust. Be sure to follow the recipe or package instructions closely for best results."
+              "content": "Preheat your oven to the highest temperature it can get, usually around 475 - 500 degrees Fahrenheit (245 - 260 degrees Celsius). However, you should check the instructions on your pizza packaging as it can vary depending on the pizza."
+            },
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
             }
           }
         ],
         "usage": {
-          "completion_tokens": 61,
-          "prompt_tokens": 52,
-          "total_tokens": 113
+          "completion_tokens": 49,
+          "prompt_tokens": 48,
+          "total_tokens": 97
         }
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "CHAT_COMPLETIONS_DEPLOYMENT_NAME": "gpt-35-turbo",
+    "CHAT_COMPLETIONS_DEPLOYMENT_NAME": "gpt-4",
     "COMPLETIONS_DEPLOYMENT_NAME": "text-davinci-002",
     "EMBEDDINGS_DEPLOYMENT_NAME": "text-embedding-ada-002",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1049633990",
+    "RandomSeed": "2114604670",
     "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

@@ -13,30 +13,42 @@ namespace Azure.AI.OpenAI
     /// <summary> Information about the content filtering category, if it has been detected. </summary>
     public partial class ContentFilterResults
     {
-        /// <summary>
+        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <param name="sexual">
         /// Describes language related to anatomical organs and genitals, romantic relationships,
         ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including
         ///  those portrayed as an assault or a forced sexual violent act against one’s will,
         ///  prostitution, pornography, and abuse.
-        /// </summary>
-        public ContentFilterResult Sexual { get; }
-        /// <summary>
+        /// </param>
+        /// <param name="violence">
         /// Describes language related to physical actions intended to hurt, injure, damage, or
         /// kill someone or something; describes weapons, etc.
-        /// </summary>
-        public ContentFilterResult Violence { get; }
-        /// <summary>
+        /// </param>
+        /// <param name="hate">
         /// Describes language attacks or uses that include pejorative or discriminatory language
         /// with reference to a person or identity group on the basis of certain differentiating
         /// attributes of these groups including but not limited to race, ethnicity, nationality,
         /// gender identity and expression, sexual orientation, religion, immigration status, ability
         /// status, personal appearance, and body size.
-        /// </summary>
-        public ContentFilterResult Hate { get; }
-        /// <summary>
+        /// </param>
+        /// <param name="selfHarm">
         /// Describes language related to physical actions intended to purposely hurt, injure,
         /// or damage one’s body, or kill oneself.
-        /// </summary>
-        public ContentFilterResult SelfHarm { get; }
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sexual"/>, <paramref name="violence"/>, <paramref name="hate"/> or <paramref name="selfHarm"/> is null. </exception>
+        internal ContentFilterResults(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm)
+        {
+            // Custom code note: suppressing null checks pending generalized handling of empty content filter responses,
+            // e.g. for function_call completions
+            // Argument.AssertNotNull(sexual, nameof(sexual));
+            // Argument.AssertNotNull(violence, nameof(violence));
+            // Argument.AssertNotNull(hate, nameof(hate));
+            // Argument.AssertNotNull(selfHarm, nameof(selfHarm));
+
+            Sexual = sexual;
+            Violence = violence;
+            Hate = hate;
+            SelfHarm = selfHarm;
+        }
     }
 }

@@ -262,7 +262,7 @@ namespace Azure.AI.OpenAI.Tests
 
             public static readonly ModelDeploymentEntry ChatCompletions = new()
             {
-                AzureDeploymentName = "gpt-35-turbo-0613",
+                AzureDeploymentName = "gpt-4-0613",
                 AzureModelName = "gpt-35-turbo",
                 NonAzureModelName = "gpt-3.5-turbo",
                 EnvironmentVariableName = "CHAT_COMPLETIONS_DEPLOYMENT_NAME",

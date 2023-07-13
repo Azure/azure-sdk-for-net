@@ -19,7 +19,7 @@ public class ChatFunctionsTests : OpenAITestBase
     }
 
     [RecordedTest]
-    // [TestCase(OpenAIClientServiceTarget.Azure)]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
     public async Task SimpleFunctionCallWorks(OpenAIClientServiceTarget serviceTarget)
     {
@@ -30,7 +30,7 @@ public class ChatFunctionsTests : OpenAITestBase
 
         var requestOptions = new ChatCompletionsOptions()
         {
-            Functions = { futureTemperatureFunction },
+            Functions = { s_futureTemperatureFunction },
             Messages =
             {
                 new ChatMessage(ChatRole.System, "You are a helpful assistant."),
@@ -48,12 +48,12 @@ public class ChatFunctionsTests : OpenAITestBase
         Assert.That(response.Value.Choices[0].Message.Role, Is.EqualTo(ChatRole.Assistant));
         Assert.That(response.Value.Choices[0].Message.Content, Is.Null.Or.Empty);
         Assert.That(response.Value.Choices[0].Message.FunctionCall, Is.Not.Null);
-        Assert.That(response.Value.Choices[0].Message.FunctionCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
+        Assert.That(response.Value.Choices[0].Message.FunctionCall.Name, Is.EqualTo(s_futureTemperatureFunction.Name));
         Assert.That(response.Value.Choices[0].Message.FunctionCall.Arguments, Is.Not.Null.Or.Empty);
 
         ChatCompletionsOptions followupOptions = new ChatCompletionsOptions()
         {
-            Functions = { futureTemperatureFunction },
+            Functions = { s_futureTemperatureFunction },
             MaxTokens = 512,
         };
         foreach (ChatMessage originalMessage in requestOptions.Messages)
@@ -83,18 +83,16 @@ public class ChatFunctionsTests : OpenAITestBase
     }
 
     [RecordedTest]
-    // [TestCase(OpenAIClientServiceTarget.Azure)]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
     public async Task StreamingFunctionCallWorks(OpenAIClientServiceTarget serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
-        string deploymentOrModelName = GetDeploymentOrModelName(
-            serviceTarget,
-            OpenAIClientScenario.ChatCompletions);
+        string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ChatCompletions);
 
         var requestOptions = new ChatCompletionsOptions()
         {
-            Functions = { futureTemperatureFunction },
+            Functions = { s_futureTemperatureFunction },
             Messages =
             {
                 new ChatMessage(ChatRole.System, "You are a helpful assistant."),
@@ -127,16 +125,15 @@ public class ChatFunctionsTests : OpenAITestBase
                     functionName = message.FunctionCall.Name;
                 }
                 argumentsBuilder.Append(message.FunctionCall?.Arguments ?? string.Empty);
-                Console.WriteLine($"{message.Role} : {message.Content} / {message.FunctionCall?.Name} -> {message.FunctionCall?.Arguments}");
             }
         }
 
         Assert.That(streamedRole, Is.EqualTo(ChatRole.Assistant));
-        Assert.That(functionName, Is.EqualTo(futureTemperatureFunction.Name));
+        Assert.That(functionName, Is.EqualTo(s_futureTemperatureFunction.Name));
         Assert.That(argumentsBuilder.Length, Is.GreaterThan(0));
     }
 
-    private static readonly FunctionDefinition futureTemperatureFunction = new FunctionDefinition()
+    private static readonly FunctionDefinition s_futureTemperatureFunction = new()
     {
         Name = "get_future_temperature",
         Description = "requests the anticipated future temperature at a provided location to help inform "

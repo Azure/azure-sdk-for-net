@@ -169,12 +169,8 @@ namespace Azure.AI.OpenAI.Tests
         [TestCase(OpenAIClientServiceTarget.NonAzure)]
         public async Task ChatCompletionsContentFilterCategories(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetTestClient(
-                serviceTarget,
-                azureServiceVersionOverride: OpenAIClientOptions.ServiceVersion.V2023_06_01_Preview);
-            string deploymentOrModelName = GetDeploymentOrModelName(
-                serviceTarget,
-                OpenAIClientScenario.ChatCompletions);
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ChatCompletions);
             var requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
