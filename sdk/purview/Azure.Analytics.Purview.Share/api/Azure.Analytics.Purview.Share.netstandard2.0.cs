@@ -10,12 +10,12 @@ namespace Azure.Analytics.Purview.Share
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAcceptedSentShareAsync(string sentShareName, string acceptedSentShareName, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetAcceptedSentShares(string sentShareName, string skipToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetAcceptedSentSharesAsync(string sentShareName, string skipToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> Reinstate(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ReinstateAsync(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> Revoke(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> RevokeAsync(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> UpdateExpiration(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> UpdateExpirationAsync(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> Reinstate(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ReinstateAsync(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> Revoke(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> RevokeAsync(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> UpdateExpiration(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> UpdateExpirationAsync(Azure.WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class AssetMappingsClient
     {
@@ -53,10 +53,10 @@ namespace Azure.Analytics.Purview.Share
         public EmailRegistrationClient(string endpoint, Azure.Core.TokenCredential credential) { }
         public EmailRegistrationClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Share.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response Activate(Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ActivateAsync(Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Register(string repeatabilityRequestId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RegisterAsync(string repeatabilityRequestId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response Activate(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ActivateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Register(Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RegisterAsync(Azure.RequestContext context) { throw null; }
     }
     public partial class PurviewShareClientOptions : Azure.Core.ClientOptions
     {
@@ -85,8 +85,8 @@ namespace Azure.Analytics.Purview.Share
         public virtual System.Threading.Tasks.Task<Azure.Response> GetReceivedInvitationAsync(string receivedInvitationName, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetReceivedInvitations(string skipToken, string filter, string orderby, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetReceivedInvitationsAsync(string skipToken, string filter, string orderby, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response Reject(string receivedInvitationName, Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RejectAsync(string receivedInvitationName, Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response Reject(string receivedInvitationName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RejectAsync(string receivedInvitationName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class ReceivedSharesClient
     {

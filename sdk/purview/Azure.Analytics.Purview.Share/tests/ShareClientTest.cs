@@ -251,7 +251,7 @@ namespace Azure.Analytics.Purview.Share.Tests
             AcceptedSentSharesClient acceptedSentSharesClient = GetAcceptedSentSharesClient();
 
             //Revoke
-            await acceptedSentSharesClient.RevokeAsync(WaitUntil.Completed, sentShareName, acceptedSentShareName, null, new());
+            await acceptedSentSharesClient.RevokeAsync(WaitUntil.Completed, sentShareName, acceptedSentShareName, new());
 
             //Get Accepted Sent Share
             Response getResponse = await acceptedSentSharesClient.GetAcceptedSentShareAsync(sentShareName, acceptedSentShareName, new());
