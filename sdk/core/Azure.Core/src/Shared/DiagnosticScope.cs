@@ -27,7 +27,7 @@ namespace Azure.Core.Pipeline
 #if NETCOREAPP2_1
         internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
 #else
-        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, System.Diagnostics.ActivityKind kind, bool suppressNestedClientActivities)
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, ActivitySource? activitySource, System.Diagnostics.ActivityKind kind, bool suppressNestedClientActivities)
 #endif
         {
             // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
