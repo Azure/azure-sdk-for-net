@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
@@ -10,6 +11,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class RequestData
     {
+        public RequestData(int version, string? operationName, string? requestUrl, Activity activity, ref ActivityTagsProcessor activityTagsProcessor) : this(version, activity, ref activityTagsProcessor)
+        {
+            Name = operationName?.Truncate(SchemaConstants.RequestData_Name_MaxLength);
+            Url = requestUrl?.Truncate(SchemaConstants.RequestData_Url_MaxLength);
+        }
+
         public RequestData(int version, Activity activity, ref ActivityTagsProcessor activityTagsProcessor) : base(version)
         {
             string? responseCode = null;
@@ -50,6 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             TraceHelper.AddPropertiesToTelemetry(Properties, ref activityTagsProcessor.UnMappedTags);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool IsSuccess(Activity activity, string? responseCode, OperationType operationType)
         {
             if (operationType.HasFlag(OperationType.Http)
@@ -67,8 +75,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         private void SetHttpRequestPropertiesAndResponseCode(Activity activity, ref AzMonList httpTagObjects, out string responseCode)
         {
-            Url = httpTagObjects.GetRequestUrl().Truncate(SchemaConstants.RequestData_Url_MaxLength);
-            Name = TraceHelper.GetOperationName(activity, ref httpTagObjects).Truncate(SchemaConstants.RequestData_Name_MaxLength);
+            Url ??= httpTagObjects.GetRequestUrl()?.Truncate(SchemaConstants.RequestData_Url_MaxLength);
+            Name ??= TraceHelper.GetOperationName(activity, ref httpTagObjects)?.Truncate(SchemaConstants.RequestData_Name_MaxLength);
             responseCode = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeHttpStatusCode)
                                                 ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                                                 ?? "0";
@@ -76,8 +84,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         private void SetHttpV2RequestPropertiesAndResponseCode(Activity activity, ref AzMonList httpTagObjects, out string responseCode)
         {
-            Url = httpTagObjects.GetNewSchemaRequestUrl().Truncate(SchemaConstants.RequestData_Url_MaxLength);
-            Name = TraceHelper.GetNewSchemaOperationName(activity, Url, ref httpTagObjects).Truncate(SchemaConstants.RequestData_Name_MaxLength);
+            Url ??= httpTagObjects.GetNewSchemaRequestUrl()?.Truncate(SchemaConstants.RequestData_Url_MaxLength);
+            Name ??= TraceHelper.GetNewSchemaOperationName(activity, Url, ref httpTagObjects)?.Truncate(SchemaConstants.RequestData_Name_MaxLength);
             responseCode = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeHttpResponseStatusCode)
                                     ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                                     ?? "0";
@@ -85,7 +93,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         private void SetMessagingRequestProperties(Activity activity, ref AzMonList messagingTagObjects)
         {
-            Url = AzMonList.GetTagValue(ref messagingTagObjects, SemanticConventions.AttributeMessagingUrl)?.ToString().Truncate(SchemaConstants.RequestData_Url_MaxLength);
+            var (messagingUrl, source) = messagingTagObjects.GetMessagingUrlAndSourceOrTarget(activity.Kind);
+            Url = messagingUrl?.Truncate(SchemaConstants.RequestData_Url_MaxLength);
+            Source = source?.Truncate(SchemaConstants.RequestData_Source_MaxLength);
             Name = activity.DisplayName;
         }
     }
