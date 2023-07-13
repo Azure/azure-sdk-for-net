@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     EventHubsTestEnvironment.Instance.ResourceGroup,
                     EventHubsTestEnvironment.Instance.EventHubsNamespace));
 
-            var eventHubConfig = new EventHubData { PartitionCount = partitionCount, MessageRetentionInDays = 1 };
+            var eventHubConfig = new EventHubData { PartitionCount = partitionCount };
             var eventHub = await ehNamespace.GetEventHubs().CreateOrUpdateAsync(WaitUntil.Completed, eventHubName, eventHubConfig).ConfigureAwait(false);
 
             var groups = consumerGroups ?? new List<string>();
