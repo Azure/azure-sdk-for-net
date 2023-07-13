@@ -1142,18 +1142,29 @@ namespace Azure.Core.Serialization
         public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable { throw null; }
         public static System.BinaryData Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ModelSerializerFormat : System.IEquatable<Azure.Core.Serialization.ModelSerializerFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static readonly string Data;
+        public static readonly string Wire;
+        public ModelSerializerFormat(string value) { throw null; }
+        public bool Equals(Azure.Core.Serialization.ModelSerializerFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.Serialization.ModelSerializerFormat left, Azure.Core.Serialization.ModelSerializerFormat right) { throw null; }
+        public static implicit operator Azure.Core.Serialization.ModelSerializerFormat (string value) { throw null; }
+        public static bool operator !=(Azure.Core.Serialization.ModelSerializerFormat left, Azure.Core.Serialization.ModelSerializerFormat right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ModelSerializerOptions
     {
         public ModelSerializerOptions(string format = "D") { }
-        public string FormatType { get { throw null; } }
+        public string ModelSerializerFormatKind { get { throw null; } }
         public System.Collections.Generic.Dictionary<System.Type, Azure.Core.Serialization.ObjectSerializer> Serializers { get { throw null; } }
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
-        public readonly partial struct Format
-        {
-            public static readonly string Data;
-            public static readonly string Wire;
-            public Format() { throw null; }
-        }
     }
     public abstract partial class ObjectSerializer
     {
