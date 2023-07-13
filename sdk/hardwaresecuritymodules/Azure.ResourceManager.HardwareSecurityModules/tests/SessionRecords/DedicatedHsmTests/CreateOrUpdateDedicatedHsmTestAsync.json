@@ -247,7 +247,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/92d851e8-d259-4e82-bad9-b27b5d35da7d?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/92d851e8-d259-4e82-bad9-b27b5d35da7d?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -284,7 +284,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/92d851e8-d259-4e82-bad9-b27b5d35da7d?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/92d851e8-d259-4e82-bad9-b27b5d35da7d?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",

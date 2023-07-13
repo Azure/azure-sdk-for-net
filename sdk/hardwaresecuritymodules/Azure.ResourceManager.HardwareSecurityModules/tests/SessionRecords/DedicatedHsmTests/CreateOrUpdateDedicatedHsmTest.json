@@ -176,7 +176,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/d4ebb2e1-e998-44e9-af63-0bf4dbb23480?api-version=2021-02-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/d4ebb2e1-e998-44e9-af63-0bf4dbb23480?api-version=2023-02-01",
         "Cache-Control": "no-cache",
         "Content-Length": "2063",
         "Content-Type": "application/json; charset=utf-8",
@@ -248,7 +248,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/d4ebb2e1-e998-44e9-af63-0bf4dbb23480?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/d4ebb2e1-e998-44e9-af63-0bf4dbb23480?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -285,7 +285,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/d4ebb2e1-e998-44e9-af63-0bf4dbb23480?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/providers/Microsoft.Network/locations/eastus/operations/d4ebb2e1-e998-44e9-af63-0bf4dbb23480?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
