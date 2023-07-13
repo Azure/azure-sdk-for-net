@@ -7,25 +7,25 @@ using System.Collections.Generic;
 namespace Azure.Core.Expressions.DataFactory
 {
     /// <summary>
-    ///
+    /// Model factory to construct types for mocking.
     /// </summary>
     public static class DataFactoryModelFactory
     {
         /// <summary>
-        ///
+        /// Constructs a <see cref="DataFactorySecretString"/> for mocking.
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="value">The secret string value.</param>
+        /// <returns>The constructed <see cref="DataFactorySecretString"/>.</returns>
         public static DataFactorySecretString DataFactorySecretString(string value) =>
             new DataFactorySecretString(value);
 
         /// <summary>
-        ///
+        /// Constructs a <see cref="DataFactoryKeyVaultSecretReference"/> for mocking.
         /// </summary>
-        /// <param name="store"></param>
-        /// <param name="secretName"></param>
-        /// <param name="secretVersion"></param>
-        /// <returns></returns>
+        /// <param name="store">The linked store.</param>
+        /// <param name="secretName">The secret name.</param>
+        /// <param name="secretVersion">The secret version.</param>
+        /// <returns>The constructed <see cref="DataFactoryKeyVaultSecretReference"/>.</returns>
         public static DataFactoryKeyVaultSecretReference DataFactoryKeyVaultSecretReference(
             DataFactoryLinkedServiceReference store,
             DataFactoryElement<string> secretName,
@@ -33,20 +33,20 @@ namespace Azure.Core.Expressions.DataFactory
             new DataFactoryKeyVaultSecretReference(store, secretName) { SecretVersion = secretVersion };
 
         /// <summary>
-        ///
+        /// Constructs a <see cref="DataFactorySecretBaseDefinition"/> for mocking.
         /// </summary>
-        /// <param name="secretBaseType"></param>
-        /// <returns></returns>
+        /// <param name="secretBaseType">The secret base type.</param>
+        /// <returns>The constructed <see cref="DataFactorySecretBaseDefinition"/>.</returns>
         public static DataFactorySecretBaseDefinition DataFactorySecretBaseDefinition(string secretBaseType) =>
             new UnknownSecretBase(secretBaseType);
 
         /// <summary>
-        ///
+        /// Constructs a <see cref="DataFactoryLinkedServiceReference"/> for mocking.
         /// </summary>
-        /// <param name="referenceType"></param>
-        /// <param name="referenceName"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
+        /// <param name="referenceType">The reference type.</param>
+        /// <param name="referenceName">The reference name.</param>
+        /// <param name="parameters">The reference parameters.</param>
+        /// <returns>The constructed <see cref="DataFactoryLinkedServiceReference"/>.</returns>
         public static DataFactoryLinkedServiceReference DataFactoryLinkedServiceReference(
             DataFactoryLinkedServiceReferenceType referenceType,
             string? referenceName,
