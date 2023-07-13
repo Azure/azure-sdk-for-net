@@ -43,6 +43,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        boundingBox = null;
                         continue;
                     }
                     List<float> array = new List<float>();
@@ -57,6 +58,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        elements = null;
                         continue;
                     }
                     List<string> array = new List<string>();

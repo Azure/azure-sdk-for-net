@@ -12,6 +12,7 @@ public-clients: false
 head-as-boolean: false
 modelerfour:
   lenient-model-deduplication: true
+deserialize-null-collection-as-null-value: true
 
 # mgmt-debug:
 #   show-serialized-names: true

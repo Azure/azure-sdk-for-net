@@ -117,6 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        allowedTrainingAlgorithms = null;
                         continue;
                     }
                     List<AutoMLVerticalRegressionModel> array = new List<AutoMLVerticalRegressionModel>();
@@ -131,6 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        blockedTrainingAlgorithms = null;
                         continue;
                     }
                     List<AutoMLVerticalRegressionModel> array = new List<AutoMLVerticalRegressionModel>();

@@ -73,6 +73,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        searchCaptions = null;
                         continue;
                     }
                     List<CaptionResult> array = new List<CaptionResult>();
@@ -87,6 +88,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        searchDocumentDebugInfo = null;
                         continue;
                     }
                     List<DocumentDebugInfo> array = new List<DocumentDebugInfo>();

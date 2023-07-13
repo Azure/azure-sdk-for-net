@@ -149,6 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        traffic = null;
                         continue;
                     }
                     Dictionary<string, int> dictionary = new Dictionary<string, int>();
@@ -188,6 +189,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

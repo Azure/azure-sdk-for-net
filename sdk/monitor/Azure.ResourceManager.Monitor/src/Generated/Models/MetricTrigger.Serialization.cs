@@ -146,6 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        dimensions = null;
                         continue;
                     }
                     List<AutoscaleRuleMetricDimension> array = new List<AutoscaleRuleMetricDimension>();

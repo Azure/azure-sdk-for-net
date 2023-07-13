@@ -366,6 +366,7 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                uriSigningKeys = null;
                                 continue;
                             }
                             List<UriSigningKey> array = new List<UriSigningKey>();

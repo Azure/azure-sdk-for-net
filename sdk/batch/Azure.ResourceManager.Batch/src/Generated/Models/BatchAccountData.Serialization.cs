@@ -222,6 +222,7 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                privateEndpointConnections = null;
                                 continue;
                             }
                             List<BatchPrivateEndpointConnectionData> array = new List<BatchPrivateEndpointConnectionData>();
@@ -274,6 +275,7 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                dedicatedCoreQuotaPerVmFamily = null;
                                 continue;
                             }
                             List<BatchVmFamilyCoreQuota> array = new List<BatchVmFamilyCoreQuota>();
@@ -315,6 +317,7 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                allowedAuthenticationModes = null;
                                 continue;
                             }
                             List<BatchAuthenticationMode> array = new List<BatchAuthenticationMode>();

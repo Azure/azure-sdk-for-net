@@ -287,6 +287,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        aliases = null;
                         continue;
                     }
                     List<CustomEntityAlias> array = new List<CustomEntityAlias>();

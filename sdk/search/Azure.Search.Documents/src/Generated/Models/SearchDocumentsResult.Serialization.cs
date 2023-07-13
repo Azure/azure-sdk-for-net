@@ -79,6 +79,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        searchAnswers = null;
                         continue;
                     }
                     List<AnswerResult> array = new List<AnswerResult>();

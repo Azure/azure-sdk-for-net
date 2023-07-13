@@ -71,6 +71,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        selectionMarks = null;
                         continue;
                     }
                     List<SelectionMark> array = new List<SelectionMark>();

@@ -123,6 +123,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -147,6 +148,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        addressSpace = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -161,6 +163,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        dnsServers = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -175,6 +178,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        subnets = null;
                         continue;
                     }
                     List<SubnetResourceSettings> array = new List<SubnetResourceSettings>();
