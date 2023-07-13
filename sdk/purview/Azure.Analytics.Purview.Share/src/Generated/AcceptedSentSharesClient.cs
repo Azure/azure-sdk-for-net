@@ -202,14 +202,13 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='ReinstateAsync(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> ReinstateAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='ReinstateAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> ReinstateAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(acceptedSentShareName, nameof(acceptedSentShareName));
@@ -219,7 +218,7 @@ namespace Azure.Analytics.Purview.Share
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReinstateRequest(sentShareName, acceptedSentShareName, content, repeatabilityRequestId, context);
+                using HttpMessage message = CreateReinstateRequest(sentShareName, acceptedSentShareName, content, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Reinstate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -243,14 +242,13 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='Reinstate(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> Reinstate(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='Reinstate(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
+        public virtual Operation<BinaryData> Reinstate(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(acceptedSentShareName, nameof(acceptedSentShareName));
@@ -260,7 +258,7 @@ namespace Azure.Analytics.Purview.Share
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReinstateRequest(sentShareName, acceptedSentShareName, content, repeatabilityRequestId, context);
+                using HttpMessage message = CreateReinstateRequest(sentShareName, acceptedSentShareName, content, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Reinstate", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -283,14 +281,13 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='RevokeAsync(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> RevokeAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId, RequestContext context)
+        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='RevokeAsync(WaitUntil,string,string,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> RevokeAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(acceptedSentShareName, nameof(acceptedSentShareName));
@@ -299,7 +296,7 @@ namespace Azure.Analytics.Purview.Share
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRevokeRequest(sentShareName, acceptedSentShareName, repeatabilityRequestId, context);
+                using HttpMessage message = CreateRevokeRequest(sentShareName, acceptedSentShareName, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Revoke", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -322,14 +319,13 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='Revoke(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> Revoke(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, string repeatabilityRequestId, RequestContext context)
+        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='Revoke(WaitUntil,string,string,RequestContext)']/*" />
+        public virtual Operation<BinaryData> Revoke(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(acceptedSentShareName, nameof(acceptedSentShareName));
@@ -338,7 +334,7 @@ namespace Azure.Analytics.Purview.Share
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRevokeRequest(sentShareName, acceptedSentShareName, repeatabilityRequestId, context);
+                using HttpMessage message = CreateRevokeRequest(sentShareName, acceptedSentShareName, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.Revoke", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -362,14 +358,13 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='UpdateExpirationAsync(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> UpdateExpirationAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='UpdateExpirationAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> UpdateExpirationAsync(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(acceptedSentShareName, nameof(acceptedSentShareName));
@@ -379,7 +374,7 @@ namespace Azure.Analytics.Purview.Share
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateExpirationRequest(sentShareName, acceptedSentShareName, content, repeatabilityRequestId, context);
+                using HttpMessage message = CreateUpdateExpirationRequest(sentShareName, acceptedSentShareName, content, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.UpdateExpiration", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -403,14 +398,13 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="sentShareName"> The name of the sent share. </param>
         /// <param name="acceptedSentShareName"> The name of the accepted sent share. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareName"/>, <paramref name="acceptedSentShareName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="acceptedSentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='UpdateExpiration(WaitUntil,string,string,RequestContent,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> UpdateExpiration(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/AcceptedSentSharesClient.xml" path="doc/members/member[@name='UpdateExpiration(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
+        public virtual Operation<BinaryData> UpdateExpiration(WaitUntil waitUntil, string sentShareName, string acceptedSentShareName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
             Argument.AssertNotNullOrEmpty(acceptedSentShareName, nameof(acceptedSentShareName));
@@ -420,7 +414,7 @@ namespace Azure.Analytics.Purview.Share
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateExpirationRequest(sentShareName, acceptedSentShareName, content, repeatabilityRequestId, context);
+                using HttpMessage message = CreateUpdateExpirationRequest(sentShareName, acceptedSentShareName, content, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "AcceptedSentSharesClient.UpdateExpiration", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -467,7 +461,7 @@ namespace Azure.Analytics.Purview.Share
             return message;
         }
 
-        internal HttpMessage CreateReinstateRequest(string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId, RequestContext context)
+        internal HttpMessage CreateReinstateRequest(string sentShareName, string acceptedSentShareName, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -482,16 +476,13 @@ namespace Azure.Analytics.Purview.Share
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (repeatabilityRequestId != null)
-            {
-                request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
-            }
+            request.Headers.Add("repeatability-request-id", Guid.NewGuid());
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateRevokeRequest(string sentShareName, string acceptedSentShareName, string repeatabilityRequestId, RequestContext context)
+        internal HttpMessage CreateRevokeRequest(string sentShareName, string acceptedSentShareName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -506,14 +497,11 @@ namespace Azure.Analytics.Purview.Share
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (repeatabilityRequestId != null)
-            {
-                request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
-            }
+            request.Headers.Add("repeatability-request-id", Guid.NewGuid());
             return message;
         }
 
-        internal HttpMessage CreateUpdateExpirationRequest(string sentShareName, string acceptedSentShareName, RequestContent content, string repeatabilityRequestId, RequestContext context)
+        internal HttpMessage CreateUpdateExpirationRequest(string sentShareName, string acceptedSentShareName, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -528,10 +516,7 @@ namespace Azure.Analytics.Purview.Share
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (repeatabilityRequestId != null)
-            {
-                request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
-            }
+            request.Headers.Add("repeatability-request-id", Guid.NewGuid());
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
