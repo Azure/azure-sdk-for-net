@@ -257,6 +257,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void AiUserAgentIsSetAsUserAgentOriginal()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            var userAgent = "Mozilla / 5.0(Windows NT 10.0;WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 91.0.4472.101 Safari / 537.36";
+            activity.SetTag(SemanticConventions.AttributeUserAgentOriginal, userAgent);
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
+
+            Assert.Equal(userAgent, telemetryItem.Tags["ai.user.userAgent"]);
+        }
+
+        [Fact]
         public void AiLocationIpIsNullByDefault()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);

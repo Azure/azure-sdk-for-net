@@ -51,21 +51,5 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> Unique identifier of this policy. </summary>
         public string Id { get; }
-        /// <summary> Friendly name of this policy. </summary>
-        public string Name { get; set; }
-        /// <summary> The fallback queue to select if the queue selector doesn't find a match. </summary>
-        public string FallbackQueueId { get; set; }
-        /// <summary>
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
-        /// DirectMapRule:  A rule that return the same labels as the input labels.
-        /// ExpressionRule: A rule providing inline expression rules.
-        /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
-        /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
-        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
-        /// </summary>
-        public RouterRule PrioritizationRule { get; set; }
     }
 }
