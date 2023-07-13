@@ -273,6 +273,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        containers = null;
                         continue;
                     }
                     List<MachineLearningComputeInstanceContainer> array = new List<MachineLearningComputeInstanceContainer>();
@@ -287,6 +288,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        dataDisks = null;
                         continue;
                     }
                     List<MachineLearningComputeInstanceDataDisk> array = new List<MachineLearningComputeInstanceDataDisk>();
@@ -301,6 +303,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        dataMounts = null;
                         continue;
                     }
                     List<MachineLearningComputeInstanceDataMount> array = new List<MachineLearningComputeInstanceDataMount>();

@@ -248,6 +248,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                configurationSettings = null;
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -262,6 +263,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                configurationProtectedSettings = null;
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -295,6 +297,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                statuses = null;
                                 continue;
                             }
                             List<KubernetesClusterExtensionStatus> array = new List<KubernetesClusterExtensionStatus>();
@@ -319,6 +322,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                customLocationSettings = null;
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();

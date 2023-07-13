@@ -132,6 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        systemServices = null;
                         continue;
                     }
                     List<MachineLearningComputeSystemService> array = new List<MachineLearningComputeSystemService>();

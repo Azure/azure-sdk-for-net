@@ -203,6 +203,7 @@ namespace Azure.ResourceManager.AppConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                privateEndpointConnections = null;
                                 continue;
                             }
                             List<AppConfigurationPrivateEndpointConnectionReference> array = new List<AppConfigurationPrivateEndpointConnectionReference>();

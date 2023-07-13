@@ -217,6 +217,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                appliedScopes = null;
                                 continue;
                             }
                             List<string> array = new List<string>();

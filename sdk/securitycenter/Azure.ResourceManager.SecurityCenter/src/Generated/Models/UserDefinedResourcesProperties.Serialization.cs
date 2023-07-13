@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        querySubscriptions = new ChangeTrackingList<string>();
+                        querySubscriptions = null;
                         continue;
                     }
                     List<string> array = new List<string>();

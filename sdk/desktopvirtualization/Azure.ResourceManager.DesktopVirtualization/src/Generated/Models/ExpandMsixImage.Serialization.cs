@@ -233,6 +233,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                packageDependencies = null;
                                 continue;
                             }
                             List<MsixPackageDependencies> array = new List<MsixPackageDependencies>();
