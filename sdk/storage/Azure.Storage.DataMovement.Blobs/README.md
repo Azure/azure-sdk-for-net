@@ -51,6 +51,83 @@ The Azure.Storage.DataMovement.Blobs library uses clients from the Azure.Storage
 
 This section demonstrates usage of Data Movement for interacting with blob storage.
 
+### Extensions on `BlobContainerClient`
+
+For applicatons with preexisting code using Azure.Storage.Blobs, this package provides extension methods for `BlobContainerClient` to get some of the benefits of the `TransferManager` with minimal extra code.
+
+Instantiate the BlobContainerClient
+```C# Snippet:ExtensionMethodCreateContainerClient
+BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
+
+BlobContainerClient container = service.GetBlobContainerClient(containerName);
+```
+
+Upload a local directory to the root of the container
+```C# Snippet:ExtensionMethodSimpleUploadToRoot
+DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
+
+await transfer.AwaitCompletion();
+```
+
+Upload a local directory to a virtual directory in the container by specifying a directory prefix
+```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
+DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
+
+await transfer.AwaitCompletion();
+```
+
+Upload a local directory to a virtual directory in the container specifying more advanced options
+```C# Snippet:ExtensionMethodSimpleUploadWithOptions
+BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
+{
+    BlobContainerOptions = new BlobStorageResourceContainerOptions
+    {
+        DirectoryPrefix = blobDirectoryPrefix
+    },
+    TransferOptions = new TransferOptions()
+    {
+        CreateMode = StorageResourceCreateMode.Overwrite,
+    }
+};
+
+DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, options);
+
+await transfer.AwaitCompletion();
+```
+
+Download the entire container to a local directory
+```C# Snippet:ExtensionMethodSimpleDownloadContainer
+DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
+
+await transfer.AwaitCompletion();
+```
+
+Download a directory in the container by specifying a directory prefix
+```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectory
+DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+
+await tranfer.AwaitCompletion();
+```
+
+Download from the container specifying more advanced options
+```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectoryWithOptions
+BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
+{
+    BlobContainerOptions = new BlobStorageResourceContainerOptions
+    {
+        DirectoryPrefix = blobDirectoryPrefix
+    },
+    TransferOptions = new TransferOptions()
+    {
+        CreateMode = StorageResourceCreateMode.Overwrite,
+    }
+};
+
+DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
+
+await tranfer.AwaitCompletion();
+```
+
 ### Initializing Blob Storage `StorageResource`
 
 Azure.Storage.DataMovement.Blobs exposes a `StorageResource` for each type of blob (block, page, append) as well as a blob container. Storage resources are initialized with the appropriate client object from Azure.Storage.Blobs.
