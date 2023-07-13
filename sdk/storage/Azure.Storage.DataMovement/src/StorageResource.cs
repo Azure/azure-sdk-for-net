@@ -3,6 +3,8 @@
 
 using System;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
@@ -20,7 +22,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public abstract bool CanProduceUri { get; }
+        protected internal abstract bool CanProduceUri { get; }
 
         /// <summary>
         /// Gets the Uri.
@@ -35,6 +37,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines whether the storage resource is a container.
         /// </summary>
-        public abstract bool IsContainer { get; }
+        protected internal abstract bool IsContainer { get; }
     }
 }
