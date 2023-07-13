@@ -59,26 +59,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </param>
         /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey">
-        /// The key for the service principal id.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="servicePrincipalKey"> The key for the service principal id. </param>
         /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterNamePrefix"> The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterUserName"> The username to access the cluster. Type: string (or Expression with resultType string). </param>
-        /// <param name="clusterPassword">
-        /// The password to access the cluster.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="clusterPassword"> The password to access the cluster. </param>
         /// <param name="clusterSshUserName"> The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string). </param>
-        /// <param name="clusterSshPassword">
-        /// The password to SSH remotely connect cluster’s node (for Linux).
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="clusterSshPassword"> The password to SSH remotely connect cluster’s node (for Linux). </param>
         /// <param name="additionalLinkedServiceNames"> Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf. </param>
         /// <param name="hcatalogLinkedServiceName"> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </param>
         /// <param name="clusterType"> The cluster type. Type: string (or Expression with resultType string). </param>
@@ -150,12 +138,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> HostSubscriptionId { get; set; }
         /// <summary> The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
-        /// <summary>
-        /// The key for the service principal id.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
-        public DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
+        /// <summary> The key for the service principal id. </summary>
+        internal DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
+        /// <summary> Gets SecretBaseType. </summary>
+        internal string ServicePrincipalKeySecretBaseType
+        {
+            get => ServicePrincipalKey is null ? default(string) : ServicePrincipalKey.SecretBaseType;
+            set => ServicePrincipalKey = new Core.Expressions.DataFactory.DataFactorySecretBaseDefinition(value);
+        }
+
         /// <summary> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </summary>
@@ -164,20 +155,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> ClusterNamePrefix { get; set; }
         /// <summary> The username to access the cluster. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClusterUserName { get; set; }
-        /// <summary>
-        /// The password to access the cluster.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
-        public DataFactorySecretBaseDefinition ClusterPassword { get; set; }
+        /// <summary> The password to access the cluster. </summary>
+        internal DataFactorySecretBaseDefinition ClusterPassword { get; set; }
+        /// <summary> Gets SecretBaseType. </summary>
+        internal string ClusterPasswordSecretBaseType
+        {
+            get => ClusterPassword is null ? default(string) : ClusterPassword.SecretBaseType;
+            set => ClusterPassword = new Core.Expressions.DataFactory.DataFactorySecretBaseDefinition(value);
+        }
+
         /// <summary> The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClusterSshUserName { get; set; }
-        /// <summary>
-        /// The password to SSH remotely connect cluster’s node (for Linux).
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
-        public DataFactorySecretBaseDefinition ClusterSshPassword { get; set; }
+        /// <summary> The password to SSH remotely connect cluster’s node (for Linux). </summary>
+        internal DataFactorySecretBaseDefinition ClusterSshPassword { get; set; }
+        /// <summary> Gets SecretBaseType. </summary>
+        internal string ClusterSshPasswordSecretBaseType
+        {
+            get => ClusterSshPassword is null ? default(string) : ClusterSshPassword.SecretBaseType;
+            set => ClusterSshPassword = new Core.Expressions.DataFactory.DataFactorySecretBaseDefinition(value);
+        }
+
         /// <summary> Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf. </summary>
         public IList<DataFactoryLinkedServiceReference> AdditionalLinkedServiceNames { get; }
         /// <summary> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </summary>

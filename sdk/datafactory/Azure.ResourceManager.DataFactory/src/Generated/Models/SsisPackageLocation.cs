@@ -23,11 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
         /// <param name="packagePath"> The SSIS package path. Type: string (or Expression with resultType string). </param>
         /// <param name="locationType"> The type of SSIS package location. </param>
-        /// <param name="packagePassword">
-        /// Password of the package.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="packagePassword"> Password of the package. </param>
         /// <param name="accessCredential"> The package access credential. </param>
         /// <param name="configurationPath"> The configuration file of the package execution. Type: string (or Expression with resultType string). </param>
         /// <param name="configurationAccessCredential"> The configuration file access credential. </param>
@@ -53,12 +49,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> PackagePath { get; set; }
         /// <summary> The type of SSIS package location. </summary>
         public SsisPackageLocationType? LocationType { get; set; }
-        /// <summary>
-        /// Password of the package.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
-        public DataFactorySecretBaseDefinition PackagePassword { get; set; }
+        /// <summary> Password of the package. </summary>
+        internal DataFactorySecretBaseDefinition PackagePassword { get; set; }
+        /// <summary> Gets SecretBaseType. </summary>
+        internal string PackagePasswordSecretBaseType
+        {
+            get => PackagePassword is null ? default(string) : PackagePassword.SecretBaseType;
+            set => PackagePassword = new Core.Expressions.DataFactory.DataFactorySecretBaseDefinition(value);
+        }
+
         /// <summary> The package access credential. </summary>
         public SsisAccessCredential AccessCredential { get; set; }
         /// <summary> The configuration file of the package execution. Type: string (or Expression with resultType string). </summary>
