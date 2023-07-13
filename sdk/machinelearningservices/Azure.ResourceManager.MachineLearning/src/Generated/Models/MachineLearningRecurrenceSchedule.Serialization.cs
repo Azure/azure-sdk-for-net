@@ -103,6 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        monthDays = null;
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        weekDays = null;
                         continue;
                     }
                     List<MachineLearningDayOfWeek> array = new List<MachineLearningDayOfWeek>();

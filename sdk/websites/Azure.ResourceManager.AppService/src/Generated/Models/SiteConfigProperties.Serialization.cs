@@ -942,6 +942,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        defaultDocuments = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -1126,6 +1127,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        appSettings = null;
                         continue;
                     }
                     List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
@@ -1140,6 +1142,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        connectionStrings = null;
                         continue;
                     }
                     List<ConnStringInfo> array = new List<ConnStringInfo>();
@@ -1164,6 +1167,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        handlerMappings = null;
                         continue;
                     }
                     List<HttpRequestHandlerMapping> array = new List<HttpRequestHandlerMapping>();
@@ -1278,6 +1282,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        virtualApplications = null;
                         continue;
                     }
                     List<VirtualApplication> array = new List<VirtualApplication>();
@@ -1472,6 +1477,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        ipSecurityRestrictions = null;
                         continue;
                     }
                     List<AppServiceIPSecurityRestriction> array = new List<AppServiceIPSecurityRestriction>();
@@ -1486,6 +1492,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        scmIPSecurityRestrictions = null;
                         continue;
                     }
                     List<AppServiceIPSecurityRestriction> array = new List<AppServiceIPSecurityRestriction>();
@@ -1610,6 +1617,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        azureStorageAccounts = null;
                         continue;
                     }
                     Dictionary<string, AppServiceStorageAccessInfo> dictionary = new Dictionary<string, AppServiceStorageAccessInfo>();

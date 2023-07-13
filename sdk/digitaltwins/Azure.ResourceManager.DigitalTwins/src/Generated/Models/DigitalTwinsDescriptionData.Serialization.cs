@@ -197,6 +197,7 @@ namespace Azure.ResourceManager.DigitalTwins
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                privateEndpointConnections = null;
                                 continue;
                             }
                             List<DigitalTwinsPrivateEndpointConnectionData> array = new List<DigitalTwinsPrivateEndpointConnectionData>();

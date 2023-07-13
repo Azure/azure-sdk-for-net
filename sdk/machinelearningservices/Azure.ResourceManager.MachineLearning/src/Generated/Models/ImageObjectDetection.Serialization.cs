@@ -154,6 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        searchSpace = null;
                         continue;
                     }
                     List<ImageModelDistributionSettingsObjectDetection> array = new List<ImageModelDistributionSettingsObjectDetection>();
