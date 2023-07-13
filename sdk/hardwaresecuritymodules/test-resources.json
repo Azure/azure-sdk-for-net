@@ -140,7 +140,7 @@
     },
     {
       "type": "Microsoft.Network/virtualNetworks",
-      "apiVersion": "2023-02-01",
+      "apiVersion": "2021-02-01",
       "name": "vnet_name",
       "location": "[parameters('dhsmLocation')]",
       "properties": {
