@@ -11,6 +11,7 @@ namespace Azure.Communication.Chat
         {
             Topic = topic;
             Metadata = new Dictionary<string, string>();
+            Participants = new List<ChatParticipant>();
         }
         public string Topic { get; }
 

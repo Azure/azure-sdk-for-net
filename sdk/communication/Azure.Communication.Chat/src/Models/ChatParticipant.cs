@@ -16,6 +16,7 @@ namespace Azure.Communication.Chat
         public ChatParticipant(CommunicationIdentifier identifier)
         {
             User = identifier;
+            Metadata = new Dictionary<string, string>();
         }
 
         internal ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime, IDictionary<string, string> metadata = null)
