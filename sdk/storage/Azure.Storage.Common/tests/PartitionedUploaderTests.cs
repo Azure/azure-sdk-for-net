@@ -36,7 +36,7 @@ namespace Azure.Storage.Tests
         private readonly UploadTransferValidationOptions s_validationOptions = new UploadTransferValidationOptions();
         private readonly CancellationToken s_cancellation = new CancellationToken();
 
-        private static readonly object s_activitySource = ActivityExtensions.CreateActivitySource("Azure.Storage.Tests");
+        private static readonly ActivitySource s_activitySource = new ActivitySource("Azure.Storage.Tests");
 
         public PartitionedUploaderTests(bool async)
         {
