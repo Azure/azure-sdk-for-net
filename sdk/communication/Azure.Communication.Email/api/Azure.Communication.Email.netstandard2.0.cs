@@ -1,5 +1,10 @@
 namespace Azure.Communication.Email
 {
+    public static partial class CommunicationEmailModelFactory
+    {
+        public static Azure.Communication.Email.EmailContent EmailContent(string subject = null, string plainText = null, string html = null) { throw null; }
+        public static Azure.Communication.Email.EmailMessage EmailMessage(System.Collections.Generic.IDictionary<string, string> headers = null, string senderAddress = null, Azure.Communication.Email.EmailContent content = null, Azure.Communication.Email.EmailRecipients recipients = null, System.Collections.Generic.IEnumerable<Azure.Communication.Email.EmailAttachment> attachments = null, System.Collections.Generic.IEnumerable<Azure.Communication.Email.EmailAddress> replyTo = null, bool? userEngagementTrackingDisabled = default(bool?)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EmailAddress
     {

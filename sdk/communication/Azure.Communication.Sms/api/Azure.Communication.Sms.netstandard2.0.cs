@@ -1,5 +1,9 @@
 namespace Azure.Communication.Sms
 {
+    public static partial class CommunicationSmsModelFactory
+    {
+        public static Azure.Communication.Sms.SmsSendOptions SmsSendOptions(bool enableDeliveryReport = false, string tag = null) { throw null; }
+    }
     public partial class SmsClient
     {
         protected SmsClient() { }

@@ -288,3 +288,10 @@ namespace Azure.Security.Attestation
         public System.BinaryData Data { get { throw null; } }
     }
 }
+namespace Azure.Security.Attestation.Models
+{
+    public static partial class SecurityAttestationModelFactory
+    {
+        public static Azure.Security.Attestation.StoredAttestationPolicy StoredAttestationPolicy(string attestationPolicy = null) { throw null; }
+    }
+}
