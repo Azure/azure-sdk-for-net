@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
     public class LocalRulesResourceCollectionTests : PaloAltoNetworksNgfwManagementTestBase
     {
         protected ResourceGroupResource DefaultResGroup { get; set; }
-        protected LocalRulesResource DefaultResource1 { get; set; }
+        protected LocalRulestackRuleListResource DefaultResource1 { get; set; }
         protected LocalRulestackResource LocalRulestack { get; set; }
         public LocalRulesResourceCollectionTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 DefaultResGroup = await DefaultSubscription.GetResourceGroupAsync("dotnetSdkTest-infra-rg");
-                LocalRulestack = (await DefaultResGroup.GetLocalRulestackResources().GetAsync("dotnetSdkTest-default-1-lrs")).Value;
-                DefaultResource1 = await LocalRulestack.GetLocalRulesResourceAsync("1000000");
+                LocalRulestack = (await DefaultResGroup.GetLocalRulestacks().GetAsync("dotnetSdkTest-default-1-lrs")).Value;
+                DefaultResource1 = await LocalRulestack.GetLocalRulestackRuleListAsync("1000000");
             }
         }
 
@@ -41,19 +41,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task CreateOrUpdate()
         {
             string priority = IsAsync ? "1" : "2";
-            LocalRulesResourceData data = getLocalRulesResourceData(priority);
-            var response = await LocalRulestack.GetLocalRulesResources().CreateOrUpdateAsync(WaitUntil.Completed, priority, data);
-            LocalRulesResource rule = response.Value;
+            LocalRulestackRuleListData data = getLocalRulestackRuleListData(priority);
+            var response = await LocalRulestack.GetLocalRulestackRuleLists().CreateOrUpdateAsync(WaitUntil.Completed, priority, data);
+            LocalRulestackRuleListResource rule = response.Value;
             Assert.IsTrue((data.RuleName).Equals(rule.Data.RuleName));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetLocalRulesResources().CreateOrUpdateAsync(WaitUntil.Completed, "3", null)).Value);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetLocalRulestackRuleLists().CreateOrUpdateAsync(WaitUntil.Completed, "3", null)).Value);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task Get()
         {
-            LocalRulesResourceCollection collection = LocalRulestack.GetLocalRulesResources();
-            LocalRulesResource rulesResource = await collection.GetAsync(DefaultResource1.Data.Priority.ToString());
+            LocalRulestackRuleListCollection collection = LocalRulestack.GetLocalRulestackRuleLists();
+            LocalRulestackRuleListResource rulesResource = await collection.GetAsync(DefaultResource1.Data.Priority.ToString());
             Assert.IsNotNull(rulesResource);
             Assert.AreEqual(rulesResource.Data.RuleName, DefaultResource1.Data.RuleName);
         }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Exists()
         {
-            LocalRulesResourceCollection collection = LocalRulestack.GetLocalRulesResources();
+            LocalRulestackRuleListCollection collection = LocalRulestack.GetLocalRulestackRuleLists();
             Assert.IsTrue(await collection.ExistsAsync(DefaultResource1.Data.Priority.ToString()));
             Assert.IsFalse(await collection.ExistsAsync("999"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
-            LocalRulesResourceCollection collection = LocalRulestack.GetLocalRulesResources();
+            LocalRulestackRuleListCollection collection = LocalRulestack.GetLocalRulestackRuleLists();
             int count = 0;
-            await foreach (LocalRulesResource lrs in collection.GetAllAsync())
+            await foreach (LocalRulestackRuleListResource lrs in collection.GetAllAsync())
             {
                 count++;
             }
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             Assert.AreEqual(count, 3);
         }
 
-        private LocalRulesResourceData getLocalRulesResourceData(string priority)
+        private LocalRulestackRuleListData getLocalRulestackRuleListData(string priority)
         {
-            LocalRulesResourceData data = new LocalRulesResourceData($"dotnetSdkTest-rule-{priority}")
+            LocalRulestackRuleListData data = new LocalRulestackRuleListData($"dotnetSdkTest-rule-{priority}")
             {
                 ETag = new ETag("c18e6eef-ba3e-49ee-8a85-2b36c863a9d0"),
                 Description = "description of local rule",
-                RuleState = StateEnum.Disabled,
-                Source = new SourceAddr()
+                RuleState = RulestackStateType.Disabled,
+                Source = new SourceAddressInfo()
                 {
                     Cidrs =
 {
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
 {
 },
                 },
-                NegateSource = BooleanEnum.False,
-                Destination = new DestinationAddr()
+                NegateSource = FirewallBooleanType.False,
+                Destination = new DestinationAddressInfo()
                 {
                     Cidrs =
 {
@@ -125,15 +125,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
 {
 },
                 },
-                NegateDestination = BooleanEnum.False,
+                NegateDestination = FirewallBooleanType.False,
                 Applications =
 {
 "any"
 },
                 Protocol = "any",
-                ActionType = ActionEnum.Allow,
-                EnableLogging = StateEnum.Enabled,
-                DecryptionRuleType = DecryptionRuleTypeEnum.None
+                ActionType = RulestackActionType.Allow,
+                EnableLogging = RulestackStateType.Enabled,
+                DecryptionRuleType = DecryptionRuleType.None
                 };
             return data;
         }

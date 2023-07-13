@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 ResGroup = await DefaultSubscription.GetResourceGroupAsync("dotnetSdkTest-infra-rg");
-                LocalRulestackResource = await ResGroup.GetLocalRulestackResources().GetAsync("dotnetSdkTest-lrs-default");
+                LocalRulestackResource = await ResGroup.GetLocalRulestacks().GetAsync("dotnetSdkTest-lrs-default");
             }
         }
 
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Update()
         {
-            LocalRulestackResourcePatch localRulestackResourcePatch = new LocalRulestackResourcePatch();
-            localRulestackResourcePatch.Tags.Add("Counter", "1");
-            LocalRulestackResource updatedResource = await LocalRulestackResource.UpdateAsync(localRulestackResourcePatch);
+            LocalRulestackPatch localRulestackPatch = new LocalRulestackPatch();
+            localRulestackPatch.Tags.Add("Counter", "1");
+            LocalRulestackResource updatedResource = await LocalRulestackResource.UpdateAsync(localRulestackPatch);
 
             Assert.AreEqual(updatedResource.Data.Tags["Counter"], "1");
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await LocalRulestackResource.UpdateAsync(null));
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
-            LocalRulestackResourceCollection collection = ResGroup.GetLocalRulestackResources();
+            LocalRulestackCollection collection = ResGroup.GetLocalRulestacks();
             LocalRulestackResource resourceForDeletion = IsAsync ? (await collection.GetAsync("dotnetSdkTest-default-delAsync-lrs")) : (await collection.GetAsync("dotnetSdkTest-default-delSync-lrs"));
             await resourceForDeletion.DeleteAsync(WaitUntil.Completed);
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetCertificateObjectLocalRulestackResource()
         {
-            CertificateObjectLocalRulestackResource cert = await LocalRulestackResource.GetCertificateObjectLocalRulestackResourceAsync("dotnetSdkTest-cert");
+            LocalRulestackCertificateObjectResource cert = await LocalRulestackResource.GetLocalRulestackCertificateObjectAsync("dotnetSdkTest-cert");
             Assert.NotNull(cert);
             Assert.AreEqual(cert.Data.Name, "dotnetSdkTest-cert");
         }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetFqdnListLocalRulestackResource()
         {
-            FqdnListLocalRulestackResource list = await LocalRulestackResource.GetFqdnListLocalRulestackResourceAsync("dotnetSdkTest-fqdnList");
+            LocalRulestackFqdnListResource list = await LocalRulestackResource.GetLocalRulestackFqdnListAsync("dotnetSdkTest-fqdnList");
             Assert.NotNull(list);
             Assert.AreEqual(list.Data.Name, "dotnetSdkTest-fqdnList");
         }
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetLocalRulesResource()
         {
-            LocalRulesResourceCollection rulesCollection = LocalRulestackResource.GetLocalRulesResources();
-            LocalRulesResource rule = await rulesCollection.GetAsync("1000000");
+            LocalRulestackRuleListCollection rulesCollection = LocalRulestackResource.GetLocalRulestackRuleLists();
+            LocalRulestackRuleListResource rule = await rulesCollection.GetAsync("1000000");
             Assert.NotNull(rule);
             Assert.AreEqual(rule.Data.RuleName, "cloud-ngfw-default-rule");
         }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetPrefixListResource()
         {
-            PrefixListResource list = await LocalRulestackResource.GetPrefixListResourceAsync("dotnetSdkTest-prefixList");
+            LocalRulestackPrefixListResource list = await LocalRulestackResource.GetLocalRulestackPrefixListAsync("dotnetSdkTest-prefixList");
             Assert.NotNull(list);
             Assert.AreEqual(list.Data.Name, "dotnetSdkTest-prefixList");
         }
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Commit()
         {
-            var rule = (await LocalRulestackResource.GetLocalRulesResourceAsync("1000000")).Value;
-            LocalRulesResourceData ruleData = rule.Data;
+            var rule = (await LocalRulestackResource.GetLocalRulestackRuleListAsync("1000000")).Value;
+            LocalRulestackRuleListData ruleData = rule.Data;
             string suffix = IsAsync ? "async" : "sync";
             ruleData.Description = $"Updated description for commit: {suffix}";
             await rule.UpdateAsync(WaitUntil.Completed, ruleData);
-            Changelog log = await LocalRulestackResource.GetChangeLogAsync();
+            RulestackChangelog log = await LocalRulestackResource.GetChangeLogAsync();
             Assert.IsTrue(log.Changes.Contains("LocalRule"));
             Assert.IsTrue(log.Changes.Contains("Rulestack"));
             ArmOperation response = await LocalRulestackResource.CommitAsync(WaitUntil.Completed);
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetChangeLog()
         {
-            LocalRulesResource rule = await LocalRulestackResource.GetLocalRulesResourceAsync("1000000");
-            LocalRulesResourceData ruleData = rule.Data;
+            LocalRulestackRuleListResource rule = await LocalRulestackResource.GetLocalRulestackRuleListAsync("1000000");
+            LocalRulestackRuleListData ruleData = rule.Data;
             string suffix = IsAsync ? "async" : "sync";
             ruleData.Description = $"Updated description for changeLog: {suffix}";
             await rule.UpdateAsync(WaitUntil.Completed, ruleData);
-            Changelog log = await LocalRulestackResource.GetChangeLogAsync();
+            RulestackChangelog log = await LocalRulestackResource.GetChangeLogAsync();
             Assert.IsTrue(log.Changes.Contains("LocalRule"));
             Assert.IsTrue(log.Changes.Contains("Rulestack"));
         }
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Revert()
         {
-            LocalRulesResource rule = await LocalRulestackResource.GetLocalRulesResourceAsync("1000000");
-            LocalRulesResourceData ruleData = rule.Data;
+            LocalRulestackRuleListResource rule = await LocalRulestackResource.GetLocalRulestackRuleListAsync("1000000");
+            LocalRulestackRuleListData ruleData = rule.Data;
             string suffix = IsAsync ? "async" : "sync";
             ruleData.Description = $"Updated description for revert: {suffix}";
             await rule.UpdateAsync(WaitUntil.Completed, ruleData);
-            Changelog log = await LocalRulestackResource.GetChangeLogAsync();
+            RulestackChangelog log = await LocalRulestackResource.GetChangeLogAsync();
             Assert.IsTrue(log.Changes.Contains("LocalRule"));
             Assert.IsTrue(log.Changes.Contains("Rulestack"));
             Response response = await LocalRulestackResource.RevertAsync();
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public void GetCountries()
         {
-            AsyncPageable<Country> countries = LocalRulestackResource.GetCountriesAsync();
+            AsyncPageable<RulestackCountry> countries = LocalRulestackResource.GetCountriesAsync();
             Assert.NotNull(countries);
         }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetSupportInfo()
         {
-            SupportInfo response = await LocalRulestackResource.GetSupportInfoAsync();
+            FirewallSupportInfo response = await LocalRulestackResource.GetSupportInfoAsync();
             Assert.NotNull(response);
             Assert.AreEqual("https://live.paloaltonetworks.com?productSku=PAN-CLOUD-NGFW-AZURE-PAYG", response.HelpURL);
         }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         // LocalRulestacks_ListBySubscription_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLocalRulestackResources_LocalRulestacksListBySubscriptionMaximumSetGen()
+        public async Task GetLocalRulestacks_LocalRulestacksListBySubscriptionMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRulestacks_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "LocalRulestacks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (LocalRulestackResource item in subscriptionResource.GetLocalRulestackResourcesAsync())
+            await foreach (LocalRulestackResource item in subscriptionResource.GetLocalRulestacksAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                LocalRulestackResourceData resourceData = item.Data;
+                LocalRulestackData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         // LocalRulestacks_ListBySubscription_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLocalRulestackResources_LocalRulestacksListBySubscriptionMinimumSetGen()
+        public async Task GetLocalRulestacks_LocalRulestacksListBySubscriptionMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/LocalRulestacks_ListBySubscription_MinimumSet_Gen.json
             // this example is just showing the usage of "LocalRulestacks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (LocalRulestackResource item in subscriptionResource.GetLocalRulestackResourcesAsync())
+            await foreach (LocalRulestackResource item in subscriptionResource.GetLocalRulestacksAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                LocalRulestackResourceData resourceData = item.Data;
+                LocalRulestackData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -103,14 +103,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            LocalRulestackResource result = await localRulestackResource.GetAsync();
+            LocalRulestackResource result = await localRulestack.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LocalRulestackResourceData resourceData = result.Data;
+            LocalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            LocalRulestackResource result = await localRulestackResource.GetAsync();
+            LocalRulestackResource result = await localRulestack.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LocalRulestackResourceData resourceData = result.Data;
+            LocalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -165,35 +165,35 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            LocalRulestackResourcePatch patch = new LocalRulestackResourcePatch()
+            LocalRulestackPatch patch = new LocalRulestackPatch()
             {
-                Identity = new AzureResourceManagerManagedIdentityProperties(ManagedIdentityType.None)
+                Identity = new ManagedServiceIdentity("None")
                 {
                     UserAssignedIdentities =
 {
-["key16"] = new UserAssignedIdentity(),
+[new ResourceIdentifier("key16")] = new UserAssignedIdentity(),
 },
                 },
                 Tags =
 {
 ["tagName"] = "value",
 },
-                Properties = new LocalRulestackResourceUpdateProperties()
+                Properties = new LocalRulestackUpdateProperties()
                 {
-                    PanETag = "2bf4a339-294d-4c25-b0b2-ef649e9f5c12",
-                    PanLocation = "eastus",
-                    Scope = ScopeType.Local,
+                    PanETag = new ETag("2bf4a339-294d-4c25-b0b2-ef649e9f5c12"),
+                    PanLocation = new AzureLocation("eastus"),
+                    Scope = RulestackScopeType.Local,
                     AssociatedSubscriptions =
 {
 "2bf4a339-294d-4c25-b0b2-ef649e9f5c27"
 },
                     Description = "local rulestacks",
-                    DefaultMode = DefaultMode.IPS,
+                    DefaultMode = RuleCreationDefaultMode.IPS,
                     MinAppIdVersion = "8.5.3",
-                    SecurityServices = new SecurityServices()
+                    SecurityServices = new RulestackSecurityServices()
                     {
                         VulnerabilityProfile = "default",
                         AntiSpywareProfile = "default",
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                     },
                 },
             };
-            LocalRulestackResource result = await localRulestackResource.UpdateAsync(patch);
+            LocalRulestackResource result = await localRulestack.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LocalRulestackResourceData resourceData = result.Data;
+            LocalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -234,15 +234,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            LocalRulestackResourcePatch patch = new LocalRulestackResourcePatch();
-            LocalRulestackResource result = await localRulestackResource.UpdateAsync(patch);
+            LocalRulestackPatch patch = new LocalRulestackPatch();
+            LocalRulestackResource result = await localRulestack.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            LocalRulestackResourceData resourceData = result.Data;
+            LocalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            await localRulestackResource.DeleteAsync(WaitUntil.Completed);
+            await localRulestack.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -293,10 +293,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            await localRulestackResource.DeleteAsync(WaitUntil.Completed);
+            await localRulestack.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -320,10 +320,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            await localRulestackResource.CommitAsync(WaitUntil.Completed);
+            await localRulestack.CommitAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -347,10 +347,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            await localRulestackResource.CommitAsync(WaitUntil.Completed);
+            await localRulestack.CommitAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -374,10 +374,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            Changelog result = await localRulestackResource.GetChangeLogAsync();
+            RulestackChangelog result = await localRulestack.GetChangeLogAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -401,10 +401,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            Changelog result = await localRulestackResource.GetChangeLogAsync();
+            RulestackChangelog result = await localRulestack.GetChangeLogAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -428,11 +428,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
             string email = "user1@domain.com";
-            SupportInfo result = await localRulestackResource.GetSupportInfoAsync(email: email);
+            FirewallSupportInfo result = await localRulestack.GetSupportInfoAsync(email: email);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -456,10 +456,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            SupportInfo result = await localRulestackResource.GetSupportInfoAsync();
+            FirewallSupportInfo result = await localRulestack.GetSupportInfoAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -483,13 +483,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            AdvSecurityObjectTypeEnum type = new AdvSecurityObjectTypeEnum("localRulestacks");
+            AdvancedSecurityObjectType type = new AdvancedSecurityObjectType("localRulestacks");
             string skip = "a6a321";
             int? top = 20;
-            AdvSecurityObjectListResponse result = await localRulestackResource.GetAdvancedSecurityObjectsAsync(type, skip: skip, top: top);
+            AdvancedSecurityObjectListResult result = await localRulestack.GetAdvancedSecurityObjectsAsync(type, skip: skip, top: top);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -513,11 +513,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            AdvSecurityObjectTypeEnum type = new AdvSecurityObjectTypeEnum("localRulestacks");
-            AdvSecurityObjectListResponse result = await localRulestackResource.GetAdvancedSecurityObjectsAsync(type);
+            AdvancedSecurityObjectType type = new AdvancedSecurityObjectType("localRulestacks");
+            AdvancedSecurityObjectListResult result = await localRulestack.GetAdvancedSecurityObjectsAsync(type);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -541,14 +541,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation and iterate over the result
             string appIdVersion = "8543";
             string appPrefix = "pref";
             string skip = "a6a321";
             int? top = 20;
-            await foreach (string item in localRulestackResource.GetAppIdsAsync(appIdVersion: appIdVersion, appPrefix: appPrefix, skip: skip, top: top))
+            await foreach (string item in localRulestack.GetAppIdsAsync(appIdVersion: appIdVersion, appPrefix: appPrefix, skip: skip, top: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -575,10 +575,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in localRulestackResource.GetAppIdsAsync())
+            await foreach (string item in localRulestack.GetAppIdsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -605,12 +605,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation and iterate over the result
             string skip = "a6a321";
             int? top = 20;
-            await foreach (Country item in localRulestackResource.GetCountriesAsync(skip: skip, top: top))
+            await foreach (RulestackCountry item in localRulestack.GetCountriesAsync(skip: skip, top: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -637,10 +637,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Country item in localRulestackResource.GetCountriesAsync())
+            await foreach (RulestackCountry item in localRulestack.GetCountriesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -667,10 +667,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in localRulestackResource.GetFirewallsAsync())
+            await foreach (string item in localRulestack.GetFirewallsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -697,10 +697,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in localRulestackResource.GetFirewallsAsync())
+            await foreach (string item in localRulestack.GetFirewallsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -727,12 +727,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation and iterate over the result
             string skip = "a6a321";
             int? top = 20;
-            await foreach (PredefinedUrlCategory item in localRulestackResource.GetPredefinedUrlCategoriesAsync(skip: skip, top: top))
+            await foreach (PredefinedUrlCategory item in localRulestack.GetPredefinedUrlCategoriesAsync(skip: skip, top: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -759,10 +759,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PredefinedUrlCategory item in localRulestackResource.GetPredefinedUrlCategoriesAsync())
+            await foreach (PredefinedUrlCategory item in localRulestack.GetPredefinedUrlCategoriesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -789,13 +789,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            SecurityServicesTypeEnum type = new SecurityServicesTypeEnum("localRulestacks");
+            RulestackSecurityServiceType type = new RulestackSecurityServiceType("localRulestacks");
             string skip = "a6a321";
             int? top = 20;
-            SecurityServicesResponse result = await localRulestackResource.GetSecurityServicesAsync(type, skip: skip, top: top);
+            RulestackSecurityServiceListResult result = await localRulestack.GetSecurityServicesAsync(type, skip: skip, top: top);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -819,11 +819,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            SecurityServicesTypeEnum type = new SecurityServicesTypeEnum("localRulestacks");
-            SecurityServicesResponse result = await localRulestackResource.GetSecurityServicesAsync(type);
+            RulestackSecurityServiceType type = new RulestackSecurityServiceType("localRulestacks");
+            RulestackSecurityServiceListResult result = await localRulestack.GetSecurityServicesAsync(type);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -847,10 +847,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            await localRulestackResource.RevertAsync();
+            await localRulestack.RevertAsync();
 
             Console.WriteLine($"Succeeded");
         }
@@ -874,10 +874,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestackResource = client.GetLocalRulestackResource(localRulestackResourceId);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            await localRulestackResource.RevertAsync();
+            await localRulestack.RevertAsync();
 
             Console.WriteLine($"Succeeded");
         }

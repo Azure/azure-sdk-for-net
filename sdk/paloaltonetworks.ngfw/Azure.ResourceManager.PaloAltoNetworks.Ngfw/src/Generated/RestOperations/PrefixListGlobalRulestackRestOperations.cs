@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrefixListGlobalRulestackResourceData>> GetAsync(string globalRulestackName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<GlobalRulestackPrefixListData>> GetAsync(string globalRulestackName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        PrefixListGlobalRulestackResourceData value = default;
+                        GlobalRulestackPrefixListData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrefixListGlobalRulestackResourceData.DeserializePrefixListGlobalRulestackResourceData(document.RootElement);
+                        value = GlobalRulestackPrefixListData.DeserializeGlobalRulestackPrefixListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrefixListGlobalRulestackResourceData)null, message.Response);
+                    return Response.FromValue((GlobalRulestackPrefixListData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrefixListGlobalRulestackResourceData> Get(string globalRulestackName, string name, CancellationToken cancellationToken = default)
+        public Response<GlobalRulestackPrefixListData> Get(string globalRulestackName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -168,19 +168,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        PrefixListGlobalRulestackResourceData value = default;
+                        GlobalRulestackPrefixListData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrefixListGlobalRulestackResourceData.DeserializePrefixListGlobalRulestackResourceData(document.RootElement);
+                        value = GlobalRulestackPrefixListData.DeserializeGlobalRulestackPrefixListData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrefixListGlobalRulestackResourceData)null, message.Response);
+                    return Response.FromValue((GlobalRulestackPrefixListData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string globalRulestackName, string name, PrefixListGlobalRulestackResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string globalRulestackName, string name, GlobalRulestackPrefixListData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string globalRulestackName, string name, PrefixListGlobalRulestackResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string globalRulestackName, string name, GlobalRulestackPrefixListData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string globalRulestackName, string name, PrefixListGlobalRulestackResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string globalRulestackName, string name, GlobalRulestackPrefixListData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));

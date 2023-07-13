@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
     internal class PrefixListResourceTests : PaloAltoNetworksNgfwManagementTestBase
     {
         protected ResourceGroupResource ResGroup { get; set; }
-        protected PrefixListResource PrefixListResource { get; set; }
+        protected LocalRulestackPrefixListResource PrefixListResource { get; set; }
         protected LocalRulestackResource LocalRulestackResource { get; set; }
         protected PrefixListResourceTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 ResGroup = await DefaultSubscription.GetResourceGroupAsync("dotnetSdkTest-infra-rg");
-                LocalRulestackResource = await ResGroup.GetLocalRulestackResources().GetAsync("dotnetSdkTest-default-2-lrs");
-                PrefixListResource = await LocalRulestackResource.GetPrefixListResourceAsync("dotnetSdkTest0-prefixList");
+                LocalRulestackResource = await ResGroup.GetLocalRulestacks().GetAsync("dotnetSdkTest-default-2-lrs");
+                PrefixListResource = await LocalRulestackResource.GetLocalRulestackPrefixListAsync("dotnetSdkTest0-prefixList");
             }
         }
 
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void CreateResourceIdentifier()
         {
             string name = PrefixListResource.Data.Name;
-            ResourceIdentifier localRulestackResourceIdentifier = PrefixListResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, name);
-            PrefixListResource.ValidateResourceId(localRulestackResourceIdentifier);
+            ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackPrefixListResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, name);
+            LocalRulestackPrefixListResource.ValidateResourceId(localRulestackResourceIdentifier);
 
-            Assert.IsTrue(localRulestackResourceIdentifier.ResourceType.Equals(PrefixListResource.ResourceType));
+            Assert.IsTrue(localRulestackResourceIdentifier.ResourceType.Equals(LocalRulestackPrefixListResource.ResourceType));
             Assert.IsTrue(localRulestackResourceIdentifier.Equals($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/prefixlists/{name}"));
-            Assert.Throws<ArgumentException>(() => PrefixListResource.ValidateResourceId(ResGroup.Data.Id));
+            Assert.Throws<ArgumentException>(() => LocalRulestackPrefixListResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Update()
         {
-            PrefixListResourceData updatedData = PrefixListResource.Data;
+            LocalRulestackPrefixListData updatedData = PrefixListResource.Data;
             updatedData.Description = "Updated description for prefix list test";
-            PrefixListResource updatedResource = (await PrefixListResource.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
+            LocalRulestackPrefixListResource updatedResource = (await PrefixListResource.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
 
             Assert.AreEqual(updatedResource.Data.Description, "Updated description for prefix list test");
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await PrefixListResource.UpdateAsync(WaitUntil.Completed, null));
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            PrefixListResource resource = await LocalRulestackResource.GetPrefixListResourceAsync("dotnetSdkTest0-prefixList");
+            LocalRulestackPrefixListResource resource = await LocalRulestackResource.GetLocalRulestackPrefixListAsync("dotnetSdkTest0-prefixList");
             Assert.NotNull(resource);
             Assert.AreEqual(resource.Data.Name, PrefixListResource.Data.Name);
         }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             {
                 ResGroup = await CreateResourceGroup(DefaultSubscription, ResourceGroupPrefix, Location);
                 DefaultResGroup = await DefaultSubscription.GetResourceGroupAsync("dotnetSdkTest-infra-rg");
-                DefaultResource1 = await DefaultResGroup.GetLocalRulestackResources().GetAsync("dotnetSdkTest-default-1-lrs");
+                DefaultResource1 = await DefaultResGroup.GetLocalRulestacks().GetAsync("dotnetSdkTest-default-1-lrs");
             }
         }
 
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task CreateOrUpdate()
         {
             string resourceName = Recording.GenerateAssetName("dotnetSdkTest-lrs-");
-            var response = await ResGroup.GetLocalRulestackResources().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, getLocalRulestackData());
+            var response = await ResGroup.GetLocalRulestacks().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, getLocalRulestackData());
             LocalRulestackResource lrs = response.Value;
             Assert.IsTrue(resourceName.Equals(lrs.Data.Name));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await ResGroup.GetLocalRulestackResources().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, null)).Value);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await ResGroup.GetLocalRulestacks().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, null)).Value);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task Get()
         {
-            LocalRulestackResourceCollection collection = DefaultResGroup.GetLocalRulestackResources();
+            LocalRulestackCollection collection = DefaultResGroup.GetLocalRulestacks();
             LocalRulestackResource firewallResource = await collection.GetAsync(DefaultResource1.Data.Name);
             Assert.IsNotNull(firewallResource);
             AssertTrackedResource(DefaultResource1.Data, firewallResource.Data);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Exists()
         {
-            LocalRulestackResourceCollection collection = DefaultResGroup.GetLocalRulestackResources();
+            LocalRulestackCollection collection = DefaultResGroup.GetLocalRulestacks();
             Assert.IsTrue(await collection.ExistsAsync(DefaultResource1.Data.Name));
             Assert.IsFalse(await collection.ExistsAsync("invalidResourceName"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
-            LocalRulestackResourceCollection collection = DefaultResGroup.GetLocalRulestackResources();
+            LocalRulestackCollection collection = DefaultResGroup.GetLocalRulestacks();
             int count = 0;
             await foreach (LocalRulestackResource lrs in collection.GetAllAsync())
             {
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             Assert.AreEqual(r1.Tags, r2.Tags);
         }
 
-        private LocalRulestackResourceData getLocalRulestackData()
+        private LocalRulestackData getLocalRulestackData()
         {
-            LocalRulestackResourceData data = new LocalRulestackResourceData(AzureLocation.EastUS2)
+            LocalRulestackData data = new LocalRulestackData(AzureLocation.EastUS2)
             {
-                Scope = ScopeType.Local,
+                Scope = RulestackScopeType.Local,
                 Description = "local rulestacks",
-                DefaultMode = DefaultMode.IPS,
-                SecurityServices = new SecurityServices()
+                DefaultMode = RuleCreationDefaultMode.IPS,
+                SecurityServices = new RulestackSecurityServices()
                 {
                     VulnerabilityProfile = "BestPractice",
                     AntiSpywareProfile = "BestPractice",

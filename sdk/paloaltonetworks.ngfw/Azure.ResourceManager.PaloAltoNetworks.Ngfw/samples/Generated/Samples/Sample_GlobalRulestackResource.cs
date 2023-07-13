@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            GlobalRulestackResource result = await globalRulestackResource.GetAsync();
+            GlobalRulestackResource result = await globalRulestack.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GlobalRulestackResourceData resourceData = result.Data;
+            GlobalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            GlobalRulestackResource result = await globalRulestackResource.GetAsync();
+            GlobalRulestackResource result = await globalRulestack.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GlobalRulestackResourceData resourceData = result.Data;
+            GlobalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -94,32 +94,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            GlobalRulestackResourcePatch patch = new GlobalRulestackResourcePatch()
+            GlobalRulestackPatch patch = new GlobalRulestackPatch()
             {
                 Location = new AzureLocation("eastus"),
-                Identity = new AzureResourceManagerManagedIdentityProperties(ManagedIdentityType.None)
+                Identity = new ManagedServiceIdentity("None")
                 {
                     UserAssignedIdentities =
 {
-["key16"] = new UserAssignedIdentity(),
+[new ResourceIdentifier("key16")] = new UserAssignedIdentity(),
 },
                 },
-                Properties = new GlobalRulestackResourceUpdateProperties()
+                Properties = new GlobalRulestackUpdateProperties()
                 {
-                    PanETag = "2bf4a339-294d-4c25-b0b2-ef649e9f5c12",
-                    PanLocation = "eastus",
-                    Scope = ScopeType.Global,
+                    PanETag = new ETag("2bf4a339-294d-4c25-b0b2-ef649e9f5c12"),
+                    PanLocation = new AzureLocation("eastus"),
+                    Scope = RulestackScopeType.Global,
                     AssociatedSubscriptions =
 {
 "2bf4a339-294d-4c25-b0b2-ef649e9f5c27"
 },
                     Description = "global rulestacks",
-                    DefaultMode = DefaultMode.IPS,
+                    DefaultMode = RuleCreationDefaultMode.IPS,
                     MinAppIdVersion = "8.5.3",
-                    SecurityServices = new SecurityServices()
+                    SecurityServices = new RulestackSecurityServices()
                     {
                         VulnerabilityProfile = "default",
                         AntiSpywareProfile = "default",
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
                     },
                 },
             };
-            GlobalRulestackResource result = await globalRulestackResource.UpdateAsync(patch);
+            GlobalRulestackResource result = await globalRulestack.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GlobalRulestackResourceData resourceData = result.Data;
+            GlobalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -158,15 +158,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            GlobalRulestackResourcePatch patch = new GlobalRulestackResourcePatch();
-            GlobalRulestackResource result = await globalRulestackResource.UpdateAsync(patch);
+            GlobalRulestackPatch patch = new GlobalRulestackPatch();
+            GlobalRulestackResource result = await globalRulestack.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GlobalRulestackResourceData resourceData = result.Data;
+            GlobalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.DeleteAsync(WaitUntil.Completed);
+            await globalRulestack.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.DeleteAsync(WaitUntil.Completed);
+            await globalRulestack.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.CommitAsync(WaitUntil.Completed);
+            await globalRulestack.CommitAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -263,10 +263,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.CommitAsync(WaitUntil.Completed);
+            await globalRulestack.CommitAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -288,10 +288,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            Changelog result = await globalRulestackResource.GetChangeLogAsync();
+            RulestackChangelog result = await globalRulestack.GetChangeLogAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            Changelog result = await globalRulestackResource.GetChangeLogAsync();
+            RulestackChangelog result = await globalRulestack.GetChangeLogAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -338,13 +338,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            AdvSecurityObjectTypeEnum type = new AdvSecurityObjectTypeEnum("globalRulestacks");
+            AdvancedSecurityObjectType type = new AdvancedSecurityObjectType("globalRulestacks");
             string skip = "a6a321";
             int? top = 20;
-            AdvSecurityObjectListResponse result = await globalRulestackResource.GetAdvancedSecurityObjectsAsync(type, skip: skip, top: top);
+            AdvancedSecurityObjectListResult result = await globalRulestack.GetAdvancedSecurityObjectsAsync(type, skip: skip, top: top);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -366,11 +366,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            AdvSecurityObjectTypeEnum type = new AdvSecurityObjectTypeEnum("globalRulestacks");
-            AdvSecurityObjectListResponse result = await globalRulestackResource.GetAdvancedSecurityObjectsAsync(type);
+            AdvancedSecurityObjectType type = new AdvancedSecurityObjectType("globalRulestacks");
+            AdvancedSecurityObjectListResult result = await globalRulestack.GetAdvancedSecurityObjectsAsync(type);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -392,14 +392,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
             string appIdVersion = "8543";
             string appPrefix = "pref";
             string skip = "a6a321";
             int? top = 20;
-            await foreach (string item in globalRulestackResource.GetAppIdsAsync(appIdVersion: appIdVersion, appPrefix: appPrefix, skip: skip, top: top))
+            await foreach (string item in globalRulestack.GetAppIdsAsync(appIdVersion: appIdVersion, appPrefix: appPrefix, skip: skip, top: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -424,10 +424,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in globalRulestackResource.GetAppIdsAsync())
+            await foreach (string item in globalRulestack.GetAppIdsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -452,12 +452,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
             string skip = "a6a321";
             int? top = 20;
-            await foreach (Country item in globalRulestackResource.GetCountriesAsync(skip: skip, top: top))
+            await foreach (RulestackCountry item in globalRulestack.GetCountriesAsync(skip: skip, top: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -482,10 +482,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Country item in globalRulestackResource.GetCountriesAsync())
+            await foreach (RulestackCountry item in globalRulestack.GetCountriesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -510,10 +510,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in globalRulestackResource.GetFirewallsAsync())
+            await foreach (string item in globalRulestack.GetFirewallsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -538,10 +538,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in globalRulestackResource.GetFirewallsAsync())
+            await foreach (string item in globalRulestack.GetFirewallsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -566,12 +566,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
             string skip = "a6a321";
             int? top = 20;
-            await foreach (PredefinedUrlCategory item in globalRulestackResource.GetPredefinedUrlCategoriesAsync(skip: skip, top: top))
+            await foreach (PredefinedUrlCategory item in globalRulestack.GetPredefinedUrlCategoriesAsync(skip: skip, top: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -596,10 +596,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PredefinedUrlCategory item in globalRulestackResource.GetPredefinedUrlCategoriesAsync())
+            await foreach (PredefinedUrlCategory item in globalRulestack.GetPredefinedUrlCategoriesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -624,13 +624,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            SecurityServicesTypeEnum type = new SecurityServicesTypeEnum("globalRulestacks");
+            RulestackSecurityServiceType type = new RulestackSecurityServiceType("globalRulestacks");
             string skip = "a6a321";
             int? top = 20;
-            SecurityServicesResponse result = await globalRulestackResource.GetSecurityServicesAsync(type, skip: skip, top: top);
+            RulestackSecurityServiceListResult result = await globalRulestack.GetSecurityServicesAsync(type, skip: skip, top: top);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -652,11 +652,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            SecurityServicesTypeEnum type = new SecurityServicesTypeEnum("globalRulestacks");
-            SecurityServicesResponse result = await globalRulestackResource.GetSecurityServicesAsync(type);
+            RulestackSecurityServiceType type = new RulestackSecurityServiceType("globalRulestacks");
+            RulestackSecurityServiceListResult result = await globalRulestack.GetSecurityServicesAsync(type);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -678,10 +678,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.RevertAsync();
+            await globalRulestack.RevertAsync();
 
             Console.WriteLine($"Succeeded");
         }
@@ -703,10 +703,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             // for more information of creating GlobalRulestackResource, please refer to the document of GlobalRulestackResource
             string globalRulestackName = "praval";
             ResourceIdentifier globalRulestackResourceId = GlobalRulestackResource.CreateResourceIdentifier(globalRulestackName);
-            GlobalRulestackResource globalRulestackResource = client.GetGlobalRulestackResource(globalRulestackResourceId);
+            GlobalRulestackResource globalRulestack = client.GetGlobalRulestackResource(globalRulestackResourceId);
 
             // invoke the operation
-            await globalRulestackResource.RevertAsync();
+            await globalRulestack.RevertAsync();
 
             Console.WriteLine($"Succeeded");
         }

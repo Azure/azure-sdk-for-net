@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
     public class PrefixListResourceCollectionTests : PaloAltoNetworksNgfwManagementTestBase
     {
         protected ResourceGroupResource DefaultResGroup { get; set; }
-        protected PrefixListResource DefaultResource1 { get; set; }
+        protected LocalRulestackPrefixListResource DefaultResource1 { get; set; }
         protected LocalRulestackResource LocalRulestack { get; set; }
         public PrefixListResourceCollectionTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 DefaultResGroup = await DefaultSubscription.GetResourceGroupAsync("dotnetSdkTest-infra-rg");
-                LocalRulestack = (await DefaultResGroup.GetLocalRulestackResources().GetAsync("dotnetSdkTest-default-2-lrs")).Value;
-                DefaultResource1 = await LocalRulestack.GetPrefixListResourceAsync("dotnetSdkTest0-prefixList");
+                LocalRulestack = (await DefaultResGroup.GetLocalRulestacks().GetAsync("dotnetSdkTest-default-2-lrs")).Value;
+                DefaultResource1 = await LocalRulestack.GetLocalRulestackPrefixListAsync("dotnetSdkTest0-prefixList");
             }
         }
 
@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             string name = IsAsync ? "list1" : "list2";
             IEnumerable<string> prefixList = new string[] { "1.0.0.0/24" };
-            PrefixListResourceData data = new PrefixListResourceData(prefixList);
-            var response = await LocalRulestack.GetPrefixListResources().CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            PrefixListResource list = response.Value;
+            LocalRulestackPrefixListData data = new LocalRulestackPrefixListData(prefixList);
+            var response = await LocalRulestack.GetLocalRulestackPrefixLists().CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            LocalRulestackPrefixListResource list = response.Value;
             Assert.IsTrue((name).Equals(list.Data.Name));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetPrefixListResources().CreateOrUpdateAsync(WaitUntil.Completed, "3", null)).Value);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetLocalRulestackPrefixLists().CreateOrUpdateAsync(WaitUntil.Completed, "3", null)).Value);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task Get()
         {
-            PrefixListResourceCollection collection = LocalRulestack.GetPrefixListResources();
-            PrefixListResource listsResource = await collection.GetAsync(DefaultResource1.Data.Name);
+            LocalRulestackPrefixListCollection collection = LocalRulestack.GetLocalRulestackPrefixLists();
+            LocalRulestackPrefixListResource listsResource = await collection.GetAsync(DefaultResource1.Data.Name);
             Assert.IsNotNull(listsResource);
             Assert.AreEqual(listsResource.Data.Name, DefaultResource1.Data.Name);
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Exists()
         {
-            PrefixListResourceCollection collection = LocalRulestack.GetPrefixListResources();
+            LocalRulestackPrefixListCollection collection = LocalRulestack.GetLocalRulestackPrefixLists();
             Assert.IsTrue(await collection.ExistsAsync(DefaultResource1.Data.Name));
             Assert.IsFalse(await collection.ExistsAsync("invalidName"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
-            PrefixListResourceCollection collection = LocalRulestack.GetPrefixListResources();
+            LocalRulestackPrefixListCollection collection = LocalRulestack.GetLocalRulestackPrefixLists();
             int count = 0;
-            await foreach (PrefixListResource lrs in collection.GetAllAsync())
+            await foreach (LocalRulestackPrefixListResource lrs in collection.GetAllAsync())
             {
                 count++;
             }

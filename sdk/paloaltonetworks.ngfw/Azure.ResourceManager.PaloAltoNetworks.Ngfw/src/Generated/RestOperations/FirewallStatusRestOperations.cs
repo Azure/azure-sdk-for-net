@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FirewallStatusResourceListResult>> ListByFirewallsAsync(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
+        public async Task<Response<PaloAltoNetworksFirewallStatusListResult>> ListByFirewallsAsync(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        FirewallStatusResourceListResult value = default;
+                        PaloAltoNetworksFirewallStatusListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FirewallStatusResourceListResult.DeserializeFirewallStatusResourceListResult(document.RootElement);
+                        value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FirewallStatusResourceListResult> ListByFirewalls(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
+        public Response<PaloAltoNetworksFirewallStatusListResult> ListByFirewalls(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        FirewallStatusResourceListResult value = default;
+                        PaloAltoNetworksFirewallStatusListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FirewallStatusResourceListResult.DeserializeFirewallStatusResourceListResult(document.RootElement);
+                        value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FirewallStatusResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
+        public async Task<Response<PaloAltoNetworksFirewallStatusData>> GetAsync(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        FirewallStatusResourceData value = default;
+                        PaloAltoNetworksFirewallStatusData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FirewallStatusResourceData.DeserializeFirewallStatusResourceData(document.RootElement);
+                        value = PaloAltoNetworksFirewallStatusData.DeserializePaloAltoNetworksFirewallStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FirewallStatusResourceData)null, message.Response);
+                    return Response.FromValue((PaloAltoNetworksFirewallStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FirewallStatusResourceData> Get(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
+        public Response<PaloAltoNetworksFirewallStatusData> Get(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -187,13 +187,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        FirewallStatusResourceData value = default;
+                        PaloAltoNetworksFirewallStatusData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FirewallStatusResourceData.DeserializeFirewallStatusResourceData(document.RootElement);
+                        value = PaloAltoNetworksFirewallStatusData.DeserializePaloAltoNetworksFirewallStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FirewallStatusResourceData)null, message.Response);
+                    return Response.FromValue((PaloAltoNetworksFirewallStatusData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FirewallStatusResourceListResult>> ListByFirewallsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
+        public async Task<Response<PaloAltoNetworksFirewallStatusListResult>> ListByFirewallsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -234,9 +234,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        FirewallStatusResourceListResult value = default;
+                        PaloAltoNetworksFirewallStatusListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FirewallStatusResourceListResult.DeserializeFirewallStatusResourceListResult(document.RootElement);
+                        value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FirewallStatusResourceListResult> ListByFirewallsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
+        public Response<PaloAltoNetworksFirewallStatusListResult> ListByFirewallsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -265,9 +265,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        FirewallStatusResourceListResult value = default;
+                        PaloAltoNetworksFirewallStatusListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FirewallStatusResourceListResult.DeserializeFirewallStatusResourceListResult(document.RootElement);
+                        value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

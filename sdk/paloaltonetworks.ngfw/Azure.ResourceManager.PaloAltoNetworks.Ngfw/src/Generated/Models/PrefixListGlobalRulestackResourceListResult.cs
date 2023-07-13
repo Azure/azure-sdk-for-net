@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of PrefixListGlobalRulestackResourceListResult. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrefixListGlobalRulestackResourceListResult(IEnumerable<PrefixListGlobalRulestackResourceData> value)
+        internal PrefixListGlobalRulestackResourceListResult(IEnumerable<GlobalRulestackPrefixListData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of PrefixListGlobalRulestackResourceListResult. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal PrefixListGlobalRulestackResourceListResult(IReadOnlyList<PrefixListGlobalRulestackResourceData> value, string nextLink)
+        internal PrefixListGlobalRulestackResourceListResult(IReadOnlyList<GlobalRulestackPrefixListData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on this page. </summary>
-        public IReadOnlyList<PrefixListGlobalRulestackResourceData> Value { get; }
+        public IReadOnlyList<GlobalRulestackPrefixListData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }

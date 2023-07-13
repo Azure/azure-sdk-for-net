@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
     public class CertificateObjectLocalRulestackResourceCollectionTests : PaloAltoNetworksNgfwManagementTestBase
     {
         protected ResourceGroupResource DefaultResGroup { get; set; }
-        protected CertificateObjectLocalRulestackResource DefaultResource1 { get; set; }
+        protected LocalRulestackCertificateObjectResource DefaultResource1 { get; set; }
         protected LocalRulestackResource LocalRulestack { get; set; }
         public CertificateObjectLocalRulestackResourceCollectionTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 DefaultResGroup = await DefaultSubscription.GetResourceGroupAsync("dotnetSdkTest-infra-rg");
-                LocalRulestack = (await DefaultResGroup.GetLocalRulestackResources().GetAsync("dotnetSdkTest-default-2-lrs")).Value;
-                DefaultResource1 = await LocalRulestack.GetCertificateObjectLocalRulestackResourceAsync("dotnetSdkTest-cert");
+                LocalRulestack = (await DefaultResGroup.GetLocalRulestacks().GetAsync("dotnetSdkTest-default-2-lrs")).Value;
+                DefaultResource1 = await LocalRulestack.GetLocalRulestackCertificateObjectAsync("dotnetSdkTest-cert");
             }
         }
 
@@ -42,18 +42,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task CreateOrUpdate()
         {
             string name = IsAsync ? "cert1" : "cert2";
-            var response = await LocalRulestack.GetCertificateObjectLocalRulestackResources().CreateOrUpdateAsync(WaitUntil.Completed, name, new CertificateObjectLocalRulestackResourceData(BooleanEnum.True));
-            CertificateObjectLocalRulestackResource cert = response.Value;
+            var response = await LocalRulestack.GetLocalRulestackCertificateObjects().CreateOrUpdateAsync(WaitUntil.Completed, name, new LocalRulestackCertificateObjectData(FirewallBooleanType.True));
+            LocalRulestackCertificateObjectResource cert = response.Value;
             Assert.IsTrue((name).Equals(cert.Data.Name));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetCertificateObjectLocalRulestackResources().CreateOrUpdateAsync(WaitUntil.Completed, "cert10", null)).Value);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetLocalRulestackCertificateObjects().CreateOrUpdateAsync(WaitUntil.Completed, "cert10", null)).Value);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task Get()
         {
-            CertificateObjectLocalRulestackResourceCollection collection = LocalRulestack.GetCertificateObjectLocalRulestackResources();
-            CertificateObjectLocalRulestackResource listsResource = await collection.GetAsync(DefaultResource1.Data.Name);
+            LocalRulestackCertificateObjectCollection collection = LocalRulestack.GetLocalRulestackCertificateObjects();
+            LocalRulestackCertificateObjectResource listsResource = await collection.GetAsync(DefaultResource1.Data.Name);
             Assert.IsNotNull(listsResource);
             Assert.AreEqual(listsResource.Data.Name, DefaultResource1.Data.Name);
         }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Exists()
         {
-            CertificateObjectLocalRulestackResourceCollection collection = LocalRulestack.GetCertificateObjectLocalRulestackResources();
+            LocalRulestackCertificateObjectCollection collection = LocalRulestack.GetLocalRulestackCertificateObjects();
             Assert.IsTrue(await collection.ExistsAsync(DefaultResource1.Data.Name));
             Assert.IsFalse(await collection.ExistsAsync("invalidName"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
-            CertificateObjectLocalRulestackResourceCollection collection = LocalRulestack.GetCertificateObjectLocalRulestackResources();
+            LocalRulestackCertificateObjectCollection collection = LocalRulestack.GetLocalRulestackCertificateObjects();
             int count = 0;
-            await foreach (CertificateObjectLocalRulestackResource lrs in collection.GetAllAsync())
+            await foreach (LocalRulestackCertificateObjectResource lrs in collection.GetAllAsync())
             {
                 count++;
             }

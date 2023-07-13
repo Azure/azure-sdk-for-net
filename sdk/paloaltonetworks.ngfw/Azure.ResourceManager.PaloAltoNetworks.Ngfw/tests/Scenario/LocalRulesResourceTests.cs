@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
     internal class LocalRulesResourceTests : PaloAltoNetworksNgfwManagementTestBase
     {
         protected ResourceGroupResource ResGroup { get; set; }
-        protected LocalRulesResource LocalRulesResource { get; set; }
+        protected LocalRulestackRuleListResource LocalRulesResource { get; set; }
         protected LocalRulestackResource LocalRulestackResource { get; set; }
         protected LocalRulesResourceTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 ResGroup = await DefaultSubscription.GetResourceGroupAsync("dotnetSdkTest-infra-rg");
-                LocalRulestackResource = await ResGroup.GetLocalRulestackResources().GetAsync("dotnetSdkTest-default-2-lrs");
-                LocalRulesResource = await LocalRulestackResource.GetLocalRulesResourceAsync("1000000");
+                LocalRulestackResource = await ResGroup.GetLocalRulestacks().GetAsync("dotnetSdkTest-default-2-lrs");
+                LocalRulesResource = await LocalRulestackResource.GetLocalRulestackRuleListAsync("1000000");
             }
         }
 
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void CreateResourceIdentifier()
         {
             string priority = "100";
-            ResourceIdentifier localRulestackResourceIdentifier = LocalRulesResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, priority);
-            LocalRulesResource.ValidateResourceId(localRulestackResourceIdentifier);
+            ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackRuleListResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, priority);
+            LocalRulestackRuleListResource.ValidateResourceId(localRulestackResourceIdentifier);
 
-            Assert.IsTrue(localRulestackResourceIdentifier.ResourceType.Equals(LocalRulesResource.ResourceType));
+            Assert.IsTrue(localRulestackResourceIdentifier.ResourceType.Equals(LocalRulestackRuleListResource.ResourceType));
             Assert.IsTrue(localRulestackResourceIdentifier.Equals($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/localrules/{priority}"));
-            Assert.Throws<ArgumentException>(() => LocalRulesResource.ValidateResourceId(ResGroup.Data.Id));
+            Assert.Throws<ArgumentException>(() => LocalRulestackRuleListResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Update()
         {
-            LocalRulesResourceData updatedData = LocalRulesResource.Data;
+            LocalRulestackRuleListData updatedData = LocalRulesResource.Data;
             updatedData.Description = "Updated description for local rules test";
-            LocalRulesResource updatedResource = (await LocalRulesResource.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
+            LocalRulestackRuleListResource updatedResource = (await LocalRulesResource.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
 
             Assert.AreEqual(updatedResource.Data.Description, "Updated description for local rules test");
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await LocalRulesResource.UpdateAsync(WaitUntil.Completed, null));
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetCounters()
         {
-            RuleCounter counter = (await LocalRulesResource.GetCountersAsync()).Value;
+            FirewallRuleCounter counter = (await LocalRulesResource.GetCountersAsync()).Value;
             Assert.IsNotNull(counter);
             Assert.AreEqual(counter.RuleName, LocalRulesResource.Data.RuleName);
             Assert.AreEqual(counter.RuleStackName, LocalRulestackResource.Data.Name);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            LocalRulesResource resource = await LocalRulestackResource.GetLocalRulesResourceAsync("1000000");
+            LocalRulestackRuleListResource resource = await LocalRulestackResource.GetLocalRulestackRuleListAsync("1000000");
             Assert.NotNull(resource);
             Assert.AreEqual(resource.Data.RuleName, LocalRulesResource.Data.RuleName);
         }

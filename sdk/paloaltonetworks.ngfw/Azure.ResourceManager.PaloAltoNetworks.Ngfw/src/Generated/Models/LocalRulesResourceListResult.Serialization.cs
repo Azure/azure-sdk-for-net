@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            IReadOnlyList<LocalRulesResourceData> value = default;
+            IReadOnlyList<LocalRulestackRuleListData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<LocalRulesResourceData> array = new List<LocalRulesResourceData>();
+                    List<LocalRulestackRuleListData> array = new List<LocalRulestackRuleListData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocalRulesResourceData.DeserializeLocalRulesResourceData(item));
+                        array.Add(LocalRulestackRuleListData.DeserializeLocalRulestackRuleListData(item));
                     }
                     value = array;
                     continue;
