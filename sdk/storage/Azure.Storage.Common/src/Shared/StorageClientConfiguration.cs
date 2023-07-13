@@ -16,7 +16,7 @@ namespace Azure.Storage.Shared
 
         public virtual StorageSharedKeyCredential SharedKeyCredential { get; private set; }
 
-        public virtual TokenCredential TokenCredential { get; private set; }
+        public virtual TokenCredential OAuthTokenCredential { get; private set; }
 
         public virtual AzureSasCredential SasCredential { get; private set; }
 
@@ -26,7 +26,7 @@ namespace Azure.Storage.Shared
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics)
-            : this(pipeline, clientDiagnostics, sharedKeyCredential, null, null)
+            : this(pipeline, clientDiagnostics)
         {
             SharedKeyCredential = sharedKeyCredential;
         }
@@ -35,35 +35,45 @@ namespace Azure.Storage.Shared
             HttpPipeline pipeline,
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics)
-            : this (pipeline, clientDiagnostics, null, sasCredential, null)
+            : this (pipeline, clientDiagnostics)
         {
+            SasCredential = sasCredential;
         }
 
         public StorageClientConfiguration(
             HttpPipeline pipeline,
             TokenCredential tokenCredential,
             ClientDiagnostics clientDiagnostics)
-            : this (pipeline, clientDiagnostics, null, null, tokenCredential)
+            : this(pipeline, clientDiagnostics)
         {
+            OAuthTokenCredential = tokenCredential;
         }
 
-        protected StorageClientConfiguration(
+        internal StorageClientConfiguration(
             HttpPipeline pipeline,
-            ClientDiagnostics clientDiagnostics,
             StorageSharedKeyCredential sharedKeyCredential,
             AzureSasCredential sasCredential,
-            TokenCredential tokenCredential)
+            TokenCredential tokenCredential,
+            ClientDiagnostics clientDiagnostics)
+        {
+            Pipeline = pipeline;
+            SharedKeyCredential = sharedKeyCredential;
+            SasCredential = sasCredential;
+            OAuthTokenCredential = tokenCredential;
+            ClientDiagnostics = clientDiagnostics;
+        }
+
+        internal StorageClientConfiguration(
+            HttpPipeline pipeline,
+            ClientDiagnostics clientDiagnostics)
         {
             Pipeline = pipeline;
             ClientDiagnostics = clientDiagnostics;
-            SharedKeyCredential = sharedKeyCredential;
-            SasCredential = sasCredential;
-            TokenCredential = tokenCredential;
         }
 
         /// <summary>
         /// Constructor for mocking.
         /// </summary>
-        protected StorageClientConfiguration() { }
+        internal StorageClientConfiguration() { }
     }
 }

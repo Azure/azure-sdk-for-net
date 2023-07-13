@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Shared;
@@ -42,29 +41,25 @@ namespace Azure.Storage.Files.DataLake
             TransferValidation = clientOptions.TransferValidation;
         }
 
-        private DataLakeClientConfiguration(
+        internal DataLakeClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             AzureSasCredential sasCredential,
-            TokenCredential tokenCredential,
             ClientDiagnostics clientDiagnostics,
             DataLakeClientOptions clientOptions,
             DataLakeCustomerProvidedKey? customerProvidedKey)
-            : base(pipeline, clientDiagnostics, sharedKeyCredential, sasCredential, tokenCredential)
+            : base(pipeline, sharedKeyCredential, sasCredential, default, clientDiagnostics)
         {
             ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;
             TransferValidation = clientOptions.TransferValidation;
         }
 
-        private DataLakeClientConfiguration() { }
-
         internal static DataLakeClientConfiguration DeepCopy(DataLakeClientConfiguration originalClientConfiguration)
             => new DataLakeClientConfiguration(
                 pipeline: originalClientConfiguration.Pipeline,
                 sharedKeyCredential: originalClientConfiguration.SharedKeyCredential,
                 sasCredential: originalClientConfiguration.SasCredential,
-                tokenCredential: originalClientConfiguration.TokenCredential,
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
                 clientOptions: originalClientConfiguration.ClientOptions,
                 customerProvidedKey: originalClientConfiguration.CustomerProvidedKey);

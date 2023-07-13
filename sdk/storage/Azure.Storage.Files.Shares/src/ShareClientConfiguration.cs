@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Shared;
@@ -19,10 +18,8 @@ namespace Azure.Storage.Files.Shares
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
             ShareClientOptions clientOptions)
-            : base(pipeline, sharedKeyCredential, clientDiagnostics)
+            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, clientOptions)
         {
-            ClientOptions = clientOptions;
-            TransferValidation = clientOptions.TransferValidation;
         }
 
         public ShareClientConfiguration(
@@ -30,23 +27,20 @@ namespace Azure.Storage.Files.Shares
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
             ShareClientOptions clientOptions)
-            : base(pipeline, sasCredential, clientDiagnostics)
+            : this(pipeline, default, sasCredential, clientDiagnostics, clientOptions)
         {
-            ClientOptions = clientOptions;
-            TransferValidation = clientOptions.TransferValidation;
         }
 
-        public ShareClientConfiguration(
+        internal ShareClientConfiguration(
             HttpPipeline pipeline,
-            TokenCredential tokenCredential,
+            StorageSharedKeyCredential sharedKeyCredential,
+            AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
             ShareClientOptions clientOptions)
-            : base(pipeline, tokenCredential, clientDiagnostics)
+            : base(pipeline, sharedKeyCredential, sasCredential, default, clientDiagnostics)
         {
             ClientOptions = clientOptions;
             TransferValidation = clientOptions.TransferValidation;
         }
-
-        private ShareClientConfiguration() { }
     }
 }

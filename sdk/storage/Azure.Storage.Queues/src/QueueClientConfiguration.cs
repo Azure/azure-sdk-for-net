@@ -33,39 +33,5 @@ namespace Azure.Storage.Queues
             MessageEncoding = messageEncoding;
             QueueMessageDecodingFailedHandlers = queueMessageDecodingFailedHandlers;
         }
-
-        public QueueClientConfiguration(
-            HttpPipeline pipeline,
-            AzureSasCredential sasCredential,
-            ClientDiagnostics clientDiagnostics,
-            QueueClientOptions.ServiceVersion version,
-            QueueClientSideEncryptionOptions clientSideEncryption,
-            QueueMessageEncoding messageEncoding,
-            SyncAsyncEventHandler<QueueMessageDecodingFailedEventArgs> queueMessageDecodingFailedHandlers)
-            : base(pipeline, sasCredential, clientDiagnostics)
-        {
-            Version = version;
-            ClientSideEncryption = clientSideEncryption;
-            MessageEncoding = messageEncoding;
-            QueueMessageDecodingFailedHandlers = queueMessageDecodingFailedHandlers;
-        }
-
-        public QueueClientConfiguration(
-            HttpPipeline pipeline,
-            TokenCredential tokenCredential,
-            ClientDiagnostics clientDiagnostics,
-            QueueClientOptions.ServiceVersion version,
-            QueueClientSideEncryptionOptions clientSideEncryption,
-            QueueMessageEncoding messageEncoding,
-            SyncAsyncEventHandler<QueueMessageDecodingFailedEventArgs> queueMessageDecodingFailedHandlers)
-            : base(pipeline, tokenCredential, clientDiagnostics)
-        {
-            Version = version;
-            ClientSideEncryption = clientSideEncryption;
-            MessageEncoding = messageEncoding;
-            QueueMessageDecodingFailedHandlers = queueMessageDecodingFailedHandlers;
-        }
-
-        private QueueClientConfiguration() { }
     }
 }
