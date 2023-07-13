@@ -686,7 +686,7 @@ namespace Azure.Communication.CallAutomation
 
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                Response<SendDtmfResponse> response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                var response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken).ConfigureAwait(false);
 
                 var result = new SendDtmfResult();
@@ -722,7 +722,7 @@ namespace Azure.Communication.CallAutomation
 
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                Response<SendDtmfResponse> response = CallMediaRestClient.SendDtmf(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                var response = CallMediaRestClient.SendDtmf(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken);
 
                 var result = new SendDtmfResult();

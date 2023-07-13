@@ -8,16 +8,16 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The SendDtmfResponse. </summary>
-    public partial class SendDtmfResponse
+    internal partial class SendDtmfResponseInternal
     {
-        /// <summary> Initializes a new instance of SendDtmfResponse. </summary>
-        internal SendDtmfResponse()
+        /// <summary> Initializes a new instance of SendDtmfResponseInternal. </summary>
+        internal SendDtmfResponseInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of SendDtmfResponse. </summary>
+        /// <summary> Initializes a new instance of SendDtmfResponseInternal. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        internal SendDtmfResponse(string operationContext)
+        internal SendDtmfResponseInternal(string operationContext)
         {
             OperationContext = operationContext;
         }

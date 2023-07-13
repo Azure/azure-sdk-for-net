@@ -666,7 +666,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         /// <returns>A Response containing MuteParticipantsResponse.</returns>
-        public virtual Response<MuteParticipantsResponse> MuteParticipants(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
+        public virtual Response<MuteParticipantsResult> MuteParticipants(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
         {
             var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant });
 
@@ -682,7 +682,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns>A Response containing MuteParticipantsResponse. </returns>
-        public virtual Response<MuteParticipantsResponse> MuteParticipants(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<MuteParticipantsResult> MuteParticipants(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipants)}");
             scope.Start();
@@ -720,7 +720,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MuteParticipantsResult>> MuteParticipantsAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
         {
             var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant });
 
@@ -736,7 +736,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
-        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MuteParticipantsResult>> MuteParticipantsAsync(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipants)}");
             scope.Start();

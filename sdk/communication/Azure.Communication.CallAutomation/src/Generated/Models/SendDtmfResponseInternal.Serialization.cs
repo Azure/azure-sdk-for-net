@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class MuteParticipantsResponse
+    internal partial class SendDtmfResponseInternal
     {
-        internal static MuteParticipantsResponse DeserializeMuteParticipantsResponse(JsonElement element)
+        internal static SendDtmfResponseInternal DeserializeSendDtmfResponseInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new MuteParticipantsResponse(operationContext.Value);
+            return new SendDtmfResponseInternal(operationContext.Value);
         }
     }
 }
