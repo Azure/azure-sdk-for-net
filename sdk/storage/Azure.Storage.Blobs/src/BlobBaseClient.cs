@@ -651,9 +651,9 @@ namespace Azure.Storage.Blobs.Specialized
             BlobBaseClient client,
             CancellationToken cancellationToken = default)
         {
-            if (client.ClientConfiguration.OAuthTokenCredential != default)
+            if (client.ClientConfiguration.TokenCredential != default)
             {
-                return await client.ClientConfiguration.OAuthTokenCredential.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
+                return await client.ClientConfiguration.TokenCredential.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
             }
             return default;
         }
