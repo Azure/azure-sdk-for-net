@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class FlexibleServersLogFile : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerLogFile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteEndObject();
         }
 
-        internal static FlexibleServersLogFile DeserializeFlexibleServersLogFile(JsonElement element)
+        internal static PostgreSqlFlexibleServerLogFile DeserializePostgreSqlFlexibleServerLogFile(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new FlexibleServersLogFile(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(sizeInKb), type0.Value, url.Value);
+            return new PostgreSqlFlexibleServerLogFile(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(sizeInKb), type0.Value, url.Value);
         }
     }
 }

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlMigrationResourceListResult. </summary>
         internal PostgreSqlMigrationResourceListResult()
         {
-            Value = new ChangeTrackingList<MigrationResourceData>();
+            Value = new ChangeTrackingList<PostgreSqlMigrationData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlMigrationResourceListResult. </summary>
         /// <param name="value"> A list of migration resources. </param>
         /// <param name="nextLink"> The link used to get the next page of migrations. </param>
-        internal PostgreSqlMigrationResourceListResult(IReadOnlyList<MigrationResourceData> value, string nextLink)
+        internal PostgreSqlMigrationResourceListResult(IReadOnlyList<PostgreSqlMigrationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of migration resources. </summary>
-        public IReadOnlyList<MigrationResourceData> Value { get; }
+        public IReadOnlyList<PostgreSqlMigrationData> Value { get; }
         /// <summary> The link used to get the next page of migrations. </summary>
         public string NextLink { get; }
     }

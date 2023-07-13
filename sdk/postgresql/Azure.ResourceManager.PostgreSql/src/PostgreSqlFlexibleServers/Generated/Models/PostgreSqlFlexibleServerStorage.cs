@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="autoGrow"> Flag to enable / disable Storage Auto grow for flexible server. </param>
         /// <param name="tier"> Name of storage tier for IOPS. </param>
         /// <param name="iops"> Storage tier IOPS quantity. </param>
-        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, AzureManagedDiskPerformanceTier? tier, int? iops)
+        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops)
         {
             StorageSizeInGB = storageSizeInGB;
             AutoGrow = autoGrow;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Flag to enable / disable Storage Auto grow for flexible server. </summary>
         public StorageAutoGrow? AutoGrow { get; set; }
         /// <summary> Name of storage tier for IOPS. </summary>
-        public AzureManagedDiskPerformanceTier? Tier { get; set; }
+        public PostgreSqlManagedDiskPerformanceTier? Tier { get; set; }
         /// <summary> Storage tier IOPS quantity. </summary>
         public int? Iops { get; }
     }

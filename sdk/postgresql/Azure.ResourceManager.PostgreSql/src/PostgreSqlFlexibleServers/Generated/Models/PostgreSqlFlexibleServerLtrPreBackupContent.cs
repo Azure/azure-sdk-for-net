@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> A request that is made for pre-backup. </summary>
-    public partial class LtrPreBackupContent : PostgreSqlBackupContent
+    public partial class PostgreSqlFlexibleServerLtrPreBackupContent : PostgreSqlBackupContent
     {
-        /// <summary> Initializes a new instance of LtrPreBackupContent. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrPreBackupContent. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
-        public LtrPreBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings) : base(backupSettings)
+        public PostgreSqlFlexibleServerLtrPreBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings) : base(backupSettings)
         {
             Argument.AssertNotNull(backupSettings, nameof(backupSettings));
         }

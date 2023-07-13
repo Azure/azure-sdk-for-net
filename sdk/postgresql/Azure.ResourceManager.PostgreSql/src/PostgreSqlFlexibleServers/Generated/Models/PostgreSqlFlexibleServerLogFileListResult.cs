@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> A List of logFiles. </summary>
-    internal partial class FlexibleServersLogFileListResult
+    internal partial class PostgreSqlFlexibleServerLogFileListResult
     {
-        /// <summary> Initializes a new instance of FlexibleServersLogFileListResult. </summary>
-        internal FlexibleServersLogFileListResult()
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFileListResult. </summary>
+        internal PostgreSqlFlexibleServerLogFileListResult()
         {
-            Value = new ChangeTrackingList<FlexibleServersLogFile>();
+            Value = new ChangeTrackingList<PostgreSqlFlexibleServerLogFile>();
         }
 
-        /// <summary> Initializes a new instance of FlexibleServersLogFileListResult. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFileListResult. </summary>
         /// <param name="value"> The list of logFiles in a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        internal FlexibleServersLogFileListResult(IReadOnlyList<FlexibleServersLogFile> value, string nextLink)
+        internal PostgreSqlFlexibleServerLogFileListResult(IReadOnlyList<PostgreSqlFlexibleServerLogFile> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of logFiles in a server. </summary>
-        public IReadOnlyList<FlexibleServersLogFile> Value { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServerLogFile> Value { get; }
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
     }

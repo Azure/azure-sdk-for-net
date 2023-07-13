@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             Optional<PostgreSqlMigrationState> state = default;
             Optional<string> error = default;
-            Optional<MigrationSubStateDetails> currentSubStateDetails = default;
+            Optional<PostgreSqlMigrationSubStateDetails> currentSubStateDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    currentSubStateDetails = MigrationSubStateDetails.DeserializeMigrationSubStateDetails(property.Value);
+                    currentSubStateDetails = PostgreSqlMigrationSubStateDetails.DeserializePostgreSqlMigrationSubStateDetails(property.Value);
                     continue;
                 }
             }

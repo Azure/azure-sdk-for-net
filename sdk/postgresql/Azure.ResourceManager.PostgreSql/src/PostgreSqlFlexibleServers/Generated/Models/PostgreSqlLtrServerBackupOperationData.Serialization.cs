@@ -13,7 +13,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class LtrServerBackupOperationData : IUtf8JsonSerializable
+    public partial class PostgreSqlLtrServerBackupOperationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             writer.WriteEndObject();
         }
 
-        internal static LtrServerBackupOperationData DeserializeLtrServerBackupOperationData(JsonElement element)
+        internal static PostgreSqlLtrServerBackupOperationData DeserializePostgreSqlLtrServerBackupOperationData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     continue;
                 }
             }
-            return new LtrServerBackupOperationData(id, name, type, systemData.Value, Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupName.Value, backupMetadata.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value);
+            return new PostgreSqlLtrServerBackupOperationData(id, name, type, systemData.Value, Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupName.Value, backupMetadata.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value);
         }
     }
 }

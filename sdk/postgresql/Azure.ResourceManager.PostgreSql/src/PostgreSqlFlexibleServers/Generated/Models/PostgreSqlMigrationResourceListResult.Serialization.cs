@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MigrationResourceData>> value = default;
+            Optional<IReadOnlyList<PostgreSqlMigrationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<MigrationResourceData> array = new List<MigrationResourceData>();
+                    List<PostgreSqlMigrationData> array = new List<PostgreSqlMigrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrationResourceData.DeserializeMigrationResourceData(item));
+                        array.Add(PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(item));
                     }
                     value = array;
                     continue;

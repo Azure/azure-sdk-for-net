@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationList. </summary>
         internal PostgreSqlLtrServerBackupOperationList()
         {
-            Value = new ChangeTrackingList<LtrServerBackupOperationData>();
+            Value = new ChangeTrackingList<PostgreSqlLtrServerBackupOperationData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationList. </summary>
         /// <param name="value"> The list of long term retention server backup operations. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        internal PostgreSqlLtrServerBackupOperationList(IReadOnlyList<LtrServerBackupOperationData> value, string nextLink)
+        internal PostgreSqlLtrServerBackupOperationList(IReadOnlyList<PostgreSqlLtrServerBackupOperationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of long term retention server backup operations. </summary>
-        public IReadOnlyList<LtrServerBackupOperationData> Value { get; }
+        public IReadOnlyList<PostgreSqlLtrServerBackupOperationData> Value { get; }
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
     }

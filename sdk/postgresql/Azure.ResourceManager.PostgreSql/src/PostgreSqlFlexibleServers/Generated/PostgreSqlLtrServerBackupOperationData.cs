@@ -13,17 +13,17 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing the LtrServerBackupOperation data model.
+    /// A class representing the PostgreSqlLtrServerBackupOperation data model.
     /// Response for the LTR backup Operation API call
     /// </summary>
-    public partial class LtrServerBackupOperationData : ResourceData
+    public partial class PostgreSqlLtrServerBackupOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of LtrServerBackupOperationData. </summary>
-        public LtrServerBackupOperationData()
+        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationData. </summary>
+        public PostgreSqlLtrServerBackupOperationData()
         {
         }
 
-        /// <summary> Initializes a new instance of LtrServerBackupOperationData. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="percentComplete"> PercentageCompleted. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
-        internal LtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage) : base(id, name, resourceType, systemData)
+        internal PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage) : base(id, name, resourceType, systemData)
         {
             DatasourceSizeInBytes = datasourceSizeInBytes;
             DataTransferredInBytes = dataTransferredInBytes;

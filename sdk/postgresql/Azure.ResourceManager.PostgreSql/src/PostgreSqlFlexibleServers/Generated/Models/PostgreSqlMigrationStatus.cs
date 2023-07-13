@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="state"> State of migration. </param>
         /// <param name="error"> Error message, if any, for the migration state. </param>
         /// <param name="currentSubStateDetails"> Current Migration sub state details. </param>
-        internal PostgreSqlMigrationStatus(PostgreSqlMigrationState? state, string error, MigrationSubStateDetails currentSubStateDetails)
+        internal PostgreSqlMigrationStatus(PostgreSqlMigrationState? state, string error, PostgreSqlMigrationSubStateDetails currentSubStateDetails)
         {
             State = state;
             Error = error;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Error message, if any, for the migration state. </summary>
         public string Error { get; }
         /// <summary> Current Migration sub state details. </summary>
-        internal MigrationSubStateDetails CurrentSubStateDetails { get; }
+        internal PostgreSqlMigrationSubStateDetails CurrentSubStateDetails { get; }
         /// <summary> Migration sub state. </summary>
         public PostgreSqlMigrationSubState? CurrentSubState
         {

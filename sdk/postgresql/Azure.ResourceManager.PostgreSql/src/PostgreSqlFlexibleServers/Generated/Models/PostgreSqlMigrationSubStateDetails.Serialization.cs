@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    internal partial class MigrationSubStateDetails
+    internal partial class PostgreSqlMigrationSubStateDetails
     {
-        internal static MigrationSubStateDetails DeserializeMigrationSubStateDetails(JsonElement element)
+        internal static PostgreSqlMigrationSubStateDetails DeserializePostgreSqlMigrationSubStateDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MigrationSubStateDetails(Optional.ToNullable(currentSubState));
+            return new PostgreSqlMigrationSubStateDetails(Optional.ToNullable(currentSubState));
         }
     }
 }

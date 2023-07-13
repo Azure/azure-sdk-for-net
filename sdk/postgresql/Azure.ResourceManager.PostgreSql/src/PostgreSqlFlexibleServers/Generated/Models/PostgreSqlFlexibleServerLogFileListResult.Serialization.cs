@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    internal partial class FlexibleServersLogFileListResult
+    internal partial class PostgreSqlFlexibleServerLogFileListResult
     {
-        internal static FlexibleServersLogFileListResult DeserializeFlexibleServersLogFileListResult(JsonElement element)
+        internal static PostgreSqlFlexibleServerLogFileListResult DeserializePostgreSqlFlexibleServerLogFileListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<FlexibleServersLogFile>> value = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerLogFile>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<FlexibleServersLogFile> array = new List<FlexibleServersLogFile>();
+                    List<PostgreSqlFlexibleServerLogFile> array = new List<PostgreSqlFlexibleServerLogFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlexibleServersLogFile.DeserializeFlexibleServersLogFile(item));
+                        array.Add(PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(item));
                     }
                     value = array;
                     continue;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new FlexibleServersLogFileListResult(Optional.ToList(value), nextLink.Value);
+            return new PostgreSqlFlexibleServerLogFileListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="tier"> Name of storage tier for IOPS. </param>
         /// <param name="iops"> Storage tier IOPS quantity. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorage"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerStorage PostgreSqlFlexibleServerStorage(int? storageSizeInGB = null, StorageAutoGrow? autoGrow = null, AzureManagedDiskPerformanceTier? tier = null, int? iops = null)
+        public static PostgreSqlFlexibleServerStorage PostgreSqlFlexibleServerStorage(int? storageSizeInGB = null, StorageAutoGrow? autoGrow = null, PostgreSqlManagedDiskPerformanceTier? tier = null, int? iops = null)
         {
             return new PostgreSqlFlexibleServerStorage(storageSizeInGB, autoGrow, tier, iops);
         }
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerHighAvailability(mode, state, standbyAvailabilityZone);
         }
 
-        /// <summary> Initializes a new instance of MigrationResourceData. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlMigrationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -367,15 +367,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases send triggerCutover flag as True and database names in this array. </param>
         /// <param name="cancel"> To trigger cancel for entire migration we need to send this flag as True. </param>
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </param>
-        /// <returns> A new <see cref="FlexibleServers.MigrationResourceData"/> instance for mocking. </returns>
-        public static MigrationResourceData MigrationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string migrationId = null, PostgreSqlMigrationStatus currentStatus = null, PostgreSqlMigrationMode? migrationMode = null, PostgreSqlServerMetadata sourceDbServerMetadata = null, PostgreSqlServerMetadata targetDbServerMetadata = null, ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, PostgreSqlMigrationSecretParameters secretParameters = null, IEnumerable<string> dbsToMigrate = null, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = null, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = null, DateTimeOffset? migrationWindowStartTimeInUtc = null, DateTimeOffset? migrationWindowEndTimeInUtc = null, PostgreSqlMigrationStartDataMigration? startDataMigration = null, PostgreSqlMigrationTriggerCutover? triggerCutover = null, IEnumerable<string> dbsToTriggerCutoverOn = null, PostgreSqlMigrationCancel? cancel = null, IEnumerable<string> dbsToCancelMigrationOn = null)
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlMigrationData"/> instance for mocking. </returns>
+        public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string migrationId = null, PostgreSqlMigrationStatus currentStatus = null, PostgreSqlMigrationMode? migrationMode = null, PostgreSqlServerMetadata sourceDbServerMetadata = null, PostgreSqlServerMetadata targetDbServerMetadata = null, ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, PostgreSqlMigrationSecretParameters secretParameters = null, IEnumerable<string> dbsToMigrate = null, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = null, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = null, DateTimeOffset? migrationWindowStartTimeInUtc = null, DateTimeOffset? migrationWindowEndTimeInUtc = null, PostgreSqlMigrationStartDataMigration? startDataMigration = null, PostgreSqlMigrationTriggerCutover? triggerCutover = null, IEnumerable<string> dbsToTriggerCutoverOn = null, PostgreSqlMigrationCancel? cancel = null, IEnumerable<string> dbsToCancelMigrationOn = null)
         {
             tags ??= new Dictionary<string, string>();
             dbsToMigrate ??= new List<string>();
             dbsToTriggerCutoverOn ??= new List<string>();
             dbsToCancelMigrationOn ??= new List<string>();
 
-            return new MigrationResourceData(id, name, resourceType, systemData, tags, location, migrationId, currentStatus, migrationMode, sourceDbServerMetadata, targetDbServerMetadata, sourceDbServerResourceId, sourceDbServerFullyQualifiedDomainName, targetDbServerResourceId, targetDbServerFullyQualifiedDomainName, secretParameters, dbsToMigrate?.ToList(), setupLogicalReplicationOnSourceDbIfNeeded, overwriteDbsInTarget, migrationWindowStartTimeInUtc, migrationWindowEndTimeInUtc, startDataMigration, triggerCutover, dbsToTriggerCutoverOn?.ToList(), cancel, dbsToCancelMigrationOn?.ToList());
+            return new PostgreSqlMigrationData(id, name, resourceType, systemData, tags, location, migrationId, currentStatus, migrationMode, sourceDbServerMetadata, targetDbServerMetadata, sourceDbServerResourceId, sourceDbServerFullyQualifiedDomainName, targetDbServerResourceId, targetDbServerFullyQualifiedDomainName, secretParameters, dbsToMigrate?.ToList(), setupLogicalReplicationOnSourceDbIfNeeded, overwriteDbsInTarget, migrationWindowStartTimeInUtc, migrationWindowEndTimeInUtc, startDataMigration, triggerCutover, dbsToTriggerCutoverOn?.ToList(), cancel, dbsToCancelMigrationOn?.ToList());
         }
 
         /// <summary> Initializes a new instance of PostgreSqlMigrationStatus. </summary>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlMigrationStatus"/> instance for mocking. </returns>
         public static PostgreSqlMigrationStatus PostgreSqlMigrationStatus(PostgreSqlMigrationState? state = null, string error = null, PostgreSqlMigrationSubState? currentSubState = null)
         {
-            return new PostgreSqlMigrationStatus(state, error, currentSubState != null ? new MigrationSubStateDetails(currentSubState) : null);
+            return new PostgreSqlMigrationStatus(state, error, currentSubState != null ? new PostgreSqlMigrationSubStateDetails(currentSubState) : null);
         }
 
         /// <summary> Initializes a new instance of PostgreSqlServerMetadata. </summary>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlCheckMigrationNameAvailabilityContent(name, resourceType, nameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of FlexibleServersLogFile. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFile. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -436,10 +436,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="sizeInKb"> The size in kb of the logFile. </param>
         /// <param name="typePropertiesType"> Type of the log file. </param>
         /// <param name="uri"> The url to download the log file from. </param>
-        /// <returns> A new <see cref="Models.FlexibleServersLogFile"/> instance for mocking. </returns>
-        public static FlexibleServersLogFile FlexibleServersLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, long? sizeInKb = null, string typePropertiesType = null, Uri uri = null)
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLogFile"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerLogFile PostgreSqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, long? sizeInKb = null, string typePropertiesType = null, Uri uri = null)
         {
-            return new FlexibleServersLogFile(id, name, resourceType, systemData, createdOn, lastModifiedOn, sizeInKb, typePropertiesType, uri);
+            return new PostgreSqlFlexibleServerLogFile(id, name, resourceType, systemData, createdOn, lastModifiedOn, sizeInKb, typePropertiesType, uri);
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerLtrBackupResult(datasourceSizeInBytes, dataTransferredInBytes, backupName, backupMetadata, status, startOn, endOn, percentComplete, errorCode, errorMessage);
         }
 
-        /// <summary> Initializes a new instance of LtrServerBackupOperationData. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -503,10 +503,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="percentComplete"> PercentageCompleted. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
-        /// <returns> A new <see cref="FlexibleServers.LtrServerBackupOperationData"/> instance for mocking. </returns>
-        public static LtrServerBackupOperationData LtrServerBackupOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationData"/> instance for mocking. </returns>
+        public static PostgreSqlLtrServerBackupOperationData PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
         {
-            return new LtrServerBackupOperationData(id, name, resourceType, systemData, datasourceSizeInBytes, dataTransferredInBytes, backupName, backupMetadata, status, startOn, endOn, percentComplete, errorCode, errorMessage);
+            return new PostgreSqlLtrServerBackupOperationData(id, name, resourceType, systemData, datasourceSizeInBytes, dataTransferredInBytes, backupName, backupMetadata, status, startOn, endOn, percentComplete, errorCode, errorMessage);
         }
     }
 }

@@ -260,8 +260,8 @@ rename-mapping:
   FastProvisioningSupportedEnum: PostgreSqlFlexibleServerFastProvisioningSupported
   FlexibleServerCapability.fastProvisioningSupported: SupportFastProvisioning
   FlexibleServerCapability: PostgreSqlFlexibleServerCapabilityProperties
-  FlexibleServersLogFile: PostgreSqlFlexibleServersLogFile
-  FlexibleServersLogFileListResult: PostgreSqlFlexibleServersLogFileListResult
+  LogFile: PostgreSqlFlexibleServerLogFile
+  LogFileListResult: PostgreSqlFlexibleServerLogFileListResult
   GeoBackupSupportedEnum: PostgreSqlFlexibleServerGeoBackupSupported
   HaMode: PostgreSqlFlexibleServerHAMode
   ZoneRedundantHaSupportedEnum: PostgreSqlFlexibleServerZoneRedundantHaSupported
@@ -274,24 +274,25 @@ rename-mapping:
   CapabilityBase: PostgreSqlBaseCapability
   ExecutionStatus: PostgreSqlExecutionStatus
   KeyStatusEnum: PostgreSqlKeyStatus
-  LtrBackupContent: PostgreSqlFlexibleServerLtrBackupContent
   LtrBackupResponse: PostgreSqlFlexibleServerLtrBackupResult
-  LtrPreBackupContent: PostgreSqlFlexibleServerLtrPreBackupContent
   LtrPreBackupResponse: PostgreSqlFlexibleServerLtrPreBackupResult
-  LtrServerBackupOperationData: PostgreSqlLtrServerBackupOperationData
+  LtrServerBackupOperation: PostgreSqlLtrServerBackupOperation
   LtrServerBackupOperationList: PostgreSqlLtrServerBackupOperationList
-  MigrationListFilter: PostgreqlMigrationListFilter
+  MigrationListFilter: PostgreSqlMigrationListFilter
   MigrationMode: PostgreSqlMigrationMode
   MigrationNameAvailabilityReason: PostgreSqlMigrationNameUnavailableReason
   MigrationResourceListResult: PostgreSqlMigrationResourceListResult
   MigrationNameAvailabilityResource: PostgreSqlCheckMigrationNameAvailabilityContent
-  MigrationResourcePatch: PostgreSqlMigrationPatch
   MigrationSecretParameters: PostgreSqlMigrationSecretParameters
   MigrationState: PostgreSqlMigrationState
   MigrationStatus: PostgreSqlMigrationStatus
   MigrationSubState: PostgreSqlMigrationSubState
+  MigrationSubStateDetails: PostgreSqlMigrationSubStateDetails
   BackupRequestBase: PostgreSqlBackupContent
-  AzureManagedDiskPerformanceTier: PostgreSqlManagedDiskPerformanceTier
+  AzureManagedDiskPerformanceTiers: PostgreSqlManagedDiskPerformanceTier
+  LtrBackupRequest: PostgreSqlFlexibleServerLtrBackupContent
+  LtrPreBackupRequest: PostgreSqlFlexibleServerLtrPreBackupContent
+  MigrationResource: PostgreSqlMigration
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
   CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation

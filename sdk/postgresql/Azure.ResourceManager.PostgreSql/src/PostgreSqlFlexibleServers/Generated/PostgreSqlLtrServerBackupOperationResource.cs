@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A Class representing a LtrServerBackupOperation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LtrServerBackupOperationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLtrServerBackupOperationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource" /> using the GetLtrServerBackupOperation method.
+    /// A Class representing a PostgreSqlLtrServerBackupOperation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlLtrServerBackupOperationResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlLtrServerBackupOperationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource" /> using the GetPostgreSqlLtrServerBackupOperation method.
     /// </summary>
-    public partial class LtrServerBackupOperationResource : ArmResource
+    public partial class PostgreSqlLtrServerBackupOperationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LtrServerBackupOperationResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PostgreSqlLtrServerBackupOperationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string backupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/ltrBackupOperations/{backupName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _ltrServerBackupOperationltrBackupOperationsClientDiagnostics;
-        private readonly LtrBackupRestOperations _ltrServerBackupOperationltrBackupOperationsRestClient;
-        private readonly LtrServerBackupOperationData _data;
+        private readonly ClientDiagnostics _postgreSqlLtrServerBackupOperationltrBackupOperationsClientDiagnostics;
+        private readonly LtrBackupRestOperations _postgreSqlLtrServerBackupOperationltrBackupOperationsRestClient;
+        private readonly PostgreSqlLtrServerBackupOperationData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="LtrServerBackupOperationResource"/> class for mocking. </summary>
-        protected LtrServerBackupOperationResource()
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlLtrServerBackupOperationResource"/> class for mocking. </summary>
+        protected PostgreSqlLtrServerBackupOperationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LtrServerBackupOperationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlLtrServerBackupOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LtrServerBackupOperationResource(ArmClient client, LtrServerBackupOperationData data) : this(client, data.Id)
+        internal PostgreSqlLtrServerBackupOperationResource(ArmClient client, PostgreSqlLtrServerBackupOperationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LtrServerBackupOperationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlLtrServerBackupOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LtrServerBackupOperationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PostgreSqlLtrServerBackupOperationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ltrServerBackupOperationltrBackupOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string ltrServerBackupOperationltrBackupOperationsApiVersion);
-            _ltrServerBackupOperationltrBackupOperationsRestClient = new LtrBackupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ltrServerBackupOperationltrBackupOperationsApiVersion);
+            _postgreSqlLtrServerBackupOperationltrBackupOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string postgreSqlLtrServerBackupOperationltrBackupOperationsApiVersion);
+            _postgreSqlLtrServerBackupOperationltrBackupOperationsRestClient = new LtrBackupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlLtrServerBackupOperationltrBackupOperationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual LtrServerBackupOperationData Data
+        public virtual PostgreSqlLtrServerBackupOperationData Data
         {
             get
             {
@@ -100,16 +100,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LtrServerBackupOperationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlLtrServerBackupOperationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _ltrServerBackupOperationltrBackupOperationsClientDiagnostics.CreateScope("LtrServerBackupOperationResource.Get");
+            using var scope = _postgreSqlLtrServerBackupOperationltrBackupOperationsClientDiagnostics.CreateScope("PostgreSqlLtrServerBackupOperationResource.Get");
             scope.Start();
             try
             {
-                var response = await _ltrServerBackupOperationltrBackupOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _postgreSqlLtrServerBackupOperationltrBackupOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LtrServerBackupOperationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlLtrServerBackupOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,16 +132,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LtrServerBackupOperationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlLtrServerBackupOperationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _ltrServerBackupOperationltrBackupOperationsClientDiagnostics.CreateScope("LtrServerBackupOperationResource.Get");
+            using var scope = _postgreSqlLtrServerBackupOperationltrBackupOperationsClientDiagnostics.CreateScope("PostgreSqlLtrServerBackupOperationResource.Get");
             scope.Start();
             try
             {
-                var response = _ltrServerBackupOperationltrBackupOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _postgreSqlLtrServerBackupOperationltrBackupOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LtrServerBackupOperationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlLtrServerBackupOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

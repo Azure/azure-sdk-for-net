@@ -14,21 +14,21 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing the MigrationResource data model.
+    /// A class representing the PostgreSqlMigration data model.
     /// Represents a migration resource.
     /// </summary>
-    public partial class MigrationResourceData : TrackedResourceData
+    public partial class PostgreSqlMigrationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MigrationResourceData. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlMigrationData. </summary>
         /// <param name="location"> The location. </param>
-        public MigrationResourceData(AzureLocation location) : base(location)
+        public PostgreSqlMigrationData(AzureLocation location) : base(location)
         {
             DbsToMigrate = new ChangeTrackingList<string>();
             DbsToTriggerCutoverOn = new ChangeTrackingList<string>();
             DbsToCancelMigrationOn = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MigrationResourceData. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlMigrationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases send triggerCutover flag as True and database names in this array. </param>
         /// <param name="cancel"> To trigger cancel for entire migration we need to send this flag as True. </param>
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </param>
-        internal MigrationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, PostgreSqlMigrationStatus currentStatus, PostgreSqlMigrationMode? migrationMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn) : base(id, name, resourceType, systemData, tags, location)
+        internal PostgreSqlMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, PostgreSqlMigrationStatus currentStatus, PostgreSqlMigrationMode? migrationMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn) : base(id, name, resourceType, systemData, tags, location)
         {
             MigrationId = migrationId;
             CurrentStatus = currentStatus;

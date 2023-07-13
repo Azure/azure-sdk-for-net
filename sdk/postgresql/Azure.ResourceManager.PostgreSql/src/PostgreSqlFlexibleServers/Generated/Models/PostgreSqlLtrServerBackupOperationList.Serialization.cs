@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LtrServerBackupOperationData>> value = default;
+            Optional<IReadOnlyList<PostgreSqlLtrServerBackupOperationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<LtrServerBackupOperationData> array = new List<LtrServerBackupOperationData>();
+                    List<PostgreSqlLtrServerBackupOperationData> array = new List<PostgreSqlLtrServerBackupOperationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LtrServerBackupOperationData.DeserializeLtrServerBackupOperationData(item));
+                        array.Add(PostgreSqlLtrServerBackupOperationData.DeserializePostgreSqlLtrServerBackupOperationData(item));
                     }
                     value = array;
                     continue;

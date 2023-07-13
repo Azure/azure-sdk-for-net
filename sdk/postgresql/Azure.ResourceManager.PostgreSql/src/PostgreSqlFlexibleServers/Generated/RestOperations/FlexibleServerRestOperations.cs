@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateTriggerLtrPreBackupRequest(string subscriptionId, string resourceGroupName, string serverName, LtrPreBackupContent content)
+        internal HttpMessage CreateTriggerLtrPreBackupRequest(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerLtrPreBackupContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlFlexibleServerLtrPreBackupResult>> TriggerLtrPreBackupAsync(string subscriptionId, string resourceGroupName, string serverName, LtrPreBackupContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlFlexibleServerLtrPreBackupResult>> TriggerLtrPreBackupAsync(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerLtrPreBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlFlexibleServerLtrPreBackupResult> TriggerLtrPreBackup(string subscriptionId, string resourceGroupName, string serverName, LtrPreBackupContent content, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlFlexibleServerLtrPreBackupResult> TriggerLtrPreBackup(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerLtrPreBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        internal HttpMessage CreateStartLtrBackupRequest(string subscriptionId, string resourceGroupName, string serverName, LtrBackupContent content)
+        internal HttpMessage CreateStartLtrBackupRequest(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerLtrBackupContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StartLtrBackupAsync(string subscriptionId, string resourceGroupName, string serverName, LtrBackupContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> StartLtrBackupAsync(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerLtrBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response StartLtrBackup(string subscriptionId, string resourceGroupName, string serverName, LtrBackupContent content, CancellationToken cancellationToken = default)
+        public Response StartLtrBackup(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerLtrBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

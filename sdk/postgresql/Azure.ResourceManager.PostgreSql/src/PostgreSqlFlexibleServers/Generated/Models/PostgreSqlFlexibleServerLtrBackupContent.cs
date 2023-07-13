@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> The request that is made for a long term retention backup. </summary>
-    public partial class LtrBackupContent : PostgreSqlBackupContent
+    public partial class PostgreSqlFlexibleServerLtrBackupContent : PostgreSqlBackupContent
     {
-        /// <summary> Initializes a new instance of LtrBackupContent. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrBackupContent. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <param name="targetDetails"> Backup store detail for target server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> or <paramref name="targetDetails"/> is null. </exception>
-        public LtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, PostgreSqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings)
+        public PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, PostgreSqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings)
         {
             Argument.AssertNotNull(backupSettings, nameof(backupSettings));
             Argument.AssertNotNull(targetDetails, nameof(targetDetails));

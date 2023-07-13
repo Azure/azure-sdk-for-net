@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Represents a logFile. </summary>
-    public partial class FlexibleServersLogFile : ResourceData
+    public partial class PostgreSqlFlexibleServerLogFile : ResourceData
     {
-        /// <summary> Initializes a new instance of FlexibleServersLogFile. </summary>
-        public FlexibleServersLogFile()
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFile. </summary>
+        public PostgreSqlFlexibleServerLogFile()
         {
         }
 
-        /// <summary> Initializes a new instance of FlexibleServersLogFile. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFile. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="sizeInKb"> The size in kb of the logFile. </param>
         /// <param name="typePropertiesType"> Type of the log file. </param>
         /// <param name="uri"> The url to download the log file from. </param>
-        internal FlexibleServersLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, long? sizeInKb, string typePropertiesType, Uri uri) : base(id, name, resourceType, systemData)
+        internal PostgreSqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, long? sizeInKb, string typePropertiesType, Uri uri) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;

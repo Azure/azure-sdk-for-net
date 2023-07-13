@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             Optional<int> storageSizeGB = default;
             Optional<StorageAutoGrow> autoGrow = default;
-            Optional<AzureManagedDiskPerformanceTier> tier = default;
+            Optional<PostgreSqlManagedDiskPerformanceTier> tier = default;
             Optional<int> iops = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    tier = new AzureManagedDiskPerformanceTier(property.Value.GetString());
+                    tier = new PostgreSqlManagedDiskPerformanceTier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("iops"u8))

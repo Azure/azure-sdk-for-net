@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Represents a migration resource for patch. </summary>
-    public partial class MigrationResourcePatch
+    public partial class PostgreSqlMigrationPatch
     {
-        /// <summary> Initializes a new instance of MigrationResourcePatch. </summary>
-        public MigrationResourcePatch()
+        /// <summary> Initializes a new instance of PostgreSqlMigrationPatch. </summary>
+        public PostgreSqlMigrationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             DbsToMigrate = new ChangeTrackingList<string>();

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, MigrationResourceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/>, <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MigrationResourceData>> CreateAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, MigrationResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlMigrationData>> CreateAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                 case 201:
                     {
-                        MigrationResourceData value = default;
+                        PostgreSqlMigrationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MigrationResourceData.DeserializeMigrationResourceData(document.RootElement);
+                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/>, <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MigrationResourceData> Create(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, MigrationResourceData data, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlMigrationData> Create(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case 200:
                 case 201:
                     {
-                        MigrationResourceData value = default;
+                        PostgreSqlMigrationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MigrationResourceData.DeserializeMigrationResourceData(document.RootElement);
+                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MigrationResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlMigrationData>> GetAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -174,13 +174,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        MigrationResourceData value = default;
+                        PostgreSqlMigrationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MigrationResourceData.DeserializeMigrationResourceData(document.RootElement);
+                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MigrationResourceData)null, message.Response);
+                    return Response.FromValue((PostgreSqlMigrationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MigrationResourceData> Get(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlMigrationData> Get(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -207,19 +207,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        MigrationResourceData value = default;
+                        PostgreSqlMigrationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MigrationResourceData.DeserializeMigrationResourceData(document.RootElement);
+                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MigrationResourceData)null, message.Response);
+                    return Response.FromValue((PostgreSqlMigrationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, MigrationResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/>, <paramref name="migrationName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MigrationResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, MigrationResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlMigrationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -268,9 +268,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        MigrationResourceData value = default;
+                        PostgreSqlMigrationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MigrationResourceData.DeserializeMigrationResourceData(document.RootElement);
+                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/>, <paramref name="migrationName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MigrationResourceData> Update(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, MigrationResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlMigrationData> Update(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -301,9 +301,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        MigrationResourceData value = default;
+                        PostgreSqlMigrationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MigrationResourceData.DeserializeMigrationResourceData(document.RootElement);
+                        value = PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        internal HttpMessage CreateListByTargetServerRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreqlMigrationListFilter? migrationListFilter)
+        internal HttpMessage CreateListByTargetServerRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlMigrationResourceListResult>> ListByTargetServerAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlMigrationResourceListResult>> ListByTargetServerAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlMigrationResourceListResult> ListByTargetServer(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlMigrationResourceListResult> ListByTargetServer(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        internal HttpMessage CreateListByTargetServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreqlMigrationListFilter? migrationListFilter)
+        internal HttpMessage CreateListByTargetServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlMigrationResourceListResult>> ListByTargetServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlMigrationResourceListResult>> ListByTargetServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlMigrationResourceListResult> ListByTargetServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlMigrationResourceListResult> ListByTargetServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
