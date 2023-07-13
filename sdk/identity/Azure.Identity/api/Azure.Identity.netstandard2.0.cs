@@ -346,11 +346,13 @@ namespace Azure.Identity
     public partial class TokenCacheRefreshArgs
     {
         internal TokenCacheRefreshArgs() { }
+        public bool IsCaeEnabled { get { throw null; } }
         public string SuggestedCacheKey { get { throw null; } }
     }
     public partial class TokenCacheUpdatedArgs
     {
         internal TokenCacheUpdatedArgs() { }
+        public bool IsCaeEnabled { get { throw null; } }
         public System.ReadOnlyMemory<byte> UnsafeCacheData { get { throw null; } }
     }
     public partial class TokenCredentialDiagnosticsOptions : Azure.Core.DiagnosticsOptions

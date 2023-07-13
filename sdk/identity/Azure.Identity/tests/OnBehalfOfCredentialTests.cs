@@ -60,7 +60,7 @@ namespace Azure.Identity.Tests
                     config.TenantId,
                     ClientId,
                     "secret",
-                    Guid.NewGuid().ToString(),
+                    expectedUserAssertion,
                     options,
                     pipeline,
                     null));

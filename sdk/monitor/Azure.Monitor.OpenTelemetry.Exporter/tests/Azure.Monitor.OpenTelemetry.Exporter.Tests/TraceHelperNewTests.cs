@@ -90,11 +90,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void GetNewOperationName_WithNullHttpRoute_ReturnsActivityDisplayName()
+        public void GetNewOperationName_WithNullHttpRoute_ReturnsUrlWithVerb()
         {
             // Arrange
-            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetNewOperationName_WithNullHttpRoute_ReturnsActivityDisplayName)).Build();
-            using var activitySource = new ActivitySource(nameof(GetNewOperationName_WithNullHttpRoute_ReturnsActivityDisplayName));
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetNewOperationName_WithNullHttpRoute_ReturnsUrlWithVerb)).Build();
+            using var activitySource = new ActivitySource(nameof(GetNewOperationName_WithNullHttpRoute_ReturnsUrlWithVerb));
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Server);
@@ -102,12 +102,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var tagObjects = AzMonList.Initialize();
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpRequestMethod, "POST"));
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerAddress, "example.com"));
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeUrlScheme, "http"));
 
             // Act
             var result = TraceHelper.GetNewSchemaOperationName(activity!, url: null, ref tagObjects);
 
             // Assert
-            Assert.Equal(ActivityName, result);
+            Assert.Equal("POST http://example.com", result);
         }
 
         [Fact]
@@ -130,6 +132,54 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Assert
             Assert.Equal("GET /api/test", result);
+        }
+
+        [Fact]
+        public void GetHttpOperationNameAndUrl_V1()
+        {
+            // Arrange
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetNewOperationName_WithNullUrl_ReturnsFormattedStringFromMappedTags)).Build();
+            using var activitySource = new ActivitySource(nameof(GetNewOperationName_WithNullUrl_ReturnsFormattedStringFromMappedTags));
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server);
+            activity?.Stop();
+
+            var httpMappedTags = AzMonList.Initialize();
+            AzMonList.Add(ref httpMappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpUrl, "https://example.com"));
+            AzMonList.Add(ref httpMappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpMethod, "GET"));
+
+            // Act
+            var (requestUrl, operationName) = TraceHelper.GetHttpOperationNameAndUrl(activity!.DisplayName, OperationType.Http, ref httpMappedTags);
+
+            // Assert
+            Assert.Equal("https://example.com", requestUrl);
+            Assert.Equal("GET /", operationName);
+        }
+
+        [Fact]
+        public void GetHttpOperationNameAndUrl_V2()
+        {
+            // Arrange
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder().AddSource(nameof(GetNewOperationName_WithNullUrl_ReturnsFormattedStringFromMappedTags)).Build();
+            using var activitySource = new ActivitySource(nameof(GetNewOperationName_WithNullUrl_ReturnsFormattedStringFromMappedTags));
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server);
+            activity?.Stop();
+
+            var httpMappedTags = AzMonList.Initialize();
+            AzMonList.Add(ref httpMappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeUrlScheme, "http"));
+            AzMonList.Add(ref httpMappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeServerAddress, "example.com"));
+            AzMonList.Add(ref httpMappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpRequestMethod, "GET"));
+            AzMonList.Add(ref httpMappedTags, new KeyValuePair<string, object?>(SemanticConventions.AttributeUrlPath, "/search"));
+
+            // Act
+            var (requestUrl, operationName) = TraceHelper.GetHttpOperationNameAndUrl(activity!.DisplayName, OperationType.V2, ref httpMappedTags);
+
+            // Assert
+            Assert.Equal("http://example.com/search", requestUrl);
+            Assert.Equal("GET /search", operationName);
         }
 
         private string? GetExpectedMSlinks(IEnumerable<ActivityLink> links)

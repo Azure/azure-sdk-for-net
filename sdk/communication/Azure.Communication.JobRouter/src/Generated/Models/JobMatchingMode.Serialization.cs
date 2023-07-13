@@ -48,7 +48,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    scheduleAndSuspendMode = ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(property.Value);
+                    scheduleAndSuspendMode = JobRouter.ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(property.Value);
                     continue;
                 }
                 if (property.NameEquals("suspendMode"u8))
