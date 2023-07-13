@@ -19,11 +19,15 @@ namespace Azure.ResourceManager.HealthBot.Tests
         protected HealthBotManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoredHeaders.Add("Sync-Token");
+            IgnoredQueryParameters.Add("service-version");
         }
 
         protected HealthBotManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoredHeaders.Add("Sync-Token");
+            IgnoredQueryParameters.Add("service-version");
         }
 
         [SetUp]
