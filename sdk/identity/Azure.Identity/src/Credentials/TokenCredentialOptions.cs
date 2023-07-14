@@ -35,6 +35,7 @@ namespace Azure.Identity
         /// Gets or sets value indicating if ETW logging that contains potentially sensitive content should be logged.
         /// Setting this property to true will not disable redaction of <see cref="Request"/> Content. To enable logging of sensitive <see cref="Request.Content"/>
         /// the <see cref="DiagnosticsOptions.IsLoggingContentEnabled"/> property must be set to <c>true</c>.
+        /// Setting this property to `true` equates to passing 'true' for the enablePiiLogging parameter to the 'WithLogging' method on the MSAL client builder.
         /// </summary>
         public bool IsSupportLoggingEnabled { get; set; }
 
