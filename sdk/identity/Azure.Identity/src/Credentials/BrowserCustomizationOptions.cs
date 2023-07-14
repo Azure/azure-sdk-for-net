@@ -21,8 +21,6 @@ namespace Azure.Identity
 
         internal SystemWebViewOptions SystemBrowserOptions;
 
-        internal EmbeddedWebViewOptions EmbeddedBrowserOptions;
-
         private SystemWebViewOptions systemWebViewOptions
         {
             get
@@ -32,20 +30,17 @@ namespace Azure.Identity
             }
         }
 
-        private EmbeddedWebViewOptions embeddedWebViewOptions
-        {
-            get
-            {
-                EmbeddedBrowserOptions ??= new EmbeddedWebViewOptions();
-                return EmbeddedBrowserOptions;
-            }
-        }
-
         /// <summary>
-        /// Property to set HtmlMessageSuccess of SystemWebViewOptions.
+        /// Property to set HtmlMessageSuccess of SystemWebViewOptions from MSAL,
+        /// which the browser will show to the user when the user finishes authenticating successfully.
         /// </summary>
         public string HtmlMessageSuccess
         {
+            get
+            {
+                return systemWebViewOptions.HtmlMessageSuccess;
+            }
+
             set
             {
                 systemWebViewOptions.HtmlMessageSuccess = value;
@@ -53,25 +48,21 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Property to set HtmlMessageError of SystemWebViewOptions.
+        /// Property to set HtmlMessageError of SystemWebViewOptions from MSAL,
+        /// which the browser will show to the user when the user finishes authenticating, but an error occurred.
+        /// You can use a string format e.g. "An error has occurred: {0} details: {1}".
         /// </summary>
         public string HtmlMessageError
         {
+            get
+            {
+                return systemWebViewOptions.HtmlMessageError;
+            }
+
             set
             {
                 systemWebViewOptions.HtmlMessageError = value;
             }
-        }
-
-        /// <summary>
-        /// Default constructor for <see cref="BrowserCustomizationOptions"/>. Will keep the framework default behavior,
-        /// when you use this constructor.
-        /// </summary>
-        public BrowserCustomizationOptions(bool useEmbeddedWebView = false)
-        {
-            UseEmbeddedWebView = null;
-            SystemBrowserOptions = null;
-            EmbeddedBrowserOptions = null;
         }
     }
 }

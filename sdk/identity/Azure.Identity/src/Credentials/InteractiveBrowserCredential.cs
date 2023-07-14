@@ -21,9 +21,7 @@ namespace Azure.Identity
         internal string[] AdditionallyAllowedTenantIds { get; }
         internal string ClientId { get; }
         internal string LoginHint { get; }
-        internal bool? UseEmbeddedWebView { get; }
-        internal SystemWebViewOptions SystemBrowserOptions { get; }
-        internal EmbeddedWebViewOptions EmbeddedBrowserOptions {get;}
+        internal BrowserCustomizationOptions BrowserCustomizedOptions { get; }
         internal MsalPublicClient Client { get; }
         internal CredentialPipeline Pipeline { get; }
         internal bool DisableAutomaticAuthentication { get; }
@@ -91,9 +89,7 @@ namespace Azure.Identity
             Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options);
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             Record = (options as InteractiveBrowserCredentialOptions)?.AuthenticationRecord;
-            UseEmbeddedWebView = (options as InteractiveBrowserCredentialOptions)?.BrowserCustomizationOptions.UseEmbeddedWebView ?? null;
-            SystemBrowserOptions = (options as InteractiveBrowserCredentialOptions)?.BrowserCustomizationOptions.SystemBrowserOptions ?? null;
-            EmbeddedBrowserOptions = (options as InteractiveBrowserCredentialOptions)?.BrowserCustomizationOptions.EmbeddedBrowserOptions ?? null;
+            BrowserCustomizedOptions = (options as InteractiveBrowserCredentialOptions)?.BrowserCustomizedOptions;
         }
 
         /// <summary>
@@ -238,7 +234,7 @@ namespace Azure.Identity
 
             var tenantId = TenantIdResolver.Resolve(TenantId ?? Record?.TenantId, context, AdditionallyAllowedTenantIds);
             AuthenticationResult result = await Client
-                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, context.IsCaeEnabled, UseEmbeddedWebView, SystemBrowserOptions, EmbeddedBrowserOptions, async, cancellationToken)
+                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, context.IsCaeEnabled, BrowserCustomizedOptions, async, cancellationToken)
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);

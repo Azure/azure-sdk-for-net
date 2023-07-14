@@ -66,25 +66,9 @@ namespace Azure.Identity
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
 
-        private BrowserCustomizationOptions _browserCustomizationOptions = null;
-
         /// <summary>
         /// The options for customizing the browser for interactive authentication.
         /// </summary>
-        public BrowserCustomizationOptions BrowserCustomizationOptions
-        {
-            get
-            {
-                if (_browserCustomizationOptions == null)
-                {
-                    _browserCustomizationOptions = new BrowserCustomizationOptions();
-                }
-                return _browserCustomizationOptions;
-            }
-            set
-            {
-                _browserCustomizationOptions = value;
-            }
-        }
+        public BrowserCustomizationOptions BrowserCustomizedOptions { get; set; }
     }
 }
