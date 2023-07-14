@@ -391,6 +391,73 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.AreEqual(connectionId, response.CallConnectionId);
         }
 
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public void MuteParticipant_202Accepted(CommunicationIdentifier participant)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = callConnection.MuteParticipants(participant);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+        }
+
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public void MuteParticipant_WithOptions_202Accepted(CommunicationIdentifier participant)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { participant })
+            {
+                OperationContext = OperationContext
+            };
+            var response = callConnection.MuteParticipants(options);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+        }
+
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public async Task MuteParticipantAsync_202Accepted(CommunicationIdentifier participant)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = await callConnection.MuteParticipantsAsync(participant);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+        }
+
+        [Test]
+        public void MuteParticipantAsync_NotAcsUser_400BadRequest()
+        {
+            var callConnection = CreateMockCallConnection(400);
+            var participant = new PhoneNumberIdentifier("+15559501234");
+            Assert.ThrowsAsync(typeof(RequestFailedException), async () => await callConnection.MuteParticipantsAsync(participant));
+        }
+
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public async Task MuteParticipantAsync_WithOptions_202Accepted(CommunicationIdentifier participant)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { participant })
+            {
+                OperationContext = OperationContext,
+            };
+
+            var response = await callConnection.MuteParticipantsAsync(options);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+        }
+
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public void MuteParticipantAsync_WithOptions_MoreThanOneParticipant_400BadRequest(CommunicationIdentifier participant)
+        {
+            var callConnection = CreateMockCallConnection(400);
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { participant, participant })
+            {
+                OperationContext = OperationContext,
+            };
+
+            Assert.ThrowsAsync(typeof(RequestFailedException), async () => await callConnection.MuteParticipantsAsync(options));
+        }
+
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")
         {
             return CreateMockCallAutomationClient(responseCode, responseContent).GetCallConnection(callConnectionId);
@@ -449,7 +516,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
         private void verifyAddParticipantsResult(AddParticipantResult result)
         {
-            var identifier = (CommunicationUserIdentifier) result.Participant.Identifier;
+            var identifier = (CommunicationUserIdentifier)result.Participant.Identifier;
             Assert.AreEqual(ParticipantUserId, identifier.Id);
             Assert.IsFalse(result.Participant.IsMuted);
             Assert.AreEqual(OperationContext, result.OperationContext);

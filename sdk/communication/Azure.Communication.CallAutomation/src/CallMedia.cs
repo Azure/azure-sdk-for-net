@@ -264,7 +264,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="playSource"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual Response<PlayResult> PlayToAll(PlaySource playSource,  CancellationToken cancellationToken = default)
+        public virtual Response<PlayResult> PlayToAll(PlaySource playSource, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
             scope.Start();
@@ -440,7 +440,6 @@ namespace Azure.Communication.CallAutomation
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeChoiceOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
-                request.CallbackUri = recognizeOptions.CallbackUri?.AbsoluteUri;
 
                 return request;
             }
@@ -473,7 +472,6 @@ namespace Azure.Communication.CallAutomation
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
-                request.CallbackUri = recognizeOptions.CallbackUri?.AbsoluteUri;
 
                 return request;
             }
@@ -488,7 +486,7 @@ namespace Azure.Communication.CallAutomation
                 {
                     InterToneTimeoutInSeconds = (int)recognizeSpeechOrDtmfOptions.InterToneTimeout.TotalSeconds,
                     MaxTonesToCollect = recognizeSpeechOrDtmfOptions.MaxTonesToCollect,
-                    StopTones = recognizeSpeechOrDtmfOptions.StopTones.ToList()
+                    StopTones = recognizeSpeechOrDtmfOptions.StopTones
                 };
 
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOrDtmfOptions.TargetParticipant))
@@ -550,7 +548,7 @@ namespace Azure.Communication.CallAutomation
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Ssml);
                 sourceInternal.SsmlSource = new SsmlSourceInternal(ssmlSource.SsmlText);
                 sourceInternal.SsmlSource.CustomVoiceEndpointId = ssmlSource.CustomVoiceEndpointId ?? null;
-                sourceInternal.PlaySourceId = ssmlSource.PlaySourceCacheId;
+                sourceInternal.PlaySourceCacheId = ssmlSource.PlaySourceCacheId;
                 return sourceInternal;
             }
             else
@@ -605,6 +603,7 @@ namespace Azure.Communication.CallAutomation
                 };
 
                 return await CallMediaRestClient.StartContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                ;
             }
             catch (Exception ex)
             {
@@ -618,10 +617,9 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="targetParticipant">A target participant identifier for stopping continuous Dtmf recognition.</param>
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
-        /// <param name="callbackUri">The callback URI override for this transfer call request.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 200 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual Response StopContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, string operationContext = default, Uri callbackUri = default,
+        public virtual Response StopContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, string operationContext = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopContinuousDtmfRecognition)}");
@@ -630,8 +628,7 @@ namespace Azure.Communication.CallAutomation
             {
                 ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant))
                 {
-                    OperationContext = operationContext,
-                    CallbackUri = callbackUri?.AbsoluteUri
+                    OperationContext = operationContext
                 };
 
                 return CallMediaRestClient.StopContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
@@ -648,10 +645,9 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="targetParticipant">A target participant identifier for stopping continuous Dtmf recognition.</param>
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
-        /// <param name="callbackUri">The callback URI override for this transfer call request.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 200 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual async Task<Response> StopContinuousDtmfRecognitionAsync(CommunicationIdentifier targetParticipant, string operationContext = default, Uri callbackUri = default,
+        public virtual async Task<Response> StopContinuousDtmfRecognitionAsync(CommunicationIdentifier targetParticipant, string operationContext = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopContinuousDtmfRecognition)}");
@@ -660,8 +656,7 @@ namespace Azure.Communication.CallAutomation
             {
                 ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant))
                 {
-                    OperationContext = operationContext,
-                    CallbackUri = callbackUri?.AbsoluteUri
+                    OperationContext = operationContext
                 };
 
                 return await CallMediaRestClient.StopContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
@@ -679,11 +674,10 @@ namespace Azure.Communication.CallAutomation
         /// <param name="tones">A list of Tones to be sent.</param>
         /// <param name="targetParticipant">A target participant identifier for starting continuous Dtmf recognition.</param>
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
-        /// <param name="callbackUri">The callback URI override for this transfer call request.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns a Response containing a SendDtmfResult object indicating the result of the send operation.</returns>
         public virtual async Task<Response<SendDtmfResult>> SendDtmfAsync(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
-            string operationContext = default, Uri callbackUri = default, CancellationToken cancellationToken = default)
+            string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
             scope.Start();
@@ -692,14 +686,16 @@ namespace Azure.Communication.CallAutomation
                 SendDtmfRequestInternal request = request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
                 request.OperationContext = operationContext;
-                request.CallbackUri = callbackUri?.AbsoluteUri;
 
-                var response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                var response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken).ConfigureAwait(false);
 
                 var result = new SendDtmfResult();
-                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
-                return Response.FromValue(result, response);
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -714,11 +710,10 @@ namespace Azure.Communication.CallAutomation
         /// <param name="tones">A list of Tones to be sent.</param>
         /// <param name="targetParticipant">A target participant identifier for starting continuous Dtmf recognition.</param>
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
-        /// <param name="callbackUri">The callback URI override for this transfer call request.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns a Response containing a SendDtmfResult object indicating the result of the send operation.</returns>
         public virtual Response<SendDtmfResult> SendDtmf(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
-            string operationContext = default, Uri callbackUri = default, CancellationToken cancellationToken = default)
+            string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
             scope.Start();
@@ -727,14 +722,16 @@ namespace Azure.Communication.CallAutomation
                 SendDtmfRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
                 request.OperationContext = operationContext;
-                request.CallbackUri = callbackUri?.AbsoluteUri;
 
-                var response = CallMediaRestClient.SendDtmf(CallConnectionId, request, cancellationToken);
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                var response = CallMediaRestClient.SendDtmf(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken);
 
                 var result = new SendDtmfResult();
-                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
-                return Response.FromValue(result, response);
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {

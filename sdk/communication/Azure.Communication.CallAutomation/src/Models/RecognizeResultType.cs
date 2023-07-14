@@ -9,7 +9,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Determines the sub-type of the recognize result.
     /// </summary>
-    public readonly partial struct RecognizeResultType: IEquatable<RecognizeResultType>
+    public readonly partial struct RecognizeResultType : IEquatable<RecognizeResultType>
     {
         private readonly string _value;
 

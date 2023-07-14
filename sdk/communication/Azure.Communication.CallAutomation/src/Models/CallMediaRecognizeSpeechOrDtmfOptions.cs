@@ -12,7 +12,6 @@ namespace Azure.Communication.CallAutomation
     public class CallMediaRecognizeSpeechOrDtmfOptions : CallMediaRecognizeOptions
     {
         private static readonly TimeSpan _defaultInterToneTimeout = TimeSpan.FromSeconds(2);
-        private static readonly TimeSpan _defaultEndSilenceTimeoutInMs = TimeSpan.FromMilliseconds(500);
 
         /// <summary> Initializes a new instance of CallMediaRecognizeSpeechOrDtmfOptions. </summary>
         public CallMediaRecognizeSpeechOrDtmfOptions(CommunicationIdentifier targetParticipant, int maxTonesToCollect) : base(RecognizeInputType.SpeechOrDtmf, targetParticipant)

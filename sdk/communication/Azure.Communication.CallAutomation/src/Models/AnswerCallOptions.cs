@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// The endpoint uri of the Azure Cognitive Services resource attached
+        /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
         public Uri AzureCognitiveServicesEndpointUri { get; set; }
 

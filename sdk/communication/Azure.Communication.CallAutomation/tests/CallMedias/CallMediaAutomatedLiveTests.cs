@@ -18,6 +18,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
         }
 
+        [Ignore(reason: "Send Dtmf response change not deployed on nextpma yet")]
         [RecordedTest]
         public async Task continuousDtmfDetectionAndSendDtmfTest()
         {
@@ -105,7 +106,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                 // send dtmf tones to the target user
                 var tones = new DtmfTone[] { DtmfTone.One };
-                var sendDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().SendDtmfAsync(tones, target);
+                var sendDtmfResponse = await client.GetCallConnection(callConnectionId).GetCallMedia().SendDtmfAsync(tones, target, "ctx");
                 Assert.AreEqual(StatusCodes.Status202Accepted, sendDtmfResponse.GetRawResponse().Status);
 
                 // wait for ContinuousDtmfRecognitionToneReceived event
