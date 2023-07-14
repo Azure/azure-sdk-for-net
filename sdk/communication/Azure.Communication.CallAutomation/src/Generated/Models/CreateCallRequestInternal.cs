@@ -44,5 +44,7 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
+        /// <summary> The identifier of the Cognitive Service resource assigned to this call. </summary>
+        public string AzureCognitiveServicesEndpointUrl { get; set; }
     }
 }

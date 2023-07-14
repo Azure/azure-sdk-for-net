@@ -23,5 +23,9 @@ namespace Azure.Communication.CallAutomation
         public string PlaySourceCacheId { get; set; }
         /// <summary> Defines the file source info to be used for play. </summary>
         public FileSourceInternal File { get; set; }
+        /// <summary> Defines the text source info to be used for play. </summary>
+        public TextSourceInternal TextSource { get; set; }
+        /// <summary> Defines the ssml(Speech Synthesis Markup Language) source info to be used for play. </summary>
+        public SsmlSourceInternal SsmlSource { get; set; }
     }
 }
