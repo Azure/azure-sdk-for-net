@@ -14,14 +14,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppPlatform.Tests
 {
-    internal class AppPlatfromServiceTests : AppPlatformManagementTestBase
+    internal class AppPlatformServiceTests : AppPlatformManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private AppPlatformServiceCollection _serviceCollection;
         private AppPlatformServiceResource _appPlatformService;
         private string _serviceName;
 
-        public AppPlatfromServiceTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AppPlatformServiceTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
