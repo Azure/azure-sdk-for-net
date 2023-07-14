@@ -160,6 +160,15 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        internal StreamingChatCompletions(
+            ChatCompletions baseChatCompletions = null,
+            List<StreamingChatChoice> streamingChatChoices = null)
+        {
+            _baseChatCompletions.Add(baseChatCompletions);
+            _streamingChatChoices = streamingChatChoices;
+            _streamingTaskComplete = true;
+        }
+
         public void Dispose()
         {
             Dispose(disposing: true);

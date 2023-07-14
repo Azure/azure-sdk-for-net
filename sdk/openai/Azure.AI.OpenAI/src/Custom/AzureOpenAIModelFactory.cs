@@ -14,24 +14,6 @@ namespace Azure.AI.OpenAI
     /// <summary> Model factory for models. </summary>
     public static partial class AzureOpenAIModelFactory
     {
-        /// <summary> Initializes a new instance of Choice. </summary>
-        /// <param name="text"> The generated text for a given completions prompt. </param>
-        /// <param name="index"> The ordered index associated with this completions choice. </param>
-        /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
-        /// <param name="finishReason"> Reason for finishing. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
-        public static Choice Choice(string text = null, int index = default, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason finishReason = default)
-        {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            // Custom code: remove inappropriate null check of nullable CompletionsLogProbabilityModel
-
-            return new Choice(text, index, logProbabilityModel, finishReason);
-        }
-
         /// <summary>
         /// Initializes a new instance of ImageLocation for testing and mocking.
         /// </summary>
@@ -66,6 +48,158 @@ namespace Azure.AI.OpenAI
             IEnumerable<ImageLocation> data)
         {
             return new ImageGenerations(created, data);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of ContentFilterResult for tests and mocking.
+        /// </summary>
+        /// <param name="severity"> The severity level associated with this filter result </param>
+        /// <param name="isFiltered"> Whether or not the severity level for this filter result should block content </param>
+        /// <returns> A new instance of ContentFilterResult </returns>
+        public static ContentFilterResult ContentFilterResult(
+            ContentFilterSeverity severity = default,
+            bool isFiltered = default)
+        {
+            return new ContentFilterResult(severity, isFiltered);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of ContentFilterResults for tests and mocking.
+        /// </summary>
+        /// <param name="sexualFilterResult"> The content filter result for the 'sexual' category </param>
+        /// <param name="violenceFilterResult"> The content filter result for the 'violence' category </param>
+        /// <param name="hateFilterResult"> The content filter result for the 'hate' category </param>
+        /// <param name="selfHarmFilterResult"> The content filter result for the 'selfHarm' category </param>
+        /// <returns> A new instance of ContentFilterResults </returns>
+        public static ContentFilterResults ContentFilterResults(
+            ContentFilterResult sexualFilterResult = null,
+            ContentFilterResult violenceFilterResult = null,
+            ContentFilterResult hateFilterResult = null,
+            ContentFilterResult selfHarmFilterResult = null)
+        {
+            return new ContentFilterResults(sexualFilterResult, violenceFilterResult, hateFilterResult, selfHarmFilterResult);
+        }
+        /// <summary>
+        /// Initializes a new instance of PromptFilterResult for tests and mocking.
+        /// </summary>
+        /// <param name="index"> The index of the prompt to associate this filter result with </param>
+        /// <param name="contentFilterResults"> The content filter results associated with the matching prompt index </param>
+        /// <returns> A new instance of PromptFilterResult </returns>
+        public static PromptFilterResult PromptFilterResult(
+            int index = default,
+            ContentFilterResults contentFilterResults = null)
+        {
+            return new PromptFilterResult(index, contentFilterResults);
+        }
+
+        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <param name="text"> The generated text for a given completions prompt. </param>
+        /// <param name="index"> The ordered index associated with this completions choice. </param>
+        /// <param name="contentFilterResults"> The filter category results associated with this completions choice </param>
+        /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
+        /// <param name="finishReason"> Reason for finishing. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
+        public static Choice Choice(
+            string text = null,
+            int index = default,
+            ContentFilterResults contentFilterResults = null,
+            CompletionsLogProbabilityModel logProbabilityModel = null,
+            CompletionsFinishReason finishReason = default)
+        {
+            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason);
+        }
+
+        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <param name="message"> The chat message associated with this chat completions choice </param>
+        /// <param name="index"> The ordered index associated with this chat completions choice. </param>
+        /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
+        /// <param name="deltaMessage"> For streamed choices, the internal representation of a 'delta' payload </param>
+        /// <param name="contentFilterResults"> The category annotations for this chat choice's content filtering </param>
+        /// <returns> A new <see cref="OpenAI.ChatChoice"/> instance for mocking. </returns>
+        public static ChatChoice ChatChoice(
+            ChatMessage message = null,
+            int index = default,
+            CompletionsFinishReason finishReason = default,
+            ChatMessage deltaMessage = null,
+            ContentFilterResults contentFilterResults = null)
+        {
+            return new ChatChoice(message, index, finishReason, deltaMessage, contentFilterResults);
+        }
+
+        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
+        /// <param name="created"> The first timestamp associated with generation activity for this completions response. </param>
+        /// <param name="choices"> The collection of completions choices associated with this completions response. </param>
+        /// <param name="promptFilterResults"> The filter annotations for this chat completions messages input </param>
+        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
+        /// <returns> A new <see cref="OpenAI.ChatCompletions"/> instance for mocking. </returns>
+        public static ChatCompletions ChatCompletions(
+            string id = null,
+            DateTimeOffset created = default(DateTimeOffset),
+            IReadOnlyList<ChatChoice> choices = null,
+            IReadOnlyList<PromptFilterResult> promptFilterResults = null,
+            CompletionsUsage usage = null)
+        {
+            choices ??= new List<ChatChoice>();
+            usage ??= AIOpenAIModelFactory.CompletionsUsage();
+
+            long constrainedUnixTimeInSec = Math.Max(
+                Math.Min(created.ToUnixTimeSeconds(), int.MaxValue),
+                int.MinValue);
+
+            return new ChatCompletions(
+                id ?? string.Empty,
+                created,
+                choices,
+                promptFilterResults,
+                usage);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of StreamingChoice for tests and mocking.
+        /// </summary>
+        /// <param name="originalBaseChoice"> An underlying Choice for this streaming representation </param>
+        /// <returns> A new instance of StreamingChoice </returns>
+        public static StreamingChoice StreamingChoice(Choice originalBaseChoice = null)
+        {
+            return new StreamingChoice(originalBaseChoice);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of StreamingCompletions for tests and mocking.
+        /// </summary>
+        /// <param name="baseCompletions"> The non-streaming completions to base this streaming representation on </param>
+        /// <param name="streamingChoices"> The streaming choices associated with this streaming completions </param>
+        /// <returns> A new instance of StreamingCompletions </returns>
+        public static StreamingCompletions StreamingCompletions(
+            Completions baseCompletions = null,
+            List<StreamingChoice> streamingChoices = null)
+        {
+            return new StreamingCompletions(baseCompletions, streamingChoices);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of StreamingChatChoice for tests and mocking.
+        /// </summary>
+        /// <param name="originalBaseChoice"> An underlying ChatChoice for this streaming representation </param>
+        /// <returns> A new instance of StreamingChatChoice </returns>
+        public static StreamingChatChoice StreamingChatChoice(ChatChoice originalBaseChoice = null)
+        {
+            return new StreamingChatChoice(originalBaseChoice);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of StreamingChatCompletions for tests and mocking.
+        /// </summary>
+        /// <param name="baseChatCompletions"> The non-streaming completions to base this streaming representation on </param>
+        /// <param name="streamingChatChoices"> The streaming choices associated with this streaming chat completions </param>
+        /// <returns> A new instance of StreamingChatCompletions </returns>
+        public static StreamingChatCompletions StreamingChatCompletions(
+            ChatCompletions baseChatCompletions = null,
+            List<StreamingChatChoice> streamingChatChoices = null)
+        {
+            return new StreamingChatCompletions(baseChatCompletions, streamingChatChoices);
         }
     }
 }

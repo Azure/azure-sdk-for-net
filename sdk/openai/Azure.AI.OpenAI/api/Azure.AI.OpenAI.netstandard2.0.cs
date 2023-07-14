@@ -18,9 +18,18 @@ namespace Azure.AI.OpenAI
     }
     public static partial class AzureOpenAIModelFactory
     {
-        public static Azure.AI.OpenAI.Choice Choice(string text = null, int index = 0, Azure.AI.OpenAI.CompletionsLogProbabilityModel logProbabilityModel = null, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason)) { throw null; }
+        public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason), Azure.AI.OpenAI.ChatMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResults contentFilterResults = null) { throw null; }
+        public static Azure.AI.OpenAI.ChatCompletions ChatCompletions(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ChatChoice> choices = null, System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.PromptFilterResult> promptFilterResults = null, Azure.AI.OpenAI.CompletionsUsage usage = null) { throw null; }
+        public static Azure.AI.OpenAI.Choice Choice(string text = null, int index = 0, Azure.AI.OpenAI.ContentFilterResults contentFilterResults = null, Azure.AI.OpenAI.CompletionsLogProbabilityModel logProbabilityModel = null, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason)) { throw null; }
+        public static Azure.AI.OpenAI.ContentFilterResult ContentFilterResult(Azure.AI.OpenAI.ContentFilterSeverity severity = default(Azure.AI.OpenAI.ContentFilterSeverity), bool isFiltered = false) { throw null; }
+        public static Azure.AI.OpenAI.ContentFilterResults ContentFilterResults(Azure.AI.OpenAI.ContentFilterResult sexualFilterResult = null, Azure.AI.OpenAI.ContentFilterResult violenceFilterResult = null, Azure.AI.OpenAI.ContentFilterResult hateFilterResult = null, Azure.AI.OpenAI.ContentFilterResult selfHarmFilterResult = null) { throw null; }
         public static Azure.AI.OpenAI.ImageGenerations ImageGenerations(System.DateTimeOffset created, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ImageLocation> data) { throw null; }
         public static Azure.AI.OpenAI.ImageLocation ImageLocation(System.Uri url, Azure.Core.Pipeline.HttpPipeline pipeline = null) { throw null; }
+        public static Azure.AI.OpenAI.PromptFilterResult PromptFilterResult(int index = 0, Azure.AI.OpenAI.ContentFilterResults contentFilterResults = null) { throw null; }
+        public static Azure.AI.OpenAI.StreamingChatChoice StreamingChatChoice(Azure.AI.OpenAI.ChatChoice originalBaseChoice = null) { throw null; }
+        public static Azure.AI.OpenAI.StreamingChatCompletions StreamingChatCompletions(Azure.AI.OpenAI.ChatCompletions baseChatCompletions = null, System.Collections.Generic.List<Azure.AI.OpenAI.StreamingChatChoice> streamingChatChoices = null) { throw null; }
+        public static Azure.AI.OpenAI.StreamingChoice StreamingChoice(Azure.AI.OpenAI.Choice originalBaseChoice = null) { throw null; }
+        public static Azure.AI.OpenAI.StreamingCompletions StreamingCompletions(Azure.AI.OpenAI.Completions baseCompletions = null, System.Collections.Generic.List<Azure.AI.OpenAI.StreamingChoice> streamingChoices = null) { throw null; }
     }
     public partial class ChatChoice
     {
