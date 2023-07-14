@@ -80,27 +80,9 @@ namespace Azure.AI.OpenAI
         /// Describes language related to physical actions intended to purposely hurt, injure,
         /// or damage one’s body, or kill oneself.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sexual"/>, <paramref name="violence"/>, <paramref name="hate"/> or <paramref name="selfHarm"/> is null. </exception>
         /// <returns> A new <see cref="OpenAI.ContentFilterResults"/> instance for mocking. </returns>
         public static ContentFilterResults ContentFilterResults(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null)
         {
-            if (sexual == null)
-            {
-                throw new ArgumentNullException(nameof(sexual));
-            }
-            if (violence == null)
-            {
-                throw new ArgumentNullException(nameof(violence));
-            }
-            if (hate == null)
-            {
-                throw new ArgumentNullException(nameof(hate));
-            }
-            if (selfHarm == null)
-            {
-                throw new ArgumentNullException(nameof(selfHarm));
-            }
-
             return new ContentFilterResults(sexual, violence, hate, selfHarm);
         }
 

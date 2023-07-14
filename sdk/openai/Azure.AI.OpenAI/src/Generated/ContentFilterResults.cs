@@ -5,14 +5,46 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.AI.OpenAI
 {
     /// <summary> Information about the content filtering category, if it has been detected. </summary>
     public partial class ContentFilterResults
     {
+        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        internal ContentFilterResults()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <param name="sexual">
+        /// Describes language related to anatomical organs and genitals, romantic relationships,
+        ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including
+        ///  those portrayed as an assault or a forced sexual violent act against one’s will,
+        ///  prostitution, pornography, and abuse.
+        /// </param>
+        /// <param name="violence">
+        /// Describes language related to physical actions intended to hurt, injure, damage, or
+        /// kill someone or something; describes weapons, etc.
+        /// </param>
+        /// <param name="hate">
+        /// Describes language attacks or uses that include pejorative or discriminatory language
+        /// with reference to a person or identity group on the basis of certain differentiating
+        /// attributes of these groups including but not limited to race, ethnicity, nationality,
+        /// gender identity and expression, sexual orientation, religion, immigration status, ability
+        /// status, personal appearance, and body size.
+        /// </param>
+        /// <param name="selfHarm">
+        /// Describes language related to physical actions intended to purposely hurt, injure,
+        /// or damage one’s body, or kill oneself.
+        /// </param>
+        internal ContentFilterResults(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm)
+        {
+            Sexual = sexual;
+            Violence = violence;
+            Hate = hate;
+            SelfHarm = selfHarm;
+        }
+
         /// <summary>
         /// Describes language related to anatomical organs and genitals, romantic relationships,
         ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including

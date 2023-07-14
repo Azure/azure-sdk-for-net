@@ -19,34 +19,50 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            ContentFilterResult sexual = default;
-            ContentFilterResult violence = default;
-            ContentFilterResult hate = default;
-            ContentFilterResult selfHarm = default;
+            Optional<ContentFilterResult> sexual = default;
+            Optional<ContentFilterResult> violence = default;
+            Optional<ContentFilterResult> hate = default;
+            Optional<ContentFilterResult> selfHarm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sexual"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     sexual = ContentFilterResult.DeserializeContentFilterResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("violence"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     violence = ContentFilterResult.DeserializeContentFilterResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hate"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     hate = ContentFilterResult.DeserializeContentFilterResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("self_harm"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     selfHarm = ContentFilterResult.DeserializeContentFilterResult(property.Value);
                     continue;
                 }
             }
-            return new ContentFilterResults(sexual, violence, hate, selfHarm);
+            return new ContentFilterResults(sexual.Value, violence.Value, hate.Value, selfHarm.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
