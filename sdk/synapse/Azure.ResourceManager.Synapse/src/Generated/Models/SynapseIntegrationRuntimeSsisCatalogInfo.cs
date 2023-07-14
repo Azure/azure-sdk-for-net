@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="catalogAdminPassword"> The password of the administrator user account of the catalog database. </param>
         /// <param name="catalogPricingTier"> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SynapseIntegrationRuntimeSsisCatalogInfo(Uri catalogServerEndpoint, string catalogAdminUserName, DataFactorySecretString catalogAdminPassword, SynapseIntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, IDictionary<string, BinaryData> additionalProperties)
+        internal SynapseIntegrationRuntimeSsisCatalogInfo(Uri catalogServerEndpoint, string catalogAdminUserName, SynapseSecureString catalogAdminPassword, SynapseIntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, IDictionary<string, BinaryData> additionalProperties)
         {
             CatalogServerEndpoint = catalogServerEndpoint;
             CatalogAdminUserName = catalogAdminUserName;
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> The administrator user name of catalog database. </summary>
         public string CatalogAdminUserName { get; set; }
         /// <summary> The password of the administrator user account of the catalog database. </summary>
-        public DataFactorySecretString CatalogAdminPassword { get; set; }
+        public SynapseSecureString CatalogAdminPassword { get; set; }
         /// <summary> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </summary>
         public SynapseIntegrationRuntimeSsisCatalogPricingTier? CatalogPricingTier { get; set; }
         /// <summary>

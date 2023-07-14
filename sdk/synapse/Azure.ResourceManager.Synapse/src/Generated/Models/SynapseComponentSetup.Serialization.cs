@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(LicenseKey))
             {
                 writer.WritePropertyName("licenseKey"u8);
-                JsonSerializer.Serialize(writer, LicenseKey);
+                writer.WriteObjectValue(LicenseKey);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             string type = default;
             string componentName = default;
-            Optional<DataFactorySecretBaseDefinition> licenseKey = default;
+            Optional<SynapseSecretBase> licenseKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -67,14 +66,14 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            licenseKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            licenseKey = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SynapseComponentSetup(type, componentName, licenseKey);
+            return new SynapseComponentSetup(type, componentName, licenseKey.Value);
         }
     }
 }
