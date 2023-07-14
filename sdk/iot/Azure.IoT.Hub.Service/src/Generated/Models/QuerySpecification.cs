@@ -15,6 +15,13 @@ namespace Azure.IoT.Hub.Service.Models
         {
         }
 
+        /// <summary> Initializes a new instance of QuerySpecification. </summary>
+        /// <param name="query"> The query string. </param>
+        internal QuerySpecification(string query)
+        {
+            Query = query;
+        }
+
         /// <summary> The query string. </summary>
         public string Query { get; set; }
     }

@@ -20,6 +20,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
         }
 
+        /// <summary> Initializes a new instance of InternalNetworkPatch. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
+        /// <param name="connectedIPv4Subnets"> List with object connected IPv4 Subnets. </param>
+        /// <param name="connectedIPv6Subnets"> List with object connected IPv6 Subnets. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
+        /// <param name="bgpConfiguration"> BGP configuration properties. </param>
+        /// <param name="importRoutePolicyId"> ARM resource ID of importRoutePolicy. </param>
+        /// <param name="exportRoutePolicyId"> ARM resource ID of importRoutePolicy. </param>
+        internal InternalNetworkPatch(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, StaticRouteConfiguration staticRouteConfiguration, BgpConfiguration bgpConfiguration, string importRoutePolicyId, string exportRoutePolicyId)
+        {
+            Annotation = annotation;
+            Mtu = mtu;
+            ConnectedIPv4Subnets = connectedIPv4Subnets;
+            ConnectedIPv6Subnets = connectedIPv6Subnets;
+            StaticRouteConfiguration = staticRouteConfiguration;
+            BgpConfiguration = bgpConfiguration;
+            ImportRoutePolicyId = importRoutePolicyId;
+            ExportRoutePolicyId = exportRoutePolicyId;
+        }
+
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Maximum transmission unit. Default value is 1500. </summary>

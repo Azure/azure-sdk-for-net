@@ -256,6 +256,16 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubMatchedRoute(properties);
         }
 
+        /// <summary> Initializes a new instance of IotHubTestRouteContent. </summary>
+        /// <param name="message"> Routing message. </param>
+        /// <param name="route"> Route properties. </param>
+        /// <param name="twin"> Routing Twin Reference. </param>
+        /// <returns> A new <see cref="Models.IotHubTestRouteContent"/> instance for mocking. </returns>
+        public static IotHubTestRouteContent IotHubTestRouteContent(RoutingMessage message = null, RoutingRuleProperties route = null, RoutingTwin twin = null)
+        {
+            return new IotHubTestRouteContent(message, route, twin);
+        }
+
         /// <summary> Initializes a new instance of IotHubTestRouteResult. </summary>
         /// <param name="result"> Result of testing route. </param>
         /// <param name="detailsCompilationErrors"> Detailed result of testing route. </param>
@@ -293,6 +303,35 @@ namespace Azure.ResourceManager.IotHub.Models
         public static RouteErrorPosition RouteErrorPosition(int? line = null, int? column = null)
         {
             return new RouteErrorPosition(line, column);
+        }
+
+        /// <summary> Initializes a new instance of ExportDevicesContent. </summary>
+        /// <param name="exportBlobContainerUri"> The export blob container URI. </param>
+        /// <param name="excludeKeys"> The value indicating whether keys should be excluded during export. </param>
+        /// <param name="exportBlobName"> The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub. </param>
+        /// <param name="authenticationType"> Specifies authentication type being used for connecting to the storage account. </param>
+        /// <param name="userAssignedIdentity"> Managed identity properties of storage endpoint for export devices. </param>
+        /// <param name="includeConfigurations"> The value indicating whether configurations should be exported. </param>
+        /// <param name="configurationsBlobName"> The name of the blob that will be created in the provided output blob container. This blob will contain the exported configurations for the Iot Hub. </param>
+        /// <returns> A new <see cref="Models.ExportDevicesContent"/> instance for mocking. </returns>
+        public static ExportDevicesContent ExportDevicesContent(Uri exportBlobContainerUri = null, bool excludeKeys = default, string exportBlobName = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, bool? includeConfigurations = null, string configurationsBlobName = null)
+        {
+            return new ExportDevicesContent(exportBlobContainerUri, excludeKeys, exportBlobName, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity) : null, includeConfigurations, configurationsBlobName);
+        }
+
+        /// <summary> Initializes a new instance of IotHubImportDevicesContent. </summary>
+        /// <param name="inputBlobContainerUri"> The input blob container URI. </param>
+        /// <param name="outputBlobContainerUri"> The output blob container URI. </param>
+        /// <param name="inputBlobName"> The blob name to be used when importing from the provided input blob container. </param>
+        /// <param name="outputBlobName"> The blob name to use for storing the status of the import job. </param>
+        /// <param name="authenticationType"> Specifies authentication type being used for connecting to the storage account. </param>
+        /// <param name="userAssignedIdentity"> Managed identity properties of storage endpoint for import devices. </param>
+        /// <param name="includeConfigurations"> The value indicating whether configurations should be imported. </param>
+        /// <param name="configurationsBlobName"> The blob name to be used when importing configurations from the provided input blob container. </param>
+        /// <returns> A new <see cref="Models.IotHubImportDevicesContent"/> instance for mocking. </returns>
+        public static IotHubImportDevicesContent IotHubImportDevicesContent(Uri inputBlobContainerUri = null, Uri outputBlobContainerUri = null, string inputBlobName = null, string outputBlobName = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, bool? includeConfigurations = null, string configurationsBlobName = null)
+        {
+            return new IotHubImportDevicesContent(inputBlobContainerUri, outputBlobContainerUri, inputBlobName, outputBlobName, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity) : null, includeConfigurations, configurationsBlobName);
         }
 
         /// <summary> Initializes a new instance of IotHubCertificateDescriptionData. </summary>

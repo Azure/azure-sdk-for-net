@@ -105,6 +105,28 @@ namespace Azure.ResourceManager.Media.Models
             return new MediaServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
+        /// <summary> Initializes a new instance of MediaServicesAccountPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The Managed Identity for the Media Services account. </param>
+        /// <param name="mediaServiceId"> The Media Services account ID. </param>
+        /// <param name="storageAccounts"> The storage accounts for this resource. </param>
+        /// <param name="storageAuthentication"></param>
+        /// <param name="encryption"> The account encryption properties. </param>
+        /// <param name="keyDeliveryAccessControl"> The Key Delivery properties for Media Services account. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for resources under the Media Services account. </param>
+        /// <param name="provisioningState"> Provisioning state of the Media Services account. </param>
+        /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version allowed for this account's requests. This is an optional property. If unspecified, a secure default value will be used. </param>
+        /// <returns> A new <see cref="Models.MediaServicesAccountPatch"/> instance for mocking. </returns>
+        public static MediaServicesAccountPatch MediaServicesAccountPatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, Guid? mediaServiceId = null, IEnumerable<MediaServicesStorageAccount> storageAccounts = null, MediaStorageAuthentication? storageAuthentication = null, AccountEncryption encryption = null, MediaAccessControl keyDeliveryAccessControl = null, MediaServicesPublicNetworkAccess? publicNetworkAccess = null, MediaServicesProvisioningState? provisioningState = null, IEnumerable<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections = null, MediaServicesMinimumTlsVersion? minimumTlsVersion = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            storageAccounts ??= new List<MediaServicesStorageAccount>();
+            privateEndpointConnections ??= new List<MediaServicesPrivateEndpointConnectionData>();
+
+            return new MediaServicesAccountPatch(tags, identity, mediaServiceId, storageAccounts?.ToList(), storageAuthentication, encryption, keyDeliveryAccessControl != null ? new MediaKeyDelivery(keyDeliveryAccessControl) : null, publicNetworkAccess, provisioningState, privateEndpointConnections?.ToList(), minimumTlsVersion);
+        }
+
         /// <summary> Initializes a new instance of MediaServicesEdgePolicies. </summary>
         /// <param name="usageDataCollectionPolicy"></param>
         /// <returns> A new <see cref="Models.MediaServicesEdgePolicies"/> instance for mocking. </returns>

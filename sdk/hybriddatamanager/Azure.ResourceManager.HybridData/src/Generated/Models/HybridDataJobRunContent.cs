@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.HybridData.Models
             CustomerSecrets = new ChangeTrackingList<HybridDataCustomerSecret>();
         }
 
+        /// <summary> Initializes a new instance of HybridDataJobRunContent. </summary>
+        /// <param name="userConfirmation"> Enum to detect if user confirmation is required. If not passed will default to NotRequired. </param>
+        /// <param name="dataServiceInput"> A generic json used differently by each data service type. </param>
+        /// <param name="customerSecrets"> List of customer secrets containing a key identifier and key value. The key identifier is a way for the specific data source to understand the key. Value contains customer secret encrypted by the encryptionKeys. </param>
+        internal HybridDataJobRunContent(UserConfirmationSetting? userConfirmation, BinaryData dataServiceInput, IList<HybridDataCustomerSecret> customerSecrets)
+        {
+            UserConfirmation = userConfirmation;
+            DataServiceInput = dataServiceInput;
+            CustomerSecrets = customerSecrets;
+        }
+
         /// <summary> Enum to detect if user confirmation is required. If not passed will default to NotRequired. </summary>
         public UserConfirmationSetting? UserConfirmation { get; set; }
         /// <summary>

@@ -19,6 +19,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of L2IsolationDomainPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="mtu"> maximum transmission unit. Default value is 1500. </param>
+        internal L2IsolationDomainPatch(IDictionary<string, string> tags, string annotation, int? mtu)
+        {
+            Tags = tags;
+            Annotation = annotation;
+            Mtu = mtu;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Switch configuration description. </summary>

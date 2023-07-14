@@ -20,6 +20,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Conditions = new ChangeTrackingList<AccessControlListConditionProperties>();
         }
 
+        /// <summary> Initializes a new instance of AccessControlListPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="addressFamily"> IP address family. Example: ipv4 | ipv6. </param>
+        /// <param name="conditions"> Access Control List conditions. </param>
+        internal AccessControlListPatch(IDictionary<string, string> tags, string annotation, AddressFamily? addressFamily, IList<AccessControlListConditionProperties> conditions)
+        {
+            Tags = tags;
+            Annotation = annotation;
+            AddressFamily = addressFamily;
+            Conditions = conditions;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Switch configuration description. </summary>

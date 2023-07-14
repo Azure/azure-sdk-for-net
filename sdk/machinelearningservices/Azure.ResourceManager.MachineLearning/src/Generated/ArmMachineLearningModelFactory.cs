@@ -1067,6 +1067,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningSkuSetting(name, tier);
         }
 
+        /// <summary> Initializes a new instance of MachineLearningEndpointKeyRegenerateContent. </summary>
+        /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>
+        /// <param name="keyValue"> The value the key is set to. </param>
+        /// <returns> A new <see cref="Models.MachineLearningEndpointKeyRegenerateContent"/> instance for mocking. </returns>
+        public static MachineLearningEndpointKeyRegenerateContent MachineLearningEndpointKeyRegenerateContent(MachineLearningKeyType keyType = default, string keyValue = null)
+        {
+            return new MachineLearningEndpointKeyRegenerateContent(keyType, keyValue);
+        }
+
         /// <summary> Initializes a new instance of MachineLearningEndpointAuthToken. </summary>
         /// <param name="accessToken"> Access token for endpoint authentication. </param>
         /// <param name="expireOn"> Access token expiry time (UTC). </param>

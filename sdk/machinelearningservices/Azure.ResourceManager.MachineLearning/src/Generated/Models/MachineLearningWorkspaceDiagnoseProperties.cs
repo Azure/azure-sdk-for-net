@@ -28,6 +28,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Others = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
+        /// <summary> Initializes a new instance of MachineLearningWorkspaceDiagnoseProperties. </summary>
+        /// <param name="udr"> Setting for diagnosing user defined routing. </param>
+        /// <param name="nsg"> Setting for diagnosing network security group. </param>
+        /// <param name="resourceLock"> Setting for diagnosing resource lock. </param>
+        /// <param name="dnsResolution"> Setting for diagnosing dns resolution. </param>
+        /// <param name="storageAccount"> Setting for diagnosing dependent storage account. </param>
+        /// <param name="keyVault"> Setting for diagnosing dependent key vault. </param>
+        /// <param name="containerRegistry"> Setting for diagnosing dependent container registry. </param>
+        /// <param name="applicationInsights"> Setting for diagnosing dependent application insights. </param>
+        /// <param name="others"> Setting for diagnosing unclassified category of problems. </param>
+        internal MachineLearningWorkspaceDiagnoseProperties(IDictionary<string, BinaryData> udr, IDictionary<string, BinaryData> nsg, IDictionary<string, BinaryData> resourceLock, IDictionary<string, BinaryData> dnsResolution, IDictionary<string, BinaryData> storageAccount, IDictionary<string, BinaryData> keyVault, IDictionary<string, BinaryData> containerRegistry, IDictionary<string, BinaryData> applicationInsights, IDictionary<string, BinaryData> others)
+        {
+            Udr = udr;
+            Nsg = nsg;
+            ResourceLock = resourceLock;
+            DnsResolution = dnsResolution;
+            StorageAccount = storageAccount;
+            KeyVault = keyVault;
+            ContainerRegistry = containerRegistry;
+            ApplicationInsights = applicationInsights;
+            Others = others;
+        }
+
         /// <summary>
         /// Setting for diagnosing user defined routing
         /// <para>

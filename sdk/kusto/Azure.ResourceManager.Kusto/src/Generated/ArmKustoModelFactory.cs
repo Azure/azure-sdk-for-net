@@ -153,6 +153,15 @@ namespace Azure.ResourceManager.Kusto.Models
             return new KustoClusterPatch(id, name, resourceType, systemData, tags, location, sku, identity, state, provisioningState, uri, dataIngestionUri, stateReason, trustedExternalTenants?.ToList(), optimizedAutoscale, isDiskEncryptionEnabled, isStreamingIngestEnabled, virtualNetworkConfiguration, keyVaultProperties, isPurgeEnabled, languageExtensionsValue != null ? new KustoLanguageExtensionList(languageExtensionsValue?.ToList()) : null, isDoubleEncryptionEnabled, publicNetworkAccess, allowedIPRangeList?.ToList(), engineType, acceptedAudiences?.ToList(), isAutoStopEnabled, restrictOutboundNetworkAccess, allowedFqdnList?.ToList(), publicIPType, virtualClusterGraduationProperties, privateEndpointConnections?.ToList(), migrationCluster);
         }
 
+        /// <summary> Initializes a new instance of KustoClusterPrincipalAssignmentNameAvailabilityContent. </summary>
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/principalAssignments. </param>
+        /// <returns> A new <see cref="Models.KustoClusterPrincipalAssignmentNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoClusterPrincipalAssignmentNameAvailabilityContent KustoClusterPrincipalAssignmentNameAvailabilityContent(string name = null, KustoClusterPrincipalAssignmentType resourceType = default)
+        {
+            return new KustoClusterPrincipalAssignmentNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of KustoNameAvailabilityResult. </summary>
         /// <param name="nameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
         /// <param name="name"> The name that was checked. </param>
@@ -256,6 +265,33 @@ namespace Azure.ResourceManager.Kusto.Models
             return new KustoResourceSkuCapabilities(name, value);
         }
 
+        /// <summary> Initializes a new instance of KustoClusterNameAvailabilityContent. </summary>
+        /// <param name="name"> Cluster name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters. </param>
+        /// <returns> A new <see cref="Models.KustoClusterNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoClusterNameAvailabilityContent KustoClusterNameAvailabilityContent(string name = null, KustoClusterType resourceType = default)
+        {
+            return new KustoClusterNameAvailabilityContent(name, resourceType);
+        }
+
+        /// <summary> Initializes a new instance of KustoAttachedDatabaseConfigurationNameAvailabilityContent. </summary>
+        /// <param name="name"> Attached database resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/attachedDatabaseConfigurations. </param>
+        /// <returns> A new <see cref="Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoAttachedDatabaseConfigurationNameAvailabilityContent KustoAttachedDatabaseConfigurationNameAvailabilityContent(string name = null, AttachedDatabaseType resourceType = default)
+        {
+            return new KustoAttachedDatabaseConfigurationNameAvailabilityContent(name, resourceType);
+        }
+
+        /// <summary> Initializes a new instance of KustoManagedPrivateEndpointNameAvailabilityContent. </summary>
+        /// <param name="name"> Managed private endpoint resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/managedPrivateEndpoints. </param>
+        /// <returns> A new <see cref="Models.KustoManagedPrivateEndpointNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoManagedPrivateEndpointNameAvailabilityContent KustoManagedPrivateEndpointNameAvailabilityContent(string name = null, KustoManagedPrivateEndpointsType resourceType = default)
+        {
+            return new KustoManagedPrivateEndpointNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of KustoAvailableSkuDetails. </summary>
         /// <param name="resourceType"> Resource Namespace and Type. </param>
         /// <param name="sku"> The SKU details. </param>
@@ -290,12 +326,30 @@ namespace Azure.ResourceManager.Kusto.Models
             return new KustoDatabaseData(id, name, resourceType, systemData, location, kind);
         }
 
+        /// <summary> Initializes a new instance of DatabaseInviteFollowerContent. </summary>
+        /// <param name="inviteeEmail"> The email of the invited user for which the follower invitation is generated. </param>
+        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
+        /// <returns> A new <see cref="Models.DatabaseInviteFollowerContent"/> instance for mocking. </returns>
+        public static DatabaseInviteFollowerContent DatabaseInviteFollowerContent(string inviteeEmail = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null)
+        {
+            return new DatabaseInviteFollowerContent(inviteeEmail, tableLevelSharingProperties);
+        }
+
         /// <summary> Initializes a new instance of DatabaseInviteFollowerResult. </summary>
         /// <param name="generatedInvitation"> The generated invitation token. </param>
         /// <returns> A new <see cref="Models.DatabaseInviteFollowerResult"/> instance for mocking. </returns>
         public static DatabaseInviteFollowerResult DatabaseInviteFollowerResult(string generatedInvitation = null)
         {
             return new DatabaseInviteFollowerResult(generatedInvitation);
+        }
+
+        /// <summary> Initializes a new instance of KustoDatabasePrincipalAssignmentNameAvailabilityContent. </summary>
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/principalAssignments. </param>
+        /// <returns> A new <see cref="Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoDatabasePrincipalAssignmentNameAvailabilityContent KustoDatabasePrincipalAssignmentNameAvailabilityContent(string name = null, KustoDatabasePrincipalAssignmentType resourceType = default)
+        {
+            return new KustoDatabasePrincipalAssignmentNameAvailabilityContent(name, resourceType);
         }
 
         /// <summary> Initializes a new instance of KustoDatabasePrincipalAssignmentData. </summary>
@@ -449,6 +503,24 @@ namespace Azure.ResourceManager.Kusto.Models
         public static DataConnectionValidationResult DataConnectionValidationResult(string errorMessage = null)
         {
             return new DataConnectionValidationResult(errorMessage);
+        }
+
+        /// <summary> Initializes a new instance of KustoDataConnectionNameAvailabilityContent. </summary>
+        /// <param name="name"> Data Connection name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/dataConnections. </param>
+        /// <returns> A new <see cref="Models.KustoDataConnectionNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoDataConnectionNameAvailabilityContent KustoDataConnectionNameAvailabilityContent(string name = null, KustoDataConnectionType resourceType = default)
+        {
+            return new KustoDataConnectionNameAvailabilityContent(name, resourceType);
+        }
+
+        /// <summary> Initializes a new instance of KustoScriptNameAvailabilityContent. </summary>
+        /// <param name="name"> Script name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/scripts. </param>
+        /// <returns> A new <see cref="Models.KustoScriptNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoScriptNameAvailabilityContent KustoScriptNameAvailabilityContent(string name = null, KustoScriptType resourceType = default)
+        {
+            return new KustoScriptNameAvailabilityContent(name, resourceType);
         }
 
         /// <summary> Initializes a new instance of KustoReadWriteDatabase. </summary>

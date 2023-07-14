@@ -20,6 +20,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of MachineLearningWorkspacePatch. </summary>
+        /// <param name="tags"> The resource tags for the machine learning workspace. </param>
+        /// <param name="sku"> The sku of the workspace. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="description"> The description of this workspace. </param>
+        /// <param name="friendlyName"> The friendly name for this workspace. </param>
+        /// <param name="imageBuildCompute"> The compute name for image build. </param>
+        /// <param name="serviceManagedResourcesSettings"> The service managed resource settings. </param>
+        /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
+        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
+        /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
+        /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
+        internal MachineLearningWorkspacePatch(IDictionary<string, string> tags, MachineLearningSku sku, ManagedServiceIdentity identity, string description, string friendlyName, string imageBuildCompute, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, MachineLearningPublicNetworkAccess? publicNetworkAccess, string applicationInsights, string containerRegistry)
+        {
+            Tags = tags;
+            Sku = sku;
+            Identity = identity;
+            Description = description;
+            FriendlyName = friendlyName;
+            ImageBuildCompute = imageBuildCompute;
+            ServiceManagedResourcesSettings = serviceManagedResourcesSettings;
+            PrimaryUserAssignedIdentity = primaryUserAssignedIdentity;
+            PublicNetworkAccess = publicNetworkAccess;
+            ApplicationInsights = applicationInsights;
+            ContainerRegistry = containerRegistry;
+        }
+
         /// <summary> The resource tags for the machine learning workspace. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>

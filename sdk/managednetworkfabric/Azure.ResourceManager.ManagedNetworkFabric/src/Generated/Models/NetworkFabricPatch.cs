@@ -22,6 +22,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             L3IsolationDomains = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of NetworkFabricPatch. </summary>
+        /// <param name="tags"> Azure resource tags that will replace the existing ones. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="terminalServerConfiguration"> Network and credentials configuration already applied to terminal server. </param>
+        /// <param name="racks"> List of NetworkRack resource IDs under the Network Fabric. The number of racks allowed depends on the Network Fabric SKU. </param>
+        /// <param name="l2IsolationDomains"> List of L2IsolationDomain resource IDs under the Network Fabric. </param>
+        /// <param name="l3IsolationDomains"> List of L3IsolationDomain resource IDs under the Network Fabric. </param>
+        internal NetworkFabricPatch(IDictionary<string, string> tags, string annotation, TerminalServerPatchableProperties terminalServerConfiguration, IReadOnlyList<string> racks, IReadOnlyList<string> l2IsolationDomains, IReadOnlyList<string> l3IsolationDomains)
+        {
+            Tags = tags;
+            Annotation = annotation;
+            TerminalServerConfiguration = terminalServerConfiguration;
+            Racks = racks;
+            L2IsolationDomains = l2IsolationDomains;
+            L3IsolationDomains = l3IsolationDomains;
+        }
+
         /// <summary> Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Switch configuration description. </summary>

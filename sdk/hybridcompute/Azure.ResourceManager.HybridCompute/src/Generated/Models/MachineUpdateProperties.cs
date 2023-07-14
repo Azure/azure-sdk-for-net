@@ -15,6 +15,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
         }
 
+        /// <summary> Initializes a new instance of MachineUpdateProperties. </summary>
+        /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
+        /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
+        /// <param name="cloudMetadata"> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </param>
+        /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
+        /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
+        internal MachineUpdateProperties(LocationData locationData, OSProfile osProfile, CloudMetadata cloudMetadata, string parentClusterResourceId, string privateLinkScopeResourceId)
+        {
+            LocationData = locationData;
+            OSProfile = osProfile;
+            CloudMetadata = cloudMetadata;
+            ParentClusterResourceId = parentClusterResourceId;
+            PrivateLinkScopeResourceId = privateLinkScopeResourceId;
+        }
+
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
         public LocationData LocationData { get; set; }
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
