@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetFqdnListLocalRulestackResource()
         {
-            LocalRulestackFqdnListResource list = await LocalRulestackResource.GetLocalRulestackFqdnListAsync("dotnetSdkTest-fqdnList");
+            LocalRulestackFqdnResource list = await LocalRulestackResource.GetLocalRulestackFqdnAsync("dotnetSdkTest-fqdnList");
             Assert.NotNull(list);
             Assert.AreEqual(list.Data.Name, "dotnetSdkTest-fqdnList");
         }
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetLocalRulesResource()
         {
-            LocalRulestackRuleListCollection rulesCollection = LocalRulestackResource.GetLocalRulestackRuleLists();
-            LocalRulestackRuleListResource rule = await rulesCollection.GetAsync("1000000");
+            LocalRulestackRuleCollection rulesCollection = LocalRulestackResource.GetLocalRulestackRules();
+            LocalRulestackRuleResource rule = await rulesCollection.GetAsync("1000000");
             Assert.NotNull(rule);
             Assert.AreEqual(rule.Data.RuleName, "cloud-ngfw-default-rule");
         }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetPrefixListResource()
         {
-            LocalRulestackPrefixListResource list = await LocalRulestackResource.GetLocalRulestackPrefixListAsync("dotnetSdkTest-prefixList");
+            LocalRulestackPrefixResource list = await LocalRulestackResource.GetLocalRulestackPrefixAsync("dotnetSdkTest-prefixList");
             Assert.NotNull(list);
             Assert.AreEqual(list.Data.Name, "dotnetSdkTest-prefixList");
         }
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Commit()
         {
-            var rule = (await LocalRulestackResource.GetLocalRulestackRuleListAsync("1000000")).Value;
-            LocalRulestackRuleListData ruleData = rule.Data;
+            var rule = (await LocalRulestackResource.GetLocalRulestackRuleAsync("1000000")).Value;
+            LocalRulestackRuleData ruleData = rule.Data;
             string suffix = IsAsync ? "async" : "sync";
             ruleData.Description = $"Updated description for commit: {suffix}";
             await rule.UpdateAsync(WaitUntil.Completed, ruleData);
@@ -180,8 +180,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetChangeLog()
         {
-            LocalRulestackRuleListResource rule = await LocalRulestackResource.GetLocalRulestackRuleListAsync("1000000");
-            LocalRulestackRuleListData ruleData = rule.Data;
+            LocalRulestackRuleResource rule = await LocalRulestackResource.GetLocalRulestackRuleAsync("1000000");
+            LocalRulestackRuleData ruleData = rule.Data;
             string suffix = IsAsync ? "async" : "sync";
             ruleData.Description = $"Updated description for changeLog: {suffix}";
             await rule.UpdateAsync(WaitUntil.Completed, ruleData);
@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Revert()
         {
-            LocalRulestackRuleListResource rule = await LocalRulestackResource.GetLocalRulestackRuleListAsync("1000000");
-            LocalRulestackRuleListData ruleData = rule.Data;
+            LocalRulestackRuleResource rule = await LocalRulestackResource.GetLocalRulestackRuleAsync("1000000");
+            LocalRulestackRuleData ruleData = rule.Data;
             string suffix = IsAsync ? "async" : "sync";
             ruleData.Description = $"Updated description for revert: {suffix}";
             await rule.UpdateAsync(WaitUntil.Completed, ruleData);

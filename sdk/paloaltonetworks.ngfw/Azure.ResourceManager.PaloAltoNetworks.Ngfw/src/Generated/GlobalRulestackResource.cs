@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return GetGlobalRulestackCertificateObjects().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GlobalRulestackFqdnListResources in the GlobalRulestack. </summary>
-        /// <returns> An object representing collection of GlobalRulestackFqdnListResources and their operations over a GlobalRulestackFqdnListResource. </returns>
-        public virtual GlobalRulestackFqdnListCollection GetGlobalRulestackFqdnLists()
+        /// <summary> Gets a collection of GlobalRulestackFqdnResources in the GlobalRulestack. </summary>
+        /// <returns> An object representing collection of GlobalRulestackFqdnResources and their operations over a GlobalRulestackFqdnResource. </returns>
+        public virtual GlobalRulestackFqdnCollection GetGlobalRulestackFqdns()
         {
-            return GetCachedClient(Client => new GlobalRulestackFqdnListCollection(Client, Id));
+            return GetCachedClient(Client => new GlobalRulestackFqdnCollection(Client, Id));
         }
 
         /// <summary>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GlobalRulestackFqdnListResource>> GetGlobalRulestackFqdnListAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GlobalRulestackFqdnResource>> GetGlobalRulestackFqdnAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetGlobalRulestackFqdnLists().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetGlobalRulestackFqdns().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -189,39 +189,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GlobalRulestackFqdnListResource> GetGlobalRulestackFqdnList(string name, CancellationToken cancellationToken = default)
+        public virtual Response<GlobalRulestackFqdnResource> GetGlobalRulestackFqdn(string name, CancellationToken cancellationToken = default)
         {
-            return GetGlobalRulestackFqdnLists().Get(name, cancellationToken);
+            return GetGlobalRulestackFqdns().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PostRulestackRuleListResources in the GlobalRulestack. </summary>
-        /// <returns> An object representing collection of PostRulestackRuleListResources and their operations over a PostRulestackRuleListResource. </returns>
-        public virtual PostRulestackRuleListCollection GetPostRulestackRuleLists()
+        /// <summary> Gets a collection of PostRulestackRuleResources in the GlobalRulestack. </summary>
+        /// <returns> An object representing collection of PostRulestackRuleResources and their operations over a PostRulestackRuleResource. </returns>
+        public virtual PostRulestackRuleCollection GetPostRulestackRules()
         {
-            return GetCachedClient(Client => new PostRulestackRuleListCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a PostRulesResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="priority"> Post Rule priority. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PostRulestackRuleListResource>> GetPostRulestackRuleListAsync(string priority, CancellationToken cancellationToken = default)
-        {
-            return await GetPostRulestackRuleLists().GetAsync(priority, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new PostRulestackRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -242,16 +219,39 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PostRulestackRuleListResource> GetPostRulestackRuleList(string priority, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostRulestackRuleResource>> GetPostRulestackRuleAsync(string priority, CancellationToken cancellationToken = default)
         {
-            return GetPostRulestackRuleLists().Get(priority, cancellationToken);
+            return await GetPostRulestackRules().GetAsync(priority, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of GlobalRulestackPrefixListResources in the GlobalRulestack. </summary>
-        /// <returns> An object representing collection of GlobalRulestackPrefixListResources and their operations over a GlobalRulestackPrefixListResource. </returns>
-        public virtual GlobalRulestackPrefixListCollection GetGlobalRulestackPrefixLists()
+        /// <summary>
+        /// Get a PostRulesResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PostRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PostRulestackRuleResource> GetPostRulestackRule(string priority, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new GlobalRulestackPrefixListCollection(Client, Id));
+            return GetPostRulestackRules().Get(priority, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GlobalRulestackPrefixResources in the GlobalRulestack. </summary>
+        /// <returns> An object representing collection of GlobalRulestackPrefixResources and their operations over a GlobalRulestackPrefixResource. </returns>
+        public virtual GlobalRulestackPrefixCollection GetGlobalRulestackPrefixes()
+        {
+            return GetCachedClient(Client => new GlobalRulestackPrefixCollection(Client, Id));
         }
 
         /// <summary>
@@ -272,9 +272,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GlobalRulestackPrefixListResource>> GetGlobalRulestackPrefixListAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GlobalRulestackPrefixResource>> GetGlobalRulestackPrefixAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetGlobalRulestackPrefixLists().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetGlobalRulestackPrefixes().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -295,39 +295,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GlobalRulestackPrefixListResource> GetGlobalRulestackPrefixList(string name, CancellationToken cancellationToken = default)
+        public virtual Response<GlobalRulestackPrefixResource> GetGlobalRulestackPrefix(string name, CancellationToken cancellationToken = default)
         {
-            return GetGlobalRulestackPrefixLists().Get(name, cancellationToken);
+            return GetGlobalRulestackPrefixes().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PreRulestackRuleListResources in the GlobalRulestack. </summary>
-        /// <returns> An object representing collection of PreRulestackRuleListResources and their operations over a PreRulestackRuleListResource. </returns>
-        public virtual PreRulestackRuleListCollection GetPreRulestackRuleLists()
+        /// <summary> Gets a collection of PreRulestackRuleResources in the GlobalRulestack. </summary>
+        /// <returns> An object representing collection of PreRulestackRuleResources and their operations over a PreRulestackRuleResource. </returns>
+        public virtual PreRulestackRuleCollection GetPreRulestackRules()
         {
-            return GetCachedClient(Client => new PreRulestackRuleListCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a PreRulesResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PreRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="priority"> Pre Rule priority. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PreRulestackRuleListResource>> GetPreRulestackRuleListAsync(string priority, CancellationToken cancellationToken = default)
-        {
-            return await GetPreRulestackRuleLists().GetAsync(priority, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new PreRulestackRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -348,9 +325,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PreRulestackRuleListResource> GetPreRulestackRuleList(string priority, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PreRulestackRuleResource>> GetPreRulestackRuleAsync(string priority, CancellationToken cancellationToken = default)
         {
-            return GetPreRulestackRuleLists().Get(priority, cancellationToken);
+            return await GetPreRulestackRules().GetAsync(priority, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a PreRulesResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PreRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PreRulestackRuleResource> GetPreRulestackRule(string priority, CancellationToken cancellationToken = default)
+        {
+            return GetPreRulestackRules().Get(priority, cancellationToken);
         }
 
         /// <summary>

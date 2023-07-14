@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PreRulestackRuleListData>> GetAsync(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
+        public async Task<Response<PreRulestackRuleData>> GetAsync(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        PreRulestackRuleListData value = default;
+                        PreRulestackRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PreRulestackRuleListData.DeserializePreRulestackRuleListData(document.RootElement);
+                        value = PreRulestackRuleData.DeserializePreRulestackRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PreRulestackRuleListData)null, message.Response);
+                    return Response.FromValue((PreRulestackRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PreRulestackRuleListData> Get(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
+        public Response<PreRulestackRuleData> Get(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));
@@ -168,19 +168,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        PreRulestackRuleListData value = default;
+                        PreRulestackRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PreRulestackRuleListData.DeserializePreRulestackRuleListData(document.RootElement);
+                        value = PreRulestackRuleData.DeserializePreRulestackRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PreRulestackRuleListData)null, message.Response);
+                    return Response.FromValue((PreRulestackRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string globalRulestackName, string priority, PreRulestackRuleListData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string globalRulestackName, string priority, PreRulestackRuleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/>, <paramref name="priority"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string globalRulestackName, string priority, PreRulestackRuleListData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string globalRulestackName, string priority, PreRulestackRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/>, <paramref name="priority"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string globalRulestackName, string priority, PreRulestackRuleListData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string globalRulestackName, string priority, PreRulestackRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));

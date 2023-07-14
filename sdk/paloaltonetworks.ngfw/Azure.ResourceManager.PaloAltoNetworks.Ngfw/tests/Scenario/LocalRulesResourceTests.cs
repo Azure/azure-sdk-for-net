@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
     internal class LocalRulesResourceTests : PaloAltoNetworksNgfwManagementTestBase
     {
         protected ResourceGroupResource ResGroup { get; set; }
-        protected LocalRulestackRuleListResource LocalRulesResource { get; set; }
+        protected LocalRulestackRuleResource LocalRulesResource { get; set; }
         protected LocalRulestackResource LocalRulestackResource { get; set; }
         protected LocalRulesResourceTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             {
                 ResGroup = await DefaultSubscription.GetResourceGroupAsync("dotnetSdkTest-infra-rg");
                 LocalRulestackResource = await ResGroup.GetLocalRulestacks().GetAsync("dotnetSdkTest-default-2-lrs");
-                LocalRulesResource = await LocalRulestackResource.GetLocalRulestackRuleListAsync("1000000");
+                LocalRulesResource = await LocalRulestackResource.GetLocalRulestackRuleAsync("1000000");
             }
         }
 
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void CreateResourceIdentifier()
         {
             string priority = "100";
-            ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackRuleListResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, priority);
-            LocalRulestackRuleListResource.ValidateResourceId(localRulestackResourceIdentifier);
+            ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackRuleResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, priority);
+            LocalRulestackRuleResource.ValidateResourceId(localRulestackResourceIdentifier);
 
-            Assert.IsTrue(localRulestackResourceIdentifier.ResourceType.Equals(LocalRulestackRuleListResource.ResourceType));
+            Assert.IsTrue(localRulestackResourceIdentifier.ResourceType.Equals(LocalRulestackRuleResource.ResourceType));
             Assert.IsTrue(localRulestackResourceIdentifier.Equals($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/localrules/{priority}"));
-            Assert.Throws<ArgumentException>(() => LocalRulestackRuleListResource.ValidateResourceId(ResGroup.Data.Id));
+            Assert.Throws<ArgumentException>(() => LocalRulestackRuleResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Update()
         {
-            LocalRulestackRuleListData updatedData = LocalRulesResource.Data;
+            LocalRulestackRuleData updatedData = LocalRulesResource.Data;
             updatedData.Description = "Updated description for local rules test";
-            LocalRulestackRuleListResource updatedResource = (await LocalRulesResource.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
+            LocalRulestackRuleResource updatedResource = (await LocalRulesResource.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
 
             Assert.AreEqual(updatedResource.Data.Description, "Updated description for local rules test");
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await LocalRulesResource.UpdateAsync(WaitUntil.Completed, null));
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            LocalRulestackRuleListResource resource = await LocalRulestackResource.GetLocalRulestackRuleListAsync("1000000");
+            LocalRulestackRuleResource resource = await LocalRulestackResource.GetLocalRulestackRuleAsync("1000000");
             Assert.NotNull(resource);
             Assert.AreEqual(resource.Data.RuleName, LocalRulesResource.Data.RuleName);
         }

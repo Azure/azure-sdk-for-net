@@ -103,77 +103,77 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
         #endregion
 
-        #region GlobalRulestackFqdnListResource
+        #region GlobalRulestackFqdnResource
         /// <summary>
-        /// Gets an object representing a <see cref="GlobalRulestackFqdnListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GlobalRulestackFqdnListResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackFqdnListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GlobalRulestackFqdnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GlobalRulestackFqdnResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackFqdnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GlobalRulestackFqdnListResource" /> object. </returns>
-        public static GlobalRulestackFqdnListResource GetGlobalRulestackFqdnListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GlobalRulestackFqdnResource" /> object. </returns>
+        public static GlobalRulestackFqdnResource GetGlobalRulestackFqdnResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GlobalRulestackFqdnListResource.ValidateResourceId(id);
-                return new GlobalRulestackFqdnListResource(client, id);
+                GlobalRulestackFqdnResource.ValidateResourceId(id);
+                return new GlobalRulestackFqdnResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PostRulestackRuleListResource
+        #region PostRulestackRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="PostRulestackRuleListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostRulestackRuleListResource.CreateResourceIdentifier" /> to create a <see cref="PostRulestackRuleListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostRulestackRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostRulestackRuleResource.CreateResourceIdentifier" /> to create a <see cref="PostRulestackRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostRulestackRuleListResource" /> object. </returns>
-        public static PostRulestackRuleListResource GetPostRulestackRuleListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostRulestackRuleResource" /> object. </returns>
+        public static PostRulestackRuleResource GetPostRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PostRulestackRuleListResource.ValidateResourceId(id);
-                return new PostRulestackRuleListResource(client, id);
+                PostRulestackRuleResource.ValidateResourceId(id);
+                return new PostRulestackRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GlobalRulestackPrefixListResource
+        #region GlobalRulestackPrefixResource
         /// <summary>
-        /// Gets an object representing a <see cref="GlobalRulestackPrefixListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GlobalRulestackPrefixListResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackPrefixListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GlobalRulestackPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GlobalRulestackPrefixResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GlobalRulestackPrefixListResource" /> object. </returns>
-        public static GlobalRulestackPrefixListResource GetGlobalRulestackPrefixListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GlobalRulestackPrefixResource" /> object. </returns>
+        public static GlobalRulestackPrefixResource GetGlobalRulestackPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GlobalRulestackPrefixListResource.ValidateResourceId(id);
-                return new GlobalRulestackPrefixListResource(client, id);
+                GlobalRulestackPrefixResource.ValidateResourceId(id);
+                return new GlobalRulestackPrefixResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PreRulestackRuleListResource
+        #region PreRulestackRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="PreRulestackRuleListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PreRulestackRuleListResource.CreateResourceIdentifier" /> to create a <see cref="PreRulestackRuleListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PreRulestackRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PreRulestackRuleResource.CreateResourceIdentifier" /> to create a <see cref="PreRulestackRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PreRulestackRuleListResource" /> object. </returns>
-        public static PreRulestackRuleListResource GetPreRulestackRuleListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PreRulestackRuleResource" /> object. </returns>
+        public static PreRulestackRuleResource GetPreRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PreRulestackRuleListResource.ValidateResourceId(id);
-                return new PreRulestackRuleListResource(client, id);
+                PreRulestackRuleResource.ValidateResourceId(id);
+                return new PreRulestackRuleResource(client, id);
             }
             );
         }
@@ -255,58 +255,58 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
         #endregion
 
-        #region LocalRulestackFqdnListResource
+        #region LocalRulestackFqdnResource
         /// <summary>
-        /// Gets an object representing a <see cref="LocalRulestackFqdnListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocalRulestackFqdnListResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackFqdnListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LocalRulestackFqdnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackFqdnResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackFqdnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocalRulestackFqdnListResource" /> object. </returns>
-        public static LocalRulestackFqdnListResource GetLocalRulestackFqdnListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LocalRulestackFqdnResource" /> object. </returns>
+        public static LocalRulestackFqdnResource GetLocalRulestackFqdnResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LocalRulestackFqdnListResource.ValidateResourceId(id);
-                return new LocalRulestackFqdnListResource(client, id);
+                LocalRulestackFqdnResource.ValidateResourceId(id);
+                return new LocalRulestackFqdnResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LocalRulestackRuleListResource
+        #region LocalRulestackRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="LocalRulestackRuleListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocalRulestackRuleListResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackRuleListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LocalRulestackRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackRuleResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocalRulestackRuleListResource" /> object. </returns>
-        public static LocalRulestackRuleListResource GetLocalRulestackRuleListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LocalRulestackRuleResource" /> object. </returns>
+        public static LocalRulestackRuleResource GetLocalRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LocalRulestackRuleListResource.ValidateResourceId(id);
-                return new LocalRulestackRuleListResource(client, id);
+                LocalRulestackRuleResource.ValidateResourceId(id);
+                return new LocalRulestackRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LocalRulestackPrefixListResource
+        #region LocalRulestackPrefixResource
         /// <summary>
-        /// Gets an object representing a <see cref="LocalRulestackPrefixListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocalRulestackPrefixListResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackPrefixListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LocalRulestackPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackPrefixResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocalRulestackPrefixListResource" /> object. </returns>
-        public static LocalRulestackPrefixListResource GetLocalRulestackPrefixListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LocalRulestackPrefixResource" /> object. </returns>
+        public static LocalRulestackPrefixResource GetLocalRulestackPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LocalRulestackPrefixListResource.ValidateResourceId(id);
-                return new LocalRulestackPrefixListResource(client, id);
+                LocalRulestackPrefixResource.ValidateResourceId(id);
+                return new LocalRulestackPrefixResource(client, id);
             }
             );
         }

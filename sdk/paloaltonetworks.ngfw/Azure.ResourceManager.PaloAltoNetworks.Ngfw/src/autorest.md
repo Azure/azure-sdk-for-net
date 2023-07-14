@@ -27,19 +27,19 @@ rename-mapping:
   FirewallResourceListResult: PaloAltoNetworksFirewallListResult
   FirewallStatusResource: PaloAltoNetworksFirewallStatus
   FirewallStatusResourceListResult: PaloAltoNetworksFirewallStatusListResult
-  FqdnListGlobalRulestackResource: GlobalRulestackFqdnList
-  FqdnListGlobalRulestackResourceListResult: GlobalRulestackFqdnListsResult
-  FqdnListLocalRulestackResource: LocalRulestackFqdnList
-  FqdnListLocalRulestackResourceListResult: LocalRulestackFqdnListsResult
+  FqdnListGlobalRulestackResource: GlobalRulestackFqdn
+  FqdnListGlobalRulestackResourceListResult: GlobalRulestackFqdnListResult
+  FqdnListLocalRulestackResource: LocalRulestackFqdn
+  FqdnListLocalRulestackResourceListResult: LocalRulestackFqdnListResult
   GlobalRulestackResource: GlobalRulestack
   GlobalRulestackResourceListResult: GlobalRulestackListResult
-  LocalRulesResource: LocalRulestackRuleList
+  LocalRulesResource: LocalRulestackRule
   LocalRulestackResource: LocalRulestack
   LocalRulestackResourceListResult: LocalRulestackListResult
-  PostRulesResource: PostRulestackRuleList
-  PrefixListGlobalRulestackResource: GlobalRulestackPrefixList
-  PrefixListResource: LocalRulestackPrefixList
-  PreRulesResource: PreRulestackRuleList
+  PostRulesResource: PostRulestackRule
+  PrefixListGlobalRulestackResource: GlobalRulestackPrefix
+  PrefixListResource: LocalRulestackPrefix
+  PreRulesResource: PreRulestackRule
   ActionEnum: RulestackActionType
   AdvSecurityObjectListResponse: AdvancedSecurityObjectListResult
   AdvSecurityObjectModel: AdvancedSecurityObject

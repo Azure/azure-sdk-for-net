@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
     public class LocalRulesResourceCollectionTests : PaloAltoNetworksNgfwManagementTestBase
     {
         protected ResourceGroupResource DefaultResGroup { get; set; }
-        protected LocalRulestackRuleListResource DefaultResource1 { get; set; }
+        protected LocalRulestackRuleResource DefaultResource1 { get; set; }
         protected LocalRulestackResource LocalRulestack { get; set; }
         public LocalRulesResourceCollectionTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             {
                 DefaultResGroup = await DefaultSubscription.GetResourceGroupAsync("dotnetSdkTest-infra-rg");
                 LocalRulestack = (await DefaultResGroup.GetLocalRulestacks().GetAsync("dotnetSdkTest-default-1-lrs")).Value;
-                DefaultResource1 = await LocalRulestack.GetLocalRulestackRuleListAsync("1000000");
+                DefaultResource1 = await LocalRulestack.GetLocalRulestackRuleAsync("1000000");
             }
         }
 
@@ -41,19 +41,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task CreateOrUpdate()
         {
             string priority = IsAsync ? "1" : "2";
-            LocalRulestackRuleListData data = getLocalRulestackRuleListData(priority);
-            var response = await LocalRulestack.GetLocalRulestackRuleLists().CreateOrUpdateAsync(WaitUntil.Completed, priority, data);
-            LocalRulestackRuleListResource rule = response.Value;
+            LocalRulestackRuleData data = getLocalRulestackRuleListData(priority);
+            var response = await LocalRulestack.GetLocalRulestackRules().CreateOrUpdateAsync(WaitUntil.Completed, priority, data);
+            LocalRulestackRuleResource rule = response.Value;
             Assert.IsTrue((data.RuleName).Equals(rule.Data.RuleName));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetLocalRulestackRuleLists().CreateOrUpdateAsync(WaitUntil.Completed, "3", null)).Value);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await LocalRulestack.GetLocalRulestackRules().CreateOrUpdateAsync(WaitUntil.Completed, "3", null)).Value);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task Get()
         {
-            LocalRulestackRuleListCollection collection = LocalRulestack.GetLocalRulestackRuleLists();
-            LocalRulestackRuleListResource rulesResource = await collection.GetAsync(DefaultResource1.Data.Priority.ToString());
+            LocalRulestackRuleCollection collection = LocalRulestack.GetLocalRulestackRules();
+            LocalRulestackRuleResource rulesResource = await collection.GetAsync(DefaultResource1.Data.Priority.ToString());
             Assert.IsNotNull(rulesResource);
             Assert.AreEqual(rulesResource.Data.RuleName, DefaultResource1.Data.RuleName);
         }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Exists()
         {
-            LocalRulestackRuleListCollection collection = LocalRulestack.GetLocalRulestackRuleLists();
+            LocalRulestackRuleCollection collection = LocalRulestack.GetLocalRulestackRules();
             Assert.IsTrue(await collection.ExistsAsync(DefaultResource1.Data.Priority.ToString()));
             Assert.IsFalse(await collection.ExistsAsync("999"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
-            LocalRulestackRuleListCollection collection = LocalRulestack.GetLocalRulestackRuleLists();
+            LocalRulestackRuleCollection collection = LocalRulestack.GetLocalRulestackRules();
             int count = 0;
-            await foreach (LocalRulestackRuleListResource lrs in collection.GetAllAsync())
+            await foreach (LocalRulestackRuleResource lrs in collection.GetAllAsync())
             {
                 count++;
             }
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             Assert.AreEqual(count, 3);
         }
 
-        private LocalRulestackRuleListData getLocalRulestackRuleListData(string priority)
+        private LocalRulestackRuleData getLocalRulestackRuleListData(string priority)
         {
-            LocalRulestackRuleListData data = new LocalRulestackRuleListData($"dotnetSdkTest-rule-{priority}")
+            LocalRulestackRuleData data = new LocalRulestackRuleData($"dotnetSdkTest-rule-{priority}")
             {
                 ETag = new ETag("c18e6eef-ba3e-49ee-8a85-2b36c863a9d0"),
                 Description = "description of local rule",

@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return GetLocalRulestackCertificateObjects().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LocalRulestackFqdnListResources in the LocalRulestack. </summary>
-        /// <returns> An object representing collection of LocalRulestackFqdnListResources and their operations over a LocalRulestackFqdnListResource. </returns>
-        public virtual LocalRulestackFqdnListCollection GetLocalRulestackFqdnLists()
+        /// <summary> Gets a collection of LocalRulestackFqdnResources in the LocalRulestack. </summary>
+        /// <returns> An object representing collection of LocalRulestackFqdnResources and their operations over a LocalRulestackFqdnResource. </returns>
+        public virtual LocalRulestackFqdnCollection GetLocalRulestackFqdns()
         {
-            return GetCachedClient(Client => new LocalRulestackFqdnListCollection(Client, Id));
+            return GetCachedClient(Client => new LocalRulestackFqdnCollection(Client, Id));
         }
 
         /// <summary>
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LocalRulestackFqdnListResource>> GetLocalRulestackFqdnListAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocalRulestackFqdnResource>> GetLocalRulestackFqdnAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetLocalRulestackFqdnLists().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetLocalRulestackFqdns().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -190,39 +190,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LocalRulestackFqdnListResource> GetLocalRulestackFqdnList(string name, CancellationToken cancellationToken = default)
+        public virtual Response<LocalRulestackFqdnResource> GetLocalRulestackFqdn(string name, CancellationToken cancellationToken = default)
         {
-            return GetLocalRulestackFqdnLists().Get(name, cancellationToken);
+            return GetLocalRulestackFqdns().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LocalRulestackRuleListResources in the LocalRulestack. </summary>
-        /// <returns> An object representing collection of LocalRulestackRuleListResources and their operations over a LocalRulestackRuleListResource. </returns>
-        public virtual LocalRulestackRuleListCollection GetLocalRulestackRuleLists()
+        /// <summary> Gets a collection of LocalRulestackRuleResources in the LocalRulestack. </summary>
+        /// <returns> An object representing collection of LocalRulestackRuleResources and their operations over a LocalRulestackRuleResource. </returns>
+        public virtual LocalRulestackRuleCollection GetLocalRulestackRules()
         {
-            return GetCachedClient(Client => new LocalRulestackRuleListCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a LocalRulesResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="priority"> Local Rule priority. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LocalRulestackRuleListResource>> GetLocalRulestackRuleListAsync(string priority, CancellationToken cancellationToken = default)
-        {
-            return await GetLocalRulestackRuleLists().GetAsync(priority, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new LocalRulestackRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -243,16 +220,39 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LocalRulestackRuleListResource> GetLocalRulestackRuleList(string priority, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocalRulestackRuleResource>> GetLocalRulestackRuleAsync(string priority, CancellationToken cancellationToken = default)
         {
-            return GetLocalRulestackRuleLists().Get(priority, cancellationToken);
+            return await GetLocalRulestackRules().GetAsync(priority, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of LocalRulestackPrefixListResources in the LocalRulestack. </summary>
-        /// <returns> An object representing collection of LocalRulestackPrefixListResources and their operations over a LocalRulestackPrefixListResource. </returns>
-        public virtual LocalRulestackPrefixListCollection GetLocalRulestackPrefixLists()
+        /// <summary>
+        /// Get a LocalRulesResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LocalRulestackRuleResource> GetLocalRulestackRule(string priority, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new LocalRulestackPrefixListCollection(Client, Id));
+            return GetLocalRulestackRules().Get(priority, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of LocalRulestackPrefixResources in the LocalRulestack. </summary>
+        /// <returns> An object representing collection of LocalRulestackPrefixResources and their operations over a LocalRulestackPrefixResource. </returns>
+        public virtual LocalRulestackPrefixCollection GetLocalRulestackPrefixes()
+        {
+            return GetCachedClient(Client => new LocalRulestackPrefixCollection(Client, Id));
         }
 
         /// <summary>
@@ -273,9 +273,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LocalRulestackPrefixListResource>> GetLocalRulestackPrefixListAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocalRulestackPrefixResource>> GetLocalRulestackPrefixAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetLocalRulestackPrefixLists().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetLocalRulestackPrefixes().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -296,9 +296,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LocalRulestackPrefixListResource> GetLocalRulestackPrefixList(string name, CancellationToken cancellationToken = default)
+        public virtual Response<LocalRulestackPrefixResource> GetLocalRulestackPrefix(string name, CancellationToken cancellationToken = default)
         {
-            return GetLocalRulestackPrefixLists().Get(name, cancellationToken);
+            return GetLocalRulestackPrefixes().Get(name, cancellationToken);
         }
 
         /// <summary>

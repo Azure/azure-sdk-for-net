@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
     internal class FqdnListLocalRulestackResourceTests : PaloAltoNetworksNgfwManagementTestBase
     {
         protected ResourceGroupResource ResGroup { get; set; }
-        protected LocalRulestackFqdnListResource LocalRulestackFqdnListResource { get; set; }
+        protected LocalRulestackFqdnResource LocalRulestackFqdnListResource { get; set; }
         protected LocalRulestackResource LocalRulestackResource { get; set; }
         protected FqdnListLocalRulestackResourceTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             {
                 ResGroup = await DefaultSubscription.GetResourceGroupAsync("dotnetSdkTest-infra-rg");
                 LocalRulestackResource = await ResGroup.GetLocalRulestacks().GetAsync("dotnetSdkTest-default-2-lrs");
-                LocalRulestackFqdnListResource = await LocalRulestackResource.GetLocalRulestackFqdnListAsync("dotnetSdkTest-fqdnList");
+                LocalRulestackFqdnListResource = await LocalRulestackResource.GetLocalRulestackFqdnAsync("dotnetSdkTest-fqdnList");
             }
         }
 
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public void CreateResourceIdentifier()
         {
             string name = LocalRulestackFqdnListResource.Data.Name;
-            ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackFqdnListResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, name);
-            LocalRulestackFqdnListResource.ValidateResourceId(localRulestackResourceIdentifier);
+            ResourceIdentifier localRulestackResourceIdentifier = LocalRulestackFqdnResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, ResGroup.Data.Name, LocalRulestackResource.Data.Name, name);
+            LocalRulestackFqdnResource.ValidateResourceId(localRulestackResourceIdentifier);
 
-            Assert.IsTrue(localRulestackResourceIdentifier.ResourceType.Equals(LocalRulestackFqdnListResource.ResourceType));
+            Assert.IsTrue(localRulestackResourceIdentifier.ResourceType.Equals(LocalRulestackFqdnResource.ResourceType));
             Assert.IsTrue(localRulestackResourceIdentifier.Equals($"{ResGroup.Id}/providers/{LocalRulestackResource.ResourceType}/{LocalRulestackResource.Data.Name}/fqdnlists/{name}"));
-            Assert.Throws<ArgumentException>(() => LocalRulestackFqdnListResource.ValidateResourceId(ResGroup.Data.Id));
+            Assert.Throws<ArgumentException>(() => LocalRulestackFqdnResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Update()
         {
-            LocalRulestackFqdnListData updatedData = LocalRulestackFqdnListResource.Data;
+            LocalRulestackFqdnData updatedData = LocalRulestackFqdnListResource.Data;
             updatedData.Description = "Updated description for fqdn list test";
-            LocalRulestackFqdnListResource updatedResource = (await LocalRulestackFqdnListResource.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
+            LocalRulestackFqdnResource updatedResource = (await LocalRulestackFqdnListResource.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
 
             Assert.AreEqual(updatedResource.Data.Description, "Updated description for fqdn list test");
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await LocalRulestackFqdnListResource.UpdateAsync(WaitUntil.Completed, null));
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            LocalRulestackFqdnListResource resource = await LocalRulestackResource.GetLocalRulestackFqdnListAsync("dotnetSdkTest-fqdnList");
+            LocalRulestackFqdnResource resource = await LocalRulestackResource.GetLocalRulestackFqdnAsync("dotnetSdkTest-fqdnList");
             Assert.NotNull(resource);
             Assert.AreEqual(resource.Data.Name, LocalRulestackFqdnListResource.Data.Name);
         }
