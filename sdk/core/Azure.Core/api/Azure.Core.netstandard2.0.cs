@@ -1147,8 +1147,8 @@ namespace Azure.Core.Serialization
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public static readonly string Data;
-        public static readonly string Wire;
+        public static readonly Azure.Core.Serialization.ModelSerializerFormat Data;
+        public static readonly Azure.Core.Serialization.ModelSerializerFormat Wire;
         public ModelSerializerFormat(string value) { throw null; }
         public bool Equals(Azure.Core.Serialization.ModelSerializerFormat other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1156,14 +1156,15 @@ namespace Azure.Core.Serialization
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.Serialization.ModelSerializerFormat left, Azure.Core.Serialization.ModelSerializerFormat right) { throw null; }
+        public static implicit operator string (Azure.Core.Serialization.ModelSerializerFormat value) { throw null; }
         public static implicit operator Azure.Core.Serialization.ModelSerializerFormat (string value) { throw null; }
         public static bool operator !=(Azure.Core.Serialization.ModelSerializerFormat left, Azure.Core.Serialization.ModelSerializerFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ModelSerializerOptions
     {
+        public Azure.Core.Serialization.ModelSerializerFormat Format;
         public ModelSerializerOptions(string format = "D") { }
-        public string ModelSerializerFormatKind { get { throw null; } }
         public System.Collections.Generic.Dictionary<System.Type, Azure.Core.Serialization.ObjectSerializer> Serializers { get { throw null; } }
     }
     public abstract partial class ObjectSerializer

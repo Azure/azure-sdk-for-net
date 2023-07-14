@@ -17,12 +17,12 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// Specifies the data format where IgnoreReadOnly and IgnoreAdditionalProperties are false.
         /// </summary>
-        public static readonly string Data = DataValue;
+        public static readonly ModelSerializerFormat Data = new ModelSerializerFormat(DataValue);
 
         /// <summary>
         /// Specifies the wire format IgnoreReadOnly and IgnoreAdditionalProperties are true.
         /// </summary>
-        public static readonly string Wire = WireValue;
+        public static readonly ModelSerializerFormat Wire = new ModelSerializerFormat(WireValue);
 
         private readonly string _value;
 
@@ -55,6 +55,12 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="value">The string value to convert.</param>
         public static implicit operator ModelSerializerFormat(string value) => new ModelSerializerFormat(value);
+
+        /// <summary>
+        /// Converts a <see cref="ModelSerializerFormat"/> to a string.
+        /// </summary>
+        /// <param name="value">The ModelSerializerFormat value to convert.</param>
+        public static implicit operator string(ModelSerializerFormat value) => value.ToString();
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -12,19 +12,19 @@ namespace Azure.Core.Serialization
     public class ModelSerializerOptions
     {
         /// <summary>
-        /// Consructor for ModelSerializerOptions. Takes in a string that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".
+        /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class. Takes in a string that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".
         /// </summary>
         /// <param name="format"></param>
         public ModelSerializerOptions(string format = "D")
         {
             //throw ArgumentException if not "D" or "W"
-            ModelSerializerFormatKind = ValidateFormat(format);
+            Format = ValidateFormat(format);
         }
 
         /// <summary>
-        /// String that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".
+        /// ModelSerializerFormat that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".
         /// </summary>
-        public string ModelSerializerFormatKind { get; }
+        public ModelSerializerFormat Format;
 
         /// <summary>
         /// Dictionary that holds all the serializers for the different model types.
@@ -35,7 +35,7 @@ namespace Azure.Core.Serialization
         {
             if (x != "D" && x != "W")
             {
-                throw new ArgumentException("Format must be either 'Data' or 'Wire'.");
+                throw new ArgumentException("Format must be either 'D' or 'W'.");
             }
             return x;
         }

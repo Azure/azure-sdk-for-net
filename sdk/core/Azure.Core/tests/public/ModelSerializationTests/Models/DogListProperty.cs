@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             MemoryStream stream = new MemoryStream();
             Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
-            if (options.ModelSerializerFormatKind == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Data)
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -89,7 +89,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 writer.WriteEndArray();
             }
 
-            if (options.ModelSerializerFormatKind == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Data)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -147,7 +147,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     }
                     continue;
                 }
-                if (options.ModelSerializerFormatKind == ModelSerializerFormat.Data)
+                if (options.Format == ModelSerializerFormat.Data)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -183,7 +183,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                string format = modelConverter is not null ? modelConverter.Format : "W";
+                string format = modelConverter is not null ? modelConverter.Format : ModelSerializerFormat.Wire;
                 return new ModelSerializerOptions(format);
             }
         }
