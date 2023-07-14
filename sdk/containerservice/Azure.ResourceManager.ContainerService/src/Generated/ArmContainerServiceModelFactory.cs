@@ -521,6 +521,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ContainerServicePrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState);
         }
 
+        /// <summary> Initializes a new instance of ManagedClusterRunCommandContent. </summary>
+        /// <param name="command"> The command to run. </param>
+        /// <param name="context"> A base64 encoded zip file containing the files required by the command. </param>
+        /// <param name="clusterToken"> AuthToken issued for AKS AAD Server App. </param>
+        /// <returns> A new <see cref="Models.ManagedClusterRunCommandContent"/> instance for mocking. </returns>
+        public static ManagedClusterRunCommandContent ManagedClusterRunCommandContent(string command = null, string context = null, string clusterToken = null)
+        {
+            return new ManagedClusterRunCommandContent(command, context, clusterToken);
+        }
+
         /// <summary> Initializes a new instance of ManagedClusterRunCommandResult. </summary>
         /// <param name="id"> The command id. </param>
         /// <param name="provisioningState"> provisioning State. </param>

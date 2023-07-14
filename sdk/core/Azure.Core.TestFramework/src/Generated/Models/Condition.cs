@@ -15,6 +15,15 @@ namespace Azure.Core.TestFramework.Models
         {
         }
 
+        /// <summary> Initializes a new instance of Condition. </summary>
+        /// <param name="uriRegex"></param>
+        /// <param name="responseHeader"> Header condition to apply. </param>
+        internal Condition(string uriRegex, HeaderCondition responseHeader)
+        {
+            UriRegex = uriRegex;
+            ResponseHeader = responseHeader;
+        }
+
         /// <summary> Gets or sets the uri regex. </summary>
         public string UriRegex { get; set; }
         /// <summary> Header condition to apply. </summary>

@@ -23,6 +23,15 @@ namespace Azure.Core.TestFramework.Models
             XRecordingFile = xRecordingFile;
         }
 
+        /// <summary> Initializes a new instance of StartInformation. </summary>
+        /// <param name="xRecordingFile"></param>
+        /// <param name="xRecordingAssetsFile"></param>
+        internal StartInformation(string xRecordingFile, string xRecordingAssetsFile)
+        {
+            XRecordingFile = xRecordingFile;
+            XRecordingAssetsFile = xRecordingAssetsFile;
+        }
+
         /// <summary> Gets the x recording file. </summary>
         public string XRecordingFile { get; }
         /// <summary> Gets or sets the x recording assets file. </summary>

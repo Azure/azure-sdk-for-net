@@ -171,6 +171,41 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataProtectionBackupRecoveryPointData(id, name, resourceType, systemData, properties);
         }
 
+        /// <summary> Initializes a new instance of BackupRehydrationContent. </summary>
+        /// <param name="recoveryPointId"> Id of the recovery point to be recovered. </param>
+        /// <param name="rehydrationPriority"> Priority to be used for rehydration. Values High or Standard. </param>
+        /// <param name="rehydrationRetentionDuration"> Retention duration in ISO 8601 format i.e P10D . </param>
+        /// <returns> A new <see cref="Models.BackupRehydrationContent"/> instance for mocking. </returns>
+        public static BackupRehydrationContent BackupRehydrationContent(string recoveryPointId = null, BackupRehydrationPriority? rehydrationPriority = null, TimeSpan rehydrationRetentionDuration = default)
+        {
+            return new BackupRehydrationContent(recoveryPointId, rehydrationPriority, rehydrationRetentionDuration);
+        }
+
+        /// <summary> Initializes a new instance of BackupRestoreContent. </summary>
+        /// <param name="objectType"></param>
+        /// <param name="restoreTargetInfo">
+        /// Gets or sets the restore target information.
+        /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="RestoreTargetInfo"/>.
+        /// </param>
+        /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
+        /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <returns> A new <see cref="Models.BackupRestoreContent"/> instance for mocking. </returns>
+        public static BackupRestoreContent BackupRestoreContent(string objectType = null, RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null)
+        {
+            return new UnknownAzureBackupRestoreRequest(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId);
+        }
+
+        /// <summary> Initializes a new instance of RestoreTargetInfoBase. </summary>
+        /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
+        /// <param name="recoverySetting"> Recovery Option. </param>
+        /// <param name="restoreLocation"> Target Restore region. </param>
+        /// <returns> A new <see cref="Models.RestoreTargetInfoBase"/> instance for mocking. </returns>
+        public static RestoreTargetInfoBase RestoreTargetInfoBase(string objectType = null, RecoverySetting recoverySetting = default, AzureLocation? restoreLocation = null)
+        {
+            return new UnknownRestoreTargetInfoBase(objectType, recoverySetting, restoreLocation);
+        }
+
         /// <summary> Initializes a new instance of DataProtectionBackupJobData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -261,6 +296,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             additionalDetails ??= new Dictionary<string, string>();
 
             return new BackupJobSubTask(additionalDetails, taskId, taskName, taskProgress, taskStatus);
+        }
+
+        /// <summary> Initializes a new instance of BackupFindRestorableTimeRangeContent. </summary>
+        /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
+        /// <param name="startOn"> Start time for the List Restore Ranges request. ISO 8601 format. </param>
+        /// <param name="endOn"> End time for the List Restore Ranges request. ISO 8601 format. </param>
+        /// <returns> A new <see cref="Models.BackupFindRestorableTimeRangeContent"/> instance for mocking. </returns>
+        public static BackupFindRestorableTimeRangeContent BackupFindRestorableTimeRangeContent(RestoreSourceDataStoreType sourceDataStoreType = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
+        {
+            return new BackupFindRestorableTimeRangeContent(sourceDataStoreType, startOn, endOn);
         }
 
         /// <summary> Initializes a new instance of BackupFindRestorableTimeRangeResult. </summary>
@@ -438,6 +483,53 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new RecoveryPointDataStoreDetail(createdOn, expireOn, recoveryPointDataStoreId, metadata, state, recoveryPointDataStoreType, isVisible, rehydrationExpireOn, rehydrationStatus);
         }
 
+        /// <summary> Initializes a new instance of BackupRecoveryPointBasedRestoreContent. </summary>
+        /// <param name="restoreTargetInfo">
+        /// Gets or sets the restore target information.
+        /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="RestoreTargetInfo"/>.
+        /// </param>
+        /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
+        /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="recoveryPointId"></param>
+        /// <returns> A new <see cref="Models.BackupRecoveryPointBasedRestoreContent"/> instance for mocking. </returns>
+        public static BackupRecoveryPointBasedRestoreContent BackupRecoveryPointBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, string recoveryPointId = null)
+        {
+            return new BackupRecoveryPointBasedRestoreContent("AzureBackupRecoveryPointBasedRestoreRequest", restoreTargetInfo, sourceDataStoreType, sourceResourceId, recoveryPointId);
+        }
+
+        /// <summary> Initializes a new instance of BackupRestoreWithRehydrationContent. </summary>
+        /// <param name="restoreTargetInfo">
+        /// Gets or sets the restore target information.
+        /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="RestoreTargetInfo"/>.
+        /// </param>
+        /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
+        /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="recoveryPointId"></param>
+        /// <param name="rehydrationPriority"> Priority to be used for rehydration. Values High or Standard. </param>
+        /// <param name="rehydrationRetentionDuration"> Retention duration in ISO 8601 format i.e P10D . </param>
+        /// <returns> A new <see cref="Models.BackupRestoreWithRehydrationContent"/> instance for mocking. </returns>
+        public static BackupRestoreWithRehydrationContent BackupRestoreWithRehydrationContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, string recoveryPointId = null, BackupRehydrationPriority rehydrationPriority = default, TimeSpan rehydrationRetentionDuration = default)
+        {
+            return new BackupRestoreWithRehydrationContent("AzureBackupRestoreWithRehydrationRequest", restoreTargetInfo, sourceDataStoreType, sourceResourceId, recoveryPointId, rehydrationPriority, rehydrationRetentionDuration);
+        }
+
+        /// <summary> Initializes a new instance of BackupRecoveryTimeBasedRestoreContent. </summary>
+        /// <param name="restoreTargetInfo">
+        /// Gets or sets the restore target information.
+        /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="RestoreTargetInfo"/>.
+        /// </param>
+        /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
+        /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="recoverOn"> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </param>
+        /// <returns> A new <see cref="Models.BackupRecoveryTimeBasedRestoreContent"/> instance for mocking. </returns>
+        public static BackupRecoveryTimeBasedRestoreContent BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, DateTimeOffset recoverOn = default)
+        {
+            return new BackupRecoveryTimeBasedRestoreContent("AzureBackupRecoveryTimeBasedRestoreRequest", restoreTargetInfo, sourceDataStoreType, sourceResourceId, recoverOn);
+        }
+
         /// <summary> Initializes a new instance of BackupFeatureValidationResult. </summary>
         /// <param name="featureType"> backup support feature type. </param>
         /// <param name="features"> Response features. </param>
@@ -459,6 +551,111 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             exposureControlledFeatures ??= new List<string>();
 
             return new BackupSupportedFeature(featureName, supportStatus, exposureControlledFeatures?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ItemLevelRestoreTargetInfo. </summary>
+        /// <param name="recoverySetting"> Recovery Option. </param>
+        /// <param name="restoreLocation"> Target Restore region. </param>
+        /// <param name="restoreCriteria">
+        /// Restore Criteria
+        /// Please note <see cref="ItemLevelRestoreCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ItemPathBasedRestoreCriteria"/>, <see cref="KubernetesClusterRestoreCriteria"/>, <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/> and <see cref="RangeBasedItemLevelRestoreCriteria"/>.
+        /// </param>
+        /// <param name="datasourceInfo"> Information of target DS. </param>
+        /// <param name="datasourceSetInfo"> Information of target DS Set. </param>
+        /// <param name="datasourceAuthCredentials">
+        /// Credentials to use to authenticate with data source provider.
+        /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.ItemLevelRestoreTargetInfo"/> instance for mocking. </returns>
+        public static ItemLevelRestoreTargetInfo ItemLevelRestoreTargetInfo(RecoverySetting recoverySetting = default, AzureLocation? restoreLocation = null, IEnumerable<ItemLevelRestoreCriteria> restoreCriteria = null, DataSourceInfo datasourceInfo = null, DataSourceSetInfo datasourceSetInfo = null, DataProtectionBackupAuthCredentials datasourceAuthCredentials = null)
+        {
+            restoreCriteria ??= new List<ItemLevelRestoreCriteria>();
+
+            return new ItemLevelRestoreTargetInfo("ItemLevelRestoreTargetInfo", recoverySetting, restoreLocation, restoreCriteria?.ToList(), datasourceInfo, datasourceSetInfo, datasourceAuthCredentials);
+        }
+
+        /// <summary> Initializes a new instance of ItemPathBasedRestoreCriteria. </summary>
+        /// <param name="itemPath"> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </param>
+        /// <param name="isPathRelativeToBackupItem"> Flag to specify if the path is relative to backup item or full path. </param>
+        /// <param name="subItemPathPrefix"> The list of prefix strings to be used as filter criteria during restore. These are relative to the item path specified. </param>
+        /// <returns> A new <see cref="Models.ItemPathBasedRestoreCriteria"/> instance for mocking. </returns>
+        public static ItemPathBasedRestoreCriteria ItemPathBasedRestoreCriteria(string itemPath = null, bool isPathRelativeToBackupItem = default, IEnumerable<string> subItemPathPrefix = null)
+        {
+            subItemPathPrefix ??= new List<string>();
+
+            return new ItemPathBasedRestoreCriteria("ItemPathBasedRestoreCriteria", itemPath, isPathRelativeToBackupItem, subItemPathPrefix?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of KubernetesClusterRestoreCriteria. </summary>
+        /// <param name="isClusterScopeResourcesIncluded"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore. </param>
+        /// <param name="includedNamespaces"> Gets or sets the include namespaces property. This property sets the namespaces to be included during restore. </param>
+        /// <param name="excludedNamespaces"> Gets or sets the exclude namespaces property. This property sets the namespaces to be excluded during restore. </param>
+        /// <param name="includedResourceTypes"> Gets or sets the include resource types property. This property sets the resource types to be included during restore. </param>
+        /// <param name="excludedResourceTypes"> Gets or sets the exclude resource types property. This property sets the resource types to be excluded during restore. </param>
+        /// <param name="labelSelectors"> Gets or sets the LabelSelectors property. This property sets the resource with such label selectors to be included during restore. </param>
+        /// <param name="persistentVolumeRestoreMode"> Gets or sets the PV (Persistent Volume) Restore Mode property. This property sets whether volumes needs to be restored. </param>
+        /// <param name="conflictPolicy"> Gets or sets the Conflict Policy property. This property sets policy during conflict of resources during restore. </param>
+        /// <param name="namespaceMappings"> Gets or sets the Namespace Mappings property. This property sets if namespace needs to be change during restore. </param>
+        /// <returns> A new <see cref="Models.KubernetesClusterRestoreCriteria"/> instance for mocking. </returns>
+        public static KubernetesClusterRestoreCriteria KubernetesClusterRestoreCriteria(bool isClusterScopeResourcesIncluded = default, IEnumerable<string> includedNamespaces = null, IEnumerable<string> excludedNamespaces = null, IEnumerable<string> includedResourceTypes = null, IEnumerable<string> excludedResourceTypes = null, IEnumerable<string> labelSelectors = null, PersistentVolumeRestoreMode? persistentVolumeRestoreMode = null, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = null, IDictionary<string, string> namespaceMappings = null)
+        {
+            includedNamespaces ??= new List<string>();
+            excludedNamespaces ??= new List<string>();
+            includedResourceTypes ??= new List<string>();
+            excludedResourceTypes ??= new List<string>();
+            labelSelectors ??= new List<string>();
+            namespaceMappings ??= new Dictionary<string, string>();
+
+            return new KubernetesClusterRestoreCriteria("KubernetesClusterRestoreCriteria", isClusterScopeResourcesIncluded, includedNamespaces?.ToList(), excludedNamespaces?.ToList(), includedResourceTypes?.ToList(), excludedResourceTypes?.ToList(), labelSelectors?.ToList(), persistentVolumeRestoreMode, conflictPolicy, namespaceMappings);
+        }
+
+        /// <summary> Initializes a new instance of RestoreFilesTargetInfo. </summary>
+        /// <param name="recoverySetting"> Recovery Option. </param>
+        /// <param name="restoreLocation"> Target Restore region. </param>
+        /// <param name="targetDetails"> Destination of RestoreAsFiles operation, when destination is not a datasource. </param>
+        /// <returns> A new <see cref="Models.RestoreFilesTargetInfo"/> instance for mocking. </returns>
+        public static RestoreFilesTargetInfo RestoreFilesTargetInfo(RecoverySetting recoverySetting = default, AzureLocation? restoreLocation = null, RestoreFilesTargetDetails targetDetails = null)
+        {
+            return new RestoreFilesTargetInfo("RestoreFilesTargetInfo", recoverySetting, restoreLocation, targetDetails);
+        }
+
+        /// <summary> Initializes a new instance of RestoreFilesTargetDetails. </summary>
+        /// <param name="filePrefix">
+        /// Restore operation may create multiple files inside location pointed by Url
+        /// Below will be the common prefix for all of them
+        /// </param>
+        /// <param name="restoreTargetLocationType">
+        /// Denotes the target location where the data will be restored,
+        /// string value for the enum {Microsoft.Internal.AzureBackup.DataProtection.Common.Interface.RestoreTargetLocationType}
+        /// </param>
+        /// <param name="uri"> Url denoting the restore destination. It can point to container / file share etc. </param>
+        /// <param name="targetResourceArmId">
+        /// Full ARM Id denoting the restore destination. It is the ARM Id pointing to container / file share
+        /// This is optional if the target subscription can be identified with the URL field. If not
+        /// then this is needed if CrossSubscriptionRestore field of BackupVault is in any of the disabled states
+        /// </param>
+        /// <returns> A new <see cref="Models.RestoreFilesTargetDetails"/> instance for mocking. </returns>
+        public static RestoreFilesTargetDetails RestoreFilesTargetDetails(string filePrefix = null, RestoreTargetLocationType restoreTargetLocationType = default, Uri uri = null, ResourceIdentifier targetResourceArmId = null)
+        {
+            return new RestoreFilesTargetDetails(filePrefix, restoreTargetLocationType, uri, targetResourceArmId);
+        }
+
+        /// <summary> Initializes a new instance of RestoreTargetInfo. </summary>
+        /// <param name="recoverySetting"> Recovery Option. </param>
+        /// <param name="restoreLocation"> Target Restore region. </param>
+        /// <param name="dataSourceInfo"> Information of target DS. </param>
+        /// <param name="dataSourceSetInfo"> Information of target DS Set. </param>
+        /// <param name="dataSourceAuthCredentials">
+        /// Credentials to use to authenticate with data source provider.
+        /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.RestoreTargetInfo"/> instance for mocking. </returns>
+        public static RestoreTargetInfo RestoreTargetInfo(RecoverySetting recoverySetting = default, AzureLocation? restoreLocation = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null)
+        {
+            return new RestoreTargetInfo("RestoreTargetInfo", recoverySetting, restoreLocation, dataSourceInfo, dataSourceSetInfo, dataSourceAuthCredentials);
         }
     }
 }

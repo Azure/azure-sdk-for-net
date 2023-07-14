@@ -726,6 +726,47 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineCaptureResult(id, schema, contentVersion, parameters, resources?.ToList());
         }
 
+        /// <summary> Initializes a new instance of VirtualMachinePatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </param>
+        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
+        /// <param name="zones"> The virtual machine zones. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
+        /// <param name="osProfile"> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
+        /// <param name="bootDiagnostics"> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </param>
+        /// <param name="availabilitySetId"> Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Availability sets overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview). For more information on Azure planned maintenance, see [Maintenance and updates for Virtual Machines in Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates). Currently, a VM can only be added to availability set at creation time. The availability set to which the VM is being added should be under the same resource group as the availability set resource. An existing VM cannot be added to an availability set. This property cannot exist along with a non-null properties.virtualMachineScaleSet reference. </param>
+        /// <param name="virtualMachineScaleSetId"> Specifies information about the virtual machine scale set that the virtual machine should be assigned to. Virtual machines specified in the same virtual machine scale set are allocated to different nodes to maximize availability. Currently, a VM can only be added to virtual machine scale set at creation time. An existing VM cannot be added to a virtual machine scale set. This property cannot exist along with a non-null properties.availabilitySet reference. Minimum api‐version: 2019‐03‐01. </param>
+        /// <param name="proximityPlacementGroupId"> Specifies information about the proximity placement group that the virtual machine should be assigned to. Minimum api-version: 2018-04-01. </param>
+        /// <param name="priority"> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </param>
+        /// <param name="billingMaxPrice"> Specifies the billing related details of a Azure Spot virtual machine. Minimum api-version: 2019-03-01. </param>
+        /// <param name="hostId"> Specifies information about the dedicated host that the virtual machine resides in. Minimum api-version: 2018-10-01. </param>
+        /// <param name="hostGroupId"> Specifies information about the dedicated host group that the virtual machine resides in. **Note:** User cannot specify both host and hostGroup properties. Minimum api-version: 2020-06-01. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The virtual machine instance view. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="vmId"> Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform BIOS commands. </param>
+        /// <param name="extensionsTimeBudget"> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). Minimum api-version: 2020-06-01. </param>
+        /// <param name="platformFaultDomain"> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains. This is applicable only if the 'virtualMachineScaleSet' property of this Virtual Machine is set. The Virtual Machine Scale Set that is referenced, must have 'platformFaultDomainCount' greater than 1. This property cannot be updated once the Virtual Machine is created. Fault domain assignment can be viewed in the Virtual Machine Instance View. Minimum api‐version: 2020‐12‐01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
+        /// <param name="capacityReservationGroupId"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <returns> A new <see cref="Models.VirtualMachinePatch"/> instance for mocking. </returns>
+        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags = null, ComputePlan plan = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null, VirtualMachineHardwareProfile hardwareProfile = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, VirtualMachineNetworkProfile networkProfile = null, SecurityProfile securityProfile = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, ResourceIdentifier virtualMachineScaleSetId = null, ResourceIdentifier proximityPlacementGroupId = null, VirtualMachinePriorityType? priority = null, VirtualMachineEvictionPolicyType? evictionPolicy = null, double? billingMaxPrice = null, ResourceIdentifier hostId = null, ResourceIdentifier hostGroupId = null, string provisioningState = null, VirtualMachineInstanceView instanceView = null, string licenseType = null, string vmId = null, string extensionsTimeBudget = null, int? platformFaultDomain = null, ComputeScheduledEventsProfile scheduledEventsProfile = null, string userData = null, ResourceIdentifier capacityReservationGroupId = null, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = null, DateTimeOffset? timeCreated = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            zones ??= new List<string>();
+            galleryApplications ??= new List<VirtualMachineGalleryApplication>();
+
+            return new VirtualMachinePatch(tags, plan, identity, zones?.ToList(), hardwareProfile, storageProfile, additionalCapabilities, osProfile, networkProfile, securityProfile, bootDiagnostics != null ? new DiagnosticsProfile(bootDiagnostics) : null, availabilitySetId != null ? ResourceManagerModelFactory.WritableSubResource(availabilitySetId) : null, virtualMachineScaleSetId != null ? ResourceManagerModelFactory.WritableSubResource(virtualMachineScaleSetId) : null, proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, priority, evictionPolicy, billingMaxPrice != null ? new BillingProfile(billingMaxPrice) : null, hostId != null ? ResourceManagerModelFactory.WritableSubResource(hostId) : null, hostGroupId != null ? ResourceManagerModelFactory.WritableSubResource(hostGroupId) : null, provisioningState, instanceView, licenseType, vmId, extensionsTimeBudget, platformFaultDomain, scheduledEventsProfile, userData, capacityReservationGroupId != null ? new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId)) : null, galleryApplications != null ? new ApplicationProfile(galleryApplications?.ToList()) : null, timeCreated);
+        }
+
         /// <summary> Initializes a new instance of VirtualMachineAssessPatchesResult. </summary>
         /// <param name="status"> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Unknown", "Failed", "Succeeded", or "CompletedWithWarnings.". </param>
         /// <param name="assessmentActivityId"> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </param>
@@ -760,6 +801,17 @@ namespace Azure.ResourceManager.Compute.Models
             classifications ??= new List<string>();
 
             return new VirtualMachineSoftwarePatchProperties(patchId, name, version, kbId, classifications?.ToList(), rebootBehavior, activityId, publishedOn, lastModifiedOn, assessmentState);
+        }
+
+        /// <summary> Initializes a new instance of VirtualMachineInstallPatchesContent. </summary>
+        /// <param name="maximumDuration"> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </param>
+        /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
+        /// <param name="windowsParameters"> Input for InstallPatches on a Windows VM, as directly received by the API. </param>
+        /// <param name="linuxParameters"> Input for InstallPatches on a Linux VM, as directly received by the API. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineInstallPatchesContent"/> instance for mocking. </returns>
+        public static VirtualMachineInstallPatchesContent VirtualMachineInstallPatchesContent(TimeSpan? maximumDuration = null, VmGuestPatchRebootSetting rebootSetting = default, WindowsParameters windowsParameters = null, LinuxParameters linuxParameters = null)
+        {
+            return new VirtualMachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineInstallPatchesResult. </summary>
@@ -849,6 +901,24 @@ namespace Azure.ResourceManager.Compute.Models
             return new AvailabilitySetData(id, name, resourceType, systemData, tags, location, sku, platformUpdateDomainCount, platformFaultDomainCount, virtualMachines?.ToList(), proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, statuses?.ToList());
         }
 
+        /// <summary> Initializes a new instance of AvailabilitySetPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> Sku of the availability set. </param>
+        /// <param name="platformUpdateDomainCount"> Update Domain count. </param>
+        /// <param name="platformFaultDomainCount"> Fault Domain count. </param>
+        /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
+        /// <param name="proximityPlacementGroupId"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
+        /// <param name="statuses"> The resource status information. </param>
+        /// <returns> A new <see cref="Models.AvailabilitySetPatch"/> instance for mocking. </returns>
+        public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags = null, ComputeSku sku = null, int? platformUpdateDomainCount = null, int? platformFaultDomainCount = null, IEnumerable<WritableSubResource> virtualMachines = null, ResourceIdentifier proximityPlacementGroupId = null, IEnumerable<InstanceViewStatus> statuses = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            virtualMachines ??= new List<WritableSubResource>();
+            statuses ??= new List<InstanceViewStatus>();
+
+            return new AvailabilitySetPatch(tags, sku, platformUpdateDomainCount, platformFaultDomainCount, virtualMachines?.ToList(), proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, statuses?.ToList());
+        }
+
         /// <summary> Initializes a new instance of ProximityPlacementGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -936,6 +1006,25 @@ namespace Azure.ResourceManager.Compute.Models
             return new DedicatedHostAllocatableVm(vmSize, count);
         }
 
+        /// <summary> Initializes a new instance of DedicatedHostGroupPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="zones"> Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the same zone. </param>
+        /// <param name="platformFaultDomainCount"> Number of fault domains that the host group can span. </param>
+        /// <param name="hosts"> A list of references to all dedicated hosts in the dedicated host group. </param>
+        /// <param name="instanceViewHosts"> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </param>
+        /// <param name="supportAutomaticPlacement"> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to 'false' when not provided. Minimum api-version: 2020-06-01. </param>
+        /// <param name="ultraSsdEnabled"> Enables or disables a capability on the dedicated host group. Minimum api-version: 2022-03-01. </param>
+        /// <returns> A new <see cref="Models.DedicatedHostGroupPatch"/> instance for mocking. </returns>
+        public static DedicatedHostGroupPatch DedicatedHostGroupPatch(IDictionary<string, string> tags = null, IEnumerable<string> zones = null, int? platformFaultDomainCount = null, IEnumerable<SubResource> hosts = null, IEnumerable<DedicatedHostInstanceViewWithName> instanceViewHosts = null, bool? supportAutomaticPlacement = null, bool? ultraSsdEnabled = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            zones ??= new List<string>();
+            hosts ??= new List<SubResource>();
+            instanceViewHosts ??= new List<DedicatedHostInstanceViewWithName>();
+
+            return new DedicatedHostGroupPatch(tags, zones?.ToList(), platformFaultDomainCount, hosts?.ToList(), instanceViewHosts != null ? new DedicatedHostGroupInstanceView(instanceViewHosts?.ToList()) : null, supportAutomaticPlacement, ultraSsdEnabled != null ? new DedicatedHostGroupPropertiesAdditionalCapabilities(ultraSsdEnabled) : null);
+        }
+
         /// <summary> Initializes a new instance of DedicatedHostData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -960,6 +1049,27 @@ namespace Azure.ResourceManager.Compute.Models
             virtualMachines ??= new List<SubResource>();
 
             return new DedicatedHostData(id, name, resourceType, systemData, tags, location, sku, platformFaultDomain, autoReplaceOnFailure, hostId, virtualMachines?.ToList(), licenseType, provisioningOn, provisioningState, instanceView, timeCreated);
+        }
+
+        /// <summary> Initializes a new instance of DedicatedHostPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> [List all available dedicated host sizes for resizing] (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes). Resizing can be only used to scale up DedicatedHost. Only name is required to be set. </param>
+        /// <param name="platformFaultDomain"> Fault domain of the dedicated host within a dedicated host group. </param>
+        /// <param name="autoReplaceOnFailure"> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided. </param>
+        /// <param name="hostId"> A unique id generated and assigned to the dedicated host by the platform. Does not change throughout the lifetime of the host. </param>
+        /// <param name="virtualMachines"> A list of references to all virtual machines in the Dedicated Host. </param>
+        /// <param name="licenseType"> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: **None,** **Windows_Server_Hybrid,** **Windows_Server_Perpetual.** The default value is: **None.**. </param>
+        /// <param name="provisioningOn"> The date when the host was first provisioned. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The dedicated host instance view. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <returns> A new <see cref="Models.DedicatedHostPatch"/> instance for mocking. </returns>
+        public static DedicatedHostPatch DedicatedHostPatch(IDictionary<string, string> tags = null, ComputeSku sku = null, int? platformFaultDomain = null, bool? autoReplaceOnFailure = null, string hostId = null, IEnumerable<SubResource> virtualMachines = null, DedicatedHostLicenseType? licenseType = null, DateTimeOffset? provisioningOn = null, string provisioningState = null, DedicatedHostInstanceView instanceView = null, DateTimeOffset? timeCreated = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            virtualMachines ??= new List<SubResource>();
+
+            return new DedicatedHostPatch(tags, sku, platformFaultDomain, autoReplaceOnFailure, hostId, virtualMachines?.ToList(), licenseType, provisioningOn, provisioningState, instanceView, timeCreated);
         }
 
         /// <summary> Initializes a new instance of SshPublicKeyData. </summary>
@@ -1020,6 +1130,20 @@ namespace Azure.ResourceManager.Compute.Models
             tags ??= new Dictionary<string, string>();
 
             return new DiskImageData(id, name, resourceType, systemData, tags, location, extendedLocation, sourceVirtualMachineId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVirtualMachineId) : null, storageProfile, provisioningState, hyperVGeneration);
+        }
+
+        /// <summary> Initializes a new instance of DiskImagePatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sourceVirtualMachineId"> The source virtual machine from which Image is created. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
+        /// <returns> A new <see cref="Models.DiskImagePatch"/> instance for mocking. </returns>
+        public static DiskImagePatch DiskImagePatch(IDictionary<string, string> tags = null, ResourceIdentifier sourceVirtualMachineId = null, ImageStorageProfile storageProfile = null, string provisioningState = null, HyperVGeneration? hyperVGeneration = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DiskImagePatch(tags, sourceVirtualMachineId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVirtualMachineId) : null, storageProfile, provisioningState, hyperVGeneration);
         }
 
         /// <summary> Initializes a new instance of RestorePointGroupData. </summary>
@@ -1157,6 +1281,21 @@ namespace Azure.ResourceManager.Compute.Models
             return new DiskRestorePointReplicationStatus(status, completionPercent);
         }
 
+        /// <summary> Initializes a new instance of RestorePointGroupPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="source"> The properties of the source resource that this restore point collection is created from. </param>
+        /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
+        /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
+        /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
+        /// <returns> A new <see cref="Models.RestorePointGroupPatch"/> instance for mocking. </returns>
+        public static RestorePointGroupPatch RestorePointGroupPatch(IDictionary<string, string> tags = null, RestorePointGroupSource source = null, string provisioningState = null, string restorePointGroupId = null, IEnumerable<RestorePointData> restorePoints = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            restorePoints ??= new List<RestorePointData>();
+
+            return new RestorePointGroupPatch(tags, source, provisioningState, restorePointGroupId, restorePoints?.ToList());
+        }
+
         /// <summary> Initializes a new instance of CapacityReservationGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1214,6 +1353,22 @@ namespace Azure.ResourceManager.Compute.Models
             return new CapacityReservationUtilization(currentCapacity, virtualMachinesAllocated?.ToList());
         }
 
+        /// <summary> Initializes a new instance of CapacityReservationGroupPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="capacityReservations"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
+        /// <param name="virtualMachinesAssociated"> A list of references to all virtual machines associated to the capacity reservation group. </param>
+        /// <param name="instanceViewCapacityReservations"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
+        /// <returns> A new <see cref="Models.CapacityReservationGroupPatch"/> instance for mocking. </returns>
+        public static CapacityReservationGroupPatch CapacityReservationGroupPatch(IDictionary<string, string> tags = null, IEnumerable<SubResource> capacityReservations = null, IEnumerable<SubResource> virtualMachinesAssociated = null, IEnumerable<CapacityReservationInstanceViewWithName> instanceViewCapacityReservations = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            capacityReservations ??= new List<SubResource>();
+            virtualMachinesAssociated ??= new List<SubResource>();
+            instanceViewCapacityReservations ??= new List<CapacityReservationInstanceViewWithName>();
+
+            return new CapacityReservationGroupPatch(tags, capacityReservations?.ToList(), virtualMachinesAssociated?.ToList(), instanceViewCapacityReservations != null ? new CapacityReservationGroupInstanceView(instanceViewCapacityReservations?.ToList()) : null);
+        }
+
         /// <summary> Initializes a new instance of CapacityReservationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1240,12 +1395,77 @@ namespace Azure.ResourceManager.Compute.Models
             return new CapacityReservationData(id, name, resourceType, systemData, tags, location, sku, zones?.ToList(), reservationId, platformFaultDomainCount, virtualMachinesAssociated?.ToList(), provisioningOn, provisioningState, instanceView, timeCreated);
         }
 
+        /// <summary> Initializes a new instance of CapacityReservationPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called 'CapacityReservationSupported' set to true are supported. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </param>
+        /// <param name="reservationId"> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </param>
+        /// <param name="platformFaultDomainCount"> Specifies the value of fault domain count that Capacity Reservation supports for requested VM size. **Note:** The fault domain count specified for a resource (like virtual machines scale set) must be less than or equal to this value if it deploys using capacity reservation. Minimum api-version: 2022-08-01. </param>
+        /// <param name="virtualMachinesAssociated"> A list of all virtual machine resource ids that are associated with the capacity reservation. </param>
+        /// <param name="provisioningOn"> The date time when the capacity reservation was last updated. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The Capacity reservation instance view. </param>
+        /// <param name="timeCreated"> Specifies the time at which the Capacity Reservation resource was created. Minimum api-version: 2021-11-01. </param>
+        /// <returns> A new <see cref="Models.CapacityReservationPatch"/> instance for mocking. </returns>
+        public static CapacityReservationPatch CapacityReservationPatch(IDictionary<string, string> tags = null, ComputeSku sku = null, string reservationId = null, int? platformFaultDomainCount = null, IEnumerable<SubResource> virtualMachinesAssociated = null, DateTimeOffset? provisioningOn = null, string provisioningState = null, CapacityReservationInstanceView instanceView = null, DateTimeOffset? timeCreated = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            virtualMachinesAssociated ??= new List<SubResource>();
+
+            return new CapacityReservationPatch(tags, sku, reservationId, platformFaultDomainCount, virtualMachinesAssociated?.ToList(), provisioningOn, provisioningState, instanceView, timeCreated);
+        }
+
+        /// <summary> Initializes a new instance of RequestRateByIntervalContent. </summary>
+        /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
+        /// <param name="fromTime"> From time of the query. </param>
+        /// <param name="toTime"> To time of the query. </param>
+        /// <param name="groupByThrottlePolicy"> Group query result by Throttle Policy applied. </param>
+        /// <param name="groupByOperationName"> Group query result by Operation Name. </param>
+        /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
+        /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
+        /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
+        /// <param name="intervalLength"> Interval value in minutes used to create LogAnalytics call rate logs. </param>
+        /// <returns> A new <see cref="Models.RequestRateByIntervalContent"/> instance for mocking. </returns>
+        public static RequestRateByIntervalContent RequestRateByIntervalContent(Uri blobContainerSasUri = null, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = null, bool? groupByOperationName = null, bool? groupByResourceName = null, bool? groupByClientApplicationId = null, bool? groupByUserAgent = null, IntervalInMins intervalLength = default)
+        {
+            return new RequestRateByIntervalContent(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent, intervalLength);
+        }
+
+        /// <summary> Initializes a new instance of LogAnalyticsInputBase. </summary>
+        /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
+        /// <param name="fromTime"> From time of the query. </param>
+        /// <param name="toTime"> To time of the query. </param>
+        /// <param name="groupByThrottlePolicy"> Group query result by Throttle Policy applied. </param>
+        /// <param name="groupByOperationName"> Group query result by Operation Name. </param>
+        /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
+        /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
+        /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
+        /// <returns> A new <see cref="Models.LogAnalyticsInputBase"/> instance for mocking. </returns>
+        public static LogAnalyticsInputBase LogAnalyticsInputBase(Uri blobContainerSasUri = null, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = null, bool? groupByOperationName = null, bool? groupByResourceName = null, bool? groupByClientApplicationId = null, bool? groupByUserAgent = null)
+        {
+            return new LogAnalyticsInputBase(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent);
+        }
+
         /// <summary> Initializes a new instance of LogAnalytics. </summary>
         /// <param name="logAnalyticsOutput"> LogAnalyticsOutput. </param>
         /// <returns> A new <see cref="Models.LogAnalytics"/> instance for mocking. </returns>
         public static LogAnalytics LogAnalytics(string logAnalyticsOutput = null)
         {
             return new LogAnalytics(logAnalyticsOutput != null ? new LogAnalyticsOutput(logAnalyticsOutput) : null);
+        }
+
+        /// <summary> Initializes a new instance of ThrottledRequestsContent. </summary>
+        /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
+        /// <param name="fromTime"> From time of the query. </param>
+        /// <param name="toTime"> To time of the query. </param>
+        /// <param name="groupByThrottlePolicy"> Group query result by Throttle Policy applied. </param>
+        /// <param name="groupByOperationName"> Group query result by Operation Name. </param>
+        /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
+        /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
+        /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
+        /// <returns> A new <see cref="Models.ThrottledRequestsContent"/> instance for mocking. </returns>
+        public static ThrottledRequestsContent ThrottledRequestsContent(Uri blobContainerSasUri = null, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = null, bool? groupByOperationName = null, bool? groupByResourceName = null, bool? groupByClientApplicationId = null, bool? groupByUserAgent = null)
+        {
+            return new ThrottledRequestsContent(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent);
         }
 
         /// <summary> Initializes a new instance of RunCommandDocumentBase. </summary>
@@ -1323,6 +1543,19 @@ namespace Azure.ResourceManager.Compute.Models
             return new RunCommandParameterDefinition(name, runCommandParameterDefinitionType, defaultValue, required);
         }
 
+        /// <summary> Initializes a new instance of RunCommandInput. </summary>
+        /// <param name="commandId"> The run command id. </param>
+        /// <param name="script"> Optional. The script to be executed.  When this value is given, the given script will override the default script of the command. </param>
+        /// <param name="parameters"> The run command parameters. </param>
+        /// <returns> A new <see cref="Models.RunCommandInput"/> instance for mocking. </returns>
+        public static RunCommandInput RunCommandInput(string commandId = null, IEnumerable<string> script = null, IEnumerable<RunCommandInputParameter> parameters = null)
+        {
+            script ??= new List<string>();
+            parameters ??= new List<RunCommandInputParameter>();
+
+            return new RunCommandInput(commandId, script?.ToList(), parameters?.ToList());
+        }
+
         /// <summary> Initializes a new instance of VirtualMachineRunCommandResult. </summary>
         /// <param name="value"> Run command operation response. </param>
         /// <returns> A new <see cref="Models.VirtualMachineRunCommandResult"/> instance for mocking. </returns>
@@ -1379,6 +1612,32 @@ namespace Azure.ResourceManager.Compute.Models
             statuses ??= new List<InstanceViewStatus>();
 
             return new VirtualMachineRunCommandInstanceView(executionState, executionMessage, exitCode, output, error, startOn, endOn, statuses?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of VirtualMachineRunCommandUpdate. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="source"> The source of the run command script. </param>
+        /// <param name="parameters"> The parameters used by the script. </param>
+        /// <param name="protectedParameters"> The parameters used by the script. </param>
+        /// <param name="asyncExecution"> Optional. If set to true, provisioning will complete as soon as the script starts and will not wait for script to complete. </param>
+        /// <param name="runAsUser"> Specifies the user account on the VM when executing the run command. </param>
+        /// <param name="runAsPassword"> Specifies the user account password on the VM when executing the run command. </param>
+        /// <param name="timeoutInSeconds"> The timeout in seconds to execute the run command. </param>
+        /// <param name="outputBlobUri"> Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter. </param>
+        /// <param name="errorBlobUri"> Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter. </param>
+        /// <param name="outputBlobManagedIdentity"> User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
+        /// <param name="errorBlobManagedIdentity"> User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. If treatFailureAsDeploymentFailure set to true, any failure in the script will fail the deployment and ProvisioningState will be marked as Failed. If treatFailureAsDeploymentFailure set to false, ProvisioningState would only reflect whether the run command was run or not by the extensions platform, it would not indicate whether script failed in case of script failures. See instance view of run command in case of script failures to see executionMessage, output, error: https://aka.ms/runcommandmanaged#get-execution-status-and-results. </param>
+        /// <param name="instanceView"> The virtual machine run command instance view. </param>
+        /// <param name="treatFailureAsDeploymentFailure"> Optional. If set to true, any failure in the script will fail the deployment and ProvisioningState will be marked as Failed. If set to false, ProvisioningState would only reflect whether the run command was run or not by the extensions platform, it would not indicate whether script failed in case of script failures. See instance view of run command in case of script failures to see executionMessage, output, error: https://aka.ms/runcommandmanaged#get-execution-status-and-results. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineRunCommandUpdate"/> instance for mocking. </returns>
+        public static VirtualMachineRunCommandUpdate VirtualMachineRunCommandUpdate(IDictionary<string, string> tags = null, VirtualMachineRunCommandScriptSource source = null, IEnumerable<RunCommandInputParameter> parameters = null, IEnumerable<RunCommandInputParameter> protectedParameters = null, bool? asyncExecution = null, string runAsUser = null, string runAsPassword = null, int? timeoutInSeconds = null, Uri outputBlobUri = null, Uri errorBlobUri = null, RunCommandManagedIdentity outputBlobManagedIdentity = null, RunCommandManagedIdentity errorBlobManagedIdentity = null, string provisioningState = null, VirtualMachineRunCommandInstanceView instanceView = null, bool? treatFailureAsDeploymentFailure = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            parameters ??= new List<RunCommandInputParameter>();
+            protectedParameters ??= new List<RunCommandInputParameter>();
+
+            return new VirtualMachineRunCommandUpdate(tags, source, parameters?.ToList(), protectedParameters?.ToList(), asyncExecution, runAsUser, runAsPassword, timeoutInSeconds, outputBlobUri, errorBlobUri, outputBlobManagedIdentity, errorBlobManagedIdentity, provisioningState, instanceView, treatFailureAsDeploymentFailure);
         }
 
         /// <summary> Initializes a new instance of ManagedDiskData. </summary>
@@ -1468,6 +1727,47 @@ namespace Azure.ResourceManager.Compute.Models
         public static ShareInfoElement ShareInfoElement(Uri vmUri = null)
         {
             return new ShareInfoElement(vmUri);
+        }
+
+        /// <summary> Initializes a new instance of ManagedDiskPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
+        /// <param name="osType"> the Operating System type. </param>
+        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
+        /// <param name="encryptionSettingsGroup"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
+        /// <param name="diskIopsReadWrite"> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadWrite"> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="diskIopsReadOnly"> The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadOnly"> The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
+        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
+        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
+        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="tier"> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </param>
+        /// <param name="burstingEnabled"> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </param>
+        /// <param name="purchasePlan"> Purchase plan information to be added on the OS disk. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities to be added on the OS disk. </param>
+        /// <param name="propertyUpdatesInProgressTargetTier"> Properties of the disk for which update is pending. </param>
+        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
+        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
+        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
+        /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
+        /// <returns> A new <see cref="Models.ManagedDiskPatch"/> instance for mocking. </returns>
+        public static ManagedDiskPatch ManagedDiskPatch(IDictionary<string, string> tags = null, DiskSku sku = null, SupportedOperatingSystemType? osType = null, int? diskSizeGB = null, EncryptionSettingsGroup encryptionSettingsGroup = null, long? diskIopsReadWrite = null, long? diskMBpsReadWrite = null, long? diskIopsReadOnly = null, long? diskMBpsReadOnly = null, int? maxShares = null, DiskEncryption encryption = null, NetworkAccessPolicy? networkAccessPolicy = null, ResourceIdentifier diskAccessId = null, string tier = null, bool? burstingEnabled = null, DiskPurchasePlan purchasePlan = null, SupportedCapabilities supportedCapabilities = null, string propertyUpdatesInProgressTargetTier = null, bool? supportsHibernation = null, DiskPublicNetworkAccess? publicNetworkAccess = null, DataAccessAuthMode? dataAccessAuthMode = null, bool? isOptimizedForFrequentAttach = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ManagedDiskPatch(tags, sku, osType, diskSizeGB, encryptionSettingsGroup, diskIopsReadWrite, diskMBpsReadWrite, diskIopsReadOnly, diskMBpsReadOnly, maxShares, encryption, networkAccessPolicy, diskAccessId, tier, burstingEnabled, purchasePlan, supportedCapabilities, propertyUpdatesInProgressTargetTier != null ? new PropertyUpdatesInProgress(propertyUpdatesInProgressTargetTier) : null, supportsHibernation, publicNetworkAccess, dataAccessAuthMode, isOptimizedForFrequentAttach);
+        }
+
+        /// <summary> Initializes a new instance of GrantAccessData. </summary>
+        /// <param name="access"> The Access Level, accepted values include None, Read, Write. </param>
+        /// <param name="durationInSeconds"> Time duration in seconds until the SAS access expires. </param>
+        /// <param name="getSecureVmGuestStateSas"> Set this flag to true to get additional SAS for VM guest state. </param>
+        /// <returns> A new <see cref="Models.GrantAccessData"/> instance for mocking. </returns>
+        public static GrantAccessData GrantAccessData(AccessLevel access = default, int durationInSeconds = default, bool? getSecureVmGuestStateSas = null)
+        {
+            return new GrantAccessData(access, durationInSeconds, getSecureVmGuestStateSas);
         }
 
         /// <summary> Initializes a new instance of AccessUri. </summary>
@@ -1812,6 +2112,26 @@ namespace Azure.ResourceManager.Compute.Models
             return new RegionalSharingStatus(region, state, details);
         }
 
+        /// <summary> Initializes a new instance of GalleryPatch. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> The description of this Shared Image Gallery resource. This property is updatable. </param>
+        /// <param name="identifierUniqueName"> Describes the gallery unique name. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
+        /// <param name="isSoftDeleteEnabled"> Contains information about the soft deletion policy of the gallery. </param>
+        /// <param name="sharingStatus"> Sharing status of current gallery. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.GalleryPatch"/> instance for mocking. </returns>
+        public static GalleryPatch GalleryPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string identifierUniqueName = null, GalleryProvisioningState? provisioningState = null, SharingProfile sharingProfile = null, bool? isSoftDeleteEnabled = null, SharingStatus sharingStatus = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new GalleryPatch(id, name, resourceType, systemData, description, identifierUniqueName != null ? new GalleryIdentifier(identifierUniqueName) : null, provisioningState, sharingProfile, isSoftDeleteEnabled != null ? new SoftDeletePolicy(isSoftDeleteEnabled) : null, sharingStatus, tags);
+        }
+
         /// <summary> Initializes a new instance of GalleryImageData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1842,6 +2162,37 @@ namespace Azure.ResourceManager.Compute.Models
             features ??= new List<GalleryImageFeature>();
 
             return new GalleryImageData(id, name, resourceType, systemData, tags, location, description, eula, privacyStatementUri, releaseNoteUri, osType, osState, hyperVGeneration, endOfLifeOn, identifier, recommended, disallowedDiskTypes != null ? new Disallowed(disallowedDiskTypes?.ToList()) : null, purchasePlan, provisioningState, features?.ToList(), architecture);
+        }
+
+        /// <summary> Initializes a new instance of GalleryImagePatch. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> The description of this gallery image definition resource. This property is updatable. </param>
+        /// <param name="eula"> The Eula agreement for the gallery image definition. </param>
+        /// <param name="privacyStatementUri"> The privacy statement uri. </param>
+        /// <param name="releaseNoteUri"> The release note uri. </param>
+        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
+        /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="identifier"> This is the gallery image definition identifier. </param>
+        /// <param name="recommended"> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </param>
+        /// <param name="disallowedDiskTypes"> Describes the disallowed disk types. </param>
+        /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="features"> A list of gallery image features. </param>
+        /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.GalleryImagePatch"/> instance for mocking. </returns>
+        public static GalleryImagePatch GalleryImagePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string eula = null, Uri privacyStatementUri = null, Uri releaseNoteUri = null, SupportedOperatingSystemType? osType = null, OperatingSystemStateType? osState = null, HyperVGeneration? hyperVGeneration = null, DateTimeOffset? endOfLifeOn = null, GalleryImageIdentifier identifier = null, RecommendedMachineConfiguration recommended = null, IEnumerable<string> disallowedDiskTypes = null, ImagePurchasePlan purchasePlan = null, GalleryProvisioningState? provisioningState = null, IEnumerable<GalleryImageFeature> features = null, ArchitectureType? architecture = null, IDictionary<string, string> tags = null)
+        {
+            disallowedDiskTypes ??= new List<string>();
+            features ??= new List<GalleryImageFeature>();
+            tags ??= new Dictionary<string, string>();
+
+            return new GalleryImagePatch(id, name, resourceType, systemData, description, eula, privacyStatementUri, releaseNoteUri, osType, osState, hyperVGeneration, endOfLifeOn, identifier, recommended, disallowedDiskTypes != null ? new Disallowed(disallowedDiskTypes?.ToList()) : null, purchasePlan, provisioningState, features?.ToList(), architecture, tags);
         }
 
         /// <summary> Initializes a new instance of GalleryImageVersionData. </summary>
@@ -1974,6 +2325,25 @@ namespace Azure.ResourceManager.Compute.Models
             return new RegionalReplicationStatus(region, state, details, progress);
         }
 
+        /// <summary> Initializes a new instance of GalleryImageVersionPatch. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="publishingProfile"> The publishing profile of a gallery image Version. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
+        /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
+        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.GalleryImageVersionPatch"/> instance for mocking. </returns>
+        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GalleryImageVersionPublishingProfile publishingProfile = null, GalleryProvisioningState? provisioningState = null, GalleryImageVersionStorageProfile storageProfile = null, GalleryImageVersionSafetyProfile safetyProfile = null, ReplicationStatus replicationStatus = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new GalleryImageVersionPatch(id, name, resourceType, systemData, publishingProfile, provisioningState, storageProfile, safetyProfile, replicationStatus, tags);
+        }
+
         /// <summary> Initializes a new instance of GalleryApplicationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1995,6 +2365,28 @@ namespace Azure.ResourceManager.Compute.Models
             customActions ??= new List<GalleryApplicationCustomAction>();
 
             return new GalleryApplicationData(id, name, resourceType, systemData, tags, location, description, eula, privacyStatementUri, releaseNoteUri, endOfLifeOn, supportedOSType, customActions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of GalleryApplicationPatch. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> The description of this gallery Application Definition resource. This property is updatable. </param>
+        /// <param name="eula"> The Eula agreement for the gallery Application Definition. </param>
+        /// <param name="privacyStatementUri"> The privacy statement uri. </param>
+        /// <param name="releaseNoteUri"> The release note uri. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
+        /// <param name="customActions"> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.GalleryApplicationPatch"/> instance for mocking. </returns>
+        public static GalleryApplicationPatch GalleryApplicationPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string eula = null, Uri privacyStatementUri = null, Uri releaseNoteUri = null, DateTimeOffset? endOfLifeOn = null, SupportedOperatingSystemType? supportedOSType = null, IEnumerable<GalleryApplicationCustomAction> customActions = null, IDictionary<string, string> tags = null)
+        {
+            customActions ??= new List<GalleryApplicationCustomAction>();
+            tags ??= new Dictionary<string, string>();
+
+            return new GalleryApplicationPatch(id, name, resourceType, systemData, description, eula, privacyStatementUri, releaseNoteUri, endOfLifeOn, supportedOSType, customActions?.ToList(), tags);
         }
 
         /// <summary> Initializes a new instance of GalleryApplicationVersionData. </summary>
@@ -2040,6 +2432,24 @@ namespace Azure.ResourceManager.Compute.Models
             customActions ??= new List<GalleryApplicationCustomAction>();
 
             return new GalleryApplicationVersionPublishingProfile(targetRegions?.ToList(), replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations?.ToList(), source, manageActions, settings, advancedSettings, enableHealthCheck, customActions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of GalleryApplicationVersionPatch. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
+        /// <param name="allowDeletionOfReplicatedLocations"> The safety profile of the Gallery Application Version. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.GalleryApplicationVersionPatch"/> instance for mocking. </returns>
+        public static GalleryApplicationVersionPatch GalleryApplicationVersionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GalleryApplicationVersionPublishingProfile publishingProfile = null, bool? allowDeletionOfReplicatedLocations = null, GalleryProvisioningState? provisioningState = null, ReplicationStatus replicationStatus = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new GalleryApplicationVersionPatch(id, name, resourceType, systemData, publishingProfile, allowDeletionOfReplicatedLocations != null ? new GalleryApplicationVersionSafetyProfile(allowDeletionOfReplicatedLocations) : null, provisioningState, replicationStatus, tags);
         }
 
         /// <summary> Initializes a new instance of SharedGalleryData. </summary>

@@ -17,6 +17,54 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmContainerRegistryModelFactory
     {
+        /// <summary> Initializes a new instance of ContainerRegistryImportImageContent. </summary>
+        /// <param name="source"> The source of the image. </param>
+        /// <param name="targetTags"> List of strings of the form repo[:tag]. When tag is omitted the source will be used (or 'latest' if source tag is also omitted). </param>
+        /// <param name="untaggedTargetRepositories"> List of strings of repository names to do a manifest only copy. No tag will be created. </param>
+        /// <param name="mode"> When Force, any existing target tags will be overwritten. When NoForce, any existing target tags will fail the operation before any copying begins. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryImportImageContent"/> instance for mocking. </returns>
+        public static ContainerRegistryImportImageContent ContainerRegistryImportImageContent(ContainerRegistryImportSource source = null, IEnumerable<string> targetTags = null, IEnumerable<string> untaggedTargetRepositories = null, ContainerRegistryImportMode? mode = null)
+        {
+            targetTags ??= new List<string>();
+            untaggedTargetRepositories ??= new List<string>();
+
+            return new ContainerRegistryImportImageContent(source, targetTags?.ToList(), untaggedTargetRepositories?.ToList(), mode);
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryImportSource. </summary>
+        /// <param name="resourceId"> The resource identifier of the source Azure Container Registry. </param>
+        /// <param name="registryAddress"> The address of the source registry (e.g. 'mcr.microsoft.com'). </param>
+        /// <param name="credentials"> Credentials used when importing from a registry uri. </param>
+        /// <param name="sourceImage">
+        /// Repository name of the source image.
+        /// Specify an image by repository ('hello-world'). This will use the 'latest' tag.
+        /// Specify an image by tag ('hello-world:latest').
+        /// Specify an image by sha256-based manifest digest ('hello-world@sha256:abc123').
+        /// </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryImportSource"/> instance for mocking. </returns>
+        public static ContainerRegistryImportSource ContainerRegistryImportSource(ResourceIdentifier resourceId = null, string registryAddress = null, ContainerRegistryImportSourceCredentials credentials = null, string sourceImage = null)
+        {
+            return new ContainerRegistryImportSource(resourceId, registryAddress, credentials, sourceImage);
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryImportSourceCredentials. </summary>
+        /// <param name="username"> The username to authenticate with the source registry. </param>
+        /// <param name="password"> The password used to authenticate with the source registry. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryImportSourceCredentials"/> instance for mocking. </returns>
+        public static ContainerRegistryImportSourceCredentials ContainerRegistryImportSourceCredentials(string username = null, string password = null)
+        {
+            return new ContainerRegistryImportSourceCredentials(username, password);
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryNameAvailabilityContent. </summary>
+        /// <param name="name"> The name of the container registry. </param>
+        /// <param name="resourceType"> The resource type of the container registry. This field must be set to 'Microsoft.ContainerRegistry/registries'. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryNameAvailabilityContent"/> instance for mocking. </returns>
+        public static ContainerRegistryNameAvailabilityContent ContainerRegistryNameAvailabilityContent(string name = null, ContainerRegistryResourceType resourceType = default)
+        {
+            return new ContainerRegistryNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of ContainerRegistryNameAvailableResult. </summary>
         /// <param name="isNameAvailable"> The value that indicates whether the name is available. </param>
         /// <param name="reason"> If any, the reason that the name is not available. </param>
@@ -260,6 +308,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             actions ??= new List<ContainerRegistryWebhookAction>();
 
             return new ContainerRegistryWebhookData(id, name, resourceType, systemData, tags, location, status, scope, actions?.ToList(), provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryWebhookCreateOrUpdateContent. </summary>
+        /// <param name="tags"> The tags for the webhook. </param>
+        /// <param name="location"> The location of the webhook. This cannot be changed after the resource is created. </param>
+        /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
+        /// <param name="customHeaders"> Custom headers that will be added to the webhook notifications. </param>
+        /// <param name="status"> The status of the webhook at the time the operation was called. </param>
+        /// <param name="scope"> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </param>
+        /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryWebhookCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static ContainerRegistryWebhookCreateOrUpdateContent ContainerRegistryWebhookCreateOrUpdateContent(IDictionary<string, string> tags = null, AzureLocation location = default, Uri serviceUri = null, IDictionary<string, string> customHeaders = null, ContainerRegistryWebhookStatus? status = null, string scope = null, IEnumerable<ContainerRegistryWebhookAction> actions = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            customHeaders ??= new Dictionary<string, string>();
+            actions ??= new List<ContainerRegistryWebhookAction>();
+
+            return new ContainerRegistryWebhookCreateOrUpdateContent(tags, location, serviceUri, customHeaders, status, scope, actions?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryWebhookEventInfo. </summary>
@@ -528,6 +594,41 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryBaseImageDependency ContainerRegistryBaseImageDependency(ContainerRegistryBaseImageDependencyType? dependencyType = null, string registry = null, string repository = null, string tag = null, string digest = null)
         {
             return new ContainerRegistryBaseImageDependency(dependencyType, registry, repository, tag, digest);
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryTimerTriggerUpdateContent. </summary>
+        /// <param name="schedule"> The CRON expression for the task schedule. </param>
+        /// <param name="status"> The current status of trigger. </param>
+        /// <param name="name"> The name of the trigger. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryTimerTriggerUpdateContent"/> instance for mocking. </returns>
+        public static ContainerRegistryTimerTriggerUpdateContent ContainerRegistryTimerTriggerUpdateContent(string schedule = null, ContainerRegistryTriggerStatus? status = null, string name = null)
+        {
+            return new ContainerRegistryTimerTriggerUpdateContent(schedule, status, name);
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistrySourceTriggerUpdateContent. </summary>
+        /// <param name="sourceRepository"> The properties that describes the source(code) for the task. </param>
+        /// <param name="sourceTriggerEvents"> The source event corresponding to the trigger. </param>
+        /// <param name="status"> The current status of trigger. </param>
+        /// <param name="name"> The name of the trigger. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistrySourceTriggerUpdateContent"/> instance for mocking. </returns>
+        public static ContainerRegistrySourceTriggerUpdateContent ContainerRegistrySourceTriggerUpdateContent(SourceCodeRepoUpdateContent sourceRepository = null, IEnumerable<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = null, ContainerRegistryTriggerStatus? status = null, string name = null)
+        {
+            sourceTriggerEvents ??= new List<ContainerRegistrySourceTriggerEvent>();
+
+            return new ContainerRegistrySourceTriggerUpdateContent(sourceRepository, sourceTriggerEvents?.ToList(), status, name);
+        }
+
+        /// <summary> Initializes a new instance of ContainerRegistryBaseImageTriggerUpdateContent. </summary>
+        /// <param name="baseImageTriggerType"> The type of the auto trigger for base image dependency updates. </param>
+        /// <param name="updateTriggerEndpoint"> The endpoint URL for receiving update triggers. </param>
+        /// <param name="updateTriggerPayloadType"> Type of Payload body for Base image update triggers. </param>
+        /// <param name="status"> The current status of trigger. </param>
+        /// <param name="name"> The name of the trigger. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryBaseImageTriggerUpdateContent"/> instance for mocking. </returns>
+        public static ContainerRegistryBaseImageTriggerUpdateContent ContainerRegistryBaseImageTriggerUpdateContent(ContainerRegistryBaseImageTriggerType? baseImageTriggerType = null, string updateTriggerEndpoint = null, ContainerRegistryUpdateTriggerPayloadType? updateTriggerPayloadType = null, ContainerRegistryTriggerStatus? status = null, string name = null)
+        {
+            return new ContainerRegistryBaseImageTriggerUpdateContent(baseImageTriggerType, updateTriggerEndpoint, updateTriggerPayloadType, status, name);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryDockerBuildStep. </summary>

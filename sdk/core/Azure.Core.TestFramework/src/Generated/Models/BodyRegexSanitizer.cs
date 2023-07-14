@@ -26,6 +26,19 @@ namespace Azure.Core.TestFramework.Models
             Value = value;
         }
 
+        /// <summary> Initializes a new instance of BodyRegexSanitizer. </summary>
+        /// <param name="regex"></param>
+        /// <param name="value"></param>
+        /// <param name="groupForReplace"></param>
+        /// <param name="condition"> Condition to apply for the sanitization or transform. If the condition is not met, sanitization/transform is not performed. </param>
+        internal BodyRegexSanitizer(string regex, string value, string groupForReplace, Condition condition)
+        {
+            Regex = regex;
+            Value = value;
+            GroupForReplace = groupForReplace;
+            Condition = condition;
+        }
+
         /// <summary> Gets the regex. </summary>
         public string Regex { get; }
         /// <summary> Gets the value. </summary>

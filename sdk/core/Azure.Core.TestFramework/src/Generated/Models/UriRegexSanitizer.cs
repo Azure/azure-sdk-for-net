@@ -26,6 +26,17 @@ namespace Azure.Core.TestFramework.Models
             Value = value;
         }
 
+        /// <summary> Initializes a new instance of UriRegexSanitizer. </summary>
+        /// <param name="regex"></param>
+        /// <param name="value"></param>
+        /// <param name="groupForReplace"></param>
+        internal UriRegexSanitizer(string regex, string value, string groupForReplace)
+        {
+            Regex = regex;
+            Value = value;
+            GroupForReplace = groupForReplace;
+        }
+
         /// <summary> Gets the regex. </summary>
         public string Regex { get; }
         /// <summary> Gets the value. </summary>

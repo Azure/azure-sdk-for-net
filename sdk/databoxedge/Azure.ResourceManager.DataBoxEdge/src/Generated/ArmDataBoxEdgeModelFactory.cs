@@ -737,6 +737,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeUpdateDetails(updateTitle, updateSizeInBytes, updateType, targetVersion, friendlyVersionNumber, estimatedInstallTimeInMins, rebootBehavior, installationImpact, status);
         }
 
+        /// <summary> Initializes a new instance of UploadCertificateContent. </summary>
+        /// <param name="authenticationType"> The authentication type. </param>
+        /// <param name="certificate"> The base64 encoded certificate raw data. </param>
+        /// <returns> A new <see cref="Models.UploadCertificateContent"/> instance for mocking. </returns>
+        public static UploadCertificateContent UploadCertificateContent(DataBoxEdgeAuthenticationType? authenticationType = null, string certificate = null)
+        {
+            return new UploadCertificateContent(authenticationType, certificate);
+        }
+
         /// <summary> Initializes a new instance of UploadCertificateResponse. </summary>
         /// <param name="authType"> Specifies authentication type. </param>
         /// <param name="resourceId"> The resource ID of the Data Box Edge/Gateway device. </param>

@@ -86,6 +86,32 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlSimplePrivateEndpointConnection(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), privateLinkServiceConnectionState);
         }
 
+        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterPatch. </summary>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login. Each cluster is created with pre-defined administrative role called ‘citus’. . </param>
+        /// <param name="postgresqlVersion"> The major PostgreSQL version on all cluster servers. </param>
+        /// <param name="citusVersion"> The Citus extension version on all cluster servers. </param>
+        /// <param name="isShardsOnCoordinatorEnabled"> If shards on coordinator is enabled or not for the cluster. </param>
+        /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the cluster. </param>
+        /// <param name="preferredPrimaryZone"> Preferred primary availability zone (AZ) for all cluster servers. </param>
+        /// <param name="coordinatorServerEdition"> The edition of the coordinator (default: GeneralPurpose). </param>
+        /// <param name="coordinatorStorageQuotaInMb"> The storage of the coordinator in MB. </param>
+        /// <param name="coordinatorVCores"> The vCores count of the coordinator (max: 96). </param>
+        /// <param name="isCoordinatorPublicIPAccessEnabled"> If public access is enabled on coordinator. </param>
+        /// <param name="nodeServerEdition"> The edition of a node (default: MemoryOptimized). </param>
+        /// <param name="nodeCount"> Worker node count of the cluster. When node count is 0, it represents a single node configuration with the ability to create distributed tables on that node. 2 or more worker nodes represent multi-node configuration. Node count value cannot be 1. </param>
+        /// <param name="nodeStorageQuotaInMb"> The storage in MB on each worker node. </param>
+        /// <param name="nodeVCores"> The compute in vCores on each worker node (max: 104). </param>
+        /// <param name="isNodePublicIPAccessEnabled"> If public access is enabled on worker nodes. </param>
+        /// <param name="maintenanceWindow"> Maintenance window of a cluster. </param>
+        /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlClusterPatch"/> instance for mocking. </returns>
+        public static CosmosDBForPostgreSqlClusterPatch CosmosDBForPostgreSqlClusterPatch(IDictionary<string, string> tags = null, string administratorLoginPassword = null, string postgresqlVersion = null, string citusVersion = null, bool? isShardsOnCoordinatorEnabled = null, bool? isHAEnabled = null, string preferredPrimaryZone = null, string coordinatorServerEdition = null, int? coordinatorStorageQuotaInMb = null, int? coordinatorVCores = null, bool? isCoordinatorPublicIPAccessEnabled = null, string nodeServerEdition = null, int? nodeCount = null, int? nodeStorageQuotaInMb = null, int? nodeVCores = null, bool? isNodePublicIPAccessEnabled = null, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new CosmosDBForPostgreSqlClusterPatch(tags, administratorLoginPassword, postgresqlVersion, citusVersion, isShardsOnCoordinatorEnabled, isHAEnabled, preferredPrimaryZone, coordinatorServerEdition, coordinatorStorageQuotaInMb, coordinatorVCores, isCoordinatorPublicIPAccessEnabled, nodeServerEdition, nodeCount, nodeStorageQuotaInMb, nodeVCores, isNodePublicIPAccessEnabled, maintenanceWindow);
+        }
+
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -185,6 +211,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public static CosmosDBForPostgreSqlRoleData CosmosDBForPostgreSqlRoleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string password = null, ProvisioningState? provisioningState = null)
         {
             return new CosmosDBForPostgreSqlRoleData(id, name, resourceType, systemData, password, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityContent. </summary>
+        /// <param name="name"> Cluster name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlClusterNameAvailabilityContent"/> instance for mocking. </returns>
+        public static CosmosDBForPostgreSqlClusterNameAvailabilityContent CosmosDBForPostgreSqlClusterNameAvailabilityContent(string name = null, CosmosDBForPostgreSqlNameAvailabilityResourceType resourceType = default)
+        {
+            return new CosmosDBForPostgreSqlClusterNameAvailabilityContent(name, resourceType);
         }
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityResult. </summary>

@@ -39,6 +39,31 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             return new DataLakeStoreAccountBasicData(id, name, resourceType, systemData, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, location, tags);
         }
 
+        /// <summary> Initializes a new instance of DataLakeStoreAccountCreateOrUpdateContent. </summary>
+        /// <param name="location"> The resource location. </param>
+        /// <param name="tags"> The resource tags. </param>
+        /// <param name="identity"> The Key Vault encryption identity, if any. Current supported identity types: SystemAssigned. </param>
+        /// <param name="defaultGroup"> The default owner group for all new folders and files created in the Data Lake Store account. </param>
+        /// <param name="encryptionConfig"> The Key Vault encryption configuration. </param>
+        /// <param name="encryptionState"> The current state of encryption for this Data Lake Store account. </param>
+        /// <param name="firewallRules"> The list of firewall rules associated with this Data Lake Store account. </param>
+        /// <param name="virtualNetworkRules"> The list of virtual network rules associated with this Data Lake Store account. </param>
+        /// <param name="firewallState"> The current state of the IP address firewall for this Data Lake Store account. </param>
+        /// <param name="firewallAllowAzureIPs"> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </param>
+        /// <param name="trustedIdProviders"> The list of trusted identity providers associated with this Data Lake Store account. </param>
+        /// <param name="trustedIdProviderState"> The current state of the trusted identity provider feature for this Data Lake Store account. </param>
+        /// <param name="newTier"> The commitment tier to use for next month. </param>
+        /// <returns> A new <see cref="Models.DataLakeStoreAccountCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static DataLakeStoreAccountCreateOrUpdateContent DataLakeStoreAccountCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, string defaultGroup = null, DataLakeStoreAccountEncryptionConfig encryptionConfig = null, DataLakeStoreEncryptionState? encryptionState = null, IEnumerable<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> firewallRules = null, IEnumerable<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> virtualNetworkRules = null, DataLakeStoreFirewallState? firewallState = null, DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs = null, IEnumerable<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> trustedIdProviders = null, DataLakeStoreTrustedIdProviderState? trustedIdProviderState = null, DataLakeStoreCommitmentTierType? newTier = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            firewallRules ??= new List<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>();
+            virtualNetworkRules ??= new List<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>();
+            trustedIdProviders ??= new List<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>();
+
+            return new DataLakeStoreAccountCreateOrUpdateContent(location, tags, identity, defaultGroup, encryptionConfig, encryptionState, firewallRules?.ToList(), virtualNetworkRules?.ToList(), firewallState, firewallAllowAzureIPs, trustedIdProviders?.ToList(), trustedIdProviderState, newTier);
+        }
+
         /// <summary> Initializes a new instance of DataLakeStoreAccountData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -111,6 +136,34 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public static DataLakeStoreTrustedIdProviderData DataLakeStoreTrustedIdProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri idProvider = null)
         {
             return new DataLakeStoreTrustedIdProviderData(id, name, resourceType, systemData, idProvider);
+        }
+
+        /// <summary> Initializes a new instance of FirewallRuleForDataLakeStoreAccountUpdateContent. </summary>
+        /// <param name="name"> The unique name of the firewall rule to update. </param>
+        /// <param name="startIPAddress"> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        /// <param name="endIPAddress"> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        /// <returns> A new <see cref="Models.FirewallRuleForDataLakeStoreAccountUpdateContent"/> instance for mocking. </returns>
+        public static FirewallRuleForDataLakeStoreAccountUpdateContent FirewallRuleForDataLakeStoreAccountUpdateContent(string name = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
+        {
+            return new FirewallRuleForDataLakeStoreAccountUpdateContent(name, startIPAddress, endIPAddress);
+        }
+
+        /// <summary> Initializes a new instance of VirtualNetworkRuleForDataLakeStoreAccountUpdateContent. </summary>
+        /// <param name="name"> The unique name of the virtual network rule to update. </param>
+        /// <param name="subnetId"> The resource identifier for the subnet. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkRuleForDataLakeStoreAccountUpdateContent"/> instance for mocking. </returns>
+        public static VirtualNetworkRuleForDataLakeStoreAccountUpdateContent VirtualNetworkRuleForDataLakeStoreAccountUpdateContent(string name = null, ResourceIdentifier subnetId = null)
+        {
+            return new VirtualNetworkRuleForDataLakeStoreAccountUpdateContent(name, subnetId);
+        }
+
+        /// <summary> Initializes a new instance of TrustedIdProviderForDataLakeStoreAccountUpdateContent. </summary>
+        /// <param name="name"> The unique name of the trusted identity provider to update. </param>
+        /// <param name="idProvider"> The URL of this trusted identity provider. </param>
+        /// <returns> A new <see cref="Models.TrustedIdProviderForDataLakeStoreAccountUpdateContent"/> instance for mocking. </returns>
+        public static TrustedIdProviderForDataLakeStoreAccountUpdateContent TrustedIdProviderForDataLakeStoreAccountUpdateContent(string name = null, Uri idProvider = null)
+        {
+            return new TrustedIdProviderForDataLakeStoreAccountUpdateContent(name, idProvider);
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreCapabilityInformation. </summary>

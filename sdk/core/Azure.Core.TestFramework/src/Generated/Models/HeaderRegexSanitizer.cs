@@ -26,6 +26,19 @@ namespace Azure.Core.TestFramework.Models
             Value = value;
         }
 
+        /// <summary> Initializes a new instance of HeaderRegexSanitizer. </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="regex"></param>
+        /// <param name="groupForReplace"></param>
+        internal HeaderRegexSanitizer(string key, string value, string regex, string groupForReplace)
+        {
+            Key = key;
+            Value = value;
+            Regex = regex;
+            GroupForReplace = groupForReplace;
+        }
+
         /// <summary> Gets the key. </summary>
         public string Key { get; }
         /// <summary> Gets the value. </summary>

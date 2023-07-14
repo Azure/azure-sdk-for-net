@@ -25,6 +25,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
+        /// <summary> Initializes a new instance of JobExecutionNamesCollection. </summary>
+        /// <param name="value"> Collection of resources. </param>
+        internal JobExecutionNamesCollection(IList<ContainerAppJobExecutionBase> value)
+        {
+            Value = value;
+        }
+
         /// <summary> Collection of resources. </summary>
         public IList<ContainerAppJobExecutionBase> Value { get; }
     }

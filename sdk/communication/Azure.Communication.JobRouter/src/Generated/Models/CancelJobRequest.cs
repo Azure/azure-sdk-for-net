@@ -15,6 +15,18 @@ namespace Azure.Communication.JobRouter
         {
         }
 
+        /// <summary> Initializes a new instance of CancelJobRequest. </summary>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
+        /// <param name="dispositionCode">
+        /// Indicates the outcome of the job, populate this field with your own custom values.
+        /// If not provided, default value of "Cancelled" is set.
+        /// </param>
+        internal CancelJobRequest(string note, string dispositionCode)
+        {
+            Note = note;
+            DispositionCode = dispositionCode;
+        }
+
         /// <summary> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </summary>
         public string Note { get; set; }
         /// <summary>

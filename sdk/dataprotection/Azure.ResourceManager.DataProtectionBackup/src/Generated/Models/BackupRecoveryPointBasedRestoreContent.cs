@@ -35,6 +35,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "AzureBackupRecoveryPointBasedRestoreRequest";
         }
 
+        /// <summary> Initializes a new instance of BackupRecoveryPointBasedRestoreContent. </summary>
+        /// <param name="objectType"></param>
+        /// <param name="restoreTargetInfo">
+        /// Gets or sets the restore target information.
+        /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="RestoreTargetInfo"/>.
+        /// </param>
+        /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
+        /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="recoveryPointId"></param>
+        internal BackupRecoveryPointBasedRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, string recoveryPointId) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId)
+        {
+            RecoveryPointId = recoveryPointId;
+            ObjectType = objectType ?? "AzureBackupRecoveryPointBasedRestoreRequest";
+        }
+
         /// <summary> Gets the recovery point id. </summary>
         public string RecoveryPointId { get; }
     }

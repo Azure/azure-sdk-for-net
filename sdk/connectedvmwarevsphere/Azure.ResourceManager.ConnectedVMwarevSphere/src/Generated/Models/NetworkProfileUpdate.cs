@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceUpdate>();
         }
 
+        /// <summary> Initializes a new instance of NetworkProfileUpdate. </summary>
+        /// <param name="networkInterfaces"> Gets or sets the list of network interfaces associated with the virtual machine. </param>
+        internal NetworkProfileUpdate(IList<NetworkInterfaceUpdate> networkInterfaces)
+        {
+            NetworkInterfaces = networkInterfaces;
+        }
+
         /// <summary> Gets or sets the list of network interfaces associated with the virtual machine. </summary>
         public IList<NetworkInterfaceUpdate> NetworkInterfaces { get; }
     }
