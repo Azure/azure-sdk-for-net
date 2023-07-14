@@ -19,8 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("filePath"u8);
             JsonSerializer.Serialize(writer, FilePath);
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
-            writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, LinkedServiceName); writer.WriteEndObject();
         }
 
         internal static AzureMLWebServiceFile DeserializeAzureMLWebServiceFile(JsonElement element)
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
             }

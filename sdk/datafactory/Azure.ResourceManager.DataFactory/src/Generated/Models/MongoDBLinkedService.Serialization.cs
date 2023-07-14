@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(AuthSource))
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authSource"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDBLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server, Optional.ToNullable(authenticationType), databaseName, username.Value, password.Value, authSource.Value, port.Value, enableSsl.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new MongoDBLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server, Optional.ToNullable(authenticationType), databaseName, username.Value, password, authSource.Value, port.Value, enableSsl.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
         }
     }
 }
