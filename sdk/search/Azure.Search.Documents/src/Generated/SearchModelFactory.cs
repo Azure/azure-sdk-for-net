@@ -150,6 +150,22 @@ namespace Azure.Search.Documents.Models
             return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize);
         }
 
+        /// <summary> Initializes a new instance of AnalyzeTextOptions. </summary>
+        /// <param name="text"> The text to break into tokens. </param>
+        /// <param name="analyzerName"> The name of the analyzer to use to break the given text. </param>
+        /// <param name="tokenizerName"> The name of the tokenizer to use to break the given text. </param>
+        /// <param name="normalizerName"> The name of the normalizer to use to normalize the given text. </param>
+        /// <param name="tokenFilters"> An optional list of token filters to use when breaking the given text. </param>
+        /// <param name="charFilters"> An optional list of character filters to use when breaking the given text. </param>
+        /// <returns> A new <see cref="Indexes.Models.AnalyzeTextOptions"/> instance for mocking. </returns>
+        public static AnalyzeTextOptions AnalyzeTextOptions(string text = null, LexicalAnalyzerName? analyzerName = null, LexicalTokenizerName? tokenizerName = null, LexicalNormalizerName? normalizerName = null, IEnumerable<TokenFilterName> tokenFilters = null, IEnumerable<string> charFilters = null)
+        {
+            tokenFilters ??= new List<TokenFilterName>();
+            charFilters ??= new List<string>();
+
+            return new AnalyzeTextOptions(text, analyzerName, tokenizerName, normalizerName, tokenFilters?.ToList(), charFilters?.ToList());
+        }
+
         /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="aliasCounter"> Total number of aliases. </param>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>

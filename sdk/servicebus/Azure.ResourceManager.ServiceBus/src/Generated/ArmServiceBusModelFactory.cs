@@ -192,6 +192,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusAccessKeys(primaryConnectionString, secondaryConnectionString, aliasPrimaryConnectionString, aliasSecondaryConnectionString, primaryKey, secondaryKey, keyName);
         }
 
+        /// <summary> Initializes a new instance of ServiceBusRegenerateAccessKeyContent. </summary>
+        /// <param name="keyType"> The access key to regenerate. </param>
+        /// <param name="key"> Optional, if the key value provided, is reset for KeyType value or autogenerate Key value set for keyType. </param>
+        /// <returns> A new <see cref="Models.ServiceBusRegenerateAccessKeyContent"/> instance for mocking. </returns>
+        public static ServiceBusRegenerateAccessKeyContent ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType keyType = default, string key = null)
+        {
+            return new ServiceBusRegenerateAccessKeyContent(keyType, key);
+        }
+
         /// <summary> Initializes a new instance of ServiceBusQueueData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

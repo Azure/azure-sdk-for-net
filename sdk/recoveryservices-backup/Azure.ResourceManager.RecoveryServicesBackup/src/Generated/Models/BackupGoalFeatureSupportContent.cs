@@ -15,5 +15,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             FeatureType = "AzureBackupGoals";
         }
+
+        /// <summary> Initializes a new instance of BackupGoalFeatureSupportContent. </summary>
+        /// <param name="featureType"> backup support feature type. </param>
+        internal BackupGoalFeatureSupportContent(string featureType) : base(featureType)
+        {
+            FeatureType = featureType ?? "AzureBackupGoals";
+        }
     }
 }

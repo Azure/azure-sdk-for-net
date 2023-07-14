@@ -43,6 +43,28 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new LinkerResourceData(id, name, resourceType, systemData, targetService, authInfo, clientType, provisioningState, solutionType != null ? new VnetSolution(solutionType) : null, secretStoreKeyVaultId != null ? new LinkerSecretStore(secretStoreKeyVaultId) : null, scope);
         }
 
+        /// <summary> Initializes a new instance of LinkerResourcePatch. </summary>
+        /// <param name="targetService">
+        /// The target service properties
+        /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
+        /// </param>
+        /// <param name="authInfo">
+        /// The authentication type.
+        /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// </param>
+        /// <param name="clientType"> The application client type. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="solutionType"> The VNet solution. </param>
+        /// <param name="secretStoreKeyVaultId"> An option to store secret value in secure place. </param>
+        /// <param name="scope"> connection scope in source service. </param>
+        /// <returns> A new <see cref="Models.LinkerResourcePatch"/> instance for mocking. </returns>
+        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolutionType? solutionType = null, ResourceIdentifier secretStoreKeyVaultId = null, string scope = null)
+        {
+            return new LinkerResourcePatch(targetService, authInfo, clientType, provisioningState, solutionType != null ? new VnetSolution(solutionType) : null, secretStoreKeyVaultId != null ? new LinkerSecretStore(secretStoreKeyVaultId) : null, scope);
+        }
+
         /// <summary> Initializes a new instance of LinkerValidateOperationResult. </summary>
         /// <param name="resourceId"> Validated linker id. </param>
         /// <param name="status"> Validation operation status. </param>

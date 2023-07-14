@@ -3338,6 +3338,20 @@ namespace Azure.ResourceManager.Sql.Models
             return new VirtualClusterData(id, name, resourceType, systemData, tags, location, subnetId, version, childResources?.ToList());
         }
 
+        /// <summary> Initializes a new instance of VirtualClusterPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="subnetId"> Subnet resource ID for the virtual cluster. </param>
+        /// <param name="version"> Virtual cluster version. </param>
+        /// <param name="childResources"> List of resources in this virtual cluster. </param>
+        /// <returns> A new <see cref="Models.VirtualClusterPatch"/> instance for mocking. </returns>
+        public static VirtualClusterPatch VirtualClusterPatch(IDictionary<string, string> tags = null, ResourceIdentifier subnetId = null, string version = null, IEnumerable<string> childResources = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            childResources ??= new List<string>();
+
+            return new VirtualClusterPatch(tags, subnetId, version, childResources?.ToList());
+        }
+
         /// <summary> Initializes a new instance of ManagedInstanceUpdateDnsServersOperationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3475,6 +3489,46 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedDatabaseData(id, name, resourceType, systemData, tags, location, collation, status, createdOn, earliestRestorePoint, restorePointInTime, defaultSecondaryLocation, catalogCollation, createMode, storageContainerUri, sourceDatabaseId, crossSubscriptionSourceDatabaseId, restorableDroppedDatabaseId, crossSubscriptionRestorableDroppedDatabaseId, storageContainerIdentity, storageContainerSasToken, failoverGroupId, recoverableDatabaseId, longTermRetentionBackupResourceId, allowAutoCompleteRestore, lastBackupName, crossSubscriptionTargetManagedInstanceId);
         }
 
+        /// <summary> Initializes a new instance of ManagedDatabasePatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="collation"> Collation of the managed database. </param>
+        /// <param name="status"> Status of the database. </param>
+        /// <param name="createdOn"> Creation date of the database. </param>
+        /// <param name="earliestRestorePoint"> Earliest restore point in time for point in time restore. </param>
+        /// <param name="restorePointInTime"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
+        /// <param name="defaultSecondaryLocation"> Geo paired region. </param>
+        /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
+        /// <param name="createMode"> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </param>
+        /// <param name="storageContainerUri"> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </param>
+        /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
+        /// <param name="crossSubscriptionSourceDatabaseId"> The resource identifier of the cross-subscription source database associated with create operation of this database. </param>
+        /// <param name="restorableDroppedDatabaseId"> The restorable dropped database resource id to restore when creating this database. </param>
+        /// <param name="crossSubscriptionRestorableDroppedDatabaseId"> The restorable cross-subscription dropped database resource id to restore when creating this database. </param>
+        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </param>
+        /// <param name="storageContainerSasToken"> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </param>
+        /// <param name="failoverGroupId"> Instance Failover Group resource identifier that this managed database belongs to. </param>
+        /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
+        /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
+        /// <param name="allowAutoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
+        /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
+        /// <param name="crossSubscriptionTargetManagedInstanceId"> Target managed instance id used in cross-subscription restore. </param>
+        /// <returns> A new <see cref="Models.ManagedDatabasePatch"/> instance for mocking. </returns>
+        public static ManagedDatabasePatch ManagedDatabasePatch(IDictionary<string, string> tags = null, string collation = null, ManagedDatabaseStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? earliestRestorePoint = null, DateTimeOffset? restorePointInTime = null, AzureLocation? defaultSecondaryLocation = null, CatalogCollationType? catalogCollation = null, ManagedDatabaseCreateMode? createMode = null, Uri storageContainerUri = null, ResourceIdentifier sourceDatabaseId = null, string crossSubscriptionSourceDatabaseId = null, ResourceIdentifier restorableDroppedDatabaseId = null, string crossSubscriptionRestorableDroppedDatabaseId = null, string storageContainerIdentity = null, string storageContainerSasToken = null, ResourceIdentifier failoverGroupId = null, ResourceIdentifier recoverableDatabaseId = null, ResourceIdentifier longTermRetentionBackupResourceId = null, bool? allowAutoCompleteRestore = null, string lastBackupName = null, ResourceIdentifier crossSubscriptionTargetManagedInstanceId = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ManagedDatabasePatch(tags, collation, status, createdOn, earliestRestorePoint, restorePointInTime, defaultSecondaryLocation, catalogCollation, createMode, storageContainerUri, sourceDatabaseId, crossSubscriptionSourceDatabaseId, restorableDroppedDatabaseId, crossSubscriptionRestorableDroppedDatabaseId, storageContainerIdentity, storageContainerSasToken, failoverGroupId, recoverableDatabaseId, longTermRetentionBackupResourceId, allowAutoCompleteRestore, lastBackupName, crossSubscriptionTargetManagedInstanceId);
+        }
+
+        /// <summary> Initializes a new instance of ManagedDatabaseStartMoveDefinition. </summary>
+        /// <param name="destinationManagedDatabaseId"> The destination managed database ID. </param>
+        /// <param name="operationMode"> The move operation mode. </param>
+        /// <returns> A new <see cref="Models.ManagedDatabaseStartMoveDefinition"/> instance for mocking. </returns>
+        public static ManagedDatabaseStartMoveDefinition ManagedDatabaseStartMoveDefinition(ResourceIdentifier destinationManagedDatabaseId = null, ManagedDatabaseMoveOperationMode? operationMode = null)
+        {
+            return new ManagedDatabaseStartMoveDefinition(destinationManagedDatabaseId, operationMode);
+        }
+
         /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3553,6 +3607,61 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlServicePrincipal SqlServicePrincipal(Guid? principalId = null, Guid? clientId = null, Guid? tenantId = null, SqlServicePrincipalType? principalType = null)
         {
             return new SqlServicePrincipal(principalId, clientId, tenantId, principalType);
+        }
+
+        /// <summary> Initializes a new instance of ManagedInstancePatch. </summary>
+        /// <param name="sku"> Managed instance sku. </param>
+        /// <param name="identity"> Managed instance identity. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="provisioningState"></param>
+        /// <param name="managedInstanceCreateMode">
+        /// Specifies the mode of database creation.
+        ///
+        /// Default: Regular instance creation.
+        ///
+        /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
+        /// </param>
+        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the managed instance. </param>
+        /// <param name="administratorLogin"> Administrator username for the managed instance. Can only be specified when the managed instance is being created (and is required for creation). </param>
+        /// <param name="administratorLoginPassword"> The administrator login password (required for managed instance creation). </param>
+        /// <param name="subnetId"> Subnet resource ID for the managed instance. </param>
+        /// <param name="state"> The state of the managed instance. </param>
+        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </param>
+        /// <param name="vCores"> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </param>
+        /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
+        /// <param name="collation"> Collation of the managed instance. </param>
+        /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
+        /// <param name="dnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
+        /// <param name="isPublicDataEndpointEnabled"> Whether or not the public data endpoint is enabled. </param>
+        /// <param name="sourceManagedInstanceId"> The resource identifier of the source managed instance associated with create operation of this instance. </param>
+        /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
+        /// <param name="proxyOverride"> Connection type used for connecting to the instance. </param>
+        /// <param name="timezoneId">
+        /// Id of the timezone. Allowed values are timezones supported by Windows.
+        /// Windows keeps details on supported timezones, including the id, in registry under
+        /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
+        /// You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
+        /// List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
+        /// An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
+        /// </param>
+        /// <param name="instancePoolId"> The Id of the instance pool this managed server belongs to. </param>
+        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections on a managed instance. </param>
+        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
+        /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
+        /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
+        /// <param name="isZoneRedundant"> Whether or not the multi-az is enabled. </param>
+        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
+        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
+        /// <param name="administrators"> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
+        /// <param name="servicePrincipal"> The managed instance's service principal. </param>
+        /// <returns> A new <see cref="Models.ManagedInstancePatch"/> instance for mocking. </returns>
+        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, int? vCores = null, int? storageSizeInGB = null, string collation = null, string dnsZone = null, string dnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            privateEndpointConnections ??= new List<ManagedInstancePecProperty>();
+
+            return new ManagedInstancePatch(sku, identity, tags, provisioningState, managedInstanceCreateMode, fullyQualifiedDomainName, administratorLogin, administratorLoginPassword, subnetId, state, licenseType, vCores, storageSizeInGB, collation, dnsZone, dnsZonePartner, isPublicDataEndpointEnabled, sourceManagedInstanceId, restorePointInTime, proxyOverride, timezoneId, instancePoolId, maintenanceConfigurationId, privateEndpointConnections?.ToList(), minimalTlsVersion, currentBackupStorageRedundancy, requestedBackupStorageRedundancy, isZoneRedundant, primaryUserAssignedIdentityId, keyId, administrators, servicePrincipal);
         }
 
         /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpoint. </summary>
@@ -3752,6 +3861,110 @@ namespace Azure.ResourceManager.Sql.Models
             return new DatabaseIdentity(identityType, tenantId, userAssignedIdentities);
         }
 
+        /// <summary> Initializes a new instance of SqlDatabasePatch. </summary>
+        /// <param name="sku"> The name and tier of the SKU. </param>
+        /// <param name="identity"> Database identity. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="createMode">
+        /// Specifies the mode of database creation.
+        ///
+        /// Default: regular database creation.
+        ///
+        /// Copy: creates a database as a copy of an existing database. sourceDatabaseId must be specified as the resource ID of the source database.
+        ///
+        /// Secondary: creates a database as a secondary replica of an existing database. sourceDatabaseId must be specified as the resource ID of the existing primary database.
+        ///
+        /// PointInTimeRestore: Creates a database by restoring a point in time backup of an existing database. sourceDatabaseId must be specified as the resource ID of the existing database, and restorePointInTime must be specified.
+        ///
+        /// Recovery: Creates a database by restoring a geo-replicated backup. sourceDatabaseId must be specified as the recoverable database resource ID to restore.
+        ///
+        /// Restore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
+        ///
+        /// RestoreLongTermRetentionBackup: Creates a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point resource ID.
+        ///
+        /// Copy, Secondary, and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition.
+        /// </param>
+        /// <param name="collation"> The collation of the database. </param>
+        /// <param name="maxSizeBytes"> The max size of the database expressed in bytes. </param>
+        /// <param name="sampleName"> The name of the sample schema to apply when creating this database. </param>
+        /// <param name="elasticPoolId"> The resource identifier of the elastic pool containing this database. </param>
+        /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
+        /// <param name="status"> The status of the database. </param>
+        /// <param name="databaseId"> The ID of the database. </param>
+        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="currentServiceObjectiveName"> The current service level objective name of the database. </param>
+        /// <param name="requestedServiceObjectiveName"> The requested service level objective name of the database. </param>
+        /// <param name="defaultSecondaryLocation"> The default secondary region for this database. </param>
+        /// <param name="failoverGroupId"> Failover Group resource identifier that this database belongs to. </param>
+        /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
+        /// <param name="sourceDatabaseDeletedOn"> Specifies the time that the database was deleted. </param>
+        /// <param name="recoveryServicesRecoveryPointId"> The resource identifier of the recovery point associated with create operation of this database. </param>
+        /// <param name="longTermRetentionBackupResourceId"> The resource identifier of the long term retention backup associated with create operation of this database. </param>
+        /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
+        /// <param name="restorableDroppedDatabaseId"> The resource identifier of the restorable dropped database associated with create operation of this database. </param>
+        /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
+        /// <param name="isZoneRedundant"> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </param>
+        /// <param name="licenseType"> The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit. </param>
+        /// <param name="maxLogSizeBytes"> The max log size for this database. </param>
+        /// <param name="earliestRestoreOn"> This records the earliest start date and time that restore is available for this database (ISO8601 format). </param>
+        /// <param name="readScale"> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. Not applicable to a Hyperscale database within an elastic pool. </param>
+        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </param>
+        /// <param name="secondaryType"> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </param>
+        /// <param name="currentSku"> The name and tier of the SKU. </param>
+        /// <param name="autoPauseDelay"> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </param>
+        /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this database. </param>
+        /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this database. </param>
+        /// <param name="minCapacity"> Minimal capacity that database will always have allocated, if not paused. </param>
+        /// <param name="pausedOn"> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </param>
+        /// <param name="resumedOn"> The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused. </param>
+        /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </param>
+        /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
+        /// <param name="isInfraEncryptionEnabled"> Infra encryption is enabled for this database. </param>
+        /// <param name="federatedClientId"> The Client id used for cross tenant per database CMK scenario. </param>
+        /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
+        /// <param name="encryptionProtector"> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </param>
+        /// <param name="preferredEnclaveType"> Type of enclave requested on the database i.e. Default or VBS enclaves. </param>
+        /// <param name="manualCutover">
+        /// Whether or not customer controlled manual cutover needs to be done during Update Database operation to Hyperscale tier.
+        ///
+        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier.
+        ///
+        /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
+        ///
+        /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
+        /// </param>
+        /// <param name="performCutover">
+        /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
+        ///
+        /// This property parameter is only applicable for scaling operations that are initiated along with 'manualCutover' parameter.
+        ///
+        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
+        ///
+        /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
+        /// </param>
+        /// <returns> A new <see cref="Models.SqlDatabasePatch"/> instance for mocking. </returns>
+        public static SqlDatabasePatch SqlDatabasePatch(SqlSku sku = null, DatabaseIdentity identity = null, IDictionary<string, string> tags = null, SqlDatabaseCreateMode? createMode = null, string collation = null, long? maxSizeBytes = null, SampleSchemaName? sampleName = null, ResourceIdentifier elasticPoolId = null, ResourceIdentifier sourceDatabaseId = null, SqlDatabaseStatus? status = null, Guid? databaseId = null, DateTimeOffset? createdOn = null, string currentServiceObjectiveName = null, string requestedServiceObjectiveName = null, AzureLocation? defaultSecondaryLocation = null, ResourceIdentifier failoverGroupId = null, DateTimeOffset? restorePointInTime = null, DateTimeOffset? sourceDatabaseDeletedOn = null, ResourceIdentifier recoveryServicesRecoveryPointId = null, ResourceIdentifier longTermRetentionBackupResourceId = null, ResourceIdentifier recoverableDatabaseId = null, ResourceIdentifier restorableDroppedDatabaseId = null, CatalogCollationType? catalogCollation = null, bool? isZoneRedundant = null, DatabaseLicenseType? licenseType = null, long? maxLogSizeBytes = null, DateTimeOffset? earliestRestoreOn = null, DatabaseReadScale? readScale = null, int? highAvailabilityReplicaCount = null, SecondaryType? secondaryType = null, SqlSku currentSku = null, int? autoPauseDelay = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, double? minCapacity = null, DateTimeOffset? pausedOn = null, DateTimeOffset? resumedOn = null, ResourceIdentifier maintenanceConfigurationId = null, bool? isLedgerOn = null, bool? isInfraEncryptionEnabled = null, Guid? federatedClientId = null, IDictionary<string, SqlDatabaseKey> keys = null, string encryptionProtector = null, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = null, bool? manualCutover = null, bool? performCutover = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            keys ??= new Dictionary<string, SqlDatabaseKey>();
+
+            return new SqlDatabasePatch(sku, identity, tags, createMode, collation, maxSizeBytes, sampleName, elasticPoolId, sourceDatabaseId, status, databaseId, createdOn, currentServiceObjectiveName, requestedServiceObjectiveName, defaultSecondaryLocation, failoverGroupId, restorePointInTime, sourceDatabaseDeletedOn, recoveryServicesRecoveryPointId, longTermRetentionBackupResourceId, recoverableDatabaseId, restorableDroppedDatabaseId, catalogCollation, isZoneRedundant, licenseType, maxLogSizeBytes, earliestRestoreOn, readScale, highAvailabilityReplicaCount, secondaryType, currentSku, autoPauseDelay, currentBackupStorageRedundancy, requestedBackupStorageRedundancy, minCapacity, pausedOn, resumedOn, maintenanceConfigurationId, isLedgerOn, isInfraEncryptionEnabled, federatedClientId, keys, encryptionProtector, preferredEnclaveType, manualCutover, performCutover);
+        }
+
+        /// <summary> Initializes a new instance of DatabaseExportDefinition. </summary>
+        /// <param name="storageKeyType"> Storage key type. </param>
+        /// <param name="storageKey"> Storage key. </param>
+        /// <param name="storageUri"> Storage Uri. </param>
+        /// <param name="administratorLogin"> Administrator login name. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. </param>
+        /// <param name="authenticationType"> Authentication type. </param>
+        /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
+        /// <returns> A new <see cref="Models.DatabaseExportDefinition"/> instance for mocking. </returns>
+        public static DatabaseExportDefinition DatabaseExportDefinition(StorageKeyType storageKeyType = default, string storageKey = null, Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, NetworkIsolationSettings networkIsolation = null)
+        {
+            return new DatabaseExportDefinition(storageKeyType, storageKey, storageUri, administratorLogin, administratorLoginPassword, authenticationType, networkIsolation);
+        }
+
         /// <summary> Initializes a new instance of ImportExportOperationResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3785,6 +3998,20 @@ namespace Azure.ResourceManager.Sql.Models
             return new PrivateEndpointConnectionRequestStatus(privateLinkServiceId, privateEndpointConnectionName, status);
         }
 
+        /// <summary> Initializes a new instance of ImportExistingDatabaseDefinition. </summary>
+        /// <param name="storageKeyType"> Storage key type. </param>
+        /// <param name="storageKey"> Storage key. </param>
+        /// <param name="storageUri"> Storage Uri. </param>
+        /// <param name="administratorLogin"> Administrator login name. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. </param>
+        /// <param name="authenticationType"> Authentication type. </param>
+        /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
+        /// <returns> A new <see cref="Models.ImportExistingDatabaseDefinition"/> instance for mocking. </returns>
+        public static ImportExistingDatabaseDefinition ImportExistingDatabaseDefinition(StorageKeyType storageKeyType = default, string storageKey = null, Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, NetworkIsolationSettings networkIsolation = null)
+        {
+            return new ImportExistingDatabaseDefinition(storageKeyType, storageKey, storageUri, administratorLogin, administratorLoginPassword, authenticationType, networkIsolation);
+        }
+
         /// <summary> Initializes a new instance of ManagedLedgerDigestUploadData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3796,6 +4023,15 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedLedgerDigestUploadData ManagedLedgerDigestUploadData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string digestStorageEndpoint = null, ManagedLedgerDigestUploadsState? state = null)
         {
             return new ManagedLedgerDigestUploadData(id, name, resourceType, systemData, digestStorageEndpoint, state);
+        }
+
+        /// <summary> Initializes a new instance of SqlNameAvailabilityContent. </summary>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <returns> A new <see cref="Models.SqlNameAvailabilityContent"/> instance for mocking. </returns>
+        public static SqlNameAvailabilityContent SqlNameAvailabilityContent(string name = null, SqlNameAvailabilityResourceType resourceType = default)
+        {
+            return new SqlNameAvailabilityContent(name, resourceType);
         }
 
         /// <summary> Initializes a new instance of SqlNameAvailabilityResponse. </summary>
@@ -3862,6 +4098,51 @@ namespace Azure.ResourceManager.Sql.Models
             groupIds ??= new List<string>();
 
             return new ServerPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of SqlServerPatch. </summary>
+        /// <param name="identity"> Server identity. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="administratorLogin"> Administrator username for the server. Once created it cannot be changed. </param>
+        /// <param name="administratorLoginPassword"> The administrator login password (required for server creation). </param>
+        /// <param name="version"> The version of the server. </param>
+        /// <param name="state"> The state of the server. </param>
+        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
+        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: '1.0', '1.1', '1.2'. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </param>
+        /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
+        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
+        /// <param name="federatedClientId"> The Client id used for cross tenant CMK scenario. </param>
+        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
+        /// <param name="administrators"> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
+        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="externalGovernanceStatus"> Status of external governance. </param>
+        /// <returns> A new <see cref="Models.SqlServerPatch"/> instance for mocking. </returns>
+        public static SqlServerPatch SqlServerPatch(ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, string minimalTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ExternalGovernanceStatus? externalGovernanceStatus = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            privateEndpointConnections ??= new List<SqlServerPrivateEndpointConnection>();
+
+            return new SqlServerPatch(identity, tags, administratorLogin, administratorLoginPassword, version, state, fullyQualifiedDomainName, privateEndpointConnections?.ToList(), minimalTlsVersion, publicNetworkAccess, workspaceFeature, primaryUserAssignedIdentityId, federatedClientId, keyId, administrators, restrictOutboundNetworkAccess, externalGovernanceStatus);
+        }
+
+        /// <summary> Initializes a new instance of DatabaseImportDefinition. </summary>
+        /// <param name="databaseName"> Name of the import database. </param>
+        /// <param name="edition"> Edition of the import database. </param>
+        /// <param name="serviceObjectiveName"> Service level objective name of the import database. </param>
+        /// <param name="maxSizeBytes"> Max size in bytes for the import database. </param>
+        /// <param name="storageKeyType"> Storage key type. </param>
+        /// <param name="storageKey"> Storage key. </param>
+        /// <param name="storageUri"> Storage Uri. </param>
+        /// <param name="administratorLogin"> Administrator login name. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. </param>
+        /// <param name="authenticationType"> Authentication type. </param>
+        /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
+        /// <returns> A new <see cref="Models.DatabaseImportDefinition"/> instance for mocking. </returns>
+        public static DatabaseImportDefinition DatabaseImportDefinition(string databaseName = null, string edition = null, string serviceObjectiveName = null, string maxSizeBytes = null, StorageKeyType storageKeyType = default, string storageKey = null, Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, NetworkIsolationSettings networkIsolation = null)
+        {
+            return new DatabaseImportDefinition(databaseName, edition, serviceObjectiveName, maxSizeBytes, storageKeyType, storageKey, storageUri, administratorLogin, administratorLoginPassword, authenticationType, networkIsolation);
         }
 
         /// <summary> Initializes a new instance of RefreshExternalGovernanceStatusOperationResult. </summary>
