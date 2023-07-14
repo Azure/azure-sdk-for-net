@@ -58,8 +58,8 @@ When a secure string is used, the value is return masked with '*' characters whe
   "secretVersion": "someSecretVersion"
 }
 ```
-A Key Vault Reference can be used to specify a Key Vault where the value of the property is stored. 
 
+A Key Vault Reference can be used to specify a Key Vault where the value of the property is stored. 
 
 ### DataFactoryElement<T>
 
