@@ -31,21 +31,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="endpoint"> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </param>
         /// <param name="companyId"> The company ID of the QuickBooks company to authorize. </param>
         /// <param name="consumerKey"> The consumer key for OAuth 1.0 authentication. </param>
-        /// <param name="consumerSecret">
-        /// The consumer secret for OAuth 1.0 authentication.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
-        /// <param name="accessToken">
-        /// The access token for OAuth 1.0 authentication.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
-        /// <param name="accessTokenSecret">
-        /// The access token secret for OAuth 1.0 authentication.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="consumerSecret"> The consumer secret for OAuth 1.0 authentication. </param>
+        /// <param name="accessToken"> The access token for OAuth 1.0 authentication. </param>
+        /// <param name="accessTokenSecret"> The access token secret for OAuth 1.0 authentication. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         internal QuickBooksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> companyId, DataFactoryElement<string> consumerKey, DataFactorySecretBaseDefinition consumerSecret, DataFactorySecretBaseDefinition accessToken, DataFactorySecretBaseDefinition accessTokenSecret, DataFactoryElement<bool> useEncryptedEndpoints, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
@@ -99,23 +87,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> CompanyId { get; set; }
         /// <summary> The consumer key for OAuth 1.0 authentication. </summary>
         public DataFactoryElement<string> ConsumerKey { get; set; }
-        /// <summary>
-        /// The consumer secret for OAuth 1.0 authentication.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The consumer secret for OAuth 1.0 authentication. </summary>
         public DataFactorySecretBaseDefinition ConsumerSecret { get; set; }
-        /// <summary>
-        /// The access token for OAuth 1.0 authentication.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The access token for OAuth 1.0 authentication. </summary>
         public DataFactorySecretBaseDefinition AccessToken { get; set; }
-        /// <summary>
-        /// The access token secret for OAuth 1.0 authentication.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The access token secret for OAuth 1.0 authentication. </summary>
         public DataFactorySecretBaseDefinition AccessTokenSecret { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
