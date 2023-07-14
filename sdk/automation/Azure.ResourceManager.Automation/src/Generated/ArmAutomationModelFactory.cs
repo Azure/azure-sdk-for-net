@@ -86,6 +86,17 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationModuleData(id, name, resourceType, systemData, tags, location, etag, isGlobal, version, sizeInBytes, activityCount, provisioningState, contentLink, error, createdOn, lastModifiedOn, description, isComposite);
         }
 
+        /// <summary> Initializes a new instance of AutomationAccountPython2PackageCreateOrUpdateContent. </summary>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
+        /// <returns> A new <see cref="Models.AutomationAccountPython2PackageCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationAccountPython2PackageCreateOrUpdateContent AutomationAccountPython2PackageCreateOrUpdateContent(IDictionary<string, string> tags = null, AutomationContentLink contentLink = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new AutomationAccountPython2PackageCreateOrUpdateContent(tags, contentLink);
+        }
+
         /// <summary> Initializes a new instance of AgentRegistration. </summary>
         /// <param name="dscMetaConfiguration"> Gets or sets the dsc meta configuration. </param>
         /// <param name="endpoint"> Gets or sets the dsc server endpoint. </param>
@@ -229,6 +240,22 @@ namespace Azure.ResourceManager.Automation.Models
         public static DscNodeConfigurationData DscNodeConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? createdOn = null, string configurationName = null, string source = null, long? nodeCount = null, bool? isIncrementNodeConfigurationBuildRequired = null)
         {
             return new DscNodeConfigurationData(id, name, resourceType, systemData, lastModifiedOn, createdOn, configurationName != null ? new DscConfigurationAssociationProperty(configurationName) : null, source, nodeCount, isIncrementNodeConfigurationBuildRequired);
+        }
+
+        /// <summary> Initializes a new instance of DscCompilationJobCreateOrUpdateContent. </summary>
+        /// <param name="name"> Gets or sets name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="configurationName"> Gets or sets the configuration. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
+        /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
+        /// <returns> A new <see cref="Models.DscCompilationJobCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static DscCompilationJobCreateOrUpdateContent DscCompilationJobCreateOrUpdateContent(string name = null, AzureLocation? location = null, IDictionary<string, string> tags = null, string configurationName = null, IDictionary<string, string> parameters = null, bool? isIncrementNodeConfigurationBuildRequired = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            parameters ??= new Dictionary<string, string>();
+
+            return new DscCompilationJobCreateOrUpdateContent(name, location, tags, configurationName != null ? new DscConfigurationAssociationProperty(configurationName) : null, parameters, isIncrementNodeConfigurationBuildRequired);
         }
 
         /// <summary> Initializes a new instance of DscCompilationJobData. </summary>
@@ -453,6 +480,18 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationCertificateData(id, name, resourceType, systemData, thumbprintString, expireOn, isExportable, createdOn, lastModifiedOn, description);
         }
 
+        /// <summary> Initializes a new instance of AutomationCertificateCreateOrUpdateContent. </summary>
+        /// <param name="name"> Gets or sets the name of the certificate. </param>
+        /// <param name="base64Value"> Gets or sets the base64 encoded value of the certificate. </param>
+        /// <param name="description"> Gets or sets the description of the certificate. </param>
+        /// <param name="thumbprintString"> Gets or sets the thumbprint of the certificate. </param>
+        /// <param name="isExportable"> Gets or sets the is exportable flag of the certificate. </param>
+        /// <returns> A new <see cref="Models.AutomationCertificateCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationCertificateCreateOrUpdateContent AutomationCertificateCreateOrUpdateContent(string name = null, string base64Value = null, string description = null, string thumbprintString = null, bool? isExportable = null)
+        {
+            return new AutomationCertificateCreateOrUpdateContent(name, base64Value, description, thumbprintString, isExportable);
+        }
+
         /// <summary> Initializes a new instance of AutomationConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -469,6 +508,19 @@ namespace Azure.ResourceManager.Automation.Models
             fieldDefinitionValues ??= new Dictionary<string, string>();
 
             return new AutomationConnectionData(id, name, resourceType, systemData, connectionTypeName != null ? new ConnectionTypeAssociationProperty(connectionTypeName) : null, fieldDefinitionValues, createdOn, lastModifiedOn, description);
+        }
+
+        /// <summary> Initializes a new instance of AutomationConnectionCreateOrUpdateContent. </summary>
+        /// <param name="name"> Gets or sets the name of the connection. </param>
+        /// <param name="description"> Gets or sets the description of the connection. </param>
+        /// <param name="connectionTypeName"> Gets or sets the connectionType of the connection. </param>
+        /// <param name="fieldDefinitionValues"> Gets or sets the field definition properties of the connection. </param>
+        /// <returns> A new <see cref="Models.AutomationConnectionCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationConnectionCreateOrUpdateContent AutomationConnectionCreateOrUpdateContent(string name = null, string description = null, string connectionTypeName = null, IDictionary<string, string> fieldDefinitionValues = null)
+        {
+            fieldDefinitionValues ??= new Dictionary<string, string>();
+
+            return new AutomationConnectionCreateOrUpdateContent(name, description, connectionTypeName != null ? new ConnectionTypeAssociationProperty(connectionTypeName) : null, fieldDefinitionValues);
         }
 
         /// <summary> Initializes a new instance of AutomationConnectionTypeData. </summary>
@@ -489,6 +541,18 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationConnectionTypeData(id, name, resourceType, systemData, isGlobal, fieldDefinitions, createdOn, lastModifiedOn, description);
         }
 
+        /// <summary> Initializes a new instance of AutomationConnectionTypeCreateOrUpdateContent. </summary>
+        /// <param name="name"> Gets or sets the name of the connection type. </param>
+        /// <param name="isGlobal"> Gets or sets a Boolean value to indicate if the connection type is global. </param>
+        /// <param name="fieldDefinitions"> Gets or sets the field definitions of the connection type. </param>
+        /// <returns> A new <see cref="Models.AutomationConnectionTypeCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationConnectionTypeCreateOrUpdateContent AutomationConnectionTypeCreateOrUpdateContent(string name = null, bool? isGlobal = null, IDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions = null)
+        {
+            fieldDefinitions ??= new Dictionary<string, AutomationConnectionFieldDefinition>();
+
+            return new AutomationConnectionTypeCreateOrUpdateContent(name, isGlobal, fieldDefinitions);
+        }
+
         /// <summary> Initializes a new instance of AutomationCredentialData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -502,6 +566,17 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationCredentialData AutomationCredentialData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string userName = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
             return new AutomationCredentialData(id, name, resourceType, systemData, userName, createdOn, lastModifiedOn, description);
+        }
+
+        /// <summary> Initializes a new instance of AutomationCredentialCreateOrUpdateContent. </summary>
+        /// <param name="name"> Gets or sets the name of the credential. </param>
+        /// <param name="userName"> Gets or sets the user name of the credential. </param>
+        /// <param name="password"> Gets or sets the password of the credential. </param>
+        /// <param name="description"> Gets or sets the description of the credential. </param>
+        /// <returns> A new <see cref="Models.AutomationCredentialCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationCredentialCreateOrUpdateContent AutomationCredentialCreateOrUpdateContent(string name = null, string userName = null, string password = null, string description = null)
+        {
+            return new AutomationCredentialCreateOrUpdateContent(name, userName, password, description);
         }
 
         /// <summary> Initializes a new instance of AutomationJobScheduleData. </summary>
@@ -520,6 +595,19 @@ namespace Azure.ResourceManager.Automation.Models
             parameters ??= new Dictionary<string, string>();
 
             return new AutomationJobScheduleData(id, name, resourceType, systemData, jobScheduleId, scheduleName != null ? new ScheduleAssociationProperty(scheduleName) : null, runbookName != null ? new RunbookAssociationProperty(runbookName) : null, runOn, parameters);
+        }
+
+        /// <summary> Initializes a new instance of AutomationJobScheduleCreateOrUpdateContent. </summary>
+        /// <param name="scheduleName"> Gets or sets the schedule. </param>
+        /// <param name="runbookName"> Gets or sets the runbook. </param>
+        /// <param name="runOn"> Gets or sets the hybrid worker group that the scheduled job should run on. </param>
+        /// <param name="parameters"> Gets or sets a list of job properties. </param>
+        /// <returns> A new <see cref="Models.AutomationJobScheduleCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationJobScheduleCreateOrUpdateContent AutomationJobScheduleCreateOrUpdateContent(string scheduleName = null, string runbookName = null, string runOn = null, IDictionary<string, string> parameters = null)
+        {
+            parameters ??= new Dictionary<string, string>();
+
+            return new AutomationJobScheduleCreateOrUpdateContent(scheduleName != null ? new ScheduleAssociationProperty(scheduleName) : null, runbookName != null ? new RunbookAssociationProperty(runbookName) : null, runOn, parameters);
         }
 
         /// <summary> Initializes a new instance of AutomationLinkedWorkspace. </summary>
@@ -595,6 +683,19 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationActivityOutputType(name, activityOutputType);
         }
 
+        /// <summary> Initializes a new instance of AutomationAccountModuleCreateOrUpdateContent. </summary>
+        /// <param name="name"> Gets or sets name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
+        /// <returns> A new <see cref="Models.AutomationAccountModuleCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationAccountModuleCreateOrUpdateContent AutomationAccountModuleCreateOrUpdateContent(string name = null, AzureLocation? location = null, IDictionary<string, string> tags = null, AutomationContentLink contentLink = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new AutomationAccountModuleCreateOrUpdateContent(name, location, tags, contentLink);
+        }
+
         /// <summary> Initializes a new instance of AutomationModuleField. </summary>
         /// <param name="name"> Gets or sets the name of the field. </param>
         /// <param name="fieldType"> Gets or sets the type of the field. </param>
@@ -602,6 +703,21 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationModuleField AutomationModuleField(string name = null, string fieldType = null)
         {
             return new AutomationModuleField(name, fieldType);
+        }
+
+        /// <summary> Initializes a new instance of AutomationScheduleCreateOrUpdateContent. </summary>
+        /// <param name="name"> Gets or sets the name of the Schedule. </param>
+        /// <param name="description"> Gets or sets the description of the schedule. </param>
+        /// <param name="startOn"> Gets or sets the start time of the schedule. </param>
+        /// <param name="expireOn"> Gets or sets the end time of the schedule. </param>
+        /// <param name="interval"> Gets or sets the interval of the schedule. </param>
+        /// <param name="frequency"> Gets or sets the frequency of the schedule. </param>
+        /// <param name="timeZone"> Gets or sets the time zone of the schedule. </param>
+        /// <param name="advancedSchedule"> Gets or sets the AdvancedSchedule. </param>
+        /// <returns> A new <see cref="Models.AutomationScheduleCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationScheduleCreateOrUpdateContent AutomationScheduleCreateOrUpdateContent(string name = null, string description = null, DateTimeOffset startOn = default, DateTimeOffset? expireOn = null, BinaryData interval = null, AutomationScheduleFrequency frequency = default, string timeZone = null, AutomationAdvancedSchedule advancedSchedule = null)
+        {
+            return new AutomationScheduleCreateOrUpdateContent(name, description, startOn, expireOn, interval, frequency, timeZone, advancedSchedule);
         }
 
         /// <summary> Initializes a new instance of AutomationScheduleData. </summary>
@@ -627,6 +743,17 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationScheduleData AutomationScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, double? startInMinutes = null, DateTimeOffset? expireOn = null, double? expireInMinutes = null, bool? isEnabled = null, DateTimeOffset? nextRunOn = null, double? nextRunInMinutes = null, BinaryData interval = null, AutomationScheduleFrequency? frequency = null, string timeZone = null, AutomationAdvancedSchedule advancedSchedule = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
             return new AutomationScheduleData(id, name, resourceType, systemData, startOn, startInMinutes, expireOn, expireInMinutes, isEnabled, nextRunOn, nextRunInMinutes, interval, frequency, timeZone, advancedSchedule, createdOn, lastModifiedOn, description);
+        }
+
+        /// <summary> Initializes a new instance of AutomationVariableCreateOrUpdateContent. </summary>
+        /// <param name="name"> Gets or sets the name of the variable. </param>
+        /// <param name="value"> Gets or sets the value of the variable. </param>
+        /// <param name="description"> Gets or sets the description of the variable. </param>
+        /// <param name="isEncrypted"> Gets or sets the encrypted flag of the variable. </param>
+        /// <returns> A new <see cref="Models.AutomationVariableCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationVariableCreateOrUpdateContent AutomationVariableCreateOrUpdateContent(string name = null, string value = null, string description = null, bool? isEncrypted = null)
+        {
+            return new AutomationVariableCreateOrUpdateContent(name, value, description, isEncrypted);
         }
 
         /// <summary> Initializes a new instance of AutomationVariableData. </summary>
@@ -696,6 +823,24 @@ namespace Azure.ResourceManager.Automation.Models
             parameters ??= new Dictionary<string, DscConfigurationParameterDefinition>();
 
             return new DscConfigurationData(id, name, resourceType, systemData, tags, location, etag, provisioningState, jobCount, parameters, source, state, isLogVerboseEnabled, createdOn, lastModifiedOn, nodeConfigurationCount, description);
+        }
+
+        /// <summary> Initializes a new instance of DscConfigurationCreateOrUpdateContent. </summary>
+        /// <param name="name"> Gets or sets name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
+        /// <param name="isLogProgressEnabled"> Gets or sets progress log option. </param>
+        /// <param name="source"> Gets or sets the source. </param>
+        /// <param name="parameters"> Gets or sets the configuration parameters. </param>
+        /// <param name="description"> Gets or sets the description of the configuration. </param>
+        /// <returns> A new <see cref="Models.DscConfigurationCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static DscConfigurationCreateOrUpdateContent DscConfigurationCreateOrUpdateContent(string name = null, AzureLocation? location = null, IDictionary<string, string> tags = null, bool? isLogVerboseEnabled = null, bool? isLogProgressEnabled = null, AutomationContentSource source = null, IDictionary<string, DscConfigurationParameterDefinition> parameters = null, string description = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            parameters ??= new Dictionary<string, DscConfigurationParameterDefinition>();
+
+            return new DscConfigurationCreateOrUpdateContent(name, location, tags, isLogVerboseEnabled, isLogProgressEnabled, source, parameters, description);
         }
 
         /// <summary> Initializes a new instance of AutomationJobData. </summary>
@@ -911,6 +1056,25 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationRunbookData(id, name, resourceType, systemData, tags, location, etag, runbookType, publishContentLink, state, isLogVerboseEnabled, isLogProgressEnabled, logActivityTrace, jobCount, parameters, outputTypes?.ToList(), draft, provisioningState, lastModifiedBy, createdOn, lastModifiedOn, description);
         }
 
+        /// <summary> Initializes a new instance of AutomationRunbookCreateOrUpdateContent. </summary>
+        /// <param name="name"> Gets or sets the name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
+        /// <param name="isLogProgressEnabled"> Gets or sets progress log option. </param>
+        /// <param name="runbookType"> Gets or sets the type of the runbook. </param>
+        /// <param name="draft"> Gets or sets the draft runbook properties. </param>
+        /// <param name="publishContentLink"> Gets or sets the published runbook content link. </param>
+        /// <param name="description"> Gets or sets the description of the runbook. </param>
+        /// <param name="logActivityTrace"> Gets or sets the activity-level tracing options of the runbook. </param>
+        /// <returns> A new <see cref="Models.AutomationRunbookCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationRunbookCreateOrUpdateContent AutomationRunbookCreateOrUpdateContent(string name = null, AzureLocation? location = null, IDictionary<string, string> tags = null, bool? isLogVerboseEnabled = null, bool? isLogProgressEnabled = null, AutomationRunbookType runbookType = default, AutomationRunbookDraft draft = null, AutomationContentLink publishContentLink = null, string description = null, int? logActivityTrace = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new AutomationRunbookCreateOrUpdateContent(name, location, tags, isLogVerboseEnabled, isLogProgressEnabled, runbookType, draft, publishContentLink, description, logActivityTrace);
+        }
+
         /// <summary> Initializes a new instance of RunbookTestJob. </summary>
         /// <param name="createdOn"> Gets or sets the creation time of the test job. </param>
         /// <param name="status"> Gets or sets the status of the test job. </param>
@@ -953,6 +1117,22 @@ namespace Azure.ResourceManager.Automation.Models
             parameters ??= new Dictionary<string, string>();
 
             return new AutomationWebhookData(id, name, resourceType, systemData, isEnabled, uri, expireOn, lastInvokedOn, parameters, runbookName != null ? new RunbookAssociationProperty(runbookName) : null, runOn, createdOn, lastModifiedOn, lastModifiedBy, description);
+        }
+
+        /// <summary> Initializes a new instance of AutomationWebhookCreateOrUpdateContent. </summary>
+        /// <param name="name"> Gets or sets the name of the webhook. </param>
+        /// <param name="isEnabled"> Gets or sets the value of the enabled flag of webhook. </param>
+        /// <param name="uri"> Gets or sets the uri. </param>
+        /// <param name="expireOn"> Gets or sets the expiry time. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
+        /// <param name="runbookName"> Gets or sets the runbook. </param>
+        /// <param name="runOn"> Gets or sets the name of the hybrid worker group the webhook job will run on. </param>
+        /// <returns> A new <see cref="Models.AutomationWebhookCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationWebhookCreateOrUpdateContent AutomationWebhookCreateOrUpdateContent(string name = null, bool? isEnabled = null, Uri uri = null, DateTimeOffset? expireOn = null, IDictionary<string, string> parameters = null, string runbookName = null, string runOn = null)
+        {
+            parameters ??= new Dictionary<string, string>();
+
+            return new AutomationWebhookCreateOrUpdateContent(name, isEnabled, uri, expireOn, parameters, runbookName != null ? new RunbookAssociationProperty(runbookName) : null, runOn);
         }
 
         /// <summary> Initializes a new instance of HybridRunbookWorkerData. </summary>

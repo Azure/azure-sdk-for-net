@@ -13,6 +13,15 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Model factory for models. </summary>
     public static partial class QuestionAnsweringModelFactory
     {
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswerContext. </summary>
+        /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
+        /// <param name="previousQuestion"> Previous user query. </param>
+        /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswerContext"/> instance for mocking. </returns>
+        public static KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = default, string previousQuestion = null)
+        {
+            return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion);
+        }
+
         /// <summary> Initializes a new instance of AnswersResult. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
         /// <returns> A new <see cref="QuestionAnswering.AnswersResult"/> instance for mocking. </returns>
