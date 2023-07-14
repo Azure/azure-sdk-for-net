@@ -30,6 +30,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             LimitTimeSeconds = limitTimeSeconds;
         }
 
+        /// <summary> Initializes a new instance of StorageApplianceRunReadCommandsContent. </summary>
+        /// <param name="commands"> The list of read-only commands to run. </param>
+        /// <param name="limitTimeSeconds">
+        /// The maximum time the commands are allowed to run.
+        /// If the execution time exceeds the maximum, the script will be stopped, any output produced until then will be captured, and the exit code matching a timeout will be returned (252).
+        /// </param>
+        internal StorageApplianceRunReadCommandsContent(IList<StorageApplianceCommandSpecification> commands, long limitTimeSeconds)
+        {
+            Commands = commands;
+            LimitTimeSeconds = limitTimeSeconds;
+        }
+
         /// <summary> The list of read-only commands to run. </summary>
         public IList<StorageApplianceCommandSpecification> Commands { get; }
         /// <summary>

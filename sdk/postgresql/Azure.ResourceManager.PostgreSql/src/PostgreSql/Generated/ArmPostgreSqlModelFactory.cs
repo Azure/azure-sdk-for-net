@@ -18,6 +18,24 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPostgreSqlModelFactory
     {
+        /// <summary> Initializes a new instance of PostgreSqlServerCreateOrUpdateContent. </summary>
+        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <param name="properties">
+        /// Properties of the server.
+        /// Please note <see cref="PostgreSqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="PostgreSqlServerPropertiesForDefaultCreate"/>, <see cref="PostgreSqlServerPropertiesForGeoRestore"/>, <see cref="PostgreSqlServerPropertiesForRestore"/> and <see cref="PostgreSqlServerPropertiesForReplica"/>.
+        /// </param>
+        /// <param name="location"> The location the resource resides in. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlServerCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static PostgreSqlServerCreateOrUpdateContent PostgreSqlServerCreateOrUpdateContent(ManagedServiceIdentity identity = null, PostgreSqlSku sku = null, PostgreSqlServerPropertiesForCreate properties = null, AzureLocation location = default, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new PostgreSqlServerCreateOrUpdateContent(identity, sku, properties, location, tags);
+        }
+
         /// <summary> Initializes a new instance of PostgreSqlServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -217,6 +235,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlPerformanceTierServiceLevelObjectives(id, edition, vCores, hardwareGeneration, maxBackupRetentionDays, minBackupRetentionDays, maxStorageInMB, minStorageInMB);
         }
 
+        /// <summary> Initializes a new instance of PostgreSqlNameAvailabilityContent. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlNameAvailabilityContent"/> instance for mocking. </returns>
+        public static PostgreSqlNameAvailabilityContent PostgreSqlNameAvailabilityContent(string name = null, ResourceType? resourceType = null)
+        {
+            return new PostgreSqlNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of PostgreSqlNameAvailabilityResult. </summary>
         /// <param name="message"> Error Message. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
@@ -308,6 +335,64 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlServerKeyData PostgreSqlServerKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, PostgreSqlServerKeyType? serverKeyType = null, Uri uri = null, DateTimeOffset? createdOn = null)
         {
             return new PostgreSqlServerKeyData(id, name, resourceType, systemData, kind, serverKeyType, uri, createdOn);
+        }
+
+        /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForDefaultCreate. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlServerPropertiesForDefaultCreate"/> instance for mocking. </returns>
+        public static PostgreSqlServerPropertiesForDefaultCreate PostgreSqlServerPropertiesForDefaultCreate(PostgreSqlServerVersion? version = null, PostgreSqlSslEnforcementEnum? sslEnforcement = null, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = null, PostgreSqlInfrastructureEncryption? infrastructureEncryption = null, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = null, PostgreSqlStorageProfile storageProfile = null, string administratorLogin = null, string administratorLoginPassword = null)
+        {
+            return new PostgreSqlServerPropertiesForDefaultCreate(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, PostgreSqlCreateMode.Default, administratorLogin, administratorLoginPassword);
+        }
+
+        /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForRestore. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="sourceServerId"> The source server id to restore from. </param>
+        /// <param name="restorePointInTime"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlServerPropertiesForRestore"/> instance for mocking. </returns>
+        public static PostgreSqlServerPropertiesForRestore PostgreSqlServerPropertiesForRestore(PostgreSqlServerVersion? version = null, PostgreSqlSslEnforcementEnum? sslEnforcement = null, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = null, PostgreSqlInfrastructureEncryption? infrastructureEncryption = null, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = null, PostgreSqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null, DateTimeOffset restorePointInTime = default)
+        {
+            return new PostgreSqlServerPropertiesForRestore(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, PostgreSqlCreateMode.PointInTimeRestore, sourceServerId, restorePointInTime);
+        }
+
+        /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForGeoRestore. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="sourceServerId"> The source server id to restore from. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlServerPropertiesForGeoRestore"/> instance for mocking. </returns>
+        public static PostgreSqlServerPropertiesForGeoRestore PostgreSqlServerPropertiesForGeoRestore(PostgreSqlServerVersion? version = null, PostgreSqlSslEnforcementEnum? sslEnforcement = null, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = null, PostgreSqlInfrastructureEncryption? infrastructureEncryption = null, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = null, PostgreSqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null)
+        {
+            return new PostgreSqlServerPropertiesForGeoRestore(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, PostgreSqlCreateMode.GeoRestore, sourceServerId);
+        }
+
+        /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForReplica. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="sourceServerId"> The master server id to create replica from. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlServerPropertiesForReplica"/> instance for mocking. </returns>
+        public static PostgreSqlServerPropertiesForReplica PostgreSqlServerPropertiesForReplica(PostgreSqlServerVersion? version = null, PostgreSqlSslEnforcementEnum? sslEnforcement = null, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = null, PostgreSqlInfrastructureEncryption? infrastructureEncryption = null, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = null, PostgreSqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null)
+        {
+            return new PostgreSqlServerPropertiesForReplica(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, PostgreSqlCreateMode.Replica, sourceServerId);
         }
     }
 }

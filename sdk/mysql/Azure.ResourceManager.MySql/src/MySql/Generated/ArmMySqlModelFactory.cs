@@ -18,6 +18,24 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMySqlModelFactory
     {
+        /// <summary> Initializes a new instance of MySqlServerCreateOrUpdateContent. </summary>
+        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <param name="properties">
+        /// Properties of the server.
+        /// Please note <see cref="MySqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MySqlServerPropertiesForDefaultCreate"/>, <see cref="MySqlServerPropertiesForGeoRestore"/>, <see cref="MySqlServerPropertiesForRestore"/> and <see cref="MySqlServerPropertiesForReplica"/>.
+        /// </param>
+        /// <param name="location"> The location the resource resides in. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <returns> A new <see cref="Models.MySqlServerCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static MySqlServerCreateOrUpdateContent MySqlServerCreateOrUpdateContent(ManagedServiceIdentity identity = null, MySqlSku sku = null, MySqlServerPropertiesForCreate properties = null, AzureLocation location = default, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new MySqlServerCreateOrUpdateContent(identity, sku, properties, location, tags);
+        }
+
         /// <summary> Initializes a new instance of MySqlServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -217,6 +235,15 @@ namespace Azure.ResourceManager.MySql.Models
             return new MySqlPerformanceTierServiceLevelObjectives(id, edition, vCores, hardwareGeneration, maxBackupRetentionDays, minBackupRetentionDays, maxStorageInMB, minStorageInMB);
         }
 
+        /// <summary> Initializes a new instance of MySqlNameAvailabilityContent. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <returns> A new <see cref="Models.MySqlNameAvailabilityContent"/> instance for mocking. </returns>
+        public static MySqlNameAvailabilityContent MySqlNameAvailabilityContent(string name = null, ResourceType? resourceType = null)
+        {
+            return new MySqlNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of MySqlNameAvailabilityResult. </summary>
         /// <param name="message"> Error Message. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
@@ -406,6 +433,64 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlServerKeyData MySqlServerKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, MySqlServerKeyType? serverKeyType = null, Uri uri = null, DateTimeOffset? createdOn = null)
         {
             return new MySqlServerKeyData(id, name, resourceType, systemData, kind, serverKeyType, uri, createdOn);
+        }
+
+        /// <summary> Initializes a new instance of MySqlServerPropertiesForDefaultCreate. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). The login name is required when updating password. </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
+        /// <returns> A new <see cref="Models.MySqlServerPropertiesForDefaultCreate"/> instance for mocking. </returns>
+        public static MySqlServerPropertiesForDefaultCreate MySqlServerPropertiesForDefaultCreate(MySqlServerVersion? version = null, MySqlSslEnforcementEnum? sslEnforcement = null, MySqlMinimalTlsVersionEnum? minimalTlsVersion = null, MySqlInfrastructureEncryption? infrastructureEncryption = null, MySqlPublicNetworkAccessEnum? publicNetworkAccess = null, MySqlStorageProfile storageProfile = null, string administratorLogin = null, string administratorLoginPassword = null)
+        {
+            return new MySqlServerPropertiesForDefaultCreate(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, MySqlCreateMode.Default, administratorLogin, administratorLoginPassword);
+        }
+
+        /// <summary> Initializes a new instance of MySqlServerPropertiesForRestore. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="sourceServerId"> The source server id to restore from. </param>
+        /// <param name="restorePointInTime"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
+        /// <returns> A new <see cref="Models.MySqlServerPropertiesForRestore"/> instance for mocking. </returns>
+        public static MySqlServerPropertiesForRestore MySqlServerPropertiesForRestore(MySqlServerVersion? version = null, MySqlSslEnforcementEnum? sslEnforcement = null, MySqlMinimalTlsVersionEnum? minimalTlsVersion = null, MySqlInfrastructureEncryption? infrastructureEncryption = null, MySqlPublicNetworkAccessEnum? publicNetworkAccess = null, MySqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null, DateTimeOffset restorePointInTime = default)
+        {
+            return new MySqlServerPropertiesForRestore(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, MySqlCreateMode.PointInTimeRestore, sourceServerId, restorePointInTime);
+        }
+
+        /// <summary> Initializes a new instance of MySqlServerPropertiesForGeoRestore. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="sourceServerId"> The source server id to restore from. </param>
+        /// <returns> A new <see cref="Models.MySqlServerPropertiesForGeoRestore"/> instance for mocking. </returns>
+        public static MySqlServerPropertiesForGeoRestore MySqlServerPropertiesForGeoRestore(MySqlServerVersion? version = null, MySqlSslEnforcementEnum? sslEnforcement = null, MySqlMinimalTlsVersionEnum? minimalTlsVersion = null, MySqlInfrastructureEncryption? infrastructureEncryption = null, MySqlPublicNetworkAccessEnum? publicNetworkAccess = null, MySqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null)
+        {
+            return new MySqlServerPropertiesForGeoRestore(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, MySqlCreateMode.GeoRestore, sourceServerId);
+        }
+
+        /// <summary> Initializes a new instance of MySqlServerPropertiesForReplica. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="sourceServerId"> The master server id to create replica from. </param>
+        /// <returns> A new <see cref="Models.MySqlServerPropertiesForReplica"/> instance for mocking. </returns>
+        public static MySqlServerPropertiesForReplica MySqlServerPropertiesForReplica(MySqlServerVersion? version = null, MySqlSslEnforcementEnum? sslEnforcement = null, MySqlMinimalTlsVersionEnum? minimalTlsVersion = null, MySqlInfrastructureEncryption? infrastructureEncryption = null, MySqlPublicNetworkAccessEnum? publicNetworkAccess = null, MySqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null)
+        {
+            return new MySqlServerPropertiesForReplica(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, MySqlCreateMode.Replica, sourceServerId);
         }
     }
 }

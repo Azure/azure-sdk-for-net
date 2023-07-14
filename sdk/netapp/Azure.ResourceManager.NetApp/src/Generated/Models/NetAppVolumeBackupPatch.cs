@@ -20,6 +20,31 @@ namespace Azure.ResourceManager.NetApp.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of NetAppVolumeBackupPatch. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="backupId"> UUID v4 used to identify the Backup. </param>
+        /// <param name="createdOn"> The creation date of the backup. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="size"> Size of backup. </param>
+        /// <param name="label"> Label for backup. </param>
+        /// <param name="backupType"> Type of backup Manual or Scheduled. </param>
+        /// <param name="failureReason"> Failure reason. </param>
+        /// <param name="volumeName"> Volume name. </param>
+        /// <param name="useExistingSnapshot"> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </param>
+        internal NetAppVolumeBackupPatch(IDictionary<string, string> tags, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, string volumeName, bool? useExistingSnapshot)
+        {
+            Tags = tags;
+            BackupId = backupId;
+            CreatedOn = createdOn;
+            ProvisioningState = provisioningState;
+            Size = size;
+            Label = label;
+            BackupType = backupType;
+            FailureReason = failureReason;
+            VolumeName = volumeName;
+            UseExistingSnapshot = useExistingSnapshot;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> UUID v4 used to identify the Backup. </summary>

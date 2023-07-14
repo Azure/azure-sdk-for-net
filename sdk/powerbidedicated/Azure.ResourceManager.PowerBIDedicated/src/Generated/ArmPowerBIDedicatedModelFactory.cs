@@ -54,6 +54,22 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new PowerBIDedicatedResourceData(id, name, resourceType, location, tags, systemData);
         }
 
+        /// <summary> Initializes a new instance of DedicatedCapacityPatch. </summary>
+        /// <param name="sku"> The SKU of the Dedicated capacity resource. </param>
+        /// <param name="tags"> Key-value pairs of additional provisioning properties. </param>
+        /// <param name="administrationMembers"> A collection of Dedicated capacity administrators. </param>
+        /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
+        /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
+        /// <param name="friendlyName"> Capacity name. </param>
+        /// <returns> A new <see cref="Models.DedicatedCapacityPatch"/> instance for mocking. </returns>
+        public static DedicatedCapacityPatch DedicatedCapacityPatch(CapacitySku sku = null, IDictionary<string, string> tags = null, IEnumerable<string> administrationMembers = null, Mode? mode = null, Guid? tenantId = null, string friendlyName = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            administrationMembers ??= new List<string>();
+
+            return new DedicatedCapacityPatch(sku, tags, administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList()) : null, mode, tenantId, friendlyName);
+        }
+
         /// <summary> Initializes a new instance of SkuDetailsForExistingResource. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
