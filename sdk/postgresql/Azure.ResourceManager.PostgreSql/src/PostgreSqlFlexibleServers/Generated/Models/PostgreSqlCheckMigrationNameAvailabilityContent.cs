@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlCheckMigrationNameAvailabilityContent. </summary>
         /// <param name="name"> The resource name to verify. </param>
         /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="nameAvailable"> Indicates whether the resource name is available. </param>
+        /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="reason"> Migration name availability reason. </param>
         /// <param name="message"> Migration name availability message. </param>
-        internal PostgreSqlCheckMigrationNameAvailabilityContent(string name, ResourceType resourceType, bool? nameAvailable, PostgreSqlMigrationNameUnavailableReason? reason, string message)
+        internal PostgreSqlCheckMigrationNameAvailabilityContent(string name, ResourceType resourceType, bool? isNameAvailable, PostgreSqlMigrationNameUnavailableReason? reason, string message)
         {
             Name = name;
             ResourceType = resourceType;
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> The type of the resource. </summary>
         public ResourceType ResourceType { get; set; }
         /// <summary> Indicates whether the resource name is available. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary> Migration name availability reason. </summary>
         public PostgreSqlMigrationNameUnavailableReason? Reason { get; }
         /// <summary> Migration name availability message. </summary>

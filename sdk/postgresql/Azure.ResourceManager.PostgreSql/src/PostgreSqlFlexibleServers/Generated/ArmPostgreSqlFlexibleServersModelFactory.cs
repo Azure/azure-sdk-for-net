@@ -417,13 +417,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlCheckMigrationNameAvailabilityContent. </summary>
         /// <param name="name"> The resource name to verify. </param>
         /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="nameAvailable"> Indicates whether the resource name is available. </param>
+        /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="reason"> Migration name availability reason. </param>
         /// <param name="message"> Migration name availability message. </param>
         /// <returns> A new <see cref="Models.PostgreSqlCheckMigrationNameAvailabilityContent"/> instance for mocking. </returns>
-        public static PostgreSqlCheckMigrationNameAvailabilityContent PostgreSqlCheckMigrationNameAvailabilityContent(string name = null, ResourceType resourceType = default, bool? nameAvailable = null, PostgreSqlMigrationNameUnavailableReason? reason = null, string message = null)
+        public static PostgreSqlCheckMigrationNameAvailabilityContent PostgreSqlCheckMigrationNameAvailabilityContent(string name = null, ResourceType resourceType = default, bool? isNameAvailable = null, PostgreSqlMigrationNameUnavailableReason? reason = null, string message = null)
         {
-            return new PostgreSqlCheckMigrationNameAvailabilityContent(name, resourceType, nameAvailable, reason, message);
+            return new PostgreSqlCheckMigrationNameAvailabilityContent(name, resourceType, isNameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFile. </summary>

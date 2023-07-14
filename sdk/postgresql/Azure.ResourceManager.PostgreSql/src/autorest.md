@@ -283,6 +283,7 @@ rename-mapping:
   MigrationNameAvailabilityReason: PostgreSqlMigrationNameUnavailableReason
   MigrationResourceListResult: PostgreSqlMigrationResourceListResult
   MigrationNameAvailabilityResource: PostgreSqlCheckMigrationNameAvailabilityContent
+  MigrationNameAvailabilityResource.nameAvailable: IsNameAvailable
   MigrationSecretParameters: PostgreSqlMigrationSecretParameters
   MigrationState: PostgreSqlMigrationState
   MigrationStatus: PostgreSqlMigrationStatus

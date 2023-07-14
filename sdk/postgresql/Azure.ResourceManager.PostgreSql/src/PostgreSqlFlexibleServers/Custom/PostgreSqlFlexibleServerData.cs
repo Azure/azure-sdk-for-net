@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     public partial class PostgreSqlFlexibleServerData : TrackedResourceData
     {
         /// <summary> Max storage allowed for a server. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public int? StorageSizeInGB
         {
             get => Storage is null ? default : Storage.StorageSizeInGB;
