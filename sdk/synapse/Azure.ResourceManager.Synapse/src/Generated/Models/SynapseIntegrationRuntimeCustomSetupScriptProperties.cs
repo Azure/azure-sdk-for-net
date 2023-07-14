@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeCustomSetupScriptProperties. </summary>
         /// <param name="blobContainerUri"> The URI of the Azure blob container that contains the custom setup script. </param>
         /// <param name="sasToken"> The SAS token of the Azure blob container. </param>
-        internal SynapseIntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, DataFactorySecretString sasToken)
+        internal SynapseIntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, SynapseSecureString sasToken)
         {
             BlobContainerUri = blobContainerUri;
             SasToken = sasToken;
@@ -30,6 +29,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> The URI of the Azure blob container that contains the custom setup script. </summary>
         public Uri BlobContainerUri { get; set; }
         /// <summary> The SAS token of the Azure blob container. </summary>
-        public DataFactorySecretString SasToken { get; set; }
+        public SynapseSecureString SasToken { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                JsonSerializer.Serialize(writer, SasToken);
+                writer.WriteObjectValue(SasToken);
             }
             writer.WriteEndObject();
         }
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             Optional<Uri> blobContainerUri = default;
-            Optional<DataFactorySecretString> sasToken = default;
+            Optional<SynapseSecureString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobContainerUri"u8))
@@ -55,11 +54,11 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    sasToken = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
+                    sasToken = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
                     continue;
                 }
             }
-            return new SynapseIntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken);
+            return new SynapseIntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken.Value);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeKeyAuthorization. </summary>
         /// <param name="key"> The key used for authorization. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public SynapseLinkedIntegrationRuntimeKeyAuthorization(DataFactorySecretString key)
+        public SynapseLinkedIntegrationRuntimeKeyAuthorization(SynapseSecureString key)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -28,13 +27,13 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeKeyAuthorization. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="key"> The key used for authorization. </param>
-        internal SynapseLinkedIntegrationRuntimeKeyAuthorization(string authorizationType, DataFactorySecretString key) : base(authorizationType)
+        internal SynapseLinkedIntegrationRuntimeKeyAuthorization(string authorizationType, SynapseSecureString key) : base(authorizationType)
         {
             Key = key;
             AuthorizationType = authorizationType ?? "Key";
         }
 
         /// <summary> The key used for authorization. </summary>
-        public DataFactorySecretString Key { get; set; }
+        public SynapseSecureString Key { get; set; }
     }
 }
