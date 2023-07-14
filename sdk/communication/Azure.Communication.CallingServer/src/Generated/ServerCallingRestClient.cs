@@ -49,7 +49,7 @@ namespace Azure.Communication.CallingServer
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now);
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -123,7 +123,7 @@ namespace Azure.Communication.CallingServer
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now);
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -199,7 +199,7 @@ namespace Azure.Communication.CallingServer
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now);
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(redirectCallRequest);
@@ -262,7 +262,7 @@ namespace Azure.Communication.CallingServer
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now);
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(rejectCallRequest);
