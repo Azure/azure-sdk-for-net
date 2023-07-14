@@ -13,6 +13,18 @@ namespace Azure.AI.Translation.Document
     /// <summary> Model factory for models. </summary>
     public static partial class DocumentTranslationModelFactory
     {
+        /// <summary> Initializes a new instance of DocumentTranslationInput. </summary>
+        /// <param name="source"> Source of the input documents. </param>
+        /// <param name="targets"> Location of the destination for the output. </param>
+        /// <param name="storageUriKind"> Storage type of the input documents source string. </param>
+        /// <returns> A new <see cref="Document.DocumentTranslationInput"/> instance for mocking. </returns>
+        public static DocumentTranslationInput DocumentTranslationInput(TranslationSource source = null, IEnumerable<TranslationTarget> targets = null, StorageInputUriKind? storageUriKind = null)
+        {
+            targets ??= new List<TranslationTarget>();
+
+            return new DocumentTranslationInput(source, targets?.ToList(), storageUriKind);
+        }
+
         /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>

@@ -47,6 +47,32 @@ namespace Azure.ResourceManager.StoragePool.Models
             return new DiskPoolData(id, name, resourceType, systemData, tags, location, sku, managedBy, managedByExtended?.ToList(), provisioningState, availabilityZones?.ToList(), status, disks?.ToList(), subnetId, additionalCapabilities?.ToList());
         }
 
+        /// <summary> Initializes a new instance of DiskPoolCreateOrUpdateContent. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="sku"> Determines the SKU of the Disk Pool. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
+        /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
+        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
+        /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
+        /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
+        /// <param name="additionalCapabilities"> List of additional capabilities for a Disk Pool. </param>
+        /// <returns> A new <see cref="Models.DiskPoolCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static DiskPoolCreateOrUpdateContent DiskPoolCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, StoragePoolSku sku = null, IDictionary<string, string> tags = null, AzureLocation location = default, string managedBy = null, IEnumerable<string> managedByExtended = null, IEnumerable<string> availabilityZones = null, IEnumerable<WritableSubResource> disks = null, ResourceIdentifier subnetId = null, IEnumerable<string> additionalCapabilities = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            managedByExtended ??= new List<string>();
+            availabilityZones ??= new List<string>();
+            disks ??= new List<WritableSubResource>();
+            additionalCapabilities ??= new List<string>();
+
+            return new DiskPoolCreateOrUpdateContent(id, name, resourceType, systemData, sku, tags, location, managedBy, managedByExtended?.ToList(), availabilityZones?.ToList(), disks?.ToList(), subnetId, additionalCapabilities?.ToList());
+        }
+
         /// <summary> Initializes a new instance of DiskPoolZoneInfo. </summary>
         /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for Disk Pool. </param>

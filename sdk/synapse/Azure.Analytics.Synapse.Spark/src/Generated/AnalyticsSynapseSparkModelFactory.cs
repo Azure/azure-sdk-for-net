@@ -135,6 +135,37 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkServiceError(message, errorCode, source);
         }
 
+        /// <summary> Initializes a new instance of SparkBatchJobOptions. </summary>
+        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="artifactId"></param>
+        /// <param name="name"></param>
+        /// <param name="file"></param>
+        /// <param name="className"></param>
+        /// <param name="arguments"></param>
+        /// <param name="jars"></param>
+        /// <param name="pythonFiles"></param>
+        /// <param name="files"></param>
+        /// <param name="archives"></param>
+        /// <param name="configuration"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="driverMemory"></param>
+        /// <param name="driverCores"></param>
+        /// <param name="executorMemory"></param>
+        /// <param name="executorCores"></param>
+        /// <param name="executorCount"></param>
+        /// <returns> A new <see cref="Models.SparkBatchJobOptions"/> instance for mocking. </returns>
+        public static SparkBatchJobOptions SparkBatchJobOptions(IDictionary<string, string> tags = null, string artifactId = null, string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            arguments ??= new List<string>();
+            jars ??= new List<string>();
+            pythonFiles ??= new List<string>();
+            files ??= new List<string>();
+            archives ??= new List<string>();
+            configuration ??= new Dictionary<string, string>();
+
+            return new SparkBatchJobOptions(tags, artifactId, name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount);
+        }
+
         /// <summary> Initializes a new instance of SparkSessionCollection. </summary>
         /// <param name="from"></param>
         /// <param name="total"></param>
@@ -193,6 +224,37 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static SparkSessionState SparkSessionState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? idleAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? shuttingDownAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, DateTimeOffset? busyAt = null, DateTimeOffset? errorAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
         {
             return new SparkSessionState(notStartedAt, startingAt, idleAt, deadAt, shuttingDownAt, terminatedAt, recoveringAt, busyAt, errorAt, currentState, jobCreationRequest);
+        }
+
+        /// <summary> Initializes a new instance of SparkSessionOptions. </summary>
+        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="artifactId"></param>
+        /// <param name="name"></param>
+        /// <param name="file"></param>
+        /// <param name="className"></param>
+        /// <param name="arguments"></param>
+        /// <param name="jars"></param>
+        /// <param name="pythonFiles"></param>
+        /// <param name="files"></param>
+        /// <param name="archives"></param>
+        /// <param name="configuration"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="driverMemory"></param>
+        /// <param name="driverCores"></param>
+        /// <param name="executorMemory"></param>
+        /// <param name="executorCores"></param>
+        /// <param name="executorCount"></param>
+        /// <returns> A new <see cref="Models.SparkSessionOptions"/> instance for mocking. </returns>
+        public static SparkSessionOptions SparkSessionOptions(IDictionary<string, string> tags = null, string artifactId = null, string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            arguments ??= new List<string>();
+            jars ??= new List<string>();
+            pythonFiles ??= new List<string>();
+            files ??= new List<string>();
+            archives ??= new List<string>();
+            configuration ??= new Dictionary<string, string>();
+
+            return new SparkSessionOptions(tags, artifactId, name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount);
         }
 
         /// <summary> Initializes a new instance of SparkStatementCollection. </summary>

@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmStorageSyncModelFactory
     {
+        /// <summary> Initializes a new instance of StorageSyncNameAvailabilityContent. </summary>
+        /// <param name="name"> The name to check for availability. </param>
+        /// <param name="resourceType"> The resource type. Must be set to Microsoft.StorageSync/storageSyncServices. </param>
+        /// <returns> A new <see cref="Models.StorageSyncNameAvailabilityContent"/> instance for mocking. </returns>
+        public static StorageSyncNameAvailabilityContent StorageSyncNameAvailabilityContent(string name = null, StorageSyncResourceType resourceType = default)
+        {
+            return new StorageSyncNameAvailabilityContent(name, resourceType);
+        }
+
         /// <summary> Initializes a new instance of StorageSyncNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or invalid and cannot be used. </param>
         /// <param name="reason"> Gets the reason that a Storage Sync Service name could not be used. The Reason element is only returned if NameAvailable is false. </param>
@@ -25,6 +34,18 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static StorageSyncNameAvailabilityResult StorageSyncNameAvailabilityResult(bool? isNameAvailable = null, StorageSyncNameUnavailableReason? reason = null, string message = null)
         {
             return new StorageSyncNameAvailabilityResult(isNameAvailable, reason, message);
+        }
+
+        /// <summary> Initializes a new instance of StorageSyncServiceCreateOrUpdateContent. </summary>
+        /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
+        /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used for viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key with a length no greater than 128 characters and a value with a length no greater than 256 characters. </param>
+        /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
+        /// <returns> A new <see cref="Models.StorageSyncServiceCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static StorageSyncServiceCreateOrUpdateContent StorageSyncServiceCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = null, IncomingTrafficPolicy? incomingTrafficPolicy = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new StorageSyncServiceCreateOrUpdateContent(location, tags, incomingTrafficPolicy);
         }
 
         /// <summary> Initializes a new instance of StorageSyncServiceData. </summary>
