@@ -44,12 +44,17 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename_mapping:
+  AccountResourceProperties.appId: -|uuid
+  AccountResourceProperties.billingPlanId: -|uuid
+
 prepend-rp-prefix:
     - ProvisioningState
     - AccountResource
     - AccountResourceList
     - AccountPatchResource
     - AccountResourceProperties
+    - TagUpdate
     
 directive:
     - remove-operation: 'Operation_List'
