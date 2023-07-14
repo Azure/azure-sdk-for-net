@@ -47,6 +47,7 @@ function Update-PSModulePathForCI()
   }
 }
 
+# Manual test at eng/common-tests/psmodule-helpers/Install-Module-Parallel.ps1
 # If we want to use another default repository other then PSGallery we can update the default parameters
 function Install-ModuleIfNotInstalled()
 {
