@@ -27,7 +27,7 @@ namespace Azure.Identity.BrokeredAuthentication
 
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
-            builder.WithBrokerPreview().WithParentActivityOrWindow(() => _parentWindowHandle);
+            builder.WithBroker().WithParentActivityOrWindow(() => _parentWindowHandle);
         }
     }
 }
