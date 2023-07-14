@@ -72,9 +72,8 @@ namespace Azure.AI.OpenAI.Samples
 
             var chatCompletionsOptions = new ChatCompletionsOptions(new ChatMessage[]
             {
-    new ChatMessage(ChatRole.System)
+    new ChatMessage(ChatRole.System, "<content>")
 {
-        Content = "<Content>",
         Name = "<Name>",
         FunctionCall = new FunctionCall("<name>", "<arguments>"),
     }

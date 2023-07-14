@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -20,7 +21,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string id = default;
-            long created = default;
+            DateTimeOffset created = default;
             Optional<long> expires = default;
             Optional<ImageGenerations> result = default;
             AzureOpenAIOperationState status = default;
@@ -34,7 +35,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("created"u8))
                 {
-                    created = property.Value.GetInt64();
+                    created = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("expires"u8))

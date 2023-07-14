@@ -65,7 +65,7 @@ namespace Azure.AI.OpenAI
             DateTimeOffset created,
             IEnumerable<ImageLocation> data)
         {
-            return new ImageGenerations(created.ToUnixTimeSeconds(), data);
+            return new ImageGenerations(created, data);
         }
     }
 }

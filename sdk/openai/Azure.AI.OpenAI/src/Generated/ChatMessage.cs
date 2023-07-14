@@ -12,9 +12,11 @@ namespace Azure.AI.OpenAI
     {
         /// <summary> Initializes a new instance of ChatMessage. </summary>
         /// <param name="role"> The role associated with this message payload. </param>
-        public ChatMessage(ChatRole role)
+        /// <param name="content"> The text associated with this message payload. </param>
+        public ChatMessage(ChatRole role, string content)
         {
             Role = role;
+            Content = content;
         }
 
         /// <summary> Initializes a new instance of ChatMessage. </summary>

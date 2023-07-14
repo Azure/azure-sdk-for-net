@@ -13,6 +13,33 @@ namespace Azure.AI.OpenAI
 {
     public partial class ChatMessage : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("role"u8);
+            writer.WriteStringValue(Role.ToString());
+            if (Content != null)
+            {
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
+            }
+            else
+            {
+                writer.WriteNull("content");
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(FunctionCall))
+            {
+                writer.WritePropertyName("function_call"u8);
+                writer.WriteObjectValue(FunctionCall);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static ChatMessage DeserializeChatMessage(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -20,7 +47,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             ChatRole role = default;
-            Optional<string> content = default;
+            string content = default;
             Optional<string> name = default;
             Optional<FunctionCall> functionCall = default;
             foreach (var property in element.EnumerateObject())
@@ -32,6 +59,11 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("content"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        content = null;
+                        continue;
+                    }
                     content = property.Value.GetString();
                     continue;
                 }
@@ -50,7 +82,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ChatMessage(role, content.Value, name.Value, functionCall.Value);
+            return new ChatMessage(role, content, name.Value, functionCall.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

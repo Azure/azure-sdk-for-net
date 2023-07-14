@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -21,7 +22,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string id = default;
-            int created = default;
+            DateTimeOffset created = default;
             Optional<IReadOnlyList<PromptFilterResult>> promptAnnotations = default;
             IReadOnlyList<Choice> choices = default;
             CompletionsUsage usage = default;
@@ -34,7 +35,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("created"u8))
                 {
-                    created = property.Value.GetInt32();
+                    created = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("prompt_annotations"u8))

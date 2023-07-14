@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
     {
         /// <summary> Initializes a new instance of ChatCompletions. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
-        /// <param name="internalCreatedSecondsAfterUnixEpoch">
+        /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
         /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
         /// </param>
@@ -32,14 +32,14 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="choices"/> or <paramref name="usage"/> is null. </exception>
-        internal ChatCompletions(string id, int internalCreatedSecondsAfterUnixEpoch, IEnumerable<ChatChoice> choices, CompletionsUsage usage)
+        internal ChatCompletions(string id, DateTimeOffset created, IEnumerable<ChatChoice> choices, CompletionsUsage usage)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(choices, nameof(choices));
             Argument.AssertNotNull(usage, nameof(usage));
 
             Id = id;
-            InternalCreatedSecondsAfterUnixEpoch = internalCreatedSecondsAfterUnixEpoch;
+            Created = created;
             Choices = choices.ToList();
             PromptFilterResults = new ChangeTrackingList<PromptFilterResult>();
             Usage = usage;
@@ -47,7 +47,7 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of ChatCompletions. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
-        /// <param name="internalCreatedSecondsAfterUnixEpoch">
+        /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
         /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
         /// </param>
@@ -61,10 +61,10 @@ namespace Azure.AI.OpenAI
         /// results for different prompts may arrive at different times or in different orders.
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        internal ChatCompletions(string id, int internalCreatedSecondsAfterUnixEpoch, IReadOnlyList<ChatChoice> choices, IReadOnlyList<PromptFilterResult> promptFilterResults, CompletionsUsage usage)
+        internal ChatCompletions(string id, DateTimeOffset created, IReadOnlyList<ChatChoice> choices, IReadOnlyList<PromptFilterResult> promptFilterResults, CompletionsUsage usage)
         {
             Id = id;
-            InternalCreatedSecondsAfterUnixEpoch = internalCreatedSecondsAfterUnixEpoch;
+            Created = created;
             Choices = choices;
             PromptFilterResults = promptFilterResults;
             Usage = usage;
@@ -72,6 +72,11 @@ namespace Azure.AI.OpenAI
 
         /// <summary> A unique identifier associated with this chat completions response. </summary>
         public string Id { get; }
+        /// <summary>
+        /// The first timestamp associated with generation activity for this completions response,
+        /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
+        /// </summary>
+        public DateTimeOffset Created { get; }
         /// <summary>
         /// The collection of completions choices associated with this completions response.
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.

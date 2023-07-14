@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
         /// <param name="created"> A timestamp when this job or item was created (in unix epochs). </param>
         /// <param name="status"> The status of the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal BatchImageGenerationOperationResponse(string id, long created, AzureOpenAIOperationState status)
+        internal BatchImageGenerationOperationResponse(string id, DateTimeOffset created, AzureOpenAIOperationState status)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -35,7 +35,7 @@ namespace Azure.AI.OpenAI
         /// <param name="result"> The result of the operation if the operation succeeded. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> The error if the operation failed. </param>
-        internal BatchImageGenerationOperationResponse(string id, long created, long? expires, ImageGenerations result, AzureOpenAIOperationState status, ResponseError error)
+        internal BatchImageGenerationOperationResponse(string id, DateTimeOffset created, long? expires, ImageGenerations result, AzureOpenAIOperationState status, ResponseError error)
         {
             Id = id;
             Created = created;
@@ -48,7 +48,7 @@ namespace Azure.AI.OpenAI
         /// <summary> The ID of the operation. </summary>
         public string Id { get; }
         /// <summary> A timestamp when this job or item was created (in unix epochs). </summary>
-        public long Created { get; }
+        public DateTimeOffset Created { get; }
         /// <summary> A timestamp when this operation and its associated images expire and will be deleted (in unix epochs). </summary>
         public long? Expires { get; }
         /// <summary> The result of the operation if the operation succeeded. </summary>

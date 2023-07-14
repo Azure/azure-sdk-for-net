@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -17,16 +19,20 @@ namespace Azure.AI.OpenAI
         /// <summary>
         ///     Gets a list of generated image items in the format specified for the request.
         /// </summary>
-        [CodeGenMember("InternalEmittedImageResponseItems")]
+        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeDataProperty))]
         public IReadOnlyList<ImageLocation> Data { get; }
 
-        /// <summary>
-        /// Gets the timestamp for when this <see cref="ImageGenerations"/> response was originated.
-        /// </summary>
-        public DateTimeOffset Created => DateTimeOffset.FromUnixTimeSeconds(InternalCreatedSecondsAfterUnixEpoch);
-
-        // CUSTOM CODE NOTE: Pending code generation directly deserializing to DateTimeOffset, that conversion is
-        //                   manual using an internal field.
-        internal long InternalCreatedSecondsAfterUnixEpoch { get; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void DeserializeDataProperty(JsonProperty property, ref IReadOnlyList<ImageLocation> data)
+        {
+            // CUSTOM CODE NOTE: this hook for Data is needed pending improved codegen support for union types; it
+            //                      otherwise generates with "property.Value.()"
+            List<ImageLocation> array = new List<ImageLocation>();
+            foreach (var item in property.Value.EnumerateArray())
+            {
+                array.Add(ImageLocation.DeserializeImageLocation(item));
+            }
+            data = array;
+        }
     }
 }
