@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(ConnectionString))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
-                writer.WriteObjectValue(AccountKey);
+                JsonSerializer.Serialize(writer, AccountKey);
             }
             if (Optional.IsDefined(SasUri))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken);
+                JsonSerializer.Serialize(writer, SasToken);
             }
             if (Optional.IsDefined(FileShare))
             {
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> userId = default;
             Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<DataFactoryElement<string>> connectionString = default;
-            Optional<AzureKeyVaultSecretReference> accountKey = default;
+            Optional<DataFactoryKeyVaultSecretReference> accountKey = default;
             Optional<DataFactoryElement<string>> sasUri = default;
-            Optional<AzureKeyVaultSecretReference> sasToken = default;
+            Optional<DataFactoryKeyVaultSecretReference> sasToken = default;
             Optional<DataFactoryElement<string>> fileShare = default;
             Optional<DataFactoryElement<string>> snapshot = default;
             Optional<BinaryData> encryptedCredential = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("connectionString"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accountKey = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(property0.Value);
+                            accountKey = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sasUri"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sasToken = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(property0.Value);
+                            sasToken = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("fileShare"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFileStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host.Value, userId.Value, password.Value, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, fileShare.Value, snapshot.Value, encryptedCredential.Value);
+            return new AzureFileStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host.Value, userId.Value, password, connectionString.Value, accountKey, sasUri.Value, sasToken, fileShare.Value, snapshot.Value, encryptedCredential.Value);
         }
     }
 }
