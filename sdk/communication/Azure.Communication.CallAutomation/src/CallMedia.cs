@@ -261,7 +261,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="playSource"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual Response<PlayResult> PlayToAll(PlaySource playSource,  CancellationToken cancellationToken = default)
+        public virtual Response<PlayResult> PlayToAll(PlaySource playSource, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
             scope.Start();
@@ -411,6 +411,107 @@ namespace Azure.Communication.CallAutomation
 
                 return request;
             }
+            else if (recognizeOptions is CallMediaRecognizeChoiceOptions recognizeChoiceOptions)
+            {
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeChoiceOptions.TargetParticipant))
+                {
+                    InterruptPrompt = recognizeChoiceOptions.InterruptPrompt,
+                    InitialSilenceTimeoutInSeconds = (int)recognizeChoiceOptions.InitialSilenceTimeout.TotalSeconds
+                };
+
+                recognizeChoiceOptions.RecognizeChoices
+                    .ToList().ForEach(t => recognizeConfigurationsInternal.Choices.Add(t));
+
+                if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechLanguage))
+                {
+                    recognizeConfigurationsInternal.SpeechLanguage = recognizeChoiceOptions.SpeechLanguage;
+                }
+
+                if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechModelEndpointId))
+                {
+                    recognizeConfigurationsInternal.SpeechRecognitionModelEndpointId = recognizeChoiceOptions.SpeechModelEndpointId;
+                }
+
+                RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeChoiceOptions.InputType, recognizeConfigurationsInternal);
+
+                request.PlayPrompt = TranslatePlaySourceToInternal(recognizeChoiceOptions.Prompt);
+                request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
+                request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
+
+                return request;
+            }
+            else if (recognizeOptions is CallMediaRecognizeSpeechOptions recognizeSpeechOptions)
+            {
+                SpeechOptionsInternal speechConfigurations = new SpeechOptionsInternal()
+                {
+                    EndSilenceTimeoutInMs = (long)recognizeSpeechOptions.EndSilenceTimeout.TotalMilliseconds
+                };
+
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOptions.TargetParticipant))
+                {
+                    InterruptPrompt = recognizeSpeechOptions.InterruptPrompt,
+                    InitialSilenceTimeoutInSeconds = (int)recognizeSpeechOptions.InitialSilenceTimeout.TotalSeconds,
+                    SpeechOptions = speechConfigurations
+                };
+
+                if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechLanguage))
+                {
+                    recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOptions.SpeechLanguage;
+                }
+
+                if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechModelEndpointId))
+                {
+                    recognizeConfigurationsInternal.SpeechRecognitionModelEndpointId = recognizeSpeechOptions.SpeechModelEndpointId;
+                }
+
+                RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOptions.InputType, recognizeConfigurationsInternal);
+
+                request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOptions.Prompt);
+                request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
+                request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
+
+                return request;
+            }
+            else if (recognizeOptions is CallMediaRecognizeSpeechOrDtmfOptions recognizeSpeechOrDtmfOptions)
+            {
+                SpeechOptionsInternal speechConfigurations = new SpeechOptionsInternal()
+                {
+                    EndSilenceTimeoutInMs = (long)recognizeSpeechOrDtmfOptions.EndSilenceTimeout.TotalMilliseconds
+                };
+
+                DtmfOptionsInternal dtmfConfigurations = new DtmfOptionsInternal()
+                {
+                    InterToneTimeoutInSeconds = (int)recognizeSpeechOrDtmfOptions.InterToneTimeout.TotalSeconds,
+                    MaxTonesToCollect = recognizeSpeechOrDtmfOptions.MaxTonesToCollect,
+                    StopTones = recognizeSpeechOrDtmfOptions.StopTones
+                };
+
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOrDtmfOptions.TargetParticipant))
+                {
+                    InterruptPrompt = recognizeSpeechOrDtmfOptions.InterruptPrompt,
+                    InitialSilenceTimeoutInSeconds = (int)recognizeSpeechOrDtmfOptions.InitialSilenceTimeout.TotalSeconds,
+                    SpeechOptions = speechConfigurations,
+                    DtmfOptions = dtmfConfigurations,
+                };
+
+                if (!String.IsNullOrEmpty(recognizeSpeechOrDtmfOptions.SpeechLanguage))
+                {
+                    recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOrDtmfOptions.SpeechLanguage;
+                }
+
+                if (!String.IsNullOrEmpty(recognizeSpeechOrDtmfOptions.SpeechModelEndpointId))
+                {
+                    recognizeConfigurationsInternal.SpeechRecognitionModelEndpointId = recognizeSpeechOrDtmfOptions.SpeechModelEndpointId;
+                }
+
+                RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOrDtmfOptions.InputType, recognizeConfigurationsInternal);
+
+                request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOrDtmfOptions.Prompt);
+                request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
+                request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
+
+                return request;
+            }
             else
             {
                 throw new NotSupportedException(recognizeOptions.GetType().Name);
@@ -428,8 +529,212 @@ namespace Azure.Communication.CallAutomation
                 sourceInternal.PlaySourceCacheId = fileSource.PlaySourceCacheId;
                 return sourceInternal;
             }
+            else if (playSource != null && playSource is TextSource textSource)
+            {
+                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Text);
+                sourceInternal.TextSource = new TextSourceInternal(textSource.Text);
+                sourceInternal.TextSource.SourceLocale = textSource.SourceLocale ?? null;
+                sourceInternal.TextSource.VoiceGender = textSource.VoiceGender ?? GenderType.Male;
+                sourceInternal.TextSource.VoiceName = textSource.VoiceName ?? null;
+                sourceInternal.TextSource.CustomVoiceEndpointId = textSource.CustomVoiceEndpointId ?? null;
+                sourceInternal.PlaySourceCacheId = textSource.PlaySourceCacheId;
+                return sourceInternal;
+            }
+            else if (playSource != null && playSource is SsmlSource ssmlSource)
+            {
+                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Ssml);
+                sourceInternal.SsmlSource = new SsmlSourceInternal(ssmlSource.SsmlText);
+                sourceInternal.SsmlSource.CustomVoiceEndpointId = ssmlSource.CustomVoiceEndpointId ?? null;
+                sourceInternal.PlaySourceCacheId = ssmlSource.PlaySourceCacheId;
+                return sourceInternal;
+            }
             else
             { return null; }
+        }
+
+        /// <summary>
+        /// Starts continuous Dtmf recognition.
+        /// </summary>
+        /// <param name="targetParticipant">A target participant identifier for starting continuous Dtmf recognition.</param>
+        /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 200 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response StartContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, string operationContext = default,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartContinuousDtmfRecognition)}");
+            scope.Start();
+            try
+            {
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                {
+                    OperationContext = operationContext
+                };
+
+                return CallMediaRestClient.StartContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts continuous Dtmf recognition in async mode.
+        /// </summary>
+        /// <param name="targetParticipant">A target participant identifier for starting continuous Dtmf recognition.</param>
+        /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 200 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> StartContinuousDtmfRecognitionAsync(CommunicationIdentifier targetParticipant, string operationContext = default,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartContinuousDtmfRecognition)}");
+            scope.Start();
+            try
+            {
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                {
+                    OperationContext = operationContext
+                };
+
+                return await CallMediaRestClient.StartContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                ;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops continuous Dtmf recognition.
+        /// </summary>
+        /// <param name="targetParticipant">A target participant identifier for stopping continuous Dtmf recognition.</param>
+        /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 200 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response StopContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, string operationContext = default,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopContinuousDtmfRecognition)}");
+            scope.Start();
+            try
+            {
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                {
+                    OperationContext = operationContext
+                };
+
+                return CallMediaRestClient.StopContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops continuous Dtmf recognition in async mode.
+        /// </summary>
+        /// <param name="targetParticipant">A target participant identifier for stopping continuous Dtmf recognition.</param>
+        /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 200 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> StopContinuousDtmfRecognitionAsync(CommunicationIdentifier targetParticipant, string operationContext = default,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopContinuousDtmfRecognition)}");
+            scope.Start();
+            try
+            {
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                {
+                    OperationContext = operationContext
+                };
+
+                return await CallMediaRestClient.StopContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Send Dtmf tones in async mode.
+        /// </summary>
+        /// <param name="tones">A list of Tones to be sent.</param>
+        /// <param name="targetParticipant">A target participant identifier for starting continuous Dtmf recognition.</param>
+        /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns a Response containing a SendDtmfResult object indicating the result of the send operation.</returns>
+        public virtual async Task<Response<SendDtmfResult>> SendDtmfAsync(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
+            string operationContext = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
+            scope.Start();
+            try
+            {
+                SendDtmfRequestInternal request = request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
+
+                request.OperationContext = operationContext;
+
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                var response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken).ConfigureAwait(false);
+
+                var result = new SendDtmfResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Send Dtmf tones.
+        /// </summary>
+        /// <param name="tones">A list of Tones to be sent.</param>
+        /// <param name="targetParticipant">A target participant identifier for starting continuous Dtmf recognition.</param>
+        /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns a Response containing a SendDtmfResult object indicating the result of the send operation.</returns>
+        public virtual Response<SendDtmfResult> SendDtmf(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
+            string operationContext = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
+            scope.Start();
+            try
+            {
+                SendDtmfRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
+
+                request.OperationContext = operationContext;
+
+                var repeatabilityHeaders = new RepeatabilityHeaders();
+
+                var response = CallMediaRestClient.SendDtmf(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken);
+
+                var result = new SendDtmfResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
     }
 }

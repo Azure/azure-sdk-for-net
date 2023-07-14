@@ -26,7 +26,9 @@ namespace Azure.Communication.CallAutomation
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
         /// <param name="dtmfResult"> Defines the result for RecognitionType = Dtmf. </param>
-        internal RecognizeCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, DtmfResult dtmfResult)
+        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
+        /// <param name="speechResult"> Defines the result for RecognitionType = Speech and SpeechOrDtmf. </param>
+        internal RecognizeCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, DtmfResult dtmfResult, ChoiceResult choiceResult, SpeechResult speechResult)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -35,8 +37,14 @@ namespace Azure.Communication.CallAutomation
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
             DtmfResult = dtmfResult;
+            ChoiceResult = choiceResult;
+            SpeechResult = speechResult;
         }
         /// <summary> Defines the result for RecognitionType = Dtmf. </summary>
         public DtmfResult DtmfResult { get; }
+        /// <summary> Defines the result for RecognitionType = Choices. </summary>
+        public ChoiceResult ChoiceResult { get; }
+        /// <summary> Defines the result for RecognitionType = Speech and SpeechOrDtmf. </summary>
+        public SpeechResult SpeechResult { get; }
     }
 }

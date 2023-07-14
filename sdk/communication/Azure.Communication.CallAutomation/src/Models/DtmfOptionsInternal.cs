@@ -13,6 +13,6 @@ namespace Azure.Communication.CallAutomation
         /// List of tones that will stop the recognition once detected.
         /// </summary>
         [CodeGenMember("StopTones")]
-        public IReadOnlyList<DtmfTone> StopTones { get; set; }
+        public IList<DtmfTone> StopTones { get; set; }
     }
 }
