@@ -13,7 +13,12 @@ namespace Azure.Identity.BrokeredAuthentication
     public class InteractiveBrowserCredentialBrokerOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
     {
         private readonly IntPtr _parentWindowHandle;
-        private readonly bool? _enableMsaPassthrough;
+
+        /// <summary>
+        /// Gets or sets whether Microsoft Account (MSA) passthough.
+        /// </summary>
+        /// <value></value>
+        public bool? IsMsaPassthroughEnabled { get; set; }
 
         /// <summary>
         /// Creates a new instance of <see cref="InteractiveBrowserCredentialBrokerOptions"/> to configure a <see cref="InteractiveBrowserCredential"/>.
@@ -24,25 +29,14 @@ namespace Azure.Identity.BrokeredAuthentication
             _parentWindowHandle = parentWindowHandle;
         }
 
-        /// <summary>
-        /// Creates a new instance of <see cref="InteractiveBrowserCredentialBrokerOptions"/> to configure a <see cref="InteractiveBrowserCredential"/>.
-        /// </summary>
-        /// <param name="parentWindowHandle">Handle of the parent window the system authentication broker should be docked to.</param>
-        /// <param name="enableMsaPassthrough">Enables Microsoft Account (MSA) passthough.</param>
-        public InteractiveBrowserCredentialBrokerOptions(IntPtr parentWindowHandle, bool enableMsaPassthrough) : base()
-        {
-            _parentWindowHandle = parentWindowHandle;
-            _enableMsaPassthrough = enableMsaPassthrough;
-        }
-
         Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient => AddBroker;
 
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
             builder.WithBrokerPreview().WithParentActivityOrWindow(() => _parentWindowHandle);
-            if (_enableMsaPassthrough.HasValue)
+            if (IsMsaPassthroughEnabled.HasValue)
             {
-                builder.WithWindowsBrokerOptions(new WindowsBrokerOptions { MsaPassthrough = _enableMsaPassthrough.Value });
+                builder.WithWindowsBrokerOptions(new WindowsBrokerOptions { MsaPassthrough = IsMsaPassthroughEnabled.Value });
             }
         }
     }

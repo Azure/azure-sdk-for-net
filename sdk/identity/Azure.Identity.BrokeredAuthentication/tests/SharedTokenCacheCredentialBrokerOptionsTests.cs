@@ -27,11 +27,11 @@ namespace Azure.Identity.BrokeredAuthentication.Tests
             IMsalPublicClientInitializerOptions credentialOptions;
             if (enableMsaPassthrough.HasValue)
             {
-                credentialOptions = new SharedTokenCacheCredentialBrokerOptions(enableMsaPassthrough: enableMsaPassthrough.Value) as IMsalPublicClientInitializerOptions;
+                credentialOptions = new SharedTokenCacheCredentialBrokerOptions { IsMsaPassthroughEnabled = enableMsaPassthrough.Value };
             }
             else
             {
-                credentialOptions = new SharedTokenCacheCredentialBrokerOptions() as IMsalPublicClientInitializerOptions;
+                credentialOptions = new SharedTokenCacheCredentialBrokerOptions();
             }
             PublicClientApplicationBuilder builder = PublicClientApplicationBuilder
                 .Create(Guid.NewGuid().ToString());

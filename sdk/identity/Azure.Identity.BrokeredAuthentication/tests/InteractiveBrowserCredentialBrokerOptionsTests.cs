@@ -18,7 +18,7 @@ namespace Azure.Identity.BrokeredAuthentication.Tests
             IMsalPublicClientInitializerOptions credentialOptions;
             if (enableMsaPassthrough.HasValue)
             {
-                credentialOptions = new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle, enableMsaPassthrough: enableMsaPassthrough.Value) as IMsalPublicClientInitializerOptions;
+                credentialOptions = new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsMsaPassthroughEnabled = enableMsaPassthrough.Value } as IMsalPublicClientInitializerOptions;
             }
             else
             {
