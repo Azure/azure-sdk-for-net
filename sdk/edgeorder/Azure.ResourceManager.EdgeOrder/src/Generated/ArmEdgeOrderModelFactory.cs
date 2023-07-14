@@ -46,6 +46,18 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemAddressProperties(shippingAddress, contactDetails, addressValidationStatus);
         }
 
+        /// <summary> Initializes a new instance of CustomerSubscriptionDetails. </summary>
+        /// <param name="registeredFeatures"> List of registered feature flags for subscription. </param>
+        /// <param name="locationPlacementId"> Location placement Id of a subscription. </param>
+        /// <param name="quotaId"> Quota ID of a subscription. </param>
+        /// <returns> A new <see cref="Models.CustomerSubscriptionDetails"/> instance for mocking. </returns>
+        public static CustomerSubscriptionDetails CustomerSubscriptionDetails(IEnumerable<CustomerSubscriptionRegisteredFeatures> registeredFeatures = null, string locationPlacementId = null, string quotaId = null)
+        {
+            registeredFeatures ??= new List<CustomerSubscriptionRegisteredFeatures>();
+
+            return new CustomerSubscriptionDetails(registeredFeatures?.ToList(), locationPlacementId, quotaId);
+        }
+
         /// <summary> Initializes a new instance of ProductFamily. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
@@ -237,6 +249,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ResourceProviderDetails(resourceProviderNamespace);
         }
 
+        /// <summary> Initializes a new instance of ConfigurationFilters. </summary>
+        /// <param name="hierarchyInformation"> Product hierarchy information. </param>
+        /// <param name="filterableProperty"> Filters specific to product. </param>
+        /// <returns> A new <see cref="Models.ConfigurationFilters"/> instance for mocking. </returns>
+        public static ConfigurationFilters ConfigurationFilters(HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperty = null)
+        {
+            filterableProperty ??= new List<FilterableProperty>();
+
+            return new ConfigurationFilters(hierarchyInformation, filterableProperty?.ToList());
+        }
+
         /// <summary> Initializes a new instance of ProductFamiliesMetadata. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
@@ -395,6 +418,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderItemAddressDetails EdgeOrderItemAddressDetails(EdgeOrderItemAddressProperties forwardAddress = null, EdgeOrderItemAddressProperties returnAddress = null)
         {
             return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress);
+        }
+
+        /// <summary> Initializes a new instance of EdgeOrderItemReturnContent. </summary>
+        /// <param name="returnAddress"> customer return address. </param>
+        /// <param name="returnReason"> Return Reason. </param>
+        /// <param name="serviceTag"> Service tag (located on the bottom-right corner of the device). </param>
+        /// <param name="isShippingBoxRequired"> Shipping Box required. </param>
+        /// <returns> A new <see cref="Models.EdgeOrderItemReturnContent"/> instance for mocking. </returns>
+        public static EdgeOrderItemReturnContent EdgeOrderItemReturnContent(EdgeOrderItemAddressProperties returnAddress = null, string returnReason = null, string serviceTag = null, bool? isShippingBoxRequired = null)
+        {
+            return new EdgeOrderItemReturnContent(returnAddress, returnReason, serviceTag, isShippingBoxRequired);
         }
 
         /// <summary> Initializes a new instance of Pav2MeterDetails. </summary>
