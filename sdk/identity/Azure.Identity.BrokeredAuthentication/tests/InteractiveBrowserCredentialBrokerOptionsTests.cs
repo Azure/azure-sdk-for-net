@@ -14,7 +14,7 @@ namespace Azure.Identity.BrokeredAuthentication.Tests
         public void RespectsMsaPassthrough(
             [Values(true, false, null)] bool? enableMsaPassthrough)
         {
-            IntPtr parentWindowHandle = new IntPtr(1234);
+            IntPtr parentWindowHandle = new(1234);
             IMsalPublicClientInitializerOptions credentialOptions;
             if (enableMsaPassthrough.HasValue)
             {
@@ -29,23 +29,23 @@ namespace Azure.Identity.BrokeredAuthentication.Tests
 
             credentialOptions.BeforeBuildClient(builder);
 
-            (WindowsBrokerOptions Options, Func<object> Parent) = GetWindowsBrokerOptions(builder);
-            Assert.AreEqual(enableMsaPassthrough, Options?.MsaPassthrough);
+            (BrokerOptions Options, Func<object> Parent) = GetBrokerOptions(builder);
+            Assert.AreEqual(enableMsaPassthrough ?? false, Options?.MsaPassthrough);
             Assert.AreEqual(parentWindowHandle, Parent());
         }
 
-        private static (WindowsBrokerOptions Options, Func<object> Parent) GetWindowsBrokerOptions(PublicClientApplicationBuilder builder)
+        private static (BrokerOptions Options, Func<object> Parent) GetBrokerOptions(PublicClientApplicationBuilder builder)
         {
             var config = builder
                 .GetType()
                 .BaseType.GetProperty("Config", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(builder);
             Console.WriteLine(config);
 
-            var options = config.GetType().GetProperty("WindowsBrokerOptions").GetValue(config);
+            var options = config.GetType().GetProperty("BrokerOptions").GetValue(config);
             Console.WriteLine(options);
             var parent = config.GetType().GetProperty("ParentActivityOrWindowFunc").GetValue(config);
 
-            return (options as WindowsBrokerOptions, parent as Func<object>);
+            return (options as BrokerOptions, parent as Func<object>);
         }
     }
 }

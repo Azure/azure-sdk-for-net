@@ -33,11 +33,13 @@ namespace Azure.Identity.BrokeredAuthentication
 
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
-            builder.WithBrokerPreview().WithParentActivityOrWindow(() => _parentWindowHandle);
+            builder.WithParentActivityOrWindow(() => _parentWindowHandle);
+            var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows);
             if (IsMsaPassthroughEnabled.HasValue)
             {
-                builder.WithWindowsBrokerOptions(new WindowsBrokerOptions { MsaPassthrough = IsMsaPassthroughEnabled.Value });
+                options.MsaPassthrough = IsMsaPassthroughEnabled.Value;
             }
+            builder.WithBroker(options);
         }
     }
 }

@@ -38,20 +38,20 @@ namespace Azure.Identity.BrokeredAuthentication.Tests
 
             credentialOptions.BeforeBuildClient(builder);
 
-            WindowsBrokerOptions options = GetWindowsBrokerOptions(builder);
-            Assert.AreEqual(enableMsaPassthrough, options?.MsaPassthrough);
+            BrokerOptions options = GetBrokerOptions(builder);
+            Assert.AreEqual(enableMsaPassthrough ?? false, options?.MsaPassthrough);
         }
 
-        private WindowsBrokerOptions GetWindowsBrokerOptions(PublicClientApplicationBuilder builder)
+        private BrokerOptions GetBrokerOptions(PublicClientApplicationBuilder builder)
         {
             var config = builder
                 .GetType()
                 .BaseType.GetProperty("Config", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(builder);
             Console.WriteLine(config);
 
-            var options = config.GetType().GetProperty("WindowsBrokerOptions").GetValue(config);
+            var options = config.GetType().GetProperty("BrokerOptions").GetValue(config);
             Console.WriteLine(options);
-            return options as WindowsBrokerOptions;
+            return options as BrokerOptions;
         }
     }
 }
