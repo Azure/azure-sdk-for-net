@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b291e128-9b68-4540-b79c-8dd9c213e615"
+          "651cffa0-0898-4137-ad7f-7cb36a788f8a"
         ],
         "Accept-Language": [
           "en-US"
@@ -27,16 +27,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetGallery3Min;349,Microsoft.Compute/GetGallery30Min;2499"
+          "Microsoft.Compute/GetGallery3Min;349,Microsoft.Compute/GetGallery30Min;2498"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "f409cccf-f8d5-4387-82a6-57ba86b3a582_133335348172145087"
+          "f409cccf-f8d5-4387-82a6-57ba86b3a582_133335932572967338"
         ],
         "x-ms-request-id": [
-          "c8ac0fe6-0554-47c0-9f89-dbcc1861b8b5"
+          "bd716b30-aa38-49f9-a2f1-54d04affdeab"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -46,16 +46,16 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "f5510f82-ae16-4021-a6d9-dcc5aa868a97"
+          "d8b27065-0d60-4b91-83f6-f730d78c8e01"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20230712T000628Z:f5510f82-ae16-4021-a6d9-dcc5aa868a97"
+          "WESTUS2:20230714T221009Z:d8b27065-0d60-4b91-83f6-f730d78c8e01"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 12 Jul 2023 00:06:27 GMT"
+          "Fri, 14 Jul 2023 22:10:09 GMT"
         ],
         "Content-Length": [
           "753"

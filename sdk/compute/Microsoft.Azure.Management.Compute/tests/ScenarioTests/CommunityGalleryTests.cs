@@ -21,6 +21,8 @@ namespace Compute.Tests
 
         private string galleryAccessLocation = "eastus2euap";
 
+        private string expectedDisclaimerLink = "https://aka.ms/community-gallery-disclaimer";
+
         [Fact]
         public void CommunityGallery_Get_Tests()
         {
@@ -100,6 +102,7 @@ namespace Compute.Tests
             string expectedId = "/CommunityGalleries/" + PublicGalleryName;
             Assert.Equal(expectedId, communityGallery.UniqueId);
             Assert.NotNull(communityGallery.Disclaimer);
+            Assert.Equal(expectedDisclaimerLink, communityGallery.Disclaimer);
         }
 
         private void ValidateCommunityGalleryImage(CommunityGalleryImage communityGalleryImage)
@@ -109,6 +112,7 @@ namespace Compute.Tests
             Assert.NotNull(communityGalleryImage.Eula);
             Assert.NotNull(communityGalleryImage.PrivacyStatementUri);
             Assert.NotNull(communityGalleryImage.Disclaimer);
+            Assert.Equal(expectedDisclaimerLink, communityGalleryImage.Disclaimer);
         }
 
         private void ValidateCommunityGalleryImageVersion(CommunityGalleryImageVersion communityGalleryImageVersion)
@@ -119,6 +123,7 @@ namespace Compute.Tests
             Assert.NotNull(communityGalleryImageVersion.ExcludeFromLatest);
             Assert.NotNull(communityGalleryImageVersion.StorageProfile.OsDiskImage);
             Assert.NotNull(communityGalleryImageVersion.Disclaimer);
+            Assert.Equal(expectedDisclaimerLink, communityGalleryImageVersion.Disclaimer);
         }
 
     }
