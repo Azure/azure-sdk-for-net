@@ -96,6 +96,12 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual("MetaValueNew1", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew1"]);
             Assert.AreEqual("MetaValueNew2", updateResponseWithNewMetadata.Value.Metadata["MetaKeyNew2"]);
 
+            var participants = new List<ChatParticipant>
+            {
+                new ChatParticipant(user1) { DisplayName = "user1" },
+                new ChatParticipant(user2) { DisplayName = "user2" },
+                new ChatParticipant(user3) { DisplayName = "user3" }
+            };
             CreateChatThreadResult createChatThreadResult2 = await chatClient.CreateChatThreadAsync(topic, participants, repeatabilityRequestId2);
             ChatThreadClient chatThreadClient2 = GetInstrumentedChatThreadClient(chatClient, createChatThreadResult2.ChatThread.Id);
             ChatThreadClient chatThreadClient3 = GetInstrumentedChatThreadClient(chatClient3, threadId);
