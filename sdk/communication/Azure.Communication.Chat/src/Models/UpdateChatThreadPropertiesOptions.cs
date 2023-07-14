@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -9,7 +10,7 @@ namespace Azure.Communication.Chat
     {
         public UpdateChatThreadPropertiesOptions()
         {
-            Metadata = new Dictionary<string, string>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
         public string Topic { get; set; }
 

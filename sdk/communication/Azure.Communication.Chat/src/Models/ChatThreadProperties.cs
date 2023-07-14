@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,7 @@ namespace Azure.Communication.Chat
             CreatedOn = chatThreadPropertiesInternal.CreatedOn;
             CreatedBy = CommunicationIdentifierSerializer.Deserialize(chatThreadPropertiesInternal.CreatedByCommunicationIdentifier);
             DeletedOn = chatThreadPropertiesInternal.DeletedOn;
+            Metadata = chatThreadPropertiesInternal.Metadata;
         }
 
         internal ChatThreadProperties(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifier createdBy, DateTimeOffset deletedOn)
@@ -41,6 +43,6 @@ namespace Azure.Communication.Chat
         /// <summary>
         /// Metadata
         /// </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; }
+        public IReadOnlyDictionary<string, string> Metadata { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }
