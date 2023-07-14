@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppPlatform.Tests
     internal class AppPlatformPortalTests : AppPlatformManagementTestBase
     {
         private AppPlatformApiPortalCollection _appPlatformApiPortalCollection;
-        //private string _appName;
-        //private AppPlatformAppResource _app;
+        private const string _portalName = "default";
+        private AppPlatformApiPortalResource _portal;
 
         public AppPlatformPortalTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
@@ -27,67 +27,58 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         [SetUp]
         public async Task SetUp()
         {
-            var rg1 = await DefaultSubscription.GetResourceGroups().GetAsync("AppPlatformRG214");
-            var service1 = await  rg1.Value.GetAppPlatformServices().GetAsync("appservice-enterprise");
-            var list  =  await service1.Value.GetAppPlatformApiPortals().GetAllAsync().ToEnumerableAsync();
             var rg = await CreateResourceGroup();
-            var service = await CreateAppPlatformService(rg, Recording.GenerateAssetName("aztestservice"));
+            var service = await CreateEnterpriseAppPlatformService(rg, Recording.GenerateAssetName("aztestservice"));
             _appPlatformApiPortalCollection = service.GetAppPlatformApiPortals();
+            _portal = await CreateAppPlatformApp(service);
         }
 
-        //private async Task<AppPlatformAppResource> CreateAppPlatformApp(AppPlatformServiceResource service, string appName)
-        //{
-        //    AppPlatformAppData data = new AppPlatformAppData()
-        //    {
-        //    };
-        //    var app = await _appPlatformApiPortalCollection.CreateOrUpdateAsync(WaitUntil.Completed, appName, data);
-        //    return app.Value;
-        //}
+        private async Task<AppPlatformApiPortalResource> CreateAppPlatformApp(AppPlatformServiceResource service)
+        {
+            var data = new AppPlatformApiPortalData();
+            var portal = await _appPlatformApiPortalCollection.CreateOrUpdateAsync(WaitUntil.Completed, _portalName, data);
+            return portal.Value;
+        }
 
         [Test]
-        public async Task CreateOrUpdate()
+        public void CreateOrUpdate()
         {
-            var list = await _appPlatformApiPortalCollection.GetAllAsync().ToEnumerableAsync();
-            var foo = await _appPlatformApiPortalCollection.CreateOrUpdateAsync(WaitUntil.Completed,
-                "portal",
-                new AppPlatformApiPortalData());
-
-            //ValidateAppPlatformAppData(_app.Data, _appName);
+            ValidateAppPlatformApiPortal(_portal.Data);
         }
 
-        //[Test]
-        //public async Task Exist()
-        //{
-        //    var flag = await _appPlatformApiPortalCollection.ExistsAsync(_appName);
-        //    Assert.IsTrue(flag);
-        //}
+        [Test]
+        public async Task Exist()
+        {
+            var flag = await _appPlatformApiPortalCollection.ExistsAsync(_portalName);
+            Assert.IsTrue(flag);
+        }
 
-        //[Test]
-        //public async Task Get()
-        //{
-        //    var app = await _appPlatformApiPortalCollection.GetAsync(_appName);
-        //    ValidateAppPlatformAppData(app.Value.Data, _appName);
-        //}
+        [Test]
+        public async Task Get()
+        {
+            var portal = await _appPlatformApiPortalCollection.GetAsync(_portalName);
+            ValidateAppPlatformApiPortal(portal.Value.Data);
+        }
 
-        //[Test]
-        //public async Task GetAll()
-        //{
-        //    var list = await _appPlatformApiPortalCollection.GetAllAsync().ToEnumerableAsync();
-        //    Assert.IsNotEmpty(list);
-        //    ValidateAppPlatformAppData(list.FirstOrDefault().Data, _appName);
-        //}
+        [Test]
+        public async Task GetAll()
+        {
+            var list = await _appPlatformApiPortalCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            ValidateAppPlatformApiPortal(list.FirstOrDefault().Data);
+        }
 
-        //[Test]
-        //public async Task Delete()
-        //{
-        //    await _app.DeleteAsync(WaitUntil.Completed);
-        //    bool flag = await _appPlatformApiPortalCollection.ExistsAsync(_appName);
-        //    Assert.IsFalse(flag);
-        //}
+        [Test]
+        public async Task Delete()
+        {
+            await _portal.DeleteAsync(WaitUntil.Completed);
+            bool flag = await _appPlatformApiPortalCollection.ExistsAsync(_portalName);
+            Assert.IsFalse(flag);
+        }
 
-        //private void ValidateAppPlatformAppData(AppPlatformAppData app, string _appName)
-        //{
-        //    Assert.IsNotNull(app);
-        //}
+        private void ValidateAppPlatformApiPortal(AppPlatformApiPortalData portal, string portalName = _portalName)
+        {
+            Assert.IsNotNull(portal);
+        }
     }
 }

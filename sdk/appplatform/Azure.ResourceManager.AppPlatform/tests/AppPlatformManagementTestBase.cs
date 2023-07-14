@@ -65,5 +65,24 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             var lro = await rg.GetAppPlatformServices().CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
             return lro.Value;
         }
+
+        protected async Task<AppPlatformServiceResource> CreateEnterpriseAppPlatformService(ResourceGroupResource rg, string serviceName)
+        {
+            AppPlatformServiceData data = new AppPlatformServiceData(rg.Data.Location)
+            {
+                Properties = new AppPlatformServiceProperties(),
+                Sku = new AppPlatformSku()
+                {
+                    Name = "E0",
+                    Tier = "Enterprise",
+                },
+                Tags =
+                {
+                    ["key1"] = "value1",
+                },
+            };
+            var lro = await rg.GetAppPlatformServices().CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
+            return lro.Value;
+        }
     }
 }
