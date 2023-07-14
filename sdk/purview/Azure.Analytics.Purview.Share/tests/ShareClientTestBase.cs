@@ -13,8 +13,8 @@ namespace Azure.Analytics.Purview.Share.Tests
         public ShareClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
             this.AddPurviewSanitizers();
-            IgnoredHeaders.Add("Repeatability-Request-ID");
-            IgnoredHeaders.Add("Repeatability-First-Sent");
+            LegacyExcludedHeaders.Add("Repeatability-Request-ID");
+            LegacyExcludedHeaders.Add("Repeatability-First-Sent");
         }
 
         public SentSharesClient GetSentSharesClient()
