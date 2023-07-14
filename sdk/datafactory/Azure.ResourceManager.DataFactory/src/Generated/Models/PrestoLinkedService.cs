@@ -47,11 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="port"> The TCP port that the Presto server uses to listen for client connections. The default value is 8080. </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Presto server. </param>
         /// <param name="username"> The user name used to connect to the Presto server. </param>
-        /// <param name="password">
-        /// The password corresponding to the user name.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> The password corresponding to the user name. </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
         /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </param>
@@ -90,11 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public PrestoAuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name used to connect to the Presto server. </summary>
         public DataFactoryElement<string> Username { get; set; }
-        /// <summary>
-        /// The password corresponding to the user name.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The password corresponding to the user name. </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
         public DataFactoryElement<bool> EnableSsl { get; set; }
