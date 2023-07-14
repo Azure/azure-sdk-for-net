@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommonPostActionResponseForDeviceUpdate>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -323,9 +323,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _l2IsolationDomainRestClient.UpdateAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceUpdate>(new CommonPostActionResponseForDeviceUpdateOperationSource(), _l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommonPostActionResponseForDeviceUpdate> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -361,9 +361,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _l2IsolationDomainRestClient.UpdateAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceUpdate>(new CommonPostActionResponseForDeviceUpdateOperationSource(), _l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -374,180 +374,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Clears ARP tables for this Isolation Domain.
+        /// Validates the configuration of the resources.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/clearArpTable</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/validateConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_clearArpTable</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> ClearArpTableAsync(WaitUntil waitUntil, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _l2IsolationDomainClientDiagnostics.CreateScope("L2IsolationDomainResource.ClearArpTable");
-            scope.Start();
-            try
-            {
-                var response = await _l2IsolationDomainRestClient.ClearArpTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateClearArpTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Clears ARP tables for this Isolation Domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/clearArpTable</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_clearArpTable</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation ClearArpTable(WaitUntil waitUntil, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _l2IsolationDomainClientDiagnostics.CreateScope("L2IsolationDomainResource.ClearArpTable");
-            scope.Start();
-            try
-            {
-                var response = _l2IsolationDomainRestClient.ClearArpTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateClearArpTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Clears IPv6 neighbors for this Isolation Domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/clearNeighborTable</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_clearNeighborTable</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> ClearNeighborTableAsync(WaitUntil waitUntil, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _l2IsolationDomainClientDiagnostics.CreateScope("L2IsolationDomainResource.ClearNeighborTable");
-            scope.Start();
-            try
-            {
-                var response = await _l2IsolationDomainRestClient.ClearNeighborTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateClearNeighborTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Clears IPv6 neighbors for this Isolation Domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/clearNeighborTable</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_clearNeighborTable</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation ClearNeighborTable(WaitUntil waitUntil, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _l2IsolationDomainClientDiagnostics.CreateScope("L2IsolationDomainResource.ClearNeighborTable");
-            scope.Start();
-            try
-            {
-                var response = _l2IsolationDomainRestClient.ClearNeighborTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateClearNeighborTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Clears IPv6 neighbors for this Isolation Domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/getArpEntries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_getArpEntries</description>
+        /// <description>L2IsolationDomains_ValidateConfiguration</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<IDictionary<string, ARPProperties>>> GetArpEntriesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ValidateConfigurationResponse>> ValidateConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _l2IsolationDomainClientDiagnostics.CreateScope("L2IsolationDomainResource.GetArpEntries");
+            using var scope = _l2IsolationDomainClientDiagnostics.CreateScope("L2IsolationDomainResource.ValidateConfiguration");
             scope.Start();
             try
             {
-                var response = await _l2IsolationDomainRestClient.GetArpEntriesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<IDictionary<string, ARPProperties>>(new IDictionaryOperationSource(), _l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateGetArpEntriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _l2IsolationDomainRestClient.ValidateConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResponse>(new ValidateConfigurationResponseOperationSource(), _l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateValidateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -560,28 +408,96 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Clears IPv6 neighbors for this Isolation Domain.
+        /// Validates the configuration of the resources.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/getArpEntries</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/validateConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_getArpEntries</description>
+        /// <description>L2IsolationDomains_ValidateConfiguration</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<IDictionary<string, ARPProperties>> GetArpEntries(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ValidateConfigurationResponse> ValidateConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _l2IsolationDomainClientDiagnostics.CreateScope("L2IsolationDomainResource.GetArpEntries");
+            using var scope = _l2IsolationDomainClientDiagnostics.CreateScope("L2IsolationDomainResource.ValidateConfiguration");
             scope.Start();
             try
             {
-                var response = _l2IsolationDomainRestClient.GetArpEntries(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<IDictionary<string, ARPProperties>>(new IDictionaryOperationSource(), _l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateGetArpEntriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _l2IsolationDomainRestClient.ValidateConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResponse>(new ValidateConfigurationResponseOperationSource(), _l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateValidateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Commits the configuration of the given resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> CommitConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _l2IsolationDomainClientDiagnostics.CreateScope("L2IsolationDomainResource.CommitConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await _l2IsolationDomainRestClient.CommitConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateCommitConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Commits the configuration of the given resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2IsolationDomains_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<CommonPostActionResponseForStateUpdate> CommitConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _l2IsolationDomainClientDiagnostics.CreateScope("L2IsolationDomainResource.CommitConfiguration");
+            scope.Start();
+            try
+            {
+                var response = _l2IsolationDomainRestClient.CommitConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _l2IsolationDomainClientDiagnostics, Pipeline, _l2IsolationDomainRestClient.CreateCommitConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

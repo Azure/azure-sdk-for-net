@@ -21,14 +21,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of StatementConditionProperties. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
+        /// <param name="routePolicyConditionType"> Type of the condition used. </param>
         /// <param name="ipPrefixId"> Arm Resource Id of IpPrefix. </param>
         /// <param name="ipExtendedCommunityIds"> List of IP Extended Community resource IDs. </param>
-        internal StatementConditionProperties(IList<string> ipCommunityIds, string ipPrefixId, IList<string> ipExtendedCommunityIds) : base(ipCommunityIds)
+        internal StatementConditionProperties(IList<string> ipCommunityIds, RoutePolicyConditionType? routePolicyConditionType, string ipPrefixId, IList<string> ipExtendedCommunityIds) : base(ipCommunityIds)
         {
+            RoutePolicyConditionType = routePolicyConditionType;
             IPPrefixId = ipPrefixId;
             IPExtendedCommunityIds = ipExtendedCommunityIds;
         }
 
+        /// <summary> Type of the condition used. </summary>
+        public RoutePolicyConditionType? RoutePolicyConditionType { get; set; }
         /// <summary> Arm Resource Id of IpPrefix. </summary>
         public string IPPrefixId { get; set; }
         /// <summary> List of IP Extended Community resource IDs. </summary>

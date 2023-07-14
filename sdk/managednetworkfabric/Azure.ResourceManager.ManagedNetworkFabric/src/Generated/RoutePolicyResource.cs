@@ -298,6 +298,218 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
+        /// Updated the admin state for this Route Policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<ArmOperation<CommonPostActionResponseForDeviceUpdate>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var scope = _routePolicyClientDiagnostics.CreateScope("RoutePolicyResource.UpdateAdministrativeState");
+            scope.Start();
+            try
+            {
+                var response = await _routePolicyRestClient.UpdateAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceUpdate>(new CommonPostActionResponseForDeviceUpdateOperationSource(), _routePolicyClientDiagnostics, Pipeline, _routePolicyRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updated the admin state for this Route Policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_UpdateAdministrativeState</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual ArmOperation<CommonPostActionResponseForDeviceUpdate> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var scope = _routePolicyClientDiagnostics.CreateScope("RoutePolicyResource.UpdateAdministrativeState");
+            scope.Start();
+            try
+            {
+                var response = _routePolicyRestClient.UpdateAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceUpdate>(new CommonPostActionResponseForDeviceUpdateOperationSource(), _routePolicyClientDiagnostics, Pipeline, _routePolicyRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validates the configuration of the resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<ValidateConfigurationResponse>> ValidateConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _routePolicyClientDiagnostics.CreateScope("RoutePolicyResource.ValidateConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await _routePolicyRestClient.ValidateConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResponse>(new ValidateConfigurationResponseOperationSource(), _routePolicyClientDiagnostics, Pipeline, _routePolicyRestClient.CreateValidateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validates the configuration of the resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/validateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_ValidateConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<ValidateConfigurationResponse> ValidateConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _routePolicyClientDiagnostics.CreateScope("RoutePolicyResource.ValidateConfiguration");
+            scope.Start();
+            try
+            {
+                var response = _routePolicyRestClient.ValidateConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResponse>(new ValidateConfigurationResponseOperationSource(), _routePolicyClientDiagnostics, Pipeline, _routePolicyRestClient.CreateValidateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Commits the configuration of the given resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> CommitConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _routePolicyClientDiagnostics.CreateScope("RoutePolicyResource.CommitConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await _routePolicyRestClient.CommitConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _routePolicyClientDiagnostics, Pipeline, _routePolicyRestClient.CreateCommitConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Commits the configuration of the given resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/routePolicies/{routePolicyName}/commitConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutePolicies_CommitConfiguration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<CommonPostActionResponseForStateUpdate> CommitConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _routePolicyClientDiagnostics.CreateScope("RoutePolicyResource.CommitConfiguration");
+            scope.Start();
+            try
+            {
+                var response = _routePolicyRestClient.CommitConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _routePolicyClientDiagnostics, Pipeline, _routePolicyRestClient.CreateCommitConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>

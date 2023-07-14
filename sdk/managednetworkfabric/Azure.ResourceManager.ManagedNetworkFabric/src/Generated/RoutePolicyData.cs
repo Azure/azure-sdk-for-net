@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -22,13 +21,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     {
         /// <summary> Initializes a new instance of RoutePolicyData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="statements"> Route Policy statements. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="statements"/> is null. </exception>
-        public RoutePolicyData(AzureLocation location, IEnumerable<RoutePolicyStatementProperties> statements) : base(location)
+        /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
+        public RoutePolicyData(AzureLocation location, ResourceIdentifier networkFabricId) : base(location)
         {
-            Argument.AssertNotNull(statements, nameof(statements));
+            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
 
-            Statements = statements.ToList();
+            Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
+            NetworkFabricId = networkFabricId;
         }
 
         /// <summary> Initializes a new instance of RoutePolicyData. </summary>
@@ -40,19 +40,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="statements"> Route Policy statements. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal RoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<RoutePolicyStatementProperties> statements, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
+        /// <param name="addressFamilyType"> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        internal RoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             Statements = statements;
+            NetworkFabricId = networkFabricId;
+            AddressFamilyType = addressFamilyType;
+            ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Route Policy statements. </summary>
         public IList<RoutePolicyStatementProperties> Statements { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
+        /// <summary> Arm Resource ID of Network Fabric. </summary>
+        public ResourceIdentifier NetworkFabricId { get; set; }
+        /// <summary> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </summary>
+        public AddressFamilyType? AddressFamilyType { get; set; }
+        /// <summary> Configuration state of the resource. </summary>
+        public ConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public AdministrativeState? AdministrativeState { get; }
     }
 }

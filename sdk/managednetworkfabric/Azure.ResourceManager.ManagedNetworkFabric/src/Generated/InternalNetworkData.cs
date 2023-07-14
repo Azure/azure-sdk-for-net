@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A class representing the InternalNetwork data model.
-    /// Defines the InternalNetwork item.
+    /// Defines the Internal Network resource.
     /// </summary>
     public partial class InternalNetworkData : ResourceData
     {
@@ -24,10 +24,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();
             ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
-            DisabledOnResources = new ChangeTrackingList<string>();
-            BgpDisabledOnResources = new ChangeTrackingList<string>();
-            BfdDisabledOnResources = new ChangeTrackingList<string>();
-            BfdForStaticRoutesDisabledOnResources = new ChangeTrackingList<string>();
             VlanId = vlanId;
         }
 
@@ -38,67 +34,79 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        /// <param name="connectedIPv4Subnets"> List with object connected IPv4 Subnets. </param>
-        /// <param name="connectedIPv6Subnets"> List with object connected IPv6 Subnets. </param>
-        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
-        /// <param name="bgpConfiguration"> BGP configuration properties. </param>
-        /// <param name="importRoutePolicyId"> ARM resource ID of importRoutePolicy. </param>
-        /// <param name="exportRoutePolicyId"> ARM resource ID of importRoutePolicy. </param>
-        /// <param name="disabledOnResources"> List of resources the InternalNetwork is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
-        /// <param name="administrativeState"> Administrative state of the InternalNetwork. Example: Enabled | Disabled. </param>
-        /// <param name="bgpDisabledOnResources"> List of resources the BGP is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
-        /// <param name="bfdDisabledOnResources"> List of resources the BFD for BGP is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
-        /// <param name="bfdForStaticRoutesDisabledOnResources"> List of resources the BFD of StaticRoutes is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
+        /// <param name="connectedIPv4Subnets"> List of Connected IPv4 Subnets. </param>
+        /// <param name="connectedIPv6Subnets"> List of connected IPv6 Subnets. </param>
+        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
+        /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
         /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
-        internal InternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, StaticRouteConfiguration staticRouteConfiguration, BgpConfiguration bgpConfiguration, string importRoutePolicyId, string exportRoutePolicyId, IReadOnlyList<string> disabledOnResources, EnabledDisabledState? administrativeState, IReadOnlyList<string> bgpDisabledOnResources, IReadOnlyList<string> bfdDisabledOnResources, IReadOnlyList<string> bfdForStaticRoutesDisabledOnResources, ProvisioningState? provisioningState, int vlanId) : base(id, name, resourceType, systemData)
+        /// <param name="bgpConfiguration"> BGP configuration properties. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        internal InternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, Extension? extension, int vlanId, InternalNetworkPropertiesBgpConfiguration bgpConfiguration, InternalNetworkPropertiesStaticRouteConfiguration staticRouteConfiguration, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData)
         {
             Annotation = annotation;
             Mtu = mtu;
             ConnectedIPv4Subnets = connectedIPv4Subnets;
             ConnectedIPv6Subnets = connectedIPv6Subnets;
-            StaticRouteConfiguration = staticRouteConfiguration;
-            BgpConfiguration = bgpConfiguration;
             ImportRoutePolicyId = importRoutePolicyId;
             ExportRoutePolicyId = exportRoutePolicyId;
-            DisabledOnResources = disabledOnResources;
-            AdministrativeState = administrativeState;
-            BgpDisabledOnResources = bgpDisabledOnResources;
-            BfdDisabledOnResources = bfdDisabledOnResources;
-            BfdForStaticRoutesDisabledOnResources = bfdForStaticRoutesDisabledOnResources;
-            ProvisioningState = provisioningState;
+            ImportRoutePolicy = importRoutePolicy;
+            ExportRoutePolicy = exportRoutePolicy;
+            IngressAclId = ingressAclId;
+            EgressAclId = egressAclId;
+            IsMonitoringEnabled = isMonitoringEnabled;
+            Extension = extension;
             VlanId = vlanId;
+            BgpConfiguration = bgpConfiguration;
+            StaticRouteConfiguration = staticRouteConfiguration;
+            ConfigurationState = configurationState;
+            ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Maximum transmission unit. Default value is 1500. </summary>
         public int? Mtu { get; set; }
-        /// <summary> List with object connected IPv4 Subnets. </summary>
+        /// <summary> List of Connected IPv4 Subnets. </summary>
         public IList<ConnectedSubnet> ConnectedIPv4Subnets { get; }
-        /// <summary> List with object connected IPv6 Subnets. </summary>
+        /// <summary> List of connected IPv6 Subnets. </summary>
         public IList<ConnectedSubnet> ConnectedIPv6Subnets { get; }
-        /// <summary> Static Route Configuration properties. </summary>
-        public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
-        /// <summary> BGP configuration properties. </summary>
-        public BgpConfiguration BgpConfiguration { get; set; }
-        /// <summary> ARM resource ID of importRoutePolicy. </summary>
-        public string ImportRoutePolicyId { get; set; }
-        /// <summary> ARM resource ID of importRoutePolicy. </summary>
-        public string ExportRoutePolicyId { get; set; }
-        /// <summary> List of resources the InternalNetwork is disabled on. Can be either entire NetworkFabric or NetworkRack. </summary>
-        public IReadOnlyList<string> DisabledOnResources { get; }
-        /// <summary> Administrative state of the InternalNetwork. Example: Enabled | Disabled. </summary>
-        public EnabledDisabledState? AdministrativeState { get; }
-        /// <summary> List of resources the BGP is disabled on. Can be either entire NetworkFabric or NetworkRack. </summary>
-        public IReadOnlyList<string> BgpDisabledOnResources { get; }
-        /// <summary> List of resources the BFD for BGP is disabled on. Can be either entire NetworkFabric or NetworkRack. </summary>
-        public IReadOnlyList<string> BfdDisabledOnResources { get; }
-        /// <summary> List of resources the BFD of StaticRoutes is disabled on. Can be either entire NetworkFabric or NetworkRack. </summary>
-        public IReadOnlyList<string> BfdForStaticRoutesDisabledOnResources { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        public ResourceIdentifier ImportRoutePolicyId { get; set; }
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        public ResourceIdentifier ExportRoutePolicyId { get; set; }
+        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
+        public ImportRoutePolicy ImportRoutePolicy { get; set; }
+        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
+        public ExportRoutePolicy ExportRoutePolicy { get; set; }
+        /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
+        public ResourceIdentifier IngressAclId { get; set; }
+        /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
+        public ResourceIdentifier EgressAclId { get; set; }
+        /// <summary> To check whether monitoring of internal network is enabled or not. </summary>
+        public IsMonitoringEnabled? IsMonitoringEnabled { get; set; }
+        /// <summary> Extension. Example: NoExtension | NPB. </summary>
+        public Extension? Extension { get; set; }
         /// <summary> Vlan identifier. Example: 1001. </summary>
         public int VlanId { get; set; }
+        /// <summary> BGP configuration properties. </summary>
+        public InternalNetworkPropertiesBgpConfiguration BgpConfiguration { get; set; }
+        /// <summary> Static Route Configuration properties. </summary>
+        public InternalNetworkPropertiesStaticRouteConfiguration StaticRouteConfiguration { get; set; }
+        /// <summary> Configuration state of the resource. </summary>
+        public ConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public AdministrativeState? AdministrativeState { get; }
     }
 }

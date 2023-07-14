@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> option A properties object. </summary>
-    public partial class ExternalNetworkPropertiesOptionAProperties : Layer3OptionAProperties
+    public partial class ExternalNetworkPropertiesOptionAProperties : Layer3IPPrefixProperties
     {
         /// <summary> Initializes a new instance of ExternalNetworkPropertiesOptionAProperties. </summary>
         public ExternalNetworkPropertiesOptionAProperties()
@@ -16,17 +18,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of ExternalNetworkPropertiesOptionAProperties. </summary>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.0/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a0/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.20/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a4/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
         /// <param name="fabricASN"> Fabric ASN number. Example 65001. </param>
         /// <param name="peerASN"> Peer ASN number.Example : 28. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        internal ExternalNetworkPropertiesOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, int? fabricASN, int? peerASN, BfdConfiguration bfdConfiguration) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, mtu, vlanId, fabricASN, peerASN, bfdConfiguration)
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        internal ExternalNetworkPropertiesOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricASN, long? peerASN, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix)
         {
+            Mtu = mtu;
+            VlanId = vlanId;
+            FabricASN = fabricASN;
+            PeerASN = peerASN;
+            BfdConfiguration = bfdConfiguration;
+            IngressAclId = ingressAclId;
+            EgressAclId = egressAclId;
         }
+
+        /// <summary> MTU to use for option A peering. </summary>
+        public int? Mtu { get; set; }
+        /// <summary> Vlan identifier. Example : 501. </summary>
+        public int? VlanId { get; set; }
+        /// <summary> Fabric ASN number. Example 65001. </summary>
+        public long? FabricASN { get; }
+        /// <summary> Peer ASN number.Example : 28. </summary>
+        public long? PeerASN { get; set; }
+        /// <summary> BFD configuration properties. </summary>
+        public BfdConfiguration BfdConfiguration { get; set; }
+        /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
+        public ResourceIdentifier IngressAclId { get; set; }
+        /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
+        public ResourceIdentifier EgressAclId { get; set; }
     }
 }

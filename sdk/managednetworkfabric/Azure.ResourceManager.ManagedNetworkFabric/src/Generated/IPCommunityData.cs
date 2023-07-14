@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A class representing the IPCommunity data model.
-    /// The IpCommunity resource definition.
+    /// The IP Community resource definition.
     /// </summary>
     public partial class IPCommunityData : TrackedResourceData
     {
@@ -22,8 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The location. </param>
         public IPCommunityData(AzureLocation location) : base(location)
         {
-            WellKnownCommunities = new ChangeTrackingList<WellKnownCommunity>();
-            CommunityMembers = new ChangeTrackingList<string>();
+            IPCommunityRules = new ChangeTrackingList<IPCommunityRule>();
         }
 
         /// <summary> Initializes a new instance of IPCommunityData. </summary>
@@ -34,28 +33,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
-        /// <param name="wellKnownCommunities"> Supported well known Community List. </param>
-        /// <param name="communityMembers"> List the communityMembers of IP Community . </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal IPCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, CommunityActionType? action, IList<WellKnownCommunity> wellKnownCommunities, IList<string> communityMembers, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        internal IPCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<IPCommunityRule> ipCommunityRules, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
-            Action = action;
-            WellKnownCommunities = wellKnownCommunities;
-            CommunityMembers = communityMembers;
+            IPCommunityRules = ipCommunityRules;
+            ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> Action to be taken on the configuration. Example: Permit | Deny. </summary>
-        public CommunityActionType? Action { get; set; }
-        /// <summary> Supported well known Community List. </summary>
-        public IList<WellKnownCommunity> WellKnownCommunities { get; }
-        /// <summary> List the communityMembers of IP Community . </summary>
-        public IList<string> CommunityMembers { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
+        /// <summary> List of IP Community Rules. </summary>
+        public IList<IPCommunityRule> IPCommunityRules { get; }
+        /// <summary> Configuration state of the resource. </summary>
+        public ConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public AdministrativeState? AdministrativeState { get; }
     }
 }

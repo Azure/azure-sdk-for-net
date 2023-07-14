@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
             Optional<string> physicalIdentifier = default;
-            Optional<EnabledDisabledState> administrativeState = default;
-            Optional<ProvisioningState> provisioningState = default;
             Optional<string> connectedTo = default;
             Optional<InterfaceType> interfaceType = default;
             Optional<string> ipv4Address = default;
             Optional<string> ipv6Address = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<AdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -91,24 +91,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             physicalIdentifier = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("administrativeState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administrativeState = new EnabledDisabledState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("connectedTo"u8))
                         {
                             connectedTo = property0.Value.GetString();
@@ -133,11 +115,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             ipv6Address = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("administrativeState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new NetworkInterfaceData(id, name, type, systemData.Value, annotation.Value, physicalIdentifier.Value, Optional.ToNullable(administrativeState), Optional.ToNullable(provisioningState), connectedTo.Value, Optional.ToNullable(interfaceType), ipv4Address.Value, ipv6Address.Value);
+            return new NetworkInterfaceData(id, name, type, systemData.Value, annotation.Value, physicalIdentifier.Value, connectedTo.Value, Optional.ToNullable(interfaceType), ipv4Address.Value, ipv6Address.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

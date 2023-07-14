@@ -38,28 +38,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(Action))
+            if (Optional.IsCollectionDefined(IPCommunityRules))
             {
-                writer.WritePropertyName("action"u8);
-                writer.WriteStringValue(Action.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(WellKnownCommunities))
-            {
-                writer.WritePropertyName("wellKnownCommunities"u8);
+                writer.WritePropertyName("ipCommunityRules"u8);
                 writer.WriteStartArray();
-                foreach (var item in WellKnownCommunities)
+                foreach (var item in IPCommunityRules)
                 {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(CommunityMembers))
-            {
-                writer.WritePropertyName("communityMembers"u8);
-                writer.WriteStartArray();
-                foreach (var item in CommunityMembers)
-                {
-                    writer.WriteStringValue(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -80,10 +65,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
-            Optional<CommunityActionType> action = default;
-            Optional<IList<WellKnownCommunity>> wellKnownCommunities = default;
-            Optional<IList<string>> communityMembers = default;
+            Optional<IList<IPCommunityRule>> ipCommunityRules = default;
+            Optional<ConfigurationState> configurationState = default;
             Optional<ProvisioningState> provisioningState = default;
+            Optional<AdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -143,41 +128,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             annotation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("action"u8))
+                        if (property0.NameEquals("ipCommunityRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            action = new CommunityActionType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("wellKnownCommunities"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<WellKnownCommunity> array = new List<WellKnownCommunity>();
+                            List<IPCommunityRule> array = new List<IPCommunityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new WellKnownCommunity(item.GetString()));
+                                array.Add(IPCommunityRule.DeserializeIPCommunityRule(item));
                             }
-                            wellKnownCommunities = array;
+                            ipCommunityRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("communityMembers"u8))
+                        if (property0.NameEquals("configurationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            communityMembers = array;
+                            configurationState = new ConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -189,11 +160,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("administrativeState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new IPCommunityData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(action), Optional.ToList(wellKnownCommunities), Optional.ToList(communityMembers), Optional.ToNullable(provisioningState));
+            return new IPCommunityData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToList(ipCommunityRules), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

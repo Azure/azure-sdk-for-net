@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -16,21 +15,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A class representing the AccessControlList data model.
-    /// The AccessControlList resource definition.
+    /// The Access Control List resource definition.
     /// </summary>
     public partial class AccessControlListData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AccessControlListData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="addressFamily"> IP address family. Example: ipv4 | ipv6. </param>
-        /// <param name="conditions"> Access Control List conditions. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conditions"/> is null. </exception>
-        public AccessControlListData(AzureLocation location, AddressFamily addressFamily, IEnumerable<AccessControlListConditionProperties> conditions) : base(location)
+        public AccessControlListData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(conditions, nameof(conditions));
-
-            AddressFamily = addressFamily;
-            Conditions = conditions.ToList();
+            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
+            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
         }
 
         /// <summary> Initializes a new instance of AccessControlListData. </summary>
@@ -41,24 +35,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="addressFamily"> IP address family. Example: ipv4 | ipv6. </param>
-        /// <param name="conditions"> Access Control List conditions. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal AccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, AddressFamily addressFamily, IList<AccessControlListConditionProperties> conditions, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="configurationType"> Input method to configure Access Control List. </param>
+        /// <param name="aclsUri"> Access Control List file URL. </param>
+        /// <param name="matchConfigurations"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="lastSyncedOn"> The last synced timestamp. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        internal AccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ConfigurationType? configurationType, Uri aclsUri, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
-            AddressFamily = addressFamily;
-            Conditions = conditions;
+            ConfigurationType = configurationType;
+            AclsUri = aclsUri;
+            MatchConfigurations = matchConfigurations;
+            DynamicMatchConfigurations = dynamicMatchConfigurations;
+            LastSyncedOn = lastSyncedOn;
+            ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> IP address family. Example: ipv4 | ipv6. </summary>
-        public AddressFamily AddressFamily { get; set; }
-        /// <summary> Access Control List conditions. </summary>
-        public IList<AccessControlListConditionProperties> Conditions { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
+        /// <summary> Input method to configure Access Control List. </summary>
+        public ConfigurationType? ConfigurationType { get; set; }
+        /// <summary> Access Control List file URL. </summary>
+        public Uri AclsUri { get; set; }
+        /// <summary> List of match configurations. </summary>
+        public IList<AccessControlListMatchConfiguration> MatchConfigurations { get; }
+        /// <summary> List of dynamic match configurations. </summary>
+        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
+        /// <summary> The last synced timestamp. </summary>
+        public DateTimeOffset? LastSyncedOn { get; }
+        /// <summary> Configuration state of the resource. </summary>
+        public ConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public AdministrativeState? AdministrativeState { get; }
     }
 }

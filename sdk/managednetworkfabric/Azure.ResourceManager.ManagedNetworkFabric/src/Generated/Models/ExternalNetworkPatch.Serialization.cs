@@ -22,6 +22,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
+            if (Optional.IsDefined(ImportRoutePolicyId))
+            {
+                writer.WritePropertyName("importRoutePolicyId"u8);
+                writer.WriteStringValue(ImportRoutePolicyId);
+            }
+            if (Optional.IsDefined(ExportRoutePolicyId))
+            {
+                writer.WritePropertyName("exportRoutePolicyId"u8);
+                writer.WriteStringValue(ExportRoutePolicyId);
+            }
+            if (Optional.IsDefined(ImportRoutePolicy))
+            {
+                writer.WritePropertyName("importRoutePolicy"u8);
+                writer.WriteObjectValue(ImportRoutePolicy);
+            }
+            if (Optional.IsDefined(ExportRoutePolicy))
+            {
+                writer.WritePropertyName("exportRoutePolicy"u8);
+                writer.WriteObjectValue(ExportRoutePolicy);
+            }
             if (Optional.IsDefined(PeeringOption))
             {
                 writer.WritePropertyName("peeringOption"u8);
@@ -36,16 +56,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("optionAProperties"u8);
                 writer.WriteObjectValue(OptionAProperties);
-            }
-            if (Optional.IsDefined(ImportRoutePolicyId))
-            {
-                writer.WritePropertyName("importRoutePolicyId"u8);
-                writer.WriteStringValue(ImportRoutePolicyId);
-            }
-            if (Optional.IsDefined(ExportRoutePolicyId))
-            {
-                writer.WritePropertyName("exportRoutePolicyId"u8);
-                writer.WriteStringValue(ExportRoutePolicyId);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: Azure.ResourceManager.ManagedNetworkFabric
 namespace: Azure.ResourceManager.ManagedNetworkFabric
-require: https://github.com/Azure/azure-rest-api-specs/blob/453fb04aa9e602377784d62390d2985799a9efa0/specification/managednetworkfabric/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0691ac4b0e05c8ca3bde2f8a33f036c12282fa25/specification/managednetworkfabric/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -48,16 +48,22 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
-  - remove-operation: NetworkDevices_getStaticInterfaceMaps
-  - remove-operation: NetworkDevices_getDynamicInterfaceMaps
-  - from: NetworkFabrics.json
-    where: $.definitions
-    transform: >
-      $.Layer3IpPrefixProperties['x-ms-client-name'] = 'NetworkFabricLayer3IpPrefixProperties';
-      $.OptionAProperties['x-ms-client-name'] = 'NetworkFabricOptionAProperties';
-      $.OptionBProperties['x-ms-client-name'] = 'NetworkFabricOptionBProperties';
   - from: NetworkFabricControllers.json
     where: $.definitions
     transform:
       $.ExpressRouteConnectionInformation.required =  [ 'expressRouteCircuitId' ];
+
+  # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem
+  - from: v5/types.json
+    where: $.definitions
+    transform: >
+      delete $.Resource.properties.id.format;
+  - from: v5/types.json
+    where: $.parameters
+    transform: >
+      delete $.SubscriptionIdParameter.format;
+
+  # Removing the operations that are not allowed for the end users.
+  - remove-operation: InternetGateways_Delete
+  - remove-operation: InternetGateways_Create
 ```

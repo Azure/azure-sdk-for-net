@@ -11,7 +11,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of IpExtendedCommunities. </summary>
+    /// <summary> List of IP Extended Communities. </summary>
     internal partial class IPExtendedCommunityListResult
     {
         /// <summary> Initializes a new instance of IPExtendedCommunityListResult. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of IPExtendedCommunityListResult. </summary>
-        /// <param name="value"> List of IpExtendedCommunities resources. </param>
+        /// <param name="value"> List of IP Extended Communities resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal IPExtendedCommunityListResult(IReadOnlyList<IPExtendedCommunityData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NextLink = nextLink;
         }
 
-        /// <summary> List of IpExtendedCommunities resources. </summary>
+        /// <summary> List of IP Extended Communities resources. </summary>
         public IReadOnlyList<IPExtendedCommunityData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }

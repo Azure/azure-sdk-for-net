@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Creates layer 2 network connectivity between compute nodes within a rack and across racks.The configuration is applied on the devices only after the isolation domain is enabled. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="data"> Request payload. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Creates layer 2 network connectivity between compute nodes within a rack and across racks.The configuration is applied on the devices only after the isolation domain is enabled. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="data"> Request payload. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements L2 Isolation Domain GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements L2 Isolation Domain GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> API to update certain properties of the L2 Isolation Domain resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="patch"> API to update certain properties of the L2 Isolation Domain resource.. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> API to update certain properties of the L2 Isolation Domain resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="patch"> API to update certain properties of the L2 Isolation Domain resource.. </param>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Deletes layer 2 connectivity between compute nodes by managed by named L2 Isolation name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -312,7 +312,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Deletes layer 2 connectivity between compute nodes by managed by named L2 Isolation name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -338,7 +337,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -373,9 +371,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Enables isolation domain across the fabric or on specified racks. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="l2IsolationDomainName"> Name of the L2IsolationDomain. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
@@ -391,6 +389,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -399,9 +398,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Enables isolation domain across the fabric or on specified racks. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="l2IsolationDomainName"> Name of the L2IsolationDomain. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
@@ -417,6 +416,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateClearArpTableRequest(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, EnableDisableOnResources body)
+        internal HttpMessage CreateValidateConfigurationRequest(string subscriptionId, string resourceGroupName, string l2IsolationDomainName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -437,161 +437,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/", false);
             uri.AppendPath(l2IsolationDomainName, true);
-            uri.AppendPath("/clearArpTable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Clears ARP tables for this Isolation Domain. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="l2IsolationDomainName"> Name of the L2IsolationDomain. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ClearArpTableAsync(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var message = CreateClearArpTableRequest(subscriptionId, resourceGroupName, l2IsolationDomainName, body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Clears ARP tables for this Isolation Domain. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="l2IsolationDomainName"> Name of the L2IsolationDomain. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ClearArpTable(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var message = CreateClearArpTableRequest(subscriptionId, resourceGroupName, l2IsolationDomainName, body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateClearNeighborTableRequest(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, EnableDisableOnResources body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/", false);
-            uri.AppendPath(l2IsolationDomainName, true);
-            uri.AppendPath("/clearNeighborTable", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Clears IPv6 neighbors for this Isolation Domain. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="l2IsolationDomainName"> Name of the L2IsolationDomain. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ClearNeighborTableAsync(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var message = CreateClearNeighborTableRequest(subscriptionId, resourceGroupName, l2IsolationDomainName, body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Clears IPv6 neighbors for this Isolation Domain. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="l2IsolationDomainName"> Name of the L2IsolationDomain. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2IsolationDomainName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ClearNeighborTable(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var message = CreateClearNeighborTableRequest(subscriptionId, resourceGroupName, l2IsolationDomainName, body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetArpEntriesRequest(string subscriptionId, string resourceGroupName, string l2IsolationDomainName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/", false);
-            uri.AppendPath(l2IsolationDomainName, true);
-            uri.AppendPath("/getArpEntries", false);
+            uri.AppendPath("/validateConfiguration", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -599,23 +445,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        /// <summary> Clears IPv6 neighbors for this Isolation Domain. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Validates the configuration of the resources. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="l2IsolationDomainName"> Name of the L2IsolationDomain. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetArpEntriesAsync(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateConfigurationAsync(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
 
-            using var message = CreateGetArpEntriesRequest(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            using var message = CreateValidateConfigurationRequest(subscriptionId, resourceGroupName, l2IsolationDomainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -623,23 +470,95 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> Clears IPv6 neighbors for this Isolation Domain. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Validates the configuration of the resources. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="l2IsolationDomainName"> Name of the L2IsolationDomain. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetArpEntries(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        public Response ValidateConfiguration(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
 
-            using var message = CreateGetArpEntriesRequest(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            using var message = CreateValidateConfigurationRequest(subscriptionId, resourceGroupName, l2IsolationDomainName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCommitConfigurationRequest(string subscriptionId, string resourceGroupName, string l2IsolationDomainName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/", false);
+            uri.AppendPath(l2IsolationDomainName, true);
+            uri.AppendPath("/commitConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Commits the configuration of the given resources. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CommitConfigurationAsync(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            using var message = CreateCommitConfigurationRequest(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Commits the configuration of the given resources. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l2IsolationDomainName"> Name of the L2 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CommitConfiguration(string subscriptionId, string resourceGroupName, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+
+            using var message = CreateCommitConfigurationRequest(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -667,7 +586,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Displays L2IsolationDomains list by resource group GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -694,7 +613,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Displays L2IsolationDomains list by resource group GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -738,7 +657,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Displays L2IsolationDomains list by subscription GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -763,7 +682,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Displays L2IsolationDomains list by subscription GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -803,7 +722,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Displays L2IsolationDomains list by resource group GET method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -832,7 +751,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Displays L2IsolationDomains list by resource group GET method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -875,7 +794,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Displays L2IsolationDomains list by subscription GET method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -902,7 +821,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Displays L2IsolationDomains list by subscription GET method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

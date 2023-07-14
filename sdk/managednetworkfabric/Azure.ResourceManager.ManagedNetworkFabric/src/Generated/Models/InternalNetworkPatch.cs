@@ -24,17 +24,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string Annotation { get; set; }
         /// <summary> Maximum transmission unit. Default value is 1500. </summary>
         public int? Mtu { get; set; }
-        /// <summary> List with object connected IPv4 Subnets. </summary>
+        /// <summary> List of Connected IPv4 Subnets. </summary>
         public IList<ConnectedSubnet> ConnectedIPv4Subnets { get; }
-        /// <summary> List with object connected IPv6 Subnets. </summary>
+        /// <summary> List of connected IPv6 Subnets. </summary>
         public IList<ConnectedSubnet> ConnectedIPv6Subnets { get; }
-        /// <summary> Static Route Configuration properties. </summary>
-        public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        public ResourceIdentifier ImportRoutePolicyId { get; set; }
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        public ResourceIdentifier ExportRoutePolicyId { get; set; }
+        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
+        public ImportRoutePolicy ImportRoutePolicy { get; set; }
+        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
+        public ExportRoutePolicy ExportRoutePolicy { get; set; }
+        /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
+        public ResourceIdentifier IngressAclId { get; set; }
+        /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
+        public ResourceIdentifier EgressAclId { get; set; }
+        /// <summary> To check whether monitoring of internal network is enabled or not. </summary>
+        public IsMonitoringEnabled? IsMonitoringEnabled { get; set; }
         /// <summary> BGP configuration properties. </summary>
         public BgpConfiguration BgpConfiguration { get; set; }
-        /// <summary> ARM resource ID of importRoutePolicy. </summary>
-        public string ImportRoutePolicyId { get; set; }
-        /// <summary> ARM resource ID of importRoutePolicy. </summary>
-        public string ExportRoutePolicyId { get; set; }
+        /// <summary> Static Route Configuration properties. </summary>
+        public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
     }
 }

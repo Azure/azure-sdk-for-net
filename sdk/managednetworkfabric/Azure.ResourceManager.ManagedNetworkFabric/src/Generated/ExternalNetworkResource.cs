@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _externalNetworkRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<ExternalNetworkResource>(new ExternalNetworkOperationSource(Client), _externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<ExternalNetworkResource>(new ExternalNetworkOperationSource(Client), _externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _externalNetworkRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<ExternalNetworkResource>(new ExternalNetworkOperationSource(Client), _externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<ExternalNetworkResource>(new ExternalNetworkOperationSource(Client), _externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_updateAdministrativeState</description>
+        /// <description>ExternalNetworks_UpdateAdministrativeState</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -321,9 +321,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _externalNetworkRestClient.UpdateAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_updateAdministrativeState</description>
+        /// <description>ExternalNetworks_UpdateAdministrativeState</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommonPostActionResponseForStateUpdate> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -359,9 +359,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _externalNetworkRestClient.UpdateAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -372,15 +372,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Update BGP for externalNetwork.
+        /// Update Static Route BFD for external Network.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateBgpAdministrativeState</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateStaticRouteBfdAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_updateBgpAdministrativeState</description>
+        /// <description>ExternalNetworks_UpdateStaticRouteBfdAdministrativeState</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,18 +388,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateBgpAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommonPostActionResponseForStateUpdate>> UpdateStaticRouteBfdAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _externalNetworkClientDiagnostics.CreateScope("ExternalNetworkResource.UpdateBgpAdministrativeState");
+            using var scope = _externalNetworkClientDiagnostics.CreateScope("ExternalNetworkResource.UpdateStaticRouteBfdAdministrativeState");
             scope.Start();
             try
             {
-                var response = await _externalNetworkRestClient.UpdateBgpAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateBgpAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = await _externalNetworkRestClient.UpdateStaticRouteBfdAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateStaticRouteBfdAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -410,15 +410,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Update BGP for externalNetwork.
+        /// Update Static Route BFD for external Network.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateBgpAdministrativeState</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateStaticRouteBfdAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_updateBgpAdministrativeState</description>
+        /// <description>ExternalNetworks_UpdateStaticRouteBfdAdministrativeState</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -426,246 +426,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation UpdateBgpAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommonPostActionResponseForStateUpdate> UpdateStaticRouteBfdAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _externalNetworkClientDiagnostics.CreateScope("ExternalNetworkResource.UpdateBgpAdministrativeState");
+            using var scope = _externalNetworkClientDiagnostics.CreateScope("ExternalNetworkResource.UpdateStaticRouteBfdAdministrativeState");
             scope.Start();
             try
             {
-                var response = _externalNetworkRestClient.UpdateBgpAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateBgpAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = _externalNetworkRestClient.UpdateStaticRouteBfdAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateStaticRouteBfdAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update BfdForBgp for externalNetwork.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateBfdForBgpAdministrativeState</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_updateBfdForBgpAdministrativeState</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateBfdForBgpAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _externalNetworkClientDiagnostics.CreateScope("ExternalNetworkResource.UpdateBfdForBgpAdministrativeState");
-            scope.Start();
-            try
-            {
-                var response = await _externalNetworkRestClient.UpdateBfdForBgpAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateBfdForBgpAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update BfdForBgp for externalNetwork.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateBfdForBgpAdministrativeState</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_updateBfdForBgpAdministrativeState</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation UpdateBfdForBgpAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _externalNetworkClientDiagnostics.CreateScope("ExternalNetworkResource.UpdateBfdForBgpAdministrativeState");
-            scope.Start();
-            try
-            {
-                var response = _externalNetworkRestClient.UpdateBfdForBgpAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateUpdateBfdForBgpAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// clearIpv6Neighbors for externalNetwork.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/clearIpv6Neighbors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_clearIpv6Neighbors</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> ClearIPv6NeighborsAsync(WaitUntil waitUntil, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _externalNetworkClientDiagnostics.CreateScope("ExternalNetworkResource.ClearIPv6Neighbors");
-            scope.Start();
-            try
-            {
-                var response = await _externalNetworkRestClient.ClearIPv6NeighborsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateClearIPv6NeighborsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// clearIpv6Neighbors for externalNetwork.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/clearIpv6Neighbors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_clearIpv6Neighbors</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation ClearIPv6Neighbors(WaitUntil waitUntil, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _externalNetworkClientDiagnostics.CreateScope("ExternalNetworkResource.ClearIPv6Neighbors");
-            scope.Start();
-            try
-            {
-                var response = _externalNetworkRestClient.ClearIPv6Neighbors(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateClearIPv6NeighborsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// clearArpEntries for externalNetwork.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/clearArpEntries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_clearArpEntries</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> ClearArpEntriesAsync(WaitUntil waitUntil, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _externalNetworkClientDiagnostics.CreateScope("ExternalNetworkResource.ClearArpEntries");
-            scope.Start();
-            try
-            {
-                var response = await _externalNetworkRestClient.ClearArpEntriesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateClearArpEntriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// clearArpEntries for externalNetwork.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/clearArpEntries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_clearArpEntries</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation ClearArpEntries(WaitUntil waitUntil, EnableDisableOnResources body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _externalNetworkClientDiagnostics.CreateScope("ExternalNetworkResource.ClearArpEntries");
-            scope.Start();
-            try
-            {
-                var response = _externalNetworkRestClient.ClearArpEntries(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_externalNetworkClientDiagnostics, Pipeline, _externalNetworkRestClient.CreateClearArpEntriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

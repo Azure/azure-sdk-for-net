@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -14,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A class representing the ExternalNetwork data model.
-    /// Defines the ExternalNetwork item.
+    /// Defines the External Network resource.
     /// </summary>
     public partial class ExternalNetworkData : ResourceData
     {
@@ -22,7 +21,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="peeringOption"> Peering option list. </param>
         public ExternalNetworkData(PeeringOption peeringOption)
         {
-            DisabledOnResources = new ChangeTrackingList<string>();
             PeeringOption = peeringOption;
         }
 
@@ -32,48 +30,56 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
         /// <param name="networkToNetworkInterconnectId"> Gets the networkToNetworkInterconnectId of the resource. </param>
-        /// <param name="disabledOnResources"> List of resources the externalNetwork is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
-        /// <param name="administrativeState"> AdministrativeState of the externalNetwork. Example: Enabled | Disabled. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties object. </param>
         /// <param name="optionAProperties"> option A properties object. </param>
-        /// <param name="importRoutePolicyId"> ARM resource ID of importRoutePolicy. </param>
-        /// <param name="exportRoutePolicyId"> ARM resource ID of exportRoutePolicy. </param>
-        internal ExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string networkToNetworkInterconnectId, IReadOnlyList<string> disabledOnResources, EnabledDisabledState? administrativeState, ProvisioningState? provisioningState, PeeringOption peeringOption, OptionBProperties optionBProperties, ExternalNetworkPropertiesOptionAProperties optionAProperties, string importRoutePolicyId, string exportRoutePolicyId) : base(id, name, resourceType, systemData)
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        internal ExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, string networkToNetworkInterconnectId, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkPropertiesOptionAProperties optionAProperties, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData)
         {
             Annotation = annotation;
+            ImportRoutePolicyId = importRoutePolicyId;
+            ExportRoutePolicyId = exportRoutePolicyId;
+            ImportRoutePolicy = importRoutePolicy;
+            ExportRoutePolicy = exportRoutePolicy;
             NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
-            DisabledOnResources = disabledOnResources;
-            AdministrativeState = administrativeState;
-            ProvisioningState = provisioningState;
             PeeringOption = peeringOption;
             OptionBProperties = optionBProperties;
             OptionAProperties = optionAProperties;
-            ImportRoutePolicyId = importRoutePolicyId;
-            ExportRoutePolicyId = exportRoutePolicyId;
+            ConfigurationState = configurationState;
+            ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        public ResourceIdentifier ImportRoutePolicyId { get; set; }
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        public ResourceIdentifier ExportRoutePolicyId { get; set; }
+        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
+        public ImportRoutePolicy ImportRoutePolicy { get; set; }
+        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
+        public ExportRoutePolicy ExportRoutePolicy { get; set; }
         /// <summary> Gets the networkToNetworkInterconnectId of the resource. </summary>
         public string NetworkToNetworkInterconnectId { get; }
-        /// <summary> List of resources the externalNetwork is disabled on. Can be either entire NetworkFabric or NetworkRack. </summary>
-        public IReadOnlyList<string> DisabledOnResources { get; }
-        /// <summary> AdministrativeState of the externalNetwork. Example: Enabled | Disabled. </summary>
-        public EnabledDisabledState? AdministrativeState { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Peering option list. </summary>
         public PeeringOption PeeringOption { get; set; }
         /// <summary> option B properties object. </summary>
-        public OptionBProperties OptionBProperties { get; set; }
+        public L3OptionBProperties OptionBProperties { get; set; }
         /// <summary> option A properties object. </summary>
         public ExternalNetworkPropertiesOptionAProperties OptionAProperties { get; set; }
-        /// <summary> ARM resource ID of importRoutePolicy. </summary>
-        public string ImportRoutePolicyId { get; set; }
-        /// <summary> ARM resource ID of exportRoutePolicy. </summary>
-        public string ExportRoutePolicyId { get; set; }
+        /// <summary> Configuration state of the resource. </summary>
+        public ConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public AdministrativeState? AdministrativeState { get; }
     }
 }

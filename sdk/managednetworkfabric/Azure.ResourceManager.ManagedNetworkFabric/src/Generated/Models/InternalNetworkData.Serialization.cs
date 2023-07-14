@@ -50,16 +50,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StaticRouteConfiguration))
-            {
-                writer.WritePropertyName("staticRouteConfiguration"u8);
-                writer.WriteObjectValue(StaticRouteConfiguration);
-            }
-            if (Optional.IsDefined(BgpConfiguration))
-            {
-                writer.WritePropertyName("bgpConfiguration"u8);
-                writer.WriteObjectValue(BgpConfiguration);
-            }
             if (Optional.IsDefined(ImportRoutePolicyId))
             {
                 writer.WritePropertyName("importRoutePolicyId"u8);
@@ -70,8 +60,48 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("exportRoutePolicyId"u8);
                 writer.WriteStringValue(ExportRoutePolicyId);
             }
+            if (Optional.IsDefined(ImportRoutePolicy))
+            {
+                writer.WritePropertyName("importRoutePolicy"u8);
+                writer.WriteObjectValue(ImportRoutePolicy);
+            }
+            if (Optional.IsDefined(ExportRoutePolicy))
+            {
+                writer.WritePropertyName("exportRoutePolicy"u8);
+                writer.WriteObjectValue(ExportRoutePolicy);
+            }
+            if (Optional.IsDefined(IngressAclId))
+            {
+                writer.WritePropertyName("ingressAclId"u8);
+                writer.WriteStringValue(IngressAclId);
+            }
+            if (Optional.IsDefined(EgressAclId))
+            {
+                writer.WritePropertyName("egressAclId"u8);
+                writer.WriteStringValue(EgressAclId);
+            }
+            if (Optional.IsDefined(IsMonitoringEnabled))
+            {
+                writer.WritePropertyName("isMonitoringEnabled"u8);
+                writer.WriteStringValue(IsMonitoringEnabled.Value.ToString());
+            }
+            if (Optional.IsDefined(Extension))
+            {
+                writer.WritePropertyName("extension"u8);
+                writer.WriteStringValue(Extension.Value.ToString());
+            }
             writer.WritePropertyName("vlanId"u8);
             writer.WriteNumberValue(VlanId);
+            if (Optional.IsDefined(BgpConfiguration))
+            {
+                writer.WritePropertyName("bgpConfiguration"u8);
+                writer.WriteObjectValue(BgpConfiguration);
+            }
+            if (Optional.IsDefined(StaticRouteConfiguration))
+            {
+                writer.WritePropertyName("staticRouteConfiguration"u8);
+                writer.WriteObjectValue(StaticRouteConfiguration);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -90,17 +120,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<int> mtu = default;
             Optional<IList<ConnectedSubnet>> connectedIPv4Subnets = default;
             Optional<IList<ConnectedSubnet>> connectedIPv6Subnets = default;
-            Optional<StaticRouteConfiguration> staticRouteConfiguration = default;
-            Optional<BgpConfiguration> bgpConfiguration = default;
-            Optional<string> importRoutePolicyId = default;
-            Optional<string> exportRoutePolicyId = default;
-            Optional<IReadOnlyList<string>> disabledOnResources = default;
-            Optional<EnabledDisabledState> administrativeState = default;
-            Optional<IReadOnlyList<string>> bgpDisabledOnResources = default;
-            Optional<IReadOnlyList<string>> bfdDisabledOnResources = default;
-            Optional<IReadOnlyList<string>> bfdForStaticRoutesDisabledOnResources = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> importRoutePolicyId = default;
+            Optional<ResourceIdentifier> exportRoutePolicyId = default;
+            Optional<ImportRoutePolicy> importRoutePolicy = default;
+            Optional<ExportRoutePolicy> exportRoutePolicy = default;
+            Optional<ResourceIdentifier> ingressAclId = default;
+            Optional<ResourceIdentifier> egressAclId = default;
+            Optional<IsMonitoringEnabled> isMonitoringEnabled = default;
+            Optional<Extension> extension = default;
             int vlanId = default;
+            Optional<InternalNetworkPropertiesBgpConfiguration> bgpConfiguration = default;
+            Optional<InternalNetworkPropertiesStaticRouteConfiguration> staticRouteConfiguration = default;
+            Optional<ConfigurationState> configurationState = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<AdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -178,13 +211,81 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             connectedIPv6Subnets = array;
                             continue;
                         }
-                        if (property0.NameEquals("staticRouteConfiguration"u8))
+                        if (property0.NameEquals("importRoutePolicyId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            staticRouteConfiguration = StaticRouteConfiguration.DeserializeStaticRouteConfiguration(property0.Value);
+                            importRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("exportRoutePolicyId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            exportRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("importRoutePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("exportRoutePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("ingressAclId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ingressAclId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("egressAclId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            egressAclId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("isMonitoringEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isMonitoringEnabled = new IsMonitoringEnabled(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("extension"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            extension = new Extension(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("vlanId"u8))
+                        {
+                            vlanId = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("bgpConfiguration"u8))
@@ -193,82 +294,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            bgpConfiguration = BgpConfiguration.DeserializeBgpConfiguration(property0.Value);
+                            bgpConfiguration = InternalNetworkPropertiesBgpConfiguration.DeserializeInternalNetworkPropertiesBgpConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("importRoutePolicyId"u8))
-                        {
-                            importRoutePolicyId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("exportRoutePolicyId"u8))
-                        {
-                            exportRoutePolicyId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("disabledOnResources"u8))
+                        if (property0.NameEquals("staticRouteConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            disabledOnResources = array;
+                            staticRouteConfiguration = InternalNetworkPropertiesStaticRouteConfiguration.DeserializeInternalNetworkPropertiesStaticRouteConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("administrativeState"u8))
+                        if (property0.NameEquals("configurationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            administrativeState = new EnabledDisabledState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("bgpDisabledOnResources"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            bgpDisabledOnResources = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("bfdDisabledOnResources"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            bfdDisabledOnResources = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("bfdForStaticRoutesDisabledOnResources"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            bfdForStaticRoutesDisabledOnResources = array;
+                            configurationState = new ConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -280,16 +324,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("vlanId"u8))
+                        if (property0.NameEquals("administrativeState"u8))
                         {
-                            vlanId = property0.Value.GetInt32();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new InternalNetworkData(id, name, type, systemData.Value, annotation.Value, Optional.ToNullable(mtu), Optional.ToList(connectedIPv4Subnets), Optional.ToList(connectedIPv6Subnets), staticRouteConfiguration.Value, bgpConfiguration.Value, importRoutePolicyId.Value, exportRoutePolicyId.Value, Optional.ToList(disabledOnResources), Optional.ToNullable(administrativeState), Optional.ToList(bgpDisabledOnResources), Optional.ToList(bfdDisabledOnResources), Optional.ToList(bfdForStaticRoutesDisabledOnResources), Optional.ToNullable(provisioningState), vlanId);
+            return new InternalNetworkData(id, name, type, systemData.Value, annotation.Value, Optional.ToNullable(mtu), Optional.ToList(connectedIPv4Subnets), Optional.ToList(connectedIPv6Subnets), importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, ingressAclId.Value, egressAclId.Value, Optional.ToNullable(isMonitoringEnabled), Optional.ToNullable(extension), vlanId, bgpConfiguration.Value, staticRouteConfiguration.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

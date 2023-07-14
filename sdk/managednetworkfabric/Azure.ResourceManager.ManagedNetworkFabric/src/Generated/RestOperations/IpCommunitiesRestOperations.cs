@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements an IP Community PUT method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="data"> Request payload. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements an IP Community PUT method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="data"> Request payload. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements an IP Community GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements an IP Community GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> API to update certain properties of the IP Community resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="patch"> IP Community properties to update. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> API to update certain properties of the IP Community resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="patch"> IP Community properties to update. </param>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements IP Community DELETE method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -312,7 +312,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Implements IP Community DELETE method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -338,7 +337,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -366,8 +364,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        /// <summary> Implements IpCommunities list by resource group GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Implements IP Communities list by resource group GET method. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -393,8 +391,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> Implements IpCommunities list by resource group GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Implements IP Communities list by resource group GET method. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -437,8 +435,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        /// <summary> Implements IpCommunities list by subscription GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Implements IP Communities list by subscription GET method. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -462,8 +460,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> Implements IpCommunities list by subscription GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Implements IP Communities list by subscription GET method. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -501,9 +499,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        /// <summary> Implements IpCommunities list by resource group GET method. </summary>
+        /// <summary> Implements IP Communities list by resource group GET method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -530,9 +528,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> Implements IpCommunities list by resource group GET method. </summary>
+        /// <summary> Implements IP Communities list by resource group GET method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -573,9 +571,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        /// <summary> Implements IpCommunities list by subscription GET method. </summary>
+        /// <summary> Implements IP Communities list by subscription GET method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -600,9 +598,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> Implements IpCommunities list by subscription GET method. </summary>
+        /// <summary> Implements IP Communities list by subscription GET method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

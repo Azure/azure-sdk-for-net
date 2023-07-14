@@ -28,40 +28,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="physicalIdentifier"> physicalIdentifier of the network interface. </param>
-        /// <param name="administrativeState"> administrativeState of the network interface. Example: Enabled | Disabled. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        /// <param name="connectedTo"> The arm resource id of the interface or compute server its connected to. </param>
+        /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
+        /// <param name="connectedTo"> The ARM resource id of the interface or compute server its connected to. </param>
         /// <param name="interfaceType"> The Interface Type. Example: Management/Data. </param>
-        /// <param name="ipv4Address"> ipv4Address. </param>
-        /// <param name="ipv6Address"> ipv6Address. </param>
-        internal NetworkInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, EnabledDisabledState? administrativeState, ProvisioningState? provisioningState, string connectedTo, InterfaceType? interfaceType, string ipv4Address, string ipv6Address) : base(id, name, resourceType, systemData)
+        /// <param name="ipv4Address"> IPv4Address of the interface. </param>
+        /// <param name="ipv6Address"> IPv6Address of the interface. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        internal NetworkInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, InterfaceType? interfaceType, string ipv4Address, string ipv6Address, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData)
         {
             Annotation = annotation;
             PhysicalIdentifier = physicalIdentifier;
-            AdministrativeState = administrativeState;
-            ProvisioningState = provisioningState;
             ConnectedTo = connectedTo;
             InterfaceType = interfaceType;
             IPv4Address = ipv4Address;
             IPv6Address = ipv6Address;
+            ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> physicalIdentifier of the network interface. </summary>
+        /// <summary> Physical Identifier of the network interface. </summary>
         public string PhysicalIdentifier { get; }
-        /// <summary> administrativeState of the network interface. Example: Enabled | Disabled. </summary>
-        public EnabledDisabledState? AdministrativeState { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The arm resource id of the interface or compute server its connected to. </summary>
+        /// <summary> The ARM resource id of the interface or compute server its connected to. </summary>
         public string ConnectedTo { get; }
         /// <summary> The Interface Type. Example: Management/Data. </summary>
         public InterfaceType? InterfaceType { get; }
-        /// <summary> ipv4Address. </summary>
+        /// <summary> IPv4Address of the interface. </summary>
         public string IPv4Address { get; }
-        /// <summary> ipv6Address. </summary>
+        /// <summary> IPv6Address of the interface. </summary>
         public string IPv6Address { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public AdministrativeState? AdministrativeState { get; }
     }
 }

@@ -10,16 +10,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The IpExtendedCommunities patch resource definition. </summary>
-    public partial class IPExtendedCommunityPatch
+    /// <summary> The IP Extended Communities patch resource definition. </summary>
+    public partial class IPExtendedCommunityPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of IPExtendedCommunityPatch. </summary>
         public IPExtendedCommunityPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            IPExtendedCommunityRules = new ChangeTrackingList<IPExtendedCommunityRule>();
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> List of IP Extended Community Rules. </summary>
+        public IList<IPExtendedCommunityRule> IPExtendedCommunityRules { get; }
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
     }
 }

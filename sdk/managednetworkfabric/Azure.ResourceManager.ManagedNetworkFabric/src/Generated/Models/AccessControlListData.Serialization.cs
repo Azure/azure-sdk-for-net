@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -38,15 +39,36 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            writer.WritePropertyName("addressFamily"u8);
-            writer.WriteStringValue(AddressFamily.ToString());
-            writer.WritePropertyName("conditions"u8);
-            writer.WriteStartArray();
-            foreach (var item in Conditions)
+            if (Optional.IsDefined(ConfigurationType))
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("configurationType"u8);
+                writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            writer.WriteEndArray();
+            if (Optional.IsDefined(AclsUri))
+            {
+                writer.WritePropertyName("aclsUrl"u8);
+                writer.WriteStringValue(AclsUri.AbsoluteUri);
+            }
+            if (Optional.IsCollectionDefined(MatchConfigurations))
+            {
+                writer.WritePropertyName("matchConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in MatchConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DynamicMatchConfigurations))
+            {
+                writer.WritePropertyName("dynamicMatchConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in DynamicMatchConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -64,9 +86,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
-            AddressFamily addressFamily = default;
-            IList<AccessControlListConditionProperties> conditions = default;
+            Optional<ConfigurationType> configurationType = default;
+            Optional<Uri> aclsUrl = default;
+            Optional<IList<AccessControlListMatchConfiguration>> matchConfigurations = default;
+            Optional<IList<CommonDynamicMatchConfiguration>> dynamicMatchConfigurations = default;
+            Optional<DateTimeOffset> lastSyncedTime = default;
+            Optional<ConfigurationState> configurationState = default;
             Optional<ProvisioningState> provisioningState = default;
+            Optional<AdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -126,19 +153,68 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             annotation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("addressFamily"u8))
+                        if (property0.NameEquals("configurationType"u8))
                         {
-                            addressFamily = new AddressFamily(property0.Value.GetString());
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            configurationType = new ConfigurationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("conditions"u8))
+                        if (property0.NameEquals("aclsUrl"u8))
                         {
-                            List<AccessControlListConditionProperties> array = new List<AccessControlListConditionProperties>();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            aclsUrl = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("matchConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<AccessControlListMatchConfiguration> array = new List<AccessControlListMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AccessControlListConditionProperties.DeserializeAccessControlListConditionProperties(item));
+                                array.Add(AccessControlListMatchConfiguration.DeserializeAccessControlListMatchConfiguration(item));
                             }
-                            conditions = array;
+                            matchConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("dynamicMatchConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item));
+                            }
+                            dynamicMatchConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("lastSyncedTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastSyncedTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            configurationState = new ConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -150,11 +226,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("administrativeState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new AccessControlListData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, addressFamily, conditions, Optional.ToNullable(provisioningState));
+            return new AccessControlListData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(configurationType), aclsUrl.Value, Optional.ToList(matchConfigurations), Optional.ToList(dynamicMatchConfigurations), Optional.ToNullable(lastSyncedTime), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

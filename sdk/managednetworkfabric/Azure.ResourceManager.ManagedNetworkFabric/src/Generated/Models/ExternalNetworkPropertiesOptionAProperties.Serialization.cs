@@ -35,6 +35,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("bfdConfiguration"u8);
                 writer.WriteObjectValue(BfdConfiguration);
             }
+            if (Optional.IsDefined(IngressAclId))
+            {
+                writer.WritePropertyName("ingressAclId"u8);
+                writer.WriteStringValue(IngressAclId);
+            }
+            if (Optional.IsDefined(EgressAclId))
+            {
+                writer.WritePropertyName("egressAclId"u8);
+                writer.WriteStringValue(EgressAclId);
+            }
             if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
@@ -66,9 +76,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             Optional<int> mtu = default;
             Optional<int> vlanId = default;
-            Optional<int> fabricASN = default;
-            Optional<int> peerASN = default;
+            Optional<long> fabricASN = default;
+            Optional<long> peerASN = default;
             Optional<BfdConfiguration> bfdConfiguration = default;
+            Optional<ResourceIdentifier> ingressAclId = default;
+            Optional<ResourceIdentifier> egressAclId = default;
             Optional<string> primaryIPv4Prefix = default;
             Optional<string> primaryIPv6Prefix = default;
             Optional<string> secondaryIPv4Prefix = default;
@@ -99,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    fabricASN = property.Value.GetInt32();
+                    fabricASN = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("peerASN"u8))
@@ -108,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    peerASN = property.Value.GetInt32();
+                    peerASN = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("bfdConfiguration"u8))
@@ -118,6 +130,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         continue;
                     }
                     bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("ingressAclId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ingressAclId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("egressAclId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    egressAclId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryIpv4Prefix"u8))
@@ -141,7 +171,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new ExternalNetworkPropertiesOptionAProperties(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(fabricASN), Optional.ToNullable(peerASN), bfdConfiguration.Value);
+            return new ExternalNetworkPropertiesOptionAProperties(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(fabricASN), Optional.ToNullable(peerASN), bfdConfiguration.Value, ingressAclId.Value, egressAclId.Value);
         }
     }
 }

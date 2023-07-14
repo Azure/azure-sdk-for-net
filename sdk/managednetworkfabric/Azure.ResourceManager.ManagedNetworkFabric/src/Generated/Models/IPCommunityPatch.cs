@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The IPCommunity patch resource definition. </summary>
-    public partial class IPCommunityPatch
+    /// <summary> The IP Community patch resource definition. </summary>
+    public partial class IPCommunityPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of IPCommunityPatch. </summary>
         public IPCommunityPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            IPCommunityRules = new ChangeTrackingList<IPCommunityRule>();
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> List of IP Community Rules. </summary>
+        public IList<IPCommunityRule> IPCommunityRules { get; }
     }
 }

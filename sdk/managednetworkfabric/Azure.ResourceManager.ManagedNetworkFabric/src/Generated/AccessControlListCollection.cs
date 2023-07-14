@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _accessControlListRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accessControlListName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<AccessControlListResource>(Response.FromValue(new AccessControlListResource(Client, response), response.GetRawResponse()));
+                var operation = new ManagedNetworkFabricArmOperation<AccessControlListResource>(new AccessControlListOperationSource(Client), _accessControlListClientDiagnostics, Pipeline, _accessControlListRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accessControlListName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _accessControlListRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accessControlListName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<AccessControlListResource>(Response.FromValue(new AccessControlListResource(Client, response), response.GetRawResponse()));
+                var operation = new ManagedNetworkFabricArmOperation<AccessControlListResource>(new AccessControlListOperationSource(Client), _accessControlListClientDiagnostics, Pipeline, _accessControlListRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accessControlListName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

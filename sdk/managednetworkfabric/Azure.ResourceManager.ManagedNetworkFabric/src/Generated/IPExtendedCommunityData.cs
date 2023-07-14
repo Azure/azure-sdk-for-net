@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -14,15 +16,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A class representing the IPExtendedCommunity data model.
-    /// The IpExtendedCommunity resource definition.
+    /// The IP Extended Community resource definition.
     /// </summary>
     public partial class IPExtendedCommunityData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IPExtendedCommunityData. </summary>
         /// <param name="location"> The location. </param>
-        public IPExtendedCommunityData(AzureLocation location) : base(location)
+        /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityRules"/> is null. </exception>
+        public IPExtendedCommunityData(AzureLocation location, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules) : base(location)
         {
-            RouteTargets = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(ipExtendedCommunityRules, nameof(ipExtendedCommunityRules));
+
+            IPExtendedCommunityRules = ipExtendedCommunityRules.ToList();
         }
 
         /// <summary> Initializes a new instance of IPExtendedCommunityData. </summary>
@@ -33,24 +39,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
-        /// <param name="routeTargets"> Route Target List.The expected formats are ASN(plain):NN &gt;&gt; example 4294967294:50, ASN.ASN:NN &gt;&gt; example 65533.65333:40, IP-address:NN &gt;&gt; example 10.10.10.10:65535. The possible values of ASN,NN are in range of 0-65535, ASN(plain) is in range of 0-4294967295. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal IPExtendedCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, CommunityActionType? action, IList<string> routeTargets, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        internal IPExtendedCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
-            Action = action;
-            RouteTargets = routeTargets;
+            IPExtendedCommunityRules = ipExtendedCommunityRules;
+            ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> Action to be taken on the configuration. Example: Permit | Deny. </summary>
-        public CommunityActionType? Action { get; set; }
-        /// <summary> Route Target List.The expected formats are ASN(plain):NN &gt;&gt; example 4294967294:50, ASN.ASN:NN &gt;&gt; example 65533.65333:40, IP-address:NN &gt;&gt; example 10.10.10.10:65535. The possible values of ASN,NN are in range of 0-65535, ASN(plain) is in range of 0-4294967295. </summary>
-        public IList<string> RouteTargets { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
+        /// <summary> List of IP Extended Community Rules. </summary>
+        public IList<IPExtendedCommunityRule> IPExtendedCommunityRules { get; }
+        /// <summary> Configuration state of the resource. </summary>
+        public ConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public AdministrativeState? AdministrativeState { get; }
     }
 }

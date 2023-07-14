@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -25,6 +24,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
+            if (Optional.IsDefined(ImportRoutePolicyId))
+            {
+                writer.WritePropertyName("importRoutePolicyId"u8);
+                writer.WriteStringValue(ImportRoutePolicyId);
+            }
+            if (Optional.IsDefined(ExportRoutePolicyId))
+            {
+                writer.WritePropertyName("exportRoutePolicyId"u8);
+                writer.WriteStringValue(ExportRoutePolicyId);
+            }
+            if (Optional.IsDefined(ImportRoutePolicy))
+            {
+                writer.WritePropertyName("importRoutePolicy"u8);
+                writer.WriteObjectValue(ImportRoutePolicy);
+            }
+            if (Optional.IsDefined(ExportRoutePolicy))
+            {
+                writer.WritePropertyName("exportRoutePolicy"u8);
+                writer.WriteObjectValue(ExportRoutePolicy);
+            }
             writer.WritePropertyName("peeringOption"u8);
             writer.WriteStringValue(PeeringOption.ToString());
             if (Optional.IsDefined(OptionBProperties))
@@ -36,16 +55,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 writer.WritePropertyName("optionAProperties"u8);
                 writer.WriteObjectValue(OptionAProperties);
-            }
-            if (Optional.IsDefined(ImportRoutePolicyId))
-            {
-                writer.WritePropertyName("importRoutePolicyId"u8);
-                writer.WriteStringValue(ImportRoutePolicyId);
-            }
-            if (Optional.IsDefined(ExportRoutePolicyId))
-            {
-                writer.WritePropertyName("exportRoutePolicyId"u8);
-                writer.WriteStringValue(ExportRoutePolicyId);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -62,15 +71,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
+            Optional<ResourceIdentifier> importRoutePolicyId = default;
+            Optional<ResourceIdentifier> exportRoutePolicyId = default;
+            Optional<ImportRoutePolicy> importRoutePolicy = default;
+            Optional<ExportRoutePolicy> exportRoutePolicy = default;
             Optional<string> networkToNetworkInterconnectId = default;
-            Optional<IReadOnlyList<string>> disabledOnResources = default;
-            Optional<EnabledDisabledState> administrativeState = default;
-            Optional<ProvisioningState> provisioningState = default;
             PeeringOption peeringOption = default;
-            Optional<OptionBProperties> optionBProperties = default;
+            Optional<L3OptionBProperties> optionBProperties = default;
             Optional<ExternalNetworkPropertiesOptionAProperties> optionAProperties = default;
-            Optional<string> importRoutePolicyId = default;
-            Optional<string> exportRoutePolicyId = default;
+            Optional<ConfigurationState> configurationState = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<AdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -111,41 +122,45 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             annotation = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("importRoutePolicyId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            importRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("exportRoutePolicyId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            exportRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("importRoutePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("exportRoutePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("networkToNetworkInterconnectId"u8))
                         {
                             networkToNetworkInterconnectId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("disabledOnResources"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            disabledOnResources = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("administrativeState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administrativeState = new EnabledDisabledState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("peeringOption"u8))
@@ -159,7 +174,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            optionBProperties = OptionBProperties.DeserializeOptionBProperties(property0.Value);
+                            optionBProperties = L3OptionBProperties.DeserializeL3OptionBProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("optionAProperties"u8))
@@ -171,21 +186,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             optionAProperties = ExternalNetworkPropertiesOptionAProperties.DeserializeExternalNetworkPropertiesOptionAProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("importRoutePolicyId"u8))
+                        if (property0.NameEquals("configurationState"u8))
                         {
-                            importRoutePolicyId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            configurationState = new ConfigurationState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("exportRoutePolicyId"u8))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
-                            exportRoutePolicyId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("administrativeState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ExternalNetworkData(id, name, type, systemData.Value, annotation.Value, networkToNetworkInterconnectId.Value, Optional.ToList(disabledOnResources), Optional.ToNullable(administrativeState), Optional.ToNullable(provisioningState), peeringOption, optionBProperties.Value, optionAProperties.Value, importRoutePolicyId.Value, exportRoutePolicyId.Value);
+            return new ExternalNetworkData(id, name, type, systemData.Value, annotation.Value, importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, networkToNetworkInterconnectId.Value, peeringOption, optionBProperties.Value, optionAProperties.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

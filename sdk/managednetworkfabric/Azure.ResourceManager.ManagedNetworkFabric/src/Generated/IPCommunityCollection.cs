@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements IpCommunities list by resource group GET method.
+        /// Implements IP Communities list by resource group GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements IpCommunities list by resource group GET method.
+        /// Implements IP Communities list by resource group GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

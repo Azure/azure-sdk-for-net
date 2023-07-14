@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="externalNetworkName"> Name of the ExternalNetwork. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="externalNetworkName"> Name of the ExternalNetwork. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="externalNetworkName"> Name of the ExternalNetwork. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="externalNetworkName"> Name of the ExternalNetwork. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_List</description>
+        /// <description>ExternalNetworks_ListByL3IsolationDomain</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="ExternalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExternalNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _externalNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _externalNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _externalNetworkRestClient.CreateListByL3IsolationDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _externalNetworkRestClient.CreateListByL3IsolationDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExternalNetworkResource(Client, ExternalNetworkData.DeserializeExternalNetworkData(e)), _externalNetworkClientDiagnostics, Pipeline, "ExternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_List</description>
+        /// <description>ExternalNetworks_ListByL3IsolationDomain</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="ExternalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExternalNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _externalNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _externalNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _externalNetworkRestClient.CreateListByL3IsolationDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _externalNetworkRestClient.CreateListByL3IsolationDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExternalNetworkResource(Client, ExternalNetworkData.DeserializeExternalNetworkData(e)), _externalNetworkClientDiagnostics, Pipeline, "ExternalNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="externalNetworkName"> Name of the ExternalNetwork. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="externalNetworkName"> Name of the ExternalNetwork. </param>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>

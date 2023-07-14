@@ -15,6 +15,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(IntervalInMilliSeconds))
+            {
+                writer.WritePropertyName("intervalInMilliSeconds"u8);
+                writer.WriteNumberValue(IntervalInMilliSeconds.Value);
+            }
+            if (Optional.IsDefined(Multiplier))
+            {
+                writer.WritePropertyName("multiplier"u8);
+                writer.WriteNumberValue(Multiplier.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -24,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<EnabledDisabledState> administrativeState = default;
-            Optional<int> interval = default;
+            Optional<BfdAdministrativeState> administrativeState = default;
+            Optional<int> intervalInMilliSeconds = default;
             Optional<int> multiplier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,16 +45,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    administrativeState = new EnabledDisabledState(property.Value.GetString());
+                    administrativeState = new BfdAdministrativeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("interval"u8))
+                if (property.NameEquals("intervalInMilliSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    interval = property.Value.GetInt32();
+                    intervalInMilliSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("multiplier"u8))
@@ -57,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new BfdConfiguration(Optional.ToNullable(administrativeState), Optional.ToNullable(interval), Optional.ToNullable(multiplier));
+            return new BfdConfiguration(Optional.ToNullable(administrativeState), Optional.ToNullable(intervalInMilliSeconds), Optional.ToNullable(multiplier));
         }
     }
 }

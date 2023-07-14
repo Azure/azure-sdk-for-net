@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of ActionIPExtendedCommunityProperties. </summary>
-        /// <param name="add"> IP Extended Community Id list properties. </param>
-        /// <param name="delete"> IP Extended Community Id list properties. </param>
-        /// <param name="set"> IP Extended Community Id list properties. </param>
+        /// <param name="add"> List of IP Extended Community IDs. </param>
+        /// <param name="delete"> List of IP Extended Community IDs. </param>
+        /// <param name="set"> List of IP Extended Community IDs. </param>
         internal ActionIPExtendedCommunityProperties(IPExtendedCommunityIdList @add, IPExtendedCommunityIdList delete, IPExtendedCommunityIdList @set) : base(@add)
         {
             Delete = delete;
             Set = @set;
         }
 
-        /// <summary> IP Extended Community Id list properties. </summary>
+        /// <summary> List of IP Extended Community IDs. </summary>
         internal IPExtendedCommunityIdList Delete { get; set; }
         /// <summary> List of IP Extended Community resource IDs. </summary>
         public IList<string> DeleteIPExtendedCommunityIds
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        /// <summary> IP Extended Community Id list properties. </summary>
+        /// <summary> List of IP Extended Community IDs. </summary>
         internal IPExtendedCommunityIdList Set { get; set; }
         /// <summary> List of IP Extended Community resource IDs. </summary>
         public IList<string> SetIPExtendedCommunityIds

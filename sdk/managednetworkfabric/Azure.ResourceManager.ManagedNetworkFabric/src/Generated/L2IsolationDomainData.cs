@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -14,15 +15,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A class representing the L2IsolationDomain data model.
-    /// The L2IsolationDomain resource definition.
+    /// The L2 Isolation Domain resource definition.
     /// </summary>
     public partial class L2IsolationDomainData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of L2IsolationDomainData. </summary>
         /// <param name="location"> The location. </param>
-        public L2IsolationDomainData(AzureLocation location) : base(location)
+        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
+        /// <param name="vlanId"> Vlan Identifier of the Network Fabric. Example: 501. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
+        public L2IsolationDomainData(AzureLocation location, ResourceIdentifier networkFabricId, int vlanId) : base(location)
         {
-            DisabledOnResources = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+
+            NetworkFabricId = networkFabricId;
+            VlanId = vlanId;
         }
 
         /// <summary> Initializes a new instance of L2IsolationDomainData. </summary>
@@ -33,36 +40,36 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkFabricId"> Network Fabric ARM resource id. </param>
-        /// <param name="vlanId"> vlanId. Example: 501. </param>
-        /// <param name="mtu"> maximum transmission unit. Default value is 1500. </param>
-        /// <param name="disabledOnResources"> List of resources the L2 Isolation Domain is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
-        /// <param name="administrativeState"> state. Example: Enabled | Disabled. It indicates administrative state of the isolationDomain, whether it is enabled or disabled. If enabled, the configuration is applied on the devices. If disabled, the configuration is removed from the devices. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal L2IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string networkFabricId, int? vlanId, int? mtu, IReadOnlyList<string> disabledOnResources, EnabledDisabledState? administrativeState, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
+        /// <param name="vlanId"> Vlan Identifier of the Network Fabric. Example: 501. </param>
+        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        internal L2IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkFabricId, int vlanId, int? mtu, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             NetworkFabricId = networkFabricId;
             VlanId = vlanId;
             Mtu = mtu;
-            DisabledOnResources = disabledOnResources;
-            AdministrativeState = administrativeState;
+            ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> Network Fabric ARM resource id. </summary>
-        public string NetworkFabricId { get; set; }
-        /// <summary> vlanId. Example: 501. </summary>
-        public int? VlanId { get; set; }
-        /// <summary> maximum transmission unit. Default value is 1500. </summary>
+        /// <summary> ARM Resource ID of the Network Fabric. </summary>
+        public ResourceIdentifier NetworkFabricId { get; set; }
+        /// <summary> Vlan Identifier of the Network Fabric. Example: 501. </summary>
+        public int VlanId { get; set; }
+        /// <summary> Maximum transmission unit. Default value is 1500. </summary>
         public int? Mtu { get; set; }
-        /// <summary> List of resources the L2 Isolation Domain is disabled on. Can be either entire NetworkFabric or NetworkRack. </summary>
-        public IReadOnlyList<string> DisabledOnResources { get; }
-        /// <summary> state. Example: Enabled | Disabled. It indicates administrative state of the isolationDomain, whether it is enabled or disabled. If enabled, the configuration is applied on the devices. If disabled, the configuration is removed from the devices. </summary>
-        public EnabledDisabledState? AdministrativeState { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
+        /// <summary> Configuration state of the resource. </summary>
+        public ConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public AdministrativeState? AdministrativeState { get; }
     }
 }

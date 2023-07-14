@@ -11,7 +11,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of ExternalNetworks. </summary>
+    /// <summary> List of External Networks. </summary>
     internal partial class ExternalNetworksList
     {
         /// <summary> Initializes a new instance of ExternalNetworksList. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of ExternalNetworksList. </summary>
-        /// <param name="value"> List of ExternalNetworks resources. </param>
+        /// <param name="value"> List of External Network resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal ExternalNetworksList(IReadOnlyList<ExternalNetworkData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NextLink = nextLink;
         }
 
-        /// <summary> List of ExternalNetworks resources. </summary>
+        /// <summary> List of External Network resources. </summary>
         public IReadOnlyList<ExternalNetworkData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }

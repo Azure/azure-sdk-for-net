@@ -53,11 +53,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("networkDeviceSku"u8);
                 writer.WriteStringValue(NetworkDeviceSku);
             }
-            if (Optional.IsDefined(NetworkDeviceRole))
-            {
-                writer.WritePropertyName("networkDeviceRole"u8);
-                writer.WriteStringValue(NetworkDeviceRole.Value.ToString());
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -79,9 +74,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> serialNumber = default;
             Optional<string> version = default;
             Optional<string> networkDeviceSku = default;
-            Optional<NetworkDeviceRoleType> networkDeviceRole = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkDeviceRole> networkDeviceRole = default;
             Optional<string> networkRackId = default;
+            Optional<string> managementIPv4Address = default;
+            Optional<string> managementIPv6Address = default;
+            Optional<ConfigurationState> configurationState = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<AdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -167,7 +166,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            networkDeviceRole = new NetworkDeviceRoleType(property0.Value.GetString());
+                            networkDeviceRole = new NetworkDeviceRole(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("networkRackId"u8))
+                        {
+                            networkRackId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("managementIpv4Address"u8))
+                        {
+                            managementIPv4Address = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("managementIpv6Address"u8))
+                        {
+                            managementIPv6Address = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            configurationState = new ConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -179,16 +202,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("networkRackId"u8))
+                        if (property0.NameEquals("administrativeState"u8))
                         {
-                            networkRackId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new NetworkDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, hostName.Value, serialNumber.Value, version.Value, networkDeviceSku.Value, Optional.ToNullable(networkDeviceRole), Optional.ToNullable(provisioningState), networkRackId.Value);
+            return new NetworkDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, hostName.Value, serialNumber.Value, version.Value, networkDeviceSku.Value, Optional.ToNullable(networkDeviceRole), networkRackId.Value, managementIPv4Address.Value, managementIPv6Address.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

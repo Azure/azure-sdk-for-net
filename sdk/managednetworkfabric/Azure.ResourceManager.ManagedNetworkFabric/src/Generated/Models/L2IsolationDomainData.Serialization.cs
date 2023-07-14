@@ -38,16 +38,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(NetworkFabricId))
-            {
-                writer.WritePropertyName("networkFabricId"u8);
-                writer.WriteStringValue(NetworkFabricId);
-            }
-            if (Optional.IsDefined(VlanId))
-            {
-                writer.WritePropertyName("vlanId"u8);
-                writer.WriteNumberValue(VlanId.Value);
-            }
+            writer.WritePropertyName("networkFabricId"u8);
+            writer.WriteStringValue(NetworkFabricId);
+            writer.WritePropertyName("vlanId"u8);
+            writer.WriteNumberValue(VlanId);
             if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
@@ -70,12 +64,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
-            Optional<string> networkFabricId = default;
-            Optional<int> vlanId = default;
+            ResourceIdentifier networkFabricId = default;
+            int vlanId = default;
             Optional<int> mtu = default;
-            Optional<IReadOnlyList<string>> disabledOnResources = default;
-            Optional<EnabledDisabledState> administrativeState = default;
+            Optional<ConfigurationState> configurationState = default;
             Optional<ProvisioningState> provisioningState = default;
+            Optional<AdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -137,15 +131,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("networkFabricId"u8))
                         {
-                            networkFabricId = property0.Value.GetString();
+                            networkFabricId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vlanId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             vlanId = property0.Value.GetInt32();
                             continue;
                         }
@@ -158,27 +148,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             mtu = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("disabledOnResources"u8))
+                        if (property0.NameEquals("configurationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            disabledOnResources = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("administrativeState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administrativeState = new EnabledDisabledState(property0.Value.GetString());
+                            configurationState = new ConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -190,11 +166,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("administrativeState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new L2IsolationDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, networkFabricId.Value, Optional.ToNullable(vlanId), Optional.ToNullable(mtu), Optional.ToList(disabledOnResources), Optional.ToNullable(administrativeState), Optional.ToNullable(provisioningState));
+            return new L2IsolationDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, networkFabricId, vlanId, Optional.ToNullable(mtu), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

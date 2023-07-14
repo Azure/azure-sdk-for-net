@@ -28,25 +28,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Optional.IsDefined(ConfigurationType))
             {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
+                writer.WritePropertyName("configurationType"u8);
+                writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            if (Optional.IsDefined(AddressFamily))
+            if (Optional.IsDefined(AclsUri))
             {
-                writer.WritePropertyName("addressFamily"u8);
-                writer.WriteStringValue(AddressFamily.Value.ToString());
+                writer.WritePropertyName("aclsUrl"u8);
+                writer.WriteStringValue(AclsUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Conditions))
+            if (Optional.IsCollectionDefined(MatchConfigurations))
             {
-                writer.WritePropertyName("conditions"u8);
+                writer.WritePropertyName("matchConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (var item in Conditions)
+                foreach (var item in MatchConfigurations)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DynamicMatchConfigurations))
+            {
+                writer.WritePropertyName("dynamicMatchConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in DynamicMatchConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Annotation))
+            {
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteStringValue(Annotation);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

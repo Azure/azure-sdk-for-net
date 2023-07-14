@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of ActionIPCommunityProperties. </summary>
-        /// <param name="add"> IP Community ID list properties. </param>
-        /// <param name="delete"> IP Community ID list properties. </param>
-        /// <param name="set"> IP Community ID list properties. </param>
+        /// <param name="add"> List of IP Community IDs. </param>
+        /// <param name="delete"> List of IP Community IDs. </param>
+        /// <param name="set"> List of IP Community IDs. </param>
         internal ActionIPCommunityProperties(IPCommunityIdList @add, IPCommunityIdList delete, IPCommunityIdList @set) : base(@add)
         {
             Delete = delete;
             Set = @set;
         }
 
-        /// <summary> IP Community ID list properties. </summary>
+        /// <summary> List of IP Community IDs. </summary>
         internal IPCommunityIdList Delete { get; set; }
         /// <summary> List of IP Community resource IDs. </summary>
         public IList<string> DeleteIPCommunityIds
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        /// <summary> IP Community ID list properties. </summary>
+        /// <summary> List of IP Community IDs. </summary>
         internal IPCommunityIdList Set { get; set; }
         /// <summary> List of IP Community resource IDs. </summary>
         public IList<string> SetIPCommunityIds

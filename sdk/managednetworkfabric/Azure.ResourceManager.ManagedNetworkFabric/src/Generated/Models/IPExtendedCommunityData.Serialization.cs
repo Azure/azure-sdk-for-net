@@ -38,21 +38,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(Action))
+            writer.WritePropertyName("ipExtendedCommunityRules"u8);
+            writer.WriteStartArray();
+            foreach (var item in IPExtendedCommunityRules)
             {
-                writer.WritePropertyName("action"u8);
-                writer.WriteStringValue(Action.Value.ToString());
+                writer.WriteObjectValue(item);
             }
-            if (Optional.IsCollectionDefined(RouteTargets))
-            {
-                writer.WritePropertyName("routeTargets"u8);
-                writer.WriteStartArray();
-                foreach (var item in RouteTargets)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
+            writer.WriteEndArray();
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -70,9 +62,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
-            Optional<CommunityActionType> action = default;
-            Optional<IList<string>> routeTargets = default;
+            IList<IPExtendedCommunityRule> ipExtendedCommunityRules = default;
+            Optional<ConfigurationState> configurationState = default;
             Optional<ProvisioningState> provisioningState = default;
+            Optional<AdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -132,27 +125,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             annotation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("action"u8))
+                        if (property0.NameEquals("ipExtendedCommunityRules"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            action = new CommunityActionType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("routeTargets"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
+                            List<IPExtendedCommunityRule> array = new List<IPExtendedCommunityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(IPExtendedCommunityRule.DeserializeIPExtendedCommunityRule(item));
                             }
-                            routeTargets = array;
+                            ipExtendedCommunityRules = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            configurationState = new ConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -164,11 +153,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("administrativeState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new IPExtendedCommunityData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(action), Optional.ToList(routeTargets), Optional.ToNullable(provisioningState));
+            return new IPExtendedCommunityData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, ipExtendedCommunityRules, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

@@ -53,21 +53,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("aggregateRouteConfiguration"u8);
                 writer.WriteObjectValue(AggregateRouteConfiguration);
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
             if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
             {
                 writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
                 writer.WriteObjectValue(ConnectedSubnetRoutePolicy);
             }
-            if (Optional.IsDefined(NetworkFabricId))
-            {
-                writer.WritePropertyName("networkFabricId"u8);
-                writer.WriteStringValue(NetworkFabricId);
-            }
+            writer.WritePropertyName("networkFabricId"u8);
+            writer.WriteStringValue(NetworkFabricId);
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -88,13 +80,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<RedistributeConnectedSubnet> redistributeConnectedSubnets = default;
             Optional<RedistributeStaticRoute> redistributeStaticRoutes = default;
             Optional<AggregateRouteConfiguration> aggregateRouteConfiguration = default;
-            Optional<string> description = default;
-            Optional<L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy> connectedSubnetRoutePolicy = default;
-            Optional<string> networkFabricId = default;
-            Optional<IReadOnlyList<string>> disabledOnResources = default;
-            Optional<EnabledDisabledState> administrativeState = default;
-            Optional<IReadOnlyList<string>> optionBDisabledOnResources = default;
+            Optional<ConnectedSubnetRoutePolicy> connectedSubnetRoutePolicy = default;
+            ResourceIdentifier networkFabricId = default;
+            Optional<ConfigurationState> configurationState = default;
             Optional<ProvisioningState> provisioningState = default;
+            Optional<AdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -181,60 +171,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             aggregateRouteConfiguration = AggregateRouteConfiguration.DeserializeAggregateRouteConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("connectedSubnetRoutePolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            connectedSubnetRoutePolicy = L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy.DeserializeL3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy(property0.Value);
+                            connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicy.DeserializeConnectedSubnetRoutePolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkFabricId"u8))
                         {
-                            networkFabricId = property0.Value.GetString();
+                            networkFabricId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("disabledOnResources"u8))
+                        if (property0.NameEquals("configurationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            disabledOnResources = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("administrativeState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administrativeState = new EnabledDisabledState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("optionBDisabledOnResources"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            optionBDisabledOnResources = array;
+                            configurationState = new ConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -246,11 +203,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("administrativeState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new L3IsolationDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(redistributeConnectedSubnets), Optional.ToNullable(redistributeStaticRoutes), aggregateRouteConfiguration.Value, description.Value, connectedSubnetRoutePolicy.Value, networkFabricId.Value, Optional.ToList(disabledOnResources), Optional.ToNullable(administrativeState), Optional.ToList(optionBDisabledOnResources), Optional.ToNullable(provisioningState));
+            return new L3IsolationDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(redistributeConnectedSubnets), Optional.ToNullable(redistributeStaticRoutes), aggregateRouteConfiguration.Value, connectedSubnetRoutePolicy.Value, networkFabricId, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

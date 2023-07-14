@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(Annotation))
+            {
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteStringValue(Annotation);
+            }
             if (Optional.IsDefined(RedistributeConnectedSubnets))
             {
                 writer.WritePropertyName("redistributeConnectedSubnets"u8);
@@ -42,11 +47,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("aggregateRouteConfiguration"u8);
                 writer.WriteObjectValue(AggregateRouteConfiguration);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
             {

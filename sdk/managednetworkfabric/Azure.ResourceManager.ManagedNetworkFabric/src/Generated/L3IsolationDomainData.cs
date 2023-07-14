@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -14,16 +15,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A class representing the L3IsolationDomain data model.
-    /// The L3IsolationDomain resource definition.
+    /// The L3 Isolation Domain resource definition.
     /// </summary>
     public partial class L3IsolationDomainData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of L3IsolationDomainData. </summary>
         /// <param name="location"> The location. </param>
-        public L3IsolationDomainData(AzureLocation location) : base(location)
+        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
+        public L3IsolationDomainData(AzureLocation location, ResourceIdentifier networkFabricId) : base(location)
         {
-            DisabledOnResources = new ChangeTrackingList<string>();
-            OptionBDisabledOnResources = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+
+            NetworkFabricId = networkFabricId;
         }
 
         /// <summary> Initializes a new instance of L3IsolationDomainData. </summary>
@@ -36,27 +40,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
         /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
-        /// <param name="aggregateRouteConfiguration"> List of Ipv4 and Ipv6 route configurations. </param>
-        /// <param name="description"> L3 Isolation Domain description. </param>
+        /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
         /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
-        /// <param name="networkFabricId"> Network Fabric ARM resource id. </param>
-        /// <param name="disabledOnResources"> List of resources the L3 Isolation Domain is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
-        /// <param name="administrativeState"> Administrative state of the IsolationDomain. Example: Enabled | Disabled. </param>
-        /// <param name="optionBDisabledOnResources"> List of resources the OptionB is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal L3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, string description, L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, string networkFabricId, IReadOnlyList<string> disabledOnResources, EnabledDisabledState? administrativeState, IReadOnlyList<string> optionBDisabledOnResources, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        internal L3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, ResourceIdentifier networkFabricId, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             RedistributeConnectedSubnets = redistributeConnectedSubnets;
             RedistributeStaticRoutes = redistributeStaticRoutes;
             AggregateRouteConfiguration = aggregateRouteConfiguration;
-            Description = description;
             ConnectedSubnetRoutePolicy = connectedSubnetRoutePolicy;
             NetworkFabricId = networkFabricId;
-            DisabledOnResources = disabledOnResources;
-            AdministrativeState = administrativeState;
-            OptionBDisabledOnResources = optionBDisabledOnResources;
+            ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
         }
 
         /// <summary> Switch configuration description. </summary>
@@ -65,21 +65,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public RedistributeConnectedSubnet? RedistributeConnectedSubnets { get; set; }
         /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
         public RedistributeStaticRoute? RedistributeStaticRoutes { get; set; }
-        /// <summary> List of Ipv4 and Ipv6 route configurations. </summary>
+        /// <summary> Aggregate route configurations. </summary>
         public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
-        /// <summary> L3 Isolation Domain description. </summary>
-        public string Description { get; set; }
         /// <summary> Connected Subnet RoutePolicy. </summary>
-        public L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
-        /// <summary> Network Fabric ARM resource id. </summary>
-        public string NetworkFabricId { get; set; }
-        /// <summary> List of resources the L3 Isolation Domain is disabled on. Can be either entire NetworkFabric or NetworkRack. </summary>
-        public IReadOnlyList<string> DisabledOnResources { get; }
-        /// <summary> Administrative state of the IsolationDomain. Example: Enabled | Disabled. </summary>
-        public EnabledDisabledState? AdministrativeState { get; }
-        /// <summary> List of resources the OptionB is disabled on. Can be either entire NetworkFabric or NetworkRack. </summary>
-        public IReadOnlyList<string> OptionBDisabledOnResources { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
+        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
+        /// <summary> ARM Resource ID of the Network Fabric. </summary>
+        public ResourceIdentifier NetworkFabricId { get; set; }
+        /// <summary> Configuration state of the resource. </summary>
+        public ConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public AdministrativeState? AdministrativeState { get; }
     }
 }

@@ -11,7 +11,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of L3IsolationDomains. </summary>
+    /// <summary> List of L3 Isolation Domains. </summary>
     internal partial class L3IsolationDomainsListResult
     {
         /// <summary> Initializes a new instance of L3IsolationDomainsListResult. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of L3IsolationDomainsListResult. </summary>
-        /// <param name="value"> List of L3IsolationDomain resources. </param>
+        /// <param name="value"> List of L3 Isolation Domain resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal L3IsolationDomainsListResult(IReadOnlyList<L3IsolationDomainData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NextLink = nextLink;
         }
 
-        /// <summary> List of L3IsolationDomain resources. </summary>
+        /// <summary> List of L3 Isolation Domain resources. </summary>
         public IReadOnlyList<L3IsolationDomainData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }

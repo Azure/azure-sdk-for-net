@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     {
         private ClientDiagnostics _accessControlListClientDiagnostics;
         private AccessControlListsRestOperations _accessControlListRestClient;
+        private ClientDiagnostics _internetGatewayClientDiagnostics;
+        private InternetGatewaysRestOperations _internetGatewayRestClient;
+        private ClientDiagnostics _internetGatewayRuleClientDiagnostics;
+        private InternetGatewayRulesRestOperations _internetGatewayRuleRestClient;
         private ClientDiagnostics _ipCommunityIPCommunitiesClientDiagnostics;
         private IpCommunitiesRestOperations _ipCommunityIPCommunitiesRestClient;
         private ClientDiagnostics _ipExtendedCommunityIPExtendedCommunitiesClientDiagnostics;
@@ -28,14 +32,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private L2IsolationDomainsRestOperations _l2IsolationDomainRestClient;
         private ClientDiagnostics _l3IsolationDomainClientDiagnostics;
         private L3IsolationDomainsRestOperations _l3IsolationDomainRestClient;
+        private ClientDiagnostics _neighborGroupClientDiagnostics;
+        private NeighborGroupsRestOperations _neighborGroupRestClient;
         private ClientDiagnostics _networkDeviceClientDiagnostics;
         private NetworkDevicesRestOperations _networkDeviceRestClient;
         private ClientDiagnostics _networkFabricControllerClientDiagnostics;
         private NetworkFabricControllersRestOperations _networkFabricControllerRestClient;
         private ClientDiagnostics _networkFabricClientDiagnostics;
         private NetworkFabricsRestOperations _networkFabricRestClient;
+        private ClientDiagnostics _networkPacketBrokerClientDiagnostics;
+        private NetworkPacketBrokersRestOperations _networkPacketBrokerRestClient;
         private ClientDiagnostics _networkRackClientDiagnostics;
         private NetworkRacksRestOperations _networkRackRestClient;
+        private ClientDiagnostics _networkTapRuleClientDiagnostics;
+        private NetworkTapRulesRestOperations _networkTapRuleRestClient;
+        private ClientDiagnostics _networkTapClientDiagnostics;
+        private NetworkTapsRestOperations _networkTapRestClient;
         private ClientDiagnostics _routePolicyClientDiagnostics;
         private RoutePoliciesRestOperations _routePolicyRestClient;
 
@@ -53,6 +65,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         private ClientDiagnostics AccessControlListClientDiagnostics => _accessControlListClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", AccessControlListResource.ResourceType.Namespace, Diagnostics);
         private AccessControlListsRestOperations AccessControlListRestClient => _accessControlListRestClient ??= new AccessControlListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AccessControlListResource.ResourceType));
+        private ClientDiagnostics InternetGatewayClientDiagnostics => _internetGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", InternetGatewayResource.ResourceType.Namespace, Diagnostics);
+        private InternetGatewaysRestOperations InternetGatewayRestClient => _internetGatewayRestClient ??= new InternetGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(InternetGatewayResource.ResourceType));
+        private ClientDiagnostics InternetGatewayRuleClientDiagnostics => _internetGatewayRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", InternetGatewayRuleResource.ResourceType.Namespace, Diagnostics);
+        private InternetGatewayRulesRestOperations InternetGatewayRuleRestClient => _internetGatewayRuleRestClient ??= new InternetGatewayRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(InternetGatewayRuleResource.ResourceType));
         private ClientDiagnostics IPCommunityIpCommunitiesClientDiagnostics => _ipCommunityIPCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", IPCommunityResource.ResourceType.Namespace, Diagnostics);
         private IpCommunitiesRestOperations IPCommunityIpCommunitiesRestClient => _ipCommunityIPCommunitiesRestClient ??= new IpCommunitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPCommunityResource.ResourceType));
         private ClientDiagnostics IPExtendedCommunityIpExtendedCommunitiesClientDiagnostics => _ipExtendedCommunityIPExtendedCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", IPExtendedCommunityResource.ResourceType.Namespace, Diagnostics);
@@ -63,14 +79,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private L2IsolationDomainsRestOperations L2IsolationDomainRestClient => _l2IsolationDomainRestClient ??= new L2IsolationDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(L2IsolationDomainResource.ResourceType));
         private ClientDiagnostics L3IsolationDomainClientDiagnostics => _l3IsolationDomainClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", L3IsolationDomainResource.ResourceType.Namespace, Diagnostics);
         private L3IsolationDomainsRestOperations L3IsolationDomainRestClient => _l3IsolationDomainRestClient ??= new L3IsolationDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(L3IsolationDomainResource.ResourceType));
+        private ClientDiagnostics NeighborGroupClientDiagnostics => _neighborGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NeighborGroupResource.ResourceType.Namespace, Diagnostics);
+        private NeighborGroupsRestOperations NeighborGroupRestClient => _neighborGroupRestClient ??= new NeighborGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NeighborGroupResource.ResourceType));
         private ClientDiagnostics NetworkDeviceClientDiagnostics => _networkDeviceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkDeviceResource.ResourceType.Namespace, Diagnostics);
         private NetworkDevicesRestOperations NetworkDeviceRestClient => _networkDeviceRestClient ??= new NetworkDevicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkDeviceResource.ResourceType));
         private ClientDiagnostics NetworkFabricControllerClientDiagnostics => _networkFabricControllerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricControllerResource.ResourceType.Namespace, Diagnostics);
         private NetworkFabricControllersRestOperations NetworkFabricControllerRestClient => _networkFabricControllerRestClient ??= new NetworkFabricControllersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkFabricControllerResource.ResourceType));
         private ClientDiagnostics NetworkFabricClientDiagnostics => _networkFabricClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricResource.ResourceType.Namespace, Diagnostics);
         private NetworkFabricsRestOperations NetworkFabricRestClient => _networkFabricRestClient ??= new NetworkFabricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkFabricResource.ResourceType));
+        private ClientDiagnostics NetworkPacketBrokerClientDiagnostics => _networkPacketBrokerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkPacketBrokerResource.ResourceType.Namespace, Diagnostics);
+        private NetworkPacketBrokersRestOperations NetworkPacketBrokerRestClient => _networkPacketBrokerRestClient ??= new NetworkPacketBrokersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkPacketBrokerResource.ResourceType));
         private ClientDiagnostics NetworkRackClientDiagnostics => _networkRackClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkRackResource.ResourceType.Namespace, Diagnostics);
         private NetworkRacksRestOperations NetworkRackRestClient => _networkRackRestClient ??= new NetworkRacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkRackResource.ResourceType));
+        private ClientDiagnostics NetworkTapRuleClientDiagnostics => _networkTapRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkTapRuleResource.ResourceType.Namespace, Diagnostics);
+        private NetworkTapRulesRestOperations NetworkTapRuleRestClient => _networkTapRuleRestClient ??= new NetworkTapRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkTapRuleResource.ResourceType));
+        private ClientDiagnostics NetworkTapClientDiagnostics => _networkTapClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkTapResource.ResourceType.Namespace, Diagnostics);
+        private NetworkTapsRestOperations NetworkTapRestClient => _networkTapRestClient ??= new NetworkTapsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkTapResource.ResourceType));
         private ClientDiagnostics RoutePolicyClientDiagnostics => _routePolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", RoutePolicyResource.ResourceType.Namespace, Diagnostics);
         private RoutePoliciesRestOperations RoutePolicyRestClient => _routePolicyRestClient ??= new RoutePoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RoutePolicyResource.ResourceType));
 
@@ -92,13 +116,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual NetworkFabricSkuCollection GetNetworkFabricSkus()
         {
             return GetCachedClient(Client => new NetworkFabricSkuCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of NetworkRackSkuResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of NetworkRackSkuResources and their operations over a NetworkRackSkuResource. </returns>
-        public virtual NetworkRackSkuCollection GetNetworkRackSkus()
-        {
-            return GetCachedClient(Client => new NetworkRackSkuCollection(Client, Id));
         }
 
         /// <summary>
@@ -146,7 +163,95 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements IpCommunities list by subscription GET method.
+        /// Displays Internet Gateways list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="InternetGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<InternetGatewayResource> GetInternetGatewaysAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => InternetGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InternetGatewayRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InternetGatewayResource(Client, InternetGatewayData.DeserializeInternetGatewayData(e)), InternetGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetInternetGateways", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Internet Gateways list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InternetGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<InternetGatewayResource> GetInternetGateways(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => InternetGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InternetGatewayRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InternetGatewayResource(Client, InternetGatewayData.DeserializeInternetGatewayData(e)), InternetGatewayClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetInternetGateways", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all Internet Gateway rules in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="InternetGatewayRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<InternetGatewayRuleResource> GetInternetGatewayRulesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => InternetGatewayRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InternetGatewayRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InternetGatewayRuleResource(Client, InternetGatewayRuleData.DeserializeInternetGatewayRuleData(e)), InternetGatewayRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetInternetGatewayRules", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all Internet Gateway rules in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGatewayRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InternetGatewayRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<InternetGatewayRuleResource> GetInternetGatewayRules(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => InternetGatewayRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InternetGatewayRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InternetGatewayRuleResource(Client, InternetGatewayRuleData.DeserializeInternetGatewayRuleData(e)), InternetGatewayRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetInternetGatewayRules", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IP Communities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -168,7 +273,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements IpCommunities list by subscription GET method.
+        /// Implements IP Communities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -366,6 +471,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
+        /// Displays NeighborGroups list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/neighborGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NeighborGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeighborGroupResource> GetNeighborGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NeighborGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NeighborGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NeighborGroupResource(Client, NeighborGroupData.DeserializeNeighborGroupData(e)), NeighborGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNeighborGroups", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays NeighborGroups list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/neighborGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeighborGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeighborGroupResource> GetNeighborGroups(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NeighborGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NeighborGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NeighborGroupResource(Client, NeighborGroupData.DeserializeNeighborGroupData(e)), NeighborGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNeighborGroups", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// List all the Network Device resources in a given subscription.
         /// <list type="bullet">
         /// <item>
@@ -498,6 +647,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
+        /// Displays Network Packet Brokers list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkPacketBrokerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkPacketBrokerResource> GetNetworkPacketBrokersAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkPacketBrokerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkPacketBrokerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkPacketBrokerResource(Client, NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(e)), NetworkPacketBrokerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkPacketBrokers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Network Packet Brokers list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkPacketBrokers_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkPacketBrokerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkPacketBrokerResource> GetNetworkPacketBrokers(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkPacketBrokerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkPacketBrokerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkPacketBrokerResource(Client, NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(e)), NetworkPacketBrokerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkPacketBrokers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// List all Network Rack resources in the given subscription
         /// <list type="bullet">
         /// <item>
@@ -539,6 +732,94 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkRackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkRackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkRackResource(Client, NetworkRackData.DeserializeNetworkRackData(e)), NetworkRackClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkRacks", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Tap Rule resources in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkTapRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkTapRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkTapRuleResource> GetNetworkTapRulesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkTapRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), NetworkTapRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkTapRules", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Tap Rule resources in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkTapRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkTapRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkTapRuleResource> GetNetworkTapRules(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkTapRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), NetworkTapRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkTapRules", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Network Taps list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkTaps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkTapResource> GetNetworkTapsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkTapRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkTapResource(Client, NetworkTapData.DeserializeNetworkTapData(e)), NetworkTapClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkTaps", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Network Taps list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkTaps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTaps_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkTapResource> GetNetworkTaps(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkTapRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkTapResource(Client, NetworkTapData.DeserializeNetworkTapData(e)), NetworkTapClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkTaps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

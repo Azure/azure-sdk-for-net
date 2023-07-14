@@ -38,6 +38,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetCachedClient(Client => new AccessControlListCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of InternetGatewayResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of InternetGatewayResources and their operations over a InternetGatewayResource. </returns>
+        public virtual InternetGatewayCollection GetInternetGateways()
+        {
+            return GetCachedClient(Client => new InternetGatewayCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of InternetGatewayRuleResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of InternetGatewayRuleResources and their operations over a InternetGatewayRuleResource. </returns>
+        public virtual InternetGatewayRuleCollection GetInternetGatewayRules()
+        {
+            return GetCachedClient(Client => new InternetGatewayRuleCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of IPCommunityResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of IPCommunityResources and their operations over a IPCommunityResource. </returns>
         public virtual IPCommunityCollection GetIPCommunities()
@@ -73,6 +87,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetCachedClient(Client => new L3IsolationDomainCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of NeighborGroupResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NeighborGroupResources and their operations over a NeighborGroupResource. </returns>
+        public virtual NeighborGroupCollection GetNeighborGroups()
+        {
+            return GetCachedClient(Client => new NeighborGroupCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of NetworkDeviceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of NetworkDeviceResources and their operations over a NetworkDeviceResource. </returns>
         public virtual NetworkDeviceCollection GetNetworkDevices()
@@ -94,11 +115,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetCachedClient(Client => new NetworkFabricCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of NetworkPacketBrokerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkPacketBrokerResources and their operations over a NetworkPacketBrokerResource. </returns>
+        public virtual NetworkPacketBrokerCollection GetNetworkPacketBrokers()
+        {
+            return GetCachedClient(Client => new NetworkPacketBrokerCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of NetworkRackResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of NetworkRackResources and their operations over a NetworkRackResource. </returns>
         public virtual NetworkRackCollection GetNetworkRacks()
         {
             return GetCachedClient(Client => new NetworkRackCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of NetworkTapRuleResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkTapRuleResources and their operations over a NetworkTapRuleResource. </returns>
+        public virtual NetworkTapRuleCollection GetNetworkTapRules()
+        {
+            return GetCachedClient(Client => new NetworkTapRuleCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of NetworkTapResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkTapResources and their operations over a NetworkTapResource. </returns>
+        public virtual NetworkTapCollection GetNetworkTaps()
+        {
+            return GetCachedClient(Client => new NetworkTapCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of RoutePolicyResources in the ResourceGroupResource. </summary>

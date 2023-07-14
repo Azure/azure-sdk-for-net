@@ -5,31 +5,25 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The L3IsolationDomain patch resource definition. </summary>
-    public partial class L3IsolationDomainPatch
+    /// <summary> The L3 Isolation Domain patch resource definition. </summary>
+    public partial class L3IsolationDomainPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of L3IsolationDomainPatch. </summary>
         public L3IsolationDomainPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
         /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>
         public RedistributeConnectedSubnet? RedistributeConnectedSubnets { get; set; }
         /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
         public RedistributeStaticRoute? RedistributeStaticRoutes { get; set; }
-        /// <summary> List of Ipv4 and Ipv6 route configurations. </summary>
+        /// <summary> Aggregate route configurations. </summary>
         public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
-        /// <summary> L3 Isolation Domain description. </summary>
-        public string Description { get; set; }
         /// <summary> Connected Subnet RoutePolicy. </summary>
-        public L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
+        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
     }
 }

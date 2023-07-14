@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -16,19 +14,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A class representing the IPPrefix data model.
-    /// The IPPrefix resource definition.
+    /// The IP Prefix resource definition.
     /// </summary>
     public partial class IPPrefixData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IPPrefixData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="ipPrefixRules"> IpPrefix contains the list of IP PrefixRules objects. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixRules"/> is null. </exception>
-        public IPPrefixData(AzureLocation location, IEnumerable<IPPrefixPropertiesIPPrefixRulesItem> ipPrefixRules) : base(location)
+        public IPPrefixData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(ipPrefixRules, nameof(ipPrefixRules));
-
-            IPPrefixRules = ipPrefixRules.ToList();
+            IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();
         }
 
         /// <summary> Initializes a new instance of IPPrefixData. </summary>
@@ -39,20 +33,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="ipPrefixRules"> IpPrefix contains the list of IP PrefixRules objects. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal IPPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<IPPrefixPropertiesIPPrefixRulesItem> ipPrefixRules, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        internal IPPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<IPPrefixRule> ipPrefixRules, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             IPPrefixRules = ipPrefixRules;
+            ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> IpPrefix contains the list of IP PrefixRules objects. </summary>
-        public IList<IPPrefixPropertiesIPPrefixRulesItem> IPPrefixRules { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
+        /// <summary> The list of IP Prefix Rules. </summary>
+        public IList<IPPrefixRule> IPPrefixRules { get; }
+        /// <summary> Configuration state of the resource. </summary>
+        public ConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public AdministrativeState? AdministrativeState { get; }
     }
 }
