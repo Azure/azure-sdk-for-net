@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -16,7 +17,7 @@ namespace Azure.Communication.Chat
         public ChatParticipant(CommunicationIdentifier identifier)
         {
             User = identifier;
-            Metadata = new Dictionary<string, string>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         internal ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime, IDictionary<string, string> metadata = null)
@@ -24,6 +25,7 @@ namespace Azure.Communication.Chat
             User = user;
             DisplayName = displayName;
             ShareHistoryTime = shareHistoryTime;
+            Metadata = metadata;
         }
 
         internal ChatParticipant(ChatParticipantInternal chatParticipantInternal)
@@ -31,6 +33,7 @@ namespace Azure.Communication.Chat
             User = CommunicationIdentifierSerializer.Deserialize(chatParticipantInternal.CommunicationIdentifier);
             DisplayName = chatParticipantInternal.DisplayName;
             ShareHistoryTime = chatParticipantInternal.ShareHistoryTime;
+            Metadata = chatParticipantInternal.Metadata;
         }
 
         ///<summary>Instance of <see cref="CommunicationIdentifier"/>. </summary>
