@@ -286,6 +286,9 @@ rename-mapping:
   ResourceSkuRestrictionInfo.locations: -|azure-location
   AppResourceProperties.url: UriString|string
 
+models-to-treat-empty-string-as-null:
+  - AppPlatformApiPortalProperties
+
 parameter-rename-mapping:
   ConfigServers_Validate:
     configServerSettings: settings
