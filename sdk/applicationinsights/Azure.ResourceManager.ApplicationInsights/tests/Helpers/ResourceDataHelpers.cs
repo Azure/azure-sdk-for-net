@@ -150,9 +150,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.Helpers
                 Kind = WorkbookSharedTypeKind.Shared,
                 Tags =
                 {
-                ["TagSample01"] = "sample01",
-                ["TagSample02"] = "sample02",
+                    ["TagSample01"] = "sample01",
+                    ["TagSample02"] = "sample02",
                 },
+                Identity = new ManagedServiceIdentity("none"),
             };
             return data;
         }
