@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         {
             if (Actions == null || Actions.Count == 0 || Actions[0] == null)
             {
-                MarkAsFailed(new Exception("No Actions Found. Please supply atleast one action."), false);
+                MarkAsFailed(new Exception($"TokenIssuanceStartResponse: {AuthenticationEventResource.Ex_No_Action}"), false);
             }
         }
     }
