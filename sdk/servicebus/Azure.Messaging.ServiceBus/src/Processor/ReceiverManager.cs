@@ -280,12 +280,14 @@ namespace Azure.Messaging.ServiceBus
             await Processor.OnProcessMessageAsync((ProcessMessageEventArgs) args).ConfigureAwait(false);
 
         internal async Task RenewMessageLockAsync(
+            ProcessMessageEventArgs args,
             ServiceBusReceivedMessage message,
-            CancellationTokenSource cancellationTokenSource,
-            CancellationTokenSource messageLockCancellationTokenSource)
+            CancellationTokenSource cancellationTokenSource)
         {
             cancellationTokenSource.CancelAfter(ProcessorOptions.MaxAutoLockRenewalDuration);
             CancellationToken cancellationToken = cancellationTokenSource.Token;
+            bool isTriggerMessage = args.Message == message;
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 try
@@ -308,7 +310,13 @@ namespace Azure.Messaging.ServiceBus
                     }
 
                     await Receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
-                    messageLockCancellationTokenSource.CancelAfterLockExpired(message);
+
+                    // Currently only the trigger message supports cancellation token for LockedUntil.
+                    if (isTriggerMessage)
+                    {
+                        args.MessageLockLostCancellationSource.CancelAfterLockExpired(message);
+                    }
+
                     ServiceBusEventSource.Log.ProcessorRenewMessageLockComplete(Processor.Identifier, message.LockTokenGuid);
                 }
                 catch (Exception ex) when (!(ex is TaskCanceledException))
@@ -318,7 +326,13 @@ namespace Azure.Messaging.ServiceBus
                     // If the message has already been settled there is no need to raise the lock lost exception to user error handler.
                     if (!message.IsSettled)
                     {
-                        messageLockCancellationTokenSource?.Cancel();
+                        // Currently only the trigger message supports cancellation token for LockedUntil.
+                        if (isTriggerMessage)
+                        {
+                            args.LockLostException = ex;
+                            args.MessageLockLostCancellationSource?.Cancel();
+                        }
+
                         await HandleRenewLockException(ex, cancellationToken).ConfigureAwait(false);
                     }
 

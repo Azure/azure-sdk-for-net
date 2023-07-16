@@ -377,20 +377,29 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
 
             var processArgs = new ProcessMessageEventArgs(
-                ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1", lockedUntil: DateTimeOffset.UtcNow.AddSeconds(-5)),
+                ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1"),
                 mockReceiver.Object,
                 CancellationToken.None);
 
+            bool lockLostEventRaised = false;
             mockProcessor.ProcessMessageAsync += args =>
             {
+                args.MessageLockLostAsync += (lockLostArgs) =>
+                {
+                    lockLostEventRaised = true;
+                    Assert.IsNull(lockLostArgs.Exception);
+                    return Task.CompletedTask;
+                };
                 processMessageCalled = true;
-                Assert.IsTrue(args.MessageLockCancellationToken.IsCancellationRequested);
                 return Task.CompletedTask;
             };
 
             mockProcessor.ProcessErrorAsync += _ => Task.CompletedTask;
 
             await mockProcessor.OnProcessMessageAsync(processArgs);
+            Assert.IsFalse(lockLostEventRaised);
+            await processArgs.OnMessageLockLostAsync(new MessageLockLostEventArgs(null));
+            Assert.IsTrue(lockLostEventRaised);
 
             Assert.IsTrue(processMessageCalled);
         }
