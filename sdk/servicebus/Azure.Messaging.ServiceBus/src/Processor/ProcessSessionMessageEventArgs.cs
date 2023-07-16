@@ -32,7 +32,9 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// An event that is raised when the session lock is lost. This event is only raised for the scope of the Process Session Message handler.
-        /// Once the handler returns, the event will not be raised.
+        /// Once the handler returns, the event will not be raised. There are two cases in which this event can be raised:
+        ///     1) When the session lock has expired based on the <see cref="SessionLockedUntil"/> property.
+        ///     2) When a non-transient exception occurs while attempting to renew the session lock.
         /// </summary>
         public event Func<SessionLockLostEventArgs, Task> SessionLockLostAsync;
 
