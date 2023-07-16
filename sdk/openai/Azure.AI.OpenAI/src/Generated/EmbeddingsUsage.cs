@@ -7,7 +7,7 @@
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Measurment of the amount of tokens used in this request and response. </summary>
+    /// <summary> Measurement of the amount of tokens used in this request and response. </summary>
     public partial class EmbeddingsUsage
     {
         /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>

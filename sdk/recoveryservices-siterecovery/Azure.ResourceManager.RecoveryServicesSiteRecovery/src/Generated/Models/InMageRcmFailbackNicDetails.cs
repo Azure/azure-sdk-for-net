@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcmFailback NIC details. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="networkName"> The network name. </param>
         /// <param name="adapterType"> The adapter type. </param>
         /// <param name="sourceIPAddress"> The IP address. </param>
-        internal InMageRcmFailbackNicDetails(string macAddress, string networkName, string adapterType, string sourceIPAddress)
+        internal InMageRcmFailbackNicDetails(string macAddress, string networkName, string adapterType, IPAddress sourceIPAddress)
         {
             MacAddress = macAddress;
             NetworkName = networkName;
@@ -35,6 +37,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The adapter type. </summary>
         public string AdapterType { get; }
         /// <summary> The IP address. </summary>
-        public string SourceIPAddress { get; }
+        public IPAddress SourceIPAddress { get; }
     }
 }

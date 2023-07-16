@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
@@ -23,6 +23,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
+
+            if (batchActivity.Count > 0 && azureMonitorResource?.MetricTelemetry != null)
+            {
+                telemetryItems.Add(azureMonitorResource.MetricTelemetry);
+            }
 
             foreach (var activity in batchActivity)
             {
@@ -40,11 +45,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     switch (activity.GetTelemetryType())
                     {
                         case TelemetryType.Request:
-                            telemetryItem.Data = new MonitorBase
+                            if (activity.Kind == ActivityKind.Server && activityTagsProcessor.activityType.HasFlag(OperationType.Http))
                             {
-                                BaseType = "RequestData",
-                                BaseData = new RequestData(Version, activity, ref activityTagsProcessor),
-                            };
+                                var (requestUrl, operationName) = GetHttpOperationNameAndUrl(activity.DisplayName, activityTagsProcessor.activityType, ref activityTagsProcessor.MappedTags);
+                                telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()] = operationName;
+                                telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
+
+                                telemetryItem.Data = new MonitorBase
+                                {
+                                    BaseType = "RequestData",
+                                    BaseData = new RequestData(Version, operationName, requestUrl, activity, ref activityTagsProcessor)
+                                };
+                            }
+                            else
+                            {
+                                telemetryItem.Data = new MonitorBase
+                                {
+                                    BaseType = "RequestData",
+                                    BaseData = new RequestData(Version, activity, ref activityTagsProcessor)
+                                };
+                            }
                             break;
                         case TelemetryType.Dependency:
                             telemetryItem.Data = new MonitorBase
@@ -60,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertActivity", ex);
+                    AzureMonitorExporterEventSource.Log.FailedToConvertActivity(activity.Source.Name, activity.DisplayName, ex);
                 }
             }
 
@@ -90,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static void AddActivityLinksToProperties(Activity activity, ref AzMonList UnMappedTags)
         {
             string msLinks = "_MS.links";
-            // max number of links that can fit in this json formatted string is 107. it is based on assumption that traceid and spanid will be of fixed length.
+            // max number of links that can fit in this json formatted string is 107. it is based on assumption that TraceId and SpanId will be of fixed length.
             // Keeping max at 100 for now.
             int maxLinks = MaxlinksAllowed;
 
@@ -98,28 +118,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 var linksJson = new StringBuilder();
                 linksJson.Append('[');
-                foreach (var link in activity.EnumerateLinks())
+                foreach (ref readonly var link in activity.EnumerateLinks())
                 {
-                    linksJson
-                        .Append('{')
-                        .Append("\"operation_Id\":")
-                        .Append('\"')
-                        .Append(link.Context.TraceId.ToHexString())
-                        .Append('\"')
-                        .Append(',');
-                    linksJson
-                        .Append("\"id\":")
-                        .Append('\"')
-                        .Append(link.Context.SpanId.ToHexString())
-                        .Append('\"');
-                    linksJson.Append("},");
-
+                    AddContextToMSLinks(linksJson, link);
                     maxLinks--;
                     if (maxLinks == 0)
                     {
                         if (MaxlinksAllowed < activity.Links.Count())
                         {
-                            AzureMonitorExporterEventSource.Log.WriteInformational("ActivityLinksIgnored", $"Max count of {MaxlinksAllowed} has reached.");
+                            AzureMonitorExporterEventSource.Log.ActivityLinksIgnored(MaxlinksAllowed, activity.Source.Name, activity.DisplayName);
                         }
                         break;
                     }
@@ -179,28 +186,88 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
+        internal static string GetNewSchemaOperationName(Activity activity, string? url, ref AzMonList MappedTags)
+        {
+            var httpMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRequestMethod)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpMethod))
+            {
+                var httpRoute = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRoute)?.ToString();
+
+                // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
+                // To work around that we will use path from httpUrl.
+                if (httpRoute?.Contains("{controller}") == false)
+                {
+                    return $"{httpMethod} {httpRoute}";
+                }
+
+                url ??= MappedTags.GetNewSchemaRequestUrl();
+                if (url != null)
+                {
+                    return $"{httpMethod} {url}";
+                }
+            }
+
+            return activity.DisplayName;
+        }
+
+        internal static (string? RequestUrl, string? OperationName) GetHttpOperationNameAndUrl(string activityDisplayName, OperationType operationType, ref AzMonList httpMappedTags)
+        {
+            string? httpMethod;
+            string? httpUrl;
+
+            if (operationType.HasFlag(OperationType.V2))
+            {
+                httpUrl = httpMappedTags.GetNewSchemaRequestUrl();
+                httpMethod = AzMonList.GetTagValue(ref httpMappedTags, SemanticConventions.AttributeHttpRequestMethod)?.ToString();
+            }
+            else
+            {
+                httpUrl = AzMonList.GetTagValue(ref httpMappedTags, SemanticConventions.AttributeHttpUrl)?.ToString();
+                httpMethod = AzMonList.GetTagValue(ref httpMappedTags, SemanticConventions.AttributeHttpMethod)?.ToString();
+            }
+
+            if (!string.IsNullOrWhiteSpace(httpMethod))
+            {
+                var httpRoute = AzMonList.GetTagValue(ref httpMappedTags, SemanticConventions.AttributeHttpRoute)?.ToString();
+
+                // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
+                // To work around that we will use path from httpUrl.
+                if (httpRoute?.Contains("{controller}") == false)
+                {
+                    return (RequestUrl: httpUrl, OperationName: $"{httpMethod} {httpRoute}");
+                }
+
+                if (!string.IsNullOrWhiteSpace(httpUrl) && Uri.TryCreate(httpUrl!.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
+                {
+                    return (RequestUrl: httpUrl, OperationName: $"{httpMethod} {uri.AbsolutePath}");
+                }
+            }
+
+            return (RequestUrl: httpUrl, OperationName: activityDisplayName);
+        }
+
         private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
         {
-            foreach (var evnt in activity.EnumerateEvents())
+            foreach (ref readonly var @event in activity.EnumerateEvents())
             {
                 try
                 {
-                    if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
+                    if (@event.Name == SemanticConventions.AttributeExceptionEventName)
                     {
-                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt);
+                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(@event);
                         if (exceptionData != null)
                         {
-                            var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                            var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             exceptionTelemetryItem.Data = exceptionData;
                             telemetryItems.Add(exceptionTelemetryItem);
                         }
                     }
                     else
                     {
-                        var messageData = GetTraceTelemetryData(evnt);
+                        var messageData = GetTraceTelemetryData(@event);
                         if (messageData != null)
                         {
-                            var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                            var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             traceTelemetryItem.Data = messageData;
                             telemetryItems.Add(traceTelemetryItem);
                         }
@@ -208,7 +275,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToExtractActivityEvent", ex);
+                    AzureMonitorExporterEventSource.Log.FailedToExtractActivityEvent(activity.Source.Name, activity.DisplayName, ex);
                 }
             }
         }
@@ -222,7 +289,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var messageData = new MessageData(Version, activityEvent.Name);
 
-            foreach (var tag in activityEvent.EnumerateTagObjects())
+            foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
             {
                 if (tag.Value is Array arrayValue)
                 {
@@ -247,7 +314,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             string? exceptionStackTrace = null;
             string? exceptionMessage = null;
 
-            foreach (var tag in activityEvent.EnumerateTagObjects())
+            foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
             {
                 // TODO: see if these can be cached
                 if (tag.Key == SemanticConventions.AttributeExceptionType)
@@ -294,6 +361,108 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 BaseType = "ExceptionData",
                 BaseData = exceptionData,
             };
+        }
+
+        internal static void AddEnqueuedTimeToMeasurementsAndLinksToProperties(Activity activity, IDictionary<string, double> measurements, ref AzMonList UnMappedTags)
+        {
+            if (activity.Links != null && activity.Links.Any())
+            {
+                if (TryGetAverageQueueTimeWithLinks(activity, ref UnMappedTags, out long enqueuedTime))
+                {
+                    measurements["timeSinceEnqueued"] = enqueuedTime;
+                }
+            }
+        }
+
+        private static bool TryGetAverageQueueTimeWithLinks(Activity activity, ref AzMonList UnMappedTags, out long avgTimeInQueue)
+        {
+            avgTimeInQueue = 0;
+            var linksCount = 0;
+            DateTimeOffset startTime = activity.StartTimeUtc;
+            long startEpochTime = startTime.ToUnixTimeMilliseconds();
+            bool isEnqueuedTimeCalculated = true;
+
+            string msLinks = "_MS.links";
+            var linksJson = new StringBuilder();
+            linksJson.Append('[');
+            foreach (ref readonly var link in activity.EnumerateLinks())
+            {
+                long msgEnqueuedTime = 0;
+                if (isEnqueuedTimeCalculated && !TryGetEnqueuedTime(link, out msgEnqueuedTime))
+                {
+                    // instrumentation does not consistently report enqueued time, ignoring whole span
+                    isEnqueuedTimeCalculated = false;
+                }
+                if (isEnqueuedTimeCalculated)
+                {
+                    avgTimeInQueue += Math.Max(startEpochTime - msgEnqueuedTime, 0);
+                }
+
+                linksCount++;
+
+                if (linksCount <= MaxlinksAllowed)
+                {
+                    AddContextToMSLinks(linksJson, link);
+                }
+            }
+
+            if (linksJson.Length > 0)
+            {
+                // trim trailing comma - json does not support it
+                linksJson.Remove(linksJson.Length - 1, 1);
+            }
+            linksJson.Append(']');
+            AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(msLinks, linksJson.ToString()));
+            if (MaxlinksAllowed < linksCount)
+            {
+                AzureMonitorExporterEventSource.Log.ActivityLinksIgnored(MaxlinksAllowed, activity.Source.Name, activity.DisplayName);
+            }
+
+            if (isEnqueuedTimeCalculated)
+            {
+                avgTimeInQueue /= linksCount;
+            }
+            else
+            {
+                avgTimeInQueue = 0;
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool TryGetEnqueuedTime(ActivityLink link, out long enqueuedTime)
+        {
+            enqueuedTime = 0;
+
+            foreach (ref readonly var attribute in link.EnumerateTagObjects())
+            {
+                if (attribute.Key == "enqueuedTime")
+                {
+                    return long.TryParse(attribute.Value?.ToString(), out enqueuedTime);
+                }
+            }
+
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void AddContextToMSLinks(StringBuilder linksJson, ActivityLink link)
+        {
+            linksJson
+                .Append('{')
+                .Append("\"operation_Id\":")
+                .Append('\"')
+                .Append(link.Context.TraceId.ToHexString())
+                .Append('\"')
+                .Append(',');
+            linksJson
+                .Append("\"id\":")
+                .Append('\"')
+                .Append(link.Context.SpanId.ToHexString())
+                .Append('\"');
+            linksJson
+                .Append("},");
         }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,38 +21,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Project))
             {
                 writer.WritePropertyName("project"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Project);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Project.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Project);
             }
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Sort);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Sort.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Sort);
             }
             if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Skip);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Skip.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Skip);
             }
             if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Limit);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Limit.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Limit);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -71,10 +56,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> project = default;
-            Optional<BinaryData> sort = default;
-            Optional<BinaryData> skip = default;
-            Optional<BinaryData> limit = default;
+            Optional<DataFactoryElement<string>> project = default;
+            Optional<DataFactoryElement<string>> sort = default;
+            Optional<DataFactoryElement<int>> skip = default;
+            Optional<DataFactoryElement<int>> limit = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    project = BinaryData.FromString(property.Value.GetRawText());
+                    project = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sort"u8))
@@ -94,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sort = BinaryData.FromString(property.Value.GetRawText());
+                    sort = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("skip"u8))
@@ -103,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    skip = BinaryData.FromString(property.Value.GetRawText());
+                    skip = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("limit"u8))
@@ -112,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    limit = BinaryData.FromString(property.Value.GetRawText());
+                    limit = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

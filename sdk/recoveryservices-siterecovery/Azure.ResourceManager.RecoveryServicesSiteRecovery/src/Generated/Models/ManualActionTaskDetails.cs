@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class represents the manual action task details. </summary>
-    public partial class ManualActionTaskDetails : TaskTypeDetails
+    public partial class ManualActionTaskDetails : SiteRecoveryTaskTypeDetails
     {
         /// <summary> Initializes a new instance of ManualActionTaskDetails. </summary>
         internal ManualActionTaskDetails()

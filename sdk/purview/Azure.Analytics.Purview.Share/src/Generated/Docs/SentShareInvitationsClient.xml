@@ -71,7 +71,7 @@ var data = new {
     invitationKind = "Application",
 };
 
-Response response = await client.CreateOrUpdateAsync("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -117,7 +117,7 @@ var data = new {
     invitationKind = "Application",
 };
 
-Response response = client.CreateOrUpdate("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -134,7 +134,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.DeleteAsync("<sentShareName>", "<sentShareInvitationName>", new RequestContext());
+Response response = await client.DeleteAsync("<sentShareName>", "<sentShareInvitationName>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -146,7 +146,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
 
-Response response = client.Delete("<sentShareName>", "<sentShareInvitationName>", new RequestContext());
+Response response = client.Delete("<sentShareName>", "<sentShareInvitationName>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -154,18 +154,6 @@ Console.WriteLine(response.Status);
     <member name="GetSentShareInvitationsAsync(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetSentShareInvitationsAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-
-await foreach (var item in client.GetSentShareInvitationsAsync("<sentShareName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSentShareInvitationsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
@@ -184,18 +172,6 @@ await foreach (var item in client.GetSentShareInvitationsAsync("<sentShareName>"
     <member name="GetSentShareInvitations(string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetSentShareInvitations with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-
-foreach (var item in client.GetSentShareInvitations("<sentShareName>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSentShareInvitations with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);

@@ -79,6 +79,7 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ClassificationPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -111,6 +112,7 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ClassificationPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -119,6 +121,95 @@ namespace Azure.Communication.JobRouter
                     }
                 default:
                     throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpsertClassificationPolicyRequest(string id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/classificationPolicies/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a classification policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the classification policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpsertClassificationPolicyAsync(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministration.UpsertClassificationPolicy");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertClassificationPolicyRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a classification policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the classification policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpsertClassificationPolicy(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministration.UpsertClassificationPolicy");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertClassificationPolicyRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -250,7 +341,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateListClassificationPoliciesRequest(int? maxPageSize)
+        internal HttpMessage CreateListClassificationPoliciesRequest(int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -258,9 +349,9 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/classificationPolicies", false);
-            if (maxPageSize != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -269,11 +360,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
-        /// <param name="maxPageSize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListClassificationPoliciesRequest(maxPageSize);
+            using var message = CreateListClassificationPoliciesRequest(maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -290,11 +381,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
-        /// <param name="maxPageSize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ClassificationPolicyCollection> ListClassificationPolicies(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<ClassificationPolicyCollection> ListClassificationPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListClassificationPoliciesRequest(maxPageSize);
+            using var message = CreateListClassificationPoliciesRequest(maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -350,6 +441,7 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         DistributionPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -382,6 +474,7 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         DistributionPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -390,6 +483,95 @@ namespace Azure.Communication.JobRouter
                     }
                 default:
                     throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpsertDistributionPolicyRequest(string id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/distributionPolicies/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a distribution policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the distribution policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpsertDistributionPolicyAsync(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministration.UpsertDistributionPolicy");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertDistributionPolicyRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a distribution policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the distribution policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpsertDistributionPolicy(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministration.UpsertDistributionPolicy");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertDistributionPolicyRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -521,7 +703,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateListDistributionPoliciesRequest(int? maxPageSize)
+        internal HttpMessage CreateListDistributionPoliciesRequest(int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -529,9 +711,9 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/distributionPolicies", false);
-            if (maxPageSize != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -540,11 +722,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
-        /// <param name="maxPageSize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDistributionPoliciesRequest(maxPageSize);
+            using var message = CreateListDistributionPoliciesRequest(maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -561,11 +743,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
-        /// <param name="maxPageSize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DistributionPolicyCollection> ListDistributionPolicies(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<DistributionPolicyCollection> ListDistributionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDistributionPoliciesRequest(maxPageSize);
+            using var message = CreateListDistributionPoliciesRequest(maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -621,6 +803,7 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ExceptionPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -653,6 +836,7 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ExceptionPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -661,6 +845,95 @@ namespace Azure.Communication.JobRouter
                     }
                 default:
                     throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpsertExceptionPolicyRequest(string id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/exceptionPolicies/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a exception policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the exception policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpsertExceptionPolicyAsync(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministration.UpsertExceptionPolicy");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertExceptionPolicyRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a exception policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the exception policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpsertExceptionPolicy(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministration.UpsertExceptionPolicy");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertExceptionPolicyRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -792,7 +1065,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateListExceptionPoliciesRequest(int? maxPageSize)
+        internal HttpMessage CreateListExceptionPoliciesRequest(int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -800,9 +1073,9 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/exceptionPolicies", false);
-            if (maxPageSize != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -811,11 +1084,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListExceptionPoliciesRequest(maxPageSize);
+            using var message = CreateListExceptionPoliciesRequest(maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -832,11 +1105,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ExceptionPolicyCollection> ListExceptionPolicies(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<ExceptionPolicyCollection> ListExceptionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListExceptionPoliciesRequest(maxPageSize);
+            using var message = CreateListExceptionPoliciesRequest(maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -852,7 +1125,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateUpsertQueueRequest(string id, JobQueue patch)
+        internal HttpMessage CreateUpsertQueueRequest(string id, RouterQueue patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -876,7 +1149,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of queue properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
-        public async Task<Response<JobQueue>> UpsertQueueAsync(string id, JobQueue patch, CancellationToken cancellationToken = default)
+        public async Task<Response<RouterQueue>> UpsertQueueAsync(string id, RouterQueue patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -892,10 +1165,11 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
-                        JobQueue value = default;
+                        RouterQueue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobQueue.DeserializeJobQueue(document.RootElement);
+                        value = RouterQueue.DeserializeRouterQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -908,7 +1182,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="patch"> Model of queue properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
-        public Response<JobQueue> UpsertQueue(string id, JobQueue patch, CancellationToken cancellationToken = default)
+        public Response<RouterQueue> UpsertQueue(string id, RouterQueue patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -924,14 +1198,104 @@ namespace Azure.Communication.JobRouter
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
-                        JobQueue value = default;
+                        RouterQueue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobQueue.DeserializeJobQueue(document.RootElement);
+                        value = RouterQueue.DeserializeRouterQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpsertQueueRequest(string id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/queues/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a queue.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the queue. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpsertQueueAsync(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministration.UpsertQueue");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertQueueRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a queue.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Id of the queue. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpsertQueue(string id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("JobRouterAdministration.UpsertQueue");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertQueueRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -954,7 +1318,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the queue to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<JobQueue>> GetQueueAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<RouterQueue>> GetQueueAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -967,9 +1331,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        JobQueue value = default;
+                        RouterQueue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobQueue.DeserializeJobQueue(document.RootElement);
+                        value = RouterQueue.DeserializeRouterQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -981,7 +1345,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of the queue to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<JobQueue> GetQueue(string id, CancellationToken cancellationToken = default)
+        public Response<RouterQueue> GetQueue(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -994,9 +1358,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        JobQueue value = default;
+                        RouterQueue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobQueue.DeserializeJobQueue(document.RootElement);
+                        value = RouterQueue.DeserializeRouterQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1063,7 +1427,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateListQueuesRequest(int? maxPageSize)
+        internal HttpMessage CreateListQueuesRequest(int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1071,9 +1435,9 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/queues", false);
-            if (maxPageSize != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1082,19 +1446,19 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing queues. </summary>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<QueueCollection>> ListQueuesAsync(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RouterQueueCollection>> ListQueuesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListQueuesRequest(maxPageSize);
+            using var message = CreateListQueuesRequest(maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        QueueCollection value = default;
+                        RouterQueueCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QueueCollection.DeserializeQueueCollection(document.RootElement);
+                        value = RouterQueueCollection.DeserializeRouterQueueCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1103,19 +1467,19 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing queues. </summary>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<QueueCollection> ListQueues(int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<RouterQueueCollection> ListQueues(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListQueuesRequest(maxPageSize);
+            using var message = CreateListQueuesRequest(maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        QueueCollection value = default;
+                        RouterQueueCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QueueCollection.DeserializeQueueCollection(document.RootElement);
+                        value = RouterQueueCollection.DeserializeRouterQueueCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1125,17 +1489,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesNextPageAsync(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxPageSize);
+            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1153,17 +1517,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ClassificationPolicyCollection> ListClassificationPoliciesNextPage(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<ClassificationPolicyCollection> ListClassificationPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxPageSize);
+            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1181,17 +1545,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesNextPageAsync(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxPageSize);
+            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1209,17 +1573,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DistributionPolicyCollection> ListDistributionPoliciesNextPage(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<DistributionPolicyCollection> ListDistributionPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxPageSize);
+            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1237,17 +1601,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesNextPageAsync(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxPageSize);
+            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1265,17 +1629,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ExceptionPolicyCollection> ListExceptionPoliciesNextPage(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<ExceptionPolicyCollection> ListExceptionPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxPageSize);
+            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1293,25 +1657,25 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<QueueCollection>> ListQueuesNextPageAsync(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RouterQueueCollection>> ListQueuesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListQueuesNextPageRequest(nextLink, maxPageSize);
+            using var message = CreateListQueuesNextPageRequest(nextLink, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        QueueCollection value = default;
+                        RouterQueueCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QueueCollection.DeserializeQueueCollection(document.RootElement);
+                        value = RouterQueueCollection.DeserializeRouterQueueCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1321,30 +1685,33 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<QueueCollection> ListQueuesNextPage(string nextLink, int? maxPageSize = null, CancellationToken cancellationToken = default)
+        public Response<RouterQueueCollection> ListQueuesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListQueuesNextPageRequest(nextLink, maxPageSize);
+            using var message = CreateListQueuesNextPageRequest(nextLink, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        QueueCollection value = default;
+                        RouterQueueCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QueueCollection.DeserializeQueueCollection(document.RootElement);
+                        value = RouterQueueCollection.DeserializeRouterQueueCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
+
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
     }
 }

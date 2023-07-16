@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> diskName = default;
             Optional<string> isOSDisk = default;
             Optional<long> capacityInBytes = default;
-            Optional<string> logStorageAccountId = default;
-            Optional<string> diskEncryptionSetId = default;
+            Optional<ResourceIdentifier> logStorageAccountId = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
             Optional<string> seedManagedDiskId = default;
             Optional<Uri> seedBlobUri = default;
             Optional<string> targetManagedDiskId = default;
-            Optional<DiskAccountType> diskType = default;
+            Optional<SiteRecoveryDiskAccountType> diskType = default;
             Optional<double> dataPendingInLogDataStoreInMB = default;
             Optional<double> dataPendingAtSourceAgentInMB = default;
             Optional<string> isInitialReplicationComplete = default;
@@ -62,12 +62,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("logStorageAccountId"u8))
                 {
-                    logStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSetId"u8))
                 {
-                    diskEncryptionSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("seedManagedDiskId"u8))
@@ -95,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskType = new DiskAccountType(property.Value.GetString());
+                    diskType = new SiteRecoveryDiskAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataPendingInLogDataStoreInMB"u8))

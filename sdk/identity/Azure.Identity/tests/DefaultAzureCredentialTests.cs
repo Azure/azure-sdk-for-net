@@ -423,6 +423,41 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [TestCaseSource(nameof(AllCredentialTypes))]
+        public void TenantIdOptionOverridesEnvironment(Type availableCredential)
+        {
+            using (new TestEnvVar(new Dictionary<string, string> {
+                    { "AZURE_CLIENT_ID", "mockclientid" },
+                    { "AZURE_CLIENT_SECRET", null},
+                    { "AZURE_TENANT_ID", "mocktenantid" },
+                    {"AZURE_USERNAME", "mockusername" },
+                    { "AZURE_PASSWORD", "mockpassword" },
+                    { "AZURE_CLIENT_CERTIFICATE_PATH", null },
+                    { "AZURE_FEDERATED_TOKEN_FILE", "c:/temp/token" }
+            }))
+            {
+                DefaultAzureCredentialOptions options = GetDacOptions(availableCredential, false, "overridetenantid");
+                var additionalTenant = Guid.NewGuid().ToString();
+                options.AdditionallyAllowedTenants.Add(additionalTenant);
+
+                var credential = new DefaultAzureCredential(options);
+                Assert.AreEqual(1, credential._sources.Length);
+                var targetCred = credential._sources[0];
+                if (CredentialTestHelpers.TryGetConfiguredTenantIdForMsalCredential(targetCred, out string tenantId))
+                {
+                    if (availableCredential == typeof(ManagedIdentityCredential))
+                    {
+                        Assert.Ignore("ManagedIdentityCredential does not include a TenantId option.");
+                    }
+                    else
+                    {
+                        Assert.AreEqual("overridetenantid", tenantId);
+                    }
+                }
+            }
+        }
+
+        [Test]
         public void ExcludeWorkloadIdentityCredential_Disables_TokenExchangeManagedIdentitySource()
         {
             var availableCredential = typeof(ManagedIdentityCredential);
@@ -449,9 +484,9 @@ namespace Azure.Identity.Tests
             }
         }
 
-        private static DefaultAzureCredentialOptions GetDacOptions(Type availableCredential, bool disableInstanceDiscovery)
+        private static DefaultAzureCredentialOptions GetDacOptions(Type availableCredential, bool disableInstanceDiscovery, string tenantId = null)
         {
-            return new DefaultAzureCredentialOptions
+            var options = new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = availableCredential != typeof(EnvironmentCredential),
                 ExcludeWorkloadIdentityCredential = availableCredential != typeof(WorkloadIdentityCredential),
@@ -463,8 +498,13 @@ namespace Azure.Identity.Tests
                 ExcludeAzureCliCredential = availableCredential != typeof(AzureCliCredential),
                 ExcludeAzurePowerShellCredential = availableCredential != typeof(AzurePowerShellCredential),
                 ExcludeInteractiveBrowserCredential = availableCredential != typeof(InteractiveBrowserCredential),
-                DisableInstanceDiscovery = disableInstanceDiscovery
+                DisableInstanceDiscovery = disableInstanceDiscovery,
             };
+            if (tenantId != null)
+            {
+                options.TenantId = tenantId;
+            }
+            return options;
         }
 
         private static Type GetTargetCredentialOptionType(Type availableCredential)

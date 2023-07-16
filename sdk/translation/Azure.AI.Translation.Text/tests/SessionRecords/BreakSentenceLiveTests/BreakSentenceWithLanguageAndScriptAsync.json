@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "ad2850b70599b21328b0ee6d5a4a0a8e",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022Text\u0022:\u0022zh\\u00E8 sh\\u00EC g\\u00E8 c\\u00E8 sh\\u00EC\\u3002\u0022}]",
+      "RequestBody": "[{\u0022text\u0022:\u0022zh\\u00E8 sh\\u00EC g\\u00E8 c\\u00E8 sh\\u00EC\\u3002\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "X-RequestId",

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Accounts_List_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAccounts_AccountsListMaximumSetGen()
+        public async Task GetNewRelicAccounts_AccountsListMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Accounts_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Accounts_List_MaximumSet_Gen.json
             // this example is just showing the usage of "Accounts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             AzureLocation location = new AzureLocation("egh");
-            await foreach (AccountResource item in subscriptionResource.GetAccountsAsync(userEmail, location))
+            await foreach (NewRelicAccountResourceData item in subscriptionResource.GetNewRelicAccountsAsync(userEmail, location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Accounts_List_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAccounts_AccountsListMinimumSetGen()
+        public async Task GetNewRelicAccounts_AccountsListMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Accounts_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Accounts_List_MinimumSet_Gen.json
             // this example is just showing the usage of "Accounts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             AzureLocation location = new AzureLocation("egh");
-            await foreach (AccountResource item in subscriptionResource.GetAccountsAsync(userEmail, location))
+            await foreach (NewRelicAccountResourceData item in subscriptionResource.GetNewRelicAccountsAsync(userEmail, location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Organizations_List_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOrganizations_OrganizationsListMaximumSetGen()
+        public async Task GetNewRelicOrganizations_OrganizationsListMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Organizations_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Organizations_List_MaximumSet_Gen.json
             // this example is just showing the usage of "Organizations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             AzureLocation location = new AzureLocation("egh");
-            await foreach (OrganizationResource item in subscriptionResource.GetOrganizationsAsync(userEmail, location))
+            await foreach (NewRelicOrganizationResourceData item in subscriptionResource.GetNewRelicOrganizationsAsync(userEmail, location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Organizations_List_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOrganizations_OrganizationsListMinimumSetGen()
+        public async Task GetNewRelicOrganizations_OrganizationsListMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Organizations_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Organizations_List_MinimumSet_Gen.json
             // this example is just showing the usage of "Organizations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             AzureLocation location = new AzureLocation("egh");
-            await foreach (OrganizationResource item in subscriptionResource.GetOrganizationsAsync(userEmail, location))
+            await foreach (NewRelicOrganizationResourceData item in subscriptionResource.GetNewRelicOrganizationsAsync(userEmail, location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Plans_List_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetPlans_PlansListMaximumSetGen()
+        public async Task GetNewRelicPlans_PlansListMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Plans_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Plans_List_MaximumSet_Gen.json
             // this example is just showing the usage of "Plans_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             string accountId = "pwuxgvrmkk";
             string organizationId = "hilawwjz";
-            await foreach (PlanDataResource item in subscriptionResource.GetPlansAsync(accountId: accountId, organizationId: organizationId))
+            await foreach (NewRelicPlanData item in subscriptionResource.GetNewRelicPlansAsync(accountId: accountId, organizationId: organizationId))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         // Plans_List_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetPlans_PlansListMinimumSetGen()
+        public async Task GetNewRelicPlans_PlansListMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2022-07-01-preview/examples/Plans_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Plans_List_MinimumSet_Gen.json
             // this example is just showing the usage of "Plans_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PlanDataResource item in subscriptionResource.GetPlansAsync())
+            await foreach (NewRelicPlanData item in subscriptionResource.GetNewRelicPlansAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

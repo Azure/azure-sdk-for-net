@@ -6,15 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
     [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
-    public partial class VectorSearch : SearchTestBase
+    public partial class VectorSearchTests : SearchTestBase
     {
-        public VectorSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+        public VectorSearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
@@ -40,7 +42,7 @@ namespace Azure.Search.Documents.Tests
                    null,
                    new SearchOptions
                    {
-                       Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                       Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
                        Select = { "hotelId", "hotelName" }
                    });
 
@@ -61,7 +63,7 @@ namespace Azure.Search.Documents.Tests
                     null,
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
                     });
@@ -83,7 +85,7 @@ namespace Azure.Search.Documents.Tests
                     "Top hotels in town",
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
                         Select = { "hotelId", "hotelName" },
                     });
 
@@ -94,6 +96,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
         public async Task SemanticHybridSearch()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
@@ -104,7 +107,7 @@ namespace Azure.Search.Documents.Tests
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, K = 3, Fields = "descriptionVector" },
+                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
                         Select = { "hotelId", "hotelName", "description", "category" },
                         QueryType = SearchQueryType.Semantic,
                         QueryLanguage = QueryLanguage.EnUs,
@@ -134,6 +137,90 @@ namespace Azure.Search.Documents.Tests
                 response,
                 h => h.Document.HotelId,
                 "9", "3", "2", "5", "10", "1", "4");
+        }
+
+        [Test]
+        public async Task UpdateExistingIndexToAddVectorFields()
+        {
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+
+            string indexName = Recording.Random.GetName();
+            resources.IndexName = indexName;
+
+            // Create Index
+            SearchIndex index = new SearchIndex(indexName)
+            {
+                Fields =
+                {
+                    new SimpleField("id", SearchFieldDataType.String) { IsKey = true },
+                    new SearchableField("name") { IsFilterable = true, IsSortable = false },
+                },
+            };
+
+           SearchIndexClient indexClient = resources.GetIndexClient();
+           await indexClient.CreateIndexAsync(index);
+
+            // Upload data
+            SearchDocument document = new SearchDocument
+            {
+                ["id"] = "1",
+                ["name"] = "Countryside Hotel"
+            };
+
+            SearchClient searchClient = resources.GetSearchClient();
+            await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(new[] { document }));
+            await resources.WaitForIndexingAsync();
+
+            // Get the document
+            Response<SearchDocument> response = await searchClient.GetDocumentAsync<SearchDocument>((string)document["id"]);
+            Assert.AreEqual(document["id"], response.Value["id"]);
+            Assert.AreEqual(document["name"], response.Value["name"]);
+
+            // Update created index to add vector field
+
+            // Get created index
+            SearchIndex createdIndex = await indexClient.GetIndexAsync(indexName);
+
+            // Add vector
+            var vectorField = new SearchField("descriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
+            {
+                IsSearchable = true,
+                VectorSearchDimensions = 1536,
+                VectorSearchConfiguration = "my-vector-config"
+            };
+            createdIndex.Fields.Add(vectorField);
+
+            createdIndex.VectorSearch = new()
+            {
+                AlgorithmConfigurations =
+                    {
+                        new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
+                    }
+            };
+
+            // Update index
+            SearchIndex updatedIndex = await indexClient.CreateOrUpdateIndexAsync(createdIndex);
+            Assert.AreEqual(indexName, updatedIndex.Name);
+            Assert.AreEqual(3, updatedIndex.Fields.Count);
+
+            // Update document to add vector field's data
+
+            // Get the dcoument
+            SearchDocument resultDoc = await searchClient.GetDocumentAsync<SearchDocument>((string)document["id"]);
+
+            // Update document to add vector field data
+            resultDoc.Add("descriptionVector", VectorSearchEmbeddings.DefaultVectorizeDescription);
+
+            await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Merge(new[] { resultDoc }));
+            await resources.WaitForIndexingAsync();
+
+            // Get the document
+            response = await searchClient.GetDocumentAsync<SearchDocument>((string)document["id"]);
+            Assert.AreEqual(document["id"], response.Value["id"]);
+            Assert.AreEqual(document["name"], response.Value["name"]);
+            Assert.IsNotNull(response.Value["descriptionVector"]);
+
+            Assert.AreEqual(updatedIndex.Name, createdIndex.Name);
         }
     }
 }

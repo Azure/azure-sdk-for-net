@@ -3,10 +3,10 @@
 
 using System;
 using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -34,12 +34,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 #endif
 
             // Get the resultUrl from the response, which contains the exported project.
-            using JsonDocument doc = JsonDocument.Parse(exportOperation.Value.ToStream());
-            string resultUrl = doc.RootElement.GetProperty("resultUrl").GetString();
+            dynamic result = exportOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            Uri resultUrl = result.resultUrl;
 
             // Use the client pipeline to create and send a request to download the raw URL.
             RequestUriBuilder builder = new RequestUriBuilder();
-            builder.Reset(new Uri(resultUrl));
+            builder.Reset(resultUrl);
 
             Request request = client.Pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.Status, Is.EqualTo(200));
-            Assert.That(new Uri(resultUrl).Host, Is.EqualTo(client.Endpoint.Host));
+            Assert.That(resultUrl.Host, Is.EqualTo(client.Endpoint.Host));
 
             // Prevent compiler errors when building with SNIPPET.
             await Task.Yield();
@@ -76,12 +76,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Operation<BinaryData> exportOperation = await client.ExportProjectAsync(WaitUntil.Completed, projectName);
 
             // Get the resultUrl from the response, which contains the exported project.
-            using JsonDocument doc = JsonDocument.Parse(exportOperation.Value.ToStream());
-            string resultUrl = doc.RootElement.GetProperty("resultUrl").GetString();
+            dynamic result = exportOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            Uri resultUrl = result.resultUrl;
 
             // Use the client pipeline to create and send a request to download the raw URL.
             RequestUriBuilder builder = new RequestUriBuilder();
-            builder.Reset(new Uri(resultUrl));
+            builder.Reset(resultUrl);
 
             Request request = client.Pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
@@ -98,7 +98,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.Status, Is.EqualTo(200));
-            Assert.That(new Uri(resultUrl).Host, Is.EqualTo(client.Endpoint.Host));
+            Assert.That(resultUrl.Host, Is.EqualTo(client.Endpoint.Host));
         }
     }
 }

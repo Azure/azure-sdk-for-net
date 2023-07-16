@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="startOn"> Start time of the period. </param>
         /// <param name="endOn"> End time of the period. </param>
         /// <param name="issueDetected"> Flag representing Issue was detected. </param>
-        /// <param name="detectorDefinition"> Detector&apos;s definition. </param>
+        /// <param name="detectorDefinition"> Detector's definition. </param>
         /// <param name="metrics"> Metrics provided by the detector. </param>
         /// <param name="abnormalTimePeriods"> List of Correlated events found by the detector. </param>
         /// <param name="data"> Additional Data that detector wants to send. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Flag representing Issue was detected. </summary>
         public bool? IssueDetected { get; set; }
-        /// <summary> Detector&apos;s definition. </summary>
+        /// <summary> Detector's definition. </summary>
         public DetectorDefinition DetectorDefinition { get; set; }
         /// <summary> Metrics provided by the detector. </summary>
         public IList<DiagnosticMetricSet> Metrics { get; }

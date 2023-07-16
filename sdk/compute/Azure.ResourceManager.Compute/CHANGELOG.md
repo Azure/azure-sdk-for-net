@@ -1,9 +1,20 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.1 (2023-06-01)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Added new properties `ComputerName`, `OSName`, `OSVersion` and `HyperVGeneration` to `VirtualMachineScaleSetVmInstanceView` class
 - Added new value `StandardSsdLrs` to `ImageStorageAccountType`
 - Compute RP to `2023-03-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
@@ -21,9 +32,10 @@
 
 - Class `VirtualMachineScaleSetNetworkConfiguration` and `VirtualMachineScaleSetIPConfiguration` no longer have the property `Id`
 
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.32.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.6.0.
 
 ## 1.1.0 (2023-02-16)
 

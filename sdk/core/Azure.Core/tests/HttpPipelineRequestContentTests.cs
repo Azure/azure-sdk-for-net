@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -132,6 +133,68 @@ namespace Azure.Core.Tests
             using var reader = new StreamReader(destination);
 
             Assert.AreEqual(expected, reader.ReadToEnd());
+        }
+
+        [Test]
+        public void DynamicDataContent()
+        {
+            ReadOnlySpan<byte> utf8Json = """
+                {
+                    "foo" : {
+                       "bar" : 1
+                    }
+                }
+                """u8;
+            ReadOnlyMemory<byte> json = new ReadOnlyMemory<byte>(utf8Json.ToArray());
+
+            using JsonDocument doc = JsonDocument.Parse(json);
+            using MemoryStream expected = new();
+            using Utf8JsonWriter writer = new(expected);
+            doc.WriteTo(writer);
+            writer.Flush();
+            expected.Position = 0;
+
+            using dynamic source = new BinaryData(json).ToDynamicFromJson();
+            using RequestContent content = RequestContent.Create(source);
+            using MemoryStream destination = new();
+
+            content.WriteTo(destination, default);
+
+            CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
+        }
+
+        [Test]
+        public void CamelCaseContent()
+        {
+            ReadOnlySpan<byte> utf8Json = """
+                {
+                    "foo" : {
+                       "bar" : 1
+                    }
+                }
+                """u8;
+            ReadOnlyMemory<byte> json = new ReadOnlyMemory<byte>(utf8Json.ToArray());
+
+            using JsonDocument doc = JsonDocument.Parse(json);
+            using MemoryStream expected = new();
+            using Utf8JsonWriter writer = new(expected);
+            doc.WriteTo(writer);
+            writer.Flush();
+            expected.Position = 0;
+
+            var anon = new
+            {
+                Foo = new
+                {
+                    Bar = 1
+                }
+            };
+
+            using RequestContent content = RequestContent.Create(anon, JsonPropertyNames.CamelCase);
+            using MemoryStream destination = new();
+            content.WriteTo(destination, default);
+
+            CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
         }
     }
 }
