@@ -1,14 +1,10 @@
 # Release History
 
-## 4.18.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 4.18.0-beta.1 (2023-07-16)
 
 ### Other Changes
+
+- Shipping the `EventGridClient` on top of the latest system events.
 
 ## 4.17.0 (2023-06-08)
 
