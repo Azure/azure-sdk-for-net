@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -37,7 +37,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0181-f111-28f4-343a0d00e5e2/:issueAccessToken?api-version=2021-03-07",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0181-f111-28f4-343a0d00e5e2/:issueAccessToken?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -76,7 +76,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -112,7 +112,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0181-f1d9-28f4-343a0d00e5e3/:issueAccessToken?api-version=2021-03-07",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0181-f1d9-28f4-343a0d00e5e3/:issueAccessToken?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -151,7 +151,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads?api-version=2023-07-01-preview",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/chat/threads?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -192,7 +192,7 @@
         "Content-Length": "401",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:03 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01@thread.v2",
+        "Location": "https://jolovcommunication-communication.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01@thread.v2",
         "MS-CV": "3g5PSBtevUeTlLfZNybSOg.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "066O0ZAAAAADu69s9iUFcQ6NndNZIq3fvV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -215,7 +215,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -238,7 +238,7 @@
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:03 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01@thread.v2/messages/1689560044039",
+        "Location": "https://jolovcommunication-communication.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01@thread.v2/messages/1689560044039",
         "MS-CV": "V2CW4Ftt3Euagh31rWCmyQ.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "066O0ZAAAAABAdkRBc9ivQoo7c8uFrDEJV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -251,7 +251,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -274,7 +274,7 @@
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:04 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01@thread.v2/messages/1689560044386",
+        "Location": "https://jolovcommunication-communication.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01@thread.v2/messages/1689560044386",
         "MS-CV": "1jjq0dCFGUSsj7QsBFquWA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "07KO0ZAAAAAAg89LOAibIR46tRItrO/zxV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -287,7 +287,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/readReceipts?api-version=2023-07-01-preview",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/readReceipts?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -318,7 +318,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/readReceipts?api-version=2023-07-01-preview",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/readReceipts?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -349,7 +349,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/readReceipts?api-version=2023-07-01-preview",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/readReceipts?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -400,7 +400,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/readReceipts?api-version=2023-07-01-preview",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2/readReceipts?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -451,7 +451,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2?api-version=2023-07-01-preview",
+      "RequestUri": "https://jolovcommunication-communication.communication.azure.com/chat/threads/19%3A2AZ07XpBtlxrJKt4v-jQKeCoG5h53LKc869oYsW_-r01%40thread.v2?api-version=2023-07-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -477,8 +477,8 @@
       "ResponseBody": null
     }
   ],
-  "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "563217859"
-  }
+    "Variables": {
+        "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://jolovcommunication-communication.communication.azure.com/;accesskey=Kg==",
+        "RandomSeed": "563217859"
+    }
 }
