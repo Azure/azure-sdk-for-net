@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.Analysis.Tests
 {
-    public class AnaltsisManagementTestEnvironment : TestEnvironment
+    public class AnalysisManagementTestEnvironment : TestEnvironment
     {
     }
 }
