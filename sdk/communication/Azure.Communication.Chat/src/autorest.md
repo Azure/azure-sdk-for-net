@@ -23,8 +23,6 @@ directive:
     remove-property: retentionPolicy
   - where-model: ChatThreadProperties
     remove-property: retentionPolicy
-  - where-model:CommunicationIdentifierModel
-    remove-property:kind
   - where-model: ChatThreadItem
     remove-property: retentionPolicy
   - remove-model:ThreadCreationDateRetentionPolicy

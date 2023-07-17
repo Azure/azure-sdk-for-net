@@ -9,11 +9,13 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using Azure.Core;
 
 namespace Azure.Communication
 {
     // Excluded internal shared code.
     /// <summary> Type of CommunicationIdentifierModel. </summary>
+    [CodeGenModel("CommunicationIdentifierModelKind")]
     [ExcludeFromCodeCoverage]
     internal readonly partial struct CommunicationIdentifierModelKind : IEquatable<CommunicationIdentifierModelKind>
     {
@@ -40,11 +42,7 @@ namespace Azure.Communication
         /// <summary> microsoftTeamsUser. </summary>
         public static CommunicationIdentifierModelKind MicrosoftTeamsUser { get; } = new CommunicationIdentifierModelKind(MicrosoftTeamsUserValue);
         /// <summary> Determines if two <see cref="CommunicationIdentifierModelKind"/> values are the same. </summary>
-        public static bool operator ==(CommunicationIdentifierModelKind left, CommunicationIdentifierModelKind right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CommunicationIdentifierModelKind"/> values are not the same. </summary>
-        public static bool operator !=(CommunicationIdentifierModelKind left, CommunicationIdentifierModelKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CommunicationIdentifierModelKind"/>. </summary>
-        public static implicit operator CommunicationIdentifierModelKind(string value) => new CommunicationIdentifierModelKind(value);
+        /// <summary> Determines if two <see cref="CommunicationIdentifierModelKind"/> values are the same. </summary>
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

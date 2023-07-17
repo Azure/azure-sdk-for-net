@@ -21,5 +21,13 @@ namespace Azure.Communication
         {
             Kind = kind;
         }
+
+        public CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        {
+            RawId = rawId;
+            CommunicationUser = communicationUser;
+            PhoneNumber = phoneNumber;
+            MicrosoftTeamsUser = microsoftTeamsUser;
+        }
     }
 }

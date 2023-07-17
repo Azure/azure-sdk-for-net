@@ -61,7 +61,6 @@ namespace Azure.Communication.Chat
         public CommunicationIdentifierModel CreatedByCommunicationIdentifier { get; }
         /// <summary> The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }
-
         /// <summary> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }
