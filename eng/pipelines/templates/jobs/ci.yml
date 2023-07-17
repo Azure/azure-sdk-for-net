@@ -233,9 +233,10 @@ jobs:
         - ${{ if not(contains(variables['Build.DefinitionName'], 'net-pr')) }}:
           # First checkout the eng folder to get the common scripts
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            Paths:
-              - '**/*.md'
-              - '.vscode/cspell.json'
+            parameters:
+              Paths:
+                - '**/*.md'
+                - '.vscode/cspell.json'
 
           # For PullRequests CredScan will be run against the files changed in the PR.
           # For non-pull requests CredScan runs against the service directory.
