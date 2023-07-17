@@ -1218,7 +1218,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,RequestContent,string,string,RequestContext)']/*" />
+#pragma warning disable AZC0018 // Protocol method should have `requestContext` as the last parameter and not use a model as parameter or return types. Protocol methods should not have optional parameters if ambiguity exists between the protocol method and convenience methods.
         public virtual async Task<Operation<BinaryData>> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+#pragma warning restore AZC0018 // Protocol method should have `requestContext` as the last parameter and not use a model as parameter or return types. Protocol methods should not have optional parameters if ambiguity exists between the protocol method and convenience methods.
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1257,7 +1259,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='Import(WaitUntil,string,RequestContent,string,string,RequestContext)']/*" />
+#pragma warning disable AZC0018 // Protocol method should have `requestContext` as the last parameter and not use a model as parameter or return types. Protocol methods should not have optional parameters if ambiguity exists between the protocol method and convenience methods.
         public virtual Operation<BinaryData> Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+#pragma warning restore AZC0018 // Protocol method should have `requestContext` as the last parameter and not use a model as parameter or return types. Protocol methods should not have optional parameters if ambiguity exists between the protocol method and convenience methods.
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
