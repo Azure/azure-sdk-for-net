@@ -1115,6 +1115,7 @@ namespace Azure.Core.Serialization
     }
     public partial interface IJsonModelSerializable : Azure.Core.Serialization.IModelSerializable
     {
+        object Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options);
         void Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options);
     }
     public partial interface IMemberNameConverter
