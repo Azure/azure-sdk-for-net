@@ -23,6 +23,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
+            if (activity.Kind == ActivityKind.Server && activityTagsProcessor.activityType.HasFlag(OperationType.V2))
+            {
+                Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationNameV2(activity, ref activityTagsProcessor.MappedTags);
+                Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
+            }
+            else if (activity.Kind == ActivityKind.Server && activityTagsProcessor.activityType.HasFlag(OperationType.Http))
+            {
+                Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
+                Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
+            }
+
             var userAgent = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUserAgentOriginal)?.ToString()
                 ?? AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
 

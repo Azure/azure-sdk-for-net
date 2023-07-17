@@ -366,12 +366,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.DisplayName = "displayname";
 
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpRoute, "/api/test");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
             var telemetryItem = telemetryItems.FirstOrDefault();
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+            var requestData = telemetryItem?.Data.BaseData as RequestData;
 
+            Assert.NotNull(requestData);
+            Assert.Equal("GET /api/test", requestData.Name);
+            Assert.Equal(requestData.Name, telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void RequestNameMatchesOperationNameV2()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpRoute, "/api/test");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
+            var requestData = telemetryItem?.Data.BaseData as RequestData;
+
+            Assert.NotNull(requestData);
+            Assert.Equal("GET /api/test", requestData.Name);
             Assert.Equal(requestData.Name, telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
 
