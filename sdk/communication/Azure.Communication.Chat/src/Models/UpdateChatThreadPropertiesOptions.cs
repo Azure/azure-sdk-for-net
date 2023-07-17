@@ -5,15 +5,27 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    /// <summary>
+    /// Update chat thread parameter options
+    /// </summary>
     public class UpdateChatThreadPropertiesOptions
     {
+        /// <summary>
+        /// Update chat thread parameter options
+        /// </summary>
         public UpdateChatThreadPropertiesOptions()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
+
+        /// <summary>
+        /// Topic of the thread
+        /// </summary>
         public string Topic { get; set; }
 
+        /// <summary>
+        /// Property bag of chat thread metadata key - value pairs.
+        /// </summary>
         public IDictionary<string, string> Metadata { get; }
     }
 }
