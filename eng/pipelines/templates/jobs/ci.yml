@@ -227,26 +227,7 @@ jobs:
           displayName: "Use Python 3.9"
           inputs:
             versionSpec: "3.9"
-
-        - template: /eng/common/pipelines/templates/steps/validate-filename.yml
-
-        - template: /eng/common/pipelines/templates/steps/check-spelling.yml
-
-        - template: /eng/common/pipelines/templates/steps/verify-links.yml
-          parameters:
-            ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-              Directory: ''
-              Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
-            ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-              Directory: sdk/${{ parameters.ServiceDirectory }}
-            CheckLinkGuidance: $true
-
-        - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
-          parameters:
-            SourceDirectory: $(Build.SourcesDirectory)
-
-        - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
-
+            
         # Skip sparse checkout for the `azure-sdk-for-<lang>-pr` private mirrored repositories
         # as we require the GitHub service connection to be loaded.
         - ${{ if not(contains(variables['Build.DefinitionName'], 'net-pr')) }}:
@@ -267,6 +248,25 @@ jobs:
               parameters:
                 Paths: 
                   - "sdk/${{ parameters.ServiceDirectory }}"
+
+        - template: /eng/common/pipelines/templates/steps/validate-filename.yml
+
+        - template: /eng/common/pipelines/templates/steps/check-spelling.yml
+
+        - template: /eng/common/pipelines/templates/steps/verify-links.yml
+          parameters:
+            ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+              Directory: ''
+              Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
+            ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+              Directory: sdk/${{ parameters.ServiceDirectory }}
+            CheckLinkGuidance: $true
+
+        - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
+          parameters:
+            SourceDirectory: $(Build.SourcesDirectory)
+
+        - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
         - template: /eng/common/pipelines/templates/steps/credscan.yml
           parameters:
