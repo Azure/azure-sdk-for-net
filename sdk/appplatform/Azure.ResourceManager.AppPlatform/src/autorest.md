@@ -288,6 +288,7 @@ rename-mapping:
 
 models-to-treat-empty-string-as-null:
   - AppPlatformApiPortalProperties
+  - AppPlatformGatewayProperties
 
 parameter-rename-mapping:
   ConfigServers_Validate:
