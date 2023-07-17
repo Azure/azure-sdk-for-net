@@ -278,5 +278,11 @@ namespace Azure.Messaging.ServiceBus
                 MessageLockLostCancellationSource.Dispose();
             }
         }
+
+        internal CancellationTokenRegistration RegisterMessageLockLostHandler() =>
+            MessageLockCancellationToken.Register(
+                () => OnMessageLockLostAsync(new MessageLockLostEventArgs(
+                    Message,
+                    LockLostException)));
     }
 }

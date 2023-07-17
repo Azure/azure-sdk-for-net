@@ -276,8 +276,12 @@ namespace Azure.Messaging.ServiceBus
             Processor.Identifier,
             cancellationToken);
 
-        protected virtual async Task OnMessageHandler(EventArgs args) =>
-            await Processor.OnProcessMessageAsync((ProcessMessageEventArgs) args).ConfigureAwait(false);
+        protected virtual async Task OnMessageHandler(EventArgs args)
+        {
+            var processMessageArgs = (ProcessMessageEventArgs)args;
+            using var registration = processMessageArgs.RegisterMessageLockLostHandler();
+            await Processor.OnProcessMessageAsync((ProcessMessageEventArgs)args).ConfigureAwait(false);
+        }
 
         internal async Task RenewMessageLockAsync(
             ProcessMessageEventArgs args,

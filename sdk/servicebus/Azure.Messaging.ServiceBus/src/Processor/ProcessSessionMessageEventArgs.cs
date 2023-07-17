@@ -268,11 +268,11 @@ namespace Azure.Messaging.ServiceBus
 
         internal void EndExecutionScope() => _receiveActions.EndExecutionScope();
 
-        internal CancellationTokenRegistration RegisterSessionLockLostHandler(ProcessSessionMessageEventArgs args) =>
+        internal CancellationTokenRegistration RegisterSessionLockLostHandler() =>
             _manager.SessionLockCancellationToken.Register(
                 () => OnSessionLockLostAsync(new SessionLockLostEventArgs(
-                    args.Message,
-                    args.SessionLockedUntil,
+                    Message,
+                    SessionLockedUntil,
                     _manager.SessionLockLostException)));
     }
 }

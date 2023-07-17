@@ -422,7 +422,7 @@ namespace Azure.Messaging.ServiceBus
         protected override async Task OnMessageHandler(EventArgs args)
         {
             var sessionArgs = (ProcessSessionMessageEventArgs)args;
-            using var registration = sessionArgs.RegisterSessionLockLostHandler(sessionArgs);
+            using var registration = sessionArgs.RegisterSessionLockLostHandler();
             await _sessionProcessor.OnProcessSessionMessageAsync(sessionArgs).ConfigureAwait(false);
         }
 
