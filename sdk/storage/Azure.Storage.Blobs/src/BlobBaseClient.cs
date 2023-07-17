@@ -19,13 +19,6 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
-[assembly: InternalsVisibleTo("Azure.Storage.DataMovement.Blobs, PublicKey=" +
-    "0024000004800000940000000602000000240000525341310004000001000100d15ddcb2968829" +
-    "5338af4b7686603fe614abd555e09efba8fb88ee09e1f7b1ccaeed2e8f823fa9eef3fdd60217fc" +
-    "012ea67d2479751a0b8c087a4185541b851bd8b16f8d91b840e51b1cb0ba6fe647997e57429265" +
-    "e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593d" +
-    "aa7b11b4")]
-
 namespace Azure.Storage.Blobs.Specialized
 {
     /// <summary>
@@ -641,39 +634,30 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region internal static accessors for Azure.Storage.DataMovement.Blobs
         /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="TokenCredential"/>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="HttpAuthorization"/>
         /// for passing the authorization when performing service to service copy
         /// where OAuth is necessary to authenticate the source.
         /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
+        /// <param name="client">
+        /// The storage client which to generate the
+        /// authorization header off of.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-        internal static TokenCredential GetTokenCredential(BlobBaseClient client) =>
-            client.ClientConfiguration.OAuthTokenCredential;
-
-        /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
-        /// for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
-        internal static BlobClientOptions GetClientOptions(BlobBaseClient client) =>
-            new BlobClientOptions(client.ClientConfiguration.Version)
+        protected static async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(
+            BlobBaseClient client,
+            CancellationToken cancellationToken = default)
+        {
+            if (client.ClientConfiguration.OAuthTokenCredential != default)
             {
-                // We only use this for communicating diagnostics, at the moment
-                Diagnostics =
-                {
-                    IsDistributedTracingEnabled = client.ClientConfiguration.ClientDiagnostics.IsActivityEnabled
-                }
-            };
-
-        /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
-        /// for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
-        internal static bool GetUsingClientSideEncryption(BlobBaseClient client) => client.UsingClientSideEncryption;
-        #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
+                return await client.ClientConfiguration.OAuthTokenCredential.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
+            }
+            return default;
+        }
+        #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>
         ///// Creates a clone of this instance that references a version ID rather than the base blob.

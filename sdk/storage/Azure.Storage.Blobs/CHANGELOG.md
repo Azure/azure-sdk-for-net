@@ -1,15 +1,17 @@
 # Release History
 
-## 12.17.0-beta.2 (Unreleased)
+## 12.18.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added support for `Metadata` in `BlobSyncUploadFromUriOptions`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.17.0 (2023-07-11)
+- Includes all features from 12.17.0-beta.1.
 
 ## 12.17.0-beta.1 (2023-05-30)
 - Added support for service version 2023-01-03.
