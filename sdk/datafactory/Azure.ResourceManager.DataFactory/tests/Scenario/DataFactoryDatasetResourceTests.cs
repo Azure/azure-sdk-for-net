@@ -9,8 +9,6 @@ using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using NUnit.Framework;
-using DataFactoryLinkedServiceReference = Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceReference;
-using DataFactoryLinkedServiceReferenceType = Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceReferenceType;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
