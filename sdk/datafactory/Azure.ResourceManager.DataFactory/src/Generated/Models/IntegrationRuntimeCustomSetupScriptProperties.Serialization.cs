@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                JsonSerializer.Serialize(writer, SasToken);
+                writer.WriteObjectValue(SasToken);
             }
             writer.WriteEndObject();
         }
@@ -55,11 +54,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sasToken = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
+                    sasToken = DataFactorySecretString.DeserializeDataFactorySecretString(property.Value);
                     continue;
                 }
             }
-            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken);
+            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken.Value);
         }
     }
 }

@@ -17,7 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Initializes a new instance of TwilioLinkedService. </summary>
         /// <param name="userName"> The Account SID of Twilio service. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> The auth token of Twilio service. </param>
+        /// <param name="password">
+        /// The auth token of Twilio service.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public TwilioLinkedService(DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password)
         {
@@ -37,7 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="userName"> The Account SID of Twilio service. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> The auth token of Twilio service. </param>
+        /// <param name="password">
+        /// The auth token of Twilio service.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// </param>
         internal TwilioLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             UserName = userName;
@@ -47,7 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The Account SID of Twilio service. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
-        /// <summary> The auth token of Twilio service. </summary>
+        /// <summary>
+        /// The auth token of Twilio service.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
     }
 }

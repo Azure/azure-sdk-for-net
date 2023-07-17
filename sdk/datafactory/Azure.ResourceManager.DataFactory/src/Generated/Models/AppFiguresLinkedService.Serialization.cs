@@ -65,8 +65,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("userName"u8);
             JsonSerializer.Serialize(writer, UserName);
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password); writer.WritePropertyName("clientKey"u8);
-            JsonSerializer.Serialize(writer, ClientKey); writer.WriteEndObject();
+            writer.WriteObjectValue(Password);
+            writer.WritePropertyName("clientKey"u8);
+            writer.WriteObjectValue(ClientKey);
+            writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -167,12 +169,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("password"u8))
                         {
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientKey"u8))
                         {
-                            clientKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            clientKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                     }

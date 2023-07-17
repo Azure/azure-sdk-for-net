@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("userName"u8);
             JsonSerializer.Serialize(writer, UserName);
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password); writer.WriteEndObject();
+            writer.WriteObjectValue(Password);
+            writer.WriteEndObject();
         }
 
         internal static SsisAccessCredential DeserializeSsisAccessCredential(JsonElement element)
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
+                    password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
             }

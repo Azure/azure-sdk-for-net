@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {

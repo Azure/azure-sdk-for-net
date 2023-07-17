@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                JsonSerializer.Serialize(writer, LinkedService);
+                writer.WriteObjectValue(LinkedService);
             }
             if (Optional.IsDefined(Flowlet))
             {
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedService = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("flowlet"u8))
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DataFlowTransformation(name, description.Value, dataset.Value, linkedService, flowlet.Value);
+            return new DataFlowTransformation(name, description.Value, dataset.Value, linkedService.Value, flowlet.Value);
         }
     }
 }

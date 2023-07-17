@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                JsonSerializer.Serialize(writer, LinkedService);
+                writer.WriteObjectValue(LinkedService);
             }
             if (Optional.IsDefined(FolderPath))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedService = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("folderPath"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DataFlowStagingInfo(linkedService, folderPath.Value);
+            return new DataFlowStagingInfo(linkedService.Value, folderPath.Value);
         }
     }
 }
