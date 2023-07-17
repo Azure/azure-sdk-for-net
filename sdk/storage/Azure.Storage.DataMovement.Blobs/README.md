@@ -47,7 +47,7 @@ The Azure.Storage.DataMovement.Blobs library uses clients from the Azure.Storage
 
 ***TODO***
 
-## Sample Usage
+## Examples
 
 This section demonstrates usage of Data Movement for interacting with blob storage.
 

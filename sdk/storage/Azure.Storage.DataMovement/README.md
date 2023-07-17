@@ -36,6 +36,10 @@ Here's an example using the Azure CLI:
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
 
+### Authenticate the client
+
+Authentication is specific to the targeted storage service. Please see documentation for the individual services
+
 ## Key concepts
 
 ***TODO***
