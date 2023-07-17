@@ -28,11 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="accessKeyId"> The access key identifier of the Amazon S3 Compatible Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </param>
-        /// <param name="secretAccessKey">
-        /// The secret access key of the Amazon S3 Compatible Identity and Access Management (IAM) user.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="secretAccessKey"> The secret access key of the Amazon S3 Compatible Identity and Access Management (IAM) user. </param>
         /// <param name="serviceUri"> This value specifies the endpoint to access with the Amazon S3 Compatible Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
         /// <param name="forcePathStyle"> If true, use S3 path-style access instead of virtual hosted-style access. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
@@ -48,11 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The access key identifier of the Amazon S3 Compatible Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AccessKeyId { get; set; }
-        /// <summary>
-        /// The secret access key of the Amazon S3 Compatible Identity and Access Management (IAM) user.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The secret access key of the Amazon S3 Compatible Identity and Access Management (IAM) user. </summary>
         public DataFactorySecretBaseDefinition SecretAccessKey { get; set; }
         /// <summary> This value specifies the endpoint to access with the Amazon S3 Compatible Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServiceUri { get; set; }
