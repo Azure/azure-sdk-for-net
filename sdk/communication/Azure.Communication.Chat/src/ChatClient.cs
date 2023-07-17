@@ -94,7 +94,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <param name = "options" > Retention policy</param>
+        /// <param name = "options" > CreateChatThread Options</param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<CreateChatThreadResult> CreateChatThread(CreateChatThreadOptions options, CancellationToken cancellationToken = default)

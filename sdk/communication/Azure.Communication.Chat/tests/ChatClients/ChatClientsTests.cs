@@ -1082,7 +1082,6 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             var chatThreads = chatClient.GetChatThreads();
 
             //assert
-
             int idCounter = 0;
             foreach (ChatThreadItem chatThread in chatThreads)
             {
