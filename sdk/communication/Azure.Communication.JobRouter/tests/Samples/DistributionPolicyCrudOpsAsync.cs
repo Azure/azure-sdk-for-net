@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicyRemoveProp_Async
 
             Response updatedDistributionPolicyWithoutName = await routerAdministrationClient.UpdateDistributionPolicyAsync(distributionPolicyId,
-                RequestContent.Create(new { Name = (string?)null }));
+                RequestContent.Create(new { Name = (string?)null }), new Azure.RequestContext());
 
             Response<DistributionPolicy> queriedDistributionPolicyWithoutName = await routerAdministrationClient.GetDistributionPolicyAsync(distributionPolicyId);
 

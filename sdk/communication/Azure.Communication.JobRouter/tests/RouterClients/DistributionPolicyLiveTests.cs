@@ -291,7 +291,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var updatedDistributionPolicyResponse =
                 await routerClient.UpdateDistributionPolicyAsync(bestWorkerModeDistributionPolicyId,
-                    RequestContent.Create(new { Name = (string?)null }));
+                    RequestContent.Create(new { Name = (string?)null }), new Azure.RequestContext());
 
             var retrievedPolicy = await routerClient.GetDistributionPolicyAsync(bestWorkerModeDistributionPolicyId);
 

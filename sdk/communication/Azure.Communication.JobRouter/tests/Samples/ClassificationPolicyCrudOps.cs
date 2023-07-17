@@ -75,7 +75,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicyRemoveProp
 
             Response updatedClassificationPolicyWithoutName = routerAdministrationClient.UpdateClassificationPolicy(classificationPolicyId,
-                RequestContent.Create(new { Name = (string?)null }));
+                RequestContent.Create(new { Name = (string?)null }), new Azure.RequestContext());
 
             Response<ClassificationPolicy> queriedClassificationPolicyWithoutName = routerAdministrationClient.GetClassificationPolicy(classificationPolicyId);
 
