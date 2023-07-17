@@ -1,6 +1,6 @@
 # Release History
 
-## 1.10.0-beta.1 (2023-07-11)
+## 1.10.0-beta.1 (2023-07-17)
 
 ### Features Added
 - Continuous Access Evaluation (CAE) is now configurable per-request by setting the `IsCaeEnabled` property of `TokenRequestContext` via its constructor.
