@@ -433,7 +433,7 @@
 # ServiceLabel: %Digital Twins %Service Attention
 /sdk/digitaltwins/                                                 @johngallardo @efriesner @abhinav-ghai @Aashish93-stack @sjiherzig @Satya-Kolluri
 
-# ServiceLabel: %IoT/CLI
+# ServiceLabel: %IoT - CLI
 #/<NotInRepo>/          @Azure/azure-iot-cli-triage
 
 # PRLabel: %IoT Models Repository
