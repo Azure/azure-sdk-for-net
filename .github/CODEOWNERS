@@ -504,7 +504,7 @@
 /sdk/iothub/Microsoft.Azure.Management.IotHub/                     @rkmanda @chieftn
 
 # ServiceLabel: %KeyVault
-#/<NotInRepo>/          @RandalliLama @schaabs @jlichwa
+#/<NotInRepo>/          @RandalliLama @jlichwa
 
 # PRLabel: %KeyVault
 /sdk/keyvault/                                                     @heaths @schaabs
