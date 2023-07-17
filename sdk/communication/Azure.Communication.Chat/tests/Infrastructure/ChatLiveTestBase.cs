@@ -14,7 +14,6 @@ namespace Azure.Communication.Chat.Tests
         {
             JsonPathSanitizers.Add("$..token");
             SanitizedHeaders.Add("x-ms-content-sha256");
-            IgnoredHeaders.Add("Repeatability-Request-ID");
         }
 
         /// <summary>
