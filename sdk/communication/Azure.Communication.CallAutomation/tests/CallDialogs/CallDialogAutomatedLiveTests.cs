@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using Azure.Communication.PhoneNumbers;
 using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
@@ -21,38 +22,60 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
         [RecordedTest]
         public async Task DialogOperationsTest()
         {
-            // ignores test if botAppId is not set in environment variables
+            // ignores test if botAppId or PMA Endpoint is not set in environment variables
             var botAppId = TestEnvironment.BotAppId;
-            if (botAppId == null)
+            var endpoint = TestEnvironment.PMAEndpoint;
+            if (botAppId == null || endpoint == null)
             {
                 Assert.Ignore();
             }
 
             // create caller and receiver
-            var user = await CreateIdentityUserAsync().ConfigureAwait(false);
-            var target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+
+            CommunicationIdentifier sourcePhone;
+            CommunicationIdentifier target;
+
+            // when in playback, use Sanatized values
+            if (Mode == RecordedTestMode.Playback)
+            {
+                sourcePhone = new PhoneNumberIdentifier("Sanitized");
+                target = new PhoneNumberIdentifier("Sanitized");
+            }
+            else
+            {
+                PhoneNumbersClient phoneNumbersClient = new PhoneNumbersClient(TestEnvironment.LiveTestStaticConnectionString);
+                var purchasedPhoneNumbers = phoneNumbersClient.GetPurchasedPhoneNumbersAsync();
+                List<string> phoneNumbers = new List<string>();
+                await foreach (var phoneNumber in purchasedPhoneNumbers)
+                {
+                    phoneNumbers.Add(phoneNumber.PhoneNumber);
+                    Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, monthly cost: {phoneNumber.Cost}");
+                }
+                target = new PhoneNumberIdentifier(phoneNumbers[1]);
+                sourcePhone = new PhoneNumberIdentifier(phoneNumbers[0]);
+            }
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
-            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
 
             // setup service bus
-            var uniqueId = await ServiceBusWithNewCall(user, target);
+            var uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
 
             // create call and assert response
-            var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-            CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
+            CallInvite invite = new CallInvite((PhoneNumberIdentifier)target, (PhoneNumberIdentifier)sourcePhone);
+            CreateCallResult response = await client.CreateCallAsync(invite, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
             Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
-            // wait for incoming call context
+            // wait for incomingcall context
             string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
             Assert.IsNotNull(incomingCallContext);
 
             // answer the call
-            var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
-            var answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
-            Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
-            var targetCallConnectionId = answerResponse.Value.CallConnectionProperties.CallConnectionId;
+            var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+            AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
+            var targetCallConnectionId = answerResponse.CallConnectionProperties.CallConnectionId;
 
             // wait for callConnected
             var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
@@ -66,7 +89,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
             try
             {
-                var callDialog = client.GetCallConnection(callConnectionId).GetCallDialog();
+                var callDialog = client.GetCallConnection(targetCallConnectionId).GetCallDialog();
 
                 // send the dialog to the target user
                 var dialogContext = new Dictionary<string, object>();
