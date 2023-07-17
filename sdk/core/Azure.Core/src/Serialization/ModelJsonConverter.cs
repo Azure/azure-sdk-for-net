@@ -17,9 +17,9 @@ namespace Azure.Core.Serialization
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
-        /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
+        /// ModelSerializerFormat that determines Format of serialized model. ModelSerializerFormat.Data = data format which means both properties are false, ModelSerializerFormat.Wire = wire format which means both properties are true Default is ModelSerializerFormat.Data.
         /// </summary>
-        public string Format { get; }
+        public ModelSerializerFormat Format { get; }
 
         /// <summary>
         /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
