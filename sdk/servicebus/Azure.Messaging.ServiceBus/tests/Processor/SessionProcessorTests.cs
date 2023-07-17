@@ -394,9 +394,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockReceiver.Setup(r => r.SessionId).Returns("sessionId");
             mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
             mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
-
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1", sessionId: "sessionId");
             var processArgs = new ProcessSessionMessageEventArgs(
-                ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1", sessionId: "sessionId"),
+                message,
                 mockReceiver.Object,
                 CancellationToken.None);
 
@@ -435,7 +435,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await mockProcessor.OnSessionInitializingAsync(processSessionArgs);
 
             Assert.IsFalse(sessionLockLostEventRaised);
-            await processArgs.OnSessionLockLostAsync(new SessionLockLostEventArgs(null));
+            await processArgs.OnSessionLockLostAsync(new SessionLockLostEventArgs(message, DateTimeOffset.Now, null));
             Assert.IsTrue(sessionLockLostEventRaised);
 
             await mockProcessor.OnSessionClosingAsync(processSessionArgs);

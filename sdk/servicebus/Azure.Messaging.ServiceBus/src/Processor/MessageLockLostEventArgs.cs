@@ -13,11 +13,17 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Constructs a new <see cref="MessageLockLostEventArgs"/> instance.
         /// </summary>
+        /// <param name="message">The message that the lock was lost for.</param>
         /// <param name="exception">The exception, if any, which led to the event being raised.</param>
-        public MessageLockLostEventArgs(Exception exception)
+        public MessageLockLostEventArgs(ServiceBusReceivedMessage message, Exception exception)
         {
             Exception = exception;
         }
+
+        /// <summary>
+        /// The message that the lock was lost for.
+        /// </summary>
+        public ServiceBusReceivedMessage Message { get; }
 
         /// <summary>
         /// Gets the exception, if any, which led to the event being raised. If the exception is null,

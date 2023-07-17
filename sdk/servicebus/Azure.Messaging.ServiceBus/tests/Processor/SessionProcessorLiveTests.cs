@@ -2565,6 +2565,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     args.SessionLockLostAsync += (lockLostArgs) =>
                     {
                         sessionLockLostEventRaised = true;
+                        Assert.AreEqual(args.Message.LockToken, lockLostArgs.Message.LockToken);
+                        Assert.AreEqual(args.SessionLockedUntil, lockLostArgs.SessionLockedUntil);
                         return Task.CompletedTask;
                     };
                     await args.CompleteMessageAsync(args.Message);
@@ -2609,6 +2611,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     args.SessionLockLostAsync += (lockLostArgs) =>
                     {
                         sessionLockLostEventRaised = true;
+                        Assert.AreEqual(args.Message.LockToken, lockLostArgs.Message.LockToken);
+                        Assert.AreEqual(args.SessionLockedUntil, lockLostArgs.SessionLockedUntil);
                         var lockLostException = lockLostArgs.Exception as ServiceBusException;
                         Assert.IsNotNull(lockLostException);
                         Assert.AreEqual(ServiceBusFailureReason.SessionLockLost, lockLostException.Reason);

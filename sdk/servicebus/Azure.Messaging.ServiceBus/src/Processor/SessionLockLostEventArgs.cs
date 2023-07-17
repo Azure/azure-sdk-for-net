@@ -13,11 +13,26 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Constructs a new <see cref="SessionLockLostEventArgs"/> instance.
         /// </summary>
+        /// <param name="message">The message that was being processed when the session lock was lost.</param>
+        /// <param name="sessionLockedUntil">The time that the session lock expires.</param>
         /// <param name="exception">The exception, if any, which led to the event being raised.</param>
-        public SessionLockLostEventArgs(Exception exception)
+        public SessionLockLostEventArgs(ServiceBusReceivedMessage message, DateTimeOffset sessionLockedUntil, Exception exception)
         {
+            Message = message;
+            SessionLockedUntil = sessionLockedUntil;
             Exception = exception;
         }
+
+        /// <summary>
+        /// The time that the session lock expires. If this time is still in the future, then the session lock was lost due to an
+        /// exception being thrown which can be accessed via the <see cref="Exception"/> property.
+        /// </summary>
+        public DateTimeOffset SessionLockedUntil { get; }
+
+        /// <summary>
+        /// The message that was being processed when the session lock was lost.
+        /// </summary>
+        public ServiceBusReceivedMessage Message { get; }
 
         /// <summary>
         /// Gets the exception, if any, which led to the event being raised. If the exception is null,

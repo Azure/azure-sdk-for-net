@@ -30,8 +30,14 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// An event that is raised when the message lock is lost. This event is only raised for the scope of the Process Message handler.
         /// Once the handler returns, the event will not be raised. There are two cases in which this event can be raised:
-        ///     1) When the message lock has expired based on the <see cref="ServiceBusReceivedMessage.LockedUntil"/> property.
-        ///     2) When a non-transient exception occurs while attempting to renew the message lock.
+        /// <list type="numbered">
+        ///     <item>
+        ///         <description>When the message lock has expired based on the <see cref="ServiceBusReceivedMessage.LockedUntil"/> property</description>
+        ///     </item>
+        ///     <item>
+        ///         <description>When a non-transient exception occurs while attempting to renew the session lock.</description>
+        ///     </item>
+        /// </list>
         /// </summary>
         public event Func<MessageLockLostEventArgs, Task> MessageLockLostAsync;
 
@@ -122,7 +128,7 @@ namespace Azure.Messaging.ServiceBus
             MessageLockLostCancellationSource = new CancellationTokenSource();
             MessageLockCancellationToken = MessageLockLostCancellationSource.Token;
 
-            MessageLockCancellationToken.Register(() => OnMessageLockLostAsync(new MessageLockLostEventArgs(LockLostException)));
+            MessageLockCancellationToken.Register(() => OnMessageLockLostAsync(new MessageLockLostEventArgs(message, LockLostException)));
             MessageLockLostCancellationSource.CancelAfterLockExpired(Message);
 
             bool autoRenew = manager?.ShouldAutoRenewMessageLock() == true;

@@ -33,8 +33,14 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// An event that is raised when the session lock is lost. This event is only raised for the scope of the Process Session Message handler.
         /// Once the handler returns, the event will not be raised. There are two cases in which this event can be raised:
-        ///     1) When the session lock has expired based on the <see cref="SessionLockedUntil"/> property.
-        ///     2) When a non-transient exception occurs while attempting to renew the session lock.
+        /// <list type="numbered">
+        ///     <item>
+        ///         <description>When the session lock has expired based on the <see cref="SessionLockedUntil"/> property</description>
+        ///     </item>
+        ///     <item>
+        ///         <description>When a non-transient exception occurs while attempting to renew the session lock.</description>
+        ///     </item>
+        /// </list>
         /// </summary>
         public event Func<SessionLockLostEventArgs, Task> SessionLockLostAsync;
 
@@ -262,7 +268,11 @@ namespace Azure.Messaging.ServiceBus
 
         internal void EndExecutionScope() => _receiveActions.EndExecutionScope();
 
-        internal CancellationTokenRegistration RegisterSessionLockLostHandler() =>
-            _manager.SessionLockCancellationToken.Register(() => OnSessionLockLostAsync(new SessionLockLostEventArgs(_manager.SessionLockLostException)));
+        internal CancellationTokenRegistration RegisterSessionLockLostHandler(ProcessSessionMessageEventArgs args) =>
+            _manager.SessionLockCancellationToken.Register(
+                () => OnSessionLockLostAsync(new SessionLockLostEventArgs(
+                    args.Message,
+                    args.SessionLockedUntil,
+                    _manager.SessionLockLostException)));
     }
 }

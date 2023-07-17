@@ -13,8 +13,9 @@ namespace Azure.Messaging.ServiceBus
     }
     public partial class MessageLockLostEventArgs
     {
-        public MessageLockLostEventArgs(System.Exception exception) { }
+        public MessageLockLostEventArgs(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Exception exception) { }
         public System.Exception Exception { get { throw null; } }
+        public Azure.Messaging.ServiceBus.ServiceBusReceivedMessage Message { get { throw null; } }
     }
     public sealed partial class ProcessErrorEventArgs : System.EventArgs
     {
@@ -563,8 +564,10 @@ namespace Azure.Messaging.ServiceBus
     }
     public partial class SessionLockLostEventArgs : System.EventArgs
     {
-        public SessionLockLostEventArgs(System.Exception exception) { }
+        public SessionLockLostEventArgs(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.DateTimeOffset sessionLockedUntil, System.Exception exception) { }
         public System.Exception Exception { get { throw null; } }
+        public Azure.Messaging.ServiceBus.ServiceBusReceivedMessage Message { get { throw null; } }
+        public System.DateTimeOffset SessionLockedUntil { get { throw null; } }
     }
     public enum SubQueue
     {
