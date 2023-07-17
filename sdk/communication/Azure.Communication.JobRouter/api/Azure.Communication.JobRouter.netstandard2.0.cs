@@ -438,8 +438,7 @@ namespace Azure.Communication.JobRouter
     public partial class PassThroughWorkerSelectorAttachment : Azure.Communication.JobRouter.WorkerSelectorAttachment
     {
         public PassThroughWorkerSelectorAttachment(string key, Azure.Communication.JobRouter.LabelOperator labelOperator) { }
-        public PassThroughWorkerSelectorAttachment(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, System.TimeSpan? ttl = default(System.TimeSpan?)) { }
-        public double? ExpiresAfterSeconds { get { throw null; } set { } }
+        public PassThroughWorkerSelectorAttachment(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, System.TimeSpan? expiresAfter = default(System.TimeSpan?)) { }
         public string Key { get { throw null; } set { } }
         public Azure.Communication.JobRouter.LabelOperator LabelOperator { get { throw null; } set { } }
     }
@@ -523,12 +522,11 @@ namespace Azure.Communication.JobRouter
     {
         public RouterWorkerSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value) { }
         public bool? Expedite { get { throw null; } set { } }
-        public double? ExpiresAfterSeconds { get { throw null; } set { } }
+        public System.TimeSpan? ExpiresAfter { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresAt { get { throw null; } }
         public string Key { get { throw null; } set { } }
         public Azure.Communication.JobRouter.LabelOperator LabelOperator { get { throw null; } set { } }
         public Azure.Communication.JobRouter.Models.RouterWorkerSelectorStatus? Status { get { throw null; } }
-        public System.TimeSpan? Ttl { get { throw null; } set { } }
         public Azure.Communication.JobRouter.LabelValue Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -830,7 +828,7 @@ namespace Azure.Communication.JobRouter.Models
     public partial class RouterJobNote
     {
         public RouterJobNote() { }
-        public System.DateTimeOffset? AddedAtUtc { get { throw null; } set { } }
+        public System.DateTimeOffset? AddedAt { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
     }
     public partial class RouterJobOffer
