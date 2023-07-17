@@ -32,11 +32,12 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Gets or sets value indicating if ETW logging that contains PII content should be logged.
-        /// Setting this property will not disable redaction of <see cref="Request"/> Content. To enable logging of sensitive <see cref="Request.Content"/>
+        /// Gets or sets value indicating if ETW logging that contains potentially sensitive content should be logged.
+        /// Setting this property to true will not disable redaction of <see cref="Request"/> Content. To enable logging of sensitive <see cref="Request.Content"/>
         /// the <see cref="DiagnosticsOptions.IsLoggingContentEnabled"/> property must be set to <c>true</c>.
+        /// Setting this property to `true` equates to passing 'true' for the enablePiiLogging parameter to the 'WithLogging' method on the MSAL client builder.
         /// </summary>
-        internal bool IsLoggingPIIEnabled { get; set; }
+        public bool IsSupportLoggingEnabled { get; set; }
 
         internal virtual T Clone<T>()
             where T : TokenCredentialOptions, new()
@@ -46,7 +47,7 @@ namespace Azure.Identity
             // copy TokenCredentialOptions Properties
             clone.AuthorityHost = AuthorityHost;
 
-            clone.IsLoggingPIIEnabled = IsLoggingPIIEnabled;
+            clone.IsSupportLoggingEnabled = IsSupportLoggingEnabled;
 
             // copy TokenCredentialDiagnosticsOptions specific options
             clone.Diagnostics.IsAccountIdentifierLoggingEnabled = Diagnostics.IsAccountIdentifierLoggingEnabled;
@@ -57,7 +58,7 @@ namespace Azure.Identity
             // copy ISupportsTokenCachePersistenceOptions
             CloneIfImplemented<ISupportsTokenCachePersistenceOptions>(this, clone, (o, c) => c.TokenCachePersistenceOptions = o.TokenCachePersistenceOptions);
 
-            // copy ISupportsAdditinallyAllowedTenants
+            // copy ISupportsAdditionallyAllowedTenants
             CloneIfImplemented<ISupportsAdditionallyAllowedTenants>(this, clone, (o, c) => CloneListItems(o.AdditionallyAllowedTenants, c.AdditionallyAllowedTenants));
 
             // copy base ClientOptions properties, this would be replaced by a similar method on the base class

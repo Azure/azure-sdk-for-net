@@ -1,14 +1,23 @@
 # Release History
 
+## 1.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.5 (2023-07-13)
 
 ### Features Added
 
-* Added Azure.* activity sources.
-  Users will need to enable the collection by turning on the feature by following one of the ways listed in
-  [Introducing experimental OpenTelemetry support in the Azure SDK for .NET](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/).
+* Added instrumentation support for Azure SDKs.
+  See [Enable Azure SDK Instrumentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md#enable-azure-sdk-instrumentation) for details.
   ([#37505](https://github.com/Azure/azure-sdk-for-net/pull/37505))
-* Added `SamplingRatio` property to customize the sampling rate in Azure Monitor Exporter.
+* Added `SamplingRatio` property to customize the sampling rate in Azure Monitor Exporter. **Note**: This package no longer takes dependency on [OpenTelemetry.Extensions.AzureMonitor](https://www.nuget.org/packages/OpenTelemetry.Extensions.AzureMonitor)
   ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
 
 ### Other Changes

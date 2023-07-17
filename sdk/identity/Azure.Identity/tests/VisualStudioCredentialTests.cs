@@ -38,6 +38,7 @@ namespace Azure.Identity.Tests
             var vsOptions = new VisualStudioCredentialOptions
             {
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
             };
             return InstrumentClient(new VisualStudioCredential(config.TenantId, default, fileSystem, new TestProcessService(testProcess, true), vsOptions));
         }
