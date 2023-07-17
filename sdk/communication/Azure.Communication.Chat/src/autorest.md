@@ -17,3 +17,14 @@ require:
     -  https://github.com/Azure/azure-rest-api-specs/blob/b9ae686a739451d7dba63bfe3b8bcb2ef952472e/specification/communication/data-plane/Chat/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true
+directive:
+  # Temporarily remove retention policy changes
+  - where-model: CreateChatThreadRequest
+    remove-property: retentionPolicy
+  - where-model: ChatThreadProperties
+    remove-property: retentionPolicy
+  - where-model:CommunicationIdentifierModel
+    remove-property:kind
+  - where-model: ChatThreadItem
+    remove-property: retentionPolicy
+  - remove-model:ThreadCreationDateRetentionPolicy
