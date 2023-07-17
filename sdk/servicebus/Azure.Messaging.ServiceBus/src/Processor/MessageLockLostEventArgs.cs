@@ -17,6 +17,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="exception">The exception, if any, which led to the event being raised.</param>
         public MessageLockLostEventArgs(ServiceBusReceivedMessage message, Exception exception)
         {
+            Message = message;
             Exception = exception;
         }
 
