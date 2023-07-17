@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override bool CanProduceUri => true;
+        protected override bool CanProduceUri => true;
 
         /// <summary>
         /// Gets the path of the storage resource.
@@ -67,7 +67,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
         /// <param name="path">The path to the storage resource, relative to the directory prefix if any.</param>
-        public override StorageResourceSingle GetChildStorageResource(string path)
+        protected override StorageResourceSingle GetChildStorageResource(string path)
             => GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: _options?.BlobType ?? BlobType.Block);
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Because blobs is a flat namespace, virtual directories will not be returned.
         /// </summary>
         /// <returns>List of the child resources in the storage container.</returns>
-        public override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+        protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(
