@@ -11,10 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Developer.LoadTesting;
-using AzureLoadTesting.Models;
+using Azure.Developer.LoadTesting.Models;
 
-namespace AzureLoadTesting
+namespace Azure.Developer.LoadTesting
 {
     // Data plane generated client.
     /// <summary> The LoadTestRun service client. </summary>

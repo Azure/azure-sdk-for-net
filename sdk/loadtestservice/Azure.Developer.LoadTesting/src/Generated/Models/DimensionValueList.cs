@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace AzureLoadTesting.Models
+namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> The DimensionValueList. </summary>
     public partial class DimensionValueList

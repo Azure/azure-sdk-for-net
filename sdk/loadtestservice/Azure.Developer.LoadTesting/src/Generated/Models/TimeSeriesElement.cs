@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace AzureLoadTesting.Models
+namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> The time series returned when a data query is performed. </summary>
     public partial class TimeSeriesElement

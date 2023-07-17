@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace AzureLoadTesting.Models
+namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Test app component. </summary>
     public partial class TestAppComponents

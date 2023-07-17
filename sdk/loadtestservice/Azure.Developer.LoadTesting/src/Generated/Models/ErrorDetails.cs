@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace AzureLoadTesting.Models
+namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Error details if there is any failure in load test run. </summary>
     public partial class ErrorDetails

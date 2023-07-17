@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> Client options for AzureLoadTesting library clients. </summary>
+    /// <summary> Client options for Azure.Developer.LoadTesting library clients. </summary>
     public partial class LoadTestingClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2022_11_01;

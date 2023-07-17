@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace AzureLoadTesting.Models
+namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary>
     /// An Azure resource object (Refer azure generic resource model :

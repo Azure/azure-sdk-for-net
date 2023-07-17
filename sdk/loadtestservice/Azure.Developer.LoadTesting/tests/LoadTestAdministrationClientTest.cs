@@ -97,7 +97,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task GetLoadTest()
         {
-            Response response = await _loadTestAdministrationClient.GetTestAsync(_testId);
+            Response response = await _loadTestAdministrationClient.GetTestAsync(_testId, new RequestContext());
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
             Assert.NotNull(response.Content);
             Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());
@@ -107,7 +107,7 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task ListLoadTest()
         {
             int pageSizeHint = 2;
-            AsyncPageable<BinaryData> responsePageable = _loadTestAdministrationClient.GetTestsAsync();
+            AsyncPageable<BinaryData> responsePageable = _loadTestAdministrationClient.GetTestsAsync(null, null, null, null, new RequestContext());
 
             int count = 0;
 
@@ -144,7 +144,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(UPLOAD_TEST_FILE)]
         public async Task GetTestFile()
         {
-            Response response = await _loadTestAdministrationClient.GetTestFileAsync(_testId, _fileName);
+            Response response = await _loadTestAdministrationClient.GetTestFileAsync(_testId, _fileName, new RequestContext());
 
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
             Assert.NotNull(response.Content);
@@ -176,7 +176,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(UPLOAD_TEST_FILE)]
         public async Task ListTestFiles()
         {
-            AsyncPageable<BinaryData> responsePageable = _loadTestAdministrationClient.GetTestFilesAsync(_testId);
+            AsyncPageable<BinaryData> responsePageable = _loadTestAdministrationClient.GetTestFilesAsync(_testId, new RequestContext());
 
             await foreach (var page in responsePageable.AsPages())
             {
@@ -241,7 +241,7 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
 
-            Response response = await _loadTestAdministrationClient.GetAppComponentsAsync(_testId);
+            Response response = await _loadTestAdministrationClient.GetAppComponentsAsync(_testId, new RequestContext());
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
             Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("components").GetProperty(_resourceId).GetProperty("resourceId").ToString());
         }
@@ -310,7 +310,7 @@ namespace Azure.Developer.LoadTesting.Tests
                     )
                 );
 
-            Response response = await _loadTestAdministrationClient.GetServerMetricsConfigAsync(_testId);
+            Response response = await _loadTestAdministrationClient.GetServerMetricsConfigAsync(_testId, new RequestContext());
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
             Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("metrics").GetProperty(_resourceId).GetProperty("resourceId").ToString());
         }

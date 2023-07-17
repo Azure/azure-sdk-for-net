@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace AzureLoadTesting.Models
+namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Pass fail metric. </summary>
     public partial class PassFailMetric

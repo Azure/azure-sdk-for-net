@@ -1,0 +1,6763 @@
+{
+ "$id": "1",
+ "Name": "AzureLoadTesting",
+ "Description": "These APIs allow end users to create, view and run load tests using Azure Load\nTest Service.",
+ "ApiVersions": [
+  "2022-11-01"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Name": "PFMetrics",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "3",
+     "Name": "response_time_ms",
+     "Value": "response_time_ms",
+     "Description": "Pass fail criteria for response time metric"
+    },
+    {
+     "$id": "4",
+     "Name": "latency",
+     "Value": "latency",
+     "Description": "Pass fail criteria for response time metric"
+    },
+    {
+     "$id": "5",
+     "Name": "error",
+     "Value": "error",
+     "Description": "Pass fail criteria for error metric"
+    },
+    {
+     "$id": "6",
+     "Name": "requests",
+     "Value": "requests",
+     "Description": "Pass fail criteria for total requests"
+    },
+    {
+     "$id": "7",
+     "Name": "requests_per_sec",
+     "Value": "requests_per_sec",
+     "Description": "Pass fail criteria for request rate."
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "8",
+   "Name": "PFAgFunc",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "9",
+     "Name": "count",
+     "Value": "count",
+     "Description": "Criteria applies for count value"
+    },
+    {
+     "$id": "10",
+     "Name": "percentage",
+     "Value": "percentage",
+     "Description": "Criteria applies for given percentage value"
+    },
+    {
+     "$id": "11",
+     "Name": "avg",
+     "Value": "avg",
+     "Description": "Criteria applies for avg value"
+    },
+    {
+     "$id": "12",
+     "Name": "p50",
+     "Value": "p50",
+     "Description": "Criteria applies for 50th percentile value"
+    },
+    {
+     "$id": "13",
+     "Name": "p90",
+     "Value": "p90",
+     "Description": "Criteria applies for 90th percentile value"
+    },
+    {
+     "$id": "14",
+     "Name": "p95",
+     "Value": "p95",
+     "Description": "Criteria applies for 95th percentile value"
+    },
+    {
+     "$id": "15",
+     "Name": "p99",
+     "Value": "p99",
+     "Description": "Criteria applies for 99th percentile value"
+    },
+    {
+     "$id": "16",
+     "Name": "min",
+     "Value": "min",
+     "Description": "Criteria applies for minimum value"
+    },
+    {
+     "$id": "17",
+     "Name": "max",
+     "Value": "max",
+     "Description": "Criteria applies for maximum value"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "18",
+   "Name": "PFAction",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "19",
+     "Name": "continue",
+     "Value": "continue",
+     "Description": "Test will continue to run even if pass fail metric criteria metric gets failed"
+    },
+    {
+     "$id": "20",
+     "Name": "stop",
+     "Value": "stop",
+     "Description": "Test run will stop if pass fail criteria metric is not passed."
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "21",
+   "Name": "PFResult",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "22",
+     "Name": "passed",
+     "Value": "passed",
+     "Description": "Given pass fail criteria metric has passed."
+    },
+    {
+     "$id": "23",
+     "Name": "undetermined",
+     "Value": "undetermined",
+     "Description": "Given pass fail criteria metric couldn't determine."
+    },
+    {
+     "$id": "24",
+     "Name": "failed",
+     "Value": "failed",
+     "Description": "Given pass fail criteria metric has failed."
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "25",
+   "Name": "SecretType",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "26",
+     "Name": "AKV_SECRET_URI",
+     "Value": "AKV_SECRET_URI",
+     "Description": "If the secret is stored in an Azure Key Vault"
+    },
+    {
+     "$id": "27",
+     "Name": "SECRET_VALUE",
+     "Value": "SECRET_VALUE",
+     "Description": "If the Plain text secret value provided"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "28",
+   "Name": "CertificateType",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "29",
+     "Name": "AKV_CERT_URI",
+     "Value": "AKV_CERT_URI",
+     "Description": "If the certificate is stored in an Azure Key Vault"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "30",
+   "Name": "FileType",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "31",
+     "Name": "JMX_FILE",
+     "Value": "JMX_FILE",
+     "Description": "If file is jmx script"
+    },
+    {
+     "$id": "32",
+     "Name": "USER_PROPERTIES",
+     "Value": "USER_PROPERTIES",
+     "Description": "If file is user properties"
+    },
+    {
+     "$id": "33",
+     "Name": "ADDITIONAL_ARTIFACTS",
+     "Value": "ADDITIONAL_ARTIFACTS",
+     "Description": "If file is not any of other supported type"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "RoundTrip"
+  },
+  {
+   "$id": "34",
+   "Name": "FileStatus",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "35",
+     "Name": "NOT_VALIDATED",
+     "Value": "NOT_VALIDATED",
+     "Description": "File is not validated."
+    },
+    {
+     "$id": "36",
+     "Name": "VALIDATION_SUCCESS",
+     "Value": "VALIDATION_SUCCESS",
+     "Description": "File is validated."
+    },
+    {
+     "$id": "37",
+     "Name": "VALIDATION_FAILURE",
+     "Value": "VALIDATION_FAILURE",
+     "Description": "File validation is failed."
+    },
+    {
+     "$id": "38",
+     "Name": "VALIDATION_INITIATED",
+     "Value": "VALIDATION_INITIATED",
+     "Description": "File validation is in progress."
+    },
+    {
+     "$id": "39",
+     "Name": "VALIDATION_NOT_REQUIRED",
+     "Value": "VALIDATION_NOT_REQUIRED",
+     "Description": "Validation is not required."
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "40",
+   "Name": "PFTestResult",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "41",
+     "Name": "PASSED",
+     "Value": "PASSED",
+     "Description": "Pass/fail criteria has passed."
+    },
+    {
+     "$id": "42",
+     "Name": "NOT_APPLICABLE",
+     "Value": "NOT_APPLICABLE",
+     "Description": "Pass/fail criteria is not applicable."
+    },
+    {
+     "$id": "43",
+     "Name": "FAILED",
+     "Value": "FAILED",
+     "Description": "Pass/fail criteria has failed."
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "44",
+   "Name": "Status",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "45",
+     "Name": "ACCEPTED",
+     "Value": "ACCEPTED",
+     "Description": "Test run request is accepted"
+    },
+    {
+     "$id": "46",
+     "Name": "NOTSTARTED",
+     "Value": "NOTSTARTED",
+     "Description": "Test run is not yet started."
+    },
+    {
+     "$id": "47",
+     "Name": "PROVISIONING",
+     "Value": "PROVISIONING",
+     "Description": "Test run is getting provision"
+    },
+    {
+     "$id": "48",
+     "Name": "PROVISIONED",
+     "Value": "PROVISIONED",
+     "Description": "Test run is provisioned"
+    },
+    {
+     "$id": "49",
+     "Name": "CONFIGURING",
+     "Value": "CONFIGURING",
+     "Description": "Test run is getting configure"
+    },
+    {
+     "$id": "50",
+     "Name": "CONFIGURED",
+     "Value": "CONFIGURED",
+     "Description": "Test run configuration is done"
+    },
+    {
+     "$id": "51",
+     "Name": "EXECUTING",
+     "Value": "EXECUTING",
+     "Description": "Test run has started executing"
+    },
+    {
+     "$id": "52",
+     "Name": "EXECUTED",
+     "Value": "EXECUTED",
+     "Description": "Test run has been executed"
+    },
+    {
+     "$id": "53",
+     "Name": "DEPROVISIONING",
+     "Value": "DEPROVISIONING",
+     "Description": "Test run is getting deprovision"
+    },
+    {
+     "$id": "54",
+     "Name": "DEPROVISIONED",
+     "Value": "DEPROVISIONED",
+     "Description": "Test run request is deprovisioned"
+    },
+    {
+     "$id": "55",
+     "Name": "DONE",
+     "Value": "DONE",
+     "Description": "Test run request is finished"
+    },
+    {
+     "$id": "56",
+     "Name": "CANCELLING",
+     "Value": "CANCELLING",
+     "Description": "Test run request is getting cancelled"
+    },
+    {
+     "$id": "57",
+     "Name": "CANCELLED",
+     "Value": "CANCELLED",
+     "Description": "Test run request is cancelled"
+    },
+    {
+     "$id": "58",
+     "Name": "FAILED",
+     "Value": "FAILED",
+     "Description": "Test run request is failed"
+    },
+    {
+     "$id": "59",
+     "Name": "VALIDATION_SUCCESS",
+     "Value": "VALIDATION_SUCCESS",
+     "Description": "Test run JMX file is validated"
+    },
+    {
+     "$id": "60",
+     "Name": "VALIDATION_FAILURE",
+     "Value": "VALIDATION_FAILURE",
+     "Description": "Test run JMX file validation is failed"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "61",
+   "Name": "Interval",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "62",
+     "Name": "PT5S",
+     "Value": "PT5S",
+     "Description": "5 seconds, available only if test run duration is less than 10 minutes"
+    },
+    {
+     "$id": "63",
+     "Name": "PT10S",
+     "Value": "PT10S",
+     "Description": "10 seconds, available only if test run duration is less than 10 minutes"
+    },
+    {
+     "$id": "64",
+     "Name": "PT1M",
+     "Value": "PT1M",
+     "Description": "1 minute"
+    },
+    {
+     "$id": "65",
+     "Name": "PT5M",
+     "Value": "PT5M",
+     "Description": "5 minutes, available only if test run duration is greater than 1 minute"
+    },
+    {
+     "$id": "66",
+     "Name": "PT1H",
+     "Value": "PT1H",
+     "Description": "1 hour, available only if test run duration is greater than 1 minute"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "67",
+   "Name": "AggregationType",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "68",
+     "Name": "Average",
+     "Value": "Average",
+     "Description": "Average value"
+    },
+    {
+     "$id": "69",
+     "Name": "Count",
+     "Value": "Count",
+     "Description": "Total count"
+    },
+    {
+     "$id": "70",
+     "Name": "None",
+     "Value": "None",
+     "Description": "Aggregation will be average in this case"
+    },
+    {
+     "$id": "71",
+     "Name": "Total",
+     "Value": "Total",
+     "Description": "Total sum"
+    },
+    {
+     "$id": "72",
+     "Name": "Percentile90",
+     "Value": "Percentile90",
+     "Description": "90th percentile"
+    },
+    {
+     "$id": "73",
+     "Name": "Percentile95",
+     "Value": "Percentile95",
+     "Description": "95th percentile"
+    },
+    {
+     "$id": "74",
+     "Name": "Percentile99",
+     "Value": "Percentile99",
+     "Description": "99th percentile"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "75",
+   "Name": "MetricUnit",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "76",
+     "Name": "NotSpecified",
+     "Value": "NotSpecified",
+     "Description": "No unit specified"
+    },
+    {
+     "$id": "77",
+     "Name": "Percent",
+     "Value": "Percent",
+     "Description": "Percentage"
+    },
+    {
+     "$id": "78",
+     "Name": "Count",
+     "Value": "Count",
+     "Description": "Value count"
+    },
+    {
+     "$id": "79",
+     "Name": "Seconds",
+     "Value": "Seconds",
+     "Description": "Seconds"
+    },
+    {
+     "$id": "80",
+     "Name": "Milliseconds",
+     "Value": "Milliseconds",
+     "Description": "Milliseconds"
+    },
+    {
+     "$id": "81",
+     "Name": "Bytes",
+     "Value": "Bytes",
+     "Description": "Bytes"
+    },
+    {
+     "$id": "82",
+     "Name": "BytesPerSecond",
+     "Value": "BytesPerSecond",
+     "Description": "Bytes per second"
+    },
+    {
+     "$id": "83",
+     "Name": "CountPerSecond",
+     "Value": "CountPerSecond",
+     "Description": "Count per second"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "84",
+   "Name": "TimeGrain",
+   "Namespace": "AzureLoadTesting",
+   "Description": "",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "85",
+     "Name": "PT5S",
+     "Value": "PT5S",
+     "Description": "5 seconds, available only if test run duration is less than 10 minutes"
+    },
+    {
+     "$id": "86",
+     "Name": "PT10S",
+     "Value": "PT10S",
+     "Description": "10 seconds, available only if test run duration is less than 10 minutes"
+    },
+    {
+     "$id": "87",
+     "Name": "PT1M",
+     "Value": "PT1M",
+     "Description": "1 minute"
+    },
+    {
+     "$id": "88",
+     "Name": "PT5M",
+     "Value": "PT5M",
+     "Description": "5 minutes, available only if test run duration is greater than 1 minute"
+    },
+    {
+     "$id": "89",
+     "Name": "PT1H",
+     "Value": "PT1H",
+     "Description": "1 hour, available only if test run duration is greater than 1 minute"
+    }
+   ],
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "90",
+   "Name": "Test",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Load test model",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "91",
+     "Name": "passFailCriteria",
+     "SerializedName": "passFailCriteria",
+     "Description": "Pass fail criteria for a test.",
+     "Type": {
+      "$id": "92",
+      "Name": "PassFailCriteria",
+      "Namespace": "AzureLoadTesting",
+      "Description": "Pass fail criteria for a test.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "93",
+        "Name": "passFailMetrics",
+        "SerializedName": "passFailMetrics",
+        "Description": "Map of id and pass fail metrics { id  : pass fail metrics }.",
+        "Type": {
+         "$id": "94",
+         "Name": "Dictionary",
+         "KeyType": {
+          "$id": "95",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "ValueType": {
+          "$id": "96",
+          "Name": "PassFailMetric",
+          "Namespace": "AzureLoadTesting",
+          "Description": "Pass fail metric",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "97",
+            "Name": "clientMetric",
+            "SerializedName": "clientMetric",
+            "Description": "The client metric on which the criteria should be applied.",
+            "Type": {
+             "$ref": "2"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "98",
+            "Name": "aggregate",
+            "SerializedName": "aggregate",
+            "Description": "The aggregation function to be applied on the client metric. Allowed functions\n- ‘percentage’ - for error metric , ‘avg’, ‘p50’, ‘p90’, ‘p95’, ‘p99’, ‘min’,\n‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec,\n‘count’ - for requests",
+            "Type": {
+             "$ref": "8"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "99",
+            "Name": "condition",
+            "SerializedName": "condition",
+            "Description": "The comparison operator. Supported types ‘>’, ‘<’ ",
+            "Type": {
+             "$id": "100",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "101",
+            "Name": "requestName",
+            "SerializedName": "requestName",
+            "Description": "Request name for which the Pass fail criteria has to be applied ",
+            "Type": {
+             "$id": "102",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "103",
+            "Name": "value",
+            "SerializedName": "value",
+            "Description": "The value to compare with the client metric. Allowed values - ‘error : [0.0 ,\n100.0] unit- % ’, response_time_ms and latency : any integer value unit- ms.",
+            "Type": {
+             "$id": "104",
+             "Name": "float32",
+             "Kind": "Float32",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "105",
+            "Name": "action",
+            "SerializedName": "action",
+            "Description": "Action taken after the threshold is met. Default is ‘continue’.",
+            "Type": {
+             "$ref": "18"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "106",
+            "Name": "actualValue",
+            "SerializedName": "actualValue",
+            "Description": "The actual value of the client metric for the test run.",
+            "Type": {
+             "$id": "107",
+             "Name": "float32",
+             "Kind": "Float32",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": true
+           },
+           {
+            "$id": "108",
+            "Name": "result",
+            "SerializedName": "result",
+            "Description": "Outcome of the test run.",
+            "Type": {
+             "$ref": "21"
+            },
+            "IsRequired": false,
+            "IsReadOnly": true
+           }
+          ]
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "109",
+     "Name": "secrets",
+     "SerializedName": "secrets",
+     "Description": "Secrets can be stored in an Azure Key Vault or any other secret store. If the\nsecret is stored in an Azure Key Vault, the value should be the secret\nidentifier and the type should be AKV_SECRET_URI. If the secret is stored\nelsewhere, the secret value should be provided directly and the type should be\nSECRET_VALUE.",
+     "Type": {
+      "$id": "110",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "111",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "112",
+       "Name": "Secret",
+       "Namespace": "AzureLoadTesting",
+       "Description": "Secret",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "113",
+         "Name": "value",
+         "SerializedName": "value",
+         "Description": "The value of the secret for the respective type",
+         "Type": {
+          "$id": "114",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "115",
+         "Name": "type",
+         "SerializedName": "type",
+         "Description": "Type of secret",
+         "Type": {
+          "$ref": "25"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "116",
+     "Name": "certificate",
+     "SerializedName": "certificate",
+     "Description": "Certificates metadata",
+     "Type": {
+      "$id": "117",
+      "Name": "CertificateMetadata",
+      "Namespace": "AzureLoadTesting",
+      "Description": "Certificates metadata",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "118",
+        "Name": "value",
+        "SerializedName": "value",
+        "Description": "The value of the certificate for respective type",
+        "Type": {
+         "$id": "119",
+         "Name": "string",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "120",
+        "Name": "type",
+        "SerializedName": "type",
+        "Description": "Type of certificate",
+        "Type": {
+         "$ref": "28"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "121",
+        "Name": "name",
+        "SerializedName": "name",
+        "Description": "Name of the certificate.",
+        "Type": {
+         "$id": "122",
+         "Name": "string",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "123",
+     "Name": "environmentVariables",
+     "SerializedName": "environmentVariables",
+     "Description": "Environment variables which are defined as a set of <name,value> pairs.",
+     "Type": {
+      "$id": "124",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "125",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "126",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "127",
+     "Name": "loadTestConfiguration",
+     "SerializedName": "loadTestConfiguration",
+     "Description": "The load test configuration.",
+     "Type": {
+      "$id": "128",
+      "Name": "LoadTestConfiguration",
+      "Namespace": "AzureLoadTesting",
+      "Description": "The load test configuration.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "129",
+        "Name": "engineInstances",
+        "SerializedName": "engineInstances",
+        "Description": "The number of engine instances to execute load test. Supported values are in\nrange of 1-45. Required for creating a new test.",
+        "Type": {
+         "$id": "130",
+         "Name": "int32",
+         "Kind": "Int32",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "131",
+        "Name": "splitAllCSVs",
+        "SerializedName": "splitAllCSVs",
+        "Description": "If false, Azure Load Testing copies and processes your input files unmodified\nacross all test engine instances. If true, Azure Load Testing splits the CSV\ninput data evenly across all engine instances. If you provide multiple CSV\nfiles, each file will be split evenly.",
+        "Type": {
+         "$id": "132",
+         "Name": "boolean",
+         "Kind": "Boolean",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "133",
+        "Name": "quickStartTest",
+        "SerializedName": "quickStartTest",
+        "Description": "If true, optionalLoadTestConfig is required and JMX script for the load test is\nnot required to upload.",
+        "Type": {
+         "$id": "134",
+         "Name": "boolean",
+         "Kind": "Boolean",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "135",
+        "Name": "optionalLoadTestConfig",
+        "SerializedName": "optionalLoadTestConfig",
+        "Description": "Optional load test config",
+        "Type": {
+         "$id": "136",
+         "Name": "OptionalLoadTestConfig",
+         "Namespace": "AzureLoadTesting",
+         "Description": "Optional load test config",
+         "IsNullable": false,
+         "Usage": "Output",
+         "Properties": [
+          {
+           "$id": "137",
+           "Name": "endpointUrl",
+           "SerializedName": "endpointUrl",
+           "Description": "Test URL. Provide the complete HTTP URL. For example,\nhttp://contoso-app.azurewebsites.net/login",
+           "Type": {
+            "$id": "138",
+            "Name": "string",
+            "Kind": "String",
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "139",
+           "Name": "virtualUsers",
+           "SerializedName": "virtualUsers",
+           "Description": "No of concurrent virtual users",
+           "Type": {
+            "$id": "140",
+            "Name": "int32",
+            "Kind": "Int32",
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "141",
+           "Name": "rampUpTime",
+           "SerializedName": "rampUpTime",
+           "Description": "Ramp up time",
+           "Type": {
+            "$id": "142",
+            "Name": "int32",
+            "Kind": "Int32",
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "143",
+           "Name": "duration",
+           "SerializedName": "duration",
+           "Description": "Test run duration",
+           "Type": {
+            "$id": "144",
+            "Name": "int32",
+            "Kind": "Int32",
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          }
+         ]
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "145",
+     "Name": "inputArtifacts",
+     "SerializedName": "inputArtifacts",
+     "Description": "The input artifacts for the test.",
+     "Type": {
+      "$id": "146",
+      "Name": "TestInputArtifacts",
+      "Namespace": "AzureLoadTesting",
+      "Description": "The input artifacts for the test.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "147",
+        "Name": "configFileInfo",
+        "SerializedName": "configFileInfo",
+        "Description": "File info",
+        "Type": {
+         "$id": "148",
+         "Name": "FileInfo",
+         "Namespace": "AzureLoadTesting",
+         "Description": "File info",
+         "IsNullable": false,
+         "Usage": "Output",
+         "Properties": [
+          {
+           "$id": "149",
+           "Name": "url",
+           "SerializedName": "url",
+           "Description": "File URL.",
+           "Type": {
+            "$id": "150",
+            "Name": "string",
+            "Kind": "String",
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "151",
+           "Name": "fileName",
+           "SerializedName": "fileName",
+           "Description": "Name of the file.",
+           "Type": {
+            "$id": "152",
+            "Name": "string",
+            "Kind": "String",
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "153",
+           "Name": "fileType",
+           "SerializedName": "fileType",
+           "Description": "File type",
+           "Type": {
+            "$ref": "30"
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "154",
+           "Name": "expireDateTime",
+           "SerializedName": "expireDateTime",
+           "Description": "Expiry time of the file (ISO 8601 literal format)",
+           "Type": {
+            "$id": "155",
+            "Name": "offsetDateTime",
+            "Kind": "DateTime",
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "156",
+           "Name": "validationStatus",
+           "SerializedName": "validationStatus",
+           "Description": "Validation status of the file",
+           "Type": {
+            "$ref": "34"
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "157",
+           "Name": "validationFailureDetails",
+           "SerializedName": "validationFailureDetails",
+           "Description": "Validation failure error details",
+           "Type": {
+            "$id": "158",
+            "Name": "string",
+            "Kind": "String",
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          }
+         ]
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "159",
+        "Name": "testScriptFileInfo",
+        "SerializedName": "testScriptFileInfo",
+        "Description": "File info",
+        "Type": {
+         "$ref": "148"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "160",
+        "Name": "userPropFileInfo",
+        "SerializedName": "userPropFileInfo",
+        "Description": "File info",
+        "Type": {
+         "$ref": "148"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "161",
+        "Name": "inputArtifactsZipFileInfo",
+        "SerializedName": "inputArtifactsZipFileInfo",
+        "Description": "File info",
+        "Type": {
+         "$ref": "148"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "162",
+        "Name": "additionalFileInfo",
+        "SerializedName": "additionalFileInfo",
+        "Description": "Additional supported files for the test run",
+        "Type": {
+         "$id": "163",
+         "Name": "Array",
+         "ElementType": {
+          "$ref": "148"
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": true
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "164",
+     "Name": "testId",
+     "SerializedName": "testId",
+     "Description": "Unique test name as identifier.",
+     "Type": {
+      "$id": "165",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "166",
+     "Name": "description",
+     "SerializedName": "description",
+     "Description": "The test description.",
+     "Type": {
+      "$id": "167",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "168",
+     "Name": "displayName",
+     "SerializedName": "displayName",
+     "Description": "Display name of a test.",
+     "Type": {
+      "$id": "169",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "170",
+     "Name": "subnetId",
+     "SerializedName": "subnetId",
+     "Description": "Subnet ID on which the load test instances should run.",
+     "Type": {
+      "$id": "171",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "172",
+     "Name": "keyvaultReferenceIdentityType",
+     "SerializedName": "keyvaultReferenceIdentityType",
+     "Description": "Type of the managed identity referencing the Key vault.",
+     "Type": {
+      "$id": "173",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "174",
+     "Name": "keyvaultReferenceIdentityId",
+     "SerializedName": "keyvaultReferenceIdentityId",
+     "Description": "Resource Id of the managed identity referencing the Key vault.",
+     "Type": {
+      "$id": "175",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "176",
+     "Name": "createdDateTime",
+     "SerializedName": "createdDateTime",
+     "Description": "The creation datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "177",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "178",
+     "Name": "createdBy",
+     "SerializedName": "createdBy",
+     "Description": "The user that created.",
+     "Type": {
+      "$id": "179",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "180",
+     "Name": "lastModifiedDateTime",
+     "SerializedName": "lastModifiedDateTime",
+     "Description": "The last Modified datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "181",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "182",
+     "Name": "lastModifiedBy",
+     "SerializedName": "lastModifiedBy",
+     "Description": "The user that last modified.",
+     "Type": {
+      "$id": "183",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    }
+   ]
+  },
+  {
+   "$ref": "92"
+  },
+  {
+   "$ref": "96"
+  },
+  {
+   "$ref": "112"
+  },
+  {
+   "$ref": "117"
+  },
+  {
+   "$ref": "128"
+  },
+  {
+   "$ref": "136"
+  },
+  {
+   "$ref": "146"
+  },
+  {
+   "$ref": "148"
+  },
+  {
+   "$id": "184",
+   "Name": "TestAppComponents",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Test app component",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "185",
+     "Name": "components",
+     "SerializedName": "components",
+     "Description": "Azure resource collection { resource id (fully qualified resource Id e.g\nsubscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})\n: resource object } ",
+     "Type": {
+      "$id": "186",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "187",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "188",
+       "Name": "AppComponent",
+       "Namespace": "AzureLoadTesting",
+       "Description": "An Azure resource object (Refer azure generic resource model :\nhttps://docs.microsoft.com/en-us/rest/api/resources/resources/get-by-id#genericresource)",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "189",
+         "Name": "resourceId",
+         "SerializedName": "resourceId",
+         "Description": "fully qualified resource Id e.g\nsubscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}",
+         "Type": {
+          "$id": "190",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "191",
+         "Name": "resourceName",
+         "SerializedName": "resourceName",
+         "Description": "Azure resource name, required while creating the app component.",
+         "Type": {
+          "$id": "192",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "193",
+         "Name": "resourceType",
+         "SerializedName": "resourceType",
+         "Description": "Azure resource type, required while creating the app component.",
+         "Type": {
+          "$id": "194",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "195",
+         "Name": "displayName",
+         "SerializedName": "displayName",
+         "Description": "Azure resource display name",
+         "Type": {
+          "$id": "196",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "197",
+         "Name": "resourceGroup",
+         "SerializedName": "resourceGroup",
+         "Description": "Resource group name of the Azure resource",
+         "Type": {
+          "$id": "198",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "199",
+         "Name": "subscriptionId",
+         "SerializedName": "subscriptionId",
+         "Description": "Subscription Id of the Azure resource",
+         "Type": {
+          "$id": "200",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "201",
+         "Name": "kind",
+         "SerializedName": "kind",
+         "Description": "Kind of Azure resource type",
+         "Type": {
+          "$id": "202",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "203",
+     "Name": "testId",
+     "SerializedName": "testId",
+     "Description": "Test identifier",
+     "Type": {
+      "$id": "204",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "205",
+     "Name": "createdDateTime",
+     "SerializedName": "createdDateTime",
+     "Description": "The creation datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "206",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "207",
+     "Name": "createdBy",
+     "SerializedName": "createdBy",
+     "Description": "The user that created.",
+     "Type": {
+      "$id": "208",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "209",
+     "Name": "lastModifiedDateTime",
+     "SerializedName": "lastModifiedDateTime",
+     "Description": "The last Modified datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "210",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "211",
+     "Name": "lastModifiedBy",
+     "SerializedName": "lastModifiedBy",
+     "Description": "The user that last modified.",
+     "Type": {
+      "$id": "212",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    }
+   ]
+  },
+  {
+   "$ref": "188"
+  },
+  {
+   "$id": "213",
+   "Name": "TestServerMetricConfig",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Test server metrics configuration",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "214",
+     "Name": "testId",
+     "SerializedName": "testId",
+     "Description": "Test identifier",
+     "Type": {
+      "$id": "215",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "216",
+     "Name": "metrics",
+     "SerializedName": "metrics",
+     "Description": "Azure resource metrics collection {metric id : metrics object} (Refer :\nhttps://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition\nfor metric id).",
+     "Type": {
+      "$id": "217",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "218",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "219",
+       "Name": "ResourceMetric",
+       "Namespace": "AzureLoadTesting",
+       "Description": "Associated metric definition for particular metrics of the azure resource (\nRefer :\nhttps://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition).",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "220",
+         "Name": "id",
+         "SerializedName": "id",
+         "Description": "Unique name for metric.",
+         "Type": {
+          "$id": "221",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "222",
+         "Name": "resourceId",
+         "SerializedName": "resourceId",
+         "Description": "Azure resource id.",
+         "Type": {
+          "$id": "223",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "224",
+         "Name": "metricNamespace",
+         "SerializedName": "metricNamespace",
+         "Description": "Metric name space.",
+         "Type": {
+          "$id": "225",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "226",
+         "Name": "displayDescription",
+         "SerializedName": "displayDescription",
+         "Description": "Metric description.",
+         "Type": {
+          "$id": "227",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "228",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "The invariant value of metric name",
+         "Type": {
+          "$id": "229",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "230",
+         "Name": "aggregation",
+         "SerializedName": "aggregation",
+         "Description": "Metric aggregation.",
+         "Type": {
+          "$id": "231",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "232",
+         "Name": "unit",
+         "SerializedName": "unit",
+         "Description": "Metric unit.",
+         "Type": {
+          "$id": "233",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "234",
+         "Name": "resourceType",
+         "SerializedName": "resourceType",
+         "Description": "Azure resource type.",
+         "Type": {
+          "$id": "235",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "236",
+     "Name": "createdDateTime",
+     "SerializedName": "createdDateTime",
+     "Description": "The creation datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "237",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "238",
+     "Name": "createdBy",
+     "SerializedName": "createdBy",
+     "Description": "The user that created.",
+     "Type": {
+      "$id": "239",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "240",
+     "Name": "lastModifiedDateTime",
+     "SerializedName": "lastModifiedDateTime",
+     "Description": "The last Modified datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "241",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "242",
+     "Name": "lastModifiedBy",
+     "SerializedName": "lastModifiedBy",
+     "Description": "The user that last modified.",
+     "Type": {
+      "$id": "243",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    }
+   ]
+  },
+  {
+   "$ref": "219"
+  },
+  {
+   "$id": "244",
+   "Name": "PagedFileInfo",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Collection of files.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "245",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The FileInfo items on this page",
+     "Type": {
+      "$id": "246",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "148"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "247",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "248",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "249",
+   "Name": "PagedTest",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Collection of tests",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "250",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The Test items on this page",
+     "Type": {
+      "$id": "251",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "90"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "252",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "253",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "254",
+   "Name": "TestRun",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Load test run model",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "255",
+     "Name": "passFailCriteria",
+     "SerializedName": "passFailCriteria",
+     "Description": "Pass fail criteria for a test.",
+     "Type": {
+      "$ref": "92"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "256",
+     "Name": "secrets",
+     "SerializedName": "secrets",
+     "Description": "Secrets can be stored in an Azure Key Vault or any other secret store. If the\nsecret is stored in an Azure Key Vault, the value should be the secret\nidentifier and the type should be AKV_SECRET_URI. If the secret is stored\nelsewhere, the secret value should be provided directly and the type should be\nSECRET_VALUE.",
+     "Type": {
+      "$id": "257",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "258",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$ref": "112"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "259",
+     "Name": "certificate",
+     "SerializedName": "certificate",
+     "Description": "Certificates metadata",
+     "Type": {
+      "$ref": "117"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "260",
+     "Name": "environmentVariables",
+     "SerializedName": "environmentVariables",
+     "Description": "Environment variables which are defined as a set of <name,value> pairs.",
+     "Type": {
+      "$id": "261",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "262",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "263",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "264",
+     "Name": "errorDetails",
+     "SerializedName": "errorDetails",
+     "Description": "Error details if there is any failure in load test run",
+     "Type": {
+      "$id": "265",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "266",
+       "Name": "ErrorDetails",
+       "Namespace": "AzureLoadTesting",
+       "Description": "Error details if there is any failure in load test run",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "267",
+         "Name": "message",
+         "SerializedName": "message",
+         "Description": "Error details in case test run was not successfully run.",
+         "Type": {
+          "$id": "268",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "269",
+     "Name": "testRunStatistics",
+     "SerializedName": "testRunStatistics",
+     "Description": "Test run statistics.",
+     "Type": {
+      "$id": "270",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "271",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "272",
+       "Name": "TestRunStatistics",
+       "Namespace": "AzureLoadTesting",
+       "Description": "Test run statistics.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "273",
+         "Name": "transaction",
+         "SerializedName": "transaction",
+         "Description": "Transaction name.",
+         "Type": {
+          "$id": "274",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "275",
+         "Name": "sampleCount",
+         "SerializedName": "sampleCount",
+         "Description": "Sampler count.",
+         "Type": {
+          "$id": "276",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "277",
+         "Name": "errorCount",
+         "SerializedName": "errorCount",
+         "Description": "Error count.",
+         "Type": {
+          "$id": "278",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "279",
+         "Name": "errorPct",
+         "SerializedName": "errorPct",
+         "Description": "Error percentage.",
+         "Type": {
+          "$id": "280",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "281",
+         "Name": "meanResTime",
+         "SerializedName": "meanResTime",
+         "Description": "Mean response time.",
+         "Type": {
+          "$id": "282",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "283",
+         "Name": "medianResTime",
+         "SerializedName": "medianResTime",
+         "Description": "Median response time.",
+         "Type": {
+          "$id": "284",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "285",
+         "Name": "maxResTime",
+         "SerializedName": "maxResTime",
+         "Description": "Max response time.",
+         "Type": {
+          "$id": "286",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "287",
+         "Name": "minResTime",
+         "SerializedName": "minResTime",
+         "Description": "Minimum response time.",
+         "Type": {
+          "$id": "288",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "289",
+         "Name": "pct1ResTime",
+         "SerializedName": "pct1ResTime",
+         "Description": "90 percentile response time.",
+         "Type": {
+          "$id": "290",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "291",
+         "Name": "pct2ResTime",
+         "SerializedName": "pct2ResTime",
+         "Description": "95 percentile response time.",
+         "Type": {
+          "$id": "292",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "293",
+         "Name": "pct3ResTime",
+         "SerializedName": "pct3ResTime",
+         "Description": "99 percentile response time.",
+         "Type": {
+          "$id": "294",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "295",
+         "Name": "throughput",
+         "SerializedName": "throughput",
+         "Description": "Throughput.",
+         "Type": {
+          "$id": "296",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "297",
+         "Name": "receivedKBytesPerSec",
+         "SerializedName": "receivedKBytesPerSec",
+         "Description": "Received network bytes.",
+         "Type": {
+          "$id": "298",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "299",
+         "Name": "sentKBytesPerSec",
+         "SerializedName": "sentKBytesPerSec",
+         "Description": "Send network bytes.",
+         "Type": {
+          "$id": "300",
+          "Name": "float32",
+          "Kind": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "301",
+     "Name": "loadTestConfiguration",
+     "SerializedName": "loadTestConfiguration",
+     "Description": "The load test configuration.",
+     "Type": {
+      "$ref": "128"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "302",
+     "Name": "testArtifacts",
+     "SerializedName": "testArtifacts",
+     "Description": "Collection of test run artifacts",
+     "Type": {
+      "$id": "303",
+      "Name": "TestRunArtifacts",
+      "Namespace": "AzureLoadTesting",
+      "Description": "Collection of test run artifacts",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "304",
+        "Name": "inputArtifacts",
+        "SerializedName": "inputArtifacts",
+        "Description": "The input artifacts for the test run.",
+        "Type": {
+         "$id": "305",
+         "Name": "TestRunInputArtifacts",
+         "Namespace": "AzureLoadTesting",
+         "Description": "The input artifacts for the test run.",
+         "IsNullable": false,
+         "Usage": "Output",
+         "Properties": [
+          {
+           "$id": "306",
+           "Name": "configFileInfo",
+           "SerializedName": "configFileInfo",
+           "Description": "File info",
+           "Type": {
+            "$ref": "148"
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "307",
+           "Name": "testScriptFileInfo",
+           "SerializedName": "testScriptFileInfo",
+           "Description": "File info",
+           "Type": {
+            "$ref": "148"
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "308",
+           "Name": "userPropFileInfo",
+           "SerializedName": "userPropFileInfo",
+           "Description": "File info",
+           "Type": {
+            "$ref": "148"
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "309",
+           "Name": "inputArtifactsZipFileInfo",
+           "SerializedName": "inputArtifactsZipFileInfo",
+           "Description": "File info",
+           "Type": {
+            "$ref": "148"
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "310",
+           "Name": "additionalFileInfo",
+           "SerializedName": "additionalFileInfo",
+           "Description": "Additional supported files for the test run",
+           "Type": {
+            "$id": "311",
+            "Name": "Array",
+            "ElementType": {
+             "$ref": "148"
+            },
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": true
+          }
+         ]
+        },
+        "IsRequired": false,
+        "IsReadOnly": true
+       },
+       {
+        "$id": "312",
+        "Name": "outputArtifacts",
+        "SerializedName": "outputArtifacts",
+        "Description": "The output artifacts for the test run.",
+        "Type": {
+         "$id": "313",
+         "Name": "TestRunOutputArtifacts",
+         "Namespace": "AzureLoadTesting",
+         "Description": "The output artifacts for the test run.",
+         "IsNullable": false,
+         "Usage": "Output",
+         "Properties": [
+          {
+           "$id": "314",
+           "Name": "resultFileInfo",
+           "SerializedName": "resultFileInfo",
+           "Description": "File info",
+           "Type": {
+            "$ref": "148"
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "315",
+           "Name": "logsFileInfo",
+           "SerializedName": "logsFileInfo",
+           "Description": "File info",
+           "Type": {
+            "$ref": "148"
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          }
+         ]
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "316",
+     "Name": "testResult",
+     "SerializedName": "testResult",
+     "Description": "Test result for pass/Fail criteria used during the test run.",
+     "Type": {
+      "$ref": "40"
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "317",
+     "Name": "virtualUsers",
+     "SerializedName": "virtualUsers",
+     "Description": "Number of virtual users, for which test has been run.",
+     "Type": {
+      "$id": "318",
+      "Name": "int32",
+      "Kind": "Int32",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "319",
+     "Name": "displayName",
+     "SerializedName": "displayName",
+     "Description": "Display name of a testRun.",
+     "Type": {
+      "$id": "320",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "321",
+     "Name": "testId",
+     "SerializedName": "testId",
+     "Description": "Associated test Id.",
+     "Type": {
+      "$id": "322",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "323",
+     "Name": "description",
+     "SerializedName": "description",
+     "Description": "The test run description.",
+     "Type": {
+      "$id": "324",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "325",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "The test run status.",
+     "Type": {
+      "$ref": "44"
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "326",
+     "Name": "startDateTime",
+     "SerializedName": "startDateTime",
+     "Description": "The test run start DateTime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "327",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "328",
+     "Name": "endDateTime",
+     "SerializedName": "endDateTime",
+     "Description": "The test run end DateTime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "329",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "330",
+     "Name": "executedDateTime",
+     "SerializedName": "executedDateTime",
+     "Description": "Test run initiated time.",
+     "Type": {
+      "$id": "331",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "332",
+     "Name": "portalUrl",
+     "SerializedName": "portalUrl",
+     "Description": "Portal url.",
+     "Type": {
+      "$id": "333",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "334",
+     "Name": "duration",
+     "SerializedName": "duration",
+     "Description": "Test run duration in milliseconds.",
+     "Type": {
+      "$id": "335",
+      "Name": "int32",
+      "Kind": "Int32",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "336",
+     "Name": "subnetId",
+     "SerializedName": "subnetId",
+     "Description": "Subnet ID on which the load test instances should run.",
+     "Type": {
+      "$id": "337",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "338",
+     "Name": "createdDateTime",
+     "SerializedName": "createdDateTime",
+     "Description": "The creation datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "339",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "340",
+     "Name": "createdBy",
+     "SerializedName": "createdBy",
+     "Description": "The user that created.",
+     "Type": {
+      "$id": "341",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "342",
+     "Name": "lastModifiedDateTime",
+     "SerializedName": "lastModifiedDateTime",
+     "Description": "The last Modified datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "343",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "344",
+     "Name": "lastModifiedBy",
+     "SerializedName": "lastModifiedBy",
+     "Description": "The user that last modified.",
+     "Type": {
+      "$id": "345",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    }
+   ]
+  },
+  {
+   "$ref": "266"
+  },
+  {
+   "$ref": "272"
+  },
+  {
+   "$ref": "303"
+  },
+  {
+   "$ref": "305"
+  },
+  {
+   "$ref": "313"
+  },
+  {
+   "$id": "346",
+   "Name": "TestRunAppComponents",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Test run app component",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "347",
+     "Name": "components",
+     "SerializedName": "components",
+     "Description": "Azure resource collection { resource id (fully qualified resource Id e.g\nsubscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})\n: resource object } ",
+     "Type": {
+      "$id": "348",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "349",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$ref": "188"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "350",
+     "Name": "testRunId",
+     "SerializedName": "testRunId",
+     "Description": "Test run identifier",
+     "Type": {
+      "$id": "351",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "352",
+     "Name": "createdDateTime",
+     "SerializedName": "createdDateTime",
+     "Description": "The creation datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "353",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "354",
+     "Name": "createdBy",
+     "SerializedName": "createdBy",
+     "Description": "The user that created.",
+     "Type": {
+      "$id": "355",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "356",
+     "Name": "lastModifiedDateTime",
+     "SerializedName": "lastModifiedDateTime",
+     "Description": "The last Modified datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "357",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "358",
+     "Name": "lastModifiedBy",
+     "SerializedName": "lastModifiedBy",
+     "Description": "The user that last modified.",
+     "Type": {
+      "$id": "359",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    }
+   ]
+  },
+  {
+   "$id": "360",
+   "Name": "TestRunServerMetricConfig",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Test run server metrics configuration",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "361",
+     "Name": "testRunId",
+     "SerializedName": "testRunId",
+     "Description": "Test run identifier",
+     "Type": {
+      "$id": "362",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "363",
+     "Name": "metrics",
+     "SerializedName": "metrics",
+     "Description": "Azure resource metrics collection {metric id : metrics object} (Refer :\nhttps://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition\nfor metric id).",
+     "Type": {
+      "$id": "364",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "365",
+       "Name": "string",
+       "Kind": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$ref": "219"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "366",
+     "Name": "createdDateTime",
+     "SerializedName": "createdDateTime",
+     "Description": "The creation datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "367",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "368",
+     "Name": "createdBy",
+     "SerializedName": "createdBy",
+     "Description": "The user that created.",
+     "Type": {
+      "$id": "369",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "370",
+     "Name": "lastModifiedDateTime",
+     "SerializedName": "lastModifiedDateTime",
+     "Description": "The last Modified datetime(ISO 8601 literal format).",
+     "Type": {
+      "$id": "371",
+      "Name": "offsetDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "372",
+     "Name": "lastModifiedBy",
+     "SerializedName": "lastModifiedBy",
+     "Description": "The user that last modified.",
+     "Type": {
+      "$id": "373",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    }
+   ]
+  },
+  {
+   "$id": "374",
+   "Name": "CustomPageDimensionValueList",
+   "Namespace": "Azure.Core.Foundations",
+   "Description": "Paged collection of DimensionValueList items",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "375",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The DimensionValueList items on this page",
+     "Type": {
+      "$id": "376",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "377",
+       "Name": "DimensionValueList",
+       "Namespace": "AzureLoadTesting",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "378",
+         "Name": "value",
+         "SerializedName": "value",
+         "Description": "",
+         "Type": {
+          "$id": "379",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "380",
+           "Name": "string",
+           "Kind": "String",
+           "IsNullable": false
+          },
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "381",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "382",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "377"
+  },
+  {
+   "$id": "383",
+   "Name": "MetricDefinitionCollection",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Represents collection of metric definitions.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "384",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "the values for the metric definitions.",
+     "Type": {
+      "$id": "385",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "386",
+       "Name": "MetricDefinition",
+       "Namespace": "AzureLoadTesting",
+       "Description": "Metric definition",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "387",
+         "Name": "dimensions",
+         "SerializedName": "dimensions",
+         "Description": "List of dimensions",
+         "Type": {
+          "$id": "388",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "389",
+           "Name": "NameAndDesc",
+           "Namespace": "AzureLoadTesting",
+           "Description": "The name and description",
+           "IsNullable": false,
+           "Usage": "Output",
+           "Properties": [
+            {
+             "$id": "390",
+             "Name": "description",
+             "SerializedName": "description",
+             "Description": "The description",
+             "Type": {
+              "$id": "391",
+              "Name": "string",
+              "Kind": "String",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "392",
+             "Name": "name",
+             "SerializedName": "name",
+             "Description": "The name",
+             "Type": {
+              "$id": "393",
+              "Name": "string",
+              "Kind": "String",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "394",
+         "Name": "description",
+         "SerializedName": "description",
+         "Description": "The metric description",
+         "Type": {
+          "$id": "395",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "396",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "The metric name",
+         "Type": {
+          "$id": "397",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "398",
+         "Name": "namespace",
+         "SerializedName": "namespace",
+         "Description": "The namespace the metric belongs to.",
+         "Type": {
+          "$id": "399",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "400",
+         "Name": "primaryAggregationType",
+         "SerializedName": "primaryAggregationType",
+         "Description": "The primary aggregation type value defining how to use the values for display.",
+         "Type": {
+          "$ref": "67"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "401",
+         "Name": "supportedAggregationTypes",
+         "SerializedName": "supportedAggregationTypes",
+         "Description": "The collection of what all aggregation types are supported.",
+         "Type": {
+          "$id": "402",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "403",
+           "Name": "string",
+           "Kind": "String",
+           "IsNullable": false
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "404",
+         "Name": "unit",
+         "SerializedName": "unit",
+         "Description": "The unit of the metric.",
+         "Type": {
+          "$ref": "75"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "405",
+         "Name": "metricAvailabilities",
+         "SerializedName": "metricAvailabilities",
+         "Description": "Metric availability specifies the time grain (aggregation interval or\nfrequency).",
+         "Type": {
+          "$id": "406",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "407",
+           "Name": "MetricAvailability",
+           "Namespace": "AzureLoadTesting",
+           "Description": "Metric availability specifies the time grain (aggregation interval or frequency)",
+           "IsNullable": false,
+           "Usage": "Output",
+           "Properties": [
+            {
+             "$id": "408",
+             "Name": "timeGrain",
+             "SerializedName": "timeGrain",
+             "Description": "The time grain specifies the aggregation interval for the metric. Expressed as\na duration 'PT1M', 'PT1H', etc.",
+             "Type": {
+              "$ref": "84"
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "386"
+  },
+  {
+   "$ref": "389"
+  },
+  {
+   "$ref": "407"
+  },
+  {
+   "$id": "409",
+   "Name": "MetricNamespaceCollection",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Represents collection of metric namespaces.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "410",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The values for the metric namespaces.",
+     "Type": {
+      "$id": "411",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "412",
+       "Name": "MetricNamespace",
+       "Namespace": "AzureLoadTesting",
+       "Description": "Metric namespace class specifies the metadata for a metric namespace.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "413",
+         "Name": "description",
+         "SerializedName": "description",
+         "Description": "The namespace description.",
+         "Type": {
+          "$id": "414",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "415",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "The metric namespace name.",
+         "Type": {
+          "$id": "416",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "412"
+  },
+  {
+   "$id": "417",
+   "Name": "MetricRequestPayload",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Filters to fetch the set of metric",
+   "IsNullable": false,
+   "Usage": "Input",
+   "Properties": [
+    {
+     "$id": "418",
+     "Name": "filters",
+     "SerializedName": "filters",
+     "Description": "Get metrics for specific dimension values. Example: Metric contains dimension\nlike SamplerName, Error. To retrieve all the time series data where SamplerName\nis equals to HTTPRequest1 or HTTPRequest2, the DimensionFilter value will be\n{\"SamplerName\", [\"HTTPRequest1\", \"HTTPRequest2\"}",
+     "Type": {
+      "$id": "419",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "420",
+       "Name": "DimensionFilter",
+       "Namespace": "AzureLoadTesting",
+       "Description": "Dimension name and values to filter",
+       "IsNullable": false,
+       "Usage": "Input",
+       "Properties": [
+        {
+         "$id": "421",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "The dimension name",
+         "Type": {
+          "$id": "422",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "423",
+         "Name": "values",
+         "SerializedName": "values",
+         "Description": "The dimension values. Maximum values can be 20.",
+         "Type": {
+          "$id": "424",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "425",
+           "Name": "string",
+           "Kind": "String",
+           "IsNullable": false
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "420"
+  },
+  {
+   "$id": "426",
+   "Name": "PagedTimeSeriesElement",
+   "Namespace": "AzureLoadTesting",
+   "Description": "The response to a metrics query.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "427",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The TimeSeriesElement items on this page",
+     "Type": {
+      "$id": "428",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "429",
+       "Name": "TimeSeriesElement",
+       "Namespace": "AzureLoadTesting",
+       "Description": "The time series returned when a data query is performed.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "430",
+         "Name": "data",
+         "SerializedName": "data",
+         "Description": "An array of data points representing the metric values.",
+         "Type": {
+          "$id": "431",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "432",
+           "Name": "MetricValue",
+           "Namespace": "AzureLoadTesting",
+           "Description": "Represents a metric value.",
+           "IsNullable": false,
+           "Usage": "Output",
+           "Properties": [
+            {
+             "$id": "433",
+             "Name": "timestamp",
+             "SerializedName": "timestamp",
+             "Description": "The timestamp for the metric value in ISO 8601 format.",
+             "Type": {
+              "$id": "434",
+              "Name": "string",
+              "Kind": "String",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "435",
+             "Name": "value",
+             "SerializedName": "value",
+             "Description": "The metric value.",
+             "Type": {
+              "$id": "436",
+              "Name": "float32",
+              "Kind": "Float32",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "437",
+         "Name": "dimensionValues",
+         "SerializedName": "dimensionValues",
+         "Description": "The dimension values ",
+         "Type": {
+          "$id": "438",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "439",
+           "Name": "DimensionValue",
+           "Namespace": "AzureLoadTesting",
+           "Description": "Represents a metric dimension value.",
+           "IsNullable": false,
+           "Usage": "Output",
+           "Properties": [
+            {
+             "$id": "440",
+             "Name": "name",
+             "SerializedName": "name",
+             "Description": "The name of the dimension.",
+             "Type": {
+              "$id": "441",
+              "Name": "string",
+              "Kind": "String",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "442",
+             "Name": "value",
+             "SerializedName": "value",
+             "Description": "The value of the dimension.",
+             "Type": {
+              "$id": "443",
+              "Name": "string",
+              "Kind": "String",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "444",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "445",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "429"
+  },
+  {
+   "$ref": "432"
+  },
+  {
+   "$ref": "439"
+  },
+  {
+   "$id": "446",
+   "Name": "PagedTestRun",
+   "Namespace": "AzureLoadTesting",
+   "Description": "Collection of test runs",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "447",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The TestRun items on this page",
+     "Type": {
+      "$id": "448",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "254"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "449",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "450",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "451",
+   "Name": "LoadTestAdministrationClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "452",
+     "Name": "CreateOrUpdateTest",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "Create a new test or update an existing test.",
+     "Description": "Create a new test or update an existing test.",
+     "Parameters": [
+      {
+       "$id": "453",
+       "Name": "endpoint",
+       "NameInRequest": "endpoint",
+       "Type": {
+        "$id": "454",
+        "Name": "Uri",
+        "Kind": "Uri",
+        "IsNullable": false
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "455",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "",
+       "Type": {
+        "$id": "456",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "IsResourceParameter": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "457",
+        "Type": {
+         "$id": "458",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "2022-11-01"
+       }
+      },
+      {
+       "$id": "459",
+       "Name": "contentType",
+       "NameInRequest": "content-type",
+       "Type": {
+        "$id": "460",
+        "Name": "Literal",
+        "LiteralValueType": {
+         "$id": "461",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "application/merge-patch+json",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "462",
+        "Type": {
+         "$ref": "460"
+        },
+        "Value": "application/merge-patch+json"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "463",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name for the load test, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "464",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "465",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "Load test model",
+       "Type": {
+        "$ref": "90"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "466",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "467",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "468",
+        "Type": {
+         "$ref": "467"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "469",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "90"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "470",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "90"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PATCH",
+     "RequestBodyMediaType": "Json",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests/{testId}",
+     "RequestMediaTypes": [
+      "application/merge-patch+json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "471",
+     "Name": "CreateOrUpdateAppComponents",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "Associate an app component (collection of azure resources) to a test",
+     "Description": "Associate an app component (collection of azure resources) to a test",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "472",
+       "Name": "contentType",
+       "NameInRequest": "content-type",
+       "Type": {
+        "$id": "473",
+        "Name": "Literal",
+        "LiteralValueType": {
+         "$id": "474",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "application/merge-patch+json",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "475",
+        "Type": {
+         "$ref": "473"
+        },
+        "Value": "application/merge-patch+json"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "476",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name for the load test, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "477",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "478",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "App Component model.",
+       "Type": {
+        "$ref": "184"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "479",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "480",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "481",
+        "Type": {
+         "$ref": "480"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "482",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "184"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "483",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "184"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PATCH",
+     "RequestBodyMediaType": "Json",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests/{testId}/app-components",
+     "RequestMediaTypes": [
+      "application/merge-patch+json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "484",
+     "Name": "CreateOrUpdateServerMetricsConfig",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "Configure server metrics for a test",
+     "Description": "Configure server metrics for a test",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "485",
+       "Name": "contentType",
+       "NameInRequest": "content-type",
+       "Type": {
+        "$id": "486",
+        "Name": "Literal",
+        "LiteralValueType": {
+         "$id": "487",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "application/merge-patch+json",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "488",
+        "Type": {
+         "$ref": "486"
+        },
+        "Value": "application/merge-patch+json"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "489",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name for the load test, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "490",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "491",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "Server metric configuration model.",
+       "Type": {
+        "$ref": "213"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "492",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "493",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "494",
+        "Type": {
+         "$ref": "493"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "495",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "213"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "496",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "213"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PATCH",
+     "RequestBodyMediaType": "Json",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests/{testId}/server-metrics-config",
+     "RequestMediaTypes": [
+      "application/merge-patch+json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "497",
+     "Name": "GetAppComponents",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "Get associated app component (collection of azure resources) for the given test.",
+     "Description": "Get associated app component (collection of azure resources) for the given test.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "498",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name for the load test, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "499",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "500",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "501",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "502",
+        "Type": {
+         "$ref": "501"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "503",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "184"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests/{testId}/app-components",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "504",
+     "Name": "GetServerMetricsConfig",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "List server metrics configuration for the given test.",
+     "Description": "List server metrics configuration for the given test.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "505",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name for the load test, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "506",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "507",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "508",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "509",
+        "Type": {
+         "$ref": "508"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "510",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "213"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests/{testId}/server-metrics-config",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "511",
+     "Name": "GetTest",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "Get load test details by test name",
+     "Description": "Get load test details by test name",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "512",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name for the load test, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "513",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "514",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "515",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "516",
+        "Type": {
+         "$ref": "515"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "517",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "90"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests/{testId}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "518",
+     "Name": "GetTestFile",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "Get test file by the file name.",
+     "Description": "Get test file by the file name.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "519",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name for the load test, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "520",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "521",
+       "Name": "fileName",
+       "NameInRequest": "fileName",
+       "Description": "File name with file extension like app.jmx",
+       "Type": {
+        "$id": "522",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "523",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "524",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "525",
+        "Type": {
+         "$ref": "524"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "526",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "148"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests/{testId}/files/{fileName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "527",
+     "Name": "ListTestFiles",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "Get all test files.",
+     "Description": "Get all test files.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "528",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name for the load test, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "529",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "530",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "531",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "532",
+        "Type": {
+         "$ref": "531"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "533",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "244"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests/{testId}/files",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "534",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "535",
+     "Name": "ListTests",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "Get all load tests by the fully qualified resource Id e.g\nsubscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.",
+     "Description": "Get all load tests by the fully qualified resource Id e.g\nsubscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "536",
+       "Name": "orderby",
+       "NameInRequest": "orderby",
+       "Description": "Sort on the supported fields in (field asc/desc) format. eg:\nlastModifiedDateTime asc. Supported fields - lastModifiedDateTime",
+       "Type": {
+        "$id": "537",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "538",
+       "Name": "search",
+       "NameInRequest": "search",
+       "Description": "Prefix based, case sensitive search on searchable fields - displayName,\ncreatedBy. For example, to search for a test, with display name is Login Test,\nthe search parameter can be Login.",
+       "Type": {
+        "$id": "539",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "540",
+       "Name": "lastModifiedStartTime",
+       "NameInRequest": "lastModifiedStartTime",
+       "Description": "Start DateTime(ISO 8601 literal format) of the last updated time range to\nfilter tests.",
+       "Type": {
+        "$id": "541",
+        "Name": "offsetDateTime",
+        "Kind": "DateTime",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "542",
+       "Name": "lastModifiedEndTime",
+       "NameInRequest": "lastModifiedEndTime",
+       "Description": "End DateTime(ISO 8601 literal format) of the last updated time range to filter\ntests.",
+       "Type": {
+        "$id": "543",
+        "Name": "offsetDateTime",
+        "Kind": "DateTime",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "544",
+       "Name": "maxpagesize",
+       "NameInRequest": "maxpagesize",
+       "Description": "Number of results in response.",
+       "Type": {
+        "$id": "545",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "546",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "547",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "548",
+        "Type": {
+         "$ref": "547"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "549",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "249"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "550",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "551",
+     "Name": "UploadTestFile",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "Upload input file for a given test name. File size can't be more than 50 MB.\nExisting file with same name for the given test will be overwritten. File\nshould be provided in the request body as application/octet-stream.",
+     "Description": "Upload input file for a given test name. File size can't be more than 50 MB.\nExisting file with same name for the given test will be overwritten. File\nshould be provided in the request body as application/octet-stream.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "552",
+       "Name": "contentType",
+       "NameInRequest": "content-type",
+       "Type": {
+        "$id": "553",
+        "Name": "Literal",
+        "LiteralValueType": {
+         "$id": "554",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "application/octet-stream",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "555",
+        "Type": {
+         "$ref": "553"
+        },
+        "Value": "application/octet-stream"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "556",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name for the load test, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "557",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "558",
+       "Name": "fileName",
+       "NameInRequest": "fileName",
+       "Description": "Unique name for test file with file extension like : App.jmx",
+       "Type": {
+        "$id": "559",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "560",
+       "Name": "fileType",
+       "NameInRequest": "fileType",
+       "Description": "File type",
+       "Type": {
+        "$ref": "30"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "561",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "The file content as application/octet-stream.",
+       "Type": {
+        "$id": "562",
+        "Name": "bytes",
+        "Kind": "Bytes",
+        "IsNullable": false
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "563",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "564",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "565",
+        "Type": {
+         "$ref": "564"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "566",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "148"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Binary",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests/{testId}/files/{fileName}",
+     "RequestMediaTypes": [
+      "application/octet-stream"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "567",
+     "Name": "DeleteTestFile",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "Delete file by the file name for a test",
+     "Description": "Delete file by the file name for a test",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "568",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name for the load test, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "569",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "570",
+       "Name": "fileName",
+       "NameInRequest": "fileName",
+       "Description": "File name with file extension like app.jmx",
+       "Type": {
+        "$id": "571",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "572",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "573",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "574",
+        "Type": {
+         "$ref": "573"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "575",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "DELETE",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests/{testId}/files/{fileName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "576",
+     "Name": "DeleteTest",
+     "ResourceName": "AdministrationOperations",
+     "Summary": "Delete a test by its name.",
+     "Description": "Delete a test by its name.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "577",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name for the load test, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "578",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "579",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "580",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "581",
+        "Type": {
+         "$ref": "580"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "582",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "DELETE",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/tests/{testId}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "583"
+   },
+   "Creatable": true
+  },
+  {
+   "$id": "584",
+   "Name": "LoadTestRunClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "585",
+     "Name": "CreateOrUpdateTestRun",
+     "ResourceName": "TestRunOperations",
+     "Summary": "Create and start a new test run with the given name.",
+     "Description": "Create and start a new test run with the given name.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "586",
+       "Name": "contentType",
+       "NameInRequest": "content-type",
+       "Type": {
+        "$id": "587",
+        "Name": "Literal",
+        "LiteralValueType": {
+         "$id": "588",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "application/merge-patch+json",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "589",
+        "Type": {
+         "$ref": "587"
+        },
+        "Value": "application/merge-patch+json"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "590",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "591",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "592",
+       "Name": "oldTestRunId",
+       "NameInRequest": "oldTestRunId",
+       "Description": "Existing test run identifier that should be rerun, if this is provided, the\ntest will run with the JMX file, configuration and app components from the\nexisting test run. You can override the configuration values for new test run\nin the request body.",
+       "Type": {
+        "$id": "593",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "594",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "Load test run model",
+       "Type": {
+        "$ref": "254"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "595",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "596",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "597",
+        "Type": {
+         "$ref": "596"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "598",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "254"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "599",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "254"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PATCH",
+     "RequestBodyMediaType": "Json",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}",
+     "RequestMediaTypes": [
+      "application/merge-patch+json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "600",
+     "Name": "CreateOrUpdateAppComponents",
+     "ResourceName": "TestRunOperations",
+     "Summary": "Associate an app component (collection of azure resources) to a test run",
+     "Description": "Associate an app component (collection of azure resources) to a test run",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "601",
+       "Name": "contentType",
+       "NameInRequest": "content-type",
+       "Type": {
+        "$id": "602",
+        "Name": "Literal",
+        "LiteralValueType": {
+         "$id": "603",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "application/merge-patch+json",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "604",
+        "Type": {
+         "$ref": "602"
+        },
+        "Value": "application/merge-patch+json"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "605",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "606",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "607",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "App Component model.",
+       "Type": {
+        "$ref": "346"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "608",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "609",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "610",
+        "Type": {
+         "$ref": "609"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "611",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "346"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "612",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "346"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PATCH",
+     "RequestBodyMediaType": "Json",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}/app-components",
+     "RequestMediaTypes": [
+      "application/merge-patch+json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "613",
+     "Name": "CreateOrUpdateServerMetricsConfig",
+     "ResourceName": "TestRunOperations",
+     "Summary": "Configure server metrics for a test run",
+     "Description": "Configure server metrics for a test run",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "614",
+       "Name": "contentType",
+       "NameInRequest": "content-type",
+       "Type": {
+        "$id": "615",
+        "Name": "Literal",
+        "LiteralValueType": {
+         "$id": "616",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "application/merge-patch+json",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "617",
+        "Type": {
+         "$ref": "615"
+        },
+        "Value": "application/merge-patch+json"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "618",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "619",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "620",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "Server metric configuration model.",
+       "Type": {
+        "$ref": "360"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "621",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "622",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "623",
+        "Type": {
+         "$ref": "622"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "624",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "360"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "625",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "360"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PATCH",
+     "RequestBodyMediaType": "Json",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}/server-metrics-config",
+     "RequestMediaTypes": [
+      "application/merge-patch+json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "626",
+     "Name": "DeleteTestRun",
+     "ResourceName": "TestRunOperations",
+     "Summary": "Delete a test run by its name.",
+     "Description": "Delete a test run by its name.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "627",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "628",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "629",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "630",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "631",
+        "Type": {
+         "$ref": "630"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "632",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "DELETE",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "633",
+     "Name": "GetAppComponents",
+     "ResourceName": "TestRunOperations",
+     "Summary": "Get associated app component (collection of azure resources) for the given test\nrun.",
+     "Description": "Get associated app component (collection of azure resources) for the given test\nrun.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "634",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "635",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "636",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "637",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "638",
+        "Type": {
+         "$ref": "637"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "639",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "346"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}/app-components",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "640",
+     "Name": "GetServerMetricsConfig",
+     "ResourceName": "TestRunOperations",
+     "Summary": "List server metrics configuration for the given test run.",
+     "Description": "List server metrics configuration for the given test run.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "641",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "642",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "643",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "644",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "645",
+        "Type": {
+         "$ref": "644"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "646",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "360"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}/server-metrics-config",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "647",
+     "Name": "GetTestRun",
+     "ResourceName": "TestRunOperations",
+     "Summary": "Get test run details by name.",
+     "Description": "Get test run details by name.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "648",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "649",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "650",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "651",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "652",
+        "Type": {
+         "$ref": "651"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "653",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "254"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "654",
+     "Name": "GetTestRunFile",
+     "ResourceName": "TestRunOperations",
+     "Summary": "Get test run file by file name.",
+     "Description": "Get test run file by file name.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "655",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "656",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "657",
+       "Name": "fileName",
+       "NameInRequest": "fileName",
+       "Description": "Test run file name with file extension",
+       "Type": {
+        "$id": "658",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "659",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "660",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "661",
+        "Type": {
+         "$ref": "660"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "662",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "148"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}/files/{fileName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "663",
+     "Name": "ListMetricDimensionValues",
+     "ResourceName": "DimensionValueList",
+     "Summary": "List the dimension values for the given metric dimension name.",
+     "Description": "List the dimension values for the given metric dimension name.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "664",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique test run name as identifier",
+       "Type": {
+        "$id": "665",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "666",
+       "Name": "name",
+       "NameInRequest": "name",
+       "Description": "Dimension name",
+       "Type": {
+        "$id": "667",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "668",
+       "Name": "interval",
+       "NameInRequest": "interval",
+       "Description": "The interval (i.e. timegrain) of the query.",
+       "Type": {
+        "$ref": "61"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "669",
+       "Name": "metricName",
+       "NameInRequest": "metricName",
+       "Description": "Metric name",
+       "Type": {
+        "$id": "670",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "671",
+       "Name": "metricNamespace",
+       "NameInRequest": "metricNamespace",
+       "Description": "Metric namespace to query metric definitions for.",
+       "Type": {
+        "$id": "672",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "673",
+       "Name": "timespan",
+       "NameInRequest": "timespan",
+       "Description": "The timespan of the query. It is a string with the following format\n'startDateTime_ISO/endDateTime_ISO'.",
+       "Type": {
+        "$id": "674",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "675",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "676",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "677",
+        "Type": {
+         "$ref": "676"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "678",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "374"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}/metric-dimensions/{name}/values",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "679",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "680",
+     "Name": "ListMetricDefinitions",
+     "ResourceName": "TestRunOperations",
+     "Summary": "List the metric definitions for a load test run.",
+     "Description": "List the metric definitions for a load test run.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "681",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "682",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "683",
+       "Name": "metricNamespace",
+       "NameInRequest": "metricNamespace",
+       "Description": "Metric namespace to query metric definitions for.",
+       "Type": {
+        "$id": "684",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "685",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "686",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "687",
+        "Type": {
+         "$ref": "686"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "688",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "383"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}/metric-definitions",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "689",
+     "Name": "ListMetricNamespaces",
+     "ResourceName": "TestRunOperations",
+     "Summary": "List the metric namespaces for a load test run.",
+     "Description": "List the metric namespaces for a load test run.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "690",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "691",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "692",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "693",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "694",
+        "Type": {
+         "$ref": "693"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "695",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "409"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}/metric-namespaces",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "696",
+     "Name": "ListMetrics",
+     "ResourceName": "TestRunOperations",
+     "Summary": "List the metric values for a load test run.",
+     "Description": "List the metric values for a load test run.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "697",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "698",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "699",
+       "Name": "aggregation",
+       "NameInRequest": "aggregation",
+       "Description": "The aggregation",
+       "Type": {
+        "$id": "700",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "701",
+       "Name": "interval",
+       "NameInRequest": "interval",
+       "Description": "The interval (i.e. timegrain) of the query.",
+       "Type": {
+        "$ref": "61"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "702",
+       "Name": "metricName",
+       "NameInRequest": "metricName",
+       "Description": "Metric name",
+       "Type": {
+        "$id": "703",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "704",
+       "Name": "metricNamespace",
+       "NameInRequest": "metricNamespace",
+       "Description": "Metric namespace to query metric definitions for.",
+       "Type": {
+        "$id": "705",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "706",
+       "Name": "timespan",
+       "NameInRequest": "timespan",
+       "Description": "The timespan of the query. It is a string with the following format\n'startDateTime_ISO/endDateTime_ISO'.",
+       "Type": {
+        "$id": "707",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "708",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "Metric dimension filter ",
+       "Type": {
+        "$ref": "417"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "709",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "710",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "711",
+        "Type": {
+         "$ref": "710"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "712",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "713",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "714",
+        "Type": {
+         "$ref": "713"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "715",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "426"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}/metrics",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "716",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "717",
+     "Name": "ListTestRuns",
+     "ResourceName": "TestRunOperations",
+     "Summary": "Get all test runs with given filters",
+     "Description": "Get all test runs with given filters",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "718",
+       "Name": "orderby",
+       "NameInRequest": "orderby",
+       "Description": "Sort on the supported fields in (field asc/desc) format. eg: executedDateTime\nasc. Supported fields - executedDateTime",
+       "Type": {
+        "$id": "719",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "720",
+       "Name": "search",
+       "NameInRequest": "search",
+       "Description": "Prefix based, case sensitive search on searchable fields - description,\nexecutedUser. For example, to search for a test run, with description 500 VUs,\nthe search parameter can be 500.",
+       "Type": {
+        "$id": "721",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "722",
+       "Name": "testId",
+       "NameInRequest": "testId",
+       "Description": "Unique name of an existing load test.",
+       "Type": {
+        "$id": "723",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "724",
+       "Name": "executionFrom",
+       "NameInRequest": "executionFrom",
+       "Description": "Start DateTime(ISO 8601 literal format) of test-run execution time filter range.",
+       "Type": {
+        "$id": "725",
+        "Name": "offsetDateTime",
+        "Kind": "DateTime",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "726",
+       "Name": "executionTo",
+       "NameInRequest": "executionTo",
+       "Description": "End DateTime(ISO 8601 literal format) of test-run execution time filter range.",
+       "Type": {
+        "$id": "727",
+        "Name": "offsetDateTime",
+        "Kind": "DateTime",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "728",
+       "Name": "status",
+       "NameInRequest": "status",
+       "Description": "Comma separated list of test run status.",
+       "Type": {
+        "$id": "729",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "730",
+       "Name": "maxpagesize",
+       "NameInRequest": "maxpagesize",
+       "Description": "Number of results in response.",
+       "Type": {
+        "$id": "731",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "732",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "733",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "734",
+        "Type": {
+         "$ref": "733"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "735",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "446"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "736",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "737",
+     "Name": "StopTestRun",
+     "ResourceName": "TestRunOperations",
+     "Summary": "Stop test run by name.",
+     "Description": "Stop test run by name.",
+     "Parameters": [
+      {
+       "$ref": "453"
+      },
+      {
+       "$ref": "455"
+      },
+      {
+       "$id": "738",
+       "Name": "testRunId",
+       "NameInRequest": "testRunId",
+       "Description": "Unique name for the load test run, must contain only lower-case alphabetic,\nnumeric, underscore or hyphen characters.",
+       "Type": {
+        "$id": "739",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "740",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "741",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "742",
+        "Type": {
+         "$ref": "741"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "743",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "254"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "None",
+     "Uri": "https://{endpoint}",
+     "Path": "/test-runs/{testRunId}:stop",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "744"
+   },
+   "Creatable": true
+  }
+ ],
+ "Auth": {
+  "$id": "745",
+  "OAuth2": {
+   "$id": "746",
+   "Scopes": [
+    "https://cnt-prod.loadtesting.azure.com/.default"
+   ]
+  }
+ }
+}

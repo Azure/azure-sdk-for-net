@@ -12,11 +12,11 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Developer.LoadTesting.Models;
 using Azure.Identity;
-using AzureLoadTesting.Models;
 using NUnit.Framework;
 
-namespace AzureLoadTesting.Samples
+namespace Azure.Developer.LoadTesting.Samples
 {
     public class Samples_LoadTestRunClient
     {

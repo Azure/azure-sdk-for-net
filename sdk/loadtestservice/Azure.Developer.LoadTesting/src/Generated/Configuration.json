@@ -1,0 +1,10 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Developer.LoadTesting",
+  "library-name": "Azure.Developer.LoadTesting",
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/LoadTestService/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/LoadTestService/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "use-overloads-between-protocol-and-convenience": true
+}

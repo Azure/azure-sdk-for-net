@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AzureLoadTesting.Models
+namespace Azure.Developer.LoadTesting.Models
 {
     public readonly partial struct PFTestResult : IEquatable<PFTestResult>
     {

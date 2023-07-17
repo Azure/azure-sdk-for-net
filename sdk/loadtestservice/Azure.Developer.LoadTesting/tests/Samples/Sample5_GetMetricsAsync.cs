@@ -46,14 +46,14 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             try
             {
-                Response getTestRunResponse = await loadTestRunClient.GetTestRunAsync(testRunId);
+                Response getTestRunResponse = await loadTestRunClient.GetTestRunAsync(testRunId, new RequestContext());
                 JsonDocument testRunJson = JsonDocument.Parse(getTestRunResponse.Content.ToString());
 
-                Response getMetricNamespaces = await loadTestRunClient.GetMetricNamespacesAsync(testRunId);
+                Response getMetricNamespaces = await loadTestRunClient.GetMetricNamespacesAsync(testRunId, new RequestContext());
                 JsonDocument metricNamespacesJson = JsonDocument.Parse(getMetricNamespaces.Content.ToString());
 
                 Response getMetricDefinitions = await loadTestRunClient.GetMetricDefinitionsAsync(
-                    testRunId, metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").ToString()
+                    testRunId, metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").ToString(), new RequestContext()
                     );
                 JsonDocument metricDefinitionsJson = JsonDocument.Parse(getMetricDefinitions.Content.ToString());
 

@@ -9,10 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AzureLoadTesting.Models
+namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AzureLoadTestingModelFactory
+    public static partial class DeveloperLoadTestingModelFactory
     {
         /// <summary> Initializes a new instance of Test. </summary>
         /// <param name="passFailCriteria"> Pass fail criteria for a test. </param>

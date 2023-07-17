@@ -7,7 +7,7 @@
 
 using System;
 
-namespace AzureLoadTesting.Models
+namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> File info. </summary>
     public partial class FileInfo

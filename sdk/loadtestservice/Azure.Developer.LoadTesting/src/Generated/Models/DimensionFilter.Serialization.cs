@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace AzureLoadTesting.Models
+namespace Azure.Developer.LoadTesting.Models
 {
     public partial class DimensionFilter : IUtf8JsonSerializable
     {
