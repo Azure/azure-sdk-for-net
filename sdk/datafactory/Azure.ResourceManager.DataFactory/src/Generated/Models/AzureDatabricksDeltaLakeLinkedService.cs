@@ -34,11 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
-        /// <param name="accessToken">
-        /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="accessToken"> Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="clusterId"> The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
@@ -56,11 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Domain { get; set; }
-        /// <summary>
-        /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactorySecretBaseDefinition AccessToken { get; set; }
         /// <summary> The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClusterId { get; set; }
