@@ -25,7 +25,7 @@ namespace Azure.AI.OpenAI.Tests
             public static AzureLocation Location = AzureLocation.EastUS;
         }
 
-        private static readonly object _deploymentIdLock = new();
+        private static readonly object s_deploymentIdLock = new();
 
         private Uri _endpoint;
         private AzureKeyCredential _azureApiKey;
@@ -83,7 +83,7 @@ namespace Azure.AI.OpenAI.Tests
             else
             {
                 // Non-recording modes that haven't yet initialized need to go initialize the deployment
-                lock (_deploymentIdLock)
+                lock (s_deploymentIdLock)
                 {
                     if (_azureApiKey is not null)
                     {
@@ -162,7 +162,7 @@ namespace Azure.AI.OpenAI.Tests
 
         private static CognitiveServicesAccountResource GetEnsureTestOpenAIResource(ResourceGroupResource resourceGroup, string subdomain)
         {
-            CognitiveServicesAccountData csaData = new CognitiveServicesAccountData(Constants.Location)
+            CognitiveServicesAccountData csaData = new(Constants.Location)
             {
                 Kind = "OpenAI",
                 Sku = new CognitiveServicesSku("S0"),
@@ -325,7 +325,7 @@ namespace Azure.AI.OpenAI.Tests
             Embeddings,
         }
 
-        protected string GetDeploymentOrModelName(
+        protected static string GetDeploymentOrModelName(
             OpenAIClientServiceTarget serviceTarget,
             OpenAIClientScenario defaultScenario)
         {

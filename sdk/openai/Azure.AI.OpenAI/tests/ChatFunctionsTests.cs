@@ -24,7 +24,7 @@ public class ChatFunctionsTests : OpenAITestBase
     public async Task SimpleFunctionCallWorks(OpenAIClientServiceTarget serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
-        string deploymentOrModelName = GetDeploymentOrModelName(
+        string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
             serviceTarget,
             OpenAIClientScenario.ChatCompletions);
 
@@ -51,7 +51,7 @@ public class ChatFunctionsTests : OpenAITestBase
         Assert.That(response.Value.Choices[0].Message.FunctionCall.Name, Is.EqualTo(s_futureTemperatureFunction.Name));
         Assert.That(response.Value.Choices[0].Message.FunctionCall.Arguments, Is.Not.Null.Or.Empty);
 
-        ChatCompletionsOptions followupOptions = new ChatCompletionsOptions()
+        ChatCompletionsOptions followupOptions = new()
         {
             Functions = { s_futureTemperatureFunction },
             MaxTokens = 512,
@@ -61,7 +61,7 @@ public class ChatFunctionsTests : OpenAITestBase
             followupOptions.Messages.Add(originalMessage);
         }
         followupOptions.Messages.Add(response.Value.Choices[0].Message);
-        followupOptions.Messages.Add(new ChatMessage(ChatRole.Function)
+        followupOptions.Messages.Add(new ChatMessage()
         {
             Name = response.Value.Choices[0].Message.FunctionCall.Name,
             Content = JsonSerializer.Serialize(new
@@ -88,7 +88,7 @@ public class ChatFunctionsTests : OpenAITestBase
     public async Task StreamingFunctionCallWorks(OpenAIClientServiceTarget serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
-        string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ChatCompletions);
+        string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ChatCompletions);
 
         var requestOptions = new ChatCompletionsOptions()
         {

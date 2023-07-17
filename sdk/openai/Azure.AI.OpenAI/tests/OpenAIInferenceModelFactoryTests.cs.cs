@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI.Tests
         [Test]
         public void TestCompletionsLogProbabilityModel()
         {
-            var logProbabilityModel = AIOpenAIModelFactory.CompletionsLogProbabilityModel(
+            CompletionsLogProbabilityModel logProbabilityModel = AIOpenAIModelFactory.CompletionsLogProbabilityModel(
                 new[] { "one", "two" },
                 new float?[] { 0.9f, 0.72f });
             Assert.That(logProbabilityModel, Is.Not.Null);
@@ -38,7 +38,7 @@ namespace Azure.AI.OpenAI.Tests
                 new { role = ChatRole.User,      text = "Final one",  index = 3,  reason = CompletionsFinishReason.TokenLimitReached },
             };
 
-            var chatChoices = expectedChoices
+            ChatChoice[] chatChoices = expectedChoices
                 .Select(e => AzureOpenAIModelFactory.ChatChoice(
                     new ChatMessage(e.role, e.text),
                     e.index,
@@ -48,7 +48,7 @@ namespace Azure.AI.OpenAI.Tests
 
             for (int i = 0; i < chatChoices.Length; i++)
             {
-                var actual = chatChoices[i];
+                ChatChoice actual = chatChoices[i];
                 var expected = expectedChoices[i];
 
                 Assert.That(actual.Message, Is.Not.Null);
@@ -72,7 +72,7 @@ namespace Azure.AI.OpenAI.Tests
                 new { role = ChatRole.User,      text = "Final one",  index = 3,  reason = CompletionsFinishReason.TokenLimitReached },
             };
 
-            var chatChoices = expectedChoices
+            ChatChoice[] chatChoices = expectedChoices
                 .Select(e => AzureOpenAIModelFactory.ChatChoice(
                     new ChatMessage(e.role, e.text),
                     e.index,
@@ -89,7 +89,7 @@ namespace Azure.AI.OpenAI.Tests
                             isFiltered: true)))
             };
 
-            var chatCompletions = AzureOpenAIModelFactory.ChatCompletions(
+            ChatCompletions chatCompletions = AzureOpenAIModelFactory.ChatCompletions(
                 expectedId,
                 expectedCreationTime,
                 chatChoices,

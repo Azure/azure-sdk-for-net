@@ -97,6 +97,8 @@ namespace Azure.AI.OpenAI
         public ChatCompletionsOptions()
             : this(new ChangeTrackingList<ChatMessage>())
         {
+            // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
+            //                      may be reconsidered for required payload constituents in the future.
         }
     }
 }

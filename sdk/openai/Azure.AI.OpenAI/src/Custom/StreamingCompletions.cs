@@ -18,9 +18,9 @@ namespace Azure.AI.OpenAI
         private readonly Response _baseResponse;
         private readonly SseReader _baseResponseReader;
         private readonly IList<Completions> _baseCompletions;
-        private readonly object _baseCompletionsLock = new object();
+        private readonly object _baseCompletionsLock = new();
         private readonly IList<StreamingChoice> _streamingChoices;
-        private readonly object _streamingChoicesLock = new object();
+        private readonly object _streamingChoicesLock = new();
         private readonly AsyncAutoResetEvent _updateAvailableEvent;
         private bool _streamingTaskComplete;
         private bool _disposedValue;
@@ -84,7 +84,7 @@ namespace Azure.AI.OpenAI
                                     .FirstOrDefault(choice => choice.Index == choiceFromSse.Index);
                                 if (existingStreamingChoice == null)
                                 {
-                                    StreamingChoice newStreamingChoice = new StreamingChoice(choiceFromSse);
+                                    StreamingChoice newStreamingChoice = new(choiceFromSse);
                                     _streamingChoices.Add(newStreamingChoice);
                                     _updateAvailableEvent.Set();
                                 }

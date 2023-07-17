@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI
     /// A structure that specifies the exact name of a specific, request-provided function to use when processing a chat
     /// completions operation.
     /// </summary>
-    public partial class FunctionName
+    internal partial class FunctionName
     {
         /// <summary> Initializes a new instance of FunctionName. </summary>
         /// <param name="name"> The name of the function to call. </param>

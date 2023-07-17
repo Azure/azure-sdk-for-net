@@ -68,7 +68,6 @@ namespace Azure.AI.OpenAI
     public partial class ChatMessage
     {
         public ChatMessage() { }
-        public ChatMessage(Azure.AI.OpenAI.ChatRole role) { }
         public ChatMessage(Azure.AI.OpenAI.ChatRole role, string content) { }
         public string Content { get { throw null; } set { } }
         public Azure.AI.OpenAI.FunctionCall FunctionCall { get { throw null; } set { } }
@@ -214,6 +213,7 @@ namespace Azure.AI.OpenAI
     }
     public partial class EmbeddingsOptions
     {
+        public EmbeddingsOptions() { }
         public EmbeddingsOptions(System.Collections.Generic.IEnumerable<string> input) { }
         public EmbeddingsOptions(string input) { }
         public System.Collections.Generic.IList<string> Input { get { throw null; } }
@@ -240,11 +240,6 @@ namespace Azure.AI.OpenAI
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.BinaryData Parameters { get { throw null; } set { } }
-    }
-    public partial class FunctionName
-    {
-        public FunctionName(string name) { }
-        public string Name { get { throw null; } }
     }
     public partial class ImageGenerationOptions
     {

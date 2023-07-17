@@ -23,9 +23,9 @@ namespace Azure.AI.OpenAI.Tests
         public async Task Completions(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
+            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
-            CompletionsOptions requestOptions = new CompletionsOptions()
+            CompletionsOptions requestOptions = new()
             {
                 Prompts =
                 {
@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task SimpleCompletions(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = GetDeploymentOrModelName(
+            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
                 serviceTarget,
                 OpenAIClientScenario.LegacyCompletions);
             Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, "Hello world!");
@@ -62,7 +62,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task CompletionsWithTokenCredential(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget, OpenAIClientAuthenticationType.Token);
-            string deploymentName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
+            string deploymentName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions();
             requestOptions.Prompts.Add("Hello, world!");
             requestOptions.Prompts.Add("I can have multiple prompts");
@@ -79,7 +79,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task Embeddings(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Embeddings);
+            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Embeddings);
             var embeddingsRequest = new EmbeddingsOptions("Your text string goes here");
             Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsOptions>());
             Response<Embeddings> response = await client.GetEmbeddingsAsync(deploymentOrModelName, embeddingsRequest);
@@ -92,7 +92,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task CompletionsUsageField(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
+            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
                 Prompts =
@@ -135,7 +135,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task ChatCompletions(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = GetDeploymentOrModelName(
+            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
                 serviceTarget,
                 OpenAIClientScenario.ChatCompletions);
             var requestOptions = new ChatCompletionsOptions()
@@ -170,7 +170,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task ChatCompletionsContentFilterCategories(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ChatCompletions);
+            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ChatCompletions);
             var requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
@@ -220,7 +220,7 @@ namespace Azure.AI.OpenAI.Tests
                 serviceTarget,
                 azureServiceVersionOverride: OpenAIClientOptions.ServiceVersion.V2023_06_01_Preview);
             string deploymentOrModelName
-                = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
+                = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
             var requestOptions = new CompletionsOptions()
             {
                 Prompts = { "How do I cook a bell pepper?" },
@@ -265,7 +265,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task StreamingChatCompletions(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = GetDeploymentOrModelName(
+            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
                 serviceTarget,
                 OpenAIClientScenario.ChatCompletions);
             var requestOptions = new ChatCompletionsOptions()
@@ -306,7 +306,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task AdvancedCompletionsOptions(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
+            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             string promptText = "Are bananas especially radioactive?";
             var requestOptions = new CompletionsOptions()
             {
@@ -370,7 +370,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task TokenCutoff(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
+            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
                 Prompts =
@@ -395,7 +395,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task StreamingCompletions(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
+            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
                 Prompts =
@@ -422,8 +422,8 @@ namespace Azure.AI.OpenAI.Tests
 
             await foreach (StreamingChoice choice in responseValue.GetChoicesStreaming())
             {
-                List<string> textPartsForChoice = new List<string>();
-                StringBuilder choiceTextBuilder = new StringBuilder();
+                List<string> textPartsForChoice = new();
+                StringBuilder choiceTextBuilder = new();
                 await foreach (string choiceTextPart in choice.GetTextStreaming())
                 {
                     choiceTextBuilder.Append(choiceTextPart);
@@ -479,7 +479,7 @@ namespace Azure.AI.OpenAI.Tests
         private static async Task<IReadOnlyList<T>> GetBlockingListFromIAsyncEnumerable<T>(
             IAsyncEnumerable<T> asyncValues)
         {
-            List<T> result = new List<T>();
+            List<T> result = new();
             await foreach (T asyncValue in asyncValues)
             {
                 result.Add(asyncValue);

@@ -3,6 +3,6 @@
 
 namespace Azure.AI.OpenAI
 {
-    public partial class FunctionName
+    internal partial class FunctionName
     {}
 }

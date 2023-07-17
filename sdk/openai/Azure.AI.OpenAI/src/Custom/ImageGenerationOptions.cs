@@ -13,6 +13,8 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of ImageGenerationOptions. </summary>
         public ImageGenerationOptions()
         {
+            // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
+            //                      may be reconsidered for required payload constituents in the future.
         }
 
         /// <summary>

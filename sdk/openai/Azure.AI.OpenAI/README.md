@@ -221,6 +221,24 @@ await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoices
 }
 ```
 
+### Generate images with DALL-E image generation models
+
+```C# Snippet:GenerateImages
+Response<ImageGenerations> imageGenerations = await client.GetImageGenerationsAsync(
+    new ImageGenerationOptions()
+    {
+        Prompt = "a happy monkey eating a banana, in watercolor",
+        Size = ImageSize.Size256x256,
+    });
+
+// Image Generations responses provide URLs you can use to retrieve requested images
+Uri _ = imageGenerations.Value.Data[0].Url;
+
+// You can also use the convenience GetStreamAsync() method to fetch it using the client transport that
+// facilitated the initial request
+Stream __ = await imageGenerations.Value.Data[0].GetStreamAsync();
+```
+
 ## Troubleshooting
 
 When you interact with Azure OpenAI using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][openai_rest] requests.
