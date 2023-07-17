@@ -35,7 +35,7 @@ namespace Azure.Core.Serialization
         {
             if (x != ModelSerializerFormat.Data && x != ModelSerializerFormat.Wire)
             {
-                throw new ArgumentException("Format must be either 'ModelSerializerFormat.Data' or 'ModelSerializerFormat.Wire'.");
+                throw new ArgumentException("Format must be either '{ModelSerializerFormat.Data}' or '{ModelSerializerFormat.Wire}'.");
             }
             return x;
         }
