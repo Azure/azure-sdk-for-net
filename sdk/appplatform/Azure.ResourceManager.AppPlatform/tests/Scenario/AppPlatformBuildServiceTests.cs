@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private AppPlatformBuildServiceCollection _appPlatformBuildServiceCollection;
         private const string _buildServicesName = "default";
 
-        public AppPlatformBuildServiceTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AppPlatformBuildServiceTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
