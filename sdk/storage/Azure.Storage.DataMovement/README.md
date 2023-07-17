@@ -44,7 +44,7 @@ Authentication is specific to the targeted storage service. Please see documenta
 
 ***TODO***
 
-## Sample Usage
+## Examples
 
 This section demonstrates usage of Data Movement regardless of extension package. Package-specific information and usage samples can be found in that package's documentation. These examples will use local disk and Azure Blob Storage when specific resources are needed for demonstration purposes, but the topics here will apply to other packages.
 
