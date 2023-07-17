@@ -56,7 +56,6 @@ namespace Azure.Communication.Chat
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             CreateChatThreadRequest createChatThreadRequest = new CreateChatThreadRequest(topic);
-
             if (participants != null)
             {
                 foreach (var value in participants)
