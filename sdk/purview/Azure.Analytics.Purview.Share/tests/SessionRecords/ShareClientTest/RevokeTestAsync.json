@@ -8,6 +8,7 @@
         "Authorization": "Sanitized",
         "Connection": "keep-alive",
         "Content-Length": "0",
+        "Repeatability-Request-ID": "7ee666e4-4631-467b-841e-788b8e59a4fa",
         "traceparent": "00-1d715b2d0e3d4146b9955bbba8a4d728-eacfb8375ffa8243-00",
         "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "74cd98422e0b4b78e78529a37f8fec34",

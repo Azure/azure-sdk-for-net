@@ -9,6 +9,7 @@
         "Connection": "keep-alive",
         "Content-Length": "23",
         "Content-Type": "application/json",
+        "Repeatability-Request-ID": "7ee666e4-4631-467b-841e-788b8e59a4fa",
         "traceparent": "00-6285203c1c8beb4185e9d9a3c822830f-39cf503a7c4daf44-00",
         "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "19f13052174f86b61b65adce53325977",
