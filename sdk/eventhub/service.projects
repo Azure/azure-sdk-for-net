@@ -22,8 +22,4 @@
   <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
   </ItemGroup>
-
-  <ItemGroup Condition="'$(SDKType)' == 'data'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.EventHubs*\**\*.csproj" />
-  </ItemGroup>
 </Project>

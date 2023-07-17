@@ -19,8 +19,6 @@ Use the following packages to publish and consume events from Event Hubs:
 
 ### `Microsoft.Azure.EventHubs`
 
-These packages are the legacy generation of client libraries for Event Hubs.  The source code is available on [GitHub](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub).
-
 Use the following legacy packages to publish and consume events from Event Hubs:
 
 | Nuget Package | Reference | Samples |
