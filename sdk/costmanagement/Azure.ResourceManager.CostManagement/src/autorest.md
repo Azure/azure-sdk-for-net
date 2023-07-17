@@ -57,6 +57,10 @@ request-path-to-resource-name:
   /{scope}/providers/Microsoft.CostManagement/views/{viewName}: CostManagementViews
   /{scope}/providers/Microsoft.CostManagement/exports/{exportName}: CostManagementExport
 
+override-operation-name:
+  ScheduledActions_CheckNameAvailabilityByScope: CheckCostManagementNameAvailabilityByScopeScheduledAction
+  ScheduledActions_CheckNameAvailability: CheckCostManagementNameAvailabilityByScheduledAction
+
 prepend-rp-prefix:
   - Alert
   - View
@@ -78,8 +82,11 @@ rename-mapping:
   PivotType: ViewPivotType
   MetricType: ViewMetricType
   KpiType: ViewKpiType
+  KpiProperties: ViewKpiProperties
   ChartType: ViewChartType
   PivotProperties: ViewPivotProperties
+  ExecutionType: ExportRunExecutionType
+  ExecutionStatus: ExportRunExecutionStatus
   ErrorDetails: ExportRunErrorDetails
   BenefitKind: BillingAccountBenefitKind
   DaysOfWeek: ScheduledActionDaysOfWeek
@@ -89,6 +96,24 @@ rename-mapping:
   Scope: BenefitRecommendationScope
   Grain: BenefitRecommendationUsageGrain
   OperatorType: ComparisonOperatorType
+  DismissAlertPayload.properties.closeTime: CloseOn|datetime
+  DismissAlertPayload.properties.statusModificationTime: StatusModifiedOn|datetime
+  Alert.properties.modificationTime: ModifiedOn|datetime
+  Alert.properties.creationTime: CreatedOn|datetime
+  Alert.properties.statusModificationTime: StatusModifiedOn|datetime
+  View.properties.scope: -|arm-id
+  ScheduledAction.properties.scope: -|arm-id
+  ScheduledAction.properties.viewId: -|arm-id
+  ExportDeliveryDestination.resourceId: -|arm-id
+  KpiProperties.id: -|arm-id
+  Dimension.properties.filterEnabled: IsFilterEnabled
+  Dimension.properties.groupingEnabled: IsGroupingEnabled
+  KpiProperties.enabled: IsEnabled
+  CheckNameAvailabilityRequest: CostManagementNameAvailabilityContent
+  CheckNameAvailabilityResponse: CostManagementNameAvailabilityResult  
+  CheckNameAvailabilityReason: CostManagementUnavailabilityReason
+  BenefitUtilizationSummariesRequest: BenefitUtilizationSummariesContent
+  GrainParameter: GrainContent
 
 directive:
   # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 

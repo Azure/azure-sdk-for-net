@@ -56,15 +56,11 @@ namespace Azure.Communication.JobRouter.Models
         public string Id { get; }
         /// <summary> The current state of the worker. </summary>
         public RouterWorkerState? State { get; }
-        /// <summary> The total capacity score this worker has to manage multiple concurrent jobs. </summary>
-        public int? TotalCapacity { get; set; }
         /// <summary> A list of active offers issued to this worker. </summary>
         public IReadOnlyList<RouterJobOffer> Offers { get; }
         /// <summary> A list of assigned jobs attached to this worker. </summary>
         public IReadOnlyList<RouterWorkerAssignment> AssignedJobs { get; }
         /// <summary> A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed. </summary>
         public double? LoadRatio { get; }
-        /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
-        public bool? AvailableForOffers { get; set; }
     }
 }

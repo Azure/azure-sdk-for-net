@@ -15,7 +15,6 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A unit of work to be routed. </summary>
     public partial class RouterJob
     {
-
         /// <summary> Initializes a new instance of RouterJob. </summary>
         /// <param name="id"> The id of the job. </param>
         /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
@@ -37,7 +36,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
         /// <param name="scheduledAt"> If set, job will be scheduled to be enqueued at a given time. </param>
         /// <param name="matchingMode"></param>
-        internal RouterJob(string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes, DateTimeOffset? scheduledAt, JobMatchingModeInternal matchingMode)
+        internal RouterJob(string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
         {
             Id = id;
             ChannelReference = channelReference;
@@ -55,27 +54,15 @@ namespace Azure.Communication.JobRouter.Models
             _tags = tags;
             _notes = notes;
             ScheduledAt = scheduledAt;
-            _matchingMode = matchingMode;
+            MatchingMode = matchingMode;
         }
 
         /// <summary> The id of the job. </summary>
         public string Id { get; }
-        /// <summary> Reference to an external parent context, eg. call ID. </summary>
-        public string ChannelReference { get; set; }
         /// <summary> The status of the Job. </summary>
         public RouterJobStatus? Status { get; }
         /// <summary> The time a job was queued in UTC. </summary>
         public DateTimeOffset? EnqueuedAt { get; }
-        /// <summary> The channel identifier. eg. voice, chat, etc. </summary>
-        public string ChannelId { get; set; }
-        /// <summary> The Id of the Classification policy used for classifying a job. </summary>
-        public string ClassificationPolicyId { get; set; }
-        /// <summary> The Id of the Queue that this job is queued to. </summary>
-        public string QueueId { get; set; }
-        /// <summary> The priority of this job. </summary>
-        public int? Priority { get; set; }
-        /// <summary> Reason code for cancelled or closed jobs. </summary>
-        public string DispositionCode { get; set; }
         /// <summary> A collection of label selectors attached by a classification policy, which a worker must satisfy in order to process this job. </summary>
         public IReadOnlyList<RouterWorkerSelector> AttachedWorkerSelectors { get; }
         /// <summary>

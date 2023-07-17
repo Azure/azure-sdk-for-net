@@ -5,22 +5,25 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Tests.Shared;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    internal class MockStorageResource : StorageResource
+    internal class MockStorageResource : StorageResourceSingle
     {
         private readonly Stream _readStream;
+
+        public override string ResourceId => "Mock";
 
         public override TransferType TransferType => TransferType.Sequential;
 
         private readonly long _maxChunkSize;
         public override long MaxChunkSize => _maxChunkSize;
 
-        private readonly ProduceUriType _produceUriType;
-        public override ProduceUriType CanProduceUri => _produceUriType;
+        private readonly bool _canProduceUri;
+        public override bool CanProduceUri => _canProduceUri;
 
         public override Uri Uri => new Uri("https://example.com");
 
@@ -28,25 +31,25 @@ namespace Azure.Storage.DataMovement.Tests
 
         public override long? Length { get; }
 
-        private MockStorageResource(long? length, ProduceUriType uriType, long maxChunkSize)
+        private MockStorageResource(long? length, bool conProduceUri, long maxChunkSize)
         {
             Length = length;
             if (length.HasValue)
             {
                 _readStream = new RepeatingStream((int)(1234567 % length.Value), length.Value, revealsLength: true);
             }
-            _produceUriType = uriType;
+            _canProduceUri = conProduceUri;
             _maxChunkSize = maxChunkSize;
         }
 
-        public static MockStorageResource MakeSourceResource(long length, ProduceUriType uriType, long? maxChunkSize = default)
+        public static MockStorageResource MakeSourceResource(long length, bool canProduceUri, long? maxChunkSize = default)
         {
-            return new MockStorageResource(length, uriType, maxChunkSize ?? 1024);
+            return new MockStorageResource(length, canProduceUri, maxChunkSize ?? 1024);
         }
 
-        public static MockStorageResource MakeDestinationResource(ProduceUriType uriType, long? maxChunkSize = default)
+        public static MockStorageResource MakeDestinationResource(bool canProduceUri, long? maxChunkSize = default)
         {
-            return new MockStorageResource(default, uriType, maxChunkSize ?? 1024);
+            return new MockStorageResource(default, canProduceUri, maxChunkSize ?? 1024);
         }
 
         public override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
@@ -54,12 +57,12 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.CompletedTask;
         }
 
-        public override Task CopyBlockFromUriAsync(StorageResource sourceResource, HttpRange range, bool overwrite, long completeLength = 0, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
+        public override Task CopyBlockFromUriAsync(StorageResourceSingle sourceResource, HttpRange range, bool overwrite, long completeLength = 0, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public override Task CopyFromUriAsync(StorageResource sourceResource, bool overwrite, long completeLength, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
+        public override Task CopyFromUriAsync(StorageResourceSingle sourceResource, bool overwrite, long completeLength, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
@@ -77,6 +80,11 @@ namespace Azure.Storage.DataMovement.Tests
                 contentLength: Length ?? 0,
                 lastAccessed: default,
                 resourceType: StorageResourceType.LocalFile));
+        }
+
+        public override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult<HttpAuthorization>(default);
         }
 
         public override Task<ReadStreamStorageResourceResult> ReadStreamAsync(long position = 0, long? length = null, CancellationToken cancellationToken = default)

@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> routerId = default;
             Optional<int> fabricASN = default;
             Optional<string> networkFabricControllerId = default;
-            Optional<NetworkFabricPropertiesTerminalServerConfiguration> terminalServerConfiguration = default;
-            Optional<NetworkFabricPropertiesManagementNetworkConfiguration> managementNetworkConfiguration = default;
+            Optional<TerminalServerConfiguration> terminalServerConfiguration = default;
+            Optional<ManagementNetworkConfiguration> managementNetworkConfiguration = default;
             Optional<NetworkFabricOperationalState> operationalState = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            terminalServerConfiguration = NetworkFabricPropertiesTerminalServerConfiguration.DeserializeNetworkFabricPropertiesTerminalServerConfiguration(property0.Value);
+                            terminalServerConfiguration = TerminalServerConfiguration.DeserializeTerminalServerConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkConfiguration"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            managementNetworkConfiguration = NetworkFabricPropertiesManagementNetworkConfiguration.DeserializeNetworkFabricPropertiesManagementNetworkConfiguration(property0.Value);
+                            managementNetworkConfiguration = ManagementNetworkConfiguration.DeserializeManagementNetworkConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("operationalState"u8))

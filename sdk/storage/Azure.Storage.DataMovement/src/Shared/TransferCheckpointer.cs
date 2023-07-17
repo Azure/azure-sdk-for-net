@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {

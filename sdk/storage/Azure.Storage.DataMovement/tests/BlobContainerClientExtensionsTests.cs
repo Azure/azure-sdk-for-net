@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -134,9 +133,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             public MockTransferManager() { }
 
-            public Action<StorageResourceContainer, StorageResourceContainer, TransferOptions> OnStartTransferContainerAsync { get; set; }
+            public Action<StorageResource, StorageResource, TransferOptions> OnStartTransferContainerAsync { get; set; }
 
-            public override Task<DataTransfer> StartTransferAsync(StorageResourceContainer sourceResource, StorageResourceContainer destinationResource, TransferOptions transferOptions = null)
+            public override Task<DataTransfer> StartTransferAsync(StorageResource sourceResource, StorageResource destinationResource, TransferOptions transferOptions = null, CancellationToken cancellationToken = default)
             {
                 if (OnStartTransferContainerAsync != null)
                 {

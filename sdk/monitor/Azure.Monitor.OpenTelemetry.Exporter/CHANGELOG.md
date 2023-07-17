@@ -1,11 +1,8 @@
 # Release History
 
-## 1.0.0-beta.13 (Unreleased)
+## 1.0.0-beta.14 (Unreleased)
 
 ### Features Added
-
-* Added `ApplicationInsightsSampler` to the exporter, enabling users to customize the sampling rate using the `SamplingRatio` property.
-  ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
 
 ### Breaking Changes
 
@@ -13,6 +10,19 @@
 
 ### Other Changes
 
+## 1.0.0-beta.13 (2023-07-13)
+
+### Features Added
+
+* Added `ApplicationInsightsSampler` to the exporter, enabling users to customize the sampling rate using the `SamplingRatio` property.
+  ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
+
+### Other Changes
+
+* Updated Exporter to read v1.21.0 of the OpenTelemetry Semantic Conventions attributes for HTTP.
+  For more information see [Semantic conventions for HTTP spans](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/http.md).
+  ([#37464](https://github.com/Azure/azure-sdk-for-net/pull/37464))
+  ([#37357](https://github.com/Azure/azure-sdk-for-net/pull/37357))
 * Update OpenTelemetry dependencies
   ([#36859](https://github.com/Azure/azure-sdk-for-net/pull/36859))
   - OpenTelemetry 1.5.0

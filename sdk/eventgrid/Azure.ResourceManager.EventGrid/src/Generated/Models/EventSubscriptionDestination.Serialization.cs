@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     case "AzureFunction": return AzureFunctionEventSubscriptionDestination.DeserializeAzureFunctionEventSubscriptionDestination(element);
                     case "EventHub": return EventHubEventSubscriptionDestination.DeserializeEventHubEventSubscriptionDestination(element);
                     case "HybridConnection": return HybridConnectionEventSubscriptionDestination.DeserializeHybridConnectionEventSubscriptionDestination(element);
+                    case "PartnerDestination": return PartnerEventSubscriptionDestination.DeserializePartnerEventSubscriptionDestination(element);
                     case "ServiceBusQueue": return ServiceBusQueueEventSubscriptionDestination.DeserializeServiceBusQueueEventSubscriptionDestination(element);
                     case "ServiceBusTopic": return ServiceBusTopicEventSubscriptionDestination.DeserializeServiceBusTopicEventSubscriptionDestination(element);
                     case "StorageQueue": return StorageQueueEventSubscriptionDestination.DeserializeStorageQueueEventSubscriptionDestination(element);

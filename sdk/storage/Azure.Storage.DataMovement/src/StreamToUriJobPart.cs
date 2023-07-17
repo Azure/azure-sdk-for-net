@@ -45,6 +45,7 @@ namespace Azure.Storage.DataMovement
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
                   singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  clientDiagnostics: job.ClientDiagnostics,
                   cancellationToken: job._cancellationToken)
         {
         }
@@ -55,8 +56,8 @@ namespace Azure.Storage.DataMovement
         private StreamToUriJobPart(
             StreamToUriTransferJob job,
             int partNumber,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             bool isFinalPart,
             StorageTransferStatus jobPartStatus = StorageTransferStatus.Queued,
             long? length = default)
@@ -77,6 +78,7 @@ namespace Azure.Storage.DataMovement
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
                   singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  clientDiagnostics: job.ClientDiagnostics,
                   cancellationToken: job._cancellationToken,
                   jobPartStatus: jobPartStatus,
                   length: length)
@@ -107,8 +109,8 @@ namespace Azure.Storage.DataMovement
         public static async Task<StreamToUriJobPart> CreateJobPartAsync(
             StreamToUriTransferJob job,
             int partNumber,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             bool isFinalPart,
             StorageTransferStatus jobPartStatus = default,
             long? length = default,
@@ -303,6 +305,7 @@ namespace Azure.Storage.DataMovement
             blockSize,
             GetBlockListCommitHandlerBehaviors(jobPart),
             transferType,
+            ClientDiagnostics,
             _cancellationToken);
 
         internal static CommitChunkHandler.Behaviors GetBlockListCommitHandlerBehaviors(

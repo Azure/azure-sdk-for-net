@@ -99,8 +99,10 @@ namespace Azure.Storage.DataMovement.Tests
         internal const long _testPartNumber = 5;
         internal static readonly DateTimeOffset _testStartTime
             = new DateTimeOffset(2023, 03, 13, 15, 24, 6, default);
+        internal const string _testSourceResourceId = "LocalFile";
         internal const string _testSourcePath = "C:/sample-source";
         internal const string _testSourceQuery = "sourcequery";
+        internal const string _testDestinationResourceId = "LocalFile";
         internal const string _testDestinationPath = "C:/sample-destination";
         internal const string _testDestinationQuery = "destquery";
         internal const byte _testPriority = 0;
@@ -131,8 +133,10 @@ namespace Azure.Storage.DataMovement.Tests
             DateTimeOffset startTime = default,
             string transferId = _testTransferId,
             long partNumber = _testPartNumber,
+            string sourceResourceId = _testSourceResourceId,
             string sourcePath = _testSourcePath,
             string sourceExtraQuery = _testSourceQuery,
+            string destinationResourceId = _testDestinationResourceId,
             string destinationPath = _testDestinationPath,
             string destinationExtraQuery = _testDestinationQuery,
             bool isFinalPart = false,
@@ -210,8 +214,10 @@ namespace Azure.Storage.DataMovement.Tests
                 startTime: startTime,
                 transferId: transferId,
                 partNumber: partNumber,
+                sourceResourceId: sourceResourceId,
                 sourcePath: sourcePath,
                 sourceExtraQuery: sourceExtraQuery,
+                destinationResourceId: destinationResourceId,
                 destinationPath: destinationPath,
                 destinationExtraQuery: destinationExtraQuery,
                 isFinalPart: isFinalPart,

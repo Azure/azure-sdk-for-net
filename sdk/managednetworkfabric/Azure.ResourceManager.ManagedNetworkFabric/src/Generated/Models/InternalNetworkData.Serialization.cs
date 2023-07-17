@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
             Optional<int> mtu = default;
-            Optional<IList<InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem>> connectedIPv4Subnets = default;
-            Optional<IList<InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem>> connectedIPv6Subnets = default;
-            Optional<InternalNetworkPatchablePropertiesStaticRouteConfiguration> staticRouteConfiguration = default;
-            Optional<InternalNetworkPatchablePropertiesBgpConfiguration> bgpConfiguration = default;
+            Optional<IList<ConnectedSubnet>> connectedIPv4Subnets = default;
+            Optional<IList<ConnectedSubnet>> connectedIPv6Subnets = default;
+            Optional<StaticRouteConfiguration> staticRouteConfiguration = default;
+            Optional<BgpConfiguration> bgpConfiguration = default;
             Optional<string> importRoutePolicyId = default;
             Optional<string> exportRoutePolicyId = default;
             Optional<IReadOnlyList<string>> disabledOnResources = default;
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem> array = new List<InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem>();
+                            List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem.DeserializeInternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem(item));
+                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
                             }
                             connectedIPv4Subnets = array;
                             continue;
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem> array = new List<InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem>();
+                            List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem.DeserializeInternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem(item));
+                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
                             }
                             connectedIPv6Subnets = array;
                             continue;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            staticRouteConfiguration = InternalNetworkPatchablePropertiesStaticRouteConfiguration.DeserializeInternalNetworkPatchablePropertiesStaticRouteConfiguration(property0.Value);
+                            staticRouteConfiguration = StaticRouteConfiguration.DeserializeStaticRouteConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bgpConfiguration"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            bgpConfiguration = InternalNetworkPatchablePropertiesBgpConfiguration.DeserializeInternalNetworkPatchablePropertiesBgpConfiguration(property0.Value);
+                            bgpConfiguration = BgpConfiguration.DeserializeBgpConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("importRoutePolicyId"u8))

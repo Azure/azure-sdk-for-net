@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Updates share properties as specified in request body. Properties not mentioned in the request will not be changed. Update fails if the specified share does not already exist. 
+        /// Updates share properties as specified in request body. Properties not mentioned in the request will not be changed. Update fails if the specified share does not already exist.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Updates share properties as specified in request body. Properties not mentioned in the request will not be changed. Update fails if the specified share does not already exist. 
+        /// Updates share properties as specified in request body. Properties not mentioned in the request will not be changed. Update fails if the specified share does not already exist.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

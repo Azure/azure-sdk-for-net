@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: ReservationRecommendationDetailsModel.sku
         /// </param>
         /// <param name="currency">
-        /// An ISO 4217 currency code identifier for the costs and savings 
+        /// An ISO 4217 currency code identifier for the costs and savings
         /// Serialized Name: ReservationRecommendationDetailsModel.properties.currency
         /// </param>
         /// <param name="properties">
@@ -1186,11 +1186,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: EventSummary.properties.creditExpired
         /// </param>
         /// <param name="charges">
-        /// The amount of charges for events of type SettleCharges and PendingEligibleCharges. 
+        /// The amount of charges for events of type SettleCharges and PendingEligibleCharges.
         /// Serialized Name: EventSummary.properties.charges
         /// </param>
         /// <param name="closedBalance">
-        /// The balance after the event. 
+        /// The balance after the event.
         /// Serialized Name: EventSummary.properties.closedBalance
         /// </param>
         /// <param name="eventType">
@@ -1202,7 +1202,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: EventSummary.properties.invoiceNumber
         /// </param>
         /// <param name="billingProfileId">
-        /// The ID that uniquely identifies the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. 
+        /// The ID that uniquely identifies the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement.
         /// Serialized Name: EventSummary.properties.billingProfileId
         /// </param>
         /// <param name="billingProfileDisplayName">
@@ -1214,7 +1214,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: EventSummary.properties.lotId
         /// </param>
         /// <param name="lotSource">
-        /// Identifies the source of the lot for which the event happened. 
+        /// Identifies the source of the lot for which the event happened.
         /// Serialized Name: EventSummary.properties.lotSource
         /// </param>
         /// <param name="canceledCredit">

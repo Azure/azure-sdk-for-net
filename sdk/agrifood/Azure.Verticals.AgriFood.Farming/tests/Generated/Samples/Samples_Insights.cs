@@ -26,7 +26,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+            Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -41,7 +41,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+            Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -65,7 +65,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -80,7 +80,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+            Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -242,7 +242,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = client.GetInsight("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
+            Response response = client.GetInsight("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -255,7 +255,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = client.GetInsight("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
+            Response response = client.GetInsight("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -287,7 +287,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = await client.GetInsightAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
+            Response response = await client.GetInsightAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -300,7 +300,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            Response response = await client.GetInsightAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
+            Response response = await client.GetInsightAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -376,7 +376,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetInsightsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>"))
+            foreach (var item in client.GetInsightsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -390,7 +390,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            foreach (var item in client.GetInsightsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+            foreach (var item in client.GetInsightsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -423,7 +423,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetInsightsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>"))
+            await foreach (var item in client.GetInsightsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -437,7 +437,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            await foreach (var item in client.GetInsightsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+            await foreach (var item in client.GetInsightsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -470,7 +470,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
+            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -486,7 +486,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
+            var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -511,7 +511,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
+            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -527,7 +527,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetInsightsClient("2022-11-01-preview");
 
-            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
+            var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

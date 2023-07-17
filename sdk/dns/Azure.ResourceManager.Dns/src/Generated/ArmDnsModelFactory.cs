@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDnsModelFactory
     {
-
         /// <summary> Initializes a new instance of DnsZoneData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

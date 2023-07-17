@@ -99,6 +99,11 @@ namespace Azure.Identity
         {
             var options = Options.Clone<EnvironmentCredentialOptions>();
 
+            if (!string.IsNullOrEmpty(options.TenantId))
+            {
+                options.TenantId = Options.TenantId;
+            }
+
             return new EnvironmentCredential(Pipeline, options);
         }
 

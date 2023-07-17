@@ -146,7 +146,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='GetSensorDataModelAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSensorDataModelAsync(string sensorPartnerId, string sensorDataModelId, RequestContext context = null)
+        public virtual async Task<Response> GetSensorDataModelAsync(string sensorPartnerId, string sensorDataModelId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(sensorDataModelId, nameof(sensorDataModelId));
@@ -183,7 +183,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='GetSensorDataModel(string,string,RequestContext)']/*" />
-        public virtual Response GetSensorDataModel(string sensorPartnerId, string sensorDataModelId, RequestContext context = null)
+        public virtual Response GetSensorDataModel(string sensorPartnerId, string sensorDataModelId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(sensorDataModelId, nameof(sensorDataModelId));
@@ -309,7 +309,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='GetSensorDataModelsAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSensorDataModelsAsync(string sensorPartnerId, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSensorDataModelsAsync(string sensorPartnerId, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
 
@@ -351,7 +351,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SensorDataModels.xml" path="doc/members/member[@name='GetSensorDataModels(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSensorDataModels(string sensorPartnerId, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSensorDataModels(string sensorPartnerId, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
 

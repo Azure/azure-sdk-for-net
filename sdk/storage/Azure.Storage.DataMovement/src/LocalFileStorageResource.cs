@@ -13,9 +13,14 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Local File Storage Resource
     /// </summary>
-    public class LocalFileStorageResource : StorageResource
+    public class LocalFileStorageResource : StorageResourceSingle
     {
         private string _path;
+
+        /// <summary>
+        /// The identifier for the type of storage resource.
+        /// </summary>
+        public override string ResourceId => "LocalFile";
 
         /// <summary>
         /// Returns URL
@@ -28,9 +33,9 @@ namespace Azure.Storage.DataMovement
         public override string Path => _path;
 
         /// <summary>
-        /// Cannot return a Url because this is a local path.
+        /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
+        public override bool CanProduceUri => false;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the resource
@@ -166,7 +171,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task CopyFromUriAsync(
-            StorageResource sourceResource,
+            StorageResourceSingle sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
@@ -190,7 +195,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task CopyBlockFromUriAsync(
-            StorageResource sourceResource,
+            StorageResourceSingle sourceResource,
             HttpRange range,
             bool overwrite,
             long completeLength = 0,
@@ -214,6 +219,22 @@ namespace Azure.Storage.DataMovement
                 return Task.FromResult(fileInfo.ToStorageResourceProperties());
             }
             throw new FileNotFoundException();
+        }
+
+        /// <summary>
+        /// Gets the Authorization Header for the storage resource if available.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        public override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -252,6 +273,30 @@ namespace Azure.Storage.DataMovement
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static LocalFileStorageResource RehydrateResource(
+            DataTransferProperties transferProperties,
+            bool isSource)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            return new LocalFileStorageResource(storedPath);
         }
     }
 }
