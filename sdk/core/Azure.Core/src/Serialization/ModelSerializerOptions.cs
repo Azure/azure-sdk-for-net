@@ -33,7 +33,7 @@ namespace Azure.Core.Serialization
 
         private string ValidateFormat(string x)
         {
-            if (x != "D" && x != "W")
+            if (x != ModelSerializerFormat.Data && x != ModelSerializerFormat.Wire)
             {
                 throw new ArgumentException("Format must be either 'D' or 'W'.");
             }
