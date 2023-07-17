@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LicenseKey))
             {
                 writer.WritePropertyName("licenseKey"u8);
-                writer.WriteObjectValue(LicenseKey);
+                JsonSerializer.Serialize(writer, LicenseKey);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -66,14 +67,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            licenseKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            licenseKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ComponentSetup(type, componentName, licenseKey.Value);
+            return new ComponentSetup(type, componentName, licenseKey);
         }
     }
 }

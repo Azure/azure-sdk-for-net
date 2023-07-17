@@ -110,7 +110,7 @@ Console.WriteLine($"Job has been successfully updated. 'ChannelReference' has be
 ## Reclassify a job
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob
-Response<ReclassifyJobResult> reclassifyJob = routerClient.ReclassifyJob(jobWithCpId);
+Response reclassifyJob = routerClient.ReclassifyJob(jobWithCpId);
 ```
 
 ## Accept a job offer
@@ -156,7 +156,7 @@ Console.WriteLine($"Job has been successfully assigned with a worker with assign
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer
 // A worker can also choose to decline an offer
 
-Response<DeclineJobOfferResult> declineOffer = routerClient.DeclineJobOffer(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.OfferId));
+Response declineOffer = routerClient.DeclineJobOffer(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.OfferId));
 ```
 
 ## Complete a job
@@ -164,7 +164,7 @@ Response<DeclineJobOfferResult> declineOffer = routerClient.DeclineJobOffer(new 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CompleteRouterJob
 // Once a worker completes the job, it needs to mark the job as completed
 
-Response<CompleteJobResult> completedJobResult = routerClient.CompleteJob(new CompleteJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
+Response completedJobResult = routerClient.CompleteJob(new CompleteJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
 queriedJob = routerClient.GetJob(jobId);
 Console.WriteLine($"Job has been successfully completed. Current status: {queriedJob.Value.Status}"); // "Completed"
@@ -173,7 +173,7 @@ Console.WriteLine($"Job has been successfully completed. Current status: {querie
 ## Close a job
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CloseRouterJob
-Response<CloseJobResult> closeJobResult = routerClient.CloseJob(new CloseJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
+Response closeJobResult = routerClient.CloseJob(new CloseJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
 queriedJob = routerClient.GetJob(jobId);
 Console.WriteLine($"Job has been successfully closed. Current status: {queriedJob.Value.Status}"); // "Closed"

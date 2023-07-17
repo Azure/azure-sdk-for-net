@@ -351,8 +351,11 @@ namespace Azure.Storage.DataMovement.Tests
             int pause = progressHandler.Updates.Count;
 
             // Resume transfer
-            transferOptions.ResumeFromCheckpointId = transfer.Id;
-            DataTransfer resumeTransfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
+            DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
+                transfer.Id,
+                sourceResource,
+                destinationResource,
+                transferOptions);
 
             tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await resumeTransfer.AwaitCompletion(tokenSource.Token);

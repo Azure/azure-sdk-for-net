@@ -136,7 +136,7 @@ namespace Azure.Analytics.Purview.Share
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class PurviewShareClientBuilderExtensions
+    public static partial class AnalyticsPurviewShareClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Share.AcceptedSentSharesClient, Azure.Analytics.Purview.Share.PurviewShareClientOptions> AddAcceptedSentSharesClient<TBuilder>(this TBuilder builder, string endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Share.AcceptedSentSharesClient, Azure.Analytics.Purview.Share.PurviewShareClientOptions> AddAcceptedSentSharesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

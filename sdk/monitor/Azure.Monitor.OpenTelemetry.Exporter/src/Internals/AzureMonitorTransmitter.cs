@@ -158,7 +158,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;
 
-        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
+        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
             ExportResult result = ExportResult.Failure;
             if (cancellationToken.IsCancellationRequested)
@@ -179,13 +179,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     if (result == ExportResult.Failure && _fileBlobProvider != null)
                     {
                         _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                        result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
+                        result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars, origin);
                     }
                     else
                     {
                         _transmissionStateManager.ResetConsecutiveErrors();
                         _transmissionStateManager.CloseTransmission();
-                        AzureMonitorExporterEventSource.Log.TransmissionSuccess(_connectionVars.InstrumentationKey);
+                        AzureMonitorExporterEventSource.Log.TransmissionSuccess(origin, _connectionVars.InstrumentationKey);
                     }
                 }
                 else
@@ -199,7 +199,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.TransmitterFailed(_connectionVars.InstrumentationKey, ex);
+                AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _connectionVars.InstrumentationKey, ex);
             }
 
             return result;
