@@ -63,6 +63,7 @@ public class ChatFunctionsTests : OpenAITestBase
         followupOptions.Messages.Add(response.Value.Choices[0].Message);
         followupOptions.Messages.Add(new ChatMessage()
         {
+            Role = ChatRole.Function,
             Name = response.Value.Choices[0].Message.FunctionCall.Name,
             Content = JsonSerializer.Serialize(new
             {
