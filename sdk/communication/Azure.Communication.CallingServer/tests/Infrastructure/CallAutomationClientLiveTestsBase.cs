@@ -21,9 +21,8 @@ namespace Azure.Communication.CallingServer
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.skype.com"));
-            // TODO: change back to IgnoredHeaders when re-recording tests
-            LegacyExcludedHeaders.Add("Repeatability-Request-ID");
-            LegacyExcludedHeaders.Add("Repeatability-First-Sent");
+            IgnoredHeaders.Add("Repeatability-Request-ID");
+            IgnoredHeaders.Add("Repeatability-First-Sent");
         }
 
         public bool SkipCallingServerInteractionLiveTests
