@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -37,7 +37,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0181-feba-78fe-343a0d0007b5/:issueAccessToken?api-version=2021-03-07",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0181-feba-78fe-343a0d0007b5/:issueAccessToken?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -76,7 +76,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -112,7 +112,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0181-ff4d-78fe-343a0d0007b6/:issueAccessToken?api-version=2021-03-07",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0181-ff4d-78fe-343a0d0007b6/:issueAccessToken?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -151,7 +151,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -187,7 +187,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0182-006e-78fe-343a0d0007b7/:issueAccessToken?api-version=2021-03-07",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0182-006e-78fe-343a0d0007b7/:issueAccessToken?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -226,7 +226,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -262,7 +262,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0182-0128-28f4-343a0d00e5e4/:issueAccessToken?api-version=2021-03-07",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0182-0128-28f4-343a0d00e5e4/:issueAccessToken?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -301,7 +301,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/identities?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -337,7 +337,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0182-01b9-28f4-343a0d00e5e5/:issueAccessToken?api-version=2021-03-07",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/identities/8%3Aacs%3A357e39d2-a29a-4bf6-88cc-fda0afc2c0ed_0000001a-0182-01b9-28f4-343a0d00e5e5/:issueAccessToken?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -376,7 +376,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -436,7 +436,7 @@
         "Content-Length": "448",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:07 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2",
+        "Location": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2",
         "MS-CV": "IL5d0WxpK0\u002B7EtrTN3cUjA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "076O0ZAAAAAB947gvUPUgQYmSbLw\u002B0Z1fV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -463,7 +463,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -491,7 +491,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -533,7 +533,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -566,7 +566,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -610,7 +610,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -662,7 +662,7 @@
         "Content-Length": "387",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:09 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3ANnPJ0F8wOE4wW6pao5U3WuYHf0vvV5UqiCg_SKsVUm01@thread.v2",
+        "Location": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3ANnPJ0F8wOE4wW6pao5U3WuYHf0vvV5UqiCg_SKsVUm01@thread.v2",
         "MS-CV": "sXjqyVM670yb8MOBXNYCDQ.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "08KO0ZAAAAABgu7YZFIOeS4nvDt8bCDWbV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -685,7 +685,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -750,7 +750,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -780,7 +780,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -824,7 +824,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -848,7 +848,7 @@
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:10 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560050316",
+        "Location": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560050316",
         "MS-CV": "Blq1SeFPHE\u002BTMEPikNl9DA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "08qO0ZAAAAACEcSkqwNouTYo6Gs790wC6V1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -861,7 +861,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3ANnPJ0F8wOE4wW6pao5U3WuYHf0vvV5UqiCg_SKsVUm01%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3ANnPJ0F8wOE4wW6pao5U3WuYHf0vvV5UqiCg_SKsVUm01%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -885,7 +885,7 @@
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:10 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3ANnPJ0F8wOE4wW6pao5U3WuYHf0vvV5UqiCg_SKsVUm01@thread.v2/messages/1689560050546",
+        "Location": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3ANnPJ0F8wOE4wW6pao5U3WuYHf0vvV5UqiCg_SKsVUm01@thread.v2/messages/1689560050546",
         "MS-CV": "VGZ/J/4aqk6F7fOo7FWB5Q.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "08qO0ZAAAAAD4INwjHyO/Qb\u002B7sH\u002BCYzOiV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -898,7 +898,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -922,7 +922,7 @@
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:10 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560050751",
+        "Location": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560050751",
         "MS-CV": "XUb8iP17RkOhjzapj4Inqg.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "08qO0ZAAAAACOvWBG1cTTQa52NHh5sVFaV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -935,7 +935,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -959,7 +959,7 @@
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:10 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560050909",
+        "Location": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560050909",
         "MS-CV": "nrpfMucK\u002BEul2qzCsgc1EA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "08qO0ZAAAAADfDtFH3UOQQKXPHGlNrkNzV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -972,7 +972,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -996,7 +996,7 @@
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:10 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560051101",
+        "Location": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560051101",
         "MS-CV": "FIIix\u002B5VWUCIWnFjTsCbZw.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "086O0ZAAAAACbczvRMSStQbLS1SRl0wq6V1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -1009,7 +1009,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1033,7 +1033,7 @@
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:11 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560051324",
+        "Location": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560051324",
         "MS-CV": "JC1zBreDb0u13ErCykoDGQ.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "086O0ZAAAAADPnoIRrnivQL0vPHIabxZFV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -1046,7 +1046,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1077,7 +1077,7 @@
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 17 Jul 2023 02:14:11 GMT",
-        "Location": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560051539",
+        "Location": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages/1689560051539",
         "MS-CV": "y7L2ZzzgakafAtpvRZXkWQ.0",
         "Strict-Transport-Security": "max-age=2592000",
         "X-Azure-Ref": "086O0ZAAAAAD8tCQhjv9zRYnh/2Zu1lMoV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
@@ -1090,7 +1090,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050316?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050316?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1135,7 +1135,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3ANnPJ0F8wOE4wW6pao5U3WuYHf0vvV5UqiCg_SKsVUm01%40thread.v2/messages/1689560050546?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3ANnPJ0F8wOE4wW6pao5U3WuYHf0vvV5UqiCg_SKsVUm01%40thread.v2/messages/1689560050546?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1180,7 +1180,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050751?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050751?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1225,7 +1225,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050909?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050909?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1270,7 +1270,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560051101?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560051101?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1315,7 +1315,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560051324?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560051324?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1360,7 +1360,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560051539?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560051539?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1412,7 +1412,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1637,7 +1637,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3ANnPJ0F8wOE4wW6pao5U3WuYHf0vvV5UqiCg_SKsVUm01%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3ANnPJ0F8wOE4wW6pao5U3WuYHf0vvV5UqiCg_SKsVUm01%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1749,7 +1749,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?maxPageSize=2\u0026api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?maxPageSize=2\u0026api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1820,11 +1820,11 @@
             }
           }
         ],
-        "nextLink": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632017c6ea06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
+        "nextLink": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632017c6ea06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632017c6ea06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632017c6ea06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1888,11 +1888,11 @@
             }
           }
         ],
-        "nextLink": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e763201dd6ca06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
+        "nextLink": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e763201dd6ca06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e763201dd6ca06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e763201dd6ca06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1956,11 +1956,11 @@
             }
           }
         ],
-        "nextLink": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632018c6aa06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
+        "nextLink": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632018c6aa06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632018c6aa06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632018c6aa06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2020,11 +2020,11 @@
             "createdOn": "2023-07-17T02:14:07Z"
           }
         ],
-        "nextLink": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632013b5fa06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
+        "nextLink": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632013b5fa06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632013b5fa06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632013b5fa06189010000536fa06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2102,7 +2102,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050316?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050316?api-version=2023-07-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2132,7 +2132,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050316?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050316?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2178,7 +2178,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050316?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560050316?api-version=2023-07-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2204,7 +2204,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560051539?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560051539?api-version=2023-07-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2241,7 +2241,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560051539?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560051539?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2293,7 +2293,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2519,7 +2519,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2584,7 +2584,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants/:add?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants/:add?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2626,7 +2626,7 @@
       "ResponseBody": {}
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants/:add?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants/:add?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2668,7 +2668,7 @@
       "ResponseBody": {}
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants?maxPageSize=2\u0026api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants?maxPageSize=2\u0026api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2720,11 +2720,11 @@
             "shareHistoryTime": "1970-01-01T00:00:00Z"
           }
         ],
-        "nextLink": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/participants?skip=2\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
+        "nextLink": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/participants?skip=2\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/participants?skip=2\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/participants?skip=2\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2772,11 +2772,11 @@
             "shareHistoryTime": "1970-01-01T00:00:00Z"
           }
         ],
-        "nextLink": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/participants?skip=4\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
+        "nextLink": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/participants?skip=4\u0026maxPageSize=2\u0026api-version=2023-07-01-preview"
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/participants?skip=4\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/participants?skip=4\u0026maxPageSize=2\u0026api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2817,7 +2817,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2902,7 +2902,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3132,11 +3132,11 @@
             "createdOn": "2023-07-17T02:14:07Z"
           }
         ],
-        "nextLink": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632013b5fa06189010000b081a06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2023-07-01-preview"
+        "nextLink": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632013b5fa06189010000b081a06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2023-07-01-preview"
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632013b5fa06189010000b081a06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e7632013b5fa06189010000b081a06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3214,7 +3214,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants/:remove?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants/:remove?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3247,7 +3247,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/participants?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3322,7 +3322,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3563,11 +3563,11 @@
             "createdOn": "2023-07-17T02:14:09Z"
           }
         ],
-        "nextLink": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e763201b868a061890100000a87a06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2023-07-01-preview"
+        "nextLink": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e763201b868a061890100000a87a06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2023-07-01-preview"
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e763201b868a061890100000a87a06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19:OuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1@thread.v2/messages?syncState=3e3900000031393a4f7541753769616b77775f64777844564642487455415a6c47565566666476727465367630797a546e6e4131407468726561642e763201b868a061890100000a87a06189010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3661,7 +3661,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560057610?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/messages/1689560057610?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3715,7 +3715,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/typing?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/typing?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3744,7 +3744,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/typing?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2/typing?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3775,7 +3775,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads?api-version=2023-07-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3816,7 +3816,7 @@
       }
     },
     {
-      "RequestUri": "https://chat-sdktester-e2e.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
+      "RequestUri": "https://petr-acs-tests-cs.communication.azure.com/chat/threads/19%3AOuAu7iakww_dwxDVFBHtUAZlGVUffdvrte6v0yzTnnA1%40thread.v2?api-version=2023-07-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3842,8 +3842,8 @@
       "ResponseBody": null
     }
   ],
-  "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1177881411"
-  }
+    "Variables": {
+        "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://petr-acs-tests-cs.communication.azure.com/;accesskey=Kg==",
+        "RandomSeed": "1177881411"
+    }
 }
