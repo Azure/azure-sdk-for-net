@@ -6,9 +6,7 @@ using System;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// This type represents the event args relating to the message lock lost event. This event is raised when the message lock is lost while
-    /// processing the message. The event is raised when the message lock expiration time has passed, or if an exception is thrown while
-    /// renewing the message lock.
+    /// This type represents the event args relating to the message lock lost event.
     /// </summary>
     public class MessageLockLostEventArgs
     {
@@ -22,7 +20,9 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets the exception, if any, which led to the event being raised.
+        /// Gets the exception, if any, which led to the event being raised. If the exception is null,
+        /// then the event was raised due to the message lock expiring based on the
+        /// <see cref="ServiceBusReceivedMessage.LockedUntil"/> property.
         /// </summary>
         public Exception Exception { get; }
     }

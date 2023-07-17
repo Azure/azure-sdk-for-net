@@ -6,9 +6,7 @@ using System;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// This type represents the event args relating to the session lock lost event. This event is raised when the session lock is lost while
-    /// processing a message. The event is raised when the session lock expiration time has passed, or if an exception is thrown while
-    /// renewing the session lock.
+    /// This type represents the event args relating to the session lock lost event.
     /// </summary>
     public class SessionLockLostEventArgs : EventArgs
     {
@@ -22,7 +20,9 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets the exception, if any, which led to the event being raised.
+        /// Gets the exception, if any, which led to the event being raised. If the exception is null,
+        /// then the event was raised due to the session lock expiring based on the
+        /// <see cref="ProcessSessionMessageEventArgs.SessionLockedUntil"/> property.
         /// </summary>
         public Exception Exception { get; }
     }
