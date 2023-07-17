@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of PreRulesResourceListResult. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PreRulesResourceListResult(IEnumerable<PreRulesResourceData> value)
+        internal PreRulesResourceListResult(IEnumerable<PreRulestackRuleData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of PreRulesResourceListResult. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal PreRulesResourceListResult(IReadOnlyList<PreRulesResourceData> value, string nextLink)
+        internal PreRulesResourceListResult(IReadOnlyList<PreRulestackRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on this page. </summary>
-        public IReadOnlyList<PreRulesResourceData> Value { get; }
+        public IReadOnlyList<PreRulestackRuleData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }
