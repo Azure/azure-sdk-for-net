@@ -58,8 +58,7 @@ namespace Azure.AI.FormRecognizer.Tests
                                 trainedModel.ModelId,
                                 includeFieldElements: false,
                                 expectedFirstPageNumber: 1,
-                                expectedLastPageNumber: 1,
-                                isComposedModel: false);
+                                expectedLastPageNumber: 1);
             }
             else
             {
@@ -115,8 +114,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 trainedModel.ModelId,
                 includeFieldElements: includeFieldElements,
                 expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1,
-                isComposedModel: false);
+                expectedLastPageNumber: 1);
 
             // Testing that we shuffle things around correctly so checking only once per property.
 
@@ -206,8 +204,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 trainedModel.ModelId,
                 includeFieldElements: true,
                 expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 2,
-                isComposedModel: false);
+                expectedLastPageNumber: 2);
 
             // Check some values to make sure that fields from both pages are being populated.
 
@@ -256,8 +253,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 trainedModel.ModelId,
                 includeFieldElements: true,
                 expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1,
-                isComposedModel: false);
+                expectedLastPageNumber: 1);
 
             var blankPage = recognizedForm.Pages.Single();
 
@@ -299,8 +295,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 trainedModel.ModelId,
                 includeFieldElements: true,
                 expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 3,
-                isComposedModel: false);
+                expectedLastPageNumber: 3);
 
             for (int pageIndex = 0; pageIndex < recognizedForm.Pages.Count; pageIndex++)
             {
@@ -652,62 +647,6 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(expected, forms.Count);
         }
 
-        [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeCustomFormsWithTableDynamicRows()
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeCustomFormsOperation operation;
-
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.TableVariableRows);
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormTableDynamicRows);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-
-            RecognizedForm form = forms.Single();
-
-            ValidateModelWithLabelsForm(
-                form,
-                trainedModel.ModelId,
-                includeFieldElements: false,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1,
-                isComposedModel: false);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeCustomFormsWithTableFixedRows()
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeCustomFormsOperation operation;
-
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.TableFixedRows);
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormTableFixedRows);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-
-            RecognizedForm form = forms.Single();
-
-            ValidateModelWithLabelsForm(
-                form,
-                trainedModel.ModelId,
-                includeFieldElements: false,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1,
-                isComposedModel: false);
-        }
-
         private void ValidateModelWithNoLabelsForm(RecognizedForm recognizedForm, string modelId, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
             Assert.NotNull(recognizedForm.FormType);
@@ -718,16 +657,11 @@ namespace Azure.AI.FormRecognizer.Tests
             ValidateRecognizedForm(recognizedForm, includeFieldElements, expectedFirstPageNumber, expectedLastPageNumber);
         }
 
-        private void ValidateModelWithLabelsForm(RecognizedForm recognizedForm, string modelId, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber, bool isComposedModel)
+        private void ValidateModelWithLabelsForm(RecognizedForm recognizedForm, string modelId, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
             Assert.NotNull(recognizedForm.FormType);
             Assert.IsTrue(recognizedForm.FormTypeConfidence.HasValue);
-            Assert.IsNotNull(recognizedForm.ModelId);
-
-            if (!isComposedModel)
-                Assert.AreEqual(modelId, recognizedForm.ModelId);
-            else
-                Assert.AreNotEqual(modelId, recognizedForm.ModelId);
+            Assert.AreEqual(modelId, recognizedForm.ModelId);
 
             ValidateRecognizedForm(recognizedForm, includeFieldElements, expectedFirstPageNumber, expectedLastPageNumber);
         }
