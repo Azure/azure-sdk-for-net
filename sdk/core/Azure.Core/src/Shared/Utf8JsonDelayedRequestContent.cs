@@ -24,7 +24,7 @@ namespace Azure.Core
         {
             _content = new MultiBufferRequestContent();
             _model = model;
-            _serializerOptions = options ?? ModelSerializerOptions.AzureSerivceDefault;
+            _serializerOptions = options ?? ModelSerializerOptions.AzureServiceDefault;
         }
 
         private MultiBufferRequestContent Content => _content ??= new MultiBufferRequestContent();

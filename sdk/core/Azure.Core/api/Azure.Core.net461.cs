@@ -1165,7 +1165,7 @@ namespace Azure.Core.Serialization
     }
     public partial class ModelSerializerOptions
     {
-        public static readonly Azure.Core.Serialization.ModelSerializerOptions AzureSerivceDefault;
+        public static readonly Azure.Core.Serialization.ModelSerializerOptions AzureServiceDefault;
         public ModelSerializerOptions() { }
         public bool IgnoreAdditionalProperties { get { throw null; } set { } }
         public bool IgnoreReadOnlyProperties { get { throw null; } set { } }

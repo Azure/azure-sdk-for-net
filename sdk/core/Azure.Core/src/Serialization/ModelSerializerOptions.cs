@@ -14,7 +14,7 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// .
         /// </summary>
-        public static readonly ModelSerializerOptions AzureSerivceDefault = new ModelSerializerOptions()
+        public static readonly ModelSerializerOptions AzureServiceDefault = new ModelSerializerOptions()
         {
             IgnoreAdditionalProperties = true,
             IgnoreReadOnlyProperties = true,

@@ -15,6 +15,7 @@ namespace Azure.Core.Perf
 {
     [MemoryDiagnoser]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
+    [InProcess]
     public abstract class SerializationBenchmark<T> where T : class, IJsonModelSerializable
     {
         private string _json;
@@ -41,7 +42,7 @@ namespace Azure.Core.Perf
             _model = ModelSerializer.Deserialize<T>(_data);
             _response = new MockResponse(200);
             _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
-            _options = ModelSerializerOptions.AzureSerivceDefault;
+            _options = ModelSerializerOptions.AzureServiceDefault;
         }
 
         [Benchmark]

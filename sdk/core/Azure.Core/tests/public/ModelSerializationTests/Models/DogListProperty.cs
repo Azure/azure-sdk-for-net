@@ -44,13 +44,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             var content = new MultiBufferRequestContent();
             using var writer = new Utf8JsonWriter(content);
-            ((IJsonModelSerializable)dog).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+            ((IJsonModelSerializable)dog).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
             writer.Flush();
             return content;
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -96,7 +96,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         internal static DogListProperty DeserializeDogListProperty(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.AzureSerivceDefault;
+            options ??= ModelSerializerOptions.AzureServiceDefault;
 
             double weight = default;
             string name = "";
