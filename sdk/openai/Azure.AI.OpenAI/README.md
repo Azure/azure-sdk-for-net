@@ -341,11 +341,7 @@ Response<ImageGenerations> imageGenerations = await client.GetImageGenerationsAs
     });
 
 // Image Generations responses provide URLs you can use to retrieve requested images
-Uri _ = imageGenerations.Value.Data[0].Url;
-
-// You can also use the convenience GetStreamAsync() method to fetch it using the client transport that
-// facilitated the initial request
-Stream __ = await imageGenerations.Value.Data[0].GetStreamAsync();
+Uri imageUri = imageGenerations.Value.Data[0].Url;
 ```
 
 ## Troubleshooting

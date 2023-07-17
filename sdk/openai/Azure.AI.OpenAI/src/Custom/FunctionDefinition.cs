@@ -21,8 +21,14 @@ namespace Azure.AI.OpenAI
         public static FunctionDefinition None
             = CreatePredefinedFunctionDefinition(FunctionCallPreset.None.ToString());
 
+        /// <summary>
+        /// Initializes a new instance of FunctionDefinition.
+        /// </summary>
         public FunctionDefinition()
-        { }
+        {
+            // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
+            //                      may be reconsidered for required payload constituents in the future.
+        }
 
         /// <summary> The name of the function to be called. </summary>
         public string Name { get; set; }

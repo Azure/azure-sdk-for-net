@@ -3,6 +3,8 @@
 
 namespace Azure.AI.OpenAI
 {
+    // CUSTOM CODE NOTE: defined here to suppress public visibility, as this is encapsulated in static members on
+    //                      FuntionDefinition, instead.
     internal partial class FunctionName
     {}
 }

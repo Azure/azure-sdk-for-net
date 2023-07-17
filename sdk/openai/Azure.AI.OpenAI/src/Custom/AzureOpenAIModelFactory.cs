@@ -18,23 +18,16 @@ namespace Azure.AI.OpenAI
         /// Initializes a new instance of ImageLocation for testing and mocking.
         /// </summary>
         /// <param name="url">The URL to represent as a download source for an image</param>
-        /// <param name="pipeline">
-        ///     An optional HttpPipeline to associate with the ImageLocation, needed for the
-        ///     GetStream() convenience method to function.
-        /// </param>
         /// <returns>A new instance of ImageLocation</returns>
         /// <exception cref="ArgumentNullException">Thrown if url is null</exception>
-        public static ImageLocation ImageLocation(Uri url, HttpPipeline pipeline = default)
+        public static ImageLocation ImageLocation(Uri url)
         {
             if (url == null)
             {
                 throw new ArgumentNullException(nameof(url));
             }
 
-            return new ImageLocation(url)
-            {
-                ClientPipeline = pipeline,
-            };
+            return new ImageLocation(url);
         }
 
         /// <summary>

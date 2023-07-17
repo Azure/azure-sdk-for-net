@@ -24,7 +24,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.ContentFilterResult ContentFilterResult(Azure.AI.OpenAI.ContentFilterSeverity severity = default(Azure.AI.OpenAI.ContentFilterSeverity), bool isFiltered = false) { throw null; }
         public static Azure.AI.OpenAI.ContentFilterResults ContentFilterResults(Azure.AI.OpenAI.ContentFilterResult sexualFilterResult = null, Azure.AI.OpenAI.ContentFilterResult violenceFilterResult = null, Azure.AI.OpenAI.ContentFilterResult hateFilterResult = null, Azure.AI.OpenAI.ContentFilterResult selfHarmFilterResult = null) { throw null; }
         public static Azure.AI.OpenAI.ImageGenerations ImageGenerations(System.DateTimeOffset created, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ImageLocation> data) { throw null; }
-        public static Azure.AI.OpenAI.ImageLocation ImageLocation(System.Uri url, Azure.Core.Pipeline.HttpPipeline pipeline = null) { throw null; }
+        public static Azure.AI.OpenAI.ImageLocation ImageLocation(System.Uri url) { throw null; }
         public static Azure.AI.OpenAI.PromptFilterResult PromptFilterResult(int index = 0, Azure.AI.OpenAI.ContentFilterResults contentFilterResults = null) { throw null; }
         public static Azure.AI.OpenAI.StreamingChatChoice StreamingChatChoice(Azure.AI.OpenAI.ChatChoice originalBaseChoice = null) { throw null; }
         public static Azure.AI.OpenAI.StreamingChatCompletions StreamingChatCompletions(Azure.AI.OpenAI.ChatCompletions baseChatCompletions = null, System.Collections.Generic.List<Azure.AI.OpenAI.StreamingChatChoice> streamingChatChoices = null) { throw null; }
@@ -260,8 +260,6 @@ namespace Azure.AI.OpenAI
     {
         internal ImageLocation() { }
         public System.Uri Url { get { throw null; } }
-        public System.IO.Stream GetStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImageSize : System.IEquatable<Azure.AI.OpenAI.ImageSize>

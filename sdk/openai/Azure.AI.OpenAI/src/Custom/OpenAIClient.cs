@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -97,9 +96,8 @@ namespace Azure.AI.OpenAI
             _pipeline = HttpPipelineBuilder.Build(
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
-                new HttpPipelinePolicy[]
-                {
-                    new SkippableBearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes)
+                new HttpPipelinePolicy[] {
+                    new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes)
                 },
                 new ResponseClassifier());
             _endpoint = endpoint;
@@ -629,14 +627,6 @@ namespace Azure.AI.OpenAI
                     rawResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
                     responseValue = ImageGenerations.FromResponse(rawResponse);
                 }
-
-                // Supplement ImageLocation entries with a reference to the client's pipeline; this facilitates the
-                // use of the GetStreamAsync helper.
-                foreach (ImageLocation imageLocation in responseValue.Data)
-                {
-                    imageLocation.ClientPipeline = _pipeline;
-                }
-
                 return Response.FromValue(responseValue, rawResponse);
             }
             catch (Exception e)
@@ -699,14 +689,6 @@ namespace Azure.AI.OpenAI
                         .ConfigureAwait(false);
                     responseValue = ImageGenerations.FromResponse(rawResponse);
                 }
-
-                // Supplement ImageLocation entries with a reference to the client's pipeline; this facilitates the
-                // use of the GetStreamAsync helper.
-                foreach (ImageLocation imageLocation in responseValue.Data)
-                {
-                    imageLocation.ClientPipeline = _pipeline;
-                }
-
                 return Response.FromValue(responseValue, rawResponse);
             }
             catch (Exception e)
