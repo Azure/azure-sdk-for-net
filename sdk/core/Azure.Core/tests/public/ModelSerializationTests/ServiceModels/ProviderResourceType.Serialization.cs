@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Security.AccessControl;
 using System.Text.Json;
@@ -13,10 +14,14 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ProviderResourceType : IUtf8JsonSerializable
+    public partial class ProviderResourceType : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+
+        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.AzureSerivceDefault;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -150,9 +155,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
-
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if(Optional.IsDefined(ResourceType))
@@ -242,6 +245,117 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+        }
+
+        private struct ProviderResourceTypeProperties
+        {
+            public Optional<string> ResourceType { get; set; }
+            public Optional<IReadOnlyList<string>> Locations { get; set; }
+            public Optional<IReadOnlyList<ProviderExtendedLocation>> LocationMappings { get; set; }
+            public Optional<IReadOnlyList<ResourceTypeAlias>> Aliases { get; set; }
+            public Optional<IReadOnlyList<string>> ApiVersions { get; set; }
+            public Optional<string> DefaultApiVersion { get; set; }
+            public Optional<IReadOnlyList<ZoneMapping>> ZoneMappings { get; set; }
+            public Optional<IReadOnlyList<ApiProfile>> ApiProfiles { get; set; }
+            public Optional<string> Capabilities { get; set; }
+            public Optional<IReadOnlyDictionary<string, string>> Properties { get; set; }
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (!reader.TryDeserialize<ProviderResourceTypeProperties>(options, SetProperty, out var properties))
+                return null;
+
+            return new ProviderResourceType(
+                properties.ResourceType.Value,
+                Optional.ToList(properties.Locations),
+                Optional.ToList(properties.LocationMappings),
+                Optional.ToList(properties.Aliases),
+                Optional.ToList(properties.ApiVersions),
+                properties.DefaultApiVersion.Value,
+                Optional.ToList(properties.ZoneMappings),
+                Optional.ToList(properties.ApiProfiles),
+                properties.Capabilities.Value,
+                Optional.ToDictionary(properties.Properties));
+        }
+
+        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ProviderResourceTypeProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (propertyName.SequenceEqual("resourceType"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.ResourceType = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("locations"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Locations = reader.GetList<string>(options);
+                return;
+            }
+            if (propertyName.SequenceEqual("locationMappings"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.LocationMappings = reader.GetList<ProviderExtendedLocation>(options);
+                return;
+            }
+            if (propertyName.SequenceEqual("aliases"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Aliases = reader.GetList<ResourceTypeAlias>(options);
+                return;
+            }
+            if (propertyName.SequenceEqual("apiVersions"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.ApiVersions = reader.GetList<string>(options);
+                return;
+            }
+            if (propertyName.SequenceEqual("defaultApiVersion"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.DefaultApiVersion = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("zoneMappings"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.ZoneMappings = reader.GetList<ZoneMapping>(options);
+                return;
+            }
+            if (propertyName.SequenceEqual("apiProfiles"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.ApiProfiles = reader.GetList<ApiProfile>(options);
+                return;
+            }
+            if (propertyName.SequenceEqual("capabilities"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Capabilities = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("properties"u8))
+            {
+                properties.Properties = reader.GetDictionary<string, string>(options);
+                return;
+            }
+            reader.Skip();
+        }
+
+            object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProviderResourceType(doc.RootElement, options);
         }
     }
 }

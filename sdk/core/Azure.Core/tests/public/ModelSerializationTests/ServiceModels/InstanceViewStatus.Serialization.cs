@@ -7,6 +7,7 @@
 
 using System;
 using System.Globalization;
+using System.Reflection.Emit;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Serialization;
@@ -111,27 +112,15 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 
         object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            InstanceViewStatusProperties properties = new InstanceViewStatusProperties();
-
-            reader.Read();
-            if (reader.TokenType == JsonTokenType.Null)
+            if (!reader.TryDeserialize<InstanceViewStatusProperties>(options, SetProperty, out var properties))
                 return null;
 
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new FormatException("Expected StartObject token");
-
-            while (reader.Read())
-            {
-                if (reader.TokenType == JsonTokenType.EndObject)
-                    break;
-
-                if (reader.TokenType != JsonTokenType.PropertyName)
-                    throw new FormatException("Expected PropertyName token");
-
-                var propertyName = reader.ValueSpan;
-                SetProperty(propertyName, ref properties, ref reader, options);
-            }
-            return new InstanceViewStatus(properties.Code.Value, Optional.ToNullable(properties.Level), properties.DisplayStatus.Value, properties.Message.Value, Optional.ToNullable(properties.Time));
+            return new InstanceViewStatus(
+                properties.Code.Value,
+                Optional.ToNullable(properties.Level),
+                properties.DisplayStatus.Value,
+                properties.Message.Value,
+                Optional.ToNullable(properties.Time));
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref InstanceViewStatusProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)

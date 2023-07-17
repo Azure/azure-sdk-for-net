@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.AccessControl;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Serialization;
@@ -104,7 +105,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if(Optional.IsDefined(Namespace))
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
@@ -124,12 +125,12 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
                 writer.WritePropertyName("registrationState"u8);
                 writer.WriteStringValue(RegistrationState);
             }
-            if(Optional.IsDefined(RegistrationPolicy))
+            if (Optional.IsDefined(RegistrationPolicy))
             {
                 writer.WritePropertyName("registrationPolicy"u8);
                 writer.WriteStringValue(RegistrationPolicy);
             }
-            if(Optional.IsDefined(ProviderAuthorizationConsentState))
+            if (Optional.IsDefined(ProviderAuthorizationConsentState))
             {
                 writer.WritePropertyName("providerAuthorizationConsentState"u8);
                 writer.WriteStringValue(ProviderAuthorizationConsentState.ToString());
@@ -137,9 +138,75 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             writer.WriteEndObject();
         }
 
+        private struct ResourceProviderDataProperties
+        {
+            public Optional<ResourceIdentifier> Id { get; set; }
+            public Optional<string> Namespace { get; set; }
+            public Optional<string> RegistrationState { get; set; }
+            public Optional<string> RegistrationPolicy { get; set; }
+            public Optional<IReadOnlyList<ProviderResourceType>> ResourceTypes { get; set; }
+            public Optional<ProviderAuthorizationConsentState> ProviderAuthorizationConsentState { get; set; }
+        }
+
         object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            throw new NotImplementedException();
+            if (!reader.TryDeserialize< ResourceProviderDataProperties>(options, SetProperty, out var properties))
+                return null;
+
+            return new ResourceProviderData(
+                properties.Id.Value,
+                properties.Namespace.Value,
+                properties.RegistrationState.Value,
+                properties.RegistrationPolicy.Value,
+                Optional.ToList(properties.ResourceTypes),
+                Optional.ToNullable(properties.ProviderAuthorizationConsentState));
+        }
+
+        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ResourceProviderDataProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (propertyName.SequenceEqual("id"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Id = new ResourceIdentifier(reader.GetString());
+                return;
+            }
+            if (propertyName.SequenceEqual("namespace"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Namespace = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("registrationState"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.RegistrationState = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("registrationPolicy"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.RegistrationPolicy = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("resourceTypes"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.ResourceTypes = reader.GetList<ProviderResourceType>(options);
+                return;
+            }
+            if (propertyName.SequenceEqual("providerAuthorizationConsentState"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.ProviderAuthorizationConsentState = new ProviderAuthorizationConsentState(reader.GetString());
+                return;
+            }
+            reader.Skip();
         }
     }
 }

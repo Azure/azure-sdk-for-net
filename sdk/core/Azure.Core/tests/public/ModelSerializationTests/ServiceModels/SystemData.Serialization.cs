@@ -96,42 +96,24 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
         {
             public Optional<string> CreatedBy { get; set; }
             public Optional<CreatedByType> CreatedByType { get; set; }
-            public Optional<DateTimeOffset> CreatedAt { get; set; }
+            public Optional<DateTimeOffset> CreatedOn { get; set; }
             public Optional<string> LastModifiedBy { get; set; }
             public Optional<CreatedByType> LastModifiedByType { get; set; }
-            public Optional<DateTimeOffset> LastModifiedAt { get; set; }
+            public Optional<DateTimeOffset> LastModifiedOn { get; set; }
         }
 
         object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            SystemDataProperties properties = new SystemDataProperties();
-
-            reader.Read();
-            if (reader.TokenType == JsonTokenType.Null)
+            if (!reader.TryDeserialize<SystemDataProperties>(options, SetProperty, out var properties))
                 return null;
-
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new FormatException("Expected StartObject token");
-
-            while (reader.Read())
-            {
-                if (reader.TokenType == JsonTokenType.EndObject)
-                    break;
-
-                if (reader.TokenType != JsonTokenType.PropertyName)
-                    throw new FormatException("Expected PropertyName token");
-
-                var propertyName = reader.ValueSpan;
-                SetProperty(propertyName, ref properties, ref reader, options);
-            }
 
             return new SystemData(
                 properties.CreatedBy.Value,
                 Optional.ToNullable(properties.CreatedByType),
-                Optional.ToNullable(properties.CreatedAt),
+                Optional.ToNullable(properties.CreatedOn),
                 properties.LastModifiedBy.Value,
                 Optional.ToNullable(properties.LastModifiedByType),
-                Optional.ToNullable(properties.LastModifiedAt));
+                Optional.ToNullable(properties.LastModifiedOn));
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref SystemDataProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
@@ -154,7 +136,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
             {
                 reader.Read();
                 if (reader.TokenType != JsonTokenType.Null)
-                    properties.CreatedAt = DateTimeOffset.Parse(reader.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+                    properties.CreatedOn = DateTimeOffset.Parse(reader.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
                 return;
             }
             if (propertyName.SequenceEqual("lastModifiedBy"u8))
@@ -175,7 +157,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
             {
                 reader.Read();
                 if (reader.TokenType != JsonTokenType.Null)
-                    properties.LastModifiedAt = DateTimeOffset.Parse(reader.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+                    properties.LastModifiedOn = DateTimeOffset.Parse(reader.GetString(), CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
                 return;
             }
             reader.Skip();

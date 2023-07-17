@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ResourceTypeAliasPath : IUtf8JsonSerializable
+    public partial class ResourceTypeAliasPath : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        internal static ResourceTypeAliasPath DeserializeResourceTypeAliasPath(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+
+        internal static ResourceTypeAliasPath DeserializeResourceTypeAliasPath(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.AzureSerivceDefault;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,9 +72,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             }
             return new ResourceTypeAliasPath(path.Value, Optional.ToList(apiVersions), pattern.Value, metadata.Value);
         }
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
@@ -97,6 +102,61 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                 writer.WriteObjectValue(Metadata);
             }
             writer.WriteEndObject();
+        }
+
+        private struct ResourceTypeAliasPathProperties
+        {
+            public Optional<string> Path { get; set; }
+            public Optional<IReadOnlyList<string>> ApiVersions { get; set; }
+            public Optional<ResourceTypeAliasPattern> Pattern { get; set; }
+            public Optional<ResourceTypeAliasPathMetadata> Metadata { get; set; }
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (!reader.TryDeserialize<ResourceTypeAliasPathProperties>(options, SetProperty, out var properties))
+                return null;
+
+            return new ResourceTypeAliasPath(properties.Path.Value, Optional.ToList(properties.ApiVersions), properties.Pattern.Value, properties.Metadata.Value);
+        }
+
+        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ResourceTypeAliasPathProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (propertyName.SequenceEqual("path"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Path = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("apiVersions"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.ApiVersions = reader.GetList<string>(options);
+                return;
+            }
+            if (propertyName.SequenceEqual("pattern"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Pattern = reader.GetObject<ResourceTypeAliasPattern>(options);
+                return;
+            }
+            if (propertyName.SequenceEqual("metadata"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Metadata = reader.GetObject<ResourceTypeAliasPathMetadata>(options);
+                return;
+            }
+            reader.Skip();
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceTypeAliasPath(doc.RootElement, options);
         }
     }
 }

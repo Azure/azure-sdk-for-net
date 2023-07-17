@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -13,10 +14,14 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ZoneMapping : IUtf8JsonSerializable
+    public partial class ZoneMapping : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        internal static ZoneMapping DeserializeZoneMapping(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+
+        internal static ZoneMapping DeserializeZoneMapping(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.AzureSerivceDefault;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,9 +56,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             }
             return new ZoneMapping(Optional.ToNullable(location), Optional.ToList(zones));
         }
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
@@ -72,6 +76,45 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        private struct ZoneMappingProperties
+        {
+            public Optional<AzureLocation> Location { get; set; }
+            public Optional<IReadOnlyList<string>> Zones { get; set; }
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (!reader.TryDeserialize<ZoneMappingProperties>(options, SetProperty, out var properties))
+                return null;
+
+            return new ZoneMapping(Optional.ToNullable(properties.Location), Optional.ToList(properties.Zones));
+        }
+
+        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ZoneMappingProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (propertyName.SequenceEqual("location"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Location = new AzureLocation(reader.GetString());
+                return;
+            }
+            if (propertyName.SequenceEqual("zones"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Zones = reader.GetList<string>(options);
+                return;
+            }
+            reader.Skip();
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeZoneMapping(doc.RootElement, options);
         }
     }
 }

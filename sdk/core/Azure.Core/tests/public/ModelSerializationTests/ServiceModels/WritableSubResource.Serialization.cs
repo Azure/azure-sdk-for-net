@@ -70,26 +70,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 
         object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            WritableSubResourceProperties properties = new WritableSubResourceProperties();
-
-            reader.Read();
-            if (reader.TokenType == JsonTokenType.Null)
+            if (!reader.TryDeserialize<WritableSubResourceProperties>(options, SetProperty, out var properties))
                 return null;
-
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new FormatException("Expected StartObject token");
-
-            while (reader.Read())
-            {
-                if (reader.TokenType == JsonTokenType.EndObject)
-                    break;
-
-                if (reader.TokenType != JsonTokenType.PropertyName)
-                    throw new FormatException("Expected PropertyName token");
-
-                var propertyName = reader.ValueSpan;
-                SetProperty(propertyName, ref properties, ref reader, options);
-            }
 
             return new WritableSubResource(properties.Id);
         }

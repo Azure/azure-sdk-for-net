@@ -5,17 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Serialization;
-using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ResourceTypeAliasPattern : IUtf8JsonSerializable
+    public partial class ResourceTypeAliasPattern : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        internal static ResourceTypeAliasPattern DeserializeResourceTypeAliasPattern(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+
+        internal static ResourceTypeAliasPattern DeserializeResourceTypeAliasPattern(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.AzureSerivceDefault;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,9 +51,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             }
             return new ResourceTypeAliasPattern(phrase.Value, variable.Value, Optional.ToNullable(type));
         }
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Phrase))
@@ -68,6 +71,53 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                 writer.WriteStringValue(PatternType.Value.ToSerialString());
             }
             writer.WriteEndObject();
+        }
+
+        private struct ResourceTypeAliasPatternProperites
+        {
+            public Optional<string> Phrase { get; set; }
+            public Optional<string> Variable { get; set; }
+            public Optional<ResourceTypeAliasPatternType> PatternType { get; set; }
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (!reader.TryDeserialize<ResourceTypeAliasPatternProperites>(options, SetProperty, out var properties))
+                return null;
+
+            return new ResourceTypeAliasPattern(properties.Phrase.Value, properties.Variable.Value, Optional.ToNullable(properties.PatternType));
+        }
+
+        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ResourceTypeAliasPatternProperites properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (propertyName.SequenceEqual("phrase"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Phrase = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("variable"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.Variable = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("type"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.PatternType = reader.GetString().ToResourceTypeAliasPatternType();
+                return;
+            }
+            reader.Skip();
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceTypeAliasPattern(doc.RootElement, options);
         }
     }
 }

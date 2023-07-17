@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.IO;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +13,14 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ApiProfile : IUtf8JsonSerializable
+    public partial class ApiProfile : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        internal static ApiProfile DeserializeApiProfile(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
+
+        internal static ApiProfile DeserializeApiProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.AzureSerivceDefault;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,9 +42,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             }
             return new ApiProfile(profileVersion.Value, apiVersion.Value);
         }
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
-        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ProfileVersion))
@@ -53,6 +57,45 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                 writer.WriteStringValue(ApiVersion);
             }
             writer.WriteEndObject();
+        }
+
+        private struct ApiProfileProperties
+        {
+            public Optional<string> ProfileVersion { get; set; }
+            public Optional<string> ApiVersion { get; set; }
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (!reader.TryDeserialize<ApiProfileProperties>(options, SetProperty, out var properties))
+                return null;
+
+            return new ApiProfile(properties.ProfileVersion.Value, properties.ApiVersion.Value);
+        }
+
+        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ApiProfileProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (propertyName.SequenceEqual("profileVersion"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.ProfileVersion = reader.GetString();
+                return;
+            }
+            if (propertyName.SequenceEqual("apiVersion"u8))
+            {
+                reader.Read();
+                if (reader.TokenType != JsonTokenType.Null)
+                    properties.ApiVersion = reader.GetString();
+                return;
+            }
+            reader.Skip();
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiProfile(doc.RootElement, options);
         }
     }
 }

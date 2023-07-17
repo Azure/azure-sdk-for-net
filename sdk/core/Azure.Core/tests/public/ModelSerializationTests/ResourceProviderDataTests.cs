@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Serialization;
-using Azure.Core.Tests.Public.ResourceManager.Compute;
 using Azure.Core.Tests.Public.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -24,19 +23,30 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void BufferTest() =>
             RoundTripTest(SerializeWithBuffer);
 
-        private void RoundTripTest(Func<ResourceProviderData, string> serialize)
+        [Test]
+        public void JsonReaderTest() =>
+            RoundTripTest(SerializeWithModelSerializer, DeserializeWithJsonReader);
+
+        private void RoundTripTest(Func<ResourceProviderData, string> serialize, Func<string, ResourceProviderData> deserialize = default)
         {
             string serviceResponse = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ResourceProviderData.json")).TrimEnd();
 
             var expectedSerializedString = serviceResponse;
 
-            ResourceProviderData model = ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)));
+            ResourceProviderData model = deserialize is null ? ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse))) : deserialize(serviceResponse);
 
             string roundTrip = serialize(model);
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            ResourceProviderData model2 = ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)));
+            ResourceProviderData model2 = deserialize is null ? ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip))) : deserialize(roundTrip);
+        }
+
+        private ResourceProviderData DeserializeWithJsonReader(string json)
+        {
+            Utf8JsonReader reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(json));
+            var model = Activator.CreateInstance(typeof(ResourceProviderData), true) as IJsonModelSerializable;
+            return (ResourceProviderData)model.Deserialize(ref reader, new ModelSerializerOptions());
         }
 
         private string SerializeWithModelSerializer(ResourceProviderData model)

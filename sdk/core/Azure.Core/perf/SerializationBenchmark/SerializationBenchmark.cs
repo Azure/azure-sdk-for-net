@@ -15,7 +15,6 @@ namespace Azure.Core.Perf
 {
     [MemoryDiagnoser]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    [Config(typeof(SerializationBenchmarkConfig))]
     public abstract class SerializationBenchmark<T> where T : class, IJsonModelSerializable
     {
         private string _json;
@@ -34,14 +33,14 @@ namespace Azure.Core.Perf
 
         protected abstract string JsonFileName { get; }
 
-        public SerializationBenchmark()
+        [GlobalSetup]
+        public void SetUp()
         {
             _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "SerializationBenchmark", "TestData", JsonFileName));
             _data = BinaryData.FromString(_json);
             _model = ModelSerializer.Deserialize<T>(_data);
-            MockResponse response = new MockResponse(200);
-            response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
-            _response = response;
+            _response = new MockResponse(200);
+            _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
             _options = ModelSerializerOptions.AzureSerivceDefault;
         }
 
@@ -135,35 +134,43 @@ namespace Azure.Core.Perf
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
-        public void Deserialize_ModelSerializer()
+        public void Deserialize_ModelSerializerFromString()
         {
             ModelSerializer.Deserialize<T>(BinaryData.FromString(_json), _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
-        public void Deserialize_ModelSerializerWithPreload()
+        public void Deserialize_ModelSerializerFromBinaryData()
         {
             ModelSerializer.Deserialize<T>(_data, _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public void Deserialize_PublicInterface()
+        public void Deserialize_PublicInterfaceFromString()
         {
             _model.Deserialize(BinaryData.FromString(_json), _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public void Deserialize_PublicInterfaceWithPreload()
+        public void Deserialize_PublicInterfaceFromBinaryData()
         {
             _model.Deserialize(_data, _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public void Deserialize_Utf8JsonReader()
+        public void Deserialize_Utf8JsonReaderFromBinaryData()
+        {
+            Utf8JsonReader reader = new Utf8JsonReader(_data);
+            _model.Deserialize(ref reader, _options);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("PublicInterface")]
+        public void Deserialize_Utf8JsonReaderFromString()
         {
             Utf8JsonReader reader = new Utf8JsonReader(_data);
             _model.Deserialize(ref reader, _options);

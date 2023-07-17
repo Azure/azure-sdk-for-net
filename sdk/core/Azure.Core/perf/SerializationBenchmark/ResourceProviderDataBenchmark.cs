@@ -4,9 +4,11 @@
 using System;
 using System.Text.Json;
 using Azure.Core.Tests.Public.ResourceManager.Resources;
+using BenchmarkDotNet.Attributes;
 
 namespace Azure.Core.Perf
 {
+    [Config(typeof(SerializationBenchmarkConfig))]
     public class ResourceProviderDataBenchmark : SerializationBenchmark<ResourceProviderData>
     {
         protected override string JsonFileName => "ResourceProviderData.json";
