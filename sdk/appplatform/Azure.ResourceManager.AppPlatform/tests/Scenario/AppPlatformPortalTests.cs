@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             var rg = await CreateResourceGroup();
             var service = await CreateEnterpriseAppPlatformService(rg, Recording.GenerateAssetName("aztestservice"));
             _appPlatformApiPortalCollection = service.GetAppPlatformApiPortals();
-            _portal = await CreateAppPlatformApp(service);
+            _portal = await CreateAppPlatformApp();
         }
 
-        private async Task<AppPlatformApiPortalResource> CreateAppPlatformApp(AppPlatformServiceResource service)
+        private async Task<AppPlatformApiPortalResource> CreateAppPlatformApp()
         {
             var data = new AppPlatformApiPortalData();
             var portal = await _appPlatformApiPortalCollection.CreateOrUpdateAsync(WaitUntil.Completed, _portalName, data);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             Assert.IsFalse(flag);
         }
 
-        private void ValidateAppPlatformApiPortal(AppPlatformApiPortalData portal, string portalName = _portalName)
+        private void ValidateAppPlatformApiPortal(AppPlatformApiPortalData portal)
         {
             Assert.IsNotNull(portal);
         }

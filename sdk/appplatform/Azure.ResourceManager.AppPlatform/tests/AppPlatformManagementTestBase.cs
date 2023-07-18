@@ -84,5 +84,40 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             var lro = await rg.GetAppPlatformServices().CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
             return lro.Value;
         }
+
+        protected async Task<AppPlatformAppResource> CreateAppPlatformApp(AppPlatformServiceResource service,string appName)
+        {
+            AppPlatformAppData data = new AppPlatformAppData()
+            {
+            };
+            var app = await service.GetAppPlatformApps().CreateOrUpdateAsync(WaitUntil.Completed, appName, data);
+            return app.Value;
+        }
+
+        protected async Task<AppPlatformGatewayResource> CreateAppPlatformGateway(AppPlatformServiceResource service)
+        {
+            string gatewayName = "default";
+            AppPlatformGatewayData data = new AppPlatformGatewayData()
+            {
+                Properties = new AppPlatformGatewayProperties()
+                {
+                    IsPublic = false,
+                    IsHttpsOnly = false,
+                    ResourceRequests = new AppPlatformGatewayResourceRequirements()
+                    {
+                        Cpu = "1",
+                        Memory = "2Gi"
+                    }
+                },
+                Sku = new AppPlatformSku()
+                {
+                    Name = "E0",
+                    Tier = "Enterprise",
+                    Capacity = 2,
+                },
+            };
+            var lro = await service.GetAppPlatformGateways().CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data);
+            return lro.Value;
+        }
     }
 }

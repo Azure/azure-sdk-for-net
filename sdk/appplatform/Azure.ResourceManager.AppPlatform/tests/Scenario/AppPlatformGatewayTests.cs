@@ -32,35 +32,10 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             _gateway = await CreateAppPlatformGateway(service);
         }
 
-        private async Task<AppPlatformGatewayResource> CreateAppPlatformGateway(AppPlatformServiceResource service)
-        {
-            AppPlatformGatewayData data = new AppPlatformGatewayData()
-            {
-                Properties = new AppPlatformGatewayProperties()
-                {
-                    IsPublic = false,
-                    IsHttpsOnly = false,
-                    ResourceRequests = new AppPlatformGatewayResourceRequirements()
-                    {
-                        Cpu = "1",
-                        Memory = "2Gi"
-                    }
-                },
-                Sku = new AppPlatformSku()
-                {
-                    Name = "E0",
-                    Tier = "Enterprise",
-                    Capacity = 2,
-                },
-            };
-            var lro = await service.GetAppPlatformGateways().CreateOrUpdateAsync(WaitUntil.Completed, _gatewayName, data);
-            return lro.Value;
-        }
-
         [Test]
         public void CreateOrUpdate()
         {
-            ValidateAppPlatformGateway(_gateway.Data, _gatewayName);
+            ValidateAppPlatformGateway(_gateway.Data );
         }
 
         [Test]
@@ -74,7 +49,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         public async Task Get()
         {
             var gateway = await _getAppPlatformGatewayCollection.GetAsync(_gatewayName);
-            ValidateAppPlatformGateway(gateway.Value.Data, _gatewayName);
+            ValidateAppPlatformGateway(gateway.Value.Data );
         }
 
         [Test]
@@ -82,7 +57,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         {
             var list = await _getAppPlatformGatewayCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateAppPlatformGateway(list.FirstOrDefault().Data, _gatewayName);
+            ValidateAppPlatformGateway(list.FirstOrDefault().Data);
         }
 
         [Test]
@@ -93,7 +68,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             Assert.IsFalse(flag);
         }
 
-        private void ValidateAppPlatformGateway(AppPlatformGatewayData gateway, string _gatewayName)
+        private void ValidateAppPlatformGateway(AppPlatformGatewayData gateway)
         {
             Assert.IsNotNull(gateway);
         }

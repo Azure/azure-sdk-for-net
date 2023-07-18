@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             ValidateAppPlatformBuildService(list.FirstOrDefault().Data);
         }
 
-        private void ValidateAppPlatformBuildService(AppPlatformBuildServiceData buildService, string buildServicesName = _buildServicesName)
+        private void ValidateAppPlatformBuildService(AppPlatformBuildServiceData buildService)
         {
             Assert.IsNotNull(buildService);
         }

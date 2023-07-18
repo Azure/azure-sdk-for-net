@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         [Test]
         public void CreateOrUpdate()
         {
-            ValidateAppPlatformService(_appPlatformService.Data, _serviceName);
+            ValidateAppPlatformService(_appPlatformService.Data);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         public async Task Get()
         {
             var AppPlatformService = await _serviceCollection.GetAsync(_serviceName);
-            ValidateAppPlatformService(AppPlatformService.Value.Data, _serviceName);
+            ValidateAppPlatformService(AppPlatformService.Value.Data);
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         {
             var list = await _serviceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateAppPlatformService(list.FirstOrDefault().Data, _serviceName);
+            ValidateAppPlatformService(list.FirstOrDefault().Data);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             Assert.IsFalse(flag);
         }
 
-        private void ValidateAppPlatformService(AppPlatformServiceData service, string _serviceName)
+        private void ValidateAppPlatformService(AppPlatformServiceData service  )
         {
             Assert.IsNotNull(service);
         }
