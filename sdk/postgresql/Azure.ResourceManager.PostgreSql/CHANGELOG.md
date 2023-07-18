@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (2023-07-18)
 
 This release uses api version 2023-03-01-preview for PostgreSQL flexible server.
 
