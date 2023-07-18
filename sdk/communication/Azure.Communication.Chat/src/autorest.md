@@ -25,4 +25,7 @@ directive:
     remove-property: retentionPolicy
   - where-model: ChatThreadItem
     remove-property: retentionPolicy
-  - remove-model:ThreadCreationDateRetentionPolicy
+  - where-model: ChatMessageContent
+    remove-property: attachments
+  - remove:-model: AttachmentType
+  - remove-model: ChatAttachment
