@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class ManagementGroupInfo : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeManagementGroupInfo(JsonDocument.Parse(data).RootElement);
 
         internal static ManagementGroupInfo DeserializeManagementGroupInfo(JsonElement element)
         {

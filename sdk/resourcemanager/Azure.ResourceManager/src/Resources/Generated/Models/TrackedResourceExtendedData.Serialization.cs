@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeTrackedResourceExtendedData(JsonDocument.Parse(data).RootElement);
 
         internal static TrackedResourceExtendedData DeserializeTrackedResourceExtendedData(JsonElement element)
         {

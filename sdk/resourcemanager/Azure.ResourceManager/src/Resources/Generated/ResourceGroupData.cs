@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class ResourceGroupData : TrackedResourceData
     {
+        internal ResourceGroupData() { }
+
         /// <summary> Initializes a new instance of ResourceGroupData. </summary>
         /// <param name="location"> The location. </param>
         public ResourceGroupData(AzureLocation location) : base(location)

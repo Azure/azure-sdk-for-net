@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class ManagementGroupNameAvailabilityResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeManagementGroupNameAvailabilityResult(JsonDocument.Parse(data).RootElement);
 
         internal static ManagementGroupNameAvailabilityResult DeserializeManagementGroupNameAvailabilityResult(JsonElement element)
         {

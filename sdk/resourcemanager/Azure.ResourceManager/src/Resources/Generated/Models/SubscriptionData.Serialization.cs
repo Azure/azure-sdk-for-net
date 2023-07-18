@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class SubscriptionData : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeSubscriptionData(JsonDocument.Parse(data).RootElement);
 
         internal static SubscriptionData DeserializeSubscriptionData(JsonElement element)
         {

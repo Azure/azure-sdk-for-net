@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ProviderExtendedLocation : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeProviderExtendedLocation(JsonDocument.Parse(data).RootElement);
 
         internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element)
         {

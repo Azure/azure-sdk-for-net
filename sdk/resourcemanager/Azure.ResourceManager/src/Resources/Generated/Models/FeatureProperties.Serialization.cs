@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class FeatureProperties : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeFeatureProperties(JsonDocument.Parse(data).RootElement);
 
         internal static FeatureProperties DeserializeFeatureProperties(JsonElement element)
         {

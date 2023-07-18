@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class SubscriptionListResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeSubscriptionListResult(JsonDocument.Parse(data).RootElement);
 
         internal static SubscriptionListResult DeserializeSubscriptionListResult(JsonElement element)
         {

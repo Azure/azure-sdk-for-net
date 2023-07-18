@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class PolicySetDefinitionListResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializePolicySetDefinitionListResult(JsonDocument.Parse(data).RootElement);
 
         internal static PolicySetDefinitionListResult DeserializePolicySetDefinitionListResult(JsonElement element)
         {

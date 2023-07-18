@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceGroupExportResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeResourceGroupExportResult(JsonDocument.Parse(data).RootElement);
 
         internal static ResourceGroupExportResult DeserializeResourceGroupExportResult(JsonElement element)
         {

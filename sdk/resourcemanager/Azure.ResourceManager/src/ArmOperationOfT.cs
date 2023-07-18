@@ -29,7 +29,7 @@ namespace Azure.ResourceManager
 
             if (typeof(T).GetInterface(nameof(IResource)) is null)
             {
-                IOperationSource<T> source = new GenericResourceOperationSource<T>(client);
+                IOperationSource<T> source = new GenericOperationSource<T>();
                 var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
                 // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
                 var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager
             }
             else
             {
-                IOperationSource<T> source = new GenericOperationSource<T>();
+                IOperationSource<T> source = new GenericResourceOperationSource<T>(client);
                 var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
                 // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
                 var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);

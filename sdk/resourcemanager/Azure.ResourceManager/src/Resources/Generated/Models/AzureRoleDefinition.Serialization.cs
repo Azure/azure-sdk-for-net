@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class AzureRoleDefinition : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeAzureRoleDefinition(JsonDocument.Parse(data).RootElement);
 
         internal static AzureRoleDefinition DeserializeAzureRoleDefinition(JsonElement element)
         {

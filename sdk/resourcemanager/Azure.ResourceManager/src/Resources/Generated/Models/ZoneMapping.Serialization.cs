@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ZoneMapping : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeZoneMapping(JsonDocument.Parse(data).RootElement);
 
         internal static ZoneMapping DeserializeZoneMapping(JsonElement element)
         {

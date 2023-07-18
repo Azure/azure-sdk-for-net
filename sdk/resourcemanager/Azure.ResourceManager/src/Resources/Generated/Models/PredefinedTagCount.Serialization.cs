@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class PredefinedTagCount : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializePredefinedTagCount(JsonDocument.Parse(data).RootElement);
 
         internal static PredefinedTagCount DeserializePredefinedTagCount(JsonElement element)
         {

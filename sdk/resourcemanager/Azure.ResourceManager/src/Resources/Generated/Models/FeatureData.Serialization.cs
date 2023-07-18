@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class FeatureData : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeFeatureData(JsonDocument.Parse(data).RootElement);
 
         internal static FeatureData DeserializeFeatureData(JsonElement element)
         {

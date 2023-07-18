@@ -31,10 +31,11 @@ namespace Azure.ResourceManager
 
         private T CreateResult(Response response)
         {
-            var data = ((IModelSerializable)this).Deserialize(response.Content, null);
+            var dataType = typeof(T).GetProperty("Data").PropertyType;
+            var data = ModelSerializer.Deserialize(response.Content, dataType, new ModelSerializerOptions());
             //var options = new JsonSerializerOptions();
-            //options.Converters.Add(new ModelJsonConverter());
             //var dataType = typeof(T).GetProperty("Data").PropertyType;
+            //options.Converters.Add(new ModelJsonConverter());
             //var data = JsonSerializer.Deserialize(response.Content, dataType, options);
             return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
         }

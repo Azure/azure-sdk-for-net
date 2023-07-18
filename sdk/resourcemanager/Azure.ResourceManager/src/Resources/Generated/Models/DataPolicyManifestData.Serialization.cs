@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class DataPolicyManifestData : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDataPolicyManifestData(JsonDocument.Parse(data).RootElement);
 
         internal static DataPolicyManifestData DeserializeDataPolicyManifestData(JsonElement element)
         {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     internal partial class DescendantListResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDescendantListResult(JsonDocument.Parse(data).RootElement);
 
         internal static DescendantListResult DeserializeDescendantListResult(JsonElement element)
         {
