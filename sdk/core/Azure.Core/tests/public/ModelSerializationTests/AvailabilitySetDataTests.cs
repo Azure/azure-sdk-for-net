@@ -16,39 +16,31 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         private const string _serviceResponse = "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"location\":\"eastus\",\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"sku\":{\"name\":\"Classic\",\"extraSku\":\"extraSku\"},\"extraRoot\":\"extraRoot\"}";
 
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
-        public void RoundTripTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties) =>
-            RoundTripTest(ignoreReadOnlyProperties, ignoreAdditionalProperties, SerializeWithModelSerializer);
+        [TestCase("W")]
+        [TestCase("D")]
+        public void RoundTripTest(string format) =>
+            RoundTripTest(format, SerializeWithModelSerializer);
 
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
-        public void BufferTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties) =>
-            RoundTripTest(ignoreReadOnlyProperties, ignoreAdditionalProperties, SerializeWithBuffer);
+        [TestCase("W")]
+        [TestCase("D")]
+        public void BufferTest(string format) =>
+            RoundTripTest(format, SerializeWithBuffer);
 
         [Test]
         public void ImplicitCastTest() =>
-            RoundTripTest(true, true, SerializeWithImplicitCast);
+            RoundTripTest(ModelSerializerFormat.Wire, SerializeWithImplicitCast);
 
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
-        public void JsonReaderTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties) =>
-            RoundTripTest(ignoreReadOnlyProperties, ignoreAdditionalProperties, SerializeWithModelSerializer, DeserializeWithJsonReader);
+        [TestCase("W")]
+        [TestCase("D")]
+        public void JsonReaderTest(string format) =>
+            RoundTripTest(format, SerializeWithModelSerializer, DeserializeWithJsonReader);
 
-        private void RoundTripTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize, Func<string, ModelSerializerOptions, AvailabilitySetData> deserialize = default)
+        private void RoundTripTest(string format, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize, Func<string, ModelSerializerOptions, AvailabilitySetData> deserialize = default)
         {
-            ModelSerializerOptions options = new ModelSerializerOptions();
-            options.IgnoreAdditionalProperties = ignoreAdditionalProperties;
-            options.IgnoreReadOnlyProperties = ignoreReadOnlyProperties;
+            ModelSerializerOptions options = new ModelSerializerOptions(format);
 
             var expectedSerializedString = "{";
-            if (!ignoreReadOnlyProperties)
+            if (format == ModelSerializerFormat.Data)
                 expectedSerializedString += "\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",";
             expectedSerializedString += "\"sku\":{\"name\":\"Classic\"";
             //if (!ignoreAdditionalProperties)
@@ -66,7 +58,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
             AvailabilitySetData model2 = deserialize is null ? ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options) : deserialize(roundTrip, options);
-            CompareModels(model, model2, ignoreReadOnlyProperties);
+            CompareModels(model, model2, format);
         }
 
         private AvailabilitySetData DeserializeWithJsonReader(string json, ModelSerializerOptions options)
@@ -106,14 +98,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return reader.ReadToEnd();
         }
 
-        private void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, bool ignoreReadOnlyProperties)
+        private void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
         {
-            Assert.AreEqual(ignoreReadOnlyProperties ? null : model.Id, model2.Id);
+            Assert.AreEqual(format == ModelSerializerFormat.Wire ? null : model.Id, model2.Id);
             Assert.AreEqual(model.Location, model2.Location);
-            Assert.AreEqual(ignoreReadOnlyProperties ? null : model.Name, model2.Name);
+            Assert.AreEqual(format == ModelSerializerFormat.Wire ? null : model.Name, model2.Name);
             Assert.AreEqual(model.PlatformFaultDomainCount, model2.PlatformFaultDomainCount);
             Assert.AreEqual(model.PlatformUpdateDomainCount, model2.PlatformUpdateDomainCount);
-            if (!ignoreReadOnlyProperties)
+            if (format == ModelSerializerFormat.Data)
                 Assert.AreEqual(model.ResourceType, model2.ResourceType);
             CollectionAssert.AreEquivalent(model.Tags, model2.Tags);
             Assert.AreEqual(model.Sku.Name, model2.Sku.Name);

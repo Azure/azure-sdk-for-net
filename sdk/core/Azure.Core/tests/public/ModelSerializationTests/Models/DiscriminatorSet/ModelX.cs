@@ -73,11 +73,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         internal static ModelX DeserializeModelX(JsonElement element, ModelSerializerOptions options = default)
         {
-            if (options is null)
-            {
-                options = new ModelSerializerOptions();
-                options.IgnoreAdditionalProperties = true;
-            }
+            options ??= ModelSerializerOptions.AzureServiceDefault;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

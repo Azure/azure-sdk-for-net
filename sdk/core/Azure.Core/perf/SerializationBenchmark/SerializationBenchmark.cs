@@ -85,8 +85,7 @@ namespace Azure.Core.Perf
         public string Serialize_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
-            options.IgnoreReadOnlyProperties = true;
-            options.Converters.Add(new ModelJsonConverter(true));
+            options.Converters.Add(new ModelJsonConverter(ModelSerializerFormat.Wire));
             return JsonSerializer.Serialize(_model, options);
         }
 
@@ -129,8 +128,7 @@ namespace Azure.Core.Perf
         public T Deserialize_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
-            options.IgnoreReadOnlyProperties = true;
-            options.Converters.Add(new ModelJsonConverter(true));
+            options.Converters.Add(new ModelJsonConverter(ModelSerializerFormat.Wire));
             return JsonSerializer.Deserialize<T>(_json, options);
         }
 

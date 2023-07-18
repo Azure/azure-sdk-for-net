@@ -165,10 +165,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                string format = modelConverter is not null ? modelConverter.Format : ModelSerializerFormat.Wire;
-                var serializerOptions = new ModelSerializerOptions(format);
-                if (modelConverter is not null)
-                    serializerOptions.Serializers = modelConverter.Serializers;
+                return modelConverter is not null ? modelConverter.Options : ModelSerializerOptions.AzureServiceDefault;
             }
         }
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)

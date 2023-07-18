@@ -28,17 +28,17 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (!options.IgnoreReadOnlyProperties)
+            if (options.Format == ModelSerializerFormat.Data)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!options.IgnoreReadOnlyProperties)
+            if (options.Format == ModelSerializerFormat.Data)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.ToString());
             }
-            if (!options.IgnoreReadOnlyProperties)
+            if (options.Format == ModelSerializerFormat.Data)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.ToString());

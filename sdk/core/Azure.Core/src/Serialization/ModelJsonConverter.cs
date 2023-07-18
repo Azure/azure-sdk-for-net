@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -17,6 +15,11 @@ namespace Azure.Core.Serialization
     public class ModelJsonConverter : JsonConverter<IJsonModelSerializable>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        public ModelSerializerOptions Options { get; }
+
         /// <summary>
         /// ModelSerializerFormat that determines Format of serialized model. ModelSerializerFormat.Data = data format which means both properties are false, ModelSerializerFormat.Wire = wire format which means both properties are true Default is ModelSerializerFormat.Data.
         /// </summary>
@@ -33,6 +36,8 @@ namespace Azure.Core.Serialization
         public ModelJsonConverter(string format = "D")
         {
             Format = format;
+            Options = new ModelSerializerOptions(Format);
+            Options.Serializers = Serializers;
         }
 
         /// <summary>
@@ -57,7 +62,7 @@ namespace Azure.Core.Serialization
         public override IJsonModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            return (IJsonModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, GetOptions(options));
+            return (IJsonModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, Options);
         }
 
         /// <summary>
@@ -70,14 +75,7 @@ namespace Azure.Core.Serialization
         public override void Write(Utf8JsonWriter writer, IJsonModelSerializable value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            value.Serialize(writer, GetOptions(options));
-        }
-
-        private ModelSerializerOptions GetOptions()
-        {
-            var options = new ModelSerializerOptions(Format);
-            options.Serializers = Serializers;
-            return options;
+            value.Serialize(writer, Options);
         }
     }
 }
