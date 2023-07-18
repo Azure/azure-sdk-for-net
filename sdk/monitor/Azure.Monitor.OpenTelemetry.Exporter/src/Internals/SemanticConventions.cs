@@ -86,7 +86,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeHttpHostName = "host.name";
         public const string AttributeHttpHostPort = "host.port";
         public const string AttributeHttpRoute = "http.route";
-        public const string AttributeHttpClientIP = "http.client_ip";
         public const string AttributeHttpUserAgent = "http.user_agent";
         public const string AttributeHttpRequestContentLength = "http.request_content_length";
         public const string AttributeHttpRequestContentLengthUncompressed = "http.request_content_length_uncompressed";
