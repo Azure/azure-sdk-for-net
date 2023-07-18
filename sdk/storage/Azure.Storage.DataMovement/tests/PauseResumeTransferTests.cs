@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         private async Task AssertDirectorySourceAndDestinationAsync(
-            TransferType transferType,
+            TransferDirection transferType,
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
             BlobContainerClient sourceContainer,
@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Tests
             await foreach (StorageResourceSingle childSourceResource in sourceResource.GetStorageResourcesAsync())
             {
                 StorageResourceSingle childDestinationResource;
-                if (transferType == TransferType.Upload)
+                if (transferType == TransferDirection.Upload)
                 {
                     string destinationChildName = childSourceResource.Path.Substring(sourceResource.Path.Length + 1);
                     childDestinationResource = destinationResource.GetChildStorageResource(destinationChildName);
@@ -61,13 +61,13 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         private async Task AssertSourceAndDestinationAsync(
-            TransferType transferType,
+            TransferDirection transferType,
             StorageResourceSingle sourceResource,
             StorageResourceSingle destinationResource,
             BlobContainerClient sourceContainer,
             BlobContainerClient destinationContainer)
         {
-            if (transferType == TransferType.Upload)
+            if (transferType == TransferDirection.Upload)
             {
                 // Verify Upload by downloading the blob and comparing the values
                 BlobUriBuilder destinationBuilder = new BlobUriBuilder(destinationResource.Uri);
@@ -76,7 +76,7 @@ namespace Azure.Storage.DataMovement.Tests
                     await DownloadAndAssertAsync(fileStream, destinationContainer.GetBlockBlobClient(destinationBuilder.BlobName));
                 }
             }
-            else if (transferType == TransferType.Download)
+            else if (transferType == TransferDirection.Download)
             {
                 // Verify Download
                 BlobUriBuilder sourceBuilder = new BlobUriBuilder(sourceResource.Uri);
@@ -141,7 +141,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         private async Task<(StorageResourceSingle SourceResource, StorageResourceSingle DestinationResource)> CreateStorageResourcesAsync(
-            TransferType transferType,
+            TransferDirection transferType,
             long size,
             string localDirectory,
             BlobContainerClient sourceContainer,
@@ -152,14 +152,14 @@ namespace Azure.Storage.DataMovement.Tests
 
             StorageResourceSingle SourceResource = default;
             StorageResourceSingle DestinationResource = default;
-            if (transferType == TransferType.Download)
+            if (transferType == TransferDirection.Download)
             {
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
                 Argument.AssertNotNullOrEmpty(localDirectory, nameof(localDirectory));
                 SourceResource ??= await CreateBlobSourceResourceAsync(size, storagePath, sourceContainer);
                 DestinationResource ??= new LocalFileStorageResource(Path.Combine(localDirectory, storagePath));
             }
-            else if (transferType == TransferType.Copy)
+            else if (transferType == TransferDirection.Copy)
             {
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
@@ -185,7 +185,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// </summary>
         private async Task<DataTransfer> CreateSingleLongTransferAsync(
             TransferManager manager,
-            TransferType transferType = TransferType.Upload,
+            TransferDirection transferType = TransferDirection.Upload,
             string localDirectory = default,
             BlobContainerClient sourceContainer = default,
             BlobContainerClient destinationContainer = default,
@@ -219,10 +219,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task TryPauseTransferAsync_Id(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task TryPauseTransferAsync_Id(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -267,10 +267,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task TryPauseTransferAsync_DataTransfer(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task TryPauseTransferAsync_DataTransfer(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -331,10 +331,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task TryPauseTransferAsync_AlreadyPaused(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task TryPauseTransferAsync_AlreadyPaused(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -384,10 +384,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task PauseThenResumeTransferAsync(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task PauseThenResumeTransferAsync(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -458,10 +458,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task ResumeTransferAsync(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task ResumeTransferAsync(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -565,7 +565,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         private async Task<(StorageResourceContainer SourceResource, StorageResourceContainer DestinationResource)> CreateStorageResourceContainersAsync(
-            TransferType transferType,
+            TransferDirection transferType,
             long size,
             int transferCount,
             string sourceDirectoryPath,
@@ -575,7 +575,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             StorageResourceContainer SourceResource = default;
             StorageResourceContainer DestinationResource = default;
-            if (transferType == TransferType.Download)
+            if (transferType == TransferDirection.Download)
             {
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
                 Argument.AssertNotNullOrEmpty(destinationDirectoryPath, nameof(destinationDirectoryPath));
@@ -586,7 +586,7 @@ namespace Azure.Storage.DataMovement.Tests
                     container: sourceContainer);
                 DestinationResource ??= new LocalDirectoryStorageResourceContainer(destinationDirectoryPath);
             }
-            else if (transferType == TransferType.Copy)
+            else if (transferType == TransferDirection.Copy)
             {
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
@@ -628,7 +628,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// </summary>
         private async Task<DataTransfer> CreateDirectoryLongTransferAsync(
             TransferManager manager,
-            TransferType transferType = TransferType.Upload,
+            TransferDirection transferType = TransferDirection.Upload,
             string sourceDirectory = default,
             string destinationDirectory = default,
             BlobContainerClient sourceContainer = default,
@@ -666,10 +666,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task TryPauseTransferAsync_Id_Directory(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task TryPauseTransferAsync_Id_Directory(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -711,10 +711,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task TryPauseTransferAsync_DataTransfer_Directory(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task TryPauseTransferAsync_DataTransfer_Directory(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -756,10 +756,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task TryPauseTransferAsync_AlreadyPaused_Directory(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task TryPauseTransferAsync_AlreadyPaused_Directory(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -807,10 +807,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task PauseThenResumeTransferAsync_Directory(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task PauseThenResumeTransferAsync_Directory(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -884,10 +884,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task ResumeTransferAsync_Directory(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task ResumeTransferAsync_Directory(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
