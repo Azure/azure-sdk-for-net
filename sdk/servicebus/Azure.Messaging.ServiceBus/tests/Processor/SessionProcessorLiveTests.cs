@@ -2600,7 +2600,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     MaxConcurrentCallsPerSession = 1,
                     MaxConcurrentSessions = 1,
-                    MaxAutoLockRenewalDuration = TimeSpan.Zero,
                     AutoCompleteMessages = false
                 });
 
@@ -2620,6 +2619,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     };
                     await args.CompleteMessageAsync(args.Message);
                     SimulateNetworkFailure(client);
+                    await Task.Delay(lockDuration.Add(lockDuration));
                     Assert.IsTrue(sessionLockLostEventRaised);
                     Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
                     tcs.SetResult(true);

@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus
 
             // manager would be null in scenarios where customers are using the public constructor for testing purposes.
             _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
-            _receiveActions = new ProcessorReceiveActions(this, _manager,false /* session locks are not message based */);
+            _receiveActions = new ProcessorReceiveActions(this, _manager, false /* session locks are not message based */);
             CancellationToken = cancellationToken;
         }
 

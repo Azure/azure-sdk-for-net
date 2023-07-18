@@ -1508,7 +1508,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [Test]
         public async Task MessageLockLostEventRaisedAfterConnectionDropped()
         {
-            var lockDuration = ShortLockDuration;
+            var lockDuration = TimeSpan.FromSeconds(30);
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
             {
                 await using var client = CreateClient();
@@ -1517,11 +1517,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
 
-                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
-                {
-                    MaxAutoLockRenewalDuration = TimeSpan.Zero,
-                    AutoCompleteMessages = false
-                });
+                await using var processor = client.CreateProcessor(scope.QueueName);
 
                 var tcs = new TaskCompletionSource<bool>();
                 async Task ProcessMessage(ProcessMessageEventArgs args)
@@ -1536,8 +1532,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, lockLostException.Reason);
                         return Task.CompletedTask;
                     };
-                    await args.CompleteMessageAsync(args.Message);
                     SimulateNetworkFailure(client);
+                    await Task.Delay(lockDuration.Add(lockDuration));
                     Assert.IsTrue(messageLockLostRaised);
                     Assert.IsTrue(args.MessageLockCancellationToken.IsCancellationRequested);
                     Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
