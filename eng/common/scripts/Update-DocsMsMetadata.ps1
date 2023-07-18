@@ -237,7 +237,8 @@ foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
     Write-Host "Validating the packages..."
 
     $packageInfo =  GetPackageInfoJson $packageInfoLocation
-    # "Validate-${Language}-DocMsPackages"
+    # This calls a function named "Validate-${Language}-DocMsPackages" 
+    # declared in common.ps1, implemented in Language-Settings.ps1
     $isValid = &$ValidateDocsMsPackagesFn `
       -PackageInfos $packageInfo `
       -PackageSourceOverride $PackageSourceOverride `
