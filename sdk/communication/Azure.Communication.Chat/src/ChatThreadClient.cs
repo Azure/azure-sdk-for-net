@@ -633,7 +633,7 @@ namespace Azure.Communication.Chat
             try
             {
                 CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(identifier);
-                return await _chatThreadRestClient.RemoveChatParticipantAsync(Id, communicationIdentifierModel.RawId,
+                return await _chatThreadRestClient.RemoveChatParticipantAsync(Id, communicationIdentifierModel.Kind, communicationIdentifierModel.RawId,
                     communicationIdentifierModel.CommunicationUser,
                     communicationIdentifierModel.PhoneNumber,
                     communicationIdentifierModel.MicrosoftTeamsUser,
@@ -657,7 +657,8 @@ namespace Azure.Communication.Chat
             try
             {
                 CommunicationIdentifierModel communicationIdentifierModel = CommunicationIdentifierSerializer.Serialize(identifier);
-                return _chatThreadRestClient.RemoveChatParticipant(Id, communicationIdentifierModel.RawId,
+                return _chatThreadRestClient.RemoveChatParticipant(Id, communicationIdentifierModel.Kind,
+                    communicationIdentifierModel.RawId,
                     communicationIdentifierModel.CommunicationUser,
                     communicationIdentifierModel.PhoneNumber,
                     communicationIdentifierModel.MicrosoftTeamsUser,
