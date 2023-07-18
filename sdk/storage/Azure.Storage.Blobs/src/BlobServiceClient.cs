@@ -225,7 +225,7 @@ namespace Azure.Storage.Blobs
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public BlobServiceClient(Uri serviceUri, AzureSasCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy<BlobUriBuilder>(serviceUri), options ?? new BlobClientOptions())
+            : this(serviceUri, credential.AsPolicy<BlobUriBuilder>(serviceUri), credential, options ?? new BlobClientOptions())
         {
         }
 
@@ -353,6 +353,45 @@ namespace Azure.Storage.Blobs
                   new BlobClientConfiguration(
                       pipeline: options.Build(authentication),
                       tokenCredential: tokenCredential,
+                      clientDiagnostics: new ClientDiagnostics(options),
+                      version: options?.Version ?? BlobClientOptions.LatestVersion,
+                      customerProvidedKey: options?.CustomerProvidedKey,
+                      transferValidation: options.TransferValidation,
+                      encryptionScope: options?.EncryptionScope,
+                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
+                  authentication,
+                  options?._clientSideEncryptionOptions?.Clone())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="sasCredential">
+        /// Optional SAS credential used to sign requests and generate sas.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal BlobServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            AzureSasCredential sasCredential,
+            BlobClientOptions options)
+            : this(serviceUri,
+                  new BlobClientConfiguration(
+                      pipeline: options.Build(authentication),
+                      sasCredential: sasCredential,
                       clientDiagnostics: new ClientDiagnostics(options),
                       version: options?.Version ?? BlobClientOptions.LatestVersion,
                       customerProvidedKey: options?.CustomerProvidedKey,
