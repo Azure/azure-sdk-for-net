@@ -75,8 +75,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     Response = GetActionResult(result, response);
                 }
 
-                Response.ValidateActions();
-
                 if (Response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     Response.Validate();

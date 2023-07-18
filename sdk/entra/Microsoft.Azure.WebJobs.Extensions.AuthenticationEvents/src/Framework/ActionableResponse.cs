@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
@@ -11,14 +11,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     /// <summary>And abstract class for responses that implements actions.</summary>
     /// <typeparam name="T">Of type EventAction.</typeparam>
     /// <seealso cref="AuthenticationEventAction" />
-    ///
-
     public abstract class ActionableResponse<T> : AuthenticationEventResponse where T : AuthenticationEventAction
     {
         /// <summary>Gets or sets the actions.</summary>
         /// <value>The actions.</value>
         [JsonPropertyName("actions")]
-        [Required]
+        [OneOrMoreRequired]
+        [EnumberableItemsNotNull]
         public List<T> Actions { get; set; } = new List<T>();
 
         /// <summary>Invalidates this instance.
