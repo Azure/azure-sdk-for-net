@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CloudServiceOSFamilyData : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeCloudServiceOSFamilyData(JsonDocument.Parse(data).RootElement);
 
         internal static CloudServiceOSFamilyData DeserializeCloudServiceOSFamilyData(JsonElement element)
         {

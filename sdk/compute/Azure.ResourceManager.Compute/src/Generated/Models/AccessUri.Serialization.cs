@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class AccessUri : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeAccessUri(JsonDocument.Parse(data).RootElement);
 
         internal static AccessUri DeserializeAccessUri(JsonElement element)
         {

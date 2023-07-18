@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class AvailabilitySetListResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeAvailabilitySetListResult(JsonDocument.Parse(data).RootElement);
 
         internal static AvailabilitySetListResult DeserializeAvailabilitySetListResult(JsonElement element)
         {

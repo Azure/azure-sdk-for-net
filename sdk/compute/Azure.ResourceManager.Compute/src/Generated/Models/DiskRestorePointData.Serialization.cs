@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class DiskRestorePointData : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDiskRestorePointData(JsonDocument.Parse(data).RootElement);
 
         internal static DiskRestorePointData DeserializeDiskRestorePointData(JsonElement element)
         {

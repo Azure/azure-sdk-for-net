@@ -11,12 +11,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class ComputeArmOperation<T> : ArmOperation<T>
+    internal class ComputeArmOperation<T> : ArmOperation<T> where T: class, IModelSerializable
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;

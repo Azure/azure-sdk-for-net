@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class DiskList : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDiskList(JsonDocument.Parse(data).RootElement);
 
         internal static DiskList DeserializeDiskList(JsonElement element)
         {

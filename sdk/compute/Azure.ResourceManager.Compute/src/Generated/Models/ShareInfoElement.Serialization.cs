@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ShareInfoElement : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeShareInfoElement(JsonDocument.Parse(data).RootElement);
 
         internal static ShareInfoElement DeserializeShareInfoElement(JsonElement element)
         {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class OSVersionPropertiesBase : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeOSVersionPropertiesBase(JsonDocument.Parse(data).RootElement);
 
         internal static OSVersionPropertiesBase DeserializeOSVersionPropertiesBase(JsonElement element)
         {

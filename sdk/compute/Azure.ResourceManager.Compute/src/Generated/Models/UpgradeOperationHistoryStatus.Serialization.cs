@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class UpgradeOperationHistoryStatus : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeUpgradeOperationHistoryStatus(JsonDocument.Parse(data).RootElement);
 
         internal static UpgradeOperationHistoryStatus DeserializeUpgradeOperationHistoryStatus(JsonElement element)
         {

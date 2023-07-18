@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineSize : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeVirtualMachineSize(JsonDocument.Parse(data).RootElement);
 
         internal static VirtualMachineSize DeserializeVirtualMachineSize(JsonElement element)
         {

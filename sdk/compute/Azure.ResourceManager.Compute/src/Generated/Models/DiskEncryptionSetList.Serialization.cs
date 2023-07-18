@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class DiskEncryptionSetList : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDiskEncryptionSetList(JsonDocument.Parse(data).RootElement);
 
         internal static DiskEncryptionSetList DeserializeDiskEncryptionSetList(JsonElement element)
         {

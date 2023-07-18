@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class RegionalReplicationStatus : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeRegionalReplicationStatus(JsonDocument.Parse(data).RootElement);
 
         internal static RegionalReplicationStatus DeserializeRegionalReplicationStatus(JsonElement element)
         {

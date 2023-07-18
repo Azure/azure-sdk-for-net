@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class PatchInstallationDetail : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializePatchInstallationDetail(JsonDocument.Parse(data).RootElement);
 
         internal static PatchInstallationDetail DeserializePatchInstallationDetail(JsonElement element)
         {

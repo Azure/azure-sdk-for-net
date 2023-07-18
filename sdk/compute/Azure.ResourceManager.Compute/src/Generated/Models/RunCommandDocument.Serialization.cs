@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class RunCommandDocument : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeRunCommandDocument(JsonDocument.Parse(data).RootElement);
 
         internal static RunCommandDocument DeserializeRunCommandDocument(JsonElement element)
         {

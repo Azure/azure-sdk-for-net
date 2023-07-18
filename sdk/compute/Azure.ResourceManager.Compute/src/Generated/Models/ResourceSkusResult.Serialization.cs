@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class ResourceSkusResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeResourceSkusResult(JsonDocument.Parse(data).RootElement);
 
         internal static ResourceSkusResult DeserializeResourceSkusResult(JsonElement element)
         {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class CapacityReservationGroupListResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeCapacityReservationGroupListResult(JsonDocument.Parse(data).RootElement);
 
         internal static CapacityReservationGroupListResult DeserializeCapacityReservationGroupListResult(JsonElement element)
         {

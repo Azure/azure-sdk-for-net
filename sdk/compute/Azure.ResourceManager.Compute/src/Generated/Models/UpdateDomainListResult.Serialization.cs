@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class UpdateDomainListResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeUpdateDomainListResult(JsonDocument.Parse(data).RootElement);
 
         internal static UpdateDomainListResult DeserializeUpdateDomainListResult(JsonElement element)
         {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class SharedGalleryDiskImage : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeSharedGalleryDiskImage(JsonDocument.Parse(data).RootElement);
 
         internal static SharedGalleryDiskImage DeserializeSharedGalleryDiskImage(JsonElement element)
         {

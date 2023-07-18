@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ResourceSkuCosts : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeResourceSkuCosts(JsonDocument.Parse(data).RootElement);
 
         internal static ResourceSkuCosts DeserializeResourceSkuCosts(JsonElement element)
         {

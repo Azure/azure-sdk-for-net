@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class VirtualMachineRunCommandsListResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeVirtualMachineRunCommandsListResult(JsonDocument.Parse(data).RootElement);
 
         internal static VirtualMachineRunCommandsListResult DeserializeVirtualMachineRunCommandsListResult(JsonElement element)
         {

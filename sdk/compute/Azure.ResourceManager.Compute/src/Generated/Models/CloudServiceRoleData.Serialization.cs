@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CloudServiceRoleData : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeCloudServiceRoleData(JsonDocument.Parse(data).RootElement);
 
         internal static CloudServiceRoleData DeserializeCloudServiceRoleData(JsonElement element)
         {

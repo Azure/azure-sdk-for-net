@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class OSFamilyListResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeOSFamilyListResult(JsonDocument.Parse(data).RootElement);
 
         internal static OSFamilyListResult DeserializeOSFamilyListResult(JsonElement element)
         {

@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeResourceSkuLocationInfo : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeComputeResourceSkuLocationInfo(JsonDocument.Parse(data).RootElement);
     }
 }

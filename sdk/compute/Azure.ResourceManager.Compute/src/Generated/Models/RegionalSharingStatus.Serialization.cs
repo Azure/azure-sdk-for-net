@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class RegionalSharingStatus : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeRegionalSharingStatus(JsonDocument.Parse(data).RootElement);
 
         internal static RegionalSharingStatus DeserializeRegionalSharingStatus(JsonElement element)
         {

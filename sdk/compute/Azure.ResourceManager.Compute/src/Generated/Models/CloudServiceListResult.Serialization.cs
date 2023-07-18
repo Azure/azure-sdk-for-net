@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class CloudServiceListResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeCloudServiceListResult(JsonDocument.Parse(data).RootElement);
 
         internal static CloudServiceListResult DeserializeCloudServiceListResult(JsonElement element)
         {

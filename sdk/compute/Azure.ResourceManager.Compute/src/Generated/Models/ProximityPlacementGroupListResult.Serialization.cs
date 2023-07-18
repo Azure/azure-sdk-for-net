@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class ProximityPlacementGroupListResult : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeProximityPlacementGroupListResult(JsonDocument.Parse(data).RootElement);
 
         internal static ProximityPlacementGroupListResult DeserializeProximityPlacementGroupListResult(JsonElement element)
         {

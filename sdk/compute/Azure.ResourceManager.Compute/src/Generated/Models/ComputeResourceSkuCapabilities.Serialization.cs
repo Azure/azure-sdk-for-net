@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeResourceSkuCapabilities : IModelSerializable
     {
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeComputeResourceSkuCapabilities(JsonDocument.Parse(data).RootElement);
 
         internal static ComputeResourceSkuCapabilities DeserializeComputeResourceSkuCapabilities(JsonElement element)
         {
