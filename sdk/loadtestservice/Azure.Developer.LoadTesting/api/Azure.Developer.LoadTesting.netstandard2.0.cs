@@ -73,10 +73,14 @@ namespace Azure.Developer.LoadTesting
         public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Developer.LoadTesting.TestRunResultOperation BeginTestRun(Azure.WaitUntil waitUntil, string testRunId, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestRunResultOperation> BeginTestRunAsync(Azure.WaitUntil waitUntil, string testRunId, Azure.Core.RequestContent content, System.TimeSpan? timeSpan = default(System.TimeSpan?), string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateAppComponents(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAppComponentsAsync(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateServerMetricsConfig(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateServerMetricsConfigAsync(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdateTestRun(string testRunId, Azure.Core.RequestContent content, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateTestRunAsync(string testRunId, Azure.Core.RequestContent content, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteTestRun(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTestRunAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetAppComponents(string testRunId, Azure.RequestContext context) { throw null; }
@@ -95,12 +99,12 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Response<Azure.Developer.LoadTesting.Models.MetricNamespaceCollection> GetMetricNamespaces(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricNamespacesAsync(string testRunId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.Models.MetricNamespaceCollection>> GetMetricNamespacesAsync(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetMetrics(string testRunId, Azure.Core.RequestContent content, string aggregation = null, string interval = null, string metricName = null, string metricNamespace = null, string timespan = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<Azure.Developer.LoadTesting.Models.TimeSeriesElement> GetMetrics(string testRunId, Azure.Developer.LoadTesting.Models.MetricRequestPayload body, string aggregation = null, Azure.Developer.LoadTesting.Models.Interval? interval = default(Azure.Developer.LoadTesting.Models.Interval?), string metricName = null, string metricNamespace = null, string timespan = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, Azure.Core.RequestContent content = null, string aggregation = null, string interval = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(string testRunId, Azure.Core.RequestContent content, string aggregation = null, string interval = null, string metricName = null, string metricNamespace = null, string timespan = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Developer.LoadTesting.Models.TimeSeriesElement> GetMetricsAsync(string testRunId, Azure.Developer.LoadTesting.Models.MetricRequestPayload body, string aggregation = null, Azure.Developer.LoadTesting.Models.Interval? interval = default(Azure.Developer.LoadTesting.Models.Interval?), string metricName = null, string metricNamespace = null, string timespan = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMetrics(string testRunId, string aggregation, string metricName, string metricNamespace, string timespan, Azure.Core.RequestContent content, string interval = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<Azure.Developer.LoadTesting.Models.TimeSeriesElement> GetMetrics(string testRunId, string aggregation, string metricName, string metricNamespace, string timespan, Azure.Developer.LoadTesting.Models.MetricRequestPayload body, Azure.Developer.LoadTesting.Models.Interval? interval = default(Azure.Developer.LoadTesting.Models.Interval?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, Azure.Core.RequestContent content = null, string aggregation = null, string interval = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(string testRunId, string aggregation, string metricName, string metricNamespace, string timespan, Azure.Core.RequestContent content, string interval = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Developer.LoadTesting.Models.TimeSeriesElement> GetMetricsAsync(string testRunId, string aggregation, string metricName, string metricNamespace, string timespan, Azure.Developer.LoadTesting.Models.MetricRequestPayload body, Azure.Developer.LoadTesting.Models.Interval? interval = default(Azure.Developer.LoadTesting.Models.Interval?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetServerMetricsConfig(string testRunId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Developer.LoadTesting.Models.TestRunServerMetricConfig> GetServerMetricsConfig(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetServerMetricsConfigAsync(string testRunId, Azure.RequestContext context) { throw null; }
@@ -113,16 +117,14 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Response<Azure.Developer.LoadTesting.Models.FileInfo> GetTestRunFile(string testRunId, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTestRunFileAsync(string testRunId, string fileName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.Models.FileInfo>> GetTestRunFileAsync(string testRunId, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetTestRuns(string orderby = null, string search = null, string testId = null, System.DateTimeOffset? executionFrom = default(System.DateTimeOffset?), System.DateTimeOffset? executionTo = default(System.DateTimeOffset?), string status = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTestRuns(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, int? maxpagesize, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.Developer.LoadTesting.Models.TestRun> GetTestRuns(string orderby = null, string search = null, string testId = null, System.DateTimeOffset? executionFrom = default(System.DateTimeOffset?), System.DateTimeOffset? executionTo = default(System.DateTimeOffset?), string status = null, int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, System.DateTimeOffset? executionFrom = default(System.DateTimeOffset?), System.DateTimeOffset? executionTo = default(System.DateTimeOffset?), string status = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTestRunsAsync(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, int? maxpagesize, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Developer.LoadTesting.Models.TestRun> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, System.DateTimeOffset? executionFrom = default(System.DateTimeOffset?), System.DateTimeOffset? executionTo = default(System.DateTimeOffset?), string status = null, int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StopTestRun(string testRunId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Developer.LoadTesting.Models.TestRun> StopTestRun(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopTestRunAsync(string testRunId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.Models.TestRun>> StopTestRunAsync(string testRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> TestRun(Azure.WaitUntil waitUntil, string testRunId, Azure.Core.RequestContent content, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> TestRunAsync(Azure.WaitUntil waitUntil, string testRunId, Azure.Core.RequestContent content, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
     }
     public partial class TestRunResultOperation : Azure.Operation<System.BinaryData>
     {
@@ -173,7 +175,31 @@ namespace Azure.Developer.LoadTesting.Models
         public string ResourceType { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
     }
-    public static partial class AzureLoadTestingModelFactory
+    public partial class CertificateMetadata
+    {
+        internal CertificateMetadata() { }
+        public string Name { get { throw null; } }
+        public Azure.Developer.LoadTesting.Models.CertificateType? Type { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CertificateType : System.IEquatable<Azure.Developer.LoadTesting.Models.CertificateType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CertificateType(string value) { throw null; }
+        public static Azure.Developer.LoadTesting.Models.CertificateType AKVCERTURI { get { throw null; } }
+        public bool Equals(Azure.Developer.LoadTesting.Models.CertificateType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Developer.LoadTesting.Models.CertificateType left, Azure.Developer.LoadTesting.Models.CertificateType right) { throw null; }
+        public static implicit operator Azure.Developer.LoadTesting.Models.CertificateType (string value) { throw null; }
+        public static bool operator !=(Azure.Developer.LoadTesting.Models.CertificateType left, Azure.Developer.LoadTesting.Models.CertificateType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public static partial class DeveloperLoadTestingModelFactory
     {
         public static Azure.Developer.LoadTesting.Models.AppComponent AppComponent(string resourceId = null, string resourceName = null, string resourceType = null, string displayName = null, string resourceGroup = null, string subscriptionId = null, string kind = null) { throw null; }
         public static Azure.Developer.LoadTesting.Models.CertificateMetadata CertificateMetadata(string value = null, Azure.Developer.LoadTesting.Models.CertificateType? type = default(Azure.Developer.LoadTesting.Models.CertificateType?), string name = null) { throw null; }
@@ -206,30 +232,6 @@ namespace Azure.Developer.LoadTesting.Models
         public static Azure.Developer.LoadTesting.Models.TestRunStatistics TestRunStatistics(string transaction = null, float? sampleCount = default(float?), float? errorCount = default(float?), float? errorPct = default(float?), float? meanResTime = default(float?), float? medianResTime = default(float?), float? maxResTime = default(float?), float? minResTime = default(float?), float? pct1ResTime = default(float?), float? pct2ResTime = default(float?), float? pct3ResTime = default(float?), float? throughput = default(float?), float? receivedKBytesPerSec = default(float?), float? sentKBytesPerSec = default(float?)) { throw null; }
         public static Azure.Developer.LoadTesting.Models.TestServerMetricConfig TestServerMetricConfig(string testId = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Developer.LoadTesting.Models.ResourceMetric> metrics = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), string createdBy = null, System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), string lastModifiedBy = null) { throw null; }
         public static Azure.Developer.LoadTesting.Models.TimeSeriesElement TimeSeriesElement(System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.Models.MetricValue> data = null, System.Collections.Generic.IEnumerable<Azure.Developer.LoadTesting.Models.DimensionValue> dimensionValues = null) { throw null; }
-    }
-    public partial class CertificateMetadata
-    {
-        internal CertificateMetadata() { }
-        public string Name { get { throw null; } }
-        public Azure.Developer.LoadTesting.Models.CertificateType? Type { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CertificateType : System.IEquatable<Azure.Developer.LoadTesting.Models.CertificateType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CertificateType(string value) { throw null; }
-        public static Azure.Developer.LoadTesting.Models.CertificateType AKVCERTURI { get { throw null; } }
-        public bool Equals(Azure.Developer.LoadTesting.Models.CertificateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Developer.LoadTesting.Models.CertificateType left, Azure.Developer.LoadTesting.Models.CertificateType right) { throw null; }
-        public static implicit operator Azure.Developer.LoadTesting.Models.CertificateType (string value) { throw null; }
-        public static bool operator !=(Azure.Developer.LoadTesting.Models.CertificateType left, Azure.Developer.LoadTesting.Models.CertificateType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class DimensionFilter
     {
