@@ -16,9 +16,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Invalidates this instance. (Builds the Json payload).</summary>
         internal abstract void Invalidate();
 
-        /// <summary>Checks the Action count > 0</summary>
-        internal abstract void ValidateActions();
-
         /// <summary>Gets or sets the body of the event response.</summary>
         [Required]
         public string Body
