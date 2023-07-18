@@ -298,17 +298,14 @@ namespace Azure.Core.Pipeline
                         linkTagsCollection.Add(tag.Key, tag.Value!);
                     }
 
-                    try
+                    var contextWasParsed = ActivityContext.TryParse(activity.ParentId!, activity.TraceStateString, out var context);
+                    if (contextWasParsed)
                     {
-                        var context = ActivityContext.Parse(activity.ParentId!, activity.TraceStateString);
                         var link = new ActivityLink(context, linkTagsCollection);
                         linkCollection.Add(link);
                     }
-                    catch (Exception)
-                    {
-                    }
 #endif
-                }
+            }
 
                 return linkCollection;
             }
@@ -1050,16 +1047,11 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal static class ActivityExtensions
     {
-        private static bool SupportsActivitySourceSwitch;
-
-        public static bool SupportsActivitySource()
-        {
-            return SupportsActivitySourceSwitch;
-        }
+        public static bool SupportsActivitySource { get; private set; }
 
         public static void ResetFeatureSwitch()
         {
-            SupportsActivitySourceSwitch = AppContextSwitchHelper.GetConfigValue(
+            SupportsActivitySource = AppContextSwitchHelper.GetConfigValue(
                 "Azure.Experimental.EnableActivitySource",
                 "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE");
         }
