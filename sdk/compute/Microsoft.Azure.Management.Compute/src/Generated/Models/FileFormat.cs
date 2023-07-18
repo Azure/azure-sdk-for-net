@@ -12,11 +12,19 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for ReplicationStatusTypes.
+    /// Defines values for FileFormat.
     /// </summary>
-    public static class ReplicationStatusTypes
+    public static class FileFormat
     {
-        public const string ReplicationStatus = "ReplicationStatus";
-        public const string ValidationProfile = "ValidationProfile";
+        /// <summary>
+        /// A VHD file is a disk image file in the Virtual Hard Disk file
+        /// format.
+        /// </summary>
+        public const string VHD = "VHD";
+        /// <summary>
+        /// A VHDX file is a disk image file in the Virtual Hard Disk v2 file
+        /// format.
+        /// </summary>
+        public const string VHDX = "VHDX";
     }
 }
