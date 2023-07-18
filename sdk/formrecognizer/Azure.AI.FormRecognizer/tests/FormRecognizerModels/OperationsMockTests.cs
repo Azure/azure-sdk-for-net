@@ -451,11 +451,11 @@ namespace Azure.AI.FormRecognizer.Tests.Models
                     }
                 }
                 """;
-            using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
-            using var emptyResponseBody1 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
+            using var responseBody0 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
+            using var responseBody1 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
             using var postResponse = new MockResponse(201);
-            using var getResponse0 = new MockResponse(200) { ContentStream = emptyResponseBody0 };
-            using var getResponse1 = new MockResponse(200) { ContentStream = emptyResponseBody1 };
+            using var getResponse0 = new MockResponse(200) { ContentStream = responseBody0 };
+            using var getResponse1 = new MockResponse(200) { ContentStream = responseBody1 };
 
             postResponse.AddHeader(new HttpHeader("Location", CustomOperationLocation));
 
@@ -524,11 +524,11 @@ namespace Azure.AI.FormRecognizer.Tests.Models
                     }
                 }
                 """;
-            using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
-            using var emptyResponseBody1 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
+            using var responseBody0 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
+            using var responseBody1 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
             using var postResponse = new MockResponse(201);
-            using var getResponse0 = new MockResponse(200) { ContentStream = emptyResponseBody0 };
-            using var getResponse1 = new MockResponse(200) { ContentStream = emptyResponseBody1 };
+            using var getResponse0 = new MockResponse(200) { ContentStream = responseBody0 };
+            using var getResponse1 = new MockResponse(200) { ContentStream = responseBody1 };
 
             postResponse.AddHeader(new HttpHeader("Location", CustomOperationLocation));
 
@@ -592,11 +592,11 @@ namespace Azure.AI.FormRecognizer.Tests.Models
                     }
                 }
                 """;
-            using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
-            using var emptyResponseBody1 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
+            using var responseBody0 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
+            using var responseBody1 = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse));
             using var postResponse = new MockResponse(202);
-            using var getResponse0 = new MockResponse(200) { ContentStream = emptyResponseBody0 };
-            using var getResponse1 = new MockResponse(200) { ContentStream = emptyResponseBody1 };
+            using var getResponse0 = new MockResponse(200) { ContentStream = responseBody0 };
+            using var getResponse1 = new MockResponse(200) { ContentStream = responseBody1 };
 
             postResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, CustomOperationLocation));
 
