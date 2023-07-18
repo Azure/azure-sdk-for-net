@@ -13,5 +13,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         Cool = 2,
         /// <summary> Archive. </summary>
         Archive = 3,
+        /// <summary> Cold. </summary>
+        Cold = 4,
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = client.GetReceivedShare("<receivedShareId>");
+            Response response = client.GetReceivedShare("<receivedShareId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = client.GetReceivedShare("<receivedShareId>");
+            Response response = client.GetReceivedShare("<receivedShareId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = await client.GetReceivedShareAsync("<receivedShareId>");
+            Response response = await client.GetReceivedShareAsync("<receivedShareId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = await client.GetReceivedShareAsync("<receivedShareId>");
+            Response response = await client.GetReceivedShareAsync("<receivedShareId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -179,7 +179,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = client.RegisterTenantEmailRegistration();
+            Response response = client.RegisterTenantEmailRegistration("<repeatabilityRequestId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -193,7 +193,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = client.RegisterTenantEmailRegistration("<repeatabilityRequestId>");
+            Response response = client.RegisterTenantEmailRegistration("<repeatabilityRequestId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -214,7 +214,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = await client.RegisterTenantEmailRegistrationAsync();
+            Response response = await client.RegisterTenantEmailRegistrationAsync("<repeatabilityRequestId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -228,7 +228,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = await client.RegisterTenantEmailRegistrationAsync("<repeatabilityRequestId>");
+            Response response = await client.RegisterTenantEmailRegistrationAsync("<repeatabilityRequestId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -249,7 +249,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>"))
+            foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -265,7 +265,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>", "<filter>", "<orderby>"))
+            foreach (var item in client.GetAllAttachedReceivedShares("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -282,7 +282,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>"))
+            await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -298,7 +298,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<filter>", "<orderby>"))
+            await foreach (var item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -315,7 +315,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllDetachedReceivedShares())
+            foreach (var item in client.GetAllDetachedReceivedShares("<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -331,7 +331,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            foreach (var item in client.GetAllDetachedReceivedShares("<filter>", "<orderby>"))
+            foreach (var item in client.GetAllDetachedReceivedShares("<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -348,7 +348,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllDetachedReceivedSharesAsync())
+            await foreach (var item in client.GetAllDetachedReceivedSharesAsync("<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -364,7 +364,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            await foreach (var item in client.GetAllDetachedReceivedSharesAsync("<filter>", "<orderby>"))
+            await foreach (var item in client.GetAllDetachedReceivedSharesAsync("<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -511,7 +511,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            var operation = client.DeleteReceivedShare(WaitUntil.Completed, "<receivedShareId>");
+            var operation = client.DeleteReceivedShare(WaitUntil.Completed, "<receivedShareId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -526,7 +526,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            var operation = client.DeleteReceivedShare(WaitUntil.Completed, "<receivedShareId>");
+            var operation = client.DeleteReceivedShare(WaitUntil.Completed, "<receivedShareId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -547,7 +547,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            var operation = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>");
+            var operation = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -562,7 +562,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            var operation = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>");
+            var operation = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>", new RequestContext());
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

@@ -1,14 +1,16 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0 (2023-07-25)
+  
+This release is first stable release for the Graph Services Management library.
 
 ### Bugs Fixed
 
-### Other Changes
+- Updated swagger spec operation ids
+
+### Breaking Changes
+- Prepended `GraphServices` to simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
 
 ## 1.0.0-beta.1 (2023-04-07)
 

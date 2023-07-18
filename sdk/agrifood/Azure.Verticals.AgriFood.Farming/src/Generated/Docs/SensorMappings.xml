@@ -112,7 +112,7 @@ This sample shows how to call GetSensorMappingAsync with required parameters and
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-Response response = await client.GetSensorMappingAsync("<sensorMappingId>");
+Response response = await client.GetSensorMappingAsync("<sensorMappingId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -139,7 +139,7 @@ This sample shows how to call GetSensorMapping with required parameters and pars
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-Response response = client.GetSensorMapping("<sensorMappingId>");
+Response response = client.GetSensorMapping("<sensorMappingId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -185,23 +185,12 @@ Console.WriteLine(response.Status);
     </member>
     <member name="GetSensorMappingsAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetSensorMappingsAsync and parse the result.
+This sample shows how to call GetSensorMappingsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetSensorMappingsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSensorMappingsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
-
-await foreach (var item in client.GetSensorMappingsAsync(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetSensorMappingsAsync(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorId").ToString());
@@ -224,23 +213,12 @@ await foreach (var item in client.GetSensorMappingsAsync(new String[]{"<sensorId
     </member>
     <member name="GetSensorMappings(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
 <example>
-This sample shows how to call GetSensorMappings and parse the result.
+This sample shows how to call GetSensorMappings with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
 
-foreach (var item in client.GetSensorMappings())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetSensorMappings with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient("2022-11-01-preview");
-
-foreach (var item in client.GetSensorMappings(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetSensorMappings(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorId").ToString());

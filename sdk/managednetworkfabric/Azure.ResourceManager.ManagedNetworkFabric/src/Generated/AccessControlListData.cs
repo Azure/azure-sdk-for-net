@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="addressFamily"> IP address family. Example: ipv4 | ipv6. </param>
         /// <param name="conditions"> Access Control List conditions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conditions"/> is null. </exception>
-        public AccessControlListData(AzureLocation location, AddressFamily addressFamily, IEnumerable<AccessControlListPropertiesConditionsItem> conditions) : base(location)
+        public AccessControlListData(AzureLocation location, AddressFamily addressFamily, IEnumerable<AccessControlListConditionProperties> conditions) : base(location)
         {
             Argument.AssertNotNull(conditions, nameof(conditions));
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="addressFamily"> IP address family. Example: ipv4 | ipv6. </param>
         /// <param name="conditions"> Access Control List conditions. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal AccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, AddressFamily addressFamily, IList<AccessControlListPropertiesConditionsItem> conditions, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal AccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, AddressFamily addressFamily, IList<AccessControlListConditionProperties> conditions, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             AddressFamily = addressFamily;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> IP address family. Example: ipv4 | ipv6. </summary>
         public AddressFamily AddressFamily { get; set; }
         /// <summary> Access Control List conditions. </summary>
-        public IList<AccessControlListPropertiesConditionsItem> Conditions { get; }
+        public IList<AccessControlListConditionProperties> Conditions { get; }
         /// <summary> Gets the provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

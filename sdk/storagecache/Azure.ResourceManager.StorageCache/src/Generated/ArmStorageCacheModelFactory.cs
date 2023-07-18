@@ -18,6 +18,106 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmStorageCacheModelFactory
     {
+        /// <summary> Initializes a new instance of AmlFileSystemData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed identity used by the AML file system, if configured. Current supported identity types: None, UserAssigned. </param>
+        /// <param name="skuName"> SKU for the resource. </param>
+        /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
+        /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. This might be rounded up. </param>
+        /// <param name="health"> Health of the AML file system. </param>
+        /// <param name="provisioningState"> ARM provisioning state. </param>
+        /// <param name="filesystemSubnet"> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </param>
+        /// <param name="clientInfo"> Client information for the AML file system. </param>
+        /// <param name="throughputProvisionedMBps"> Throughput provisioned in MB per sec, calculated as storageCapacityTiB * per-unit storage throughput. </param>
+        /// <param name="keyEncryptionKey"> Specifies encryption settings of the AML file system. </param>
+        /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
+        /// <param name="hsm"> Hydration and archive settings and status. </param>
+        /// <returns> A new <see cref="StorageCache.AmlFileSystemData"/> instance for mocking. </returns>
+        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string skuName = null, IEnumerable<string> zones = null, float? storageCapacityTiB = null, AmlFileSystemHealth health = null, AmlFileSystemProvisioningStateType? provisioningState = null, string filesystemSubnet = null, AmlFileSystemClientInfo clientInfo = null, int? throughputProvisionedMBps = null, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = null, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = null, AmlFileSystemPropertiesHsm hsm = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            zones ??= new List<string>();
+
+            return new AmlFileSystemData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuName(skuName) : null, zones?.ToList(), storageCapacityTiB, health, provisioningState, filesystemSubnet, clientInfo, throughputProvisionedMBps, keyEncryptionKey != null ? new AmlFileSystemEncryptionSettings(keyEncryptionKey) : null, maintenanceWindow, hsm);
+        }
+
+        /// <summary> Initializes a new instance of AmlFileSystemHealth. </summary>
+        /// <param name="state"> List of AML file system health states. </param>
+        /// <param name="statusCode"> Server-defined error code for the AML file system health. </param>
+        /// <param name="statusDescription"> Describes the health state. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemHealth"/> instance for mocking. </returns>
+        public static AmlFileSystemHealth AmlFileSystemHealth(AmlFileSystemHealthStateType? state = null, string statusCode = null, string statusDescription = null)
+        {
+            return new AmlFileSystemHealth(state, statusCode, statusDescription);
+        }
+
+        /// <summary> Initializes a new instance of AmlFileSystemClientInfo. </summary>
+        /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </param>
+        /// <param name="mountCommand"> Recommended command to mount the AML file system. </param>
+        /// <param name="lustreVersion"> The version of Lustre running in the AML file system. </param>
+        /// <param name="containerStorageInterface"> Container Storage Interface information for the AML file system. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemClientInfo"/> instance for mocking. </returns>
+        public static AmlFileSystemClientInfo AmlFileSystemClientInfo(string mgsAddress = null, string mountCommand = null, string lustreVersion = null, AmlFileSystemContainerStorageInterface containerStorageInterface = null)
+        {
+            return new AmlFileSystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface);
+        }
+
+        /// <summary> Initializes a new instance of AmlFileSystemContainerStorageInterface. </summary>
+        /// <param name="persistentVolumeClaim"> Recommended AKS Persistent Volume Claim for the CSI driver, in Base64 encoded YAML. </param>
+        /// <param name="persistentVolume"> Recommended AKS Persistent Volume for the CSI driver, in Base64 encoded YAML. </param>
+        /// <param name="storageClass"> Recommended AKS Storage Class for the CSI driver, in Base64 encoded YAML. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemContainerStorageInterface"/> instance for mocking. </returns>
+        public static AmlFileSystemContainerStorageInterface AmlFileSystemContainerStorageInterface(string persistentVolumeClaim = null, string persistentVolume = null, string storageClass = null)
+        {
+            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass);
+        }
+
+        /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
+        /// <param name="settings"> Specifies HSM settings of the AML file system. </param>
+        /// <param name="archiveStatus"> Archive status. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemPropertiesHsm"/> instance for mocking. </returns>
+        public static AmlFileSystemPropertiesHsm AmlFileSystemPropertiesHsm(AmlFileSystemHsmSettings settings = null, IEnumerable<AmlFileSystemArchive> archiveStatus = null)
+        {
+            archiveStatus ??= new List<AmlFileSystemArchive>();
+
+            return new AmlFileSystemPropertiesHsm(settings, archiveStatus?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of AmlFileSystemArchive. </summary>
+        /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </param>
+        /// <param name="status"> The status of the archive. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemArchive"/> instance for mocking. </returns>
+        public static AmlFileSystemArchive AmlFileSystemArchive(string filesystemPath = null, AmlFileSystemArchiveStatus status = null)
+        {
+            return new AmlFileSystemArchive(filesystemPath, status);
+        }
+
+        /// <summary> Initializes a new instance of AmlFileSystemArchiveStatus. </summary>
+        /// <param name="state"> The state of the archive operation. </param>
+        /// <param name="lastCompletionOn"> The time of the last completed archive operation. </param>
+        /// <param name="lastStartedOn"> The time the latest archive operation started. </param>
+        /// <param name="percentComplete"> The completion percentage of the archive operation. </param>
+        /// <param name="errorCode"> Server-defined error code for the archive operation. </param>
+        /// <param name="errorMessage"> Server-defined error message for the archive operation. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemArchiveStatus"/> instance for mocking. </returns>
+        public static AmlFileSystemArchiveStatus AmlFileSystemArchiveStatus(ArchiveStatusType? state = null, DateTimeOffset? lastCompletionOn = null, DateTimeOffset? lastStartedOn = null, int? percentComplete = null, string errorCode = null, string errorMessage = null)
+        {
+            return new AmlFileSystemArchiveStatus(state, lastCompletionOn, lastStartedOn, percentComplete, errorCode, errorMessage);
+        }
+
+        /// <summary> Initializes a new instance of RequiredAmlFileSystemSubnetsSize. </summary>
+        /// <param name="filesystemSubnetSize"> The number of available IP addresses that are required for the AML file system. </param>
+        /// <returns> A new <see cref="Models.RequiredAmlFileSystemSubnetsSize"/> instance for mocking. </returns>
+        public static RequiredAmlFileSystemSubnetsSize RequiredAmlFileSystemSubnetsSize(int? filesystemSubnetSize = null)
+        {
+            return new RequiredAmlFileSystemSubnetsSize(filesystemSubnetSize);
+        }
+
         /// <summary> Initializes a new instance of StorageCacheSku. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="capabilities"> A list of capabilities of this SKU, such as throughput or ops/sec. </param>
@@ -106,14 +206,14 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the cache, if configured. </param>
-        /// <param name="skuName"> SKU for the Cache. </param>
+        /// <param name="skuName"> SKU for the cache. </param>
         /// <param name="cacheSizeGB"> The size of this Cache, in GB. </param>
-        /// <param name="health"> Health of the Cache. </param>
-        /// <param name="mountAddresses"> Array of IP addresses that can be used by clients mounting this Cache. </param>
+        /// <param name="health"> Health of the cache. </param>
+        /// <param name="mountAddresses"> Array of IPv4 addresses that can be used by clients mounting this cache. </param>
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
         /// <param name="subnet"> Subnet used for the Cache. </param>
-        /// <param name="upgradeStatus"> Upgrade status of the Cache. </param>
-        /// <param name="upgradeSettings"> Upgrade settings of the Cache. </param>
+        /// <param name="upgradeStatus"> Upgrade status of the cache. </param>
+        /// <param name="upgradeSettings"> Upgrade settings of the cache. </param>
         /// <param name="networkSettings"> Specifies network settings of the cache. </param>
         /// <param name="encryptionSettings"> Specifies encryption settings of the cache. </param>
         /// <param name="securityAccessPolicies"> Specifies security settings of the cache. </param>
@@ -135,7 +235,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheHealth. </summary>
-        /// <param name="state"> List of Cache health states. </param>
+        /// <param name="state"> List of cache health states. Down is when the cluster is not responding.  Degraded is when its functioning but has some alerts. Transitioning when it is creating or deleting. Unknown will be returned in old api versions when a new value is added in future versions. WaitingForKey is when the create is waiting for the system assigned identity to be given access to the encryption key in the encryption settings. </param>
         /// <param name="statusDescription"> Describes explanation of state. </param>
         /// <param name="conditions"> Outstanding conditions that need to be investigated and resolved. </param>
         /// <returns> A new <see cref="Models.StorageCacheHealth"/> instance for mocking. </returns>
@@ -156,9 +256,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheUpgradeStatus. </summary>
-        /// <param name="currentFirmwareVersion"> Version string of the firmware currently installed on this Cache. </param>
-        /// <param name="firmwareUpdateStatus"> True if there is a firmware update ready to install on this Cache. The firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </param>
-        /// <param name="firmwareUpdateDeadline"> Time at which the pending firmware update will automatically be installed on the Cache. </param>
+        /// <param name="currentFirmwareVersion"> Version string of the firmware currently installed on this cache. </param>
+        /// <param name="firmwareUpdateStatus"> True if there is a firmware update ready to install on this cache. The firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </param>
+        /// <param name="firmwareUpdateDeadline"> Time at which the pending firmware update will automatically be installed on the cache. </param>
         /// <param name="lastFirmwareUpdate"> Time of the last successful firmware update. </param>
         /// <param name="pendingFirmwareVersion"> When firmwareUpdateAvailable is true, this field holds the version string for the update. </param>
         /// <returns> A new <see cref="Models.StorageCacheUpgradeStatus"/> instance for mocking. </returns>
@@ -169,7 +269,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Initializes a new instance of StorageCacheNetworkSettings. </summary>
         /// <param name="mtu"> The IPv4 maximum transmission unit configured for the subnet. </param>
-        /// <param name="utilityAddresses"> Array of additional IP addresses used by this Cache. </param>
+        /// <param name="utilityAddresses"> Array of additional IP addresses used by this cache. </param>
         /// <param name="dnsServers"> DNS servers for the cache to use.  It will be set from the network configuration if no value is provided. </param>
         /// <param name="dnsSearchDomain"> DNS search domain. </param>
         /// <param name="ntpServer"> NTP server IP Address or FQDN for the cache to use. The default is time.windows.com. </param>
@@ -234,7 +334,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="junctions"> List of Cache namespace junctions to target for namespace associations. </param>
+        /// <param name="junctions"> List of cache namespace junctions to target for namespace associations. </param>
         /// <param name="targetType"> Type of the Storage Target. </param>
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
         /// <param name="state"> Storage target operational state. </param>

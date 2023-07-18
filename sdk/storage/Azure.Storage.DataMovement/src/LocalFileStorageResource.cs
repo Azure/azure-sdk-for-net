@@ -18,6 +18,11 @@ namespace Azure.Storage.DataMovement
         private string _path;
 
         /// <summary>
+        /// The identifier for the type of storage resource.
+        /// </summary>
+        protected internal override string ResourceId => "LocalFile";
+
+        /// <summary>
         /// Returns URL
         /// </summary>
         public override Uri Uri => throw new NotSupportedException();
@@ -28,27 +33,27 @@ namespace Azure.Storage.DataMovement
         public override string Path => _path;
 
         /// <summary>
-        /// Cannot return a Url because this is a local path.
+        /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
+        protected internal override bool CanProduceUri => false;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the resource
         /// </summary>
-        public override TransferType TransferType => TransferType.Sequential;
+        protected internal override TransferType TransferType => TransferType.Sequential;
 
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
         /// TODO: consider changing this.
-        public override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
+        protected internal override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
         ///
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
-        public override long? Length => default;
+        protected internal override long? Length => default;
 
         /// <summary>
         /// Constructor
@@ -71,7 +76,7 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+        protected internal override Task<ReadStreamStorageResourceResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default)
@@ -116,7 +121,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task WriteFromStreamAsync(
+        protected internal override async Task WriteFromStreamAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
@@ -165,7 +170,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task CopyFromUriAsync(
+        protected internal override Task CopyFromUriAsync(
             StorageResourceSingle sourceResource,
             bool overwrite,
             long completeLength,
@@ -189,7 +194,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task CopyBlockFromUriAsync(
+        protected internal override Task CopyBlockFromUriAsync(
             StorageResourceSingle sourceResource,
             HttpRange range,
             bool overwrite,
@@ -206,7 +211,7 @@ namespace Azure.Storage.DataMovement
         /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
         /// <returns>Returns the properties of the Local File Storage Resource. See <see cref="StorageResourceProperties"/></returns>
-        public override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        protected internal override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             FileInfo fileInfo = new FileInfo(_path);
             if (fileInfo.Exists)
@@ -217,12 +222,28 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Gets the Authorization Header for the storage resource if available.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        protected internal override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException();
+        }
+
+        /// <summary>
         /// Completes the transfer if the resource resides locally.
         ///
         /// If the transfer requires client-side encryption, necessary
         /// operations will occur here.
         /// </summary>
-        public override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
             if (File.Exists(_path))
             {
@@ -244,7 +265,7 @@ namespace Azure.Storage.DataMovement
         /// If the storage resource exists and is deleted, true will be returned.
         /// Otherwise if the storage resource does not exist, false will be returned.
         /// </returns>
-        public override Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        protected internal override Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             if (File.Exists(_path))
             {
@@ -252,6 +273,30 @@ namespace Azure.Storage.DataMovement
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static LocalFileStorageResource RehydrateResource(
+            DataTransferProperties transferProperties,
+            bool isSource)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            return new LocalFileStorageResource(storedPath);
         }
     }
 }

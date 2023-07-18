@@ -31,6 +31,13 @@ namespace Azure.ResourceManager.StorageCache
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of AmlFileSystemResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AmlFileSystemResources and their operations over a AmlFileSystemResource. </returns>
+        public virtual AmlFileSystemCollection GetAmlFileSystems()
+        {
+            return GetCachedClient(Client => new AmlFileSystemCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of StorageCacheResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of StorageCacheResources and their operations over a StorageCacheResource. </returns>
         public virtual StorageCacheCollection GetStorageCaches()

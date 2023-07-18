@@ -373,6 +373,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new ResourceGuardProtectedObjectData(id, name, resourceType, systemData);
         }
 
+        /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
+        /// <returns> A new <see cref="DataProtectionBackup.ResourceGuardProxyBaseResourceData"/> instance for mocking. </returns>
+        public static ResourceGuardProxyBaseResourceData ResourceGuardProxyBaseResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceGuardProxyBase properties = null)
+        {
+            return new ResourceGuardProxyBaseResourceData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of DataProtectionUnlockDeleteResult. </summary>
+        /// <param name="unlockDeleteExpiryTime"> This is the time when unlock delete privileges will get expired. </param>
+        /// <returns> A new <see cref="Models.DataProtectionUnlockDeleteResult"/> instance for mocking. </returns>
+        public static DataProtectionUnlockDeleteResult DataProtectionUnlockDeleteResult(string unlockDeleteExpiryTime = null)
+        {
+            return new DataProtectionUnlockDeleteResult(unlockDeleteExpiryTime);
+        }
+
         /// <summary> Initializes a new instance of DataProtectionBackupRetentionTag. </summary>
         /// <param name="eTag"> Retention Tag version. </param>
         /// <param name="id"> Retention Tag version. </param>

@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
-            SupportedVersions = new ChangeTrackingList<NetworkDeviceSkuPropertiesSupportedVersionsItem>();
+            SupportedVersions = new ChangeTrackingList<SupportedVersionProperties>();
             SupportedRoleTypes = new ChangeTrackingList<NetworkDeviceRoleName>();
-            Interfaces = new ChangeTrackingList<NetworkDeviceSkuPropertiesInterfacesItem>();
+            Interfaces = new ChangeTrackingList<DeviceInterfaceProperties>();
         }
 
         /// <summary> Initializes a new instance of NetworkDeviceSkuData. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="supportedRoleTypes"> Available roles for the network device. </param>
         /// <param name="interfaces"> List of network device interfaces. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string model, string manufacturer, IList<NetworkDeviceSkuPropertiesSupportedVersionsItem> supportedVersions, NetworkDeviceSkuPropertiesLimits limits, IList<NetworkDeviceRoleName> supportedRoleTypes, IList<NetworkDeviceSkuPropertiesInterfacesItem> interfaces, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string model, string manufacturer, IList<SupportedVersionProperties> supportedVersions, DeviceLimits limits, IList<NetworkDeviceRoleName> supportedRoleTypes, IList<DeviceInterfaceProperties> interfaces, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Model = model;
             Manufacturer = manufacturer;
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Manufacturer of the network device. </summary>
         public string Manufacturer { get; set; }
         /// <summary> List of network device interfaces. </summary>
-        public IList<NetworkDeviceSkuPropertiesSupportedVersionsItem> SupportedVersions { get; }
+        public IList<SupportedVersionProperties> SupportedVersions { get; }
         /// <summary> Network device limits. </summary>
-        public NetworkDeviceSkuPropertiesLimits Limits { get; set; }
+        public DeviceLimits Limits { get; set; }
         /// <summary> Available roles for the network device. </summary>
         public IList<NetworkDeviceRoleName> SupportedRoleTypes { get; }
         /// <summary> List of network device interfaces. </summary>
-        public IList<NetworkDeviceSkuPropertiesInterfacesItem> Interfaces { get; }
+        public IList<DeviceInterfaceProperties> Interfaces { get; }
         /// <summary> Gets the provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

@@ -77,7 +77,7 @@ namespace Azure.Template
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='GetSecretAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSecretAsync(string secretName, RequestContext context = null)
+        public virtual async Task<Response> GetSecretAsync(string secretName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
@@ -112,7 +112,7 @@ namespace Azure.Template
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='GetSecret(string,RequestContext)']/*" />
-        public virtual Response GetSecret(string secretName, RequestContext context = null)
+        public virtual Response GetSecret(string secretName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 

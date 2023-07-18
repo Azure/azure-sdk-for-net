@@ -21,7 +21,7 @@ namespace Azure.Storage.DataMovement.Tests
     /// an Assert.Failure in the middle of an event.
     ///
     /// Also if there's multiple failures then we will catch all of them.
-    /// (Which would mainly occur during <see cref="ErrorHandlingOptions.ContinueOnFailure"/>
+    /// (Which would mainly occur during <see cref="ErrorHandlingBehavior.ContinueOnFailure"/>
     /// </summary>
     internal class TestEventsRaised : IDisposable
     {
@@ -202,7 +202,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// This asserts that the expected events occurred during a container transfer that is expected
         /// to have a <see cref="StorageTransferStatus.CompletedWithFailure"/> at the end without any skips.
-        /// Assuming <see cref="ErrorHandlingOptions.StopOnAllFailures"/> was set.
+        /// Assuming <see cref="ErrorHandlingBehavior.StopOnAllFailures"/> was set.
         /// </summary>
         /// <param name="expectedFailureCount">
         /// Expected amount of failure single transfers to occur within the container transfers.
@@ -233,7 +233,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// This asserts that the expected events occurred during a container transfer that is expected
         /// to have a <see cref="StorageTransferStatus.CompletedWithFailure"/> at the end without any skips.
-        /// Assuming <see cref="ErrorHandlingOptions.ContinueOnFailure"/> was set.
+        /// Assuming <see cref="ErrorHandlingBehavior.ContinueOnFailure"/> was set.
         /// </summary>
         /// <param name="expectedFailureCount">
         /// Expected amount of failure single transfers to occur within the container transfers.

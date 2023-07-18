@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
     /// A class representing the StorageCache data model.
-    /// A Cache instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
+    /// A cache instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
     /// </summary>
     public partial class StorageCacheData : TrackedResourceData
     {
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the cache, if configured. </param>
-        /// <param name="sku"> SKU for the Cache. </param>
+        /// <param name="sku"> SKU for the cache. </param>
         /// <param name="cacheSizeGB"> The size of this Cache, in GB. </param>
-        /// <param name="health"> Health of the Cache. </param>
-        /// <param name="mountAddresses"> Array of IP addresses that can be used by clients mounting this Cache. </param>
+        /// <param name="health"> Health of the cache. </param>
+        /// <param name="mountAddresses"> Array of IPv4 addresses that can be used by clients mounting this cache. </param>
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
         /// <param name="subnet"> Subnet used for the Cache. </param>
-        /// <param name="upgradeStatus"> Upgrade status of the Cache. </param>
-        /// <param name="upgradeSettings"> Upgrade settings of the Cache. </param>
+        /// <param name="upgradeStatus"> Upgrade status of the cache. </param>
+        /// <param name="upgradeSettings"> Upgrade settings of the cache. </param>
         /// <param name="networkSettings"> Specifies network settings of the cache. </param>
         /// <param name="encryptionSettings"> Specifies encryption settings of the cache. </param>
         /// <param name="securitySettings"> Specifies security settings of the cache. </param>
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary> The identity of the cache, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> SKU for the Cache. </summary>
+        /// <summary> SKU for the cache. </summary>
         internal StorageCacheSkuInfo Sku { get; set; }
-        /// <summary> SKU name for this Cache. </summary>
+        /// <summary> SKU name for this cache. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary> The size of this Cache, in GB. </summary>
         public int? CacheSizeGB { get; set; }
-        /// <summary> Health of the Cache. </summary>
+        /// <summary> Health of the cache. </summary>
         public StorageCacheHealth Health { get; }
-        /// <summary> Array of IP addresses that can be used by clients mounting this Cache. </summary>
+        /// <summary> Array of IPv4 addresses that can be used by clients mounting this cache. </summary>
         public IReadOnlyList<IPAddress> MountAddresses { get; }
         /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
         public StorageCacheProvisioningStateType? ProvisioningState { get; }
         /// <summary> Subnet used for the Cache. </summary>
         public ResourceIdentifier Subnet { get; set; }
-        /// <summary> Upgrade status of the Cache. </summary>
+        /// <summary> Upgrade status of the cache. </summary>
         public StorageCacheUpgradeStatus UpgradeStatus { get; }
-        /// <summary> Upgrade settings of the Cache. </summary>
+        /// <summary> Upgrade settings of the cache. </summary>
         public StorageCacheUpgradeSettings UpgradeSettings { get; set; }
         /// <summary> Specifies network settings of the cache. </summary>
         public StorageCacheNetworkSettings NetworkSettings { get; set; }

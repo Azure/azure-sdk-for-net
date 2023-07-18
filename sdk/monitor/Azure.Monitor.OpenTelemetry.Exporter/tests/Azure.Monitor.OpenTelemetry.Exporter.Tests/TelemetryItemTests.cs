@@ -4,11 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
-using Xunit;
-using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry.Resources;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry;
+using OpenTelemetry.Resources;
+using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -141,9 +143,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.Equal(expectedOperationName, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+            Assert.Equal(expectedOperationName, telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
 
         [Fact]
@@ -163,9 +166,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/path?id=1");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.Equal("GET /path", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+            Assert.Equal("GET /path", telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
 
         [Fact]
@@ -180,11 +184,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(activity);
             activity.DisplayName = "displayname";
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.Equal("displayname", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+            Assert.Equal("displayname", telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
 
         [Fact]
@@ -199,11 +205,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(activity);
             activity.SetTag(SemanticConventions.AttributeHttpClientIP, "127.0.0.1");
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.Equal("127.0.0.1", telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+            Assert.Equal("127.0.0.1", telemetryItem?.Tags[ContextTagKeys.AiLocationIp.ToString()]);
         }
 
         [Fact]
@@ -218,11 +226,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(activity);
             activity.SetTag(SemanticConventions.AttributeNetPeerIp, "127.0.0.1");
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.Equal("127.0.0.1", telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+            Assert.Equal("127.0.0.1", telemetryItem?.Tags[ContextTagKeys.AiLocationIp.ToString()]);
         }
 
         [Fact]
@@ -240,13 +250,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeHttpUserAgent, userAgent);
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.Equal(userAgent, telemetryItem.Tags["ai.user.userAgent"]);
+            Assert.Equal(userAgent, telemetryItem?.Tags["ai.user.userAgent"]);
         }
 
         [Fact]
-        public void AiLocationIpIsNullByDefault()
+        public void AiUserAgentIsSetAsUserAgentOriginal()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -256,10 +267,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 startTime: DateTime.UtcNow);
 
             Assert.NotNull(activity);
+            var userAgent = "Mozilla / 5.0(Windows NT 10.0;WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 91.0.4472.101 Safari / 537.36";
+            activity.SetTag(SemanticConventions.AttributeUserAgentOriginal, userAgent);
+
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
 
-            Assert.Null(telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+            Assert.Equal(userAgent, telemetryItem.Tags["ai.user.userAgent"]);
+        }
+
+        [Fact]
+        public void AiLocationIpIsNotSetByDefault()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            activity?.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
+
+            Assert.False(telemetryItem?.Tags.TryGetValue(ContextTagKeys.AiLocationIp.ToString(),out _));
         }
 
         [Fact]
@@ -319,10 +352,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
 
-        [Theory]
-        [InlineData("GET")]
-        [InlineData(null)]
-        public void RequestNameMatchesOperationName(string? httpMethod)
+        [Fact]
+        public void RequestNameMatchesOperationName()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -333,15 +364,69 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(activity);
             activity.DisplayName = "displayname";
-            if (httpMethod != null)
-            {
-                activity.SetTag(SemanticConventions.AttributeHttpMethod, httpMethod);
-            }
-            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, string.Empty);
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
-            Assert.Equal(requestData.Name, telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpRoute, "/api/test");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
+            var requestData = telemetryItem?.Data.BaseData as RequestData;
+
+            Assert.NotNull(requestData);
+            Assert.Equal("GET /api/test", requestData.Name);
+            Assert.Equal(requestData.Name, telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void RequestNameMatchesOperationNameV2()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpRoute, "/api/test");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
+            var requestData = telemetryItem?.Data.BaseData as RequestData;
+
+            Assert.NotNull(requestData);
+            Assert.Equal("GET /api/test", requestData.Name);
+            Assert.Equal(requestData.Name, telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void RequestNameMatchesOperationNameForConsumerSpans()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Consumer,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeMessagingSystem, "Eventhub");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
+            var requestData = telemetryItem?.Data.BaseData as RequestData;
+
+            Assert.NotNull(requestData);
+            Assert.Equal("displayname", requestData.Name);
+            Assert.Equal(requestData.Name, telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
 
         /// <summary>
@@ -361,9 +446,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var testAttributes = new Dictionary<string, object>();
 
-            if (serviceName != null) testAttributes.Add("service.name", serviceName);
-            if (serviceNamespace != null) testAttributes.Add("service.namespace", serviceNamespace);
-            if (serviceInstance != null) testAttributes.Add("service.instance.id", serviceInstance);
+            if (serviceName != null)
+                testAttributes.Add("service.name", serviceName);
+            if (serviceNamespace != null)
+                testAttributes.Add("service.namespace", serviceNamespace);
+            if (serviceInstance != null)
+                testAttributes.Add("service.instance.id", serviceInstance);
 
             return ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
         }
