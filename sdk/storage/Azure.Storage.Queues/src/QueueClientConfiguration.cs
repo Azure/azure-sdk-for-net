@@ -33,6 +33,7 @@ namespace Azure.Storage.Queues
                   pipeline,
                   sharedKeyCredential,
                   default,
+                  default,
                   clientDiagnostics,
                   version,
                   clientSideEncryption,
@@ -56,6 +57,31 @@ namespace Azure.Storage.Queues
                   pipeline,
                   default,
                   sasCredential,
+                  default,
+                  clientDiagnostics,
+                  version,
+                  clientSideEncryption,
+                  messageEncoding,
+                  queueMessageDecodingFailedHandlers)
+        {
+        }
+
+        /// <summary>
+        /// Create a <see cref="QueueClientConfiguration"/> with SAS authentication.
+        /// </summary>
+        public QueueClientConfiguration(
+            HttpPipeline pipeline,
+            TokenCredential tokenCredential,
+            ClientDiagnostics clientDiagnostics,
+            QueueClientOptions.ServiceVersion version,
+            QueueClientSideEncryptionOptions clientSideEncryption,
+            QueueMessageEncoding messageEncoding,
+            SyncAsyncEventHandler<QueueMessageDecodingFailedEventArgs> queueMessageDecodingFailedHandlers)
+            : this(
+                  pipeline,
+                  default,
+                  default,
+                  tokenCredential,
                   clientDiagnostics,
                   version,
                   clientSideEncryption,
@@ -79,6 +105,7 @@ namespace Azure.Storage.Queues
                   pipeline,
                   default,
                   default,
+                  default,
                   clientDiagnostics,
                   version,
                   clientSideEncryption,
@@ -87,16 +114,20 @@ namespace Azure.Storage.Queues
         {
         }
 
-        private QueueClientConfiguration(
+        /// <summary>
+        /// Used for internal Client Constructors that accept multiple types of authentication.
+        /// </summary>
+        internal QueueClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             AzureSasCredential sasCredential,
+            TokenCredential tokenCredential,
             ClientDiagnostics clientDiagnostics,
             QueueClientOptions.ServiceVersion version,
             QueueClientSideEncryptionOptions clientSideEncryption,
             QueueMessageEncoding messageEncoding,
             SyncAsyncEventHandler<QueueMessageDecodingFailedEventArgs> queueMessageDecodingFailedHandlers)
-            : base(pipeline, sharedKeyCredential, sasCredential, default, clientDiagnostics)
+            : base(pipeline, sharedKeyCredential, sasCredential, tokenCredential, clientDiagnostics)
         {
             Version = version;
             ClientSideEncryption = clientSideEncryption;
