@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineExtensionHandlerInstanceView
+    public partial class VirtualMachineExtensionHandlerInstanceView : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static VirtualMachineExtensionHandlerInstanceView DeserializeVirtualMachineExtensionHandlerInstanceView(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

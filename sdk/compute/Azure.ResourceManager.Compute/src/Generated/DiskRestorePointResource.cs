@@ -7,11 +7,13 @@
 
 using System;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetDiskRestorePointResource method.
     /// Otherwise you can get one from its parent resource <see cref="RestorePointResource" /> using the GetDiskRestorePoint method.
     /// </summary>
-    public partial class DiskRestorePointResource : ArmResource, ResourceManager.IResource
+    public partial class DiskRestorePointResource : ArmResource, ResourceManager.IResource, IJsonModelSerializable
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskRestorePointResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName)
@@ -294,5 +296,10 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => ModelSerializer.Deserialize<DiskRestorePointData>(data, options);
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => throw new NotImplementedException();
     }
 }

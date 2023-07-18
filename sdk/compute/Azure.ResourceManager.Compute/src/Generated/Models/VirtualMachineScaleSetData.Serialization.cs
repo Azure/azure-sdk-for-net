@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineScaleSetData : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetData : IUtf8JsonSerializable, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -149,6 +150,12 @@ namespace Azure.ResourceManager.Compute
             writer.WriteEndObject();
         }
 
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static VirtualMachineScaleSetData DeserializeVirtualMachineScaleSetData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -159,7 +166,7 @@ namespace Azure.ResourceManager.Compute
             Optional<ComputePlan> plan = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
-            Optional<Resources.Models.ExtendedLocation> extendedLocation = default;
+            Optional<ExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -234,7 +241,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<Resources.Models.ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

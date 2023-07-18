@@ -9,11 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineRunCommandInstanceView
+    public partial class VirtualMachineRunCommandInstanceView : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static VirtualMachineRunCommandInstanceView DeserializeVirtualMachineRunCommandInstanceView(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

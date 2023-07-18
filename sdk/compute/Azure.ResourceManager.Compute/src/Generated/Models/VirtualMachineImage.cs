@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="features"></param>
         /// <param name="architecture"> Specifies the Architecture Type. </param>
         /// <param name="imageDeprecationStatus"> Describes image deprecation status properties on the image. </param>
-        internal VirtualMachineImage(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, Resources.Models.ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGeneration? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture, ImageDeprecationStatus imageDeprecationStatus) : base(id, name, location, tags, extendedLocation)
+        internal VirtualMachineImage(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGeneration? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture, ImageDeprecationStatus imageDeprecationStatus) : base(id, name, location, tags, extendedLocation)
         {
             Plan = plan;
             OSDiskImage = osDiskImage;

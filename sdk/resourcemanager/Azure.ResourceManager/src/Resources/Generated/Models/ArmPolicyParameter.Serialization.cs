@@ -9,10 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmPolicyParameter : IUtf8JsonSerializable
+    public partial class ArmPolicyParameter : IUtf8JsonSerializable, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -57,6 +58,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
             writer.WriteEndObject();
         }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
 
         internal static ArmPolicyParameter DeserializeArmPolicyParameter(JsonElement element)
         {

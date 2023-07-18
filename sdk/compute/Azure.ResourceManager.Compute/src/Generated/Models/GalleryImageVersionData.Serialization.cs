@@ -5,15 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class GalleryImageVersionData : IUtf8JsonSerializable
+    public partial class GalleryImageVersionData : IUtf8JsonSerializable, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -51,6 +53,12 @@ namespace Azure.ResourceManager.Compute
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
 
         internal static GalleryImageVersionData DeserializeGalleryImageVersionData(JsonElement element)
         {

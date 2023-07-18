@@ -9,12 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class SharedGalleryImageData
+    public partial class SharedGalleryImageData : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static SharedGalleryImageData DeserializeSharedGalleryImageData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

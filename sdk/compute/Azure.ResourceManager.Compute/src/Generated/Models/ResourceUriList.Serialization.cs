@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class ResourceUriList
+    internal partial class ResourceUriList : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static ResourceUriList DeserializeResourceUriList(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

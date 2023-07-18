@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 
 [assembly: CodeGenSuppressType("GenericResourceFilter")]
 [assembly: CodeGenSuppressType("GenericResource")]
@@ -16,7 +18,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a GenericResource along with the instance operations that can be performed on it. </summary>
-    public partial class GenericResource : ArmResource
+    public partial class GenericResource : ArmResource, IJsonModelSerializable
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcesRestOperations _resourcesRestClient;
@@ -437,6 +439,21 @@ namespace Azure.ResourceManager.Resources
                 throw new InvalidOperationException($"An invalid resource id was given {Id}");
             }
             return version;
+        }
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            throw new NotImplementedException();
         }
     }
 }

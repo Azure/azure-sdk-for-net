@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class LoadBalancerFrontendIPConfiguration : IUtf8JsonSerializable
+    public partial class LoadBalancerFrontendIPConfiguration : IUtf8JsonSerializable, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,6 +40,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
 
         internal static LoadBalancerFrontendIPConfiguration DeserializeLoadBalancerFrontendIPConfiguration(JsonElement element)
         {

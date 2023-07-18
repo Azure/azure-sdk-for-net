@@ -9,11 +9,12 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(EncryptionPropertiesConverter))]
-    public partial class EncryptionProperties : IUtf8JsonSerializable
+    public partial class EncryptionProperties : IUtf8JsonSerializable, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,6 +31,12 @@ namespace Azure.ResourceManager.Models
             }
             writer.WriteEndObject();
         }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
 
         internal static EncryptionProperties DeserializeEncryptionProperties(JsonElement element)
         {

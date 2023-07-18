@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -13,13 +14,18 @@ namespace Azure.Core.Serialization
     /// .
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class ModelJsonConverter : JsonConverter<IModelSerializable>
+    public class ModelJsonConverter : JsonConverter<IJsonModelSerializable>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
         /// .
         /// </summary>
         public bool IgnoreAdditionalProperties { get; set; } = true;
+
+        /// <summary>
+        /// .
+        /// </summary>
+        public Dictionary<Type, ObjectSerializer> Serializers { get; set; } = new Dictionary<Type, ObjectSerializer>();
 
         /// <summary>
         /// .
@@ -54,14 +60,10 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override IModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IJsonModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            var model = ModelSerializer.DeserializeObject(JsonDocument.ParseValue(ref reader).RootElement, typeToConvert, ConvertOptions(options)) as IModelSerializable;
-            if (model is null)
-                throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
-
-            return model;
+            return (IJsonModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, ConvertOptions(options));
         }
 
         /// <summary>
@@ -71,7 +73,7 @@ namespace Azure.Core.Serialization
         /// <param name="value"></param>
         /// <param name="options"></param>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override void Write(Utf8JsonWriter writer, IModelSerializable value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IJsonModelSerializable value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             value.Serialize(writer, ConvertOptions(options));
@@ -81,6 +83,7 @@ namespace Azure.Core.Serialization
         {
             ModelSerializerOptions serializableOptions = new ModelSerializerOptions();
             serializableOptions.IgnoreAdditionalProperties = IgnoreAdditionalProperties;
+            serializableOptions.Serializers = Serializers;
             serializableOptions.IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties;
             return serializableOptions;
         }

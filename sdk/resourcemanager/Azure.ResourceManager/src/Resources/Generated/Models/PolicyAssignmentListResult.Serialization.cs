@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class PolicyAssignmentListResult
+    internal partial class PolicyAssignmentListResult : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static PolicyAssignmentListResult DeserializePolicyAssignmentListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    public partial class DescendantData
+    public partial class DescendantData : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static DescendantData DeserializeDescendantData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

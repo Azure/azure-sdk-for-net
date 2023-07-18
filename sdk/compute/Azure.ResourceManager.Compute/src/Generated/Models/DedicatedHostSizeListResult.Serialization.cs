@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class DedicatedHostSizeListResult
+    internal partial class DedicatedHostSizeListResult : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static DedicatedHostSizeListResult DeserializeDedicatedHostSizeListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

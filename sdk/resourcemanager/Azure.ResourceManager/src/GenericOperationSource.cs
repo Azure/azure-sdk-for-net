@@ -3,9 +3,6 @@
 
 #nullable disable
 
-using System;
-using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,7 +10,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager
 {
-    internal class GenericOperationSource<T> : IOperationSource<T>
+    internal class GenericOperationSource<T> : IOperationSource<T> where T: class, IModelSerializable
     {
         T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
             => CreateResult(response);
@@ -23,10 +20,7 @@ namespace Azure.ResourceManager
 
         private static T CreateResult(Response response)
         {
-            var options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter());
-            var result = JsonSerializer.Deserialize(response.Content, typeof(T), options);
-            return (T)result;
+            return ModelSerializer.Deserialize<T>(response.Content);
         }
     }
 }

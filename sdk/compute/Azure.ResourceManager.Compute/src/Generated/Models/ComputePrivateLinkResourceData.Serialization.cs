@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputePrivateLinkResourceData
+    public partial class ComputePrivateLinkResourceData : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static ComputePrivateLinkResourceData DeserializeComputePrivateLinkResourceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

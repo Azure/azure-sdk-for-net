@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RunCommandInputParameter : IUtf8JsonSerializable
+    public partial class RunCommandInputParameter : IUtf8JsonSerializable, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,6 +23,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Value);
             writer.WriteEndObject();
         }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
 
         internal static RunCommandInputParameter DeserializeRunCommandInputParameter(JsonElement element)
         {

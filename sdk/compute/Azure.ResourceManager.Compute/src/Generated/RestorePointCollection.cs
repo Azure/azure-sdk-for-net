@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
     /// Each <see cref="RestorePointResource" /> in the collection will belong to the same instance of <see cref="RestorePointGroupResource" />.
     /// To get a <see cref="RestorePointCollection" /> instance call the GetRestorePoints method from an instance of <see cref="RestorePointGroupResource" />.
     /// </summary>
-    public partial class RestorePointCollection : ArmCollection, ResourceManager.IResource
+    public partial class RestorePointCollection : ArmCollection
     {
         private readonly ClientDiagnostics _restorePointClientDiagnostics;
         private readonly RestorePointsRestOperations _restorePointRestClient;

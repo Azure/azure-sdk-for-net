@@ -7,11 +7,13 @@
 
 using System;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetCommunityGalleryImageResource method.
     /// Otherwise you can get one from its parent resource <see cref="CommunityGalleryResource" /> using the GetCommunityGalleryImage method.
     /// </summary>
-    public partial class CommunityGalleryImageResource : ArmResource, ResourceManager.IResource
+    public partial class CommunityGalleryImageResource : ArmResource, ResourceManager.IResource, IJsonModelSerializable
     {
         /// <summary> Generate the resource identifier of a <see cref="CommunityGalleryImageResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publicGalleryName, string galleryImageName)
@@ -204,5 +206,10 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => ModelSerializer.Deserialize<CommunityGalleryImageData>(data, options);
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => throw new NotImplementedException();
     }
 }

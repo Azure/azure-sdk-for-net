@@ -7,11 +7,13 @@
 
 using System;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetResourceProviderResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetResourceProvider method.
     /// </summary>
-    public partial class ResourceProviderResource : ArmResource, ResourceManager.IResource
+    public partial class ResourceProviderResource : ArmResource, ResourceManager.IResource, IJsonModelSerializable
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceProviderResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceProviderNamespace)
@@ -417,5 +419,10 @@ namespace Azure.ResourceManager.Resources
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider, expand);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, ProviderResourceType.DeserializeProviderResourceType, _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null, cancellationToken);
         }
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => ModelSerializer.Deserialize<ResourceProviderData>(data, options);
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => throw new NotImplementedException();
     }
 }

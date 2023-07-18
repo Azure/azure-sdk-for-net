@@ -7,11 +7,13 @@
 
 using System;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetSubscription method.
     /// </summary>
-    public partial class SubscriptionResource : ArmResource, ResourceManager.IResource
+    public partial class SubscriptionResource : ArmResource, ResourceManager.IResource, IJsonModelSerializable
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId)
@@ -799,5 +801,10 @@ namespace Azure.ResourceManager.Resources
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _featureRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "SubscriptionResource.GetFeatures", "value", "nextLink", cancellationToken);
         }
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => ModelSerializer.Deserialize<SubscriptionData>(data, options);
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => throw new NotImplementedException();
     }
 }

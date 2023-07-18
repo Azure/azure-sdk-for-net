@@ -7,11 +7,13 @@
 
 using System;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetPolicyAssignmentResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetPolicyAssignment method.
     /// </summary>
-    public partial class PolicyAssignmentResource : ArmResource, ResourceManager.IResource
+    public partial class PolicyAssignmentResource : ArmResource, ResourceManager.IResource, IJsonModelSerializable
     {
         /// <summary> Generate the resource identifier of a <see cref="PolicyAssignmentResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string policyAssignmentName)
@@ -290,5 +292,10 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => ModelSerializer.Deserialize<PolicyAssignmentData>(data, options);
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => throw new NotImplementedException();
     }
 }

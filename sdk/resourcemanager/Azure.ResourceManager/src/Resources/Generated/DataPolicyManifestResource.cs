@@ -7,11 +7,13 @@
 
 using System;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetDataPolicyManifestResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetDataPolicyManifest method.
     /// </summary>
-    public partial class DataPolicyManifestResource : ArmResource, ResourceManager.IResource
+    public partial class DataPolicyManifestResource : ArmResource, ResourceManager.IResource, IJsonModelSerializable
     {
         /// <summary> Generate the resource identifier of a <see cref="DataPolicyManifestResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string policyMode)
@@ -149,5 +151,10 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => ModelSerializer.Deserialize<DataPolicyManifestData>(data, options);
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => throw new NotImplementedException();
     }
 }

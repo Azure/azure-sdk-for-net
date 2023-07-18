@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CapacityReservationInstanceView
+    public partial class CapacityReservationInstanceView : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static CapacityReservationInstanceView DeserializeCapacityReservationInstanceView(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

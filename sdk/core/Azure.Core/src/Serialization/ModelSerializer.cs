@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
+using System.Xml;
 
 namespace Azure.Core.Serialization
 {
@@ -20,66 +21,81 @@ namespace Azure.Core.Serialization
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static Stream Serialize<T>(T model, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable
         {
-            // if options.Serializers is set and the model is in the dictionary, use the serializer
-            if (options != null)
-            {
-                ObjectSerializer? serializer;
+            options ??= new ModelSerializerOptions();
 
-                if (options.Serializers.TryGetValue(typeof(T), out serializer))
-                {
-                    BinaryData data = serializer.Serialize(model);
-                    return data.ToStream();
-                }
+            if (options.Serializers.TryGetValue(typeof(T), out var serializer))
+                return serializer.Serialize(model);
+
+            switch (model)
+            {
+                case IJsonModelSerializable jsonModel:
+                    return SerializeJson(jsonModel, options);
+                case IXmlModelSerializable xmlModel:
+                    return SerializeXml(xmlModel, options);
+                default:
+                    throw new NotSupportedException("Model type is not supported.");
             }
-            // else use default STJ serializer
-            Stream stream = new MemoryStream();
-            var writer = new Utf8JsonWriter(stream);
-            model.Serialize(writer, options ?? new ModelSerializerOptions());
+        }
+
+        private static BinaryData SerializeXml(IXmlModelSerializable xmlModel, ModelSerializerOptions options)
+        {
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            xmlModel.Serialize(writer, options);
             writer.Flush();
-            return stream;
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+        }
+
+        private static BinaryData SerializeJson(IJsonModelSerializable jsonModel, ModelSerializerOptions options)
+        {
+            using var multiBufferRequestContent = new MultiBufferRequestContent();
+            using var writer = new Utf8JsonWriter(multiBufferRequestContent);
+            jsonModel.Serialize(writer, options);
+            writer.Flush();
+            multiBufferRequestContent.TryComputeLength(out var length);
+            using var stream = new MemoryStream((int)length);
+            multiBufferRequestContent.WriteTo(stream, default);
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
         /// <summary>
-        /// Deserialize a model.
+        /// Serialize a XML model. Todo: collapse this method when working - need compile check over runtime
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="stream"></param>
+        /// <returns></returns>
+        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        {
+            return (T)Deserialize(data, typeof(T), options ?? new ModelSerializerOptions());
+        }
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="typeToConvert"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T Deserialize<T>(Stream stream, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        /// <exception cref="InvalidOperationException"></exception>
+        public static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
         {
-            if (options != null)
+            if (options.Serializers.TryGetValue(typeToConvert, out var serializer))
             {
-                ObjectSerializer? serializer;
-
-                if (options.Serializers.TryGetValue(typeof(T), out serializer))
-                {
-                    var obj = serializer.Deserialize(stream, typeof(T), default); //problem here T is Envelope<T> and typeof(T) is Envelope<T> but we want typeof(T) to be DogListProperty
-                    if (obj is null)
-                        throw new InvalidOperationException();
-                    else
-                        return (T)obj;
-                }
+                var obj = serializer.Deserialize(data.ToStream(), typeToConvert, default);
+                return obj ?? throw new InvalidOperationException();
             }
 
-            return DeserializeWithReflection<T>(JsonDocument.Parse(stream).RootElement, options);
+            if (typeToConvert.IsAbstract)
+                return DeserializeObject(data, typeToConvert, options);
+
+            var model = Activator.CreateInstance(typeToConvert, true) as IModelSerializable;
+
+            return model!.Deserialize(data, options);
         }
 
-        private static T DeserializeWithReflection<T>(JsonElement rootElement, ModelSerializerOptions? options) where T : class, IModelSerializable
-        {
-            Type typeToConvert = typeof(T);
-            options ??= new ModelSerializerOptions();
+        private static readonly Type[] _combinedDeserializeMethodParameters = new Type[] { typeof(BinaryData), typeof(ModelSerializerOptions) };
 
-            T? model = DeserializeObject(rootElement, typeToConvert, options) as T;
-            if (model is null)
-                throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
-
-            return model;
-        }
-
-        internal static object? DeserializeObject(JsonElement rootElement, Type typeToConvert, ModelSerializerOptions options)
+        internal static object DeserializeObject(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
         {
             var classNameInMethod = typeToConvert.Name.AsSpan();
             int backtickIndex = classNameInMethod.IndexOf('`');
@@ -87,41 +103,11 @@ namespace Azure.Core.Serialization
                 classNameInMethod = classNameInMethod.Slice(0, backtickIndex);
             var methodName = $"Deserialize{classNameInMethod.ToString()}";
 
-            var method = typeToConvert.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+            var method = typeToConvert.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static, null, _combinedDeserializeMethodParameters, null);
             if (method is null)
                 throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
 
-            return method.Invoke(null, new object[] { rootElement });
-        }
-
-        /// <summary>
-        /// Deserialize a model.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="json"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public static T Deserialize<T>(string json, ModelSerializerOptions? options = default) where T : class, IModelSerializable
-        {
-            using Stream stream = new MemoryStream();
-            using StreamWriter writer = new StreamWriter(stream);
-            writer.Write(json);
-            stream.Position = 0;
-            ObjectSerializer? serializer;
-
-            if (options != null)
-            {
-                if (options.Serializers.TryGetValue(typeof(T), out serializer))
-                {
-                    var obj = serializer.Deserialize(stream, typeof(T), default);
-                    if (obj is null)
-                        throw new InvalidOperationException();
-                    else
-                        return (T)obj;
-                }
-            }
-
-            return DeserializeWithReflection<T>(JsonDocument.Parse(stream).RootElement, options);
+            return method.Invoke(null, new object[] { data, options })!;
         }
     }
 }

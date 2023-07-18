@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class CloudServiceOSVersionData
+    public partial class CloudServiceOSVersionData : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static CloudServiceOSVersionData DeserializeCloudServiceOSVersionData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

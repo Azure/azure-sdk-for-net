@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceSkuCosts
+    public partial class ResourceSkuCosts : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static ResourceSkuCosts DeserializeResourceSkuCosts(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

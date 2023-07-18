@@ -5,14 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineImage : IUtf8JsonSerializable
+    public partial class VirtualMachineImage : IUtf8JsonSerializable, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -103,6 +105,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static VirtualMachineImage DeserializeVirtualMachineImage(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -112,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<Resources.Models.ExtendedLocation> extendedLocation = default;
+            Optional<ExtendedLocation> extendedLocation = default;
             Optional<ResourceIdentifier> id = default;
             Optional<PurchasePlan> plan = default;
             Optional<OSDiskImage> osDiskImage = default;
@@ -155,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<Resources.Models.ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

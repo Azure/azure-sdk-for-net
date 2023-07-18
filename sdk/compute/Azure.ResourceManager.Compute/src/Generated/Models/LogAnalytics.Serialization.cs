@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class LogAnalytics
+    public partial class LogAnalytics : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static LogAnalytics DeserializeLogAnalytics(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

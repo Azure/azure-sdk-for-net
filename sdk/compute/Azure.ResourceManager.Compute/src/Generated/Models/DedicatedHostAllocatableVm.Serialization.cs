@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DedicatedHostAllocatableVm
+    public partial class DedicatedHostAllocatableVm : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static DedicatedHostAllocatableVm DeserializeDedicatedHostAllocatableVm(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

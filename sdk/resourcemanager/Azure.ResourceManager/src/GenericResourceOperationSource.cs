@@ -14,7 +14,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager
 {
-    internal class GenericResourceOperationSource<T> : IOperationSource<T>
+    internal class GenericResourceOperationSource<T> : IOperationSource<T> where T: class, IModelSerializable
     {
         private readonly ArmClient _client;
 
@@ -31,10 +31,11 @@ namespace Azure.ResourceManager
 
         private T CreateResult(Response response)
         {
-            var options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter());
-            var dataType = typeof(T).GetProperty("Data").PropertyType;
-            var data = JsonSerializer.Deserialize(response.Content, dataType, options);
+            var data = ((IModelSerializable)this).Deserialize(response.Content, null);
+            //var options = new JsonSerializerOptions();
+            //options.Converters.Add(new ModelJsonConverter());
+            //var dataType = typeof(T).GetProperty("Data").PropertyType;
+            //var data = JsonSerializer.Deserialize(response.Content, dataType, options);
             return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
         }
     }

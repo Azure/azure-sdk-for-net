@@ -7,11 +7,13 @@
 
 using System;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetVirtualMachineExtensionImageResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetVirtualMachineExtensionImage method.
     /// </summary>
-    public partial class VirtualMachineExtensionImageResource : ArmResource, ResourceManager.IResource
+    public partial class VirtualMachineExtensionImageResource : ArmResource, ResourceManager.IResource, IJsonModelSerializable
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineExtensionImageResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publisherName, string type, string version)
@@ -150,5 +152,10 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => ModelSerializer.Deserialize<VirtualMachineExtensionImageData>(data, options);
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => throw new NotImplementedException();
     }
 }

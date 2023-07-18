@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DataManifestCustomResourceFunctionDefinition
+    public partial class DataManifestCustomResourceFunctionDefinition : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static DataManifestCustomResourceFunctionDefinition DeserializeDataManifestCustomResourceFunctionDefinition(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachinePatchStatus
+    public partial class VirtualMachinePatchStatus : IModelSerializable
     {
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => throw new NotImplementedException();
+
         internal static VirtualMachinePatchStatus DeserializeVirtualMachinePatchStatus(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
