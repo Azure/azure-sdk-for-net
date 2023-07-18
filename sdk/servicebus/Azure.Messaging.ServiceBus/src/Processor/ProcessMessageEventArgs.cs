@@ -128,7 +128,6 @@ namespace Azure.Messaging.ServiceBus
             MessageLockLostCancellationSource = new CancellationTokenSource();
             MessageLockCancellationToken = MessageLockLostCancellationSource.Token;
 
-            MessageLockCancellationToken.Register(() => OnMessageLockLostAsync(new MessageLockLostEventArgs(message, LockLostException)));
             MessageLockLostCancellationSource.CancelAfterLockExpired(Message);
 
             bool autoRenew = manager?.ShouldAutoRenewMessageLock() == true;
