@@ -1,0 +1,20 @@
+steps:
+# Fail the build if any of the packages failed validation. Valid values are
+# "true" or "false" though some attempt is made to parse the boolean value from
+# the string.
+- pwsh: |
+    $value = '$(DocsMsPackagesAllValid)'
+
+    try {
+        $result = [System.Convert]::ToBoolean($value)
+        if (!$result) {
+            Write-Error "Some packages failed validation"
+            exit 1
+        }
+
+        Write-Host "All packages passed validation"
+    } catch {
+        Write-Error "Failed to parse DocsMsPackagesAllValid value '$value' as a boolean."
+        exit 1
+    }
+  displayName: Check package validation results
