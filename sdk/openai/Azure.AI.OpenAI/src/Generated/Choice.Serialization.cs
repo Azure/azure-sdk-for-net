@@ -37,6 +37,11 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("logprobs"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logprobs = null;
+                        continue;
+                    }
                     logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value);
                     continue;
                 }
