@@ -6,5 +6,6 @@
     "../../TempTypeSpecFiles/LoadTestService/node_modules/@autorest/csharp/Generator.Shared",
     "../../TempTypeSpecFiles/LoadTestService/node_modules/@autorest/csharp/Azure.Core.Shared"
   ],
-  "use-overloads-between-protocol-and-convenience": true
+  "use-overloads-between-protocol-and-convenience": true,
+  "keep-non-overloadable-protocol-signature": true
 }

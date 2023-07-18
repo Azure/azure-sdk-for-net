@@ -401,14 +401,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponentsAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TestRunAppComponents>> GetAppComponentsAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponentValuesAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<TestRunAppComponents>> GetAppComponentValuesAsync(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAppComponentsAsync(testRunId, context).ConfigureAwait(false);
-            return Response.FromValue(TestRunAppComponents.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetAppComponentValues");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = await GetAppComponentsAsync(testRunId, context).ConfigureAwait(false);
+                return Response.FromValue(TestRunAppComponents.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -422,14 +432,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponents(string,CancellationToken)']/*" />
-        public virtual Response<TestRunAppComponents> GetAppComponents(string testRunId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponentValues(string,CancellationToken)']/*" />
+        public virtual Response<TestRunAppComponents> GetAppComponentValues(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAppComponents(testRunId, context);
-            return Response.FromValue(TestRunAppComponents.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetAppComponentValues");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = GetAppComponents(testRunId, context);
+                return Response.FromValue(TestRunAppComponents.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -443,7 +463,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetAppComponentsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetAppComponentValuesAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -458,7 +478,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponentsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAppComponentsAsync(string testRunId, RequestContext context)
+        public virtual async Task<Response> GetAppComponentsAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -487,7 +507,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetAppComponents(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetAppComponentValues(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -502,7 +522,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponents(string,RequestContext)']/*" />
-        public virtual Response GetAppComponents(string testRunId, RequestContext context)
+        public virtual Response GetAppComponents(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -528,14 +548,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TestRunServerMetricConfig>> GetServerMetricsConfigAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigValueAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<TestRunServerMetricConfig>> GetServerMetricsConfigValueAsync(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetServerMetricsConfigAsync(testRunId, context).ConfigureAwait(false);
-            return Response.FromValue(TestRunServerMetricConfig.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetServerMetricsConfigValue");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = await GetServerMetricsConfigAsync(testRunId, context).ConfigureAwait(false);
+                return Response.FromValue(TestRunServerMetricConfig.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List server metrics configuration for the given test run. </summary>
@@ -546,14 +576,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(string,CancellationToken)']/*" />
-        public virtual Response<TestRunServerMetricConfig> GetServerMetricsConfig(string testRunId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigValue(string,CancellationToken)']/*" />
+        public virtual Response<TestRunServerMetricConfig> GetServerMetricsConfigValue(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetServerMetricsConfig(testRunId, context);
-            return Response.FromValue(TestRunServerMetricConfig.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetServerMetricsConfigValue");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = GetServerMetricsConfig(testRunId, context);
+                return Response.FromValue(TestRunServerMetricConfig.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -566,7 +606,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetServerMetricsConfigAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetServerMetricsConfigValueAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -581,7 +621,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetServerMetricsConfigAsync(string testRunId, RequestContext context)
+        public virtual async Task<Response> GetServerMetricsConfigAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -609,7 +649,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetServerMetricsConfig(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetServerMetricsConfigValue(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -624,7 +664,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(string,RequestContext)']/*" />
-        public virtual Response GetServerMetricsConfig(string testRunId, RequestContext context)
+        public virtual Response GetServerMetricsConfig(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -650,14 +690,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TestRun>> GetTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunValueAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<TestRun>> GetTestRunValueAsync(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTestRunAsync(testRunId, context).ConfigureAwait(false);
-            return Response.FromValue(TestRun.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRunValue");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = await GetTestRunAsync(testRunId, context).ConfigureAwait(false);
+                return Response.FromValue(TestRun.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get test run details by name. </summary>
@@ -668,14 +718,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRun(string,CancellationToken)']/*" />
-        public virtual Response<TestRun> GetTestRun(string testRunId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunValue(string,CancellationToken)']/*" />
+        public virtual Response<TestRun> GetTestRunValue(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTestRun(testRunId, context);
-            return Response.FromValue(TestRun.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRunValue");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = GetTestRun(testRunId, context);
+                return Response.FromValue(TestRun.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -688,7 +748,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTestRunAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTestRunValueAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -703,7 +763,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTestRunAsync(string testRunId, RequestContext context)
+        public virtual async Task<Response> GetTestRunAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -731,7 +791,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTestRun(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTestRunValue(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -746,7 +806,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRun(string,RequestContext)']/*" />
-        public virtual Response GetTestRun(string testRunId, RequestContext context)
+        public virtual Response GetTestRun(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -773,15 +833,25 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFileAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<FileInfo>> GetTestRunFileAsync(string testRunId, string fileName, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFileValueAsync(string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<FileInfo>> GetTestRunFileValueAsync(string testRunId, string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTestRunFileAsync(testRunId, fileName, context).ConfigureAwait(false);
-            return Response.FromValue(FileInfo.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRunFileValue");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = await GetTestRunFileAsync(testRunId, fileName, context).ConfigureAwait(false);
+                return Response.FromValue(FileInfo.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get test run file by file name. </summary>
@@ -793,15 +863,25 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFile(string,string,CancellationToken)']/*" />
-        public virtual Response<FileInfo> GetTestRunFile(string testRunId, string fileName, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFileValue(string,string,CancellationToken)']/*" />
+        public virtual Response<FileInfo> GetTestRunFileValue(string testRunId, string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTestRunFile(testRunId, fileName, context);
-            return Response.FromValue(FileInfo.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRunFileValue");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = GetTestRunFile(testRunId, fileName, context);
+                return Response.FromValue(FileInfo.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -814,7 +894,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTestRunFileAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTestRunFileValueAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -830,7 +910,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFileAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTestRunFileAsync(string testRunId, string fileName, RequestContext context)
+        public virtual async Task<Response> GetTestRunFileAsync(string testRunId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
@@ -859,7 +939,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTestRunFile(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTestRunFileValue(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -875,7 +955,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFile(string,string,RequestContext)']/*" />
-        public virtual Response GetTestRunFile(string testRunId, string fileName, RequestContext context)
+        public virtual Response GetTestRunFile(string testRunId, string fileName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
@@ -903,14 +983,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitionsAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<MetricDefinitionCollection>> GetMetricDefinitionsAsync(string testRunId, string metricNamespace = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitionValuesAsync(string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<MetricDefinitionCollection>> GetMetricDefinitionValuesAsync(string testRunId, string metricNamespace = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetMetricDefinitionsAsync(testRunId, metricNamespace, context).ConfigureAwait(false);
-            return Response.FromValue(MetricDefinitionCollection.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricDefinitionValues");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = await GetMetricDefinitionsAsync(testRunId, metricNamespace, context).ConfigureAwait(false);
+                return Response.FromValue(MetricDefinitionCollection.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List the metric definitions for a load test run. </summary>
@@ -922,14 +1012,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitions(string,string,CancellationToken)']/*" />
-        public virtual Response<MetricDefinitionCollection> GetMetricDefinitions(string testRunId, string metricNamespace = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitionValues(string,string,CancellationToken)']/*" />
+        public virtual Response<MetricDefinitionCollection> GetMetricDefinitionValues(string testRunId, string metricNamespace = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetMetricDefinitions(testRunId, metricNamespace, context);
-            return Response.FromValue(MetricDefinitionCollection.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricDefinitionValues");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = GetMetricDefinitions(testRunId, metricNamespace, context);
+                return Response.FromValue(MetricDefinitionCollection.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -942,7 +1042,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetMetricDefinitionsAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetMetricDefinitionValuesAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -958,7 +1058,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitionsAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, RequestContext context)
+        public virtual async Task<Response> GetMetricDefinitionsAsync(string testRunId, string metricNamespace = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -986,7 +1086,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetMetricDefinitions(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetMetricDefinitionValues(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1002,7 +1102,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitions(string,string,RequestContext)']/*" />
-        public virtual Response GetMetricDefinitions(string testRunId, string metricNamespace, RequestContext context)
+        public virtual Response GetMetricDefinitions(string testRunId, string metricNamespace = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -1028,14 +1128,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespacesAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<MetricNamespaceCollection>> GetMetricNamespacesAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespaceValuesAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<MetricNamespaceCollection>> GetMetricNamespaceValuesAsync(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetMetricNamespacesAsync(testRunId, context).ConfigureAwait(false);
-            return Response.FromValue(MetricNamespaceCollection.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricNamespaceValues");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = await GetMetricNamespacesAsync(testRunId, context).ConfigureAwait(false);
+                return Response.FromValue(MetricNamespaceCollection.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List the metric namespaces for a load test run. </summary>
@@ -1046,14 +1156,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespaces(string,CancellationToken)']/*" />
-        public virtual Response<MetricNamespaceCollection> GetMetricNamespaces(string testRunId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespaceValues(string,CancellationToken)']/*" />
+        public virtual Response<MetricNamespaceCollection> GetMetricNamespaceValues(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetMetricNamespaces(testRunId, context);
-            return Response.FromValue(MetricNamespaceCollection.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricNamespaceValues");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = GetMetricNamespaces(testRunId, context);
+                return Response.FromValue(MetricNamespaceCollection.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1066,7 +1186,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetMetricNamespacesAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetMetricNamespaceValuesAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1081,7 +1201,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespacesAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetMetricNamespacesAsync(string testRunId, RequestContext context)
+        public virtual async Task<Response> GetMetricNamespacesAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -1109,7 +1229,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetMetricNamespaces(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetMetricNamespaceValues(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1124,7 +1244,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespaces(string,RequestContext)']/*" />
-        public virtual Response GetMetricNamespaces(string testRunId, RequestContext context)
+        public virtual Response GetMetricNamespaces(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -1150,14 +1270,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRunAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TestRun>> StopTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRunValueAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<TestRun>> StopTestRunValueAsync(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await StopTestRunAsync(testRunId, context).ConfigureAwait(false);
-            return Response.FromValue(TestRun.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.StopTestRunValue");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = await StopTestRunAsync(testRunId, context).ConfigureAwait(false);
+                return Response.FromValue(TestRun.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Stop test run by name. </summary>
@@ -1168,14 +1298,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRun(string,CancellationToken)']/*" />
-        public virtual Response<TestRun> StopTestRun(string testRunId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRunValue(string,CancellationToken)']/*" />
+        public virtual Response<TestRun> StopTestRunValue(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = StopTestRun(testRunId, context);
-            return Response.FromValue(TestRun.FromResponse(response), response);
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.StopTestRunValue");
+            scope.Start();
+            try
+            {
+                RequestContext context = FromCancellationToken(cancellationToken);
+                Response response = StopTestRun(testRunId, context);
+                return Response.FromValue(TestRun.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1188,7 +1328,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="StopTestRunAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="StopTestRunValueAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1203,7 +1343,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRunAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> StopTestRunAsync(string testRunId, RequestContext context)
+        public virtual async Task<Response> StopTestRunAsync(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -1231,7 +1371,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="StopTestRun(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="StopTestRunValue(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1246,7 +1386,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRun(string,RequestContext)']/*" />
-        public virtual Response StopTestRun(string testRunId, RequestContext context)
+        public virtual Response StopTestRun(string testRunId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
@@ -1277,8 +1417,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/> or <paramref name="metricNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDimensionValuesAsync(string,string,string,Interval?,string,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<DimensionValueList> GetMetricDimensionValuesAsync(string testRunId, string name, string metricNamespace, Interval? interval = null, string metricName = null, string timespan = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDimensionValueValuesAsync(string,string,string,Interval?,string,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<DimensionValueList> GetMetricDimensionValueValuesAsync(string testRunId, string name, string metricNamespace, Interval? interval = null, string metricName = null, string timespan = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -1303,8 +1443,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/> or <paramref name="metricNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDimensionValues(string,string,string,Interval?,string,string,CancellationToken)']/*" />
-        public virtual Pageable<DimensionValueList> GetMetricDimensionValues(string testRunId, string name, string metricNamespace, Interval? interval = null, string metricName = null, string timespan = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDimensionValueValues(string,string,string,Interval?,string,string,CancellationToken)']/*" />
+        public virtual Pageable<DimensionValueList> GetMetricDimensionValueValues(string testRunId, string name, string metricNamespace, Interval? interval = null, string metricName = null, string timespan = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -1326,7 +1466,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetMetricDimensionValuesAsync(string,string,string,Interval?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetMetricDimensionValueValuesAsync(string,string,string,Interval?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1346,7 +1486,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDimensionValuesAsync(string,string,string,string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetMetricDimensionValuesAsync(string testRunId, string name, string metricNamespace, string interval, string metricName, string timespan, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetMetricDimensionValuesAsync(string testRunId, string name, string metricNamespace, string interval = null, string metricName = null, string timespan = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -1367,7 +1507,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetMetricDimensionValues(string,string,string,Interval?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetMetricDimensionValueValues(string,string,string,Interval?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1387,7 +1527,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDimensionValues(string,string,string,string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetMetricDimensionValues(string testRunId, string name, string metricNamespace, string interval, string metricName, string timespan, RequestContext context)
+        public virtual Pageable<BinaryData> GetMetricDimensionValues(string testRunId, string name, string metricNamespace, string interval = null, string metricName = null, string timespan = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -1578,8 +1718,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="status"> Comma separated list of test run status. </param>
         /// <param name="maxpagesize"> Number of results in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunsAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<TestRun> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunValuesAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<TestRun> GetTestRunValuesAsync(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
@@ -1603,8 +1743,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="status"> Comma separated list of test run status. </param>
         /// <param name="maxpagesize"> Number of results in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRuns(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)']/*" />
-        public virtual Pageable<TestRun> GetTestRuns(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunValues(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)']/*" />
+        public virtual Pageable<TestRun> GetTestRunValues(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
@@ -1622,7 +1762,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTestRunsAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTestRunValuesAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1645,7 +1785,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunsAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
@@ -1662,7 +1802,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTestRuns(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTestRunValues(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1685,7 +1825,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRuns(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTestRuns(string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetTestRuns(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);

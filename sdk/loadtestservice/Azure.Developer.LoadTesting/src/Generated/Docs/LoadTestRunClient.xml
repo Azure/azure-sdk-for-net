@@ -537,27 +537,27 @@ Console.WriteLine(response.Status);
 ]]></code>
 </example>
     </member>
-    <member name="GetAppComponentsAsync(string,CancellationToken)">
+    <member name="GetAppComponentValuesAsync(string,CancellationToken)">
 <example>
-This sample shows how to call GetAppComponentsAsync with required parameters.
+This sample shows how to call GetAppComponentValuesAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = await client.GetAppComponentsAsync("<testRunId>");
+var result = await client.GetAppComponentValuesAsync("<testRunId>");
 ]]></code>
 </example>
     </member>
-    <member name="GetAppComponents(string,CancellationToken)">
+    <member name="GetAppComponentValues(string,CancellationToken)">
 <example>
-This sample shows how to call GetAppComponents with required parameters.
+This sample shows how to call GetAppComponentValues with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = client.GetAppComponents("<testRunId>");
+var result = client.GetAppComponentValues("<testRunId>");
 ]]></code>
 </example>
     </member>
@@ -569,7 +569,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = await client.GetAppComponentsAsync("<testRunId>", new RequestContext());
+Response response = await client.GetAppComponentsAsync("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -595,7 +595,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = client.GetAppComponents("<testRunId>", new RequestContext());
+Response response = client.GetAppComponents("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -613,27 +613,27 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="GetServerMetricsConfigAsync(string,CancellationToken)">
+    <member name="GetServerMetricsConfigValueAsync(string,CancellationToken)">
 <example>
-This sample shows how to call GetServerMetricsConfigAsync with required parameters.
+This sample shows how to call GetServerMetricsConfigValueAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = await client.GetServerMetricsConfigAsync("<testRunId>");
+var result = await client.GetServerMetricsConfigValueAsync("<testRunId>");
 ]]></code>
 </example>
     </member>
-    <member name="GetServerMetricsConfig(string,CancellationToken)">
+    <member name="GetServerMetricsConfigValue(string,CancellationToken)">
 <example>
-This sample shows how to call GetServerMetricsConfig with required parameters.
+This sample shows how to call GetServerMetricsConfigValue with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = client.GetServerMetricsConfig("<testRunId>");
+var result = client.GetServerMetricsConfigValue("<testRunId>");
 ]]></code>
 </example>
     </member>
@@ -645,7 +645,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = await client.GetServerMetricsConfigAsync("<testRunId>", new RequestContext());
+Response response = await client.GetServerMetricsConfigAsync("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testRunId").ToString());
@@ -672,7 +672,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = client.GetServerMetricsConfig("<testRunId>", new RequestContext());
+Response response = client.GetServerMetricsConfig("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testRunId").ToString());
@@ -691,27 +691,27 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="GetTestRunAsync(string,CancellationToken)">
+    <member name="GetTestRunValueAsync(string,CancellationToken)">
 <example>
-This sample shows how to call GetTestRunAsync with required parameters.
+This sample shows how to call GetTestRunValueAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = await client.GetTestRunAsync("<testRunId>");
+var result = await client.GetTestRunValueAsync("<testRunId>");
 ]]></code>
 </example>
     </member>
-    <member name="GetTestRun(string,CancellationToken)">
+    <member name="GetTestRunValue(string,CancellationToken)">
 <example>
-This sample shows how to call GetTestRun with required parameters.
+This sample shows how to call GetTestRunValue with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = client.GetTestRun("<testRunId>");
+var result = client.GetTestRunValue("<testRunId>");
 ]]></code>
 </example>
     </member>
@@ -723,7 +723,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = await client.GetTestRunAsync("<testRunId>", new RequestContext());
+Response response = await client.GetTestRunAsync("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -831,7 +831,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = client.GetTestRun("<testRunId>", new RequestContext());
+Response response = client.GetTestRun("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -931,27 +931,27 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="GetTestRunFileAsync(string,string,CancellationToken)">
+    <member name="GetTestRunFileValueAsync(string,string,CancellationToken)">
 <example>
-This sample shows how to call GetTestRunFileAsync with required parameters.
+This sample shows how to call GetTestRunFileValueAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = await client.GetTestRunFileAsync("<testRunId>", "<fileName>");
+var result = await client.GetTestRunFileValueAsync("<testRunId>", "<fileName>");
 ]]></code>
 </example>
     </member>
-    <member name="GetTestRunFile(string,string,CancellationToken)">
+    <member name="GetTestRunFileValue(string,string,CancellationToken)">
 <example>
-This sample shows how to call GetTestRunFile with required parameters.
+This sample shows how to call GetTestRunFileValue with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = client.GetTestRunFile("<testRunId>", "<fileName>");
+var result = client.GetTestRunFileValue("<testRunId>", "<fileName>");
 ]]></code>
 </example>
     </member>
@@ -963,7 +963,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = await client.GetTestRunFileAsync("<testRunId>", "<fileName>", new RequestContext());
+Response response = await client.GetTestRunFileAsync("<testRunId>", "<fileName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -983,7 +983,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = client.GetTestRunFile("<testRunId>", "<fileName>", new RequestContext());
+Response response = client.GetTestRunFile("<testRunId>", "<fileName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -995,27 +995,27 @@ Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="GetMetricDefinitionsAsync(string,string,CancellationToken)">
+    <member name="GetMetricDefinitionValuesAsync(string,string,CancellationToken)">
 <example>
-This sample shows how to call GetMetricDefinitionsAsync with required parameters.
+This sample shows how to call GetMetricDefinitionValuesAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = await client.GetMetricDefinitionsAsync("<testRunId>", "<metricNamespace>");
+var result = await client.GetMetricDefinitionValuesAsync("<testRunId>", "<metricNamespace>");
 ]]></code>
 </example>
     </member>
-    <member name="GetMetricDefinitions(string,string,CancellationToken)">
+    <member name="GetMetricDefinitionValues(string,string,CancellationToken)">
 <example>
-This sample shows how to call GetMetricDefinitions with required parameters.
+This sample shows how to call GetMetricDefinitionValues with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = client.GetMetricDefinitions("<testRunId>", "<metricNamespace>");
+var result = client.GetMetricDefinitionValues("<testRunId>", "<metricNamespace>");
 ]]></code>
 </example>
     </member>
@@ -1027,7 +1027,18 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = await client.GetMetricDefinitionsAsync("<testRunId>", "<metricNamespace>", new RequestContext());
+Response response = await client.GetMetricDefinitionsAsync("<testRunId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].ToString());
+]]></code>
+This sample shows how to call GetMetricDefinitionsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
+Response response = await client.GetMetricDefinitionsAsync("<testRunId>", "<metricNamespace>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("description").ToString());
@@ -1050,7 +1061,18 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = client.GetMetricDefinitions("<testRunId>", "<metricNamespace>", new RequestContext());
+Response response = client.GetMetricDefinitions("<testRunId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].ToString());
+]]></code>
+This sample shows how to call GetMetricDefinitions with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
+Response response = client.GetMetricDefinitions("<testRunId>", "<metricNamespace>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("description").ToString());
@@ -1065,27 +1087,27 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("metricAvailabiliti
 ]]></code>
 </example>
     </member>
-    <member name="GetMetricNamespacesAsync(string,CancellationToken)">
+    <member name="GetMetricNamespaceValuesAsync(string,CancellationToken)">
 <example>
-This sample shows how to call GetMetricNamespacesAsync with required parameters.
+This sample shows how to call GetMetricNamespaceValuesAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = await client.GetMetricNamespacesAsync("<testRunId>");
+var result = await client.GetMetricNamespaceValuesAsync("<testRunId>");
 ]]></code>
 </example>
     </member>
-    <member name="GetMetricNamespaces(string,CancellationToken)">
+    <member name="GetMetricNamespaceValues(string,CancellationToken)">
 <example>
-This sample shows how to call GetMetricNamespaces with required parameters.
+This sample shows how to call GetMetricNamespaceValues with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = client.GetMetricNamespaces("<testRunId>");
+var result = client.GetMetricNamespaceValues("<testRunId>");
 ]]></code>
 </example>
     </member>
@@ -1097,7 +1119,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = await client.GetMetricNamespacesAsync("<testRunId>", new RequestContext());
+Response response = await client.GetMetricNamespacesAsync("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
@@ -1113,7 +1135,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = client.GetMetricNamespaces("<testRunId>", new RequestContext());
+Response response = client.GetMetricNamespaces("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
@@ -1121,27 +1143,27 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString())
 ]]></code>
 </example>
     </member>
-    <member name="StopTestRunAsync(string,CancellationToken)">
+    <member name="StopTestRunValueAsync(string,CancellationToken)">
 <example>
-This sample shows how to call StopTestRunAsync with required parameters.
+This sample shows how to call StopTestRunValueAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = await client.StopTestRunAsync("<testRunId>");
+var result = await client.StopTestRunValueAsync("<testRunId>");
 ]]></code>
 </example>
     </member>
-    <member name="StopTestRun(string,CancellationToken)">
+    <member name="StopTestRunValue(string,CancellationToken)">
 <example>
-This sample shows how to call StopTestRun with required parameters.
+This sample shows how to call StopTestRunValue with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-var result = client.StopTestRun("<testRunId>");
+var result = client.StopTestRunValue("<testRunId>");
 ]]></code>
 </example>
     </member>
@@ -1153,7 +1175,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = await client.StopTestRunAsync("<testRunId>", new RequestContext());
+Response response = await client.StopTestRunAsync("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -1261,7 +1283,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = client.StopTestRun("<testRunId>", new RequestContext());
+Response response = client.StopTestRun("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -1361,29 +1383,29 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="GetMetricDimensionValuesAsync(string,string,string,Interval?,string,string,CancellationToken)">
+    <member name="GetMetricDimensionValueValuesAsync(string,string,string,Interval?,string,string,CancellationToken)">
 <example>
-This sample shows how to call GetMetricDimensionValuesAsync with required parameters.
+This sample shows how to call GetMetricDimensionValueValuesAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricNamespace>", null, "<metricName>", "<timespan>"))
+await foreach (var item in client.GetMetricDimensionValueValuesAsync("<testRunId>", "<name>", "<metricNamespace>", null, "<metricName>", "<timespan>"))
 {
 }
 ]]></code>
 </example>
     </member>
-    <member name="GetMetricDimensionValues(string,string,string,Interval?,string,string,CancellationToken)">
+    <member name="GetMetricDimensionValueValues(string,string,string,Interval?,string,string,CancellationToken)">
 <example>
-This sample shows how to call GetMetricDimensionValues with required parameters.
+This sample shows how to call GetMetricDimensionValueValues with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-foreach (var item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricNamespace>", null, "<metricName>", "<timespan>"))
+foreach (var item in client.GetMetricDimensionValueValues("<testRunId>", "<name>", "<metricNamespace>", null, "<metricName>", "<timespan>"))
 {
 }
 ]]></code>
@@ -1397,7 +1419,19 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricNamespace>", "<interval>", "<metricName>", "<timespan>", new RequestContext()))
+await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricNamespace>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("value")[0].ToString());
+}
+]]></code>
+This sample shows how to call GetMetricDimensionValuesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
+await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricNamespace>", "<interval>", "<metricName>", "<timespan>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("value")[0].ToString());
@@ -1413,7 +1447,19 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-foreach (var item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricNamespace>", "<interval>", "<metricName>", "<timespan>", new RequestContext()))
+foreach (var item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricNamespace>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("value")[0].ToString());
+}
+]]></code>
+This sample shows how to call GetMetricDimensionValues with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
+foreach (var item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricNamespace>", "<interval>", "<metricName>", "<timespan>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("value")[0].ToString());
@@ -1565,29 +1611,29 @@ foreach (var item in client.GetMetrics("<testRunId>", "<aggregation>", "<metricN
 ]]></code>
 </example>
     </member>
-    <member name="GetTestRunsAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)">
+    <member name="GetTestRunValuesAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)">
 <example>
-This sample shows how to call GetTestRunsAsync with required parameters.
+This sample shows how to call GetTestRunValuesAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-await foreach (var item in client.GetTestRunsAsync("<orderby>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
+await foreach (var item in client.GetTestRunValuesAsync("<orderby>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
 {
 }
 ]]></code>
 </example>
     </member>
-    <member name="GetTestRuns(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)">
+    <member name="GetTestRunValues(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,CancellationToken)">
 <example>
-This sample shows how to call GetTestRuns with required parameters.
+This sample shows how to call GetTestRunValues with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-foreach (var item in client.GetTestRuns("<orderby>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
+foreach (var item in client.GetTestRunValues("<orderby>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
 {
 }
 ]]></code>
@@ -1595,13 +1641,25 @@ foreach (var item in client.GetTestRuns("<orderby>", "<search>", "<testId>", Dat
     </member>
     <member name="GetTestRunsAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)">
 <example>
-This sample shows how to call GetTestRunsAsync with required parameters and parse the result.
+This sample shows how to call GetTestRunsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-await foreach (var item in client.GetTestRunsAsync("<orderby>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234, new RequestContext()))
+await foreach (var item in client.GetTestRunsAsync())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetTestRunsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
+await foreach (var item in client.GetTestRunsAsync("<orderby>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -1704,13 +1762,25 @@ await foreach (var item in client.GetTestRunsAsync("<orderby>", "<search>", "<te
     </member>
     <member name="GetTestRuns(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)">
 <example>
-This sample shows how to call GetTestRuns with required parameters and parse the result.
+This sample shows how to call GetTestRuns and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-foreach (var item in client.GetTestRuns("<orderby>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234, new RequestContext()))
+foreach (var item in client.GetTestRuns())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetTestRuns with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
+foreach (var item in client.GetTestRuns("<orderby>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
