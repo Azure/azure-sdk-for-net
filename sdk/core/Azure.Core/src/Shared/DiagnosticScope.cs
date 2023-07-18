@@ -530,16 +530,12 @@ namespace Azure.Core.Pipeline
 
 #if NETCOREAPP2_1
                 if (!activity.TryDispose())
-#else
-                if (activity is IDisposable disposable)
-                {
-                    disposable.Dispose();
-                }
-                else
-#endif
                 {
                     activity.Stop();
                 }
+#else
+                activity.Dispose();
+#endif
             }
         }
     }
