@@ -679,8 +679,8 @@
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
 
-# PRLabel: %Operational Insights
-# ServiceLabel: %Operational Insights %Service Attention
+# PRLabel: %Monitor - Operational Insights
+# ServiceLabel: Monitor - Operational Insights %Service Attention
 /sdk/operationalinsights/Microsoft.Azure.Ope*/                     @omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
 
 # ServiceLabel: %Policy %Service Attention
