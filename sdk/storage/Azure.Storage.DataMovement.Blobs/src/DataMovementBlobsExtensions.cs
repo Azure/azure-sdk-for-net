@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.Storage.Blobs.Models;
@@ -515,7 +514,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Get Metadata
                 int metadataIndex = DataMovementConstants.PlanFile.DstBlobMetadataLengthIndex;
                 int metadataReadLength = DataMovementConstants.PlanFile.DstBlobTagsLengthIndex - metadataIndex;
-                string metadata = await checkpointer.GetHeaderValue(
+                string metadata = await checkpointer.GetHeaderUShortValue(
                     transferId,
                     metadataIndex,
                     metadataReadLength,
@@ -526,7 +525,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Get blob tags
                 int tagsIndex = DataMovementConstants.PlanFile.DstBlobTagsLengthIndex;
                 int tagsReadLength = DataMovementConstants.PlanFile.DstBlobIsSourceEncrypted - tagsIndex;
-                string tags = await checkpointer.GetHeaderValue(
+                string tags = await checkpointer.GetHeaderLongValue(
                     transferId,
                     tagsIndex,
                     tagsReadLength,

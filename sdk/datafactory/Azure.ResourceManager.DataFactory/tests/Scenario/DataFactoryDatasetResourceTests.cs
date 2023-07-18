@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;

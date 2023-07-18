@@ -205,7 +205,7 @@ namespace Azure.Storage.DataMovement
             return concatStr;
         }
 
-        internal static async Task<string> GetHeaderValue(
+        internal static async Task<string> GetHeaderUShortValue(
             this TransferCheckpointer checkpointer,
             string transferId,
             int startIndex,
@@ -226,6 +226,35 @@ namespace Azure.Storage.DataMovement
                 // Read Path Length
                 byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
                 ushort pathLength = pathLengthBuffer.ToUShort();
+
+                // Read Path
+                byte[] pathBuffer = reader.ReadBytes(valueLength);
+                value = pathBuffer.ToString(pathLength);
+            }
+            return value;
+        }
+
+        internal static async Task<string> GetHeaderLongValue(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            int startIndex,
+            int streamReadLength,
+            int valueLength,
+            CancellationToken cancellationToken)
+        {
+            string value;
+            using (Stream stream = await checkpointer.ReadableStreamAsync(
+                transferId: transferId,
+                partNumber: 0,
+                offset: startIndex,
+                readSize: streamReadLength,
+                cancellationToken: cancellationToken).ConfigureAwait(false))
+            {
+                BinaryReader reader = new BinaryReader(stream);
+
+                // Read Path Length
+                byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+                long pathLength = pathLengthBuffer.ToLong();
 
                 // Read Path
                 byte[] pathBuffer = reader.ReadBytes(valueLength);

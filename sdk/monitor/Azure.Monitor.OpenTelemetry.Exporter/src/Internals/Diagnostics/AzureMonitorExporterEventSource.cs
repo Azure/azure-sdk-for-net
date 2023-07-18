@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void FailedToTransmit(string exceptionMessage) => WriteEvent(7, exceptionMessage);
 
         [NonEvent]
-        public void TransmissionFailed(int statusCode, bool fromStorage, bool willRetry, ConnectionVars connectionVars, string? requestEndpoint, Response? response)
+        public void TransmissionFailed(int statusCode, TelemetryItemOrigin origin, bool willRetry, ConnectionVars connectionVars, string? requestEndpoint, Response? response)
         {
             if (IsEnabled(EventLevel.Verbose))
             {
@@ -79,7 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                         statusCode: statusCode,
                         errorMessage: "N/A",
                         action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
-                        origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                        origin: origin.ToString(),
                         instrumentationKey: connectionVars.InstrumentationKey,
                         configuredEndpoint: connectionVars.IngestionEndpoint,
                         actualEndpoint: requestEndpoint);
@@ -92,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                             statusCode: statusCode,
                             errorMessage: error ?? "N/A",
                             action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
-                            origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                            origin: origin.ToString(),
                             instrumentationKey: connectionVars.InstrumentationKey,
                             configuredEndpoint: connectionVars.IngestionEndpoint,
                             actualEndpoint: requestEndpoint);
@@ -105,7 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                     statusCode: statusCode,
                     errorMessage: "(To get exact error change LogLevel to Verbose)",
                     action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
-                    origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                    origin: origin.ToString(),
                     instrumentationKey: connectionVars.InstrumentationKey,
                     configuredEndpoint: connectionVars.IngestionEndpoint,
                     actualEndpoint: requestEndpoint);
@@ -311,20 +311,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(31, Message = "Failed to initialize Statsbeat due to an exception. This is only for internal telemetry and can safely be ignored. Instrumentation Key: {0}. Configured Endpoint: {1}. {2}", Level = EventLevel.Informational)]
         public void ErrorInitializingStatsbeat(string instrumentationKey, string configuredEndpoint, string exceptionMessage) => WriteEvent(31, instrumentationKey, configuredEndpoint, exceptionMessage);
 
-        [Event(32, Message = "Successfully transmitted a batch of telemetry Items. Instrumentation Key: {0}", Level = EventLevel.Verbose)]
-        public void TransmissionSuccess(string instrumentationKey) => WriteEvent(32, instrumentationKey);
-
         [NonEvent]
-        public void TransmitterFailed(string instrumentationKey, Exception ex)
+        public void TransmissionSuccess(TelemetryItemOrigin origin, string instrumentationKey)
         {
-            if (IsEnabled(EventLevel.Error))
+            if (IsEnabled(EventLevel.Verbose))
             {
-                TransmitterFailed(instrumentationKey, ex.FlattenException().ToInvariantString());
+                TransmissionSuccess(origin.ToString(), instrumentationKey);
             }
         }
 
-        [Event(33, Message = "Transmitter failed due to an exception. Instrumentation Key: {0}. {1}", Level = EventLevel.Error)]
-        public void TransmitterFailed(string instrumentationKey, string exceptionMessage) => WriteEvent(33, instrumentationKey, exceptionMessage);
+        [Event(32, Message = "Successfully transmitted a batch of telemetry Items. Origin: {0}. Instrumentation Key: {1}", Level = EventLevel.Verbose)]
+        public void TransmissionSuccess(string origin, string instrumentationKey) => WriteEvent(32, origin, instrumentationKey);
+
+        [NonEvent]
+        public void TransmitterFailed(TelemetryItemOrigin origin, string instrumentationKey, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                TransmitterFailed(origin.ToString(), instrumentationKey, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(33, Message = "Transmitter failed due to an exception. Origin: {0}. Instrumentation Key: {1}. {2}", Level = EventLevel.Error)]
+        public void TransmitterFailed(string origin, string instrumentationKey, string exceptionMessage) => WriteEvent(33, origin, instrumentationKey, exceptionMessage);
 
         [Event(34, Message = "Exporter encountered a transmission failure and will wait {0} milliseconds before transmitting again.", Level = EventLevel.Warning)]
         public void BackoffEnabled(double milliseconds) => WriteEvent(34, milliseconds);

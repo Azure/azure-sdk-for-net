@@ -183,21 +183,21 @@ namespace Azure.Core.Tests
             CollectionAssert.DoesNotContain(Activity.Current.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
         }
 
-        [TestCase(DiagnosticScope.ActivityKind.Internal, true)]
-        [TestCase(DiagnosticScope.ActivityKind.Server, false)]
-        [TestCase(DiagnosticScope.ActivityKind.Client, true)]
-        [TestCase(DiagnosticScope.ActivityKind.Producer, false)]
-        [TestCase(DiagnosticScope.ActivityKind.Consumer, false)]
+        [TestCase(ActivityKind.Internal, true)]
+        [TestCase(ActivityKind.Server, false)]
+        [TestCase(ActivityKind.Client, true)]
+        [TestCase(ActivityKind.Producer, false)]
+        [TestCase(ActivityKind.Consumer, false)]
         [NonParallelizable]
         public void NestedClientActivitiesSuppressed(int kind, bool expectSuppression)
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
 
-            using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", (DiagnosticScope.ActivityKind)kind);
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", (ActivityKind)kind);
             scope.Start();
 
-            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", (DiagnosticScope.ActivityKind)kind);
+            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", (ActivityKind)kind);
             nestedScope.Start();
             if (expectSuppression)
             {
@@ -214,11 +214,11 @@ namespace Azure.Core.Tests
             CollectionAssert.DoesNotContain(Activity.Current.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
         }
 
-        [TestCase(DiagnosticScope.ActivityKind.Internal, true)]
-        [TestCase(DiagnosticScope.ActivityKind.Server, false)]
-        [TestCase(DiagnosticScope.ActivityKind.Client, true)]
-        [TestCase(DiagnosticScope.ActivityKind.Producer, false)]
-        [TestCase(DiagnosticScope.ActivityKind.Consumer, false)]
+        [TestCase(ActivityKind.Internal, true)]
+        [TestCase(ActivityKind.Server, false)]
+        [TestCase(ActivityKind.Client, true)]
+        [TestCase(ActivityKind.Producer, false)]
+        [TestCase(ActivityKind.Consumer, false)]
         [NonParallelizable]
         public void NestedClientActivitiesSuppressionActivitySource(int kind, bool expectSuppression)
         {
@@ -227,10 +227,10 @@ namespace Azure.Core.Tests
 
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
 
-            using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", (DiagnosticScope.ActivityKind)kind);
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName", (ActivityKind)kind);
             scope.Start();
 
-            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", (DiagnosticScope.ActivityKind)kind);
+            DiagnosticScope nestedScope = clientDiagnostics.CreateScope("ClientName.NestedActivityName", (ActivityKind)kind);
             nestedScope.Start();
             if (expectSuppression)
             {
