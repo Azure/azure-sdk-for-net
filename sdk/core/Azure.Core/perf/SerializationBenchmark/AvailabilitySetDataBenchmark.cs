@@ -9,9 +9,9 @@ namespace Azure.Core.Perf
 {
     public class AvailabilitySetDataBenchmark : SerializationBenchmark<AvailabilitySetData>
     {
-        protected override void Deserialize(JsonElement jsonElement)
+        protected override AvailabilitySetData Deserialize(JsonElement jsonElement)
         {
-            AvailabilitySetData.DeserializeAvailabilitySetData(jsonElement);
+            return AvailabilitySetData.DeserializeAvailabilitySetData(jsonElement);
         }
 
         protected override void Serialize(Utf8JsonWriter writer)
@@ -24,9 +24,9 @@ namespace Azure.Core.Perf
             return _model;
         }
 
-        protected override void CastFromResponse()
+        protected override AvailabilitySetData CastFromResponse()
         {
-            var aset = (AvailabilitySetData)_response;
+            return (AvailabilitySetData)_response;
         }
 
         protected override string JsonFileName => "AvailabilitySetData.json";

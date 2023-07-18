@@ -13,9 +13,9 @@ namespace Azure.Core.Perf
     {
         protected override string JsonFileName => "ResourceProviderData.json";
 
-        protected override void CastFromResponse()
+        protected override ResourceProviderData CastFromResponse()
         {
-            var resourceProviderData = (ResourceProviderData)_response;
+            return (ResourceProviderData)_response;
         }
 
         protected override RequestContent CastToRequestContent()
@@ -23,9 +23,9 @@ namespace Azure.Core.Perf
             return _model;
         }
 
-        protected override void Deserialize(JsonElement jsonElement)
+        protected override ResourceProviderData Deserialize(JsonElement jsonElement)
         {
-            ResourceProviderData.DeserializeResourceProviderData(jsonElement);
+            return ResourceProviderData.DeserializeResourceProviderData(jsonElement);
         }
 
         protected override void Serialize(Utf8JsonWriter writer)

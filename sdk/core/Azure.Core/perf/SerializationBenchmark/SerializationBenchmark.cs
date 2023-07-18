@@ -24,13 +24,13 @@ namespace Azure.Core.Perf
         private ModelSerializerOptions _options;
         private BinaryData _data;
 
-        protected abstract void Deserialize(JsonElement jsonElement);
+        protected abstract T Deserialize(JsonElement jsonElement);
 
         protected abstract void Serialize(Utf8JsonWriter writer);
 
         protected abstract RequestContent CastToRequestContent();
 
-        protected abstract void CastFromResponse();
+        protected abstract T CastFromResponse();
 
         protected abstract string JsonFileName { get; }
 
@@ -64,10 +64,10 @@ namespace Azure.Core.Perf
 
         [Benchmark]
         [BenchmarkCategory("Cast")]
-        public void Serialize_ImplicitCastWithSerialize()
+        public bool Serialize_ImplicitCastWithSerialize()
         {
             using var x = CastToRequestContent();
-            x.TryComputeLength(out var length);
+            return x.TryComputeLength(out var length);
         }
 
         [Benchmark]
@@ -82,19 +82,19 @@ namespace Azure.Core.Perf
 
         [Benchmark]
         [BenchmarkCategory("ModelJsonConverter")]
-        public void Serialize_ModelJsonConverter()
+        public string Serialize_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.IgnoreReadOnlyProperties = true;
             options.Converters.Add(new ModelJsonConverter(true));
-            JsonSerializer.Serialize(_model, options);
+            return JsonSerializer.Serialize(_model, options);
         }
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
-        public void Serialize_ModelSerializer()
+        public BinaryData Serialize_ModelSerializer()
         {
-            ModelSerializer.Serialize(_model, _options);
+            return ModelSerializer.Serialize(_model, _options);
         }
 
         [Benchmark]
@@ -109,72 +109,73 @@ namespace Azure.Core.Perf
 
         [Benchmark]
         [BenchmarkCategory("Internal")]
-        public void Deserialize_Internal()
+        public T Deserialize_Internal()
         {
             using JsonDocument doc = JsonDocument.Parse(_json);
-            Deserialize(doc.RootElement);
+            return Deserialize(doc.RootElement);
         }
 
         [Benchmark]
         [BenchmarkCategory("Cast")]
-        public void Deserialize_ExplicitCast()
+        public T Deserialize_ExplicitCast()
         {
-            CastFromResponse();
+            T result = CastFromResponse();
             _response.ContentStream.Position = 0; //reset for reuse
+            return result;
         }
 
         [Benchmark]
         [BenchmarkCategory("ModelJsonConverter")]
-        public void Deserialize_ModelJsonConverter()
+        public T Deserialize_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.IgnoreReadOnlyProperties = true;
             options.Converters.Add(new ModelJsonConverter(true));
-            JsonSerializer.Deserialize<T>(_json, options);
+            return JsonSerializer.Deserialize<T>(_json, options);
         }
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
-        public void Deserialize_ModelSerializerFromString()
+        public T Deserialize_ModelSerializerFromString()
         {
-            ModelSerializer.Deserialize<T>(BinaryData.FromString(_json), _options);
+            return ModelSerializer.Deserialize<T>(BinaryData.FromString(_json), _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
-        public void Deserialize_ModelSerializerFromBinaryData()
+        public T Deserialize_ModelSerializerFromBinaryData()
         {
-            ModelSerializer.Deserialize<T>(_data, _options);
+            return ModelSerializer.Deserialize<T>(_data, _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public void Deserialize_PublicInterfaceFromString()
+        public object Deserialize_PublicInterfaceFromString()
         {
-            _model.Deserialize(BinaryData.FromString(_json), _options);
+            return _model.Deserialize(BinaryData.FromString(_json), _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public void Deserialize_PublicInterfaceFromBinaryData()
+        public object Deserialize_PublicInterfaceFromBinaryData()
         {
-            _model.Deserialize(_data, _options);
+            return _model.Deserialize(_data, _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public void Deserialize_Utf8JsonReaderFromBinaryData()
+        public object Deserialize_Utf8JsonReaderFromBinaryData()
         {
             Utf8JsonReader reader = new Utf8JsonReader(_data);
-            _model.Deserialize(ref reader, _options);
+            return _model.Deserialize(ref reader, _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public void Deserialize_Utf8JsonReaderFromString()
+        public object Deserialize_Utf8JsonReaderFromString()
         {
             Utf8JsonReader reader = new Utf8JsonReader(_data);
-            _model.Deserialize(ref reader, _options);
+            return _model.Deserialize(ref reader, _options);
         }
     }
 }
