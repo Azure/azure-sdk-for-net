@@ -16,7 +16,7 @@ namespace Azure.Core
         public delegate void PropertySetter<T>(ReadOnlySpan<byte> propertyName, ref T properties, ref Utf8JsonReader reader, ModelSerializerOptions options);
         private delegate object ReadValue(ref Utf8JsonReader reader);
 
-        private static Dictionary<Type, ReadValue> _readerActions = new Dictionary<Type, ReadValue>()
+        private static readonly Dictionary<Type, ReadValue> _readerActions = new Dictionary<Type, ReadValue>()
         {
             { typeof(string), (ref Utf8JsonReader reader) => reader.GetString() },
             { typeof(bool), (ref Utf8JsonReader reader) => reader.GetBoolean() },
@@ -30,7 +30,7 @@ namespace Azure.Core
             { typeof(byte[]), (ref Utf8JsonReader reader) => reader.GetBytesFromBase64() },
         };
 
-        private static Dictionary<Type, Func<string, object>> _keyConverter = new Dictionary<Type, Func<string, object>>()
+        private static readonly Dictionary<Type, Func<string, object>> _keyConverter = new Dictionary<Type, Func<string, object>>()
         {
             { typeof(int), str => Convert.ToInt32(str) },
             { typeof(string), str => str },
