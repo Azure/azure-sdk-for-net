@@ -353,11 +353,11 @@ namespace Azure.Storage.Queues
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
-        /// <param name="tokenCredential">
-        /// The token credential used to sign requests.
-        /// </param>
         /// <param name="sasCredential">
         /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
         /// </param>
         internal QueueClient(
             Uri queueUri,

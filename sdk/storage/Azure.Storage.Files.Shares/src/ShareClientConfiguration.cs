@@ -62,7 +62,10 @@ namespace Azure.Storage.Files.Shares
         {
         }
 
-        private ShareClientConfiguration(
+        /// <summary>
+        /// For internal Client Constructors that accept multiple types of authentication.
+        /// </summary>
+        internal ShareClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             AzureSasCredential sasCredential,
