@@ -277,7 +277,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void AiLocationIpIsNullByDefault()
+        public void AiLocationIpIsNotSetByDefault()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -292,7 +292,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
             var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.Null(telemetryItem?.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+            Assert.False(telemetryItem?.Tags.TryGetValue(ContextTagKeys.AiLocationIp.ToString(),out _));
         }
 
         [Fact]
