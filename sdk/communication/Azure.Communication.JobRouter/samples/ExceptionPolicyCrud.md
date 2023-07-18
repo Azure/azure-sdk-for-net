@@ -148,7 +148,7 @@ Console.WriteLine($"`EscalateJobOnWaitTimeExceededTrigger2Min` rule has been suc
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateExceptionPolicyRemoveProp
 // we are going to remove Name
 Response updateExceptionPolicyWithoutName = routerClient.UpdateExceptionPolicy(exceptionPolicyId,
-        RequestContent.Create(new { Name = (string?)null }));
+        RequestContent.Create(new { Name = (string?)null }), new RequestContext());
 
 Response<ExceptionPolicy> queriedExceptionPolicyWithoutName = routerClient.GetExceptionPolicy(exceptionPolicyId);
 

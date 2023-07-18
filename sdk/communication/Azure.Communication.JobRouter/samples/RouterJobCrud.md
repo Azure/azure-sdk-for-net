@@ -100,7 +100,7 @@ Console.WriteLine($"Job has been successfully updated. Current value of channelR
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp
 Response updatedJobWithoutChannelReference = routerClient.UpdateJob(jobId,
-    RequestContent.Create(new { ChannelReference = (string?)null }));
+    RequestContent.Create(new { ChannelReference = (string?)null }), new RequestContext());
 
 Response<RouterJob> queriedJobWithoutChannelReference = routerClient.GetJob(jobId);
 

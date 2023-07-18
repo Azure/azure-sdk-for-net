@@ -93,7 +93,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp_Async
 
             Response updatedJobWithoutChannelReference = await routerClient.UpdateJobAsync(jobId,
-                RequestContent.Create(new { ChannelReference = (string?)null }));
+                RequestContent.Create(new { ChannelReference = (string?)null }), new RequestContext());
 
             Response<RouterJob> queriedJobWithoutChannelReference = await routerClient.GetJobAsync(jobId);
 

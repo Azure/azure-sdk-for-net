@@ -99,7 +99,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // we are going to remove Name
             Response updateExceptionPolicyWithoutName = await routerClient.UpdateExceptionPolicyAsync(exceptionPolicyId,
-                RequestContent.Create(new { Name = (string?)null }));
+                RequestContent.Create(new { Name = (string?)null }), new RequestContext());
 
             Response<ExceptionPolicy> queriedExceptionPolicyWithoutName = await routerClient.GetExceptionPolicyAsync(exceptionPolicyId);
 

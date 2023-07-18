@@ -61,7 +61,7 @@ Response<Models.RouterQueue> updatedJobQueue = routerAdministrationClient.Update
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateQueueRemoveProp
 Response updatedJobQueueWithoutName = routerAdministrationClient.UpdateQueue(jobQueueId,
-    RequestContent.Create(new { Name = (string?)null }));
+    RequestContent.Create(new { Name = (string?)null }), new RequestContext());
 
 Response<Models.RouterQueue> queriedJobQueueWithoutName = routerAdministrationClient.GetQueue(jobQueueId);
 

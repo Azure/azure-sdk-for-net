@@ -401,7 +401,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
-            var updatedJob1Response = await routerClient.UpdateJobAsync(createJob1.Id, RequestContent.Create(new { ChannelReference = (string?)null }));
+            var updatedJob1Response = await routerClient.UpdateJobAsync(createJob1.Id, RequestContent.Create(new { ChannelReference = (string?)null }), new RequestContext());
 
             var retrievedJob = await routerClient.GetJobAsync(jobId1);
 
