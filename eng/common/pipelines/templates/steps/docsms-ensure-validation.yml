@@ -13,8 +13,9 @@ steps:
         }
 
         Write-Host "All packages passed validation"
-    } catch {
-        Write-Error "Failed to parse DocsMsPackagesAllValid value '$value' as a boolean."
+    } catch [FormatException] {
+        Write-Host "Failed to parse DocsMsPackagesAllValid value '$value' as a boolean."
+        Write-Error $_
         exit 1
     }
   displayName: Check package validation results
