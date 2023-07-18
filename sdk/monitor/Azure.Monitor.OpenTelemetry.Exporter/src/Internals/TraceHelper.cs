@@ -140,13 +140,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static string? GetLocationIp(ref AzMonList MappedTags)
         {
-            var httpClientIp = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpClientIP)?.ToString();
-            if (!string.IsNullOrWhiteSpace(httpClientIp))
+            var clientIp = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeClientAddress)?.ToString();
+            if (!string.IsNullOrWhiteSpace(clientIp))
             {
-                return httpClientIp;
+                return clientIp;
             }
 
-            return AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeNetPeerIp)?.ToString();
+            return null;
         }
 
         internal static string GetOperationName(Activity activity, ref AzMonList MappedTags)

@@ -37,6 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeUrlScheme,
             SemanticConventions.AttributeUrlQuery,
             SemanticConventions.AttributeUserAgentOriginal,
+            SemanticConventions.AttributeClientAddress,
 
             // required - Azure
             SemanticConventions.AttributeAzureNameSpace,
