@@ -317,6 +317,11 @@ namespace Azure.Communication.CallAutomation
                 request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
             }
 
+            if (options.Transferee != null)
+            {
+                request.Transferee = CommunicationIdentifierSerializer.Serialize(options.Transferee);
+            }
+
             return request;
         }
 
