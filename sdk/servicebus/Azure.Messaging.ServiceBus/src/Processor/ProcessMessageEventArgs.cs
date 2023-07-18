@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
         ///         <description>When the message lock has expired based on the <see cref="ServiceBusReceivedMessage.LockedUntil"/> property</description>
         ///     </item>
         ///     <item>
-        ///         <description>When a non-transient exception occurs while attempting to renew the session lock.</description>
+        ///         <description>When a non-transient exception occurs while attempting to renew the message lock.</description>
         ///     </item>
         /// </list>
         /// </summary>
