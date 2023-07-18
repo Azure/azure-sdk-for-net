@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2euap/sharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/images/jmaesscc?api-version=2022-03-03",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvc2hhcmVkR2FsbGVyaWVzLzk3Zjc4MjMyLTM4MmItNDZhNy04YTcyLTk2NGQ2OTJjNGYzZi1MT05HTElWRUdBTExFUllGT0pOVlYvaW1hZ2VzL2ptYWVzc2NjP2FwaS12ZXJzaW9uPTIwMjItMDMtMDM=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2euap/sharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/images/jmaesscc?api-version=2022-08-03",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvc2hhcmVkR2FsbGVyaWVzLzk3Zjc4MjMyLTM4MmItNDZhNy04YTcyLTk2NGQ2OTJjNGYzZi1MT05HTElWRUdBTExFUllGT0pOVlYvaW1hZ2VzL2ptYWVzc2NjP2FwaS12ZXJzaW9uPTIwMjItMDgtMDM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8d9bd695-b2e3-4247-89fb-1cab46b4c5c7"
+          "a57a0cd1-197f-4e93-813a-6b0cface503e"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.30802",
+          "FxVersion/6.0.1823.26907",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/61.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -26,14 +26,17 @@
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetGalleryArtifact3Min;599,Microsoft.Compute/GetGalleryArtifact30Min;2999"
+        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "929b4a17-2677-4b76-97c2-2f5d5b05d4b0_133028703489092498"
+          "929b4a17-2677-4b76-97c2-2f5d5b05d4b0_133316158056717861"
         ],
         "x-ms-request-id": [
-          "26dd2be4-c05c-4695-866d-0be47823d7ac"
+          "5084b5c0-0064-4e18-bacd-24a224a088cd"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -43,16 +46,16 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "b82acea9-ff57-41df-ae3e-2e98d77ee404"
+          "99167620-8f89-4d47-b77c-00e95427b778"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20220722T221009Z:b82acea9-ff57-41df-ae3e-2e98d77ee404"
+          "CENTRALUS:20230703T140010Z:99167620-8f89-4d47-b77c-00e95427b778"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 22 Jul 2022 22:10:09 GMT"
+          "Mon, 03 Jul 2023 14:00:10 GMT"
         ],
         "Content-Length": [
           "476"
@@ -64,26 +67,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"identifier\": {\r\n    \"uniqueId\": \"/SharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/Images/jmaesscc\"\r\n  },\r\n  \"properties\": {\r\n    \"osType\": \"Linux\",\r\n    \"osState\": \"Generalized\",\r\n    \"identifier\": {\r\n      \"publisher\": \"GalleryPub\",\r\n      \"offer\": \"GalleryOffer\",\r\n      \"sku\": \"GallerySku\"\r\n    },\r\n    \"recommended\": {},\r\n    \"hyperVGeneration\": \"V1\",\r\n    \"architecture\": \"x64\"\r\n  },\r\n  \"location\": \"EastUS2EUAP\",\r\n  \"name\": \"jmaesscc\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"osType\": \"Linux\",\r\n    \"osState\": \"Generalized\",\r\n    \"recommended\": {},\r\n    \"hyperVGeneration\": \"V1\",\r\n    \"architecture\": \"x64\",\r\n    \"identifier\": {\r\n      \"publisher\": \"GalleryPub\",\r\n      \"offer\": \"GalleryOffer\",\r\n      \"sku\": \"GallerySku\"\r\n    }\r\n  },\r\n  \"location\": \"EastUS2EUAP\",\r\n  \"name\": \"jmaesscc\",\r\n  \"identifier\": {\r\n    \"uniqueId\": \"/SharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/Images/jmaesscc\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2euap/sharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/images?api-version=2022-03-03&sharedTo=tenant",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvc2hhcmVkR2FsbGVyaWVzLzk3Zjc4MjMyLTM4MmItNDZhNy04YTcyLTk2NGQ2OTJjNGYzZi1MT05HTElWRUdBTExFUllGT0pOVlYvaW1hZ2VzP2FwaS12ZXJzaW9uPTIwMjItMDMtMDMmc2hhcmVkVG89dGVuYW50",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2euap/sharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/images?api-version=2022-08-03&sharedTo=tenant",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvc2hhcmVkR2FsbGVyaWVzLzk3Zjc4MjMyLTM4MmItNDZhNy04YTcyLTk2NGQ2OTJjNGYzZi1MT05HTElWRUdBTExFUllGT0pOVlYvaW1hZ2VzP2FwaS12ZXJzaW9uPTIwMjItMDgtMDMmc2hhcmVkVG89dGVuYW50",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "285f3c64-39e5-4f4c-869d-f7e328af6b9d"
+          "e6792ff1-848a-4f81-b8d2-2845a2b43dcb"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.30802",
+          "FxVersion/6.0.1823.26907",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/61.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -93,14 +96,17 @@
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/ListGalleryArtifact3Min;199,Microsoft.Compute/ListGalleryArtifact30Min;199"
+        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "929b4a17-2677-4b76-97c2-2f5d5b05d4b0_133028703489092498"
+          "929b4a17-2677-4b76-97c2-2f5d5b05d4b0_133316158056717861"
         ],
         "x-ms-request-id": [
-          "8f4f0c9d-242d-4707-8b16-65836e8519d6"
+          "31ae02d0-5fb5-4038-8e8d-55a4ace83244"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -110,16 +116,16 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "413f806b-7bea-40e3-9c0b-e16e41b1527a"
+          "45f6c2d6-094f-4883-887f-58804e6ad7e2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20220722T221010Z:413f806b-7bea-40e3-9c0b-e16e41b1527a"
+          "CENTRALUS:20230703T140011Z:45f6c2d6-094f-4883-887f-58804e6ad7e2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 22 Jul 2022 22:10:10 GMT"
+          "Mon, 03 Jul 2023 14:00:10 GMT"
         ],
         "Content-Length": [
           "577"
@@ -131,26 +137,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"identifier\": {\r\n        \"uniqueId\": \"/SharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/Images/jmaesscc\"\r\n      },\r\n      \"properties\": {\r\n        \"osType\": \"Linux\",\r\n        \"osState\": \"Generalized\",\r\n        \"identifier\": {\r\n          \"publisher\": \"GalleryPub\",\r\n          \"offer\": \"GalleryOffer\",\r\n          \"sku\": \"GallerySku\"\r\n        },\r\n        \"recommended\": {},\r\n        \"hyperVGeneration\": \"V1\",\r\n        \"architecture\": \"x64\"\r\n      },\r\n      \"location\": \"EastUS2EUAP\",\r\n      \"name\": \"jmaesscc\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"osType\": \"Linux\",\r\n        \"osState\": \"Generalized\",\r\n        \"recommended\": {},\r\n        \"hyperVGeneration\": \"V1\",\r\n        \"architecture\": \"x64\",\r\n        \"identifier\": {\r\n          \"publisher\": \"GalleryPub\",\r\n          \"offer\": \"GalleryOffer\",\r\n          \"sku\": \"GallerySku\"\r\n        }\r\n      },\r\n      \"location\": \"EastUS2EUAP\",\r\n      \"name\": \"jmaesscc\",\r\n      \"identifier\": {\r\n        \"uniqueId\": \"/SharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/Images/jmaesscc\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2euap/sharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/images?api-version=2022-03-03&sharedTo=tenant",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvc2hhcmVkR2FsbGVyaWVzLzk3Zjc4MjMyLTM4MmItNDZhNy04YTcyLTk2NGQ2OTJjNGYzZi1MT05HTElWRUdBTExFUllGT0pOVlYvaW1hZ2VzP2FwaS12ZXJzaW9uPTIwMjItMDMtMDMmc2hhcmVkVG89dGVuYW50",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2euap/sharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/images?api-version=2022-08-03&sharedTo=tenant",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvc2hhcmVkR2FsbGVyaWVzLzk3Zjc4MjMyLTM4MmItNDZhNy04YTcyLTk2NGQ2OTJjNGYzZi1MT05HTElWRUdBTExFUllGT0pOVlYvaW1hZ2VzP2FwaS12ZXJzaW9uPTIwMjItMDgtMDMmc2hhcmVkVG89dGVuYW50",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0c417b8c-3e95-47a6-938d-b51b311030e0"
+          "a60ac97b-dbb4-4824-969a-d80f1be0e8fe"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.30802",
+          "FxVersion/6.0.1823.26907",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/61.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -160,14 +166,17 @@
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/ListGalleryArtifact3Min;197,Microsoft.Compute/ListGalleryArtifact30Min;197"
+        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "929b4a17-2677-4b76-97c2-2f5d5b05d4b0_133028703489092498"
+          "929b4a17-2677-4b76-97c2-2f5d5b05d4b0_133316158056717861"
         ],
         "x-ms-request-id": [
-          "05f4fe90-7286-469f-92d4-779173b92312"
+          "f9ceaf73-321b-41a0-8f76-5b5071631648"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -177,16 +186,16 @@
           "11996"
         ],
         "x-ms-correlation-request-id": [
-          "d20bd1f2-7082-40d6-86d4-3ca707a41735"
+          "d5093f3d-cdb5-455e-ae9e-1f88adaabc5b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20220722T221010Z:d20bd1f2-7082-40d6-86d4-3ca707a41735"
+          "CENTRALUS:20230703T140011Z:d5093f3d-cdb5-455e-ae9e-1f88adaabc5b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 22 Jul 2022 22:10:10 GMT"
+          "Mon, 03 Jul 2023 14:00:10 GMT"
         ],
         "Content-Length": [
           "577"
@@ -198,26 +207,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"identifier\": {\r\n        \"uniqueId\": \"/SharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/Images/jmaesscc\"\r\n      },\r\n      \"properties\": {\r\n        \"osType\": \"Linux\",\r\n        \"osState\": \"Generalized\",\r\n        \"identifier\": {\r\n          \"publisher\": \"GalleryPub\",\r\n          \"offer\": \"GalleryOffer\",\r\n          \"sku\": \"GallerySku\"\r\n        },\r\n        \"recommended\": {},\r\n        \"hyperVGeneration\": \"V1\",\r\n        \"architecture\": \"x64\"\r\n      },\r\n      \"location\": \"EastUS2EUAP\",\r\n      \"name\": \"jmaesscc\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"osType\": \"Linux\",\r\n        \"osState\": \"Generalized\",\r\n        \"recommended\": {},\r\n        \"hyperVGeneration\": \"V1\",\r\n        \"architecture\": \"x64\",\r\n        \"identifier\": {\r\n          \"publisher\": \"GalleryPub\",\r\n          \"offer\": \"GalleryOffer\",\r\n          \"sku\": \"GallerySku\"\r\n        }\r\n      },\r\n      \"location\": \"EastUS2EUAP\",\r\n      \"name\": \"jmaesscc\",\r\n      \"identifier\": {\r\n        \"uniqueId\": \"/SharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/Images/jmaesscc\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2euap/sharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/images?api-version=2022-03-03",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvc2hhcmVkR2FsbGVyaWVzLzk3Zjc4MjMyLTM4MmItNDZhNy04YTcyLTk2NGQ2OTJjNGYzZi1MT05HTElWRUdBTExFUllGT0pOVlYvaW1hZ2VzP2FwaS12ZXJzaW9uPTIwMjItMDMtMDM=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2euap/sharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/images?api-version=2022-08-03",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvc2hhcmVkR2FsbGVyaWVzLzk3Zjc4MjMyLTM4MmItNDZhNy04YTcyLTk2NGQ2OTJjNGYzZi1MT05HTElWRUdBTExFUllGT0pOVlYvaW1hZ2VzP2FwaS12ZXJzaW9uPTIwMjItMDgtMDM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9fd171c5-5936-4e5d-85b7-cb29a3a0d2bb"
+          "6e489ec6-d835-4221-bed7-835e54aae6ce"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.30802",
+          "FxVersion/6.0.1823.26907",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/61.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -227,14 +236,17 @@
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/ListGalleryArtifact3Min;198,Microsoft.Compute/ListGalleryArtifact30Min;198"
+        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "929b4a17-2677-4b76-97c2-2f5d5b05d4b0_133028703489092498"
+          "929b4a17-2677-4b76-97c2-2f5d5b05d4b0_133316158056717861"
         ],
         "x-ms-request-id": [
-          "7457688a-17e8-499c-ac66-ff0e8e98e992"
+          "ce6e394d-624e-469e-915c-f8335d019b71"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -244,16 +256,16 @@
           "11997"
         ],
         "x-ms-correlation-request-id": [
-          "08a184da-a959-44b7-ad2e-b6cab84f569f"
+          "6113e551-e3c9-4a69-a1b5-210cdeea77df"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20220722T221010Z:08a184da-a959-44b7-ad2e-b6cab84f569f"
+          "CENTRALUS:20230703T140011Z:6113e551-e3c9-4a69-a1b5-210cdeea77df"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 22 Jul 2022 22:10:10 GMT"
+          "Mon, 03 Jul 2023 14:00:10 GMT"
         ],
         "Content-Length": [
           "577"
@@ -265,7 +277,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"identifier\": {\r\n        \"uniqueId\": \"/SharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/Images/jmaesscc\"\r\n      },\r\n      \"properties\": {\r\n        \"osType\": \"Linux\",\r\n        \"osState\": \"Generalized\",\r\n        \"identifier\": {\r\n          \"publisher\": \"GalleryPub\",\r\n          \"offer\": \"GalleryOffer\",\r\n          \"sku\": \"GallerySku\"\r\n        },\r\n        \"recommended\": {},\r\n        \"hyperVGeneration\": \"V1\",\r\n        \"architecture\": \"x64\"\r\n      },\r\n      \"location\": \"EastUS2EUAP\",\r\n      \"name\": \"jmaesscc\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"osType\": \"Linux\",\r\n        \"osState\": \"Generalized\",\r\n        \"recommended\": {},\r\n        \"hyperVGeneration\": \"V1\",\r\n        \"architecture\": \"x64\",\r\n        \"identifier\": {\r\n          \"publisher\": \"GalleryPub\",\r\n          \"offer\": \"GalleryOffer\",\r\n          \"sku\": \"GallerySku\"\r\n        }\r\n      },\r\n      \"location\": \"EastUS2EUAP\",\r\n      \"name\": \"jmaesscc\",\r\n      \"identifier\": {\r\n        \"uniqueId\": \"/SharedGalleries/97f78232-382b-46a7-8a72-964d692c4f3f-LONGLIVEGALLERYFOJNVV/Images/jmaesscc\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

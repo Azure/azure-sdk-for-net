@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isReadyForDnsRecordManagement">
-        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and 
+        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
         ///  it is hosted on name servers Azure has programmatic access to.
         /// </param>
         /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsAutoRenew { get; set; }
         /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and 
+        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
         ///  it is hosted on name servers Azure has programmatic access to.
         /// </summary>
         public bool? IsReadyForDnsRecordManagement { get; }

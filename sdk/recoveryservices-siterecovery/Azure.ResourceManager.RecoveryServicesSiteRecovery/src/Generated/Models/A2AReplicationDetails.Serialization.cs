@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> fabricObjectId = default;
+            Optional<ResourceIdentifier> fabricObjectId = default;
             Optional<string> initialPrimaryZone = default;
-            Optional<string> initialPrimaryFabricLocation = default;
+            Optional<AzureLocation> initialPrimaryFabricLocation = default;
             Optional<string> initialRecoveryZone = default;
-            Optional<ExtendedLocation> initialPrimaryExtendedLocation = default;
-            Optional<ExtendedLocation> initialRecoveryExtendedLocation = default;
-            Optional<string> initialRecoveryFabricLocation = default;
+            Optional<SiteRecoveryExtendedLocation> initialPrimaryExtendedLocation = default;
+            Optional<SiteRecoveryExtendedLocation> initialRecoveryExtendedLocation = default;
+            Optional<AzureLocation> initialRecoveryFabricLocation = default;
             Optional<string> multiVmGroupId = default;
             Optional<string> multiVmGroupName = default;
             Optional<MultiVmGroupCreateOption> multiVmGroupCreateOption = default;
@@ -34,51 +34,55 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<A2AProtectedDiskDetails>> protectedDisks = default;
             Optional<IReadOnlyList<A2AUnprotectedDiskDetails>> unprotectedDisks = default;
             Optional<IReadOnlyList<A2AProtectedManagedDiskDetails>> protectedManagedDisks = default;
-            Optional<string> recoveryBootDiagStorageAccountId = default;
-            Optional<string> primaryFabricLocation = default;
-            Optional<string> recoveryFabricLocation = default;
+            Optional<ResourceIdentifier> recoveryBootDiagStorageAccountId = default;
+            Optional<AzureLocation> primaryFabricLocation = default;
+            Optional<AzureLocation> recoveryFabricLocation = default;
             Optional<string> osType = default;
             Optional<string> recoveryAzureVmSize = default;
             Optional<string> recoveryAzureVmName = default;
-            Optional<string> recoveryAzureResourceGroupId = default;
+            Optional<ResourceIdentifier> recoveryAzureResourceGroupId = default;
             Optional<string> recoveryCloudService = default;
             Optional<string> recoveryAvailabilitySet = default;
-            Optional<string> selectedRecoveryAzureNetworkId = default;
-            Optional<string> selectedTfoAzureNetworkId = default;
+            Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
+            Optional<ResourceIdentifier> selectedTfoAzureNetworkId = default;
             Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
-            Optional<AzureToAzureVmSyncedConfigDetails> vmSyncedConfigDetails = default;
+            Optional<A2AVmSyncedConfigDetails> vmSyncedConfigDetails = default;
             Optional<int> monitoringPercentageCompletion = default;
             Optional<string> monitoringJobType = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
             Optional<string> agentVersion = default;
-            Optional<DateTimeOffset> agentExpiryDate = default;
+            Optional<DateTimeOffset> agentExpireOn = default;
             Optional<bool> isReplicationAgentUpdateRequired = default;
-            Optional<DateTimeOffset> agentCertificateExpiryDate = default;
+            Optional<DateTimeOffset> agentCertificateExpireOn = default;
             Optional<bool> isReplicationAgentCertificateUpdateRequired = default;
-            Optional<string> recoveryFabricObjectId = default;
+            Optional<ResourceIdentifier> recoveryFabricObjectId = default;
             Optional<string> vmProtectionState = default;
             Optional<string> vmProtectionStateDescription = default;
             Optional<string> lifecycleId = default;
-            Optional<string> testFailoverRecoveryFabricObjectId = default;
+            Optional<ResourceIdentifier> testFailoverRecoveryFabricObjectId = default;
             Optional<long> rpoInSeconds = default;
             Optional<DateTimeOffset> lastRpoCalculatedTime = default;
             Optional<string> primaryAvailabilityZone = default;
             Optional<string> recoveryAvailabilityZone = default;
-            Optional<ExtendedLocation> primaryExtendedLocation = default;
-            Optional<ExtendedLocation> recoveryExtendedLocation = default;
-            Optional<VmEncryptionType> vmEncryptionType = default;
+            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
+            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
+            Optional<SiteRecoveryVmEncryptionType> vmEncryptionType = default;
             Optional<string> tfoAzureVmName = default;
             Optional<string> recoveryAzureGeneration = default;
-            Optional<string> recoveryProximityPlacementGroupId = default;
+            Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
             Optional<AutoProtectionOfDataDisk> autoProtectionOfDataDisk = default;
-            Optional<string> recoveryVirtualMachineScaleSetId = default;
-            Optional<string> recoveryCapacityReservationGroupId = default;
+            Optional<ResourceIdentifier> recoveryVirtualMachineScaleSetId = default;
+            Optional<ResourceIdentifier> recoveryCapacityReservationGroupId = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fabricObjectId"u8))
                 {
-                    fabricObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricObjectId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("initialPrimaryZone"u8))
@@ -88,7 +92,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("initialPrimaryFabricLocation"u8))
                 {
-                    initialPrimaryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    initialPrimaryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("initialRecoveryZone"u8))
@@ -102,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialPrimaryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialRecoveryExtendedLocation"u8))
@@ -111,12 +119,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialRecoveryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialRecoveryFabricLocation"u8))
                 {
-                    initialRecoveryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    initialRecoveryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("multiVmGroupId"u8))
@@ -187,17 +199,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryBootDiagStorageAccountId"u8))
                 {
-                    recoveryBootDiagStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryBootDiagStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryFabricLocation"u8))
                 {
-                    primaryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryFabricLocation"u8))
                 {
-                    recoveryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -217,7 +241,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryAzureResourceGroupId"u8))
                 {
-                    recoveryAzureResourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryAzureResourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryCloudService"u8))
@@ -232,12 +260,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("selectedRecoveryAzureNetworkId"u8))
                 {
-                    selectedRecoveryAzureNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    selectedRecoveryAzureNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("selectedTfoAzureNetworkId"u8))
                 {
-                    selectedTfoAzureNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    selectedTfoAzureNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vmNics"u8))
@@ -260,7 +296,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    vmSyncedConfigDetails = AzureToAzureVmSyncedConfigDetails.DeserializeAzureToAzureVmSyncedConfigDetails(property.Value);
+                    vmSyncedConfigDetails = A2AVmSyncedConfigDetails.DeserializeA2AVmSyncedConfigDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("monitoringPercentageCompletion"u8))
@@ -297,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentExpiryDate = property.Value.GetDateTimeOffset("O");
+                    agentExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("isReplicationAgentUpdateRequired"u8))
@@ -315,7 +351,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentCertificateExpiryDate = property.Value.GetDateTimeOffset("O");
+                    agentCertificateExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("isReplicationAgentCertificateUpdateRequired"u8))
@@ -329,7 +365,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryFabricObjectId"u8))
                 {
-                    recoveryFabricObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryFabricObjectId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vmProtectionState"u8))
@@ -349,7 +389,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("testFailoverRecoveryFabricObjectId"u8))
                 {
-                    testFailoverRecoveryFabricObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testFailoverRecoveryFabricObjectId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rpoInSeconds"u8))
@@ -386,7 +430,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryExtendedLocation"u8))
@@ -395,7 +439,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vmEncryptionType"u8))
@@ -404,7 +448,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    vmEncryptionType = new VmEncryptionType(property.Value.GetString());
+                    vmEncryptionType = new SiteRecoveryVmEncryptionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tfoAzureVMName"u8))
@@ -419,7 +463,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryProximityPlacementGroupId"u8))
                 {
-                    recoveryProximityPlacementGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("autoProtectionOfDataDisk"u8))
@@ -433,12 +481,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryVirtualMachineScaleSetId"u8))
                 {
-                    recoveryVirtualMachineScaleSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryVirtualMachineScaleSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryCapacityReservationGroupId"u8))
                 {
-                    recoveryCapacityReservationGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryCapacityReservationGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))
@@ -447,7 +503,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2AReplicationDetails(instanceType, fabricObjectId.Value, initialPrimaryZone.Value, initialPrimaryFabricLocation.Value, initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, initialRecoveryFabricLocation.Value, multiVmGroupId.Value, multiVmGroupName.Value, Optional.ToNullable(multiVmGroupCreateOption), managementId.Value, Optional.ToList(protectedDisks), Optional.ToList(unprotectedDisks), Optional.ToList(protectedManagedDisks), recoveryBootDiagStorageAccountId.Value, primaryFabricLocation.Value, recoveryFabricLocation.Value, osType.Value, recoveryAzureVmSize.Value, recoveryAzureVmName.Value, recoveryAzureResourceGroupId.Value, recoveryCloudService.Value, recoveryAvailabilitySet.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, Optional.ToList(vmNics), vmSyncedConfigDetails.Value, Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(lastHeartbeat), agentVersion.Value, Optional.ToNullable(agentExpiryDate), Optional.ToNullable(isReplicationAgentUpdateRequired), Optional.ToNullable(agentCertificateExpiryDate), Optional.ToNullable(isReplicationAgentCertificateUpdateRequired), recoveryFabricObjectId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value, testFailoverRecoveryFabricObjectId.Value, Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), primaryAvailabilityZone.Value, recoveryAvailabilityZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(vmEncryptionType), tfoAzureVmName.Value, recoveryAzureGeneration.Value, recoveryProximityPlacementGroupId.Value, Optional.ToNullable(autoProtectionOfDataDisk), recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value);
+            return new A2AReplicationDetails(instanceType, fabricObjectId.Value, initialPrimaryZone.Value, Optional.ToNullable(initialPrimaryFabricLocation), initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Optional.ToNullable(initialRecoveryFabricLocation), multiVmGroupId.Value, multiVmGroupName.Value, Optional.ToNullable(multiVmGroupCreateOption), managementId.Value, Optional.ToList(protectedDisks), Optional.ToList(unprotectedDisks), Optional.ToList(protectedManagedDisks), recoveryBootDiagStorageAccountId.Value, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation), osType.Value, recoveryAzureVmSize.Value, recoveryAzureVmName.Value, recoveryAzureResourceGroupId.Value, recoveryCloudService.Value, recoveryAvailabilitySet.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, Optional.ToList(vmNics), vmSyncedConfigDetails.Value, Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(lastHeartbeat), agentVersion.Value, Optional.ToNullable(agentExpireOn), Optional.ToNullable(isReplicationAgentUpdateRequired), Optional.ToNullable(agentCertificateExpireOn), Optional.ToNullable(isReplicationAgentCertificateUpdateRequired), recoveryFabricObjectId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value, testFailoverRecoveryFabricObjectId.Value, Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), primaryAvailabilityZone.Value, recoveryAvailabilityZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(vmEncryptionType), tfoAzureVmName.Value, recoveryAzureGeneration.Value, recoveryProximityPlacementGroupId.Value, Optional.ToNullable(autoProtectionOfDataDisk), recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value);
         }
     }
 }

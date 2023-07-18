@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerScopes"> Scope of Network Manager. </param>
         /// <param name="networkManagerScopeAccesses"> Scope Access. </param>
         /// <param name="provisioningState"> The provisioning state of the network manager resource. </param>
-        internal NetworkManagerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, SystemData systemData, string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        internal NetworkManagerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, SystemData systemData, string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
             SystemData = systemData;
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.Network
             NetworkManagerScopes = networkManagerScopes;
             NetworkManagerScopeAccesses = networkManagerScopeAccesses;
             ProvisioningState = provisioningState;
+            ResourceGuid = resourceGuid;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -59,5 +62,7 @@ namespace Azure.ResourceManager.Network
         public IList<NetworkConfigurationDeploymentType> NetworkManagerScopeAccesses { get; }
         /// <summary> The provisioning state of the network manager resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> Unique identifier for this resource. </summary>
+        public Guid? ResourceGuid { get; }
     }
 }

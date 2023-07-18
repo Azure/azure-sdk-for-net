@@ -32,6 +32,7 @@ namespace Azure.Storage.DataMovement
         public override long? Length { get { throw null; } }
         public override long MaxChunkSize { get { throw null; } }
         public override string Path { get { throw null; } }
+        public override string ResourceId { get { throw null; } }
         public override Azure.Storage.DataMovement.TransferType TransferType { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         public override System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -41,6 +42,15 @@ namespace Azure.Storage.DataMovement
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.StorageResourceProperties> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Storage.DataMovement.Models.ReadStreamStorageResourceResult> ReadStreamAsync(long position = (long)0, long? length = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, long streamLength, bool overwrite, long position = (long)0, long completeLength = (long)0, Azure.Storage.DataMovement.Models.StorageResourceWriteToOffsetOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class LocalStorageResourceProvider
+    {
+        internal LocalStorageResourceProvider() { }
+        public Azure.Storage.DataMovement.StorageResource MakeResource() { throw null; }
+    }
+    public static partial class LocalStorageResources
+    {
+        public static bool TryGetResourceProviders(Azure.Storage.DataMovement.Models.DataTransferProperties info, out Azure.Storage.DataMovement.LocalStorageResourceProvider sourceProvider, out Azure.Storage.DataMovement.LocalStorageResourceProvider destinationProvider) { throw null; }
     }
     [System.FlagsAttribute]
     public enum ProduceUriType
@@ -76,6 +86,7 @@ namespace Azure.Storage.DataMovement
         public override bool IsContainer { get { throw null; } }
         public abstract long? Length { get; }
         public abstract long MaxChunkSize { get; }
+        public abstract string ResourceId { get; }
         public abstract Azure.Storage.DataMovement.TransferType TransferType { get; }
         public abstract System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task CopyBlockFromUriAsync(Azure.Storage.DataMovement.StorageResourceSingle sourceResource, Azure.HttpRange range, bool overwrite, long completeLength = (long)0, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -147,11 +158,13 @@ namespace Azure.Storage.DataMovement.Models
     public partial class DataTransferProperties
     {
         protected DataTransferProperties() { }
-        public Azure.Storage.DataMovement.Models.TransferCheckpointerOptions Checkpointer { get { throw null; } }
-        public string DestinationScheme { get { throw null; } }
-        public bool IsContainer { get { throw null; } }
-        public string SourceScheme { get { throw null; } }
-        public string TransferId { get { throw null; } }
+        public virtual Azure.Storage.DataMovement.Models.TransferCheckpointerOptions Checkpointer { get { throw null; } }
+        public virtual string DestinationPath { get { throw null; } }
+        public virtual string DestinationScheme { get { throw null; } }
+        public virtual bool IsContainer { get { throw null; } }
+        public virtual string SourcePath { get { throw null; } }
+        public virtual string SourceScheme { get { throw null; } }
+        public virtual string TransferId { get { throw null; } }
     }
     public partial class ProgressHandlerOptions
     {

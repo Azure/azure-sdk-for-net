@@ -38,18 +38,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetCachedClient(Client => new AccessControlListCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of IPCommunityListResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IPCommunityListResources and their operations over a IPCommunityListResource. </returns>
-        public virtual IPCommunityListCollection GetIPCommunityLists()
+        /// <summary> Gets a collection of IPCommunityResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of IPCommunityResources and their operations over a IPCommunityResource. </returns>
+        public virtual IPCommunityCollection GetIPCommunities()
         {
-            return GetCachedClient(Client => new IPCommunityListCollection(Client, Id));
+            return GetCachedClient(Client => new IPCommunityCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of IPPrefixListResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IPPrefixListResources and their operations over a IPPrefixListResource. </returns>
-        public virtual IPPrefixListCollection GetIPPrefixLists()
+        /// <summary> Gets a collection of IPExtendedCommunityResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of IPExtendedCommunityResources and their operations over a IPExtendedCommunityResource. </returns>
+        public virtual IPExtendedCommunityCollection GetIPExtendedCommunities()
         {
-            return GetCachedClient(Client => new IPPrefixListCollection(Client, Id));
+            return GetCachedClient(Client => new IPExtendedCommunityCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of IPPrefixResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of IPPrefixResources and their operations over a IPPrefixResource. </returns>
+        public virtual IPPrefixCollection GetIPPrefixes()
+        {
+            return GetCachedClient(Client => new IPPrefixCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of L2IsolationDomainResources in the ResourceGroupResource. </summary>

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -20,9 +22,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     {
         /// <summary> Initializes a new instance of RoutePolicyData. </summary>
         /// <param name="location"> The location. </param>
-        public RoutePolicyData(AzureLocation location) : base(location)
+        /// <param name="statements"> Route Policy statements. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="statements"/> is null. </exception>
+        public RoutePolicyData(AzureLocation location, IEnumerable<RoutePolicyStatementProperties> statements) : base(location)
         {
-            Conditions = new ChangeTrackingList<RoutePolicyPropertiesConditionsItem>();
+            Argument.AssertNotNull(statements, nameof(statements));
+
+            Statements = statements.ToList();
         }
 
         /// <summary> Initializes a new instance of RoutePolicyData. </summary>
@@ -33,23 +39,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="description"> Route Policy description. </param>
-        /// <param name="conditions"> Route Policy conditions. </param>
+        /// <param name="statements"> Route Policy statements. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal RoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string description, IList<RoutePolicyPropertiesConditionsItem> conditions, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal RoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<RoutePolicyStatementProperties> statements, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
-            Description = description;
-            Conditions = conditions;
+            Statements = statements;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> Route Policy description. </summary>
-        public string Description { get; set; }
-        /// <summary> Route Policy conditions. </summary>
-        public IList<RoutePolicyPropertiesConditionsItem> Conditions { get; }
+        /// <summary> Route Policy statements. </summary>
+        public IList<RoutePolicyStatementProperties> Statements { get; }
         /// <summary> Gets the provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

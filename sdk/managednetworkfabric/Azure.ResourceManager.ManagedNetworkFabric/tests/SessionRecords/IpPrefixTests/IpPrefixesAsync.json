@@ -1,0 +1,3796 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipprefix062223?api-version=2023-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "220",
+        "Content-Type": "application/json",
+        "traceparent": "00-13ead7dddbfcb24e5cdb083634d72563-5c22b7f1c8cd56ea-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "78cb3c93f7b0490f91154561c47615fd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "key6404": ""
+        },
+        "location": "eastus",
+        "properties": {
+          "annotation": "annotationValue",
+          "ipPrefixRules": [
+            {
+              "action": "Permit",
+              "sequenceNumber": 12,
+              "networkPrefix": "1.1.1.0/24",
+              "condition": "EqualTo",
+              "subnetMaskLength": 24
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/2e8e3d1f-9ff8-425f-9db1-cfe41e385383*263634422553D65E38B18F94451CBDCBFEC3DAA5EAF3C40651B6B43E5244AF12?api-version=2023-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "777",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:01:47 GMT",
+        "ETag": "\u00227a08c72a-0000-0100-0000-6493f1d90000\u0022",
+        "Expires": "-1",
+        "mise-correlation-id": "d107a309-3274-4407-a4d8-d4196c3a87d5",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "78cb3c93f7b0490f91154561c47615fd",
+        "x-ms-correlation-request-id": "118bed63-a047-462f-85e5-a7673cac3af9",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "11855ee7-0e93-4537-a4b2-000913a9119b",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T070147Z:118bed63-a047-462f-85e5-a7673cac3af9"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipprefix062223",
+        "name": "nfa-tool-ts-sdk-ipprefix062223",
+        "type": "microsoft.managednetworkfabric/ipprefixes",
+        "location": "eastus",
+        "tags": {
+          "key6404": ""
+        },
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T07:01:44.1646205Z",
+          "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-22T07:01:44.1646205Z"
+        },
+        "properties": {
+          "ipPrefixRules": [
+            {
+              "action": "Permit",
+              "sequenceNumber": 12,
+              "networkPrefix": "1.1.1.0/24",
+              "condition": "EqualTo",
+              "subnetMaskLength": 24
+            }
+          ],
+          "provisioningState": "Accepted",
+          "annotation": "annotationValue"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/2e8e3d1f-9ff8-425f-9db1-cfe41e385383*263634422553D65E38B18F94451CBDCBFEC3DAA5EAF3C40651B6B43E5244AF12?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-13ead7dddbfcb24e5cdb083634d72563-ea69012284ea7812-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ce3a3d3c9acc20b3c9270089e5e04bba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "671",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:01:48 GMT",
+        "ETag": "\u0022430493e9-0000-0100-0000-6493f1d90000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ce3a3d3c9acc20b3c9270089e5e04bba",
+        "x-ms-correlation-request-id": "f5f676d7-14ed-41d9-94f6-c6dd8747e7a3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "8c623320-1b8f-413a-8002-3ae2535360a9",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T070149Z:f5f676d7-14ed-41d9-94f6-c6dd8747e7a3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/2e8e3d1f-9ff8-425f-9db1-cfe41e385383*263634422553D65E38B18F94451CBDCBFEC3DAA5EAF3C40651B6B43E5244AF12",
+        "name": "2e8e3d1f-9ff8-425f-9db1-cfe41e385383*263634422553D65E38B18F94451CBDCBFEC3DAA5EAF3C40651B6B43E5244AF12",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipprefix062223",
+        "status": "Succeeded",
+        "startTime": "2023-06-22T07:01:45.4171919Z",
+        "endTime": "2023-06-22T07:01:45.9033599Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipprefix062223?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-13ead7dddbfcb24e5cdb083634d72563-68cc76c941a05619-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b9280202581f5ba2e69037cdc353e6f8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "778",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:01:49 GMT",
+        "ETag": "\u00227a08c82a-0000-0100-0000-6493f1da0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b9280202581f5ba2e69037cdc353e6f8",
+        "x-ms-correlation-request-id": "d48ad7b5-dffc-43a6-a8c4-afd45beeb014",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "04d464b7-65cb-4b2b-9a9e-d81d6ad5bd7a",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T070149Z:d48ad7b5-dffc-43a6-a8c4-afd45beeb014"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipprefix062223",
+        "name": "nfa-tool-ts-sdk-ipprefix062223",
+        "type": "microsoft.managednetworkfabric/ipprefixes",
+        "location": "eastus",
+        "tags": {
+          "key6404": ""
+        },
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T07:01:44.1646205Z",
+          "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-22T07:01:44.1646205Z"
+        },
+        "properties": {
+          "ipPrefixRules": [
+            {
+              "action": "Permit",
+              "sequenceNumber": 12,
+              "networkPrefix": "1.1.1.0/24",
+              "condition": "EqualTo",
+              "subnetMaskLength": 24
+            }
+          ],
+          "provisioningState": "Succeeded",
+          "annotation": "annotationValue"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipprefix062223?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-96c9af3351662a2b9e08634039696c06-19d201c04b97b4b5-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "862514a0473b7131becf491c37cc5560",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "778",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:01:50 GMT",
+        "ETag": "\u00227a08c82a-0000-0100-0000-6493f1da0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "862514a0473b7131becf491c37cc5560",
+        "x-ms-correlation-request-id": "0d78a0b9-37e0-4cb0-bd23-2c94e5dabce4",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "0aa4646a-c6b8-4f87-9db9-de744f925b97",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T070150Z:0d78a0b9-37e0-4cb0-bd23-2c94e5dabce4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipprefix062223",
+        "name": "nfa-tool-ts-sdk-ipprefix062223",
+        "type": "microsoft.managednetworkfabric/ipprefixes",
+        "location": "eastus",
+        "tags": {
+          "key6404": ""
+        },
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T07:01:44.1646205Z",
+          "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-22T07:01:44.1646205Z"
+        },
+        "properties": {
+          "ipPrefixRules": [
+            {
+              "action": "Permit",
+              "sequenceNumber": 12,
+              "networkPrefix": "1.1.1.0/24",
+              "condition": "EqualTo",
+              "subnetMaskLength": 24
+            }
+          ],
+          "provisioningState": "Succeeded",
+          "annotation": "annotationValue"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "60b97a97bb70e3109adfe83b63e65d75",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1536",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:01:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0645efb9-5e15-4c2e-bc16-0739bda6871d",
+        "x-ms-original-request-ids": [
+          "8145109a-e54c-420e-bb76-6157a978714e",
+          "ac38d28d-adaf-47af-ade3-6ae37caf0756",
+          "0ce9fd6f-2f92-45a5-bc41-6f49db8cadd0",
+          "ebd5fe8e-5d71-4ef4-a9f3-38e5b0d5b669"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "0645efb9-5e15-4c2e-bc16-0739bda6871d",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T070152Z:0645efb9-5e15-4c2e-bc16-0739bda6871d"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipPrefix061623",
+            "name": "nfa-tool-ts-sdk-ipPrefix061623",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-19T07:35:23.6642325Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:00:26.822087Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 1234,
+                  "networkPrefix": "1.1.10.10/20",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipprefix062223",
+            "name": "nfa-tool-ts-sdk-ipprefix062223",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "tags": {
+              "key6404": ""
+            },
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-22T07:01:44.1646205Z",
+              "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-06-22T07:01:44.1646205Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "1.1.1.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded",
+              "annotation": "annotationValue"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/ipPrefixes?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d1e90840c4bbbb7ed1b7fb500e862319",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "90728",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:01:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0d74362a-10c8-4ff3-81f6-9fdbdcaf17e5",
+        "x-ms-original-request-ids": [
+          "0af33773-6bb9-4470-b23e-33fbcd19334a",
+          "7c66fca3-f6f8-4be8-b228-39e14f87615c",
+          "37f56ca2-7169-4eba-8687-907e57b1e44f",
+          "360d69d3-2536-4dbd-8777-a45851733cab"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "0d74362a-10c8-4ff3-81f6-9fdbdcaf17e5",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T070153Z:0d74362a-10c8-4ff3-81f6-9fdbdcaf17e5"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfcrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-cli-ipprefix1-061223",
+            "name": "nfa-tool-ts-cli-ipprefix1-061223",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-12T07:12:57.3440245Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-14T02:21:02.8453099Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 1234,
+                  "networkPrefix": "1.1.10.10/20",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 25
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipPrefix061623",
+            "name": "nfa-tool-ts-sdk-ipPrefix061623",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-19T07:35:23.6642325Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:00:26.822087Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 1234,
+                  "networkPrefix": "1.1.10.10/20",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2601-staticsubnet",
+            "name": "ipprefixv4-2601-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:37.4688039Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:47.1107808Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.128.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "10.18.129.0/24",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 19,
+                  "networkPrefix": "10.18.128.0/22",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 22
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-staticsubnet",
+            "name": "ipprefixv4-2602-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:38.7656989Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:47.3139106Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.136.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "10.18.137.0/24",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 19,
+                  "networkPrefix": "10.18.136.0/22",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 22
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2601-connsubnet",
+            "name": "ipprefixv4-2601-connsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:39.8125893Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:47.5639214Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.32.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "10.18.33.0/24",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 19,
+                  "networkPrefix": "10.18.32.0/22",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 22
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-connsubnet",
+            "name": "ipprefixv4-2602-connsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:40.8126039Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:47.7983009Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.48.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "10.18.49.0/24",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 19,
+                  "networkPrefix": "10.18.48.0/22",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 22
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2601-cn1",
+            "name": "ipprefixv4-2601-cn1",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:50.8596366Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:56.8000872Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.32.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.32.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2601-cn2",
+            "name": "ipprefixv4-2601-cn2",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:51.8909498Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:57.0501092Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.33.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.33.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2601-cn3",
+            "name": "ipprefixv4-2601-cn3",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:52.8752893Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:57.1751601Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.34.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2601-cn4",
+            "name": "ipprefixv4-2601-cn4",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:53.9378124Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:57.3001266Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.35.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2601-cn1-exp",
+            "name": "ipprefixv4-2601-cn1-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:57.0941074Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:42.7841895Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.32.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.32.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2601-cn2-exp",
+            "name": "ipprefixv4-2601-cn2-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:58.140997Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:42.9873194Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.33.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.33.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2601-cn3-exp",
+            "name": "ipprefixv4-2601-cn3-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:59.1253912Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:43.0966953Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.34.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2601-cn4-exp",
+            "name": "ipprefixv4-2601-cn4-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:00.016025Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:43.2217025Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.35.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn1-imp",
+            "name": "ipprefixv4-2602-cn1-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:09.5943518Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:54.6473703Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.48.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.48.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn2-imp",
+            "name": "ipprefixv4-2602-cn2-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:10.5474421Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:54.8660986Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.49.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.49.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn3-imp",
+            "name": "ipprefixv4-2602-cn3-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:11.4849553Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:54.9754733Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.50.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn4-imp",
+            "name": "ipprefixv4-2602-cn4-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:12.35997Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:55.1004748Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.51.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn1-exp",
+            "name": "ipprefixv4-2602-cn1-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:17.1100421Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:40.6880512Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.48.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.48.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn2-exp",
+            "name": "ipprefixv4-2602-cn2-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:18.1413159Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:40.9536757Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.49.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.49.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn3-exp",
+            "name": "ipprefixv4-2602-cn3-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:19.1725738Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:41.0630515Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.50.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn4-exp",
+            "name": "ipprefixv4-2602-cn4-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:20.0944622Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:41.1880504Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.51.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn1-ext-imp",
+            "name": "ipprefixv4-2602-cn1-ext-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:30.8758831Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:46.0474545Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.48.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.48.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn3-ext-imp",
+            "name": "ipprefixv4-2602-cn3-ext-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:31.8446455Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:46.2349777Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.50.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn1-ext-exp",
+            "name": "ipprefixv4-2602-cn1-ext-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:36.0947129Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:56.0630778Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.48.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.48.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2602-cn3-ext-exp",
+            "name": "ipprefixv4-2602-cn3-ext-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:37.0009743Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:56.344328Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.50.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2603-staticsubnet",
+            "name": "ipprefixv4-2603-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:51.7043257Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:42.0086778Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.145.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "10.18.146.0/24",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 19,
+                  "networkPrefix": "10.18.145.0/22",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 22
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-staticsubnet",
+            "name": "ipprefixv4-2604-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:52.641844Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:42.2464995Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.149.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "10.18.150.0/24",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 19,
+                  "networkPrefix": "10.18.149.0/22",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 22
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2603-connsubnet",
+            "name": "ipprefixv4-2603-connsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:53.6418584Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:42.5868148Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.55.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "10.18.56.0/24",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 19,
+                  "networkPrefix": "10.18.55.0/22",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 22
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-connsubnet",
+            "name": "ipprefixv4-2604-connsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:54.7043742Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:42.8524729Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.59.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "10.18.60.0/24",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 19,
+                  "networkPrefix": "10.18.59.0/22",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 22
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2603-cn1",
+            "name": "ipprefixv4-2603-cn1",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:03.5638879Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:48.6725418Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.55.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.55.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2603-cn2",
+            "name": "ipprefixv4-2603-cn2",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:04.5326488Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:48.9069517Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.56.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.56.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2603-cn3",
+            "name": "ipprefixv4-2603-cn3",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:05.5014173Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:49.0006673Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.57.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2603-cn4",
+            "name": "ipprefixv4-2603-cn4",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:06.4233035Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:49.0788009Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.58.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2603-cn1-exp",
+            "name": "ipprefixv4-2603-cn1-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:09.7358531Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:00.1569355Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.55.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.55.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2603-cn2-exp",
+            "name": "ipprefixv4-2603-cn2-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:10.8608718Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:00.3600625Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.56.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.56.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2603-cn3-exp",
+            "name": "ipprefixv4-2603-cn3-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:11.89214Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:00.469435Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.57.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2603-cn4-exp",
+            "name": "ipprefixv4-2603-cn4-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:12.9078332Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:00.5631863Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.58.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn1-imp",
+            "name": "ipprefixv4-2604-cn1-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:22.5642296Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:45.5033805Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.59.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.59.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn2-imp",
+            "name": "ipprefixv4-2604-cn2-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:23.5016915Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:45.7286177Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.60.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.60.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn3-imp",
+            "name": "ipprefixv4-2604-cn3-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:24.4704561Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:45.8848679Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.61.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn4-imp",
+            "name": "ipprefixv4-2604-cn4-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:25.8454788Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:45.994218Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.62.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn1-exp",
+            "name": "ipprefixv4-2604-cn1-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:30.6268021Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:58.8010978Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.59.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.59.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn2-exp",
+            "name": "ipprefixv4-2604-cn2-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:31.5643184Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:59.0979956Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.60.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.60.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn3-exp",
+            "name": "ipprefixv4-2604-cn3-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:32.5487048Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:59.2237609Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.61.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn4-exp",
+            "name": "ipprefixv4-2604-cn4-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:33.6424737Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:59.3011311Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.62.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn1-ext-imp",
+            "name": "ipprefixv4-2604-cn1-ext-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:42.1426035Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:39:40.7414476Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.59.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.59.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn3-ext-imp",
+            "name": "ipprefixv4-2604-cn3-ext-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:43.2519956Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:39:40.9914661Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.61.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn1-ext-exp",
+            "name": "ipprefixv4-2604-cn1-ext-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:47.1583554Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:39:47.1727342Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.59.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.59.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2604-cn3-ext-exp",
+            "name": "ipprefixv4-2604-cn3-ext-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:48.3458268Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:39:47.3289832Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.61.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2605-staticsubnet",
+            "name": "ipprefixv6-2605-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:03.4710583Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:00.1490165Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "fda0:d59c:da12:80::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "fda0:d59c:da12:80::/62"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-staticsubnet",
+            "name": "ipprefixv6-2606-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:04.5179434Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:00.3677879Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "fda0:d59c:da12:90::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 13,
+                  "networkPrefix": "fda0:d59c:da12:91::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 64
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "fda0:d59c:da12:90::/62"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2605-connsubnet",
+            "name": "ipprefixv6-2605-connsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:05.5492114Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:00.5865472Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "fda0:d59c:da12:20::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "fda0:d59c:da12:20::/62"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-connsubnet",
+            "name": "ipprefixv6-2606-connsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:06.5336027Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:00.82095Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "fda0:d59c:da12:32::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "fda0:d59c:da12:34::/62"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2605-cn1-imp",
+            "name": "ipprefixv6-2605-cn1-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:15.4556128Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:42.2940194Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:20::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2605-cn2-imp",
+            "name": "ipprefixv6-2605-cn2-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:16.4400039Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:42.5127894Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:21::/64",
+                  "condition": "LesserThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2605-cn3-imp",
+            "name": "ipprefixv6-2605-cn3-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:17.5181436Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:42.6534326Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:22::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2605-cn4-imp",
+            "name": "ipprefixv6-2605-cn4-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:18.5025368Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:42.7784404Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:23::/64"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2605-cn1-exp",
+            "name": "ipprefixv6-2605-cn1-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:21.6900851Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:53.3915878Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:20::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2605-cn2-exp",
+            "name": "ipprefixv6-2605-cn2-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:22.7369757Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:53.641595Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:21::/64",
+                  "condition": "LesserThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2605-cn3-exp",
+            "name": "ipprefixv6-2605-cn3-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:23.9401171Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:53.7197147Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:22::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2605-cn4-exp",
+            "name": "ipprefixv6-2605-cn4-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:24.9557623Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:53.8447177Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:23::/64"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn1-imp",
+            "name": "ipprefixv6-2606-cn1-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:34.2215271Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:05.2806878Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:30::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn2-imp",
+            "name": "ipprefixv6-2606-cn2-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:35.1434152Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:05.452629Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:31::/64",
+                  "condition": "LesserThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn3-imp",
+            "name": "ipprefixv6-2606-cn3-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:36.2215566Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:05.5619636Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:33::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn4-imp",
+            "name": "ipprefixv6-2606-cn4-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:37.2371974Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:05.6557198Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:34::/64"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn1-exp",
+            "name": "ipprefixv6-2606-cn1-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:43.4716685Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:45.3760474Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:30::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn2-exp",
+            "name": "ipprefixv6-2606-cn2-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:44.4404321Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:45.6104241Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:31::/64",
+                  "condition": "LesserThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn3-exp",
+            "name": "ipprefixv6-2606-cn3-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:45.3935694Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:45.7510483Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:33::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn4-exp",
+            "name": "ipprefixv6-2606-cn4-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:46.3780112Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:45.844798Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:34::/64"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn1-ext-imp",
+            "name": "ipprefixv6-2606-cn1-ext-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:53.1436892Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:54.7041911Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:30::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn3-ext-imp",
+            "name": "ipprefixv6-2606-cn3-ext-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:54.0343309Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:54.8760716Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:33::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn1-ext-exp",
+            "name": "ipprefixv6-2606-cn1-ext-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:58.1281416Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:00.7859687Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:30::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2606-cn3-ext-exp",
+            "name": "ipprefixv6-2606-cn3-ext-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:59.2219848Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:01.0047415Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:33::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2607-staticsubnet",
+            "name": "ipprefixv6-2607-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:14.8940223Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:45.2199192Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "fda0:d59c:da12:94::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "fda0:d59c:da12:94::/62"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-staticsubnet",
+            "name": "ipprefixv6-2608-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:15.9409131Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:45.4386722Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "fda0:d59c:da12:99::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 13,
+                  "networkPrefix": "fda0:d59c:da12:9a::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 64
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "fda0:d59c:da12:98::/62"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2607-connsubnet",
+            "name": "ipprefixv6-2607-connsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:16.9409274Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:45.7042959Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "fda0:d59c:da12:40::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "fda0:d59c:da12:40::/62"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-connsubnet",
+            "name": "ipprefixv6-2608-connsubnet",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:18.0346958Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:45.9230464Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "fda0:d59c:da12:52::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 14,
+                  "networkPrefix": "fda0:d59c:da12:54::/62"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2607-cn1-imp",
+            "name": "ipprefixv6-2607-cn1-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:29.1911194Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:55.018485Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:40::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2607-cn2-imp",
+            "name": "ipprefixv6-2607-cn2-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:30.3630105Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:55.1903411Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:41::/64",
+                  "condition": "LesserThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2607-cn3-imp",
+            "name": "ipprefixv6-2607-cn3-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:31.5036503Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:55.2997138Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:42::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2607-cn4-imp",
+            "name": "ipprefixv6-2607-cn4-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:32.4724186Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:55.3778446Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:43::/64"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2607-cn1-exp",
+            "name": "ipprefixv6-2607-cn1-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:35.9568424Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:06.8700033Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:40::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2607-cn2-exp",
+            "name": "ipprefixv6-2607-cn2-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:36.8631081Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:07.0731504Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:41::/64",
+                  "condition": "LesserThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2607-cn3-exp",
+            "name": "ipprefixv6-2607-cn3-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:37.8943742Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:07.1669024Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:42::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2607-cn4-exp",
+            "name": "ipprefixv6-2607-cn4-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:38.9256363Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:07.2606605Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:43::/64"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn1-imp",
+            "name": "ipprefixv6-2608-cn1-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:48.36328Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:48.6860659Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:51::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn2-imp",
+            "name": "ipprefixv6-2608-cn2-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:49.4101723Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:48.9360842Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:52::/64",
+                  "condition": "LesserThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn3-imp",
+            "name": "ipprefixv6-2608-cn3-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:50.5508144Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:49.0454711Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:53::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn4-imp",
+            "name": "ipprefixv6-2608-cn4-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:51.5352053Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:49.1548505Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:54::/64"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn1-exp",
+            "name": "ipprefixv6-2608-cn1-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:56.6602836Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:01.7340303Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:51::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn2-exp",
+            "name": "ipprefixv6-2608-cn2-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:57.6759225Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:02.0465509Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:52::/64",
+                  "condition": "LesserThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn3-exp",
+            "name": "ipprefixv6-2608-cn3-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:58.6603148Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:02.1559335Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:53::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn4-exp",
+            "name": "ipprefixv6-2608-cn4-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:59.6134533Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:02.2809446Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:54::/64"
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn1-ext-imp",
+            "name": "ipprefixv6-2608-cn1-ext-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:09.316726Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:43.2103993Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:51::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn3-ext-imp",
+            "name": "ipprefixv6-2608-cn3-ext-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:10.2698659Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:43.4135341Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:53::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn1-ext-exp",
+            "name": "ipprefixv6-2608-cn1-ext-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:14.301176Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:48.4701248Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:51::/64",
+                  "condition": "GreaterThanOrEqualTo",
+                  "subnetMaskLength": 68
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv6-2608-cn3-ext-exp",
+            "name": "ipprefixv6-2608-cn3-ext-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:15.2855697Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:48.6576182Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "fda0:d59c:da12:53::/64",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 64
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2609-cn1-imp",
+            "name": "ipprefixv4-2609-cn1-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:32.7858333Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:57.7229544Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.65.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.65.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2609-cn2-imp",
+            "name": "ipprefixv4-2609-cn2-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:33.8483498Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:57.9885991Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.66.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.66.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2609-cn3-imp",
+            "name": "ipprefixv4-2609-cn3-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:34.7702394Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:58.0823576Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.67.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2609-cn4-imp",
+            "name": "ipprefixv4-2609-cn4-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:35.7546275Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:58.2229928Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.68.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2609-cn1-exp",
+            "name": "ipprefixv4-2609-cn1-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:38.5984212Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:44.1345477Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.65.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.65.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2609-cn2-exp",
+            "name": "ipprefixv4-2609-cn2-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:39.4109385Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:44.5095623Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.66.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.66.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2609-cn3-exp",
+            "name": "ipprefixv4-2609-cn3-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:40.1453189Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:44.759569Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.67.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2609-cn4-exp",
+            "name": "ipprefixv4-2609-cn4-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:41.0984572Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:44.8533191Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.68.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2610-cn1-imp",
+            "name": "ipprefixv4-2610-cn1-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:49.5830501Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:53.883621Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.70.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.70.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2610-cn2-imp",
+            "name": "ipprefixv4-2610-cn2-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:50.3642671Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:54.1180134Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.71.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.71.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2610-cn3-imp",
+            "name": "ipprefixv4-2610-cn3-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:51.1299124Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:54.2430224Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.72.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2610-cn4-imp",
+            "name": "ipprefixv4-2610-cn4-imp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:51.9112286Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:54.3992871Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.73.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2610-cn1-exp",
+            "name": "ipprefixv4-2610-cn1-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:55.8800197Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:46:03.478109Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.70.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Deny",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.70.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2610-cn2-exp",
+            "name": "ipprefixv4-2610-cn2-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:56.7862927Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:46:03.6968828Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.71.0/28",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 28
+                },
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.71.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2610-cn3-exp",
+            "name": "ipprefixv4-2610-cn3-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:57.7238124Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:46:03.806261Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 10,
+                  "networkPrefix": "10.18.72.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipPrefixes/ipprefixv4-2610-cn4-exp",
+            "name": "ipprefixv4-2610-cn4-exp",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:58.5832071Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:46:03.9312699Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "10.18.73.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipprefix062223",
+            "name": "nfa-tool-ts-sdk-ipprefix062223",
+            "type": "microsoft.managednetworkfabric/ipprefixes",
+            "location": "eastus",
+            "tags": {
+              "key6404": ""
+            },
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-22T07:01:44.1646205Z",
+              "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-06-22T07:01:44.1646205Z"
+            },
+            "properties": {
+              "ipPrefixRules": [
+                {
+                  "action": "Permit",
+                  "sequenceNumber": 12,
+                  "networkPrefix": "1.1.1.0/24",
+                  "condition": "EqualTo",
+                  "subnetMaskLength": 24
+                }
+              ],
+              "provisioningState": "Succeeded",
+              "annotation": "annotationValue"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipprefix062223?api-version=2023-02-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e4d6ce0b92b4d5fea95f5c0b425ee5a5-6e8a1e4f7a889b89-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4936d63a859ae5870441ec5b5ff50ed8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/c4c44c91-dc30-4a7f-aac1-743a3f90abe7*263634422553D65E38B18F94451CBDCBFEC3DAA5EAF3C40651B6B43E5244AF12?api-version=2023-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:01:54 GMT",
+        "ETag": "\u00227a08d42a-0000-0100-0000-6493f1e20000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/c4c44c91-dc30-4a7f-aac1-743a3f90abe7*263634422553D65E38B18F94451CBDCBFEC3DAA5EAF3C40651B6B43E5244AF12?api-version=2023-02-01-preview",
+        "mise-correlation-id": "3aaded80-4734-463a-b724-88792bc6d5c8",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4936d63a859ae5870441ec5b5ff50ed8",
+        "x-ms-correlation-request-id": "9d1fab78-a937-4354-ada4-c6a701eeed5f",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "d6a1b817-5621-442f-92d5-dbb5f185b051",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T070155Z:9d1fab78-a937-4354-ada4-c6a701eeed5f"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/c4c44c91-dc30-4a7f-aac1-743a3f90abe7*263634422553D65E38B18F94451CBDCBFEC3DAA5EAF3C40651B6B43E5244AF12?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e4d6ce0b92b4d5fea95f5c0b425ee5a5-8b427fbc2e0477c8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8c00cebb14b0bbdb8004cd7ad8235cdc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "670",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:01:55 GMT",
+        "ETag": "\u0022430496e9-0000-0100-0000-6493f1e30000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8c00cebb14b0bbdb8004cd7ad8235cdc",
+        "x-ms-correlation-request-id": "5ee06330-6f9d-40c9-af28-77459b2d53a3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "f5fcf936-e47f-45e6-b641-6a69b1e9b2d0",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T070155Z:5ee06330-6f9d-40c9-af28-77459b2d53a3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/c4c44c91-dc30-4a7f-aac1-743a3f90abe7*263634422553D65E38B18F94451CBDCBFEC3DAA5EAF3C40651B6B43E5244AF12",
+        "name": "c4c44c91-dc30-4a7f-aac1-743a3f90abe7*263634422553D65E38B18F94451CBDCBFEC3DAA5EAF3C40651B6B43E5244AF12",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipprefix062223",
+        "status": "Succeeded",
+        "startTime": "2023-06-22T07:01:54.8534903Z",
+        "endTime": "2023-06-22T07:01:55.049054Z",
+        "properties": null
+      }
+    }
+  ],
+  "Variables": {
+    "IP_PREFIX_NAME": "nfa-tool-ts-sdk-ipprefix062223",
+    "LOCATION": "eastus",
+    "RandomSeed": "591705916",
+    "RESOURCE_GROUP_NAME": "nfa-tool-ts-clisdktest-nfrg060523",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "61065ccc-9543-4b91-b2d1-0ce42a914507"
+  }
+}

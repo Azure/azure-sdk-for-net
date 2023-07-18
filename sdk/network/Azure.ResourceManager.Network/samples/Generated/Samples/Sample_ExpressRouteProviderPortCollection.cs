@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ExpressRouteProviderPort()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/expressRouteProviderPort.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/expressRouteProviderPort.json
             // this example is just showing the usage of "ExpressRouteProviderPort" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ExpressRouteProviderPort()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/expressRouteProviderPort.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/expressRouteProviderPort.json
             // this example is just showing the usage of "ExpressRouteProviderPort" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ExpressRouteProviderPortList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/expressRouteProviderPortList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/expressRouteProviderPortList.json
             // this example is just showing the usage of "ExpressRouteProviderPortsLocation_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
