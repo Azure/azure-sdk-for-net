@@ -277,7 +277,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void AiLocationIpIsNullByDefault()
+        public void AiLocationIpIsNotSetByDefault()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -292,7 +292,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
             var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.Null(telemetryItem?.Tags[ContextTagKeys.AiLocationIp.ToString()]);
+            Assert.False(telemetryItem?.Tags.TryGetValue(ContextTagKeys.AiLocationIp.ToString(),out _));
         }
 
         [Fact]
@@ -401,6 +401,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(requestData);
             Assert.Equal("GET /api/test", requestData.Name);
+            Assert.Equal(requestData.Name, telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void RequestNameMatchesOperationNameForConsumerSpans()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Consumer,
+                null,
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.DisplayName = "displayname";
+
+            activity.SetTag(SemanticConventions.AttributeMessagingSystem, "Eventhub");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
+            var telemetryItem = telemetryItems.FirstOrDefault();
+            var requestData = telemetryItem?.Data.BaseData as RequestData;
+
+            Assert.NotNull(requestData);
+            Assert.Equal("displayname", requestData.Name);
             Assert.Equal(requestData.Name, telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
 

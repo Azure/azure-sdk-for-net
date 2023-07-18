@@ -87,7 +87,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             var (messagingUrl, source) = messagingTagObjects.GetMessagingUrlAndSourceOrTarget(activity.Kind);
             Url = messagingUrl?.Truncate(SchemaConstants.RequestData_Url_MaxLength);
             Source = source?.Truncate(SchemaConstants.RequestData_Source_MaxLength);
-            Name = activity.DisplayName;
         }
     }
 }
