@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -452,36 +451,6 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { Language = "not language" }));
             Assert.AreEqual("NotSupportedLanguage", ex.ErrorCode);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeContentWithReadingOrder()
-        {
-            var client = CreateFormRecognizerClient();
-            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-            RecognizeContentOperation basicOrderOperation, naturalOrderOperation;
-
-            basicOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = FormReadingOrder.Basic });
-            naturalOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = FormReadingOrder.Natural });
-
-            await basicOrderOperation.WaitForCompletionAsync();
-            Assert.IsTrue(basicOrderOperation.HasValue);
-
-            await naturalOrderOperation.WaitForCompletionAsync();
-            Assert.IsTrue(naturalOrderOperation.HasValue);
-
-            var basicOrderFormPage = basicOrderOperation.Value.Single();
-            var naturalOrderFormPage = naturalOrderOperation.Value.Single();
-
-            ValidateFormPage(basicOrderFormPage, includeFieldElements: true, expectedPageNumber: 1);
-            ValidateFormPage(naturalOrderFormPage, includeFieldElements: true, expectedPageNumber: 1);
-
-            var basicOrderLines = basicOrderFormPage.Lines.Select(f => f.Text);
-            var naturalOrderLines = naturalOrderFormPage.Lines.Select(f => f.Text);
-
-            CollectionAssert.AreEquivalent(basicOrderLines, naturalOrderLines);
-            CollectionAssert.AreNotEqual(basicOrderLines, naturalOrderLines);
         }
     }
 }

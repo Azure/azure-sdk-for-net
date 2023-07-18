@@ -112,6 +112,50 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [TestCase(FormReadingOrder.Basic, "basic")]
+        [TestCase(FormReadingOrder.Natural, "natural")]
+        public async Task StartRecognizeContentSendsReadingOrder(FormReadingOrder readingOrder, string readingOrderString)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
+            var recognizeOptions = new RecognizeContentOptions { ReadingOrder = readingOrder };
+            await client.StartRecognizeContentAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"readingOrder={readingOrderString}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase(FormReadingOrder.Basic, "basic")]
+        [TestCase(FormReadingOrder.Natural, "natural")]
+        public async Task StartRecognizeContentFromUriSendsReadingOrder(FormReadingOrder readingOrder, string readingOrderString)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeContentOptions { ReadingOrder = readingOrder };
+            await client.StartRecognizeContentFromUriAsync(uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"readingOrder={readingOrderString}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
         [TestCase("")]
         [TestCase("en")]
         public async Task StartRecognizeContentSendsUserSpecifiedLanguage(string language)
