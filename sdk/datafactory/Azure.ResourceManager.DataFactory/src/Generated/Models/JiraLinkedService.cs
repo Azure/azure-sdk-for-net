@@ -39,11 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="host"> The IP address or host name of the Jira service. (e.g. jira.example.com). </param>
         /// <param name="port"> The TCP port that the Jira server uses to listen for client connections. The default value is 443 if connecting through HTTPS, or 8080 if connecting through HTTP. </param>
         /// <param name="username"> The user name that you use to access Jira Service. </param>
-        /// <param name="password">
-        /// The password corresponding to the user name that you provided in the username field.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> The password corresponding to the user name that you provided in the username field. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
@@ -67,11 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> The user name that you use to access Jira Service. </summary>
         public DataFactoryElement<string> Username { get; set; }
-        /// <summary>
-        /// The password corresponding to the user name that you provided in the username field.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The password corresponding to the user name that you provided in the username field. </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }

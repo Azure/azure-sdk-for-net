@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -622,7 +623,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // Create the diagnostics scope used for distributed tracing and instrument the events in the batch.
 
-            using var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, DiagnosticScope.ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
+            using var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
 
             if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
             {

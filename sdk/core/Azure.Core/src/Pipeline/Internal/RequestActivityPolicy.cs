@@ -19,7 +19,11 @@ namespace Azure.Core.Pipeline
         private const string RequestIdHeaderName = "Request-Id";
 
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Core");
+#if NETCOREAPP2_1
         private static readonly object? s_activitySource = ActivityExtensions.CreateActivitySource("Azure.Core.Http");
+#else
+        private static readonly ActivitySource s_activitySource = new ActivitySource("Azure.Core.Http");
+#endif
 
         public RequestActivityPolicy(bool isDistributedTracingEnabled, string? resourceProviderNamespace, HttpMessageSanitizer httpMessageSanitizer)
         {
@@ -54,7 +58,11 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
+#if NETCOREAPP2_1
             using var scope = new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, DiagnosticScope.ActivityKind.Client, false);
+#else
+            using var scope = new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, System.Diagnostics.ActivityKind.Client, false);
+#endif
 
             bool isActivitySourceEnabled = IsActivitySourceEnabled;
 

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -60,8 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
             writer.WritePropertyName("linkedService"u8);
-            writer.WriteObjectValue(LinkedService);
-            writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, LinkedService); writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("linkedService"u8))
                         {
-                            linkedService = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
+                            linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                     }

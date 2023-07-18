@@ -1,6 +1,31 @@
 # Release History
 
-## 12.0.0-beta.3 (Unreleased)
+## 12.0.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+- [BREAKING CHANGE] Made the following members `public` to `protected` members (including all derived classes):
+    - `BlobStorageResourceContainer.CanProduceUri`
+    - `BlobStorageResourceContainer.GetStorageResourcesAsync`
+    - `*BlobStorageResource.CanProduceUri`
+    - `*BlobStorageResource.Length`
+    - `*BlobStorageResource.MaxChunkSize`
+    - `*BlobStorageResource.ResourceId`
+    - `*BlobStorageResource.TransferType`
+    - `*BlobStorageResource.CompleteTransferAsync`
+    - `*BlobStorageResource.CopyBlockFromUriAsync`
+    - `*BlobStorageResource.CopyFromUriAsync`
+    - `*BlobStorageResource.DeleteIfExistsAsync`
+    - `*BlobStorageResource.GetCopyAuthorizationHeaderAsync`
+    - `*BlobStorageResource.GetPropertiesAsync`
+    - `*BlobStorageResource.ReadStreamAsync`
+    - `*BlobStorageResource.WriteFromStreamAsync`
+### Bugs Fixed
+
+### Other Changes
+
+## 12.0.0-beta.3 (2023-07-11)
 
 ### Features Added
 - Added `ResourceOptions` to `BlobStorageResourceContainerOptions` which allows setting resource specific options on all resources in a container transfer.
@@ -12,8 +37,6 @@
 
 ### Bugs Fixed
 - Fixed bug where the extension methods `BlobContainerClient.StartUploadDirectoryAsync` and `StartDownloadToDirectoryAsync` throws an exception when attempting to lazy construct the `TransferManager`.
-
-### Other Changes
 
 ## 12.0.0-beta.2 (2023-04-26)
 - This release contains bug fixes to improve quality.
