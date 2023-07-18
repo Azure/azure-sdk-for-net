@@ -5,104 +5,15 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Core.Pipeline;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     /// <summary> Model factory for models. </summary>
+    [CodeGenModel("AIOpenAIModelFactory")]
     public static partial class AzureOpenAIModelFactory
     {
-        /// <summary>
-        /// Initializes a new instance of ImageLocation for testing and mocking.
-        /// </summary>
-        /// <param name="url">The URL to represent as a download source for an image</param>
-        /// <returns>A new instance of ImageLocation</returns>
-        /// <exception cref="ArgumentNullException">Thrown if url is null</exception>
-        public static ImageLocation ImageLocation(Uri url)
-        {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-
-            return new ImageLocation(url);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of ImageGenerations for tests and mocking.
-        /// </summary>
-        /// <param name="created">The timestamp to use for image generation origination</param>
-        /// <param name="data">The collection of ImageLocations to associate with the result</param>
-        /// <returns>A new instance of ImageGenerations</returns>
-        public static ImageGenerations ImageGenerations(
-            DateTimeOffset created,
-            IEnumerable<ImageLocation> data)
-        {
-            return new ImageGenerations(created, data);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of ContentFilterResult for tests and mocking.
-        /// </summary>
-        /// <param name="severity"> The severity level associated with this filter result </param>
-        /// <param name="isFiltered"> Whether or not the severity level for this filter result should block content </param>
-        /// <returns> A new instance of ContentFilterResult </returns>
-        public static ContentFilterResult ContentFilterResult(
-            ContentFilterSeverity severity = default,
-            bool isFiltered = default)
-        {
-            return new ContentFilterResult(severity, isFiltered);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of ContentFilterResults for tests and mocking.
-        /// </summary>
-        /// <param name="sexualFilterResult"> The content filter result for the 'sexual' category </param>
-        /// <param name="violenceFilterResult"> The content filter result for the 'violence' category </param>
-        /// <param name="hateFilterResult"> The content filter result for the 'hate' category </param>
-        /// <param name="selfHarmFilterResult"> The content filter result for the 'selfHarm' category </param>
-        /// <returns> A new instance of ContentFilterResults </returns>
-        public static ContentFilterResults ContentFilterResults(
-            ContentFilterResult sexualFilterResult = null,
-            ContentFilterResult violenceFilterResult = null,
-            ContentFilterResult hateFilterResult = null,
-            ContentFilterResult selfHarmFilterResult = null)
-        {
-            return new ContentFilterResults(sexualFilterResult, violenceFilterResult, hateFilterResult, selfHarmFilterResult);
-        }
-        /// <summary>
-        /// Initializes a new instance of PromptFilterResult for tests and mocking.
-        /// </summary>
-        /// <param name="index"> The index of the prompt to associate this filter result with </param>
-        /// <param name="contentFilterResults"> The content filter results associated with the matching prompt index </param>
-        /// <returns> A new instance of PromptFilterResult </returns>
-        public static PromptFilterResult PromptFilterResult(
-            int index = default,
-            ContentFilterResults contentFilterResults = null)
-        {
-            return new PromptFilterResult(index, contentFilterResults);
-        }
-
-        /// <summary> Initializes a new instance of Choice. </summary>
-        /// <param name="text"> The generated text for a given completions prompt. </param>
-        /// <param name="index"> The ordered index associated with this completions choice. </param>
-        /// <param name="contentFilterResults"> The filter category results associated with this completions choice </param>
-        /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
-        /// <param name="finishReason"> Reason for finishing. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
-        public static Choice Choice(
-            string text = null,
-            int index = default,
-            ContentFilterResults contentFilterResults = null,
-            CompletionsLogProbabilityModel logProbabilityModel = null,
-            CompletionsFinishReason finishReason = default)
-        {
-            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason);
-        }
-
         /// <summary> Initializes a new instance of ChatChoice. </summary>
         /// <param name="message"> The chat message associated with this chat completions choice </param>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
@@ -118,35 +29,6 @@ namespace Azure.AI.OpenAI
             ContentFilterResults contentFilterResults = null)
         {
             return new ChatChoice(message, index, finishReason, deltaMessage, contentFilterResults);
-        }
-
-        /// <summary> Initializes a new instance of ChatCompletions. </summary>
-        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
-        /// <param name="created"> The first timestamp associated with generation activity for this completions response. </param>
-        /// <param name="choices"> The collection of completions choices associated with this completions response. </param>
-        /// <param name="promptFilterResults"> The filter annotations for this chat completions messages input </param>
-        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        /// <returns> A new <see cref="OpenAI.ChatCompletions"/> instance for mocking. </returns>
-        public static ChatCompletions ChatCompletions(
-            string id = null,
-            DateTimeOffset created = default(DateTimeOffset),
-            IReadOnlyList<ChatChoice> choices = null,
-            IReadOnlyList<PromptFilterResult> promptFilterResults = null,
-            CompletionsUsage usage = null)
-        {
-            choices ??= new List<ChatChoice>();
-            usage ??= AIOpenAIModelFactory.CompletionsUsage();
-
-            long constrainedUnixTimeInSec = Math.Max(
-                Math.Min(created.ToUnixTimeSeconds(), int.MaxValue),
-                int.MinValue);
-
-            return new ChatCompletions(
-                id ?? string.Empty,
-                created,
-                choices,
-                promptFilterResults,
-                usage);
         }
 
         /// <summary>

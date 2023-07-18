@@ -13,7 +13,7 @@ using Azure;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AIOpenAIModelFactory
+    public static partial class AzureOpenAIModelFactory
     {
         /// <summary> Initializes a new instance of Embeddings. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>

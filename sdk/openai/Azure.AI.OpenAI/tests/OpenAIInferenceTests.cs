@@ -216,6 +216,9 @@ namespace Azure.AI.OpenAI.Tests
         [TestCase(OpenAIClientServiceTarget.NonAzure)]
         public async Task CompletionsContentFilterCategories(OpenAIClientServiceTarget serviceTarget)
         {
+            // Temporary test note: at the time of authoring, content filter results aren't included for completions
+            // with the latest 2023-07-01-preview service API version. We'll manually configure one version behind
+            // pending the latest version having these results enabled.
             OpenAIClient client = GetTestClient(
                 serviceTarget,
                 azureServiceVersionOverride: OpenAIClientOptions.ServiceVersion.V2023_06_01_Preview);
@@ -298,6 +301,13 @@ namespace Azure.AI.OpenAI.Tests
             }
 
             Assert.That(totalMessages, Is.GreaterThan(1));
+
+            // Note: these top-level values *are likely not yet populated* until *after* at least one streaming
+            // choice has arrived.
+            Assert.That(streamingResponse.GetRawResponse(), Is.Not.Null.Or.Empty);
+            Assert.That(streamingChatCompletions.Id, Is.Not.Null.Or.Empty);
+            Assert.That(streamingChatCompletions.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
+            Assert.That(streamingChatCompletions.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
         }
 
         [RecordedTest]
@@ -394,7 +404,12 @@ namespace Azure.AI.OpenAI.Tests
         [TestCase(OpenAIClientServiceTarget.NonAzure)]
         public async Task StreamingCompletions(OpenAIClientServiceTarget serviceTarget)
         {
-            OpenAIClient client = GetTestClient(serviceTarget);
+            // Temporary test note: at the time of authoring, content filter results aren't included for completions
+            // with the latest 2023-07-01-preview service API version. We'll manually configure one version behind
+            // pending the latest version having these results enabled.
+            OpenAIClient client = GetTestClient(
+                serviceTarget,
+                azureServiceVersionOverride: OpenAIClientOptions.ServiceVersion.V2023_06_01_Preview);
             string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {

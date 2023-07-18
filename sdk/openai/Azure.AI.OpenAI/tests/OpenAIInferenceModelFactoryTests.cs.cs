@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI.Tests
         [Test]
         public void TestCompletionsLogProbabilityModel()
         {
-            CompletionsLogProbabilityModel logProbabilityModel = AIOpenAIModelFactory.CompletionsLogProbabilityModel(
+            CompletionsLogProbabilityModel logProbabilityModel = AzureOpenAIModelFactory.CompletionsLogProbabilityModel(
                 new[] { "one", "two" },
                 new float?[] { 0.9f, 0.72f });
             Assert.That(logProbabilityModel, Is.Not.Null);
@@ -84,9 +84,9 @@ namespace Azure.AI.OpenAI.Tests
                 AzureOpenAIModelFactory.PromptFilterResult(
                     0,
                     AzureOpenAIModelFactory.ContentFilterResults(
-                        hateFilterResult: AzureOpenAIModelFactory.ContentFilterResult(
+                        hate: AzureOpenAIModelFactory.ContentFilterResult(
                             ContentFilterSeverity.Medium,
-                            isFiltered: true)))
+                            filtered: true)))
             };
 
             ChatCompletions chatCompletions = AzureOpenAIModelFactory.ChatCompletions(
@@ -94,7 +94,7 @@ namespace Azure.AI.OpenAI.Tests
                 expectedCreationTime,
                 chatChoices,
                 promptFilterResults,
-                AIOpenAIModelFactory.CompletionsUsage(2, 5, 7));
+                AzureOpenAIModelFactory.CompletionsUsage(2, 5, 7));
 
             Assert.That(chatCompletions, Is.Not.Null);
             Assert.That(chatCompletions.Id, Is.EqualTo(expectedId));
