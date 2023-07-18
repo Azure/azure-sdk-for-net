@@ -83,14 +83,14 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public BlobClientConfiguration(
             HttpPipeline pipeline,
-            AzureSasCredential azureSasCredential,
+            AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
             BlobClientOptions.ServiceVersion version,
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
             string encryptionScope,
             bool trimBlobNameSlashes)
-            : base(pipeline, azureSasCredential, clientDiagnostics)
+            : base(pipeline, sasCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
