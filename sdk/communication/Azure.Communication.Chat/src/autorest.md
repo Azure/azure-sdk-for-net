@@ -27,5 +27,5 @@ directive:
     remove-property: retentionPolicy
   - where-model: ChatMessageContent
     remove-property: attachments
-  - remove:-model: AttachmentType
+  - remove-model: AttachmentType
   - remove-model: ChatAttachment
