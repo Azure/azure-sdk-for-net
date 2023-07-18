@@ -12,7 +12,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 {
     public class CallDialogTests : CallAutomationTestBase
     {
+        private const string dialogId = "92e08834-b6ee-4ede-8956-9fefa27a691c";
         private static readonly StartDialogOptions _startDialogOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", new Dictionary<string, object>())
+        {
+            OperationContext = "context"
+        };
+
+        private static readonly StartDialogOptions _startDialogWithIdOptions = new StartDialogOptions(dialogId, DialogInputType.PowerVirtualAgents, "botAppId", new Dictionary<string, object>())
         {
             OperationContext = "context"
         };
@@ -48,6 +54,26 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             Assert.AreEqual((int)HttpStatusCode.Created, result.GetRawResponse().Status);
         }
 
+        [TestCaseSource(nameof(TestData_StartDialogWithIdAsync))]
+        public async Task StartDialogWithIdAsync_Return201Created(Func<CallDialog, Task<Response<DialogResult>>> operation)
+        {
+            _callDialog = GetCallDialog(201, responseContent: DummyDialogStatusResponse);
+            var result = await operation(_callDialog);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Created, result.GetRawResponse().Status);
+            Assert.AreEqual(result.Value.DialogId, dialogId);
+        }
+
+        [TestCaseSource(nameof(TestData_StartDialogWithId))]
+        public void StartDialogWithId_Return201Created(Func<CallDialog, Response<DialogResult>> operation)
+        {
+            _callDialog = GetCallDialog(201, responseContent: DummyDialogStatusResponse);
+            var result = operation(_callDialog);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Created, result.GetRawResponse().Status);
+            Assert.AreEqual(result.Value.DialogId, dialogId);
+        }
+
         [TestCaseSource(nameof(TestData_StopDialogAsync))]
         public async Task StopDialogAsync_Return204NoContent(Func<CallDialog, Task<Response<DialogResult>>> operation)
         {
@@ -74,6 +100,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 {
                     callDialog => callDialog.StartDialogAsync(_startDialogOptions)
                 },
+                new Func<CallDialog, Task<Response<DialogResult>>>?[]
+                {
+                    callDialog => callDialog.StartDialogAsync(_startDialogWithIdOptions)
+                },
             };
         }
 
@@ -84,6 +114,32 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 new Func<CallDialog, Response<DialogResult>>?[]
                 {
                     callDialog => callDialog.StartDialog(_startDialogOptions)
+                },
+                new Func<CallDialog, Response<DialogResult>>?[]
+                {
+                    callDialog => callDialog.StartDialog(_startDialogWithIdOptions)
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_StartDialogWithIdAsync()
+        {
+            return new[]
+            {
+                new Func<CallDialog, Task<Response<DialogResult>>>?[]
+                {
+                    callDialog => callDialog.StartDialogAsync(_startDialogWithIdOptions)
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_StartDialogWithId()
+        {
+            return new[]
+            {
+                new Func<CallDialog, Response<DialogResult>>?[]
+                {
+                    callDialog => callDialog.StartDialog(_startDialogWithIdOptions)
                 },
             };
         }
