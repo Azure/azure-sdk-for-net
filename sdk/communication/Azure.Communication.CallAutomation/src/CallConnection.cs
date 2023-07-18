@@ -305,8 +305,8 @@ namespace Azure.Communication.CallAutomation
             TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.Target));
 
             request.CustomContext = new CustomContextInternal(
-                options.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.SipHeaders,
-                options.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.VoipHeaders);
+                options.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.SipHeaders,
+                options.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.VoipHeaders);
 
             if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
             {
@@ -444,8 +444,8 @@ namespace Azure.Communication.CallAutomation
             }
 
             request.CustomContext = new CustomContextInternal(
-                options.ParticipantToAdd.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.SipHeaders,
-                options.ParticipantToAdd.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.VoipHeaders);
+                options.ParticipantToAdd.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.SipHeaders,
+                options.ParticipantToAdd.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.VoipHeaders);
 
             return request;
         }

@@ -61,7 +61,7 @@ namespace Azure.Core.Shared
         /// <returns>The created diagnostic scope containing the common set of messaging attributes that are knowable upon creation.</returns>
         public DiagnosticScope CreateScope(
             string activityName,
-            DiagnosticScope.ActivityKind kind,
+            ActivityKind kind,
             MessagingDiagnosticOperation operation = default)
         {
             DiagnosticScope scope = _scopeFactory.CreateScope(activityName, kind);
@@ -167,13 +167,13 @@ namespace Azure.Core.Shared
             {
                 using DiagnosticScope messageScope = CreateScope(
                     activityName,
-                    DiagnosticScope.ActivityKind.Producer);
+                    ActivityKind.Producer);
                 messageScope.Start();
 
-                Activity activity = Activity.Current;
+                Activity? activity = Activity.Current;
                 if (activity != null)
                 {
-                    traceparent = activity.Id;
+                    traceparent = activity.Id!;
                     properties[DiagnosticIdAttribute] = traceparent;
                     if (ActivityExtensions.SupportsActivitySource())
                     {

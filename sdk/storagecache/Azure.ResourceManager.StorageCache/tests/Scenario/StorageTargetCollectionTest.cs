@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
             bool preCreated = true;
             this.DefaultStorageCache = preCreated ?
                 await this.RetrieveExistingStorageCache(
-                    resourceGroupName: @"sdkexplorerexecution10",
-                    cacheName: @"sc1") :
+                    resourceGroupName: this.DefaultResourceGroup.Id.Name,
+                    cacheName: @"testsc1846") :
                 await this.CreateOrUpdateStorageCache();
         }
 

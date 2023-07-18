@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.IO;
@@ -199,7 +199,7 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.IsNull(searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryCaption = QueryCaptionType.None;
-            Assert.AreEqual($"{QueryCaptionType.None}|highlight-True", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"{QueryCaptionType.None}", searchOptions.QueryCaptionRaw);
             Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
 
             searchOptions.QueryCaption = QueryCaptionType.Extractive;
@@ -236,10 +236,10 @@ namespace Azure.Search.Documents.Tests.Models
 
             // We can set `QueryCaption` to one of the known values, using either a string or a predefined value.
             searchOptions.QueryCaption = "none";
-            Assert.AreEqual($"{QueryCaptionType.None}|highlight-True", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"{QueryCaptionType.None}", searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryCaption = QueryCaptionType.None;
-            Assert.AreEqual($"{QueryCaptionType.None}|highlight-True", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"{QueryCaptionType.None}", searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryCaptionHighlightEnabled = false;
 
@@ -253,18 +253,14 @@ namespace Azure.Search.Documents.Tests.Models
 
             // We can also set `QueryCaption` to a value unknown to the SDK.
             searchOptions.QueryCaption = "unknown";
-            Assert.AreEqual($"unknown|highlight-True", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"unknown", searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryAnswer = new QueryAnswerType("unknown");
-            Assert.AreEqual($"unknown|highlight-True", searchOptions.QueryCaptionRaw);
+            Assert.AreEqual($"unknown", searchOptions.QueryCaptionRaw);
 
             searchOptions.QueryCaptionRaw = "unknown";
             Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
             Assert.IsNull(searchOptions.QueryCaptionHighlightEnabled);
-
-            searchOptions.QueryCaptionRaw = "unknown|highlight-False";
-            Assert.AreEqual("unknown", $"{searchOptions.QueryAnswer}");
-            Assert.AreEqual(false, searchOptions.QueryCaptionHighlightEnabled);
         }
 
         [Test]

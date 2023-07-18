@@ -32,6 +32,7 @@ namespace Azure.Identity.Tests
             {
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 TenantId = config.TenantId,
+                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
             var testProcess = new TestProcess { Output = processOutput };

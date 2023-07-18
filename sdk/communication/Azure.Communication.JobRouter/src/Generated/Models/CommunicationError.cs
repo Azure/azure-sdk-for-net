@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> The Communication Services error. </summary>
-    public partial class CommunicationError
+    internal partial class CommunicationError
     {
         /// <summary> Initializes a new instance of CommunicationError. </summary>
         /// <param name="code"> The error code. </param>

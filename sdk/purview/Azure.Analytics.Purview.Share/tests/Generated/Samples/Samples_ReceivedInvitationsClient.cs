@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.GetReceivedInvitation("<receivedInvitationName>");
+            Response response = client.GetReceivedInvitation("<receivedInvitationName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.GetReceivedInvitation("<receivedInvitationName>");
+            Response response = client.GetReceivedInvitation("<receivedInvitationName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.GetReceivedInvitationAsync("<receivedInvitationName>");
+            Response response = await client.GetReceivedInvitationAsync("<receivedInvitationName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.GetReceivedInvitationAsync("<receivedInvitationName>");
+            Response response = await client.GetReceivedInvitationAsync("<receivedInvitationName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -188,7 +188,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
 
-            foreach (var item in client.GetReceivedInvitations())
+            foreach (var item in client.GetReceivedInvitations("<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
 
-            foreach (var item in client.GetReceivedInvitations("<skipToken>", "<filter>", "<orderby>"))
+            foreach (var item in client.GetReceivedInvitations("<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -220,7 +220,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
 
-            await foreach (var item in client.GetReceivedInvitationsAsync())
+            await foreach (var item in client.GetReceivedInvitationsAsync("<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
 
-            await foreach (var item in client.GetReceivedInvitationsAsync("<skipToken>", "<filter>", "<orderby>"))
+            await foreach (var item in client.GetReceivedInvitationsAsync("<skipToken>", "<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("invitationKind").ToString());

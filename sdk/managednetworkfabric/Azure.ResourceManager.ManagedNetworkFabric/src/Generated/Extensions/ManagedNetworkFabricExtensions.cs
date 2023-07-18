@@ -68,39 +68,58 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
         #endregion
 
-        #region IPCommunityListResource
+        #region IPCommunityResource
         /// <summary>
-        /// Gets an object representing an <see cref="IPCommunityListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPCommunityListResource.CreateResourceIdentifier" /> to create an <see cref="IPCommunityListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IPCommunityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPCommunityResource.CreateResourceIdentifier" /> to create an <see cref="IPCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPCommunityListResource" /> object. </returns>
-        public static IPCommunityListResource GetIPCommunityListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPCommunityResource" /> object. </returns>
+        public static IPCommunityResource GetIPCommunityResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IPCommunityListResource.ValidateResourceId(id);
-                return new IPCommunityListResource(client, id);
+                IPCommunityResource.ValidateResourceId(id);
+                return new IPCommunityResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IPPrefixListResource
+        #region IPExtendedCommunityResource
         /// <summary>
-        /// Gets an object representing an <see cref="IPPrefixListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPPrefixListResource.CreateResourceIdentifier" /> to create an <see cref="IPPrefixListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IPExtendedCommunityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPExtendedCommunityResource.CreateResourceIdentifier" /> to create an <see cref="IPExtendedCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPPrefixListResource" /> object. </returns>
-        public static IPPrefixListResource GetIPPrefixListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPExtendedCommunityResource" /> object. </returns>
+        public static IPExtendedCommunityResource GetIPExtendedCommunityResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IPPrefixListResource.ValidateResourceId(id);
-                return new IPPrefixListResource(client, id);
+                IPExtendedCommunityResource.ValidateResourceId(id);
+                return new IPExtendedCommunityResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region IPPrefixResource
+        /// <summary>
+        /// Gets an object representing an <see cref="IPPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPPrefixResource.CreateResourceIdentifier" /> to create an <see cref="IPPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IPPrefixResource" /> object. </returns>
+        public static IPPrefixResource GetIPPrefixResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                IPPrefixResource.ValidateResourceId(id);
+                return new IPPrefixResource(client, id);
             }
             );
         }
@@ -428,116 +447,172 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return resourceGroupResource.GetAccessControlLists().Get(accessControlListName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IPCommunityListResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of IPCommunityResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IPCommunityListResources and their operations over a IPCommunityListResource. </returns>
-        public static IPCommunityListCollection GetIPCommunityLists(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of IPCommunityResources and their operations over a IPCommunityResource. </returns>
+        public static IPCommunityCollection GetIPCommunities(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPCommunityLists();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPCommunities();
         }
 
         /// <summary>
-        /// Implements Ip Community List GET method.
+        /// Implements an IP Community GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunityLists/{ipCommunityListName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunityLists_Get</description>
+        /// <description>IpCommunities_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipCommunityListName"> Name of the Ip Community List. </param>
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityListName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<IPCommunityListResource>> GetIPCommunityListAsync(this ResourceGroupResource resourceGroupResource, string ipCommunityListName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IPCommunityResource>> GetIPCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetIPCommunityLists().GetAsync(ipCommunityListName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetIPCommunities().GetAsync(ipCommunityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Implements Ip Community List GET method.
+        /// Implements an IP Community GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunityLists/{ipCommunityListName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunityLists_Get</description>
+        /// <description>IpCommunities_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipCommunityListName"> Name of the Ip Community List. </param>
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityListName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<IPCommunityListResource> GetIPCommunityList(this ResourceGroupResource resourceGroupResource, string ipCommunityListName, CancellationToken cancellationToken = default)
+        public static Response<IPCommunityResource> GetIPCommunity(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetIPCommunityLists().Get(ipCommunityListName, cancellationToken);
+            return resourceGroupResource.GetIPCommunities().Get(ipCommunityName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IPPrefixListResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of IPExtendedCommunityResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IPPrefixListResources and their operations over a IPPrefixListResource. </returns>
-        public static IPPrefixListCollection GetIPPrefixLists(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of IPExtendedCommunityResources and their operations over a IPExtendedCommunityResource. </returns>
+        public static IPExtendedCommunityCollection GetIPExtendedCommunities(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPPrefixLists();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPExtendedCommunities();
         }
 
         /// <summary>
-        /// Implements Ip Prefix List GET method.
+        /// Implements IP Extended Community GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixLists/{ipPrefixListName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixLists_Get</description>
+        /// <description>IpExtendedCommunities_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipPrefixListName"> Name of the Ip Prefix List. </param>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixListName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<IPPrefixListResource>> GetIPPrefixListAsync(this ResourceGroupResource resourceGroupResource, string ipPrefixListName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IPExtendedCommunityResource>> GetIPExtendedCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetIPPrefixLists().GetAsync(ipPrefixListName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetIPExtendedCommunities().GetAsync(ipExtendedCommunityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Implements Ip Prefix List GET method.
+        /// Implements IP Extended Community GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixLists/{ipPrefixListName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixLists_Get</description>
+        /// <description>IpExtendedCommunities_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipPrefixListName"> Name of the Ip Prefix List. </param>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixListName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<IPPrefixListResource> GetIPPrefixList(this ResourceGroupResource resourceGroupResource, string ipPrefixListName, CancellationToken cancellationToken = default)
+        public static Response<IPExtendedCommunityResource> GetIPExtendedCommunity(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetIPPrefixLists().Get(ipPrefixListName, cancellationToken);
+            return resourceGroupResource.GetIPExtendedCommunities().Get(ipExtendedCommunityName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of IPPrefixResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of IPPrefixResources and their operations over a IPPrefixResource. </returns>
+        public static IPPrefixCollection GetIPPrefixes(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPPrefixes();
+        }
+
+        /// <summary>
+        /// Implements IP Prefix GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<IPPrefixResource>> GetIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetIPPrefixes().GetAsync(ipPrefixName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements IP Prefix GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<IPPrefixResource> GetIPPrefix(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetIPPrefixes().Get(ipPrefixName, cancellationToken);
         }
 
         /// <summary> Gets a collection of L2IsolationDomainResources in the ResourceGroupResource. </summary>
@@ -1143,87 +1218,129 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements IpCommunityLists list by subscription GET method.
+        /// Implements IpCommunities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipCommunityLists</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipCommunities</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunityLists_ListBySubscription</description>
+        /// <description>IpCommunities_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPCommunityListResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IPCommunityListResource> GetIPCommunityListsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPCommunityResource> GetIPCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPCommunityListsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPCommunitiesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Implements IpCommunityLists list by subscription GET method.
+        /// Implements IpCommunities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipCommunityLists</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipCommunities</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunityLists_ListBySubscription</description>
+        /// <description>IpCommunities_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPCommunityListResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IPCommunityListResource> GetIPCommunityLists(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPCommunityResource> GetIPCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPCommunityLists(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPCommunities(cancellationToken);
         }
 
         /// <summary>
-        /// Implements IpPrefixLists list by subscription GET method.
+        /// Implements IpExtendedCommunities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipPrefixLists</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixLists_ListBySubscription</description>
+        /// <description>IpExtendedCommunities_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPPrefixListResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IPPrefixListResource> GetIPPrefixListsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPExtendedCommunityResource> GetIPExtendedCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPPrefixListsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPExtendedCommunitiesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Implements IpPrefixLists list by subscription GET method.
+        /// Implements IpExtendedCommunities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipPrefixLists</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixLists_ListBySubscription</description>
+        /// <description>IpExtendedCommunities_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPPrefixListResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IPPrefixListResource> GetIPPrefixLists(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPExtendedCommunityResource> GetIPExtendedCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPPrefixLists(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPExtendedCommunities(cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IpPrefixes list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="IPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPPrefixResource> GetIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPPrefixesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IpPrefixes list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPPrefixResource> GetIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPPrefixes(cancellationToken);
         }
 
         /// <summary>

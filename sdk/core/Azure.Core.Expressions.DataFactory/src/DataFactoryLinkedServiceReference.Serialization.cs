@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Core.Expressions.DataFactory
 {
+    [JsonConverter(typeof(DataFactoryLinkedServiceReferenceConverter))]
     public partial class DataFactoryLinkedServiceReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

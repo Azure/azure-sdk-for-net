@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "5afa96d4a8d1eff30420c7832bdbaa1e",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022Text\u0022:\u0022The word \\u003C mstrans:dictionary translation =\\u0022wordomatic\\u0022\\u003Ewordomatic\\u003C/mstrans:dictionary\\u003E is a dictionary entry.\u0022}]",
+      "RequestBody": "[{\u0022text\u0022:\u0022The word \\u003C mstrans:dictionary translation =\\u0022wordomatic\\u0022\\u003Ewordomatic\\u003C/mstrans:dictionary\\u003E is a dictionary entry.\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": [

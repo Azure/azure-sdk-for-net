@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             FqdnTags = new ChangeTrackingList<string>();
             SourceIPGroups = new ChangeTrackingList<string>();
             WebCategories = new ChangeTrackingList<string>();
+            HttpHeadersToInsert = new ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>();
             RuleType = FirewallPolicyRuleType.ApplicationRule;
         }
 
@@ -40,7 +41,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
         /// <param name="terminateTLS"> Terminate TLS connections for this rule. </param>
         /// <param name="webCategories"> List of destination azure web categories. </param>
-        internal ApplicationRule(string name, string description, FirewallPolicyRuleType ruleType, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<FirewallPolicyRuleApplicationProtocol> protocols, IList<string> targetFqdns, IList<string> targetUrls, IList<string> fqdnTags, IList<string> sourceIPGroups, bool? terminateTLS, IList<string> webCategories) : base(name, description, ruleType)
+        /// <param name="httpHeadersToInsert"> List of HTTP/S headers to insert. </param>
+        internal ApplicationRule(string name, string description, FirewallPolicyRuleType ruleType, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<FirewallPolicyRuleApplicationProtocol> protocols, IList<string> targetFqdns, IList<string> targetUrls, IList<string> fqdnTags, IList<string> sourceIPGroups, bool? terminateTLS, IList<string> webCategories, IList<FirewallPolicyHttpHeaderToInsert> httpHeadersToInsert) : base(name, description, ruleType)
         {
             SourceAddresses = sourceAddresses;
             DestinationAddresses = destinationAddresses;
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.Network.Models
             SourceIPGroups = sourceIPGroups;
             TerminateTLS = terminateTLS;
             WebCategories = webCategories;
+            HttpHeadersToInsert = httpHeadersToInsert;
             RuleType = ruleType;
         }
 
@@ -72,5 +75,7 @@ namespace Azure.ResourceManager.Network.Models
         public bool? TerminateTLS { get; set; }
         /// <summary> List of destination azure web categories. </summary>
         public IList<string> WebCategories { get; }
+        /// <summary> List of HTTP/S headers to insert. </summary>
+        public IList<FirewallPolicyHttpHeaderToInsert> HttpHeadersToInsert { get; }
     }
 }

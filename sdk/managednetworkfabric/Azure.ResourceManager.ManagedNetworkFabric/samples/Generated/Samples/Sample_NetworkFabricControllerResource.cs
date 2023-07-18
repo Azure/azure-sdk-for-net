@@ -76,7 +76,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             {
                 WorkloadExpressRouteConnections =
 {
-new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName","xxxxxxx")
+new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName")
+{
+ExpressRouteAuthorizationKey = "xxxxxxx",
+}
 },
             };
             ArmOperation<NetworkFabricControllerResource> lro = await networkFabricController.UpdateAsync(WaitUntil.Completed, patch);

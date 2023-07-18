@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 AddressFamily = AddressFamily.IPv4,
                 Conditions =
 {
-new AccessControlListPatchPropertiesConditionsItem(4,ConditionActionType.Allow,"1.1.1.2","21","2.2.2.3","65000",6)
+new AccessControlListConditionProperties(4,ConditionActionType.Allow,"1.1.1.2","21","2.2.2.3","65000",6)
 },
             };
             AccessControlListResource result = await accessControlList.UpdateAsync(patch);
