@@ -26,8 +26,6 @@ This release uses api version 2023-03-01-preview for PostgreSQL flexible server.
 - Support Network object to be updated as part of PostgreSqlFlexibleServerPatch call.
 - Remove unsupported ReplicationRoles GeoSyncReplica, Secondary, SyncReplica, WalReplica.
 
-### Other Changes
-
 ## 1.2.0-beta.1 (2023-05-31)
 
 ### Features Added
