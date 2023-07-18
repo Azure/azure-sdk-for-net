@@ -23,15 +23,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
-            if (activity.Kind == ActivityKind.Server && activityTagsProcessor.activityType.HasFlag(OperationType.V2))
+            if (activity.Kind == ActivityKind.Server)
             {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationNameV2(activity, ref activityTagsProcessor.MappedTags);
+                if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationNameV2(activity, ref activityTagsProcessor.MappedTags);
+                }
+                else if (activityTagsProcessor.activityType.HasFlag(OperationType.Http))
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
+                }
+
                 Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
             }
-            else if (activity.Kind == ActivityKind.Server && activityTagsProcessor.activityType.HasFlag(OperationType.Http))
+            else if (activity.Kind == ActivityKind.Consumer)
             {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
+                Tags[ContextTagKeys.AiOperationName.ToString()] = activity.DisplayName;
             }
 
             var userAgent = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUserAgentOriginal)?.ToString()
