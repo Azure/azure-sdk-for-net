@@ -31,8 +31,8 @@ namespace Azure.Communication.CallAutomation
             CallConnectionId = internalEvent.CallConnectionId;
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;
-            Transferee = CommunicationIdentifierSerializer.Deserialize(internalEvent.Transferee);
-            TransferTarget = CommunicationIdentifierSerializer.Deserialize(internalEvent.TransferTarget);
+            Transferee = internalEvent.Transferee == null ? null : CommunicationIdentifierSerializer.Deserialize(internalEvent.Transferee);
+            TransferTarget = internalEvent.TransferTarget == null ? null : CommunicationIdentifierSerializer.Deserialize(internalEvent.TransferTarget);
         }
 
         /// <summary>

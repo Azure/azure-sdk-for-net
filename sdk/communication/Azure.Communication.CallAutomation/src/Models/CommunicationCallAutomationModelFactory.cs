@@ -217,8 +217,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                CommunicationIdentifierSerializer.Serialize(transferTarget),
-                CommunicationIdentifierSerializer.Serialize(transferee)
+                transferTarget == null ? null : CommunicationIdentifierSerializer.Serialize(transferTarget),
+                transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee)
                 );
             return new CallTransferAccepted(internalEvent);
         }
