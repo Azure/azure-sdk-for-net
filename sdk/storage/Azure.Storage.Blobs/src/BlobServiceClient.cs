@@ -419,6 +419,15 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="sharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
         /// <returns>
         /// New instanc of the <see cref="BlobServiceClient"/> class.
         /// </returns>
@@ -426,13 +435,18 @@ namespace Azure.Storage.Blobs
             Uri serviceUri,
             BlobClientOptions options,
             HttpPipelinePolicy authentication,
-            HttpPipeline pipeline)
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential sharedKeyCredential,
+            AzureSasCredential sasCredential,
+            TokenCredential tokenCredential)
         {
             return new BlobServiceClient(
                 serviceUri,
                 new BlobClientConfiguration(
                     pipeline: pipeline,
-                    sharedKeyCredential: null,
+                    sharedKeyCredential: sharedKeyCredential,
+                    sasCredential: sasCredential,
+                    tokenCredential: tokenCredential,
                     clientDiagnostics: new ClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,

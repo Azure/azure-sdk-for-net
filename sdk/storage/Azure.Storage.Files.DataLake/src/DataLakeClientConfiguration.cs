@@ -80,7 +80,10 @@ namespace Azure.Storage.Files.DataLake
             TransferValidation = clientOptions.TransferValidation;
         }
 
-        private DataLakeClientConfiguration(
+        /// <summary>
+        /// For internal Client Constructors that accept multiple types of authentication.
+        /// </summary>
+        internal DataLakeClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             AzureSasCredential sasCredential,

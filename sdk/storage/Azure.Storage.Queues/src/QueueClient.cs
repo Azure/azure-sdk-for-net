@@ -238,7 +238,7 @@ namespace Azure.Storage.Queues
                   queueUri,
                   (HttpPipelinePolicy)null,
                   options,
-                  storageSharedKeyCredential: null,
+                  sharedKeyCredential: null,
                   sasCredential: null,
                   tokenCredential: null)
         {
@@ -266,7 +266,7 @@ namespace Azure.Storage.Queues
                   queueUri,
                   credential.AsPolicy(),
                   options,
-                  storageSharedKeyCredential: credential,
+                  sharedKeyCredential: credential,
                   sasCredential: null,
                   tokenCredential: null)
         {
@@ -298,7 +298,7 @@ namespace Azure.Storage.Queues
                   queueUri,
                   credential.AsPolicy<QueueUriBuilder>(queueUri),
                   options,
-                  storageSharedKeyCredential: null,
+                  sharedKeyCredential: null,
                   sasCredential: credential,
                   tokenCredential: null)
         {
@@ -326,7 +326,7 @@ namespace Azure.Storage.Queues
                   queueUri,
                   credential.AsPolicy(options),
                   options,
-                  storageSharedKeyCredential: null,
+                  sharedKeyCredential: null,
                   sasCredential: null,
                   tokenCredential: credential)
         {
@@ -350,7 +350,7 @@ namespace Azure.Storage.Queues
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        /// <param name="storageSharedKeyCredential">
+        /// <param name="sharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
         /// <param name="sasCredential">
@@ -363,7 +363,7 @@ namespace Azure.Storage.Queues
             Uri queueUri,
             HttpPipelinePolicy authentication,
             QueueClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential,
+            StorageSharedKeyCredential sharedKeyCredential,
             AzureSasCredential sasCredential,
             TokenCredential tokenCredential)
         {
@@ -373,7 +373,7 @@ namespace Azure.Storage.Queues
             options ??= new QueueClientOptions();
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(authentication),
-                sharedKeyCredential: storageSharedKeyCredential,
+                sharedKeyCredential: sharedKeyCredential,
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
                 clientDiagnostics: new ClientDiagnostics(options),

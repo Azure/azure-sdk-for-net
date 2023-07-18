@@ -121,7 +121,10 @@ namespace Azure.Storage.Blobs
             TrimBlobNameSlashes = trimBlobNameSlashes;
         }
 
-        private BlobClientConfiguration(
+        /// <summary>
+        /// Used for internal Client Constructors that accept multiple types of authentication.
+        /// </summary>
+        internal BlobClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             TokenCredential tokenCredential,
