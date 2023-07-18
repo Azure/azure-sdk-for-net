@@ -92,7 +92,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             testListener.AssertScope($"{nameof(AnalyzeDocumentOperation)}.{nameof(AnalyzeDocumentOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task AnalyzeDocumentOperationCanPollFromNewObject()
         {
             using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
@@ -166,7 +166,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsTrue(ex.Message.Contains("AdditionInformation"));
         }
 
-        [RecordedTest]
+        [Test]
         public async Task BuildDocumentModelOperationCanPollFromNewObject()
         {
             using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
@@ -233,7 +233,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsTrue(ex.Message.Contains("AdditionInformation"));
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CopyDocumentModelToOperationCanPollFromNewObject()
         {
             using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
@@ -328,7 +328,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             testListener.AssertScope($"{nameof(ClassifyDocumentOperation)}.{nameof(ClassifyDocumentOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task ClassifyDocumentOperationCanPollFromNewObject()
         {
             using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
@@ -381,7 +381,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             testListener.AssertScope($"{nameof(BuildDocumentClassifierOperation)}.{nameof(BuildDocumentClassifierOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task BuildDocumentClassifierOperationCanPollFromNewObject()
         {
             using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes("{}"));

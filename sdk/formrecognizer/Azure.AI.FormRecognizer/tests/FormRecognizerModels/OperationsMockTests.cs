@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(RecognizeContentOperation)}.{nameof(RecognizeContentOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeContentOperationCanPollFromNewObject()
         {
             using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
@@ -125,7 +125,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(RecognizeReceiptsOperation)}.{nameof(RecognizeReceiptsOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeReceiptsOperationCanPollFromNewObject()
         {
             using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
@@ -186,7 +186,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(RecognizeBusinessCardsOperation)}.{nameof(RecognizeBusinessCardsOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeBusinessCardsOperationCanPollFromNewObject()
         {
             using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
@@ -249,7 +249,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(RecognizeInvoicesOperation)}.{nameof(RecognizeInvoicesOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeInvoicesOperationCanPollFromNewObject()
         {
             using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
@@ -312,7 +312,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(RecognizeIdentityDocumentsOperation)}.{nameof(RecognizeIdentityDocumentsOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeIdentityDocumentsOperationCanPollFromNewObject()
         {
             using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
@@ -373,7 +373,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(RecognizeCustomFormsOperation)}.{nameof(RecognizeCustomFormsOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task RecognizeCustomFormsOperationCanPollFromNewObject()
         {
             using var emptyResponseBody0 = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
@@ -441,7 +441,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(CreateCustomFormModelOperation)}.{nameof(CreateCustomFormModelOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task TrainingOperationCanPollFromNewObject()
         {
             string jsonResponse = """
@@ -514,7 +514,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(CreateCustomFormModelOperation)}.{nameof(CreateCustomFormModelOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CreateComposedModelOperationCanPollFromNewObject()
         {
             string jsonResponse = """
@@ -582,7 +582,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             testListener.AssertScope($"{nameof(CopyModelOperation)}.{nameof(CopyModelOperation.UpdateStatus)}");
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CopyModelOperationCanPollFromNewObject()
         {
             string jsonResponse = """
