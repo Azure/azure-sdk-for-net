@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<int> iops = default;
+            Optional<long> iops = default;
             Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    iops = property.Value.GetInt32();
+                    iops = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("status"u8))

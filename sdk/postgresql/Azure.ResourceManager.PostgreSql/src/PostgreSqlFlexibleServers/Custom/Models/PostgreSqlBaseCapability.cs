@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
+
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -9,7 +11,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public partial class PostgreSqlBaseCapability
     {
         /// <summary> Readonly status of the capability. </summary>
-        public string? Status
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Status
         {
             get => CapabilityStatus?.ToString();
         }

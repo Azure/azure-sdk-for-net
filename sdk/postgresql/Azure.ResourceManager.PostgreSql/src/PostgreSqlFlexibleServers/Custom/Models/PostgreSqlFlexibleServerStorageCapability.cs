@@ -17,5 +17,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Gets the supported upgradable tier list. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> SupportedUpgradableTierList { get; }
+
+        /// <summary> Supported IOPS. </summary>
+        public long? SupportedIops { get; }
     }
 }

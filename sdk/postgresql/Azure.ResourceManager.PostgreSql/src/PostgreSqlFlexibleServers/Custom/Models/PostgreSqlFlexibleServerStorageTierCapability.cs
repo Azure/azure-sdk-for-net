@@ -16,5 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Indicates if this is a baseline storage tier or not. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsBaseline { get; }
+        /// <summary> Supported IOPS for this storage tier. </summary>
+        public long? Iops { get; }
     }
 }
