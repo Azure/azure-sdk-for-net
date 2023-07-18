@@ -144,7 +144,7 @@ StorageResource pageBlobResource = new PageBlobStorageResource(pageBlobClient);
 StorageResource appendBlobResource = new AppendBlobStorageResource(appendBlobClient);
 ```
 
-Blob Storage `StorageResouce` objects can be constructed with optional "options" arguments specific to the type of resource.
+Blob `StorageResource` objects can be constructed with optional "options" arguments specific to the type of resource.
 
 ```csharp
 BlobContainerClient containerClient;
