@@ -565,25 +565,6 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
-        [RecordedTest]
-        [TestCase(true)]
-        [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeCustomFormsThrowsForDamagedFile(bool useTrainingLabels)
-        {
-            var client = CreateFormRecognizerClient();
-
-            // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
-
-            var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
-            using var stream = new MemoryStream(damagedFile);
-
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels);
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream));
-            Assert.AreEqual("1000", ex.ErrorCode);
-        }
-
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.

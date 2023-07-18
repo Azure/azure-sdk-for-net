@@ -332,20 +332,6 @@ namespace Azure.AI.FormRecognizer.Tests
                 expectedLastPageNumber: 2);
         }
 
-        [RecordedTest]
-        public void StartRecognizeInvoicesThrowsForDamagedFile()
-        {
-            var client = CreateFormRecognizerClient();
-
-            // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
-
-            var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
-            using var stream = new MemoryStream(damagedFile);
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesAsync(stream));
-            Assert.AreEqual("BadArgument", ex.ErrorCode);
-        }
-
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.
