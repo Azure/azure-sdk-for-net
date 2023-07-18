@@ -521,7 +521,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             ThrowLockLostException();
                         }
 
-                        // The message was no found on the link which can occur as a result of a reconnect.
+                        // The message was not found on the link which can occur as a result of a reconnect.
                         // Attempt to settle the message over the management link.
                         await DisposeMessageRequestResponseAsync(
                             lockToken,
