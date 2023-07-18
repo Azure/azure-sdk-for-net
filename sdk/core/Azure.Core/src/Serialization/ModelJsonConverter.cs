@@ -10,33 +10,27 @@ using System.Text.Json.Serialization;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// .
+    /// Add
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
     public class ModelJsonConverter : JsonConverter<IModelSerializable>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
-        /// .
+        /// ModelSerializerFormat that determines Format of serialized model. ModelSerializerFormat.Data = data format which means both properties are false, ModelSerializerFormat.Wire = wire format which means both properties are true Default is ModelSerializerFormat.Data.
         /// </summary>
-        public bool IgnoreAdditionalProperties { get; set; } = true;
+        public ModelSerializerFormat Format { get; }
 
         /// <summary>
-        /// .
+        /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
         /// </summary>
-        public ModelJsonConverter() { }
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="ignoreAdditionalProperties"></param>
-        public ModelJsonConverter(bool ignoreAdditionalProperties)
+        public ModelJsonConverter(string format = "D")
         {
-            IgnoreAdditionalProperties = ignoreAdditionalProperties;
+            Format = format;
         }
 
         /// <summary>
-        /// .
+        /// Check if a certain type can be converted to IModelSerializable
         /// </summary>
         /// <param name="typeToConvert"></param>
         /// <returns></returns>
@@ -46,7 +40,7 @@ namespace Azure.Core.Serialization
         }
 
         /// <summary>
-        /// .
+        /// todo
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="typeToConvert"></param>
@@ -57,11 +51,11 @@ namespace Azure.Core.Serialization
         public override IModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            return (IModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, ConvertOptions(options));
+            return (IModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, GetOptions());
         }
 
         /// <summary>
-        /// .
+        /// todo
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="value"></param>
@@ -70,7 +64,7 @@ namespace Azure.Core.Serialization
         public override void Write(Utf8JsonWriter writer, IModelSerializable value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            BinaryData data = value.Serialize(ConvertOptions(options));
+            BinaryData data = value.Serialize(GetOptions());
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(data);
 #else
@@ -78,12 +72,9 @@ namespace Azure.Core.Serialization
 #endif
         }
 
-        private ModelSerializerOptions ConvertOptions(JsonSerializerOptions options)
+        private ModelSerializerOptions GetOptions()
         {
-            ModelSerializerOptions serializableOptions = new ModelSerializerOptions();
-            serializableOptions.IgnoreAdditionalProperties = IgnoreAdditionalProperties;
-            serializableOptions.IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties;
-            return serializableOptions;
+            return new ModelSerializerOptions(Format);
         }
     }
 }

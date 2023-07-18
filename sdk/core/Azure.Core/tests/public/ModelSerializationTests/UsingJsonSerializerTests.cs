@@ -15,8 +15,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void SerializeTest(bool ignoreReadonlyProperties)
         {
             string expected = "{";
-            if (!ignoreReadonlyProperties)
-                expected += "\"latinName\":\"Animalia\",";
             expected += "\"name\":\"Doggo\",\"isHungry\":false,";
 #if NETFRAMEWORK
             expected += "\"weight\":1.1000000000000001,";
@@ -62,8 +60,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.IsFalse(additionalProperties.ContainsKey("numberOfLegs"));
 
             string expected = "{";
-            if (!ignoreReadonlyProperties)
-                expected += "\"latinName\":\"Animalia\",";
             expected += "\"name\":\"Doggo\",\"isHungry\":false,";
 #if NETFRAMEWORK
             expected += "\"weight\":1.1000000000000001,";

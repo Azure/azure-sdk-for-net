@@ -17,12 +17,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private static void VerifyProperties(Animal x, Animal y, ModelSerializerOptions options)
         {
-            if (!options.IgnoreReadOnlyProperties)
+            if (options.Format == ModelSerializerFormat.Data)
                 Assert.That(x.LatinName, Is.EqualTo(y.LatinName));
             Assert.That(x.Name, Is.EqualTo(y.Name));
             Assert.That(x.Weight, Is.EqualTo(y.Weight));
 
-            if (!options.IgnoreAdditionalProperties)
+            if (options.Format == ModelSerializerFormat.Data)
             {
                 var additionalPropertiesX = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(x) as Dictionary<string, BinaryData>;
                 var additionalPropertiesY = typeof(Animal).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(y) as Dictionary<string, BinaryData>;
