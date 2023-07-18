@@ -41,7 +41,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!options.IgnoreAdditionalProperties)
+            if (options.Format == ModelSerializerFormat.Data)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -78,7 +78,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (!options.IgnoreAdditionalProperties)
+                if (options.Format == ModelSerializerFormat.Data)
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

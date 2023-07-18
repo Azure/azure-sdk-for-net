@@ -44,7 +44,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (!options.IgnoreReadOnlyProperties)
+            if (options.Format == ModelSerializerFormat.Data)
             {
                 writer.WritePropertyName("readOnlyProperty"u8);
                 writer.WriteStringValue(ReadOnlyProperty);
@@ -55,7 +55,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WritePropertyName("modelC"u8);
             SerializeT(writer, options);
 
-            if (!options.IgnoreAdditionalProperties)
+            if (options.Format == ModelSerializerFormat.Data)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -96,7 +96,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     continue;
                 }
 
-                if (!options.IgnoreAdditionalProperties)
+                if (options.Format == ModelSerializerFormat.Data)
                 {
                     //this means it's an modelC property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

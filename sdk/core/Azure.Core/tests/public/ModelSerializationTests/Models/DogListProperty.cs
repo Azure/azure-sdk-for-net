@@ -55,7 +55,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (!options.IgnoreReadOnlyProperties)
+            if (options.Format == ModelSerializerFormat.Data)
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -78,7 +78,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 writer.WriteEndArray();
             }
 
-            if (!options.IgnoreAdditionalProperties)
+            if (options.Format == ModelSerializerFormat.Data)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -135,7 +135,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     }
                     continue;
                 }
-                if (!options.IgnoreAdditionalProperties)
+                if (options.Format == ModelSerializerFormat.Data)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -149,7 +149,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             public override DogListProperty Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var model = DeserializeDogListProperty(JsonDocument.ParseValue(ref reader).RootElement, ConvertOptions(options));
+                var model = DeserializeDogListProperty(JsonDocument.ParseValue(ref reader).RootElement, GetOptions(options));
                 //marker used for testing to know if this converter fires
                 model.RawData.Add("DogListPropertyConverterMarker", new BinaryData("true"));
                 return model;
@@ -157,18 +157,18 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             public override void Write(Utf8JsonWriter writer, DogListProperty value, JsonSerializerOptions options)
             {
-                ((IJsonModelSerializable)value).Serialize(writer, ConvertOptions(options));
+                ((IJsonModelSerializable)value).Serialize(writer, GetOptions(options));
             }
 
-            private ModelSerializerOptions ConvertOptions(JsonSerializerOptions options)
+            private ModelSerializerOptions GetOptions(JsonSerializerOptions options)
             {
-                var serializableOptions = new ModelSerializerOptions();
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
-                var modelConverter = options.Converters.FirstOrDefault(c=>c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                serializableOptions.IgnoreAdditionalProperties = modelConverter is not null ? modelConverter.IgnoreAdditionalProperties : true;
-                serializableOptions.IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties;
-                return serializableOptions;
+                var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
+                string format = modelConverter is not null ? modelConverter.Format : ModelSerializerFormat.Wire;
+                var serializerOptions = new ModelSerializerOptions(format);
+                if (modelConverter is not null)
+                    serializerOptions.Serializers = modelConverter.Serializers;
             }
         }
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)

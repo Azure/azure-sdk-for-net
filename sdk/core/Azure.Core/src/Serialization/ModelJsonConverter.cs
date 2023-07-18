@@ -11,16 +11,16 @@ using System.Text.Json.Serialization;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// .
+    /// Add
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
     public class ModelJsonConverter : JsonConverter<IJsonModelSerializable>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
-        /// .
+        /// ModelSerializerFormat that determines Format of serialized model. ModelSerializerFormat.Data = data format which means both properties are false, ModelSerializerFormat.Wire = wire format which means both properties are true Default is ModelSerializerFormat.Data.
         /// </summary>
-        public bool IgnoreAdditionalProperties { get; set; } = true;
+        public ModelSerializerFormat Format { get; }
 
         /// <summary>
         /// .
@@ -28,21 +28,15 @@ namespace Azure.Core.Serialization
         public Dictionary<Type, ObjectSerializer> Serializers { get; set; } = new Dictionary<Type, ObjectSerializer>();
 
         /// <summary>
-        /// .
+        /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
         /// </summary>
-        public ModelJsonConverter() { }
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="ignoreAdditionalProperties"></param>
-        public ModelJsonConverter(bool ignoreAdditionalProperties)
+        public ModelJsonConverter(string format = "D")
         {
-            IgnoreAdditionalProperties = ignoreAdditionalProperties;
+            Format = format;
         }
 
         /// <summary>
-        /// .
+        /// Check if a certain type can be converted to IModelSerializable
         /// </summary>
         /// <param name="typeToConvert"></param>
         /// <returns></returns>
@@ -52,7 +46,7 @@ namespace Azure.Core.Serialization
         }
 
         /// <summary>
-        /// .
+        /// todo
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="typeToConvert"></param>
@@ -63,11 +57,11 @@ namespace Azure.Core.Serialization
         public override IJsonModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            return (IJsonModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, ConvertOptions(options));
+            return (IJsonModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, GetOptions(options));
         }
 
         /// <summary>
-        /// .
+        /// todo
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="value"></param>
@@ -76,16 +70,14 @@ namespace Azure.Core.Serialization
         public override void Write(Utf8JsonWriter writer, IJsonModelSerializable value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            value.Serialize(writer, ConvertOptions(options));
+            value.Serialize(writer, GetOptions(options));
         }
 
-        private ModelSerializerOptions ConvertOptions(JsonSerializerOptions options)
+        private ModelSerializerOptions GetOptions()
         {
-            ModelSerializerOptions serializableOptions = new ModelSerializerOptions();
-            serializableOptions.IgnoreAdditionalProperties = IgnoreAdditionalProperties;
-            serializableOptions.Serializers = Serializers;
-            serializableOptions.IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties;
-            return serializableOptions;
+            var options = new ModelSerializerOptions(Format);
+            options.Serializers = Serializers;
+            return options;
         }
     }
 }
