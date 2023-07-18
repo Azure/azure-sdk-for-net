@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.TestCase
     public class ComponentTests : ApplicationInsightsManagementTestBase
     {
         public ComponentTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

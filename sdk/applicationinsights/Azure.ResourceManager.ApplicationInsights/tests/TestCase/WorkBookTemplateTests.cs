@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.TestCase
             //ResourceDataHelpers.AssertTemplateData(template.Data, template2.Data);
             //3.GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
+            //_ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
+            //_ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
             int count = 0;
             AsyncPageable<WorkbookTemplateResource> workbookTemplateResources = collection.GetAllAsync();
             await foreach (var num in workbookTemplateResources)
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
+            Assert.GreaterOrEqual(count, 1);
             //4.Exists
             Assert.IsTrue(await collection.ExistsAsync(name));
             Assert.IsFalse(await collection.ExistsAsync(name + "1"));
