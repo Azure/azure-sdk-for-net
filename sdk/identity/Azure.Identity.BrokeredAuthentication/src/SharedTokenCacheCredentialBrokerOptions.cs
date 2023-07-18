@@ -13,6 +13,12 @@ namespace Azure.Identity.BrokeredAuthentication
     public class SharedTokenCacheCredentialBrokerOptions : SharedTokenCacheCredentialOptions, IMsalPublicClientInitializerOptions
     {
         /// <summary>
+        /// Gets or sets whether Microsoft Account (MSA) passthough.
+        /// </summary>
+        /// <value></value>
+        public bool? IsMsaPassthroughEnabled { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialBrokerOptions"/>.
         /// </summary>
         public SharedTokenCacheCredentialBrokerOptions()
@@ -32,7 +38,12 @@ namespace Azure.Identity.BrokeredAuthentication
 
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
-            builder.WithBrokerPreview();
+            var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows);
+            if (IsMsaPassthroughEnabled.HasValue)
+            {
+                options.MsaPassthrough = IsMsaPassthroughEnabled.Value;
+            }
+            builder.WithBroker(options);
         }
     }
 }

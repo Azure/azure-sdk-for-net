@@ -1,14 +1,26 @@
 # Release History
 
-## 1.10.0-beta.1 (2023-07-11)
+## 1.10.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.10.0-beta.1 (2023-07-17)
 
 ### Features Added
 - Continuous Access Evaluation (CAE) is now configurable per-request by setting the `IsCaeEnabled` property of `TokenRequestContext` via its constructor.
+- Added `IsSupportLoggingEnabled` property to `TokenCredentialOptions` which equates to passing 'true' for the `enablePiiLogging` parameter to the 'WithLogging' method on the MSAL client builder.
 
 ### Bugs Fixed
 - Fixed an issue with `TokenCachePersistenceOptions` where credentials in the same process would share the same cache, even if they had different configured names.
 - ManagedIdentityCredential now ignores empty ClientId values. [#37100](https://github.com/Azure/azure-sdk-for-net/issues/37100)
 - ManagedIdentityCredential will no longer attempt to parse invalid json payloads on responses from the managed identity endpoint.
+- When utilizing `EnvironmentCredential` from `DefaultAzureCredential` the credential will now override the `TENANT_ID` environment value if the TenantId value is set in `DefaultAzureCredentialOptions`.
 
 ### Other Changes
 - All developer credentials in the `DefaultAzureCredential` credential chain will fall through to the next credential in the chain on any failure. Previously, some exceptions would throw `AuthenticationFailedException`, which stops further progress in the chain.
