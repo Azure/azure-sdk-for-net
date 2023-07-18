@@ -510,45 +510,5 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
         }
-
-        [RecordedTest]
-        [TestCase("1", 1)]
-        [TestCase("1-2", 2)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeReceiptsWithOnePageArgument(string pages, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeReceiptsOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptMultipage);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeReceiptsAsync(stream, new RecognizeReceiptsOptions() { Pages = { pages } });
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, forms.Count);
-        }
-
-        [RecordedTest]
-        [TestCase("1", "3", 2)]
-        [TestCase("1-2", "3", 3)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeReceiptsWithMultiplePageArgument(string page1, string page2, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeReceiptsOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceipMultipageWithBlankPage);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeReceiptsAsync(stream, new RecognizeReceiptsOptions() { Pages = { page1, page2 } });
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, forms.Count);
-        }
     }
 }

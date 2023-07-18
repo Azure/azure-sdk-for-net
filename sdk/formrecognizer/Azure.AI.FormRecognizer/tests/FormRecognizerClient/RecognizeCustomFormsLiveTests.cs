@@ -603,50 +603,6 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("2001", ex.ErrorCode);
         }
 
-        [RecordedTest]
-        [TestCase("1", 1)]
-        [TestCase("1-2", 2)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeCustomFormsWithOnePageArgument(string pages, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeCustomFormsOperation operation;
-
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, ContainerType.MultipageFiles);
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, new RecognizeCustomFormsOptions() { Pages = { pages } });
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, forms.Count);
-        }
-
-        [RecordedTest]
-        [TestCase("1", "3", 2)]
-        [TestCase("1-2", "3", 3)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeCustomFormsWithMultiplePageArgument(string page1, string page2, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeCustomFormsOperation operation;
-
-            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, ContainerType.MultipageFiles);
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, new RecognizeCustomFormsOptions() { Pages = { page1, page2 } });
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, forms.Count);
-        }
-
         private void ValidateModelWithNoLabelsForm(RecognizedForm recognizedForm, string modelId, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
         {
             Assert.NotNull(recognizedForm.FormType);

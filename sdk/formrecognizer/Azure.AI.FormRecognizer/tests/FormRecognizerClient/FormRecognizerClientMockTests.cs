@@ -135,6 +135,94 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(language, requestUriQuery.Substring(index + languageQuery.Length, length));
         }
 
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartRecognizeContentSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
+            var recognizeOptions = new RecognizeContentOptions { Pages = { pages } };
+            await client.StartRecognizeContentAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartRecognizeContentFromUriSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeContentOptions { Pages = { pages } };
+            await client.StartRecognizeContentFromUriAsync(uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartRecognizeContentSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
+            var recognizeOptions = new RecognizeContentOptions { Pages = { page1, page2 } };
+            await client.StartRecognizeContentAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartRecognizeContentFromUriSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeContentOptions { Pages = { page1, page2 } };
+            await client.StartRecognizeContentFromUriAsync(uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
         #endregion
 
         #region Recognize Receipt
@@ -226,6 +314,94 @@ namespace Azure.AI.FormRecognizer.Tests
             var index = requestUriQuery.IndexOf(localeQuery);
             var length = requestUriQuery.Length - (index + localeQuery.Length);
             Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+        }
+
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartRecognizeReceiptsSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var recognizeOptions = new RecognizeReceiptsOptions { Pages = { pages } };
+            await client.StartRecognizeReceiptsAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartRecognizeReceiptsFromUriSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeReceiptsOptions { Pages = { pages } };
+            await client.StartRecognizeReceiptsFromUriAsync(uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartRecognizeReceiptsSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var recognizeOptions = new RecognizeReceiptsOptions { Pages = { page1, page2 } };
+            await client.StartRecognizeReceiptsAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartRecognizeReceiptsFromUriSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeReceiptsOptions { Pages = { page1, page2 } };
+            await client.StartRecognizeReceiptsFromUriAsync(uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
         }
 
         #endregion
@@ -321,6 +497,94 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
         }
 
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartRecognizeBusinessCardsSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+            var recognizeOptions = new RecognizeBusinessCardsOptions { Pages = { pages } };
+            await client.StartRecognizeBusinessCardsAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartRecognizeBusinessCardsFromUriSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeBusinessCardsOptions { Pages = { pages } };
+            await client.StartRecognizeBusinessCardsFromUriAsync(uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartRecognizeBusinessCardsSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+            var recognizeOptions = new RecognizeBusinessCardsOptions { Pages = { page1, page2 } };
+            await client.StartRecognizeBusinessCardsAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartRecognizeBusinessCardsFromUriSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeBusinessCardsOptions { Pages = { page1, page2 } };
+            await client.StartRecognizeBusinessCardsFromUriAsync(uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
         #endregion
 
         #region Recognize Invoices
@@ -414,6 +678,94 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
         }
 
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartRecognizeInvoicesSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceJpg);
+            var recognizeOptions = new RecognizeInvoicesOptions { Pages = { pages } };
+            await client.StartRecognizeInvoicesAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartRecognizeInvoicesFromUriSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeInvoicesOptions { Pages = { pages } };
+            await client.StartRecognizeInvoicesFromUriAsync(uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartRecognizeInvoicesSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceJpg);
+            var recognizeOptions = new RecognizeInvoicesOptions { Pages = { page1, page2 } };
+            await client.StartRecognizeInvoicesAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartRecognizeInvoicesFromUriSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeInvoicesOptions { Pages = { page1, page2 } };
+            await client.StartRecognizeInvoicesFromUriAsync(uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
         #endregion
 
         #region Recognize Custom Forms
@@ -482,6 +834,94 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.True(requestBody.Contains(encodedUriString));
                 Assert.False(requestBody.Contains(decodedUriString));
             }
+        }
+
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartRecognizeCustomFormsSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
+            var recognizeOptions = new RecognizeCustomFormsOptions { Pages = { pages } };
+            await client.StartRecognizeCustomFormsAsync("00000000000000000000000000000000", stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1")]
+        [TestCase("1-2")]
+        public async Task StartRecognizeCustomFormsFromUriSendsOnePageArgument(string pages)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeCustomFormsOptions { Pages = { pages } };
+            await client.StartRecognizeCustomFormsFromUriAsync("00000000000000000000000000000000", uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={pages}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartRecognizeCustomFormsSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
+            var recognizeOptions = new RecognizeCustomFormsOptions { Pages = { page1, page2 } };
+            await client.StartRecognizeCustomFormsAsync("00000000000000000000000000000000", stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        [TestCase("1", "3")]
+        [TestCase("1-2", "3")]
+        public async Task StartRecognizeCustomFormsFromUriSendsMultiplePageArgument(string page1, string page2)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeCustomFormsOptions { Pages = { page1, page2 } };
+            await client.StartRecognizeCustomFormsFromUriAsync("00000000000000000000000000000000", uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"pages={page1}%2C{page2}";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
         }
 
         #endregion

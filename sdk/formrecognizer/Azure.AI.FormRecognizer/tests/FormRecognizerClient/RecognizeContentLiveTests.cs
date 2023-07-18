@@ -440,46 +440,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [TestCase("1", 1)]
-        [TestCase("1-2", 2)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeContentWithOnePageArgument(string pages, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeContentOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = { pages } });
-            }
-
-            FormPageCollection formPages = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, formPages.Count);
-        }
-
-        [RecordedTest]
-        [TestCase("1", "3", 2)]
-        [TestCase("1-2", "3", 3)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeContentWithMultiplePageArgument(string page1, string page2, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeContentOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = { page1, page2 } });
-            }
-
-            FormPageCollection formPages = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, formPages.Count);
-        }
-
-        [RecordedTest]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartRecognizeContentWithLanguage()
         {

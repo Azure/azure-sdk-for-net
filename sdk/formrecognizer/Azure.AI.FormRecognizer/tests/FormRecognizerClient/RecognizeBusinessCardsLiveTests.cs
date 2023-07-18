@@ -463,43 +463,5 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
         }
-
-        [RecordedTest]
-        [TestCase("1", 1)]
-        [TestCase("1-2", 2)]
-        public async Task StartRecognizeBusinessCardsWithOnePageArgument(string pages, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeBusinessCardsOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeBusinessCardsAsync(stream, new RecognizeBusinessCardsOptions() { Pages = { pages } });
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, forms.Count);
-        }
-
-        [RecordedTest]
-        [TestCase("1", "3", 2)]
-        [TestCase("1-2", "3", 3)]
-        public async Task StartRecognizeBusinessCardsWithMultiplePageArgument(string page1, string page2, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeBusinessCardsOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeBusinessCardsAsync(stream, new RecognizeBusinessCardsOptions() { Pages = { page1, page2 } });
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, forms.Count);
-        }
     }
 }
