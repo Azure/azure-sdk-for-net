@@ -43,11 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
-        /// <param name="accessKey">
-        /// The Azure Batch account access key.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="accessKey"> The Azure Batch account access key. </param>
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
@@ -67,11 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The Azure Batch account name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AccountName { get; set; }
-        /// <summary>
-        /// The Azure Batch account access key.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The Azure Batch account access key. </summary>
         public DataFactorySecretBaseDefinition AccessKey { get; set; }
         /// <summary> The Azure Batch URI. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> BatchUri { get; set; }

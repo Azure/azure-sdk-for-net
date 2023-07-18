@@ -31,13 +31,5 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> The unique identifier of the policy. </summary>
         public string Id { get; }
-        /// <summary> The human readable name of the policy. </summary>
-        public string Name { get; set; }
-        /// <summary>
-        /// Abstract base class for defining a distribution mode
-        /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
-        /// </summary>
-        public DistributionMode Mode { get; set; }
     }
 }

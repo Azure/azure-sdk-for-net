@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
             Optional<string> originalDatabaseName = default;
             Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
+            Optional<SuspensionDetails> suspensionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -184,11 +185,20 @@ namespace Azure.ResourceManager.Kusto.Models
                             databaseShareOrigin = new KustoDatabaseShareOrigin(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("suspensionDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            suspensionDetails = SuspensionDetails.DeserializeSuspensionDetails(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Optional.ToNullable(databaseShareOrigin));
+            return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Optional.ToNullable(databaseShareOrigin), suspensionDetails.Value);
         }
     }
 }

@@ -8,7 +8,7 @@ This sample shows how to call GetDataDeleteJobDetailsAsync with required paramet
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>");
+Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -42,7 +42,7 @@ This sample shows how to call GetDataDeleteJobDetails with required parameters a
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-Response response = client.GetDataDeleteJobDetails("<jobId>");
+Response response = client.GetDataDeleteJobDetails("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("extensionId").ToString());
@@ -76,7 +76,7 @@ This sample shows how to call GetDataIngestionJobDetailsAsync with required para
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>");
+Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -110,7 +110,7 @@ This sample shows how to call GetDataIngestionJobDetails with required parameter
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-Response response = client.GetDataIngestionJobDetails("<jobId>");
+Response response = client.GetDataIngestionJobDetails("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -144,26 +144,7 @@ This sample shows how to call GetWeathersAsync with required parameters and pars
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-await foreach (var item in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("partyId").ToString());
-    Console.WriteLine(result.GetProperty("boundaryId").ToString());
-    Console.WriteLine(result.GetProperty("extensionId").ToString());
-    Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
-    Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
-    Console.WriteLine(result.GetProperty("dateTime").ToString());
-    Console.WriteLine(result.GetProperty("extensionVersion").ToString());
-    Console.WriteLine(result.GetProperty("weatherDataType").ToString());
-    Console.WriteLine(result.GetProperty("granularity").ToString());
-}
-]]></code>
-This sample shows how to call GetWeathersAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
-
-await foreach (var item in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -222,26 +203,7 @@ This sample shows how to call GetWeathers with required parameters and parse the
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
 
-foreach (var item in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("partyId").ToString());
-    Console.WriteLine(result.GetProperty("boundaryId").ToString());
-    Console.WriteLine(result.GetProperty("extensionId").ToString());
-    Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
-    Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
-    Console.WriteLine(result.GetProperty("dateTime").ToString());
-    Console.WriteLine(result.GetProperty("extensionVersion").ToString());
-    Console.WriteLine(result.GetProperty("weatherDataType").ToString());
-    Console.WriteLine(result.GetProperty("granularity").ToString());
-}
-]]></code>
-This sample shows how to call GetWeathers with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetWeatherClient("2022-11-01-preview");
-
-foreach (var item in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
