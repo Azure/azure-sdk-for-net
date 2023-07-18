@@ -6,11 +6,15 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Maintenance.Models
+namespace Azure.ResourceManager.Maintenance
 {
-    /// <summary> Configuration Assignment. </summary>
+    /// <summary>
+    /// A class representing the MaintenanceConfigurationAssignment data model.
+    /// Configuration Assignment
+    /// </summary>
     public partial class MaintenanceConfigurationAssignmentData : ResourceData
     {
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentData. </summary>
@@ -26,11 +30,13 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="location"> Location of the resource. </param>
         /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
         /// <param name="resourceId"> The unique resourceId. </param>
-        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId) : base(id, name, resourceType, systemData)
+        /// <param name="filter"> Properties of the configuration assignment. </param>
+        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId, ConfigurationAssignmentFilterProperties filter) : base(id, name, resourceType, systemData)
         {
             Location = location;
             MaintenanceConfigurationId = maintenanceConfigurationId;
             ResourceId = resourceId;
+            Filter = filter;
         }
 
         /// <summary> Location of the resource. </summary>
@@ -39,5 +45,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public ResourceIdentifier MaintenanceConfigurationId { get; set; }
         /// <summary> The unique resourceId. </summary>
         public ResourceIdentifier ResourceId { get; set; }
+        /// <summary> Properties of the configuration assignment. </summary>
+        public ConfigurationAssignmentFilterProperties Filter { get; set; }
     }
 }
