@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 // Set ip in case of server spans only.
                 if (activity.Kind == ActivityKind.Server)
                 {
-                    var locationIp = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
+                    var locationIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString();
                     if (locationIp != null)
                     {
                         Tags[ContextTagKeys.AiLocationIp.ToString()] = locationIp;
