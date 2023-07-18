@@ -426,24 +426,6 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeContentWithLanguage()
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeContentOperation operation;
-
-            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-            operation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { Language = FormRecognizerLanguage.En });
-
-            await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasValue);
-
-            var formPage = operation.Value.Single();
-
-            ValidateFormPage(formPage, includeFieldElements: true, expectedPageNumber: 1);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public void StartRecognizeContentWithNoSupporttedLanguage()
         {
             var client = CreateFormRecognizerClient();

@@ -180,6 +180,30 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [TestCase("")]
+        [TestCase("en")]
+        public async Task StartRecognizeContentFromUriSendsUserSpecifiedLanguage(string language)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeContentOptions { Language = language };
+            await client.StartRecognizeContentFromUriAsync(uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+
+            var languageQuery = "language=";
+            var index = requestUriQuery.IndexOf(languageQuery);
+            var length = requestUriQuery.Length - (index + languageQuery.Length);
+            Assert.AreEqual(language, requestUriQuery.Substring(index + languageQuery.Length, length));
+        }
+
+        [Test]
         [TestCase("1")]
         [TestCase("1-2")]
         public async Task StartRecognizeContentSendsOnePageArgument(string pages)
@@ -351,6 +375,30 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             var recognizeOptions = new RecognizeReceiptsOptions { Locale = locale };
             await client.StartRecognizeReceiptsAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+
+            var localeQuery = "locale=";
+            var index = requestUriQuery.IndexOf(localeQuery);
+            var length = requestUriQuery.Length - (index + localeQuery.Length);
+            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase("en-US")]
+        public async Task StartRecognizeReceiptsFromUriSendsUserSpecifiedLocale(string locale)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/prebuilt/receipt/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeReceiptsOptions { Locale = locale };
+            await client.StartRecognizeReceiptsFromUriAsync(uri, recognizeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
 
@@ -542,6 +590,30 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [TestCase("")]
+        [TestCase("en-US")]
+        public async Task StartRecognizeBusinessCardsFromUriSendsUserSpecifiedLocale(string locale)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/prebuilt/businesscards/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeBusinessCardsOptions { Locale = locale };
+            await client.StartRecognizeBusinessCardsFromUriAsync(uri, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+
+            var localeQuery = "locale=";
+            var index = requestUriQuery.IndexOf(localeQuery);
+            var length = requestUriQuery.Length - (index + localeQuery.Length);
+            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+        }
+
+        [Test]
         [TestCase("1")]
         [TestCase("1-2")]
         public async Task StartRecognizeBusinessCardsSendsOnePageArgument(string pages)
@@ -713,6 +785,30 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceJpg);
             var recognizeOptions = new RecognizeInvoicesOptions { Locale = locale };
             await client.StartRecognizeInvoicesAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+
+            var localeQuery = "locale=";
+            var index = requestUriQuery.IndexOf(localeQuery);
+            var length = requestUriQuery.Length - (index + localeQuery.Length);
+            Assert.AreEqual(locale, requestUriQuery.Substring(index + localeQuery.Length, length));
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase("en-US")]
+        public async Task StartRecognizeInvoicesFromUriSendsUserSpecifiedLocale(string locale)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/prebuilt/invoice/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var recognizeOptions = new RecognizeInvoicesOptions { Locale = locale };
+            await client.StartRecognizeInvoicesFromUriAsync(uri, recognizeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
 

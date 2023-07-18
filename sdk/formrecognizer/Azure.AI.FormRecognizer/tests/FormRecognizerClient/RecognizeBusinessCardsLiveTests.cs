@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -397,42 +396,6 @@ namespace Azure.AI.FormRecognizer.Tests
                 FormField contactNameField = recognizedForm.Fields["ContactNames"].Value.AsList().Single();
                 Assert.AreEqual(formIndex + 1, contactNameField.ValueData.PageNumber);
             }
-        }
-
-        [RecordedTest]
-        public async Task StartRecognizeBusinessCardsWithSupportedLocale()
-        {
-            var client = CreateFormRecognizerClient();
-            var options = new RecognizeBusinessCardsOptions()
-            {
-                IncludeFieldElements = true,
-                Locale = FormRecognizerLocale.EnUS
-            };
-            RecognizeBusinessCardsOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
-            }
-
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
-
-            var businessCard = recognizedForms.Single();
-
-            ValidatePrebuiltForm(
-                businessCard,
-                includeFieldElements: true,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1);
-
-            Assert.Greater(businessCard.Fields.Count, 0);
-
-            var businessCardPage = businessCard.Pages.Single();
-
-            Assert.Greater(businessCardPage.Lines.Count, 0);
-            Assert.AreEqual(0, businessCardPage.SelectionMarks.Count);
-            Assert.AreEqual(0, businessCardPage.Tables.Count);
         }
 
         [RecordedTest]

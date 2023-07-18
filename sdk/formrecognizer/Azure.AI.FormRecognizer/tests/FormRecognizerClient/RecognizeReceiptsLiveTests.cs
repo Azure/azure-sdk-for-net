@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -441,43 +440,6 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsFromUriAsync(invalidUri));
             Assert.AreEqual("InvalidImage", ex.ErrorCode);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeReceiptsWithSupportedLocale()
-        {
-            var client = CreateFormRecognizerClient();
-            var options = new RecognizeReceiptsOptions()
-            {
-                IncludeFieldElements = true,
-                Locale = FormRecognizerLocale.EnUS
-            };
-            RecognizeReceiptsOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeReceiptsAsync(stream, options);
-            }
-
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
-
-            var receipt = recognizedForms.Single();
-
-            ValidatePrebuiltForm(
-                receipt,
-                includeFieldElements: true,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1);
-
-            Assert.Greater(receipt.Fields.Count, 0);
-
-            var receiptPage = receipt.Pages.Single();
-
-            Assert.Greater(receiptPage.Lines.Count, 0);
-            Assert.AreEqual(0, receiptPage.SelectionMarks.Count);
-            Assert.AreEqual(0, receiptPage.Tables.Count);
         }
 
         [RecordedTest]
