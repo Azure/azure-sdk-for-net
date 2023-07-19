@@ -204,28 +204,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 startTime: DateTime.UtcNow);
 
             Assert.NotNull(activity);
-            activity.SetTag(SemanticConventions.AttributeHttpClientIP, "127.0.0.1");
-            activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
-
-            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey");
-            var telemetryItem = telemetryItems.FirstOrDefault();
-
-            Assert.Equal("127.0.0.1", telemetryItem?.Tags[ContextTagKeys.AiLocationIp.ToString()]);
-        }
-
-        [Fact]
-        public void AiLocationIpIsSetAsNetPeerIpForServerSpans()
-        {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
-            using var activity = activitySource.StartActivity(
-                ActivityName,
-                ActivityKind.Server,
-                null,
-                startTime: DateTime.UtcNow);
-
-            Assert.NotNull(activity);
-            activity.SetTag(SemanticConventions.AttributeNetPeerIp, "127.0.0.1");
+            activity.SetTag(SemanticConventions.AttributeClientAddress, "127.0.0.1");
             activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
