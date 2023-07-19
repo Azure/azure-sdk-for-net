@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -31,23 +30,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
             var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
 
-            MockResponse response = new MockResponse(200, "OK");
             _tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .SetSampler(new AlwaysOnSampler())
-                .AddSource(ActivitySourceName)
-                .AddAzureMonitorTraceExporter(o => {
-                    o.Transport = new MockTransport((_) => response);
-                    o.ConnectionString = connectionString;
-                    })
-                .Build();
-
-            //_tracerProvider = Sdk.CreateTracerProviderBuilder()
-            //                .SetResourceBuilder(resourceBuilder)
-            //                .AddSource(ActivitySourceName)
-            //                .AddProcessor(new ActivityFilteringProcessor())
-            //                .AddProcessor(new ActivityEnrichingProcessor())
-            //                .AddAzureMonitorTraceExporter(o => { o.ConnectionString = connectionString; o.SamplingRatio = 1.0F; }, credential)
-            //                .Build();
+                            .SetResourceBuilder(resourceBuilder)
+                            .AddSource(ActivitySourceName)
+                            .AddProcessor(new ActivityFilteringProcessor())
+                            .AddProcessor(new ActivityEnrichingProcessor())
+                            .AddAzureMonitorTraceExporter(o => { o.ConnectionString = connectionString; o.SamplingRatio = 1.0F; }, credential)
+                            .Build();
         }
 
         /// <remarks>
